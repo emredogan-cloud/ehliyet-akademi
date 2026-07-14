@@ -31,6 +31,29 @@ export default tseslint.config(
     },
   },
   {
+    // TS/TSX: tip denetimini TypeScript yapar → no-undef kapalı; tarayıcı+node globalleri açık.
+    files: ['**/*.ts', '**/*.tsx'],
+    languageOptions: {
+      globals: {
+        window: 'readonly',
+        document: 'readonly',
+        localStorage: 'readonly',
+        navigator: 'readonly',
+        console: 'readonly',
+        process: 'readonly',
+        fetch: 'readonly',
+        URL: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        HTMLElement: 'readonly',
+        React: 'readonly',
+      },
+    },
+    rules: {
+      'no-undef': 'off',
+    },
+  },
+  {
     files: ['**/*.js', '**/*.mjs', '**/*.cjs'],
     languageOptions: {
       globals: {

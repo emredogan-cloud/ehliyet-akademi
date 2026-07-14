@@ -8,6 +8,13 @@
   "engines": {
     "node": ">=20"
   },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "@tailwindcss/oxide",
+      "sharp"
+    ]
+  },
   "scripts": {
     "build": "turbo run build",
     "lint": "eslint .",

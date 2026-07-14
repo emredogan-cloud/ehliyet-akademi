@@ -1,34 +1,41 @@
 # MEMORY — proje sürdürme bağlamı
 
 > Ani kesinti sonrası kaldığı yerden devam için. Tek doğru kaynak: üst dizin `ROADMAP.md` (v3.1, 36 faz).
-> Her ~3 fazda güncellenir. Ayrıntılı ilerleme: `STATUS.md`.
+> Ayrıntılı ilerleme: `STATUS.md`. Faz durumu + GO/NO-GO: `FINAL_*` raporları.
 
-_Son güncelleme: 2026-07-14 · Faz 0 sonu_
+_Son güncelleme: 2026-07-15 · Faz 4 sonu_
 
 ## Tamamlanan fazlar
 
-- **Faz 0** — Mühendislik temeli: monorepo (pnpm+turbo), kalite kapıları (`pnpm gates`), GitHub Actions (CI/CodeQL/gitleaks/commitlint), yönetişim dosyaları, Dependabot, Changesets, private repo + push.
+- **Faz 0** ✅ mühendislik temeli (monorepo, gates, CI/CD, repo+push).
+- **Faz 1–3** ✅ 6 ADR + ENV rehberi.
+- **Faz 4** ✅ Next.js app + 3 çekirdek paket; 30 unit + 4 e2e + build yeşil; çekirdek akış tarayıcıda doğrulandı.
+- **Faz 5–14** temel kuruldu (tokenlar, rotalar, SRS, içerik, PWA).
 
-## Mimari kararlar (kısa ADR özeti)
+## Mimari kararlar
 
-1. **Monorepo konumu:** `other_report/ehliyet-akademi/` — üst dizindeki ilgisiz/özel dosyalar (raporlar, gerçek `OPENAI_API_KEY` içeren `.env`) repo DIŞINDA kalır; asla commit edilmez.
-2. **Trunk-based** + Conventional Commits + Changesets (SemVer).
-3. **Dependabot** (Renovate yerine — native, sıfır kurulum; ROADMAP "Renovate tercih / Dependabot" izin veriyor).
-4. **CodeQL** yalnız repo public olduğunda (private'ta Advanced Security istiyor) — workflow'da görünürlük koşulu.
-5. Kullanıcıya görünen her şey Türkçe; içerik hukuku ROADMAP C.4/E.6 bağlayıcı.
+Bkz. `docs/adr/`: Next.js App Router · monorepo (`@ea/*`) · Postgres/Drizzle + yerel PGlite ·
+sağlayıcı-agnostik auth (yerel credentials) · tipli içerik + özgün soru bankası · CSS tokenları.
+**Mock politikası:** DB/auth/AI/ödeme/analitik/arama harici servissiz çalışır (ENV_SETUP_GUIDE.md).
+
+## Komutlar
+
+- `pnpm gates` = verify + lint + typecheck + test + build (CI muadili).
+- `pnpm --filter @ea/web e2e` = Playwright (dev sunucu 3100).
+- `pnpm --filter @ea/web dev` = yerel geliştirme.
 
 ## Açık işler
 
-- Faz 1–3 ADR'leri → sonra Faz 4 (Next.js + auth + DB).
-- Dependabot PR'ları (actions sürüm yükseltmeleri) CI koşamadığı için bekliyor.
-- Branch protection henüz kurulmadı (private+free plan kısıtı denenecek).
+- Daha fazla özgün soru (konu başına 100+ hedefi), 4 dersin tümü, e-Sınav simülatörü, quiz pratiği.
+- Faz 15–35: SEO schema, monetizasyon (mock), analitik (mock), CMS, admin, arama (Meili), güvenlik sertleştirme, gözlemlenebilirlik, topluluk, habit loop, platform zekası.
 
-## Riskler
+## Riskler / engeller
 
-- **GitHub Actions faturalandırma kilidi** (dış engel — detay STATUS.md). Yerel kapılar CI'ın birebir muadili olarak çalıştırılıyor.
+- **GitHub Actions billing kilidi** (dış) — yerel gates ile telafi. Branch protection Pro/public ister.
+- Kapsam: 36 faz tek oturumda tam üretime alınamaz — çekirdek tam+test edilmiş; gerisi temel+mock.
 
-## Son durum bilgisi
+## Son durum
 
-- **Son commit:** `b1132d0` chore: Faz 0 — mühendislik temeli (+ bu dosyalarla yeni commit gelecek)
+- **Son commit:** Faz 4 (`feat(web): Next.js + çekirdek paketler`), pushed.
 - **Remote:** https://github.com/emredogan-cloud/ehliyet-akademi (private)
-- **Son test/CI/build:** `pnpm gates` yerelde ✅ · hosted CI ⛔ faturalandırma · build (turbo) ✅ (henüz paket yok)
+- **Testler:** 30 unit + 4 e2e ✅ · build 13 sayfa ✅ · hosted CI ⛔ billing (yerel gates ✅)

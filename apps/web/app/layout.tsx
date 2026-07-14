@@ -19,6 +19,8 @@ export const metadata: Metadata = {
     'deneme sınavı',
   ],
   applicationName: 'Ehliyet Akademi',
+  manifest: '/manifest.webmanifest',
+  icons: { icon: '/icon.svg', apple: '/icon.svg' },
   openGraph: {
     type: 'website',
     locale: 'tr_TR',

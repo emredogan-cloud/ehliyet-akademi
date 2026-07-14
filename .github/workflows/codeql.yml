@@ -12,6 +12,9 @@ on:
 jobs:
   analyze:
     name: Analyze (javascript-typescript)
+    # CodeQL code-scanning private repoda GitHub Advanced Security ister;
+    # repo public olduğunda bu iş otomatik devreye girer.
+    if: ${{ !github.event.repository.private }}
     runs-on: ubuntu-latest
     permissions:
       security-events: write

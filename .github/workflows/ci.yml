@@ -1,0 +1,101 @@
+# CI — kalite kapıları. Main'e merge/push bu işlerin tamamı yeşil olmadan kabul edilmez.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Lint · Typecheck · Test · Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Workspace doğrulaması
+        run: pnpm verify
+      - name: Lint
+        run: pnpm lint
+      - name: Format kontrolü
+        run: pnpm format
+      - name: Typecheck
+        run: pnpm typecheck
+      - name: Unit & integration testleri
+        run: pnpm test
+      - name: Build
+        run: pnpm build
+      - name: Build çıktısını yükle (web)
+        if: hashFiles('apps/web/package.json') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: next-build
+          path: apps/web/.next
+          retention-days: 3
+          if-no-files-found: ignore
+
+  e2e:
+    name: E2E (Playwright)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: E2E var mı?
+        id: has-e2e
+        run: |
+          if [ -f apps/web/playwright.config.ts ]; then echo "run=true" >> "$GITHUB_OUTPUT"; else echo "run=false" >> "$GITHUB_OUTPUT"; fi
+      - name: Playwright tarayıcıları
+        if: steps.has-e2e.outputs.run == 'true'
+        run: pnpm --filter @ea/web exec playwright install --with-deps chromium
+      - name: E2E testleri
+        if: steps.has-e2e.outputs.run == 'true'
+        run: pnpm e2e
+      - name: Rapor
+        if: steps.has-e2e.outputs.run == 'true' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: apps/web/playwright-report
+          retention-days: 7
+          if-no-files-found: ignore
+
+  gitleaks:
+    name: Secret taraması (gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  commitlint:
+    name: Conventional Commits
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose

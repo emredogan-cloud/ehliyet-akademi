@@ -1,0 +1,13 @@
+EHLİYET AKADEMİ — TESCİLLİ YAZILIM LİSANSI (Proprietary)
+
+Copyright (c) 2026 Emre Doğan. Tüm hakları saklıdır. / All rights reserved.
+
+Bu depo ve içeriği (kaynak kod, içerik, soru bankası, görseller, dokümantasyon)
+tescillidir. Yazılı izin olmaksızın kopyalanamaz, dağıtılamaz, değiştirilemez
+veya türev çalışma üretilemez.
+
+This repository and its contents (source code, content, question bank, assets,
+documentation) are proprietary. No copying, distribution, modification, or
+derivative works without prior written permission.
+
+Üçüncü taraf bağımlılıklar kendi lisanslarına tabidir (bkz. package.json).

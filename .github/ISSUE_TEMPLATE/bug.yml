@@ -1,0 +1,11 @@
+name: Hata bildirimi
+description: Bir hata bildir
+labels: [bug]
+body:
+  - type: textarea
+    attributes: { label: Ne oldu?, description: Beklenen ve gerçekleşen davranış }
+    validations: { required: true }
+  - type: input
+    attributes: { label: Sayfa/URL }
+  - type: textarea
+    attributes: { label: Adımlar }

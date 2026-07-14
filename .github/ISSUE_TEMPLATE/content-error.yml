@@ -1,0 +1,10 @@
+name: İçerik hatası
+description: Ders/soru içeriğinde yanlışlık bildir (mevzuat/ilk yardım dahil)
+labels: [content, needs-expert-review]
+body:
+  - type: input
+    attributes: { label: Ders/Soru ID }
+    validations: { required: true }
+  - type: textarea
+    attributes: { label: Yanlış olan nedir? Doğrusu (kaynakla) }
+    validations: { required: true }

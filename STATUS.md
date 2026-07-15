@@ -2,7 +2,7 @@
 
 > Tek doğru kaynak: üst dizindeki `ROADMAP.md` (v3.1, Faz 0–35).
 
-_Son güncelleme: 2026-07-15 · SPRINT 1 (auth+DB+entitlements+senkron) sonrası_
+_Son güncelleme: 2026-07-15 · SPRINT 2 (CMS+Admin+içerik hattı+medya+arama soyutlaması) sonrası_
 
 ### Yaptım
 
@@ -34,14 +34,25 @@ _Son güncelleme: 2026-07-15 · SPRINT 1 (auth+DB+entitlements+senkron) sonrası
 - **Kalite:** 39 unit/integration + 23 e2e (production build üstünde) + CI yeşil + prod deploy.
 - **Tek dış aksiyon:** production DATABASE_URL → Neon marketplace şartları kullanıcı kabulü bekliyor (SPRINT_1_REPORT.md'de link). O gelene dek prod auth uçları bilinçli 503.
 
+### Yaptım (SPRINT 2) ✅
+
+- **CMS (Faz 24 · ADR-007):** değerlendirme (Payload/Sanity/Contentful/Strapi/özel) → **şema-öncelikli özel çekirdek**; `content_items/content_versions/media_assets/audit_logs` (JSONB payload + Zod doğrulama); türler `lesson/question/article/seo_page/kb`, `locale`+`licence` ile gelecekteki sınıflara açık. Payload'a açık kapı (JSONB birebir taşınır).
+- **İçerik hattı:** durum makinesi `draft→in_review→approved→published→retired` (sunucuda zorlanır; onaysız yayın reddedilir); her değişiklik = sürüm satırı + denetim satırı; yayın/emeklilik → arama indeksleme kancası.
+- **Admin (Faz 25):** `/admin` **aynı SaaS kabuğunda** (Genel Bakış/İçerik/Medya/Kullanıcılar/Denetim); istemci koruması (admin-denied) + sunucu koruması (`requireRole` her `/api/admin/*` ucunda); JSON payload editörü + NEXT geçiş düğmeleri + sürüm geçmişi.
+- **Medya (Faz 14 altyapı):** svg/png/jpeg/webp/lottie yükleme (2MB sınır, desteklenmeyen mime reddi) + halka açık servis `/api/media/[id]` (doğru mime, değişmez cache); Blob/S3 adaptör kapısı.
+- **Arama soyutlaması (Faz 28):** `SearchProvider` arayüzü + `LocalSearchProvider`; `getSearchProvider()` + `SEARCH_PROVIDER` env → Meili/Typesense/Algolia **yeniden-yazımsız** takılır; /arama bu soyutlamayı kullanıyor.
+- **RBAC:** `users.role` user/editor/admin; rol bootstrap (`ADMIN_EMAILS` → `ADMIN_EMAIL_PATTERN` → yönetici-yoksa-ilk-kullanıcı); oturumsuz 401 / yetkisiz 403; öz-adminlik düşürme kilidi; tam denetim kaydı.
+- **Kalite:** 81 unit/integration + 28 e2e (production build) + CI yeşil + prod deploy + **canlı tarayıcı doğrulaması** (arama sonuç veriyor · /admin misafirde RBAC reddi · admin API oturumsuz 401).
+- Ayrıntı: `SPRINT_2_REPORT.md` · karar: `docs/adr/007-cms.md`.
+
 ### Yapıyorum
 
-- Sprint 1 kapanışı (rapor + dokümantasyon).
+- Sprint 2 kapanışı (rapor + dokümantasyon). **DUR: Sprint 3 başlatılmadı** (direktif).
 
 ### Yapacağım (ROADMAP sırası — sonraki sorumlu nokta)
 
-- **Faz 17 ASO** (mağaza — retention kanıtı sonrası) · **Faz 19** diğer sınıflar.
-- **Faz 22–35 kurumsal:** AI platformu (mock→gerçek), Analitik (GA4/PostHog), CMS (Payload), Admin, API/DB sunucu kalıcılığı (auth), Arama, Güvenlik sertleştirme (CSP/pen-test), Gözlemlenebilirlik (Sentry), Topluluk, Habit-loop derinleştirme, Platform Zekası. (Faz 34'ün seri/streak çekirdeği canlıda.)
+- **Faz 17 ASO** (mağaza — retention kanıtı sonrası) · **Faz 19** diğer sınıflar (altyapı hazır: `licence` kolonu).
+- **Faz 22–35 kurumsal:** AI platformu (mock→gerçek), Analitik (GA4/PostHog), gerçek tahsilat adaptörü, Güvenlik sertleştirme (CSP/pen-test/KVKK), Gözlemlenebilirlik (Sentry), Topluluk, Habit-loop derinleştirme, Platform Zekası. **(Faz 24 CMS · 25 Admin · 28 Arama çekirdekleri Sprint 2'de tamamlandı; 34 seri/streak canlıda.)**
 
 ### Engeller / Notlar
 

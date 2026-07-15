@@ -30,7 +30,7 @@ Yerel geliştirme için `apps/web/.env.example` → `apps/web/.env.local` kopyal
 - **Ne:** Parola sıfırlama bağlantısını e-postayla göndermek için.
 - **Zorunlu mu:** Hayır. Yoksa sistem dürüst 'devToken' modunda çalışır (token yanıt içinde).
 - **Nasıl alınır:** https://resend.com — ücretsiz kademe.
-- **Production:** anahtar girildiğinde gerçek gönderim adaptörü etkinleşir (Sprint 2).
+- **Production:** anahtar girildiğinde gerçek gönderim adaptörü etkinleşir (sonraki sprint kalemi).
 
 ### `AUTH_SECRET`
 
@@ -85,12 +85,38 @@ Analitik ENV yoksa **no-op/console** sink kullanılır — olay sözlüğü yine
 
 ---
 
-## Arama (ROADMAP Faz 28)
+## Admin / RBAC (ROADMAP Faz 25 · Sprint 2)
+
+Roller `users.role` kolonunda: `user | editor | admin`. İlk yöneticiyi **kayıt anında** belirlemek
+için (aşağıdaki sıra ile) bootstrap kuralları çalışır. `/admin` ve `/api/admin/*` yalnız editor/admin'e açıktır.
+
+### `ADMIN_EMAILS`
+
+- **Ne:** Virgülle ayrılmış e-posta listesi; bu adreslerle kayıt olan kullanıcı otomatik **admin** olur.
+- **Zorunlu mu:** Hayır. Örn: `ADMIN_EMAILS=kurucu@ea.dev,editor@ea.dev`.
+- **Production:** ilk yöneticiyi güvenle atamak için önerilir.
+
+### `ADMIN_EMAIL_PATTERN`
+
+- **Ne:** Regex; eşleşen e-posta ile kayıt olan **admin** olur (esnek alan/desen tabanlı atama).
+- **Zorunlu mu:** Hayır. E2E'de `^admin-e2e-` olarak Playwright webServer'da set edilir.
+- **Not:** Geçersiz regex sessizce yok sayılır (try/catch).
+
+### Fallback — ilk kullanıcı
+
+- Yukarıdakiler eşleşmez **ve** sistemde hiç admin yoksa, **ilk kayıt olan kullanıcı admin** olur.
+  Sonraki kullanıcılar `user` olur. (Otonom/sıfırdan kurulum için güvenli varsayılan.)
+
+---
+
+## Arama (ROADMAP Faz 28 · Sprint 2)
 
 ### `SEARCH_PROVIDER` / `MEILISEARCH_HOST` / `MEILISEARCH_KEY`
 
-- **Zorunlu mu:** Hayır. Varsayılan `pg-fts` (Postgres/PGlite tam-metin) veya bellek-içi indeks.
-- **Production ölçek:** Meilisearch/Typesense (self-host veya bulut).
+- **Ne:** Arama sağlayıcısı. Kod `SearchProvider` **soyutlaması** üzerinden çalışır (`lib/search.ts`).
+- **Zorunlu mu:** Hayır. Varsayılan `local` → `LocalSearchProvider` (TR-normalize, bellek-içi yayınlanmış-içerik indeksi).
+- **Production ölçek:** `SEARCH_PROVIDER=meilisearch` (veya typesense/algolia) → aynı arayüz;
+  `getSearchProvider()` fabrikasına adaptör eklenir, **uygulama/UI kodu değişmez** (yeniden-yazımsız takılır).
 
 ---
 

@@ -65,6 +65,7 @@ export interface SessionUser {
   id: string;
   email: string;
   name: string;
+  role: 'user' | 'editor' | 'admin';
 }
 
 export async function getSessionUser(req: Request): Promise<SessionUser | null> {
@@ -76,6 +77,7 @@ export async function getSessionUser(req: Request): Promise<SessionUser | null> 
       id: users.id,
       email: users.email,
       name: users.name,
+      role: users.role,
       expiresAt: sessions.expiresAt,
     })
     .from(sessions)
@@ -87,7 +89,7 @@ export async function getSessionUser(req: Request): Promise<SessionUser | null> 
     await db.delete(sessions).where(eq(sessions.tokenHash, sha256(token)));
     return null;
   }
-  return { id: row.id, email: row.email, name: row.name };
+  return { id: row.id, email: row.email, name: row.name, role: row.role as SessionUser['role'] };
 }
 
 export async function destroySession(req: Request): Promise<void> {
@@ -111,6 +113,18 @@ export function validEmail(e: string): boolean {
 
 export function newId(): string {
   return randomUUID();
+}
+
+/** RBAC (Sprint 2): rol kapısı — yetki yoksa Response döner. */
+export async function requireRole(
+  req: Request,
+  ...roles: Array<SessionUser['role']>
+): Promise<SessionUser | Response> {
+  const user = await getSessionUser(req);
+  if (!user) return json({ error: 'Oturum gerekli.' }, { status: 401 });
+  if (!roles.includes(user.role))
+    return json({ error: 'Bu işlem için yetkin yok.' }, { status: 403 });
+  return user;
 }
 
 /** DB yapılandırılmadıysa (prod'da DATABASE_URL bekleniyor) 500 yerine net 503 döndür. */

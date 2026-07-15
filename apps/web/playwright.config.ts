@@ -21,5 +21,7 @@ export default defineConfig({
     url: BASE_URL,
     reuseExistingServer: !process.env.CI,
     timeout: 240_000,
+    // E2E: 'admin-e2e-*' e-postaları admin olur (deterministik RBAC). Prod'da kullanılmaz.
+    env: { ADMIN_EMAIL_PATTERN: '^admin-e2e-' },
   },
 });

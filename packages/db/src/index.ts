@@ -8,7 +8,9 @@ import { drizzle as drizzlePg, type NodePgDatabase } from 'drizzle-orm/node-post
 import { drizzle as drizzlePglite, type PgliteDatabase } from 'drizzle-orm/pglite';
 import { Pool } from 'pg';
 import type { PGlite as PGliteType } from '@electric-sql/pglite';
-import * as schema from './schema';
+import * as schemaCore from './schema';
+import * as schemaCms from './cms';
+const schema = { ...schemaCore, ...schemaCms };
 
 /**
  * PGlite ESM-only'dir; Next/webpack onu require ile externalize EDEMEZ ve bundle'lar —
@@ -23,6 +25,7 @@ async function loadPGlite(): Promise<typeof import('@electric-sql/pglite')> {
 }
 
 export * from './schema';
+export * from './cms';
 export { schema };
 
 export type Db = NodePgDatabase<typeof schema> | PgliteDatabase<typeof schema>;
@@ -70,6 +73,65 @@ CREATE TABLE IF NOT EXISTS purchases (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX IF NOT EXISTS purchases_user_product_uq ON purchases(user_id, product_id);
+
+ALTER TABLE users ADD COLUMN IF NOT EXISTS role TEXT NOT NULL DEFAULT 'user';
+
+CREATE TABLE IF NOT EXISTS content_items (
+  id TEXT PRIMARY KEY,
+  type TEXT NOT NULL,
+  slug TEXT NOT NULL,
+  locale TEXT NOT NULL DEFAULT 'tr',
+  licence TEXT NOT NULL DEFAULT 'B',
+  status TEXT NOT NULL DEFAULT 'draft',
+  version INTEGER NOT NULL DEFAULT 1,
+  title TEXT NOT NULL DEFAULT '',
+  tags JSONB NOT NULL DEFAULT '[]',
+  difficulty TEXT,
+  payload JSONB NOT NULL,
+  created_by TEXT NOT NULL REFERENCES users(id),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  published_at TIMESTAMPTZ
+);
+CREATE UNIQUE INDEX IF NOT EXISTS content_slug_uq ON content_items(type, slug, locale, licence);
+CREATE INDEX IF NOT EXISTS content_status_idx ON content_items(status);
+CREATE INDEX IF NOT EXISTS content_type_idx ON content_items(type);
+
+CREATE TABLE IF NOT EXISTS content_versions (
+  id TEXT PRIMARY KEY,
+  content_id TEXT NOT NULL REFERENCES content_items(id) ON DELETE CASCADE,
+  version INTEGER NOT NULL,
+  status TEXT NOT NULL,
+  payload JSONB NOT NULL,
+  changed_by TEXT NOT NULL REFERENCES users(id),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS content_versions_content_idx ON content_versions(content_id);
+
+CREATE TABLE IF NOT EXISTS media_assets (
+  id TEXT PRIMARY KEY,
+  kind TEXT NOT NULL,
+  filename TEXT NOT NULL,
+  mime TEXT NOT NULL,
+  bytes INTEGER NOT NULL,
+  alt TEXT NOT NULL DEFAULT '',
+  tags JSONB NOT NULL DEFAULT '[]',
+  version INTEGER NOT NULL DEFAULT 1,
+  data_base64 TEXT NOT NULL,
+  created_by TEXT NOT NULL REFERENCES users(id),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS media_kind_idx ON media_assets(kind);
+
+CREATE TABLE IF NOT EXISTS audit_logs (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id),
+  action TEXT NOT NULL,
+  entity TEXT NOT NULL,
+  entity_id TEXT NOT NULL,
+  meta JSONB NOT NULL DEFAULT '{}',
+  at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS audit_at_idx ON audit_logs(at);
 `;
 
 let _db: Db | null = null;

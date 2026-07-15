@@ -106,12 +106,14 @@ export function Sidebar() {
         </a>
         <nav className="sidebar__nav">
           {NAV.map((g) => {
+            const isAdmin = user?.role === 'admin' || user?.role === 'editor';
             const items =
               g.group === 'Hesap'
                 ? [
                     user
                       ? { href: '/profil', label: user.name || 'Profil', icon: '👤' }
                       : { href: '/giris', label: 'Giriş Yap', icon: '🔑' },
+                    ...(isAdmin ? [{ href: '/admin', label: 'Yönetim', icon: '🛠️' }] : []),
                     ...g.items,
                   ]
                 : g.items;

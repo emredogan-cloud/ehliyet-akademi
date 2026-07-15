@@ -591,3 +591,81 @@ footer.site {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px var(--primary-100);
 }
+
+/* ============ Admin tabloları & rozetler (Sprint 2) ============ */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+table.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 560px;
+}
+.tbl th,
+.tbl td {
+  text-align: left;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.92rem;
+}
+.tbl thead th {
+  background: var(--surface-2);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-3);
+  position: sticky;
+  top: 0;
+}
+.tbl tbody tr:hover {
+  background: var(--surface-2);
+}
+.tbl tbody tr:last-child td {
+  border-bottom: none;
+}
+.pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  border: 1px solid var(--border-strong);
+}
+.pill--draft {
+  color: var(--text-3);
+}
+.pill--in_review {
+  color: var(--yellow);
+  border-color: var(--yellow);
+}
+.pill--approved {
+  color: var(--blue);
+  border-color: var(--blue);
+}
+.pill--published {
+  color: var(--green);
+  border-color: var(--green);
+}
+.pill--retired {
+  color: var(--red);
+  border-color: var(--red);
+}
+.toolbar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.toolbar select,
+.toolbar input {
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}

@@ -10,6 +10,7 @@ export interface AuthUser {
   id: string;
   email: string;
   name: string;
+  role: 'user' | 'editor' | 'admin';
 }
 
 /** Ham (JSON'suz) saklanan anahtarlar — kök tema scripti doğrudan okur. */

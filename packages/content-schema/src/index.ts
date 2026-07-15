@@ -139,3 +139,48 @@ export function validateBank(questions: unknown[]): {
   });
   return { ok: errors.length === 0, count: parsed.length, errors };
 }
+
+/* ================= Sprint 2 — CMS sözleşmeleri ================= */
+
+/** Makale/SEO sayfası/bilgi-tabanı gövdesi (ROADMAP Faz 15/33). */
+export const Article = z.object({
+  title: z.string().min(4),
+  summary: z.string().min(8),
+  body: z.string().min(20), // markdown-lite (** ve [link](/yol))
+  seo: z
+    .object({
+      metaDescription: z.string().max(160).optional(),
+      canonicalPath: z.string().startsWith('/').optional(),
+    })
+    .default({}),
+});
+export type Article = z.infer<typeof Article>;
+
+/** İçerik yayın akışı — izinli geçişler (ADR-007; sunucuda zorlanır). */
+export const WORKFLOW: Record<string, string[]> = {
+  draft: ['in_review', 'retired'],
+  in_review: ['approved', 'draft'],
+  approved: ['published', 'draft'],
+  published: ['retired'],
+  retired: ['draft'],
+};
+export function canTransition(from: string, to: string): boolean {
+  return (WORKFLOW[from] ?? []).includes(to);
+}
+
+/** Tür → payload doğrulayıcı eşlemesi (CMS yazım kapısı). */
+export function validatePayload(type: string, payload: unknown): { ok: boolean; errors: string[] } {
+  const map: Record<string, z.ZodTypeAny> = {
+    question: Question,
+    lesson: Lesson,
+    article: Article,
+    seo_page: Article,
+    kb: Article,
+  };
+  const schema = map[type];
+  if (!schema) return { ok: false, errors: [`Bilinmeyen içerik türü: ${type}`] };
+  const r = schema.safeParse(payload);
+  return r.success
+    ? { ok: true, errors: [] }
+    : { ok: false, errors: r.error.issues.map((e) => `${e.path.join('.')}: ${e.message}`) };
+}

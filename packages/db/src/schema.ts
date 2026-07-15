@@ -19,6 +19,7 @@ export const users = pgTable(
     email: text('email').notNull(),
     name: text('name').notNull().default(''),
     passwordHash: text('password_hash').notNull(),
+    role: text('role').notNull().default('user'), // user | editor | admin (Sprint 2 RBAC)
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [uniqueIndex('users_email_uq').on(t.email)]

@@ -49,7 +49,7 @@ test('AI koç: öneriye tıkla → kaynaklı yanıt + uyarı', async ({ page }) 
 test('arama: sonuç bulur ve boş durumu gösterir', async ({ page }) => {
   await page.goto('/arama');
   await page.getByTestId('search-input').fill('hız');
-  await expect(page.getByTestId('search-questions')).toBeVisible();
+  await expect(page.getByTestId('search-results')).toBeVisible();
   await page.getByTestId('search-input').fill('qqqqzzzz');
   await expect(page.getByTestId('search-empty')).toBeVisible();
 });

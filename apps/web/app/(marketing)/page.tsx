@@ -164,36 +164,36 @@ export default function HomePage() {
       </Reveal>
 
       <Reveal as="section">
-      <h2 className="section-title">Teorik e-Sınav dağılımı</h2>
-      <p className="muted" style={{ marginTop: 0 }}>
-        Gerçek e-Sınav: {EXAM_BLUEPRINT.totalQuestions} soru · {EXAM_BLUEPRINT.durationMinutes} dk ·
-        geçmek için {EXAM_BLUEPRINT.passCorrect} doğru. Bankada toplam {totalQ} özgün soru.
-      </p>
-      <div className="dist-grid">
-        {(
-          Object.keys(EXAM_BLUEPRINT.distribution) as Array<
-            keyof typeof EXAM_BLUEPRINT.distribution
-          >
-        ).map((s) => {
-          const need = EXAM_BLUEPRINT.distribution[s];
-          const have = counts[s] ?? 0;
-          return (
-            <div className="dist-card" key={s}>
-              <div className="dist-card__bar" aria-hidden>
-                <span
-                  style={{
-                    width: `${Math.min(100, (need / EXAM_BLUEPRINT.totalQuestions) * 100 * 2)}%`,
-                  }}
-                />
+        <h2 className="section-title">Teorik e-Sınav dağılımı</h2>
+        <p className="muted" style={{ marginTop: 0 }}>
+          Gerçek e-Sınav: {EXAM_BLUEPRINT.totalQuestions} soru · {EXAM_BLUEPRINT.durationMinutes} dk
+          · geçmek için {EXAM_BLUEPRINT.passCorrect} doğru. Bankada toplam {totalQ} özgün soru.
+        </p>
+        <div className="dist-grid">
+          {(
+            Object.keys(EXAM_BLUEPRINT.distribution) as Array<
+              keyof typeof EXAM_BLUEPRINT.distribution
+            >
+          ).map((s) => {
+            const need = EXAM_BLUEPRINT.distribution[s];
+            const have = counts[s] ?? 0;
+            return (
+              <div className="dist-card" key={s}>
+                <div className="dist-card__bar" aria-hidden>
+                  <span
+                    style={{
+                      width: `${Math.min(100, (need / EXAM_BLUEPRINT.totalQuestions) * 100 * 2)}%`,
+                    }}
+                  />
+                </div>
+                <strong>{SUBJECT_LABEL[s]}</strong>
+                <p className="muted" style={{ margin: '4px 0 0', fontSize: '0.84rem' }}>
+                  {need} soru · bankada {have} hazır
+                </p>
               </div>
-              <strong>{SUBJECT_LABEL[s]}</strong>
-              <p className="muted" style={{ margin: '4px 0 0', fontSize: '0.84rem' }}>
-                {need} soru · bankada {have} hazır
-              </p>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
       </Reveal>
 
       <Reveal as="section">

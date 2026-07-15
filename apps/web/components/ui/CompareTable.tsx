@@ -35,7 +35,7 @@ export function CompareTable({ caption, headers, rows }: CompareData) {
                   </th>
                 ) : (
                   <td key={c} dangerouslySetInnerHTML={{ __html: mdBold(cell) }} />
-                ),
+                )
               )}
             </tr>
           ))}

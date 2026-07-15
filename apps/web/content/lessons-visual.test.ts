@@ -7,9 +7,7 @@ import { LESSONS, lessonBySlug } from './lessons';
  */
 describe('Ders görsel blokları (Bölüm D)', () => {
   it('çekirdek derslerde callout veya karşılaştırma tablosu bulunur', () => {
-    const withVisual = LESSONS.filter((l) =>
-      l.sections.some((s) => s.callout || s.compare),
-    );
+    const withVisual = LESSONS.filter((l) => l.sections.some((s) => s.callout || s.compare));
     // En az 5 ders görsel bloklarla zenginleştirilmiş olmalı.
     expect(withVisual.length).toBeGreaterThanOrEqual(5);
   });

@@ -26,10 +26,7 @@ export function Callout({ tone, title, text }: CalloutData) {
       </span>
       <div>
         <strong className="callout__title">{title ?? t.label}</strong>
-        <p
-          className="callout__text"
-          dangerouslySetInnerHTML={{ __html: mdBold(text) }}
-        />
+        <p className="callout__text" dangerouslySetInnerHTML={{ __html: mdBold(text) }} />
       </div>
     </div>
   );

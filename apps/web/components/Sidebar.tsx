@@ -15,6 +15,7 @@ const NAV: Array<{ group: string; items: Array<{ href: string; label: string; ic
     items: [
       { href: '/panel', label: 'Panel', icon: '🏠' },
       { href: '/dersler', label: 'Dersler', icon: '📚' },
+      { href: '/isaretler', label: 'Trafik İşaretleri', icon: '🚸' },
       { href: '/e-sinav', label: 'Teorik e-Sınav', icon: '📝' },
     ],
   },

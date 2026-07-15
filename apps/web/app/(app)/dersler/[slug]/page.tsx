@@ -175,6 +175,11 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
         <a className="btn" href="/calis">
           Akıllı çalışmayla pekiştir
         </a>
+        {lesson.subject === 'trafik' && (
+          <a className="btn btn--ghost" href="/isaretler">
+            🚸 İşaret galerisi
+          </a>
+        )}
         <a className="btn btn--ghost" href="/dersler">
           Tüm dersler
         </a>

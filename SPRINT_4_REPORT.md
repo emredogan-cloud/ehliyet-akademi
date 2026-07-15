@@ -94,7 +94,7 @@ KDV/e-fatura/iade yükünü üstlenir — solo satıcı için kritik; dijital-ü
 ## Kalan Dış Aksiyonlar (kullanıcı; kod hazır, ENV ile aktifleşir)
 
 1. **Production DATABASE_URL** (Neon şartları — Sprint 1'den beri): hesap/satın alma/webhook yazımını canlıda açar.
-2. _*LEMONSQUEEZY_* + variant_* (ADR-008): gerçek tahsilat. O gelene dek satın alma **demo modda** (etiketli).
+2. `LEMONSQUEEZY_*` + variant (ADR-008): gerçek tahsilat. O gelene dek satın alma **demo modda** (etiketli).
 3. **RESEND_API_KEY + EMAIL_FROM** (ADR-009): gerçek e-posta gönderimi. Yoksa console/devToken.
 4. **Yasal metinler:** taslaklar bir **hukukçu** tarafından + gerçek şirket bilgileriyle sonlandırılmalı.
 

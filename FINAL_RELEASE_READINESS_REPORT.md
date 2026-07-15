@@ -1,12 +1,12 @@
 # FINAL RELEASE READINESS REPORT — Ehliyet Akademi
 
-_Tarih: 2026-07-15 (v2 — production deploy sonrası) · Tek doğru kaynak: `ROADMAP.md` (v3.1)_
+_Tarih: 2026-07-15 (v3 — SaaS kabuk + kurumsal fazlar sonrası) · Tek doğru kaynak: `ROADMAP.md` (v3.1)_
 
 ---
 
 ## Sonuç: 🟢 GO — Public Beta (canlı) · 🟡 KOŞULLU — gerçek tahsilat · 🔴 NO-GO — "tam kurumsal platform" iddiası
 
-- **🟢 GO (yayında):** Ürün **production'da canlı**: https://ehliyet-akademi-nine.vercel.app — tanı→hazırlık skoru, 5 ders+görseller, SRS pratiği+seri, **gerçek formatlı e-Sınav simülatörü**, tek-seferlik paket vitrini (demo ödeme), PWA. CI yeşil, tarayıcı doğrulaması eksiksiz. **Public beta olarak kullanıcı almaya hazır.**
+- **🟢 GO (yayında):** Ürün **production'da canlı**: https://ehliyet-akademi-nine.vercel.app — **SaaS kabuk (sidebar+panel)**, tanı→hazırlık skoru, 5 ders+görseller, AI koç (mock), başarılar, arama, tema, SRS pratiği+seri, **gerçek formatlı e-Sınav simülatörü**, tek-seferlik paket vitrini (demo ödeme), PWA. CI yeşil, tarayıcı doğrulaması eksiksiz. **Public beta olarak kullanıcı almaya hazır.**
 - **🟡 KOŞULLU (para almadan önce):** ödeme şu an **demo** (MockPaymentProvider — gerçek tahsilat yok ve öyle etiketli). Gerçek satış için: LemonSqueezy/Stripe **one-time** adaptörü + webhook + iade akışı + auth/DB'ye taşınmış entitlement + Mesafeli Satış/KVKK metinleri.
 - **🔴 NO-GO:** ROADMAP'in tam vizyonu (AI platformu, CMS, admin, topluluk, platform zekâsı — Faz 22–35) henüz üretimde değil; "Türkiye'nin en gelişmiş platformu" iddiasıyla pazarlama bu fazlar sonrası.
 
@@ -20,10 +20,10 @@ _Tarih: 2026-07-15 (v2 — production deploy sonrası) · Tek doğru kaynak: `RO
 | **Performance**             | 🟢         | SSG, ~103 kB paylaşımlı JS; prod hızlı (CWV-dostu); Lighthouse CI eşiği sonraki hijyen turu                      |
 | **Accessibility**           | 🟢 (temel) | Semantik, skip-link, odak, aria-live, kontrast; tam axe-regresyon Faz 20 genişletmesi                            |
 | **SEO**                     | 🟢 (temel) | Crawl'lanabilir URL + sitemap(prod URL) + robots + **JSON-LD canlıda** · programatik/pillar içerik Faz 15 devamı |
-| **AI**                      | 🔴 planlı  | Faz 22; `AI_PROVIDER=mock` soyutlama sözleşmesi hazır                                                            |
+| **AI**                      | 🟡 (mock)  | **AI Koç canlıda** — grounded mock (halüsinasyon=0, uyarı etiketli); gerçek model ENV ile takılır                |
 | **CMS / Admin**             | 🔴 planlı  | Faz 24/25; içerik tipli-TS + şema doğrulamalı (geçiş şema-uyumlu)                                                |
 | **Payments (tek-seferlik)** | 🟡         | Model + katalog + entitlement + kota **canlıda (demo)**; gerçek tahsilat koşullu-GO listesi                      |
-| **Test**                    | 🟢         | 43 unit + 10 e2e; **CI'da** koşuyor                                                                              |
+| **Test**                    | 🟢         | 57 unit + 18 e2e; **CI'da** koşuyor                                                                              |
 | **CI**                      | 🟢         | Actions yeşil (quality/e2e/gitleaks/CodeQL); kırmızı→düzelt→yeşil disiplini uygulandı                            |
 | **Deploy doğrulaması**      | 🟢         | Preview + Production; canlıda tarayıcı ile 8 akış doğrulandı (geliştirme raporu §5)                              |
 

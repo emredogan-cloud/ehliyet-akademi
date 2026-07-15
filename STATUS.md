@@ -2,7 +2,7 @@
 
 > Tek doğru kaynak: üst dizindeki `ROADMAP.md` (v3.1, Faz 0–35).
 
-_Son güncelleme: 2026-07-15 · Faz 21 (deploy) sonrası_
+_Son güncelleme: 2026-07-15 · Kabuk redesign + kurumsal fazlar sonrası_
 
 ### Yaptım
 
@@ -15,9 +15,19 @@ _Son güncelleme: 2026-07-15 · Faz 21 (deploy) sonrası_
 - **Faz 20 ✅ (çekirdek)** 43 birim testi + **10 Playwright E2E** — CI'da ve yerelde yeşil.
 - **Faz 21 ✅ DEPLOY** — **Vercel production: https://ehliyet-akademi-nine.vercel.app** (rootDirectory=apps/web monorepo; NEXT_PUBLIC_SITE_URL env). **Gerçek tarayıcıyla production doğrulandı:** landing, tanı→hazırlık skoru, dersler+SVG+schema, deneme (45:00 sayaç, 50 soru), fiyatlandırma+mock satın alma+sahiplik, SW kaydı, koyu tema, konsol 0 hata.
 
+### Yaptım (bu tur — kabuk + kurumsal)
+
+- **UYGULAMA KABUĞU REDESIGN ✅ (direktif)** — (marketing)/(app) ayrımı; **kalıcı sol sidebar** (gruplu nav, aktif durum, streak), mobil çekmece+scrim; **/panel dashboard** (stat kartları, ustalık barları, skeleton, hızlı aksiyonlar). Production'da doğrulandı.
+- **Faz 22 AI Koç ✅ (mock/grounded)** — /ai-koc: yanıtlar YALNIZ içerikten (retrieval, halüsinasyon=0), uyarı etiketli; 6 unit test; canlıda doğrulandı.
+- **Faz 23 Analitik ✅ (temel)** — tipli olay sözlüğü + console sink; 5 kritik olay bağlandı (PostHog ENV ile takılır).
+- **Faz 34 Başarılar ✅** — 8 rozet + panel entegrasyonu (4 unit test).
+- **Faz 28 Arama ✅ (hafif)** — /arama TR-normalize anlık arama.
+- **Ayarlar ✅** — tema (sistem/açık/koyu, FOUC'suz kalıcı — e2e) + veri dışa aktar/sıfırla.
+- Kapılar: **27 unit + 18 e2e** + build (24 sayfa) + **CI yeşil** + prod deploy + canlı doğrulama.
+
 ### Yapıyorum
 
-- Kapanış dokümantasyonu (FINAL raporları güncelleme).
+- Kapanış dokümantasyonu (FINAL raporları v3).
 
 ### Yapacağım (ROADMAP sırası — sonraki sorumlu nokta)
 

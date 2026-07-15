@@ -1,6 +1,6 @@
 # FINAL DEVELOPMENT REPORT — Ehliyet Akademi
 
-_Tarih: 2026-07-15 (v2 — deploy sonrası) · Depo: `emredogan-cloud/ehliyet-akademi` (**public**) · Tek doğru kaynak: `ROADMAP.md` (v3.1, 36 faz)_
+_Tarih: 2026-07-15 (v3 — kabuk redesign + kurumsal fazlar sonrası) · Depo: `emredogan-cloud/ehliyet-akademi` (**public**) · Tek doğru kaynak: `ROADMAP.md` (v3.1, 36 faz)_
 
 ---
 
@@ -16,25 +16,39 @@ e-Sınav dağılımını (23/12/9/6 = 50) tam karşılayacak **53 özgün soruya
 
 ## 2. Faz Durumu (ROADMAP eşlemesi)
 
-| Faz   | Ad                                             | Durum                                                                                                                  |
-| ----- | ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| 0–4   | Mühendislik · Strateji · Mimari · Next.js göçü | ✅ Tamamlandı (önceki oturum)                                                                                          |
-| 5–8   | BİM · Tasarım · UI/UX · Frontend               | ✅ Tamamlandı                                                                                                          |
-| 9     | Öğrenme Sistemi (SRS)                          | ✅ **Tamamlandı** — SM-2 pratik döngüsü canlıda (/calis)                                                               |
-| 10    | Teorik Akademi                                 | ✅ Çekirdek — 5 ders, 4 dersin tümü kapsandı (derinleşme sürer)                                                        |
-| 11–12 | Pratik + Soru Bankası                          | ✅ Çekirdek — **53 özgün soru, tam sınav dağılımı**; 100+/konu hedefi açık                                             |
-| 13    | Simülasyonlar                                  | ✅ **e-Sınav simülatörü canlıda** (50/45dk/35 baraj, soru haritası)                                                    |
-| 14    | Görsel İçerik                                  | ✅ Çekirdek — 4 inline SVG ders görseli                                                                                |
-| 15    | SEO                                            | ✅ JSON-LD (Org/WebSite/LearningResource/Quiz) + sitemap/robots — canlıda doğrulandı                                   |
-| 16    | Monetizasyon                                   | ✅ **PİVOT UYGULANDI** — tek-seferlik 5 paket + entitlement + kota; ödeme **demo** (gerçek tahsilat adaptörü kalan iş) |
-| 17    | ASO                                            | ○ Planlı (retention kanıtı sonrası — ROADMAP sırası gereği)                                                            |
-| 18    | Mobil/PWA                                      | ✅ SW + manifest — **prod'da kayıt doğrulandı**                                                                        |
-| 19    | Genişleme                                      | ○ Planlı                                                                                                               |
-| 20    | Test & QA                                      | ✅ Çekirdek — 43 unit + 10 e2e CI'da                                                                                   |
-| 21    | Yayın                                          | ✅ **PRODUCTION DEPLOY + tarayıcı doğrulaması**                                                                        |
-| 22–35 | Kurumsal                                       | ○ Planlı (34'ün seri/streak çekirdeği ✅ canlıda)                                                                      |
+| Faz       | Ad                                             | Durum                                                                                                                  |
+| --------- | ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| 0–4       | Mühendislik · Strateji · Mimari · Next.js göçü | ✅ Tamamlandı (önceki oturum)                                                                                          |
+| 5–8       | BİM · Tasarım · UI/UX · Frontend               | ✅ Tamamlandı                                                                                                          |
+| 9         | Öğrenme Sistemi (SRS)                          | ✅ **Tamamlandı** — SM-2 pratik döngüsü canlıda (/calis)                                                               |
+| 10        | Teorik Akademi                                 | ✅ Çekirdek — 5 ders, 4 dersin tümü kapsandı (derinleşme sürer)                                                        |
+| 11–12     | Pratik + Soru Bankası                          | ✅ Çekirdek — **53 özgün soru, tam sınav dağılımı**; 100+/konu hedefi açık                                             |
+| 13        | Simülasyonlar                                  | ✅ **e-Sınav simülatörü canlıda** (50/45dk/35 baraj, soru haritası)                                                    |
+| 14        | Görsel İçerik                                  | ✅ Çekirdek — 4 inline SVG ders görseli                                                                                |
+| 15        | SEO                                            | ✅ JSON-LD (Org/WebSite/LearningResource/Quiz) + sitemap/robots — canlıda doğrulandı                                   |
+| 16        | Monetizasyon                                   | ✅ **PİVOT UYGULANDI** — tek-seferlik 5 paket + entitlement + kota; ödeme **demo** (gerçek tahsilat adaptörü kalan iş) |
+| 17        | ASO                                            | ○ Planlı (retention kanıtı sonrası — ROADMAP sırası gereği)                                                            |
+| 18        | Mobil/PWA                                      | ✅ SW + manifest — **prod'da kayıt doğrulandı**                                                                        |
+| 19        | Genişleme                                      | ○ Planlı                                                                                                               |
+| 20        | Test & QA                                      | ✅ Çekirdek — 43 unit + 10 e2e CI'da                                                                                   |
+| 21        | Yayın                                          | ✅ **PRODUCTION DEPLOY + tarayıcı doğrulaması**                                                                        |
+| 22        | AI Platformu                                   | ◑ **AI Koç canlıda** (grounded mock, halüsinasyon=0); gerçek model adaptörü ENV ile                                    |
+| 23        | Analitik                                       | ◑ Tipli olay sözlüğü + 5 olay bağlı (console sink; PostHog ENV ile)                                                    |
+| 28        | Arama                                          | ◑ TR-normalize anlık arama canlıda (Meili adaptörü ölçekte)                                                            |
+| 34        | Alışkanlık Döngüsü                             | ◑ Seri + 8 başarı rozeti + panel entegrasyonu canlıda                                                                  |
+| 24–33, 35 | Diğer kurumsal                                 | ○ Planlı (CMS, admin, auth-DB kalıcılığı, güvenlik sertleştirme, topluluk, zekâ)                                       |
 
-## 3. Bu Oturumda İnşa Edilenler
+## 3a. Kabuk Redesign Turu (v3)
+
+- **SaaS uygulama kabuğu (direktif):** (marketing)/(app) route grupları — vitrin ayrı; uygulama **kalıcı sol sidebar** (gruplu navigasyon: Öğren/Pratik/İlerleme/Hesap, aktif durum, streak göstergesi), mobilde çekmece+scrim, tam-boy layout. **Tüm öğrenme sayfaları aynı kabukta.**
+- **/panel dashboard:** hazırlık skoru + trafik ışığı, seri, cevaplanan soru, rozet sayısı; ders bazlı ustalık barları (aria-progressbar); skeleton yükleme; hızlı aksiyonlar.
+- **/ai-koc (Faz 22):** grounded mock — retrieval yalnız ders+banka içeriğinden; "AI hata yapabilir" uyarısı; öneri çipleri; analitik olayı.
+- **/basarilar (Faz 34), /arama (Faz 28 hafif), /ayarlar** (tema sistem/açık/koyu — FOUC'suz kalıcı; veri dışa aktar/sıfırla).
+- **Faz 23:** tipli analitik olay sözlüğü; diagnostic/exam/practice/purchase/ai olayları.
+- Tasarım sistemi: skeleton/shimmer, stat-tile, progress bar, chat UI, mikro-etkileşimler.
+- Kapılar: **27 unit + 18 e2e** (mobil çekmece, tema kalıcılığı, arama, AI dahil) + CI yeşil + prod deploy + canlı doğrulama (0 konsol hatası).
+
+## 3. Önceki Oturumda İnşa Edilenler
 
 - **Gerçek CI'a geçiş:** repo public → Actions yeşil (quality, **E2E Playwright CI'da**, gitleaks, **CodeQL**); branch protection (no force-push, linear history). CI kırmızı olduğunda (lint) durup düzeltildi, yeşile çekilip devam edildi.
 - **Soru bankası genişletmesi:** +30 özgün soru (trafik 23 · ilkyardım 12 · motor 9 · adab 6 tam kapsam) — hepsi resmî müfredat kaynaklı, kendi ifademizle, `sourceRef`/`review` izli; dağılım-yeterlilik **test kapısı**.
@@ -50,9 +64,9 @@ e-Sınav dağılımını (23/12/9/6 = 50) tam karşılayacak **53 özgün soruya
 
 | Kapı               | Sonuç                                                                  |
 | ------------------ | ---------------------------------------------------------------------- |
-| Birim testleri     | ✅ **43** (schema 7 · srs 12 · bank 8 · web 16)                        |
-| E2E (Playwright)   | ✅ **10** — yerelde ve **CI'da**                                       |
-| Production build   | ✅ 19 sayfa (SSG)                                                      |
+| Birim testleri     | ✅ **57** (27 web + 30 paket) (schema 7 · srs 12 · bank 8 · web 27+3)  |
+| E2E (Playwright)   | ✅ **18** — yerelde ve **CI'da**                                       |
+| Production build   | ✅ 24 sayfa (SSG)                                                      |
 | **GitHub Actions** | ✅ **YEŞİL** (quality/e2e/gitleaks/CodeQL) — her faz push'unda izlendi |
 | gitleaks/CodeQL    | ✅ temiz                                                               |
 
@@ -71,7 +85,7 @@ e-Sınav dağılımını (23/12/9/6 = 50) tam karşılayacak **53 özgün soruya
 
 ## 6. İstatistikler
 
-- **Commit:** 11 (Conventional) · hepsi main'de, CI yeşil.
+- **Commit:** 13 (Conventional) · hepsi main'de, CI yeşil.
 - **Kod:** ~5.4k satır TS/TSX/CSS (tahmini) · 3 paket + 1 app · 19 rota.
 - **İçerik:** 53 özgün soru · 5 ders · 4 SVG görsel — tümü kaynak-izli (E.6 uyum).
 

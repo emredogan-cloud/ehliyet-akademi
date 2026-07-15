@@ -1,7 +1,7 @@
-import { getSessionUser, json } from '@/lib/server/auth';
+import { getSessionUser, json, guarded } from '@/lib/server/auth';
 
-export async function GET(req: Request): Promise<Response> {
+export const GET = guarded(async (req: Request): Promise<Response> => {
   const user = await getSessionUser(req);
   if (!user) return json({ user: null }, { status: 401 });
   return json({ user });
-}
+});

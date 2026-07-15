@@ -1,10 +1,10 @@
 import { eq } from 'drizzle-orm';
 import { getDb, purchases } from '@ea/db';
-import { getSessionUser, json, newId } from '@/lib/server/auth';
+import { getSessionUser, json, newId, guarded } from '@/lib/server/auth';
 import { productById } from '@/lib/products';
 
 /** Sahiplik listesi (restore purchases — Epic 3). */
-export async function GET(req: Request): Promise<Response> {
+export const GET = guarded(async (req: Request): Promise<Response> => {
   const user = await getSessionUser(req);
   if (!user) return json({ error: 'Oturum gerekli.' }, { status: 401 });
   const db = await getDb();
@@ -17,14 +17,14 @@ export async function GET(req: Request): Promise<Response> {
     .from(purchases)
     .where(eq(purchases.userId, user.id));
   return json({ purchases: rows });
-}
+});
 
 /**
  * Tek-seferlik satın alma (sunucu-taraflı sahiplik).
  * Şu an mock sağlayıcı: fiyat kataloğu SUNUCUDA doğrulanır (fiyat-bütünlüğü kuralı) ve
  * sahiplik kalıcı yazılır. Gerçek sağlayıcıda bu uç, webhook doğrulamasıyla beslenecek.
  */
-export async function POST(req: Request): Promise<Response> {
+export const POST = guarded(async (req: Request): Promise<Response> => {
   const user = await getSessionUser(req);
   if (!user) return json({ error: 'Oturum gerekli.' }, { status: 401 });
 
@@ -54,4 +54,4 @@ export async function POST(req: Request): Promise<Response> {
     .from(purchases)
     .where(eq(purchases.userId, user.id));
   return json({ ok: true, owned: rows.map((r) => r.productId) });
-}
+});

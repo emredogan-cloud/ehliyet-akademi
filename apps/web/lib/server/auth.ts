@@ -112,3 +112,23 @@ export function validEmail(e: string): boolean {
 export function newId(): string {
   return randomUUID();
 }
+
+/** DB yapılandırılmadıysa (prod'da DATABASE_URL bekleniyor) 500 yerine net 503 döndür. */
+export function guarded(handler: (req: Request) => Promise<Response>) {
+  return async (req: Request): Promise<Response> => {
+    try {
+      return await handler(req);
+    } catch (e) {
+      if (e instanceof Error && e.message === 'DB_NOT_CONFIGURED') {
+        return json(
+          {
+            error:
+              'Hesap sistemi kurulum aşamasında (veritabanı bağlantısı bekleniyor). Uygulamanın geri kalanı hesapsız da tamamen çalışır.',
+          },
+          { status: 503 }
+        );
+      }
+      throw e;
+    }
+  };
+}

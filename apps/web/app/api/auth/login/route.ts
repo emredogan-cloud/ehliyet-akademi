@@ -1,8 +1,8 @@
 import { eq } from 'drizzle-orm';
 import { getDb, users } from '@ea/db';
-import { verifyPassword, createSession, sessionSetCookie, json } from '@/lib/server/auth';
+import { verifyPassword, createSession, sessionSetCookie, json, guarded } from '@/lib/server/auth';
 
-export async function POST(req: Request): Promise<Response> {
+export const POST = guarded(async (req: Request): Promise<Response> => {
   let body: { email?: string; password?: string };
   try {
     body = await req.json();
@@ -26,4 +26,4 @@ export async function POST(req: Request): Promise<Response> {
     { user: { id: user.id, email: user.email, name: user.name } },
     { setCookie: sessionSetCookie(token) }
   );
-}
+});

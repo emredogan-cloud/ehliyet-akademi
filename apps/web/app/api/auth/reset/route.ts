@@ -1,8 +1,8 @@
 import { eq } from 'drizzle-orm';
 import { getDb, users, passwordResetTokens, sessions } from '@ea/db';
-import { hashPassword, sha256, json } from '@/lib/server/auth';
+import { hashPassword, sha256, json, guarded } from '@/lib/server/auth';
 
-export async function POST(req: Request): Promise<Response> {
+export const POST = guarded(async (req: Request): Promise<Response> => {
   let body: { token?: string; password?: string };
   try {
     body = await req.json();
@@ -31,4 +31,4 @@ export async function POST(req: Request): Promise<Response> {
   await db.delete(passwordResetTokens).where(eq(passwordResetTokens.userId, row.userId));
   await db.delete(sessions).where(eq(sessions.userId, row.userId));
   return json({ ok: true });
-}
+});

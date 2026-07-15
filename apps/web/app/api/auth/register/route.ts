@@ -7,9 +7,10 @@ import {
   json,
   validEmail,
   newId,
+  guarded,
 } from '@/lib/server/auth';
 
-export async function POST(req: Request): Promise<Response> {
+export const POST = guarded(async (req: Request): Promise<Response> => {
   let body: { email?: string; password?: string; name?: string };
   try {
     body = await req.json();
@@ -33,4 +34,4 @@ export async function POST(req: Request): Promise<Response> {
   await db.insert(users).values({ id, email, name, passwordHash: hashPassword(password) });
   const token = await createSession(db, id, req.headers.get('user-agent') ?? '');
   return json({ user: { id, email, name } }, { status: 201, setCookie: sessionSetCookie(token) });
-}
+});

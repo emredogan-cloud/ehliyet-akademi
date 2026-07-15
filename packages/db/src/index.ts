@@ -93,6 +93,11 @@ async function applyBootstrap(raw: {
 export async function getDb(): Promise<Db> {
   if (_db) return _db;
   const url = process.env.DATABASE_URL;
+  // Serverless (Vercel) dosya sistemi salt-okunur/geçicidir: PGlite fallback'i orada ÇALIŞMAZ.
+  // Dürüst davran: yapılandırma eksikse tipli hata → API katmanı 503 + net mesaj döner.
+  if (!url && process.env.VERCEL) {
+    throw new Error('DB_NOT_CONFIGURED');
+  }
   if (url) {
     const pool = new Pool({ connectionString: url, max: 5 });
     await applyBootstrap({ query: (s) => pool.query(s) });

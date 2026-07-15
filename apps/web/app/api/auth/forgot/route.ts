@@ -1,12 +1,12 @@
 import { eq } from 'drizzle-orm';
 import { getDb, users, passwordResetTokens } from '@ea/db';
-import { newToken, sha256, json, validEmail } from '@/lib/server/auth';
+import { newToken, sha256, json, validEmail, guarded } from '@/lib/server/auth';
 
 /**
  * Parola sıfırlama talebi. E-posta servisi (RESEND_API_KEY) yapılandırılmadıysa
  * token yanıtta döner (devToken) — dürüst etiketli geliştirme modu (ENV_SETUP_GUIDE).
  */
-export async function POST(req: Request): Promise<Response> {
+export const POST = guarded(async (req: Request): Promise<Response> => {
   let body: { email?: string };
   try {
     body = await req.json();
@@ -40,4 +40,4 @@ export async function POST(req: Request): Promise<Response> {
     devToken: token,
     note: 'E-posta servisi yapılandırılmadı; token geliştirme amacıyla döndürüldü.',
   });
-}
+});

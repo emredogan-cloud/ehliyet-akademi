@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm';
 import { getDb, userState } from '@ea/db';
-import { getSessionUser, json } from '@/lib/server/auth';
+import { getSessionUser, json, guarded } from '@/lib/server/auth';
 
 /** Senkronlanabilir anahtarlar (Epic 4) — istemci ea:* deposunun sunucu yansıması. */
 const ALLOWED_KEYS = new Set([
@@ -14,7 +14,7 @@ const ALLOWED_KEYS = new Set([
 ]);
 const MAX_VALUE_BYTES = 512 * 1024; // kayıt başına üst sınır
 
-export async function GET(req: Request): Promise<Response> {
+export const GET = guarded(async (req: Request): Promise<Response> => {
   const user = await getSessionUser(req);
   if (!user) return json({ error: 'Oturum gerekli.' }, { status: 401 });
   const db = await getDb();
@@ -23,9 +23,9 @@ export async function GET(req: Request): Promise<Response> {
     .from(userState)
     .where(eq(userState.userId, user.id));
   return json({ items: rows });
-}
+});
 
-export async function PUT(req: Request): Promise<Response> {
+export const PUT = guarded(async (req: Request): Promise<Response> => {
   const user = await getSessionUser(req);
   if (!user) return json({ error: 'Oturum gerekli.' }, { status: 401 });
 
@@ -55,4 +55,4 @@ export async function PUT(req: Request): Promise<Response> {
       });
   }
   return json({ ok: true, saved: items.length });
-}
+});

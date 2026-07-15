@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { ExamSimulator } from '../../components/ExamSimulator';
+import { ExamJsonLd } from '../../components/JsonLd';
 
 export const metadata: Metadata = {
   title: 'Deneme Sınavı (e-Sınav Simülatörü)',
@@ -14,6 +15,7 @@ export default function DenemeSinaviPage() {
       <p className="muted" style={{ marginTop: 0 }}>
         Gerçek sınav formatında simülasyon. Bu bir <em>resmî MEB sınavı değildir</em>.
       </p>
+      <ExamJsonLd />
       <ExamSimulator />
     </>
   );

@@ -8,6 +8,8 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { SUBJECT_LABEL } from '@ea/content-schema';
 import { buildExam, scoreExam, type BuiltExam, type ExamResult } from '../lib/exam';
 import { appendAnswers, touchStreak } from '../lib/progress';
+import { canStartFreeExam, consumeFreeExam, loadEntitlements } from '../lib/payments';
+import { hasCapability } from '../lib/products';
 
 function fmt(sec: number): string {
   const m = Math.floor(sec / 60);
@@ -23,7 +25,20 @@ export function ExamSimulator() {
   const [result, setResult] = useState<ExamResult | null>(null);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  const [blocked, setBlocked] = useState(false);
+
   function start() {
+    // Ücretsiz kademe: günde 1 deneme. Paket (sınırsız-deneme yeteneği) → sınırsız. (Faz 16)
+    const unlimited = hasCapability(loadEntitlements(), 'sinirsiz-deneme');
+    if (!unlimited && !canStartFreeExam()) {
+      // Kota dolu: intro görünümüne dön ki kota/paket mesajı görünsün.
+      setExam(null);
+      setResult(null);
+      setBlocked(true);
+      return;
+    }
+    if (!unlimited) consumeFreeExam();
+    setBlocked(false);
     const e = buildExam();
     setExam(e);
     setAnswers(new Array(e.questions.length).fill(null));
@@ -53,7 +68,7 @@ export function ExamSimulator() {
   // kontrol edilir; finish referansı her render'da tazedir ve exam/result'ı içeride okur.)
   useEffect(() => {
     if (exam && !result && left === 0) finish();
-  }, [left]); // eslint-disable-line
+  }, [left]);
 
   const answeredCount = useMemo(() => answers.filter((a) => a !== null).length, [answers]);
 
@@ -86,6 +101,12 @@ export function ExamSimulator() {
         <button className="btn" onClick={start} data-testid="exam-start">
           Denemeyi başlat →
         </button>
+        {blocked && (
+          <div className="explain" role="status" style={{ marginTop: 14 }} data-testid="exam-quota">
+            Bugünkü ücretsiz denemeni kullandın. <strong>Sınırsız deneme</strong> için tek-seferlik{' '}
+            <a href="/fiyatlandirma">Simülatör Paketi</a>ne göz at — abonelik yok, bir kez öde.
+          </div>
+        )}
       </div>
     );
   }

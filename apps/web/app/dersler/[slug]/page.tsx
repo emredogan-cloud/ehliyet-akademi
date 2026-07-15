@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { BADGE_LABEL, SUBJECT_LABEL } from '@ea/content-schema';
 import { LESSONS, lessonBySlug } from '../../../content/lessons';
 import { LessonFigure } from '../../../components/LessonFigure';
+import { LessonJsonLd } from '../../../components/JsonLd';
 
 export function generateStaticParams() {
   return LESSONS.map((l) => ({ slug: l.slug }));
@@ -26,6 +27,7 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
 
   return (
     <article style={{ maxWidth: 760, margin: '0 auto' }}>
+      <LessonJsonLd lesson={lesson} />
       <p className="muted" style={{ marginBottom: 4 }}>
         {SUBJECT_LABEL[lesson.subject]} · {lesson.minutes} dk okuma
       </p>

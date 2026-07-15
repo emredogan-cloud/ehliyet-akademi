@@ -54,6 +54,19 @@ export default tseslint.config(
     },
   },
   {
+    // Service worker: kendi global bağlamı (self/caches/fetch event'leri)
+    files: ['**/public/sw.js'],
+    languageOptions: {
+      globals: {
+        self: 'readonly',
+        caches: 'readonly',
+        fetch: 'readonly',
+        URL: 'readonly',
+        Promise: 'readonly',
+      },
+    },
+  },
+  {
     files: ['**/*.js', '**/*.mjs', '**/*.cjs'],
     languageOptions: {
       globals: {

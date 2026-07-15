@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
+import { SiteJsonLd } from '../components/JsonLd';
+import { RegisterSW } from '../components/RegisterSW';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -42,6 +44,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="tr">
       <body>
+        <SiteJsonLd />
+        <RegisterSW />
         <a className="skip-link" href="#main">
           İçeriğe atla
         </a>
@@ -60,6 +64,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <a href="/deneme-sinavi">Deneme</a>
               <a href="/tani">Tanı Denemesi</a>
               <a href="/hazirlik-skorum">Hazırlık Skorum</a>
+              <a href="/fiyatlandirma">Fiyatlandırma</a>
             </nav>
           </div>
         </header>

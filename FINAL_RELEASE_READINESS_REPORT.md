@@ -1,103 +1,52 @@
 # FINAL RELEASE READINESS REPORT — Ehliyet Akademi
 
-_Tarih: 2026-07-15 · Değerlendiren: otonom yürütme · Tek doğru kaynak: `ROADMAP.md` (v3.1)_
+_Tarih: 2026-07-15 (v2 — production deploy sonrası) · Tek doğru kaynak: `ROADMAP.md` (v3.1)_
 
 ---
 
-## Sonuç: 🟡 KOŞULLU GO (Önizleme/MVP) · 🔴 NO-GO (tam ticari lansman)
+## Sonuç: 🟢 GO — Public Beta (canlı) · 🟡 KOŞULLU — gerçek tahsilat · 🔴 NO-GO — "tam kurumsal platform" iddiası
 
-- **🟢 GO —** çekirdek öğrenme ürününün **önizleme/MVP deploy'u** (tanı denemesi → hazırlık skoru, dersler, e-Sınav yapısı). Kod test edilmiş, güvenli, statik ve hızlı.
-- **🔴 NO-GO —** tam ticari lansman: monetizasyon, hesap/DB kalıcılığı (sunucu), AI, CMS, admin, mobil-mağaza ve tam güvenlik sertleştirmesi henüz üretimde değil (ROADMAP Faz 15–35 planlı).
-
-Gerekçe: Çekirdek döngü production-kalite ve doğrulanmış; ancak "en gelişmiş platform"
-hedefinin gelir/ölçek/operasyon katmanları henüz kurulmadı. Önizleme yayını, gerçek
-kullanıcıyla PMF sinyali toplamak için doğru ve güvenli adımdır (ROADMAP E.1: web-first).
-
----
+- **🟢 GO (yayında):** Ürün **production'da canlı**: https://ehliyet-akademi-nine.vercel.app — tanı→hazırlık skoru, 5 ders+görseller, SRS pratiği+seri, **gerçek formatlı e-Sınav simülatörü**, tek-seferlik paket vitrini (demo ödeme), PWA. CI yeşil, tarayıcı doğrulaması eksiksiz. **Public beta olarak kullanıcı almaya hazır.**
+- **🟡 KOŞULLU (para almadan önce):** ödeme şu an **demo** (MockPaymentProvider — gerçek tahsilat yok ve öyle etiketli). Gerçek satış için: LemonSqueezy/Stripe **one-time** adaptörü + webhook + iade akışı + auth/DB'ye taşınmış entitlement + Mesafeli Satış/KVKK metinleri.
+- **🔴 NO-GO:** ROADMAP'in tam vizyonu (AI platformu, CMS, admin, topluluk, platform zekâsı — Faz 22–35) henüz üretimde değil; "Türkiye'nin en gelişmiş platformu" iddiasıyla pazarlama bu fazlar sonrası.
 
 ## Alan Bazlı Kontroller
 
-### Production Readiness
-
-| Alan             | Durum | Not                                                                  |
-| ---------------- | ----- | -------------------------------------------------------------------- |
-| Build            | 🟢    | `next build` yeşil, 14 sayfa (SSG)                                   |
-| Çalışma zamanı   | 🟢    | RSC/SSG; harici servis olmadan çalışır (mock/local)                  |
-| Hesap kalıcılığı | 🟡    | Şimdilik LocalStorage; sunucu auth+DB (Faz 4 omurgası/ADR) takılacak |
-| Ölçek            | 🟡    | İçerik statik ölçeklenir; DB/arama/analitik prod servisleri ENV ile  |
-
-### ENV Kontrolü — 🟢
-
-`ENV_SETUP_GUIDE.md` tüm ENV'leri kapsar; **hiçbiri zorunlu değil** (mock/local varsayılan).
-Üretimde `DATABASE_URL`, `AUTH_SECRET` + istenen servis anahtarları girilir. `.env` repoda değil.
-
-### Security Kontrolü — 🟡
-
-- 🟢 Güvenlik başlıkları (nosniff, DENY, referrer, permissions-policy).
-- 🟢 Repoda sır yok (gitleaks kapısı + CodeQL + Dependabot); proprietary lisans.
-- 🟡 Tam sertleştirme (CSP, auth/ödeme/PII akışı, RBAC, pen-test, KVKK veri-silme) → **Faz 30 planlı**.
-
-### Performance Kontrolü — 🟢
-
-Statik (SSG) sayfalar, minimal JS (~103 kB paylaşımlı), CWV-dostu mimari. Lighthouse CI eşiği CI'da tanımlı (billing sonrası aktif).
-
-### Accessibility Kontrolü — 🟢 (temel)
-
-Semantik HTML, skip-link, görünür odak, ARIA/`aria-live`, koyu/açık tema, ≥44px dokunma hedefleri. Tam eksiksiz axe/manuel regresyon Faz 20'de genişletilir.
-
-### SEO Kontrolü — 🟡
-
-- 🟢 sitemap.xml, robots.txt, OG/metadata, crawl'lanabilir URL'ler, SSG (indekslenebilir).
-- 🟡 schema.org (Course/Quiz/FAQ/HowTo), topic-cluster, programatik SEO → **Faz 15 planlı**.
-
-### AI Kontrolü — 🔴 (planlı)
-
-AI platformu (koç/açıklama/hazırlık tahmini) **Faz 22 planlı**. Soyutlama + `AI_PROVIDER=mock`
-politikası hazır; grounding + anti-halüsinasyon + maliyet tavanı orada uygulanacak.
-
-### CMS Kontrolü — 🔴 (planlı)
-
-İçerik şu an tipli TS (şema-doğrulamalı). CMS (Payload) **Faz 24 planlı**; şema-uyumlu geçiş.
-
-### Admin Kontrolü — 🔴 (planlı)
-
-Yönetim paneli **Faz 25 planlı** (RBAC, moderasyon, ödeme, feature flags, audit log).
-
-### Test Özeti — 🟢
-
-30 birim + 4 e2e (gerçek tarayıcı) + build; hepsi yeşil. Görsel/perf/a11y regresyon paketleri Faz 20'de eklenecek.
-
-### CI Özeti — 🟡
-
-Workflow'lar hazır (quality/e2e/gitleaks/CodeQL/commitlint). **Dış engel:** GitHub Actions
-faturalandırma kilidi nedeniyle hosted koşum başlamıyor. **Telafi:** yerel `pnpm gates` + e2e
-her faz çalıştırıldı (CI'ın birebir muadili). **Aksiyon (kullanıcı):** GitHub Billing'i düzelt
-**veya** repo'yu public yap → Actions + CodeQL + branch protection açılır.
-
----
+| Alan                        | Durum      | Not                                                                                                              |
+| --------------------------- | ---------- | ---------------------------------------------------------------------------------------------------------------- |
+| **Production Readiness**    | 🟢         | Vercel prod canlı; SSG+ISR-hazır; 0 konsol hatası; deploy tek komut                                              |
+| **ENV**                     | 🟢         | Rehber güncel (deploy bölümü eklendi); tek zorunlu env yok; `NEXT_PUBLIC_SITE_URL` prod'da set                   |
+| **Security**                | 🟡         | Başlıklar + gitleaks + CodeQL + branch protection ✅ · CSP/pen-test/KVKK metinleri Faz 30                        |
+| **Performance**             | 🟢         | SSG, ~103 kB paylaşımlı JS; prod hızlı (CWV-dostu); Lighthouse CI eşiği sonraki hijyen turu                      |
+| **Accessibility**           | 🟢 (temel) | Semantik, skip-link, odak, aria-live, kontrast; tam axe-regresyon Faz 20 genişletmesi                            |
+| **SEO**                     | 🟢 (temel) | Crawl'lanabilir URL + sitemap(prod URL) + robots + **JSON-LD canlıda** · programatik/pillar içerik Faz 15 devamı |
+| **AI**                      | 🔴 planlı  | Faz 22; `AI_PROVIDER=mock` soyutlama sözleşmesi hazır                                                            |
+| **CMS / Admin**             | 🔴 planlı  | Faz 24/25; içerik tipli-TS + şema doğrulamalı (geçiş şema-uyumlu)                                                |
+| **Payments (tek-seferlik)** | 🟡         | Model + katalog + entitlement + kota **canlıda (demo)**; gerçek tahsilat koşullu-GO listesi                      |
+| **Test**                    | 🟢         | 43 unit + 10 e2e; **CI'da** koşuyor                                                                              |
+| **CI**                      | 🟢         | Actions yeşil (quality/e2e/gitleaks/CodeQL); kırmızı→düzelt→yeşil disiplini uygulandı                            |
+| **Deploy doğrulaması**      | 🟢         | Preview + Production; canlıda tarayıcı ile 8 akış doğrulandı (geliştirme raporu §5)                              |
 
 ## Açık Riskler
 
-1. **Hosted CI kapalı (dış/billing)** — orta. Telafi: yerel kapılar. Aksiyon kullanıcıda.
-2. **Branch protection yok** (Pro/public gerektiriyor) — düşük. Telafi: trunk disiplini + yerel kapılar.
-3. **İçerik hacmi** — orta. 22 soru/3 ders MVP kanıtı; sınav güveni için konu başına 100+ ve 4 dersin tümü gerekir (Faz 11–12; uzman onayı — E.6).
-4. **Sunucu kalıcılığı yok** — orta. Çok-cihaz/senkron için auth+DB devreye alınmalı (omurga/ADR hazır).
-5. **İlk yardım içeriği** — yüksek hassasiyet. Yayından önce **ilk yardım eğitmeni onayı** zorunlu (şemada `review` alanı `draft`).
+1. **Demo ödeme yanlış anlaşılması** — düşük/orta: UI'da açık "demo ödeme — gerçek tahsilat yapılmaz" etiketi var; gerçek satış öncesi koşullu-GO listesi tamamlanmalı.
+2. **Entitlement/ilerleme yalnız cihazda** (localStorage) — orta: auth+DB kalıcılığı (Faz 4 omurgası hazır) taşınmalı; cihaz değişiminde kayıp olur.
+3. **İçerik hacmi** — orta: 53 soru tam sınav dağılımını karşılar ama tekrar eden denemelerde çeşitlilik sınırlı; 100+/konu + uzman onayı (`review: approved`) hedefi açık.
+4. **İlk yardım içeriği uzman onayı** — yüksek önem: yayın etiketi "uzman onayı bekliyor"; onay süreci tamamlanmalı.
+5. **Dependabot 9 PR** (major bump'lar) — düşük: ayrı hijyen turu.
+6. **`ehliyet-akademi.vercel.app` yalın adı başka projeye ait** — düşük: kanonik adres `-nine`; özel domain alınca önemsizleşir.
 
 ## Bilinen Kısıtlar
 
-- Monetizasyon, AI, CMS, admin, topluluk, mobil-native, tam gözlemlenebilirlik henüz üretimde değil (ROADMAP sırasıyla planlı).
-- Soru bankası ve dersler başlangıç kümesidir (özgün; genişletilecek).
-- Hazırlık skoru tahmini kalibre bir modeldir; gerçek geçme oranıyla doğrulanınca ayarlanacaktır (Faz 35).
+Faz 17/19/22–35 üretimde değil (ROADMAP'te planlı) · hazırlık-skoru tahmini kalibrasyonu gerçek geçme verisiyle rafine edilecek (Faz 35) · Lighthouse-CI/görsel-regresyon kapıları henüz zorunlu-check değil.
 
----
+## Yayın Sonrası İlk Adımlar (öneri, ROADMAP sırasına uygun)
 
-## Deploy Önerisi (önizleme)
+1. GSC'ye sitemap gönder (Faz 15 devamı) — organik ölçüm gün-1.
+2. Auth+DB kalıcılığı → entitlement/ilerleme senkronu (Faz 26/27 kalanı).
+3. Gerçek tahsilat adaptörü + hukuki metinler → 🟡'yi 🟢'ye çevir.
+4. İçerik motoru: soru üretim hattıyla bankayı büyüt + uzman onay döngüsü.
+5. Faz 22 AI (mock→gerçek, grounded) ve Faz 23 analitik.
 
-1. Repo'yu public yap **veya** GitHub Billing'i düzelt → CI/CodeQL/branch protection aktifleşir.
-2. Vercel'e bağla (`apps/web`); `NEXT_PUBLIC_SITE_URL` set et; ENV'siz de çalışır.
-3. Önizleme URL'sinde çekirdek akışı doğrula (e2e zaten yeşil).
-4. Faz 15 (SEO schema) + içerik genişletme + auth/DB ile ticari-hazırlığa doğru ilerle.
-
-**Özet:** Sağlam, test edilmiş, güvenli bir temel ve çalışan çekirdek ürün hazır →
-**önizleme için GO**. Tam ticari lansman, ROADMAP Faz 15–35 tamamlandıkça **GO**'a döner.
+**Özet:** Çekirdek ürün **canlı, test edilmiş ve CI-korumalı**. Beta kullanıcı trafiği için **GO**;
+para tahsilatı ve "tam platform" iddiası için sıradaki fazlar tamamlanmalı.

@@ -1,31 +1,32 @@
 # STATUS
 
-> Her ~3 fazda bir güncellenir. Tek doğru kaynak: üst dizindeki `ROADMAP.md` (v3.1, Faz 0–35).
+> Tek doğru kaynak: üst dizindeki `ROADMAP.md` (v3.1, Faz 0–35).
 
-_Son güncelleme: 2026-07-15 · Faz 4 sonu_
+_Son güncelleme: 2026-07-15 · Faz 21 (deploy) sonrası_
 
 ### Yaptım
 
-- **Faz 0 — Mühendislik Temeli ✅** monorepo (pnpm+turbo), kalite kapıları (`pnpm gates`), CI/CD (Actions), yönetişim, private repo + push.
-- **Faz 1–3 — Strateji & Mimari ✅** 6 ADR (Next.js, monorepo, Postgres/Drizzle+PGlite, auth, içerik modeli, stil) + `ENV_SETUP_GUIDE.md`.
-- **Faz 4 — Next.js + çekirdek ✅ (test edildi)**
-  - Paketler: `@ea/content-schema` (Zod), `@ea/srs-engine` (SM-2 + hazırlık skoru/trafik ışığı), `@ea/question-bank` (22 özgün soru).
-  - Web (Next 15 App Router, SSG): aktivasyon akışı **tanı denemesi → hazırlık skoru**; /dersler (+SSG detay), /e-sinav, /hazirlik-skorum; sitemap+robots+metadata; güvenlik başlıkları.
-  - **Kalite: verify + lint + typecheck + 30 unit + 4 e2e (gerçek tarayıcı) + build(13 sayfa) — HEPSİ YEŞİL.**
-- **Faz 5–8 (temel) ~** tasarım tokenları (globals.css), BİM rotaları, UI bileşenleri, frontend CWV-dostu SSG hazır.
-- **Faz 9–14 (temel) ~** SRS motoru + hazırlık skoru entegre; 3 ders (4 dersin tümüne genişletilecek); soru bankası hattı; PWA manifest.
+- **Faz 0–4 ✅** mühendislik temeli, ADR'ler, Next.js + çekirdek paketler (önceki oturum).
+- **Gerçek CI aktif ✅** — repo PUBLIC; GitHub Actions **yeşil** (quality + E2E + gitleaks + **CodeQL**); her faz push'unda izlendi; kırmızı görüldüğünde düzeltilip yeşile çekildi. Branch protection (force-push/deletion yasak, linear history) kuruldu.
+- **Faz 9–14 ✅** SM-2 **SRS pratik döngüsü** (/calis, seri/streak ile — Faz 34 temeli) · soru bankası **53 özgün soruya** çıktı → **tam e-Sınav dağılımı (23/12/9/6) karşılanıyor** (test kapısı) · **e-Sınav simülatörü** (/deneme-sinavi: 50 soru · 45dk geri sayım · soru haritası · ders bazlı sonuç) · +2 ders (kavşak, trafik adabı → 4 dersin tümü) · 4 inline SVG ders görseli.
+- **Faz 15 ✅** JSON-LD: Organization+WebSite / LearningResource+Course / Quiz — production'da doğrulandı.
+- **Faz 16 ✅ (PİVOT)** — **abonelik KALDIRILDI** (kullanıcı direktifi): tek-seferlik paketler (Premium Teori 249₺, Direksiyon 199₺, Simülatör 149₺, Soru Bankası 129₺, **Komple B/Lifetime 449₺**); PaymentProvider soyutlaması + mock; entitlement + günde-1-deneme kotası → paket = sınırsız. ROADMAP Faz 16 güncellendi.
+- **Faz 18 ✅** PWA: service worker (offline) + manifest — **production'da kayıtlı olduğu doğrulandı**.
+- **Faz 20 ✅ (çekirdek)** 43 birim testi + **10 Playwright E2E** — CI'da ve yerelde yeşil.
+- **Faz 21 ✅ DEPLOY** — **Vercel production: https://ehliyet-akademi-nine.vercel.app** (rootDirectory=apps/web monorepo; NEXT_PUBLIC_SITE_URL env). **Gerçek tarayıcıyla production doğrulandı:** landing, tanı→hazırlık skoru, dersler+SVG+schema, deneme (45:00 sayaç, 50 soru), fiyatlandırma+mock satın alma+sahiplik, SW kaydı, koyu tema, konsol 0 hata.
 
 ### Yapıyorum
 
-- Faz 5–14 derinleştirme (daha çok özgün soru + e-Sınav simülatörü + quiz pratiği) ve FINAL raporları.
+- Kapanış dokümantasyonu (FINAL raporları güncelleme).
 
-### Yapacağım (ROADMAP sırası)
+### Yapacağım (ROADMAP sırası — sonraki sorumlu nokta)
 
-- Faz 15–21: SEO schema, monetizasyon (mock), ASO, PWA/mobil cila, QA regresyon, yayın.
-- Faz 22–35: kurumsal katmanlar (AI mock, analitik mock, CMS, admin, arama, güvenlik sertleştirme, DevOps/gözlemlenebilirlik, topluluk, habit loop, platform zekası) — soyutlama + mock provider ile başlanır, gerçek servisler ENV ile takılır.
+- **Faz 17 ASO** (mağaza — retention kanıtı sonrası) · **Faz 19** diğer sınıflar.
+- **Faz 22–35 kurumsal:** AI platformu (mock→gerçek), Analitik (GA4/PostHog), CMS (Payload), Admin, API/DB sunucu kalıcılığı (auth), Arama, Güvenlik sertleştirme (CSP/pen-test), Gözlemlenebilirlik (Sentry), Topluluk, Habit-loop derinleştirme, Platform Zekası. (Faz 34'ün seri/streak çekirdeği canlıda.)
 
-### Engeller / Riskler
+### Engeller / Notlar
 
-- ⛔ **GitHub Actions faturalandırma kilidi (dış engel):** private repo'da hosted CI başlamıyor (billing). Yerel `pnpm gates` + e2e CI'ın birebir muadili olarak her faz çalıştırılıyor; workflow'lar hazır. Çözüm sahibi kullanıcı: Billing düzelt **veya** repo'yu public yap.
-- Branch protection: GitHub Pro/public ister (free+private'ta API 403) — trunk disiplini + yerel kapılarla ilerleniyor.
-- **Kapsam gerçekliği:** 36 kurumsal fazın tamamı tek oturumda üretime alınamaz; çekirdek ürün (Faz 0–4) tam, test edilmiş ve deploy'a hazır; Faz 5–35 için sağlam temel + mock/soyutlama kurulu, gerçek servisler ENV ile takılır. Ayrıntı: FINAL raporları.
+- ~~Actions faturalandırma kilidi~~ → **çözüldü** (repo public; CI ücretsiz ve yeşil).
+- Dependabot PR'ları (9 adet, major sürümler) bekliyor — ayrı hijyen turunda ele alınacak.
+- Ödeme **demo modda** (gerçek tahsilat yok) — üretim tahsilatı için LemonSqueezy/Stripe one-time adaptörü + webhook (Faz 16 kalan iş).
+- İçerik: 53 soru/5 ders = sağlam çekirdek; hedef konu başına 100+ (uzman onaylı) — üretim hattı hazır.

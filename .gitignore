@@ -14,3 +14,5 @@ test-results/
 .pglite/
 *.log
 .DS_Store
+.vercel
+.env*

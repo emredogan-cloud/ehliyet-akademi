@@ -81,6 +81,25 @@ Analitik ENV yoksa **no-op/console** sink kullanılır — olay sözlüğü yine
 
 ---
 
+## Deploy (Vercel — ROADMAP Faz 21) ✅ KURULU
+
+### Platform kararı
+
+**Vercel** seçildi (Netlify'a karşı): Next.js'in native platformu, sıfır-config App Router/ISR desteği, CLI yetkili. Proje: `ehliyet-akademi` · rootDirectory=`apps/web` (monorepo).
+
+### `NEXT_PUBLIC_SITE_URL` ✅ set edildi
+
+- **Ne:** Kanonik site URL'i (sitemap, JSON-LD, OG).
+- **Değer (production):** `https://ehliyet-akademi-nine.vercel.app`
+- **Nasıl:** `vercel env add NEXT_PUBLIC_SITE_URL production` (özel domain alınırsa güncellenir).
+
+### Deploy komutları
+
+```bash
+vercel deploy --yes        # preview
+vercel deploy --prod --yes # production
+```
+
 ## Özet
 
 Hiçbir ENV olmadan `pnpm dev` çalışır: PGlite + credentials-auth + mock AI/ödeme/analitik/arama.

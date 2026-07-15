@@ -3,7 +3,7 @@
 > Ani kesinti sonrası devam için. Tek doğru kaynak: üst dizin `ROADMAP.md` (v3.1, 36 faz).
 > Ayrıntı: `STATUS.md` · GO/NO-GO: `FINAL_RELEASE_READINESS_REPORT.md`.
 
-_Son güncelleme: 2026-07-15 · SPRINT 3 sonrası_
+_Son güncelleme: 2026-07-15 · SPRINT 4 sonrası_
 
 ## Kilit durum
 
@@ -11,7 +11,18 @@ _Son güncelleme: 2026-07-15 · SPRINT 3 sonrası_
 - **CI GERÇEK ve YEŞİL:** repo PUBLIC; Actions (quality/E2E/gitleaks/CodeQL) her push'ta; branch protection açık.
 - **MONETIZASYON PİVOTU (bağlayıcı):** abonelik YOK → **tek-seferlik paketler** (5 paket; Komple B = lifetime). ROADMAP Faz 16 güncellendi. Ödeme mock (demo); üretim tahsilatı = LemonSqueezy/Stripe one-time adaptörü kalan iş.
 
-## SPRINT 3 (en güncel tur) — İçerik & öğrenme deneyimi
+## SPRINT 4 (en güncel tur) — Ticaret, yasal & üretim servisleri
+
+- **Ödeme (ADR-008 LemonSqueezy MoR):** `lib/server/checkout.ts` (PaymentGateway/MockGateway/LemonSqueezyGateway/validateReceipt/variantForProduct); `/api/checkout` + `/api/webhooks/lemonsqueezy` (HAM gövde HMAC + parseOrder order_created + idempotent external_ref + confirmation email). Client `lib/checkoutClient.ts` startCheckout (mock→serverPurchase / 401|503→local grant / redirect→url). ENV: LEMONSQUEEZY_API_KEY/STORE_ID/WEBHOOK_SECRET/VARIANT_<PRODUCT>.
+- **E-posta (ADR-009 Resend):** `lib/server/email.ts` (EmailProvider/Console/Resend + welcomeEmail/verificationEmail/passwordResetEmail/purchaseConfirmationEmail/supportRequestEmail; escapeHtml). Bağlı: register (welcome+verify), forgot (reset link), `/api/auth/verify` (+`/dogrula`), `/sifirla`, `/api/support`. ENV: RESEND_API_KEY/EMAIL_FROM/SUPPORT_EMAIL.
+- **Şema (bootstrap ALTER/CREATE IF NOT EXISTS):** users.email_verified, purchases.external_ref, email_verification_tokens tablosu.
+- **Yasal:** `app/(marketing)/{gizlilik,kullanim-kosullari,cerez-politikasi,kvkk}/page.tsx` (server, taslak+yer-tutucu). `components/CookieConsent.tsx` (CONSENT_KEY=ea:consent, root layout'ta) + Ayarlar rıza yönetimi. `DELETE /api/account` (cascade). Footer legal linkleri.
+- **Üretim:** `lib/server/logger.ts` (JSON+redact), `lib/server/rate-limit.ts` (rateLimit saf + checkRateLimit; NODE_ENV=test||RATE_LIMIT_DISABLED=1 bypass), `lib/retry.ts` (withRetry). `app/error.tsx`, `app/not-found.tsx`.
+- **Premium:** `Lesson.premium` (schema), `lib/entitlements.ts` (canAccessLesson/requiredCapability/productForLesson; LESSON_CAPABILITY map), `PremiumBadge`/`PremiumLessonGate`/`PurchaseDialog`. Premium dersler: park-manevra, kavsak-uygulama, sollama-serit. İlk yardım/güvenlik ASLA premium.
+- **e2e:** `playwright.config.ts` storageState=./e2e/storage-state.json (ea:consent seed) + env RATE_LIMIT_DISABLED=1. `commerce.spec.ts` (5). Mobil drawer testi scrim'e SAĞDAN tıklar (position x:350).
+- **Canlı doğrulandı:** /dersler/park-manevra premium kilit→demo satın al→açıldı; çerez bannerı; /kvkk taslak; /api/checkout & /api/account 401.
+
+## SPRINT 3 — İçerik & öğrenme deneyimi
 
 - **Soru bankası 198 özgün soru** (trafik 63/ilkyardim 42/motor 39/adab 26/pratik 28; 82 konu). Dosyalar: `packages/question-bank/src/questions-{trafik,ilkyardim,motor,adab,pratik}.ts` (yeni id namespace -101+). index.ts: RAW→`parseQuestion` map (yüklemede Zod parse). Gate: ≥150 soru + ≥140 zenginleştirilmiş.
 - **19 ders**: `content/lessons.ts` (çekirdek 5, zenginleştirildi) + `theory-lessons.ts` (THEORY_EXTRA_LESSONS, no 6-14) + `driving-lessons.ts` (DRIVING_LESSONS, no 15-19). `LESSONS = [...].map(parseLesson).sort(no)`.
@@ -64,7 +75,8 @@ _Son güncelleme: 2026-07-15 · SPRINT 3 sonrası_
 
 ## Son durum
 
-- **Testler:** 94 unit/integration (59 web + 35 paket) + 32 e2e ✅ · build 23 sayfa + 15 API rotası ✅ · CI ✅ · CodeQL ✅ · **prod tarayıcı doğrulaması ✅** (konsol 0 hata).
+- **Testler:** 130 unit/integration (95 web + 35 paket) + 37 e2e ✅ · build 29 sayfa + 20 API rotası ✅ · CI ✅ · CodeQL ✅ · **prod tarayıcı doğrulaması ✅** (konsol 0 hata).
 - **İçerik:** 198 soru (82 konu) + 19 ders (Sprint 3). Tümü review:draft (uzman onayı bekliyor, özellikle ilk yardım).
-- **DUR:** Sprint 3 sonrası durdu; Sprint 4 direktif olmadan başlatılmaz.
+- **DUR:** Sprint 4 sonrası durdu; Sprint 5 direktif olmadan başlatılmaz.
+- **Kalan dış aksiyonlar (ENV):** DATABASE_URL (Neon), LEMONSQUEEZY_* (tahsilat), RESEND_API_KEY (e-posta), yasal metin hukukçu onayı. Kod hazır; hepsi ENV ile aktifleşir.
 - Dependabot 9 PR bekliyor (major bump'lar) — hijyen turu.

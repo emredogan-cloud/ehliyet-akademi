@@ -2,7 +2,7 @@
 
 > Tek doğru kaynak: üst dizindeki `ROADMAP.md` (v3.1, Faz 0–35).
 
-_Son güncelleme: 2026-07-15 · SPRINT 3 (içerik genişletme + öğrenme deneyimi) sonrası_
+_Son güncelleme: 2026-07-15 · SPRINT 4 (ticaret + yasal + üretim servisleri) sonrası_
 
 ### Yaptım
 
@@ -55,9 +55,19 @@ _Son güncelleme: 2026-07-15 · SPRINT 3 (içerik genişletme + öğrenme deneyi
 - **Kalite:** 94 unit/integration (+11 study, +2 bank) + 32 e2e (+4) + typecheck + build (23 sayfa) + CI yeşil + prod deploy + **canlı tarayıcı doğrulaması** (ders/alıştırma/plan/AI/görsel — konsol 0 hata).
 - Ayrıntı: `SPRINT_3_REPORT.md`.
 
+### Yaptım (SPRINT 4) ✅ — ticaret, yasal & üretim servisleri
+
+- **Ödeme (ADR-008 LemonSqueezy MoR):** `PaymentGateway` soyutlaması + MockGateway (varsayılan) + LemonSqueezyGateway (ENV); `/api/checkout` + `/api/webhooks/lemonsqueezy` (HMAC imza + makbuz doğrulaması + idempotent grant + external_ref). Fiyat sunucuda doğrulanır. Abonelik yok.
+- **E-posta (ADR-009 Resend):** `EmailProvider` soyutlaması + Console (varsayılan)/Resend (retry) + 5 saf şablon; kayıt→hoş geldin+doğrulama, forgot→reset, `/api/auth/verify`+`/dogrula`, `/sifirla`, `/api/support`. `users.email_verified` + doğrulama tablosu.
+- **Yasal:** /gizlilik, /kullanim-kosullari, /cerez-politikasi, /kvkk (taslak, yer-tutucu, hukukçu-inceleme notlu) + çerez rıza bannerı + rıza yönetimi + veri dışa aktarma + hesap silme (`DELETE /api/account`).
+- **Üretim sağlamlaştırma:** yapısal logger (sır redaksiyonu) + rate-limit + withRetry + error.tsx/not-found.tsx + guarded 503.
+- **Premium:** Lesson.premium + entitlements (canAccessLesson) + PremiumBadge + PremiumLessonGate + PurchaseDialog + checkoutClient; 3 ileri ders premium (güvenlik/ilk yardım ASLA kilitlenmez).
+- **Kalite:** 130 unit/integration (+35) + 37 e2e (+5) + CI yeşil + CodeQL yeşil + prod deploy + **canlı tarayıcı** (premium unlock/çerez/yasal/API kapıları).
+- Ayrıntı: `SPRINT_4_REPORT.md` · ADR-008/009.
+
 ### Yapıyorum
 
-- Sprint 3 kapanışı (rapor + dokümantasyon). **DUR: Sprint 4 başlatılmadı** (direktif).
+- Sprint 4 kapanışı (rapor + dokümantasyon). **DUR: Sprint 5 başlatılmadı** (direktif).
 
 ### Yapacağım (ROADMAP sırası — sonraki sorumlu nokta)
 
@@ -68,5 +78,5 @@ _Son güncelleme: 2026-07-15 · SPRINT 3 (içerik genişletme + öğrenme deneyi
 
 - ~~Actions faturalandırma kilidi~~ → **çözüldü** (repo public; CI ücretsiz ve yeşil).
 - Dependabot PR'ları (9 adet, major sürümler) bekliyor — ayrı hijyen turunda ele alınacak.
-- Ödeme **demo modda** (gerçek tahsilat yok) — üretim tahsilatı için LemonSqueezy/Stripe one-time adaptörü + webhook (Faz 16 kalan iş).
+- Ödeme mimarisi **hazır** (ADR-008 LemonSqueezy adaptörü + webhook + makbuz); gerçek tahsilat için `LEMONSQUEEZY_*` ENV (kullanıcı aksiyonu). O gelene dek satın alma **demo modda** (etiketli).
 - İçerik: **198 soru (82 konu) / 19 ders** (Sprint 3); hedef konu başına 100+ (uzman onaylı) — üretim hattı hazır, sürüyor. İlk yardım içeriği uzman onayı bekliyor (review: draft).

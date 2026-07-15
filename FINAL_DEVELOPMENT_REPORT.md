@@ -1,8 +1,19 @@
 # FINAL DEVELOPMENT REPORT — Ehliyet Akademi
 
-_Tarih: 2026-07-15 (v6 — SPRINT 3: içerik genişletme + öğrenme deneyimi) · Depo: `emredogan-cloud/ehliyet-akademi` (**public**) · Tek doğru kaynak: `ROADMAP.md` (v3.1, 36 faz)_
+_Tarih: 2026-07-15 (v7 — SPRINT 4: ticaret + yasal + üretim servisleri) · Depo: `emredogan-cloud/ehliyet-akademi` (**public**) · Tek doğru kaynak: `ROADMAP.md` (v3.1, 36 faz)_
 
 ---
+
+## 0-S4. SPRINT 4 Eki (v7) — Ticaret, Yasal & Üretim Servisleri
+
+Gerçek **tek-seferlik ödeme mimarisi** (ADR-008 LemonSqueezy MoR: `PaymentGateway` + hosted checkout +
+**HMAC webhook doğrulaması** + makbuz doğrulaması + idempotent grant; mock varsayılan), **e-posta
+platformu** (ADR-009 Resend: `EmailProvider` + 5 şablon + doğrulama/reset/onay/destek), **yasal/uyum**
+(Gizlilik/Kullanım/Çerez/KVKK taslak sayfaları + çerez rıza bannerı + veri dışa aktarma + hesap silme),
+**üretim sağlamlaştırması** (logger + rate-limit + retry + hata sınırları) ve **premium deneyim**
+(`Lesson.premium` + entitlements + kilitli dersler + kilit açma + satın alma diyaloğu) uygulandı. 130
+unit/integration + 37 e2e + CI/CodeQL yeşil + prod deploy + canlı doğrulama (premium unlock uçtan uca).
+Ayrıntı: `SPRINT_4_REPORT.md` · ADR-008/009. Güvenlik/ilk-yardım içeriği asla premium değildir.
 
 ## 0-S3. SPRINT 3 Eki (v6) — İçerik Genişletme & Öğrenme Deneyimi
 
@@ -42,30 +53,32 @@ e-Sınav dağılımını (23/12/9/6 = 50) tam karşılayacak **53 özgün soruya
 
 ## 2. Faz Durumu (ROADMAP eşlemesi)
 
-| Faz       | Ad                                             | Durum                                                                                                                               |
-| --------- | ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| 0–4       | Mühendislik · Strateji · Mimari · Next.js göçü | ✅ Tamamlandı (önceki oturum)                                                                                                       |
-| 5–8       | BİM · Tasarım · UI/UX · Frontend               | ✅ Tamamlandı                                                                                                                       |
-| 9         | Öğrenme Sistemi (SRS)                          | ✅ **Tamamlandı** — SM-2 pratik döngüsü canlıda (/calis)                                                                            |
-| 10        | Teorik Akademi                                 | ✅ **Sprint 3 — 14 teorik ders** (zengin yapı: özet/hafıza/strateji/tekrar kartı/alıştırma)                                         |
-| 11–12     | Pratik + Soru Bankası                          | ✅ **Sprint 3 — 198 özgün soru (82 konu)** + zenginleştirilmiş metaveri; 100+/konu ölçekleme sürüyor                                |
-| 13        | Simülasyonlar                                  | ✅ **e-Sınav simülatörü canlıda** (50/45dk/35 baraj) + **Sürüş Akademisi 5 direksiyon dersi** (Sprint 3)                            |
-| 14        | Görsel İçerik                                  | ✅ **Sprint 3 — 12 erişilebilir inline SVG** (role=img + aria-label; figureId eşlemesi)                                             |
-| 15        | SEO                                            | ✅ JSON-LD (Org/WebSite/LearningResource/Quiz) + sitemap/robots — canlıda doğrulandı                                                |
-| 16        | Monetizasyon                                   | ✅ **PİVOT UYGULANDI** — tek-seferlik 5 paket + entitlement + kota; ödeme **demo** (gerçek tahsilat adaptörü kalan iş)              |
-| 17        | ASO                                            | ○ Planlı (retention kanıtı sonrası — ROADMAP sırası gereği)                                                                         |
-| 18        | Mobil/PWA                                      | ✅ SW + manifest — **prod'da kayıt doğrulandı**                                                                                     |
-| 19        | Genişleme                                      | ○ Planlı                                                                                                                            |
-| 20        | Test & QA                                      | ✅ Çekirdek — 43 unit + 10 e2e CI'da                                                                                                |
-| 21        | Yayın                                          | ✅ **PRODUCTION DEPLOY + tarayıcı doğrulaması**                                                                                     |
-| 22        | AI Platformu                                   | ◑ **AI Koç grounded öğrenme asistanı** (Sprint 3: çalışma planı/zayıf konu/kişisel tekrar — kendi verisinden); gerçek model ENV ile |
-| 23        | Analitik                                       | ◑ Tipli olay sözlüğü + 5 olay bağlı (console sink; PostHog ENV ile)                                                                 |
-| 24        | CMS                                            | ✅ **Sprint 2** — şema-öncelikli özel çekirdek (ADR-007); içerik hattı + sürüm + denetim; Payload'a açık kapı                       |
-| 25        | Admin                                          | ✅ **Sprint 2** — /admin aynı SaaS kabuğunda; RBAC (user/editor/admin); istemci+sunucu koruması; denetim kaydı                      |
-| 26–27     | Auth / Veritabanı                              | ✅ **Sprint 1** — özel credentials + @ea/db çift sürücü + cihazlar-arası senkron (prod DATABASE_URL bekliyor)                       |
-| 28        | Arama                                          | ✅ **Sprint 2** — `SearchProvider` soyutlaması + LocalSearchProvider; Meili/Typesense/Algolia yeniden-yazımsız takılır              |
-| 34        | Alışkanlık Döngüsü                             | ◑ Seri + 8 başarı rozeti + panel entegrasyonu canlıda                                                                               |
-| 29–33, 35 | Diğer kurumsal                                 | ○ Planlı (gerçek tahsilat, güvenlik sertleştirme, gözlemlenebilirlik, topluluk, platform zekâsı)                                    |
+| Faz       | Ad                                             | Durum                                                                                                                                                 |
+| --------- | ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0–4       | Mühendislik · Strateji · Mimari · Next.js göçü | ✅ Tamamlandı (önceki oturum)                                                                                                                         |
+| 5–8       | BİM · Tasarım · UI/UX · Frontend               | ✅ Tamamlandı                                                                                                                                         |
+| 9         | Öğrenme Sistemi (SRS)                          | ✅ **Tamamlandı** — SM-2 pratik döngüsü canlıda (/calis)                                                                                              |
+| 10        | Teorik Akademi                                 | ✅ **Sprint 3 — 14 teorik ders** (zengin yapı: özet/hafıza/strateji/tekrar kartı/alıştırma)                                                           |
+| 11–12     | Pratik + Soru Bankası                          | ✅ **Sprint 3 — 198 özgün soru (82 konu)** + zenginleştirilmiş metaveri; 100+/konu ölçekleme sürüyor                                                  |
+| 13        | Simülasyonlar                                  | ✅ **e-Sınav simülatörü canlıda** (50/45dk/35 baraj) + **Sürüş Akademisi 5 direksiyon dersi** (Sprint 3)                                              |
+| 14        | Görsel İçerik                                  | ✅ **Sprint 3 — 12 erişilebilir inline SVG** (role=img + aria-label; figureId eşlemesi)                                                               |
+| 15        | SEO                                            | ✅ JSON-LD (Org/WebSite/LearningResource/Quiz) + sitemap/robots — canlıda doğrulandı                                                                  |
+| 16        | Monetizasyon                                   | ✅ **Sprint 4 — gerçek ödeme mimarisi** (ADR-008 LemonSqueezy + webhook + makbuz; mock varsayılan) + premium erişim kontrolü; gerçek tahsilat ENV ile |
+| 30        | Güvenlik / Uyum                                | ◑ **Sprint 4** — rate-limit + logger + KVKK/gizlilik/çerez rıza + hesap silme; CSP/pen-test kalan                                                     |
+| 31        | Gözlemlenebilirlik                             | ◑ **Sprint 4** — yapısal logger (sır redaksiyonu) + hata sınırları + retry; Sentry ENV ile                                                            |
+| 17        | ASO                                            | ○ Planlı (retention kanıtı sonrası — ROADMAP sırası gereği)                                                                                           |
+| 18        | Mobil/PWA                                      | ✅ SW + manifest — **prod'da kayıt doğrulandı**                                                                                                       |
+| 19        | Genişleme                                      | ○ Planlı                                                                                                                                              |
+| 20        | Test & QA                                      | ✅ Çekirdek — 43 unit + 10 e2e CI'da                                                                                                                  |
+| 21        | Yayın                                          | ✅ **PRODUCTION DEPLOY + tarayıcı doğrulaması**                                                                                                       |
+| 22        | AI Platformu                                   | ◑ **AI Koç grounded öğrenme asistanı** (Sprint 3: çalışma planı/zayıf konu/kişisel tekrar — kendi verisinden); gerçek model ENV ile                   |
+| 23        | Analitik                                       | ◑ Tipli olay sözlüğü + 5 olay bağlı (console sink; PostHog ENV ile)                                                                                   |
+| 24        | CMS                                            | ✅ **Sprint 2** — şema-öncelikli özel çekirdek (ADR-007); içerik hattı + sürüm + denetim; Payload'a açık kapı                                         |
+| 25        | Admin                                          | ✅ **Sprint 2** — /admin aynı SaaS kabuğunda; RBAC (user/editor/admin); istemci+sunucu koruması; denetim kaydı                                        |
+| 26–27     | Auth / Veritabanı                              | ✅ **Sprint 1** — özel credentials + @ea/db çift sürücü + cihazlar-arası senkron (prod DATABASE_URL bekliyor)                                         |
+| 28        | Arama                                          | ✅ **Sprint 2** — `SearchProvider` soyutlaması + LocalSearchProvider; Meili/Typesense/Algolia yeniden-yazımsız takılır                                |
+| 34        | Alışkanlık Döngüsü                             | ◑ Seri + 8 başarı rozeti + panel entegrasyonu canlıda                                                                                                 |
+| 29–33, 35 | Diğer kurumsal                                 | ○ Planlı (gerçek tahsilat, güvenlik sertleştirme, gözlemlenebilirlik, topluluk, platform zekâsı)                                                      |
 
 ## 3a. Kabuk Redesign Turu (v3)
 
@@ -91,13 +104,13 @@ e-Sınav dağılımını (23/12/9/6 = 50) tam karşılayacak **53 özgün soruya
 
 ## 4. Test & CI Sonuçları
 
-| Kapı               | Sonuç                                                                                                         |
-| ------------------ | ------------------------------------------------------------------------------------------------------------- |
-| Birim/entegrasyon  | ✅ **94** (59 web + 35 paket: schema 9 · srs 12 · bank 10 · db 4)                                             |
-| E2E (Playwright)   | ✅ **32** (6 spec: shell 8 · learning 8 · auth 5 · admin 5 · core 4 · monet. 2) — **CI'da**, production build |
-| Production build   | ✅ 23 sayfa + 15 API rotası                                                                                   |
-| **GitHub Actions** | ✅ **YEŞİL** (quality/e2e/gitleaks/CodeQL) — her faz push'unda izlendi                                        |
-| gitleaks/CodeQL    | ✅ temiz                                                                                                      |
+| Kapı               | Sonuç                                                                                                                      |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------- |
+| Birim/entegrasyon  | ✅ **130** (95 web + 35 paket: schema 9 · srs 12 · bank 10 · db 4)                                                         |
+| E2E (Playwright)   | ✅ **37** (7 spec: shell 8 · learning 8 · commerce 5 · auth 5 · admin 5 · core 4 · monet. 2) — **CI'da**, production build |
+| Production build   | ✅ 29 sayfa + 20 API rotası                                                                                                |
+| **GitHub Actions** | ✅ **YEŞİL** (quality/e2e/gitleaks/CodeQL) — her faz push'unda izlendi                                                     |
+| gitleaks/CodeQL    | ✅ temiz                                                                                                                   |
 
 ## 5. Production Doğrulaması (gerçek tarayıcı, canlı URL)
 
@@ -114,8 +127,8 @@ e-Sınav dağılımını (23/12/9/6 = 50) tam karşılayacak **53 özgün soruya
 
 ## 6. İstatistikler
 
-- **Commit:** 19 (Conventional) · hepsi main'de, CI yeşil.
-- **Kod:** ~10k satır TS/TSX/CSS (tahmini) · 4 paket + 1 app · 23 sayfa + 15 API rotası.
+- **Commit:** 21 (Conventional) · hepsi main'de, CI yeşil.
+- **Kod:** ~13k satır TS/TSX/CSS (tahmini) · 4 paket + 1 app · 29 sayfa + 20 API rotası.
 - **İçerik:** **198 özgün soru (82 konu) · 19 ders · 12 SVG görsel** — tümü kaynak-izli, `review: draft` (E.6 uyum; uzman onayı bekliyor). İçerik hattı binlerce kaleme ölçeklenmeye hazır (CMS + yönetişim + arama).
 
 ## 7. Kalan İş (ROADMAP sırasıyla)

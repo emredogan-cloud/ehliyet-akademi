@@ -2,6 +2,7 @@ import { eq } from 'drizzle-orm';
 import { getDb, purchases } from '@ea/db';
 import { getSessionUser, json, newId, guarded } from '@/lib/server/auth';
 import { productById } from '@/lib/products';
+import { getEmailProvider, purchaseConfirmationEmail } from '@/lib/server/email';
 
 /** Sahiplik listesi (restore purchases — Epic 3). */
 export const GET = guarded(async (req: Request): Promise<Response> => {
@@ -38,6 +39,7 @@ export const POST = guarded(async (req: Request): Promise<Response> => {
   if (!product) return json({ error: 'Ürün bulunamadı.' }, { status: 404 });
 
   const db = await getDb();
+  let inserted = true;
   try {
     await db.insert(purchases).values({
       id: newId(),
@@ -47,7 +49,12 @@ export const POST = guarded(async (req: Request): Promise<Response> => {
       provider: 'mock',
     });
   } catch {
-    // unique(user,product) — zaten sahip: idempotent davran.
+    inserted = false; // unique(user,product) — zaten sahip: idempotent davran.
+  }
+  if (inserted) {
+    await getEmailProvider()
+      .send(user.email, purchaseConfirmationEmail(product.title, product.priceTRY))
+      .catch(() => {});
   }
   const rows = await db
     .select({ productId: purchases.productId })

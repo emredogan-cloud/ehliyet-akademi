@@ -70,9 +70,10 @@ test('zengin ders: görsel + özet + tekrar kartı çevir + alıştırma geri bi
   await expect(page.getByTestId('practice-explain').first()).toBeVisible();
 });
 
-test('Sürüş Akademisi dersi (park manevra) görselle render olur', async ({ page }) => {
-  await page.goto('/dersler/park-manevra');
-  await expect(page.getByRole('img', { name: /park manevra/i })).toBeVisible();
+test('Sürüş Akademisi dersi (araç hazırlık) görselle render olur', async ({ page }) => {
+  // Ücretsiz (premium olmayan) sürüş dersi: görsel + alıştırma herkese açık.
+  await page.goto('/dersler/arac-hazirlik');
+  await expect(page.getByRole('img', { name: /hazırlık/i })).toBeVisible();
   await expect(page.getByTestId('practice-q').first()).toBeVisible();
 });
 

@@ -1,16 +1,24 @@
 import { eq, sql } from 'drizzle-orm';
-import { getDb, users } from '@ea/db';
+import { getDb, users, emailVerificationTokens } from '@ea/db';
 import {
   hashPassword,
   createSession,
   sessionSetCookie,
+  newToken,
+  sha256,
   json,
   validEmail,
   newId,
   guarded,
 } from '@/lib/server/auth';
+import { checkRateLimit } from '@/lib/server/rate-limit';
+import { getEmailProvider, welcomeEmail, verificationEmail } from '@/lib/server/email';
+import { logger } from '@/lib/server/logger';
 
 export const POST = guarded(async (req: Request): Promise<Response> => {
+  const limited = checkRateLimit(req, { bucket: 'register', limit: 8, windowMs: 60_000 });
+  if (limited) return limited;
+
   let body: { email?: string; password?: string; name?: string };
   try {
     body = await req.json();
@@ -58,6 +66,25 @@ export const POST = guarded(async (req: Request): Promise<Response> => {
   const id = newId();
   await db.insert(users).values({ id, email, name, passwordHash: hashPassword(password), role });
   const token = await createSession(db, id, req.headers.get('user-agent') ?? '');
+
+  // Hoş geldin + e-posta doğrulama (best-effort; e-posta servisi yoksa yalnız loglanır).
+  const verifyToken = newToken();
+  try {
+    await db.insert(emailVerificationTokens).values({
+      tokenHash: sha256(verifyToken),
+      userId: id,
+      expiresAt: new Date(Date.now() + 24 * 3600_000),
+    });
+    const base = process.env.NEXT_PUBLIC_SITE_URL ?? '';
+    const provider = getEmailProvider();
+    await provider.send(email, welcomeEmail(name)).catch(() => {});
+    await provider
+      .send(email, verificationEmail(`${base}/dogrula?token=${verifyToken}`))
+      .catch(() => {});
+  } catch (e) {
+    logger.warn('register_email_failed', { err: String(e) });
+  }
+
   return json(
     { user: { id, email, name, role } },
     { status: 201, setCookie: sessionSetCookie(token) }

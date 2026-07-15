@@ -12,6 +12,9 @@ export default defineConfig({
   use: {
     baseURL: BASE_URL,
     trace: 'on-first-retry',
+    // Çerez rızası önceden verilmiş sayılır → banner testleri obscure etmez.
+    // (Banner'ın kendisi cerez.spec.ts'te rıza temizlenip yeniden yüklenerek test edilir.)
+    storageState: './e2e/storage-state.json',
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
@@ -22,6 +25,7 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     timeout: 240_000,
     // E2E: 'admin-e2e-*' e-postaları admin olur (deterministik RBAC). Prod'da kullanılmaz.
-    env: { ADMIN_EMAIL_PATTERN: '^admin-e2e-' },
+    // RATE_LIMIT_DISABLED: e2e'de çok sayıda kayıt/istek hız sınırına takılmasın (çekirdek birim testli).
+    env: { ADMIN_EMAIL_PATTERN: '^admin-e2e-', RATE_LIMIT_DISABLED: '1' },
   },
 });

@@ -32,6 +32,12 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
             MEB/MTSK ve sürücü kursunuz esastır. Bu bir <em>resmî MEB sınavı değildir</em>; gerçek
             sınav formatında denemedir.
           </p>
+          <nav className="site__legal" aria-label="Yasal bağlantılar">
+            <a href="/gizlilik">Gizlilik</a>
+            <a href="/kullanim-kosullari">Kullanım Koşulları</a>
+            <a href="/cerez-politikasi">Çerez Politikası</a>
+            <a href="/kvkk">KVKK</a>
+          </nav>
         </div>
       </footer>
     </>

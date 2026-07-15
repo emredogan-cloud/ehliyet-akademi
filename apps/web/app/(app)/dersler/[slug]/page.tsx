@@ -6,6 +6,9 @@ import { LESSONS, lessonBySlug } from '@/content/lessons';
 import { LessonFigure } from '@/components/LessonFigure';
 import { LessonPractice } from '@/components/LessonPractice';
 import { LessonJsonLd } from '@/components/JsonLd';
+import { PremiumBadge } from '@/components/PremiumBadge';
+import { PremiumLessonGate } from '@/components/PremiumLessonGate';
+import type { ReactNode } from 'react';
 
 export function generateStaticParams() {
   return LESSONS.map((l) => ({ slug: l.slug }));
@@ -55,7 +58,18 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
       <p className="muted" style={{ marginBottom: 4 }}>
         {SUBJECT_LABEL[lesson.subject]} · {lesson.minutes} dk okuma
       </p>
-      <h1 style={{ margin: '0 0 10px' }}>{lesson.title}</h1>
+      <h1
+        style={{
+          margin: '0 0 10px',
+          display: 'flex',
+          gap: 10,
+          alignItems: 'center',
+          flexWrap: 'wrap',
+        }}
+      >
+        {lesson.title}
+        {lesson.premium && <PremiumBadge />}
+      </h1>
       <p
         style={{
           fontSize: '1.1rem',
@@ -81,61 +95,79 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
 
       <LessonFigure figureId={lesson.figureId} lessonId={lesson.id} />
 
-      {lesson.sections.map((sec, k) => (
-        <section key={k} style={{ margin: '26px 0' }}>
-          <h2
-            style={{
-              fontSize: '1.2rem',
-              display: 'flex',
-              gap: 10,
-              alignItems: 'center',
-              flexWrap: 'wrap',
-            }}
-          >
-            {sec.heading}
-            {sec.badge && <span className="badge">{BADGE_LABEL[sec.badge]}</span>}
-          </h2>
-          <p className="prose" dangerouslySetInnerHTML={{ __html: mdBold(sec.body) }} />
-        </section>
-      ))}
-
-      {lesson.keyTakeaways.length > 0 && (
-        <div className="card" style={{ borderColor: 'var(--primary-100)' }}>
-          <strong>🧭 Özet — aklında kalsın</strong>
-          <ul className="prose" style={{ margin: '8px 0 0' }}>
-            {lesson.keyTakeaways.map((t, k) => (
-              <li key={k}>{t}</li>
+      {(() => {
+        const deep: ReactNode = (
+          <>
+            {lesson.sections.map((sec, k) => (
+              <section key={k} style={{ margin: '26px 0' }}>
+                <h2
+                  style={{
+                    fontSize: '1.2rem',
+                    display: 'flex',
+                    gap: 10,
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                  }}
+                >
+                  {sec.heading}
+                  {sec.badge && <span className="badge">{BADGE_LABEL[sec.badge]}</span>}
+                </h2>
+                <p className="prose" dangerouslySetInnerHTML={{ __html: mdBold(sec.body) }} />
+              </section>
             ))}
-          </ul>
-        </div>
-      )}
 
-      {lesson.mistakes.length > 0 && (
-        <div
-          className="card"
-          style={{ marginTop: 14, background: 'color-mix(in srgb, var(--red) 8%, var(--surface))' }}
-        >
-          <strong style={{ color: 'var(--red)' }}>Sık Yapılan Hatalar</strong>
-          <ul className="prose" style={{ margin: '8px 0 0' }}>
-            {lesson.mistakes.map((m, k) => (
-              <li key={k}>
-                <strong>{m.text}</strong>{' '}
-                <span dangerouslySetInnerHTML={{ __html: 'Çözüm: ' + mdBold(m.fix) }} />
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+            {lesson.keyTakeaways.length > 0 && (
+              <div className="card" style={{ borderColor: 'var(--primary-100)' }}>
+                <strong>🧭 Özet — aklında kalsın</strong>
+                <ul className="prose" style={{ margin: '8px 0 0' }}>
+                  {lesson.keyTakeaways.map((t, k) => (
+                    <li key={k}>{t}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
-      <InfoCard title="🧠 Hafıza Teknikleri" color="var(--blue)" items={lesson.memoryTips} />
-      <InfoCard title="🎯 Sınav Stratejisi" color="var(--primary)" items={lesson.examStrategy} />
-      <InfoCard title="💡 Sınav İpuçları" color="var(--green)" items={lesson.tips} />
+            {lesson.mistakes.length > 0 && (
+              <div
+                className="card"
+                style={{
+                  marginTop: 14,
+                  background: 'color-mix(in srgb, var(--red) 8%, var(--surface))',
+                }}
+              >
+                <strong style={{ color: 'var(--red)' }}>Sık Yapılan Hatalar</strong>
+                <ul className="prose" style={{ margin: '8px 0 0' }}>
+                  {lesson.mistakes.map((m, k) => (
+                    <li key={k}>
+                      <strong>{m.text}</strong>{' '}
+                      <span dangerouslySetInnerHTML={{ __html: 'Çözüm: ' + mdBold(m.fix) }} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
-      <LessonPractice
-        reviewCards={lesson.reviewCards}
-        practice={practice}
-        lessonTitle={lesson.title}
-      />
+            <InfoCard title="🧠 Hafıza Teknikleri" color="var(--blue)" items={lesson.memoryTips} />
+            <InfoCard
+              title="🎯 Sınav Stratejisi"
+              color="var(--primary)"
+              items={lesson.examStrategy}
+            />
+            <InfoCard title="💡 Sınav İpuçları" color="var(--green)" items={lesson.tips} />
+
+            <LessonPractice
+              reviewCards={lesson.reviewCards}
+              practice={practice}
+              lessonTitle={lesson.title}
+            />
+          </>
+        );
+        return lesson.premium ? (
+          <PremiumLessonGate slug={lesson.slug}>{deep}</PremiumLessonGate>
+        ) : (
+          deep
+        );
+      })()}
 
       <div style={{ marginTop: 26, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
         <a className="btn" href="/calis">

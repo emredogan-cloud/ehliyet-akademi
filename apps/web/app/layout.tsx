@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import { SiteJsonLd } from '@/components/JsonLd';
 import { RegisterSW } from '@/components/RegisterSW';
+import { CookieConsent } from '@/components/CookieConsent';
 import './globals.css';
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ehliyet-akademi-nine.vercel.app';
@@ -57,6 +58,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <SiteJsonLd />
         <RegisterSW />
         {children}
+        <CookieConsent />
       </body>
     </html>
   );

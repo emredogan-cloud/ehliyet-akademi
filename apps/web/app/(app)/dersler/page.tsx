@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { SUBJECT_LABEL, type Subject } from '@ea/content-schema';
 import { LESSONS } from '@/content/lessons';
+import { PremiumBadge } from '@/components/PremiumBadge';
 
 export const metadata: Metadata = {
   title: 'Dersler',
@@ -42,7 +43,10 @@ export default function DerslerPage() {
             <div className="grid">
               {items.map((l) => (
                 <a className="card card--link" key={l.id} href={`/dersler/${l.slug}`}>
-                  <span className="badge">{SUBJECT_LABEL[l.subject]}</span>
+                  <span style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+                    <span className="badge">{SUBJECT_LABEL[l.subject]}</span>
+                    {l.premium && <PremiumBadge />}
+                  </span>
                   <h3 style={{ margin: '10px 0 6px' }}>{l.title}</h3>
                   <p className="muted" style={{ margin: 0 }}>
                     {l.summary}

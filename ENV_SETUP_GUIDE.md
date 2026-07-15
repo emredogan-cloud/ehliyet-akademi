@@ -25,12 +25,13 @@ Yerel geliştirme için `apps/web/.env.example` → `apps/web/.env.local` kopyal
   ilk bağlantıda idempotent bootstrap ile kurulur). Şartlar kabul edilene dek auth uçları
   üretimde dostane 503 döner; uygulamanın hesapsız akışları tam çalışır.
 
-### `RESEND_API_KEY` (parola sıfırlama e-postası)
+### `RESEND_API_KEY` / `EMAIL_FROM` (e-posta platformu — Sprint 4 · ADR-009)
 
-- **Ne:** Parola sıfırlama bağlantısını e-postayla göndermek için.
-- **Zorunlu mu:** Hayır. Yoksa sistem dürüst 'devToken' modunda çalışır (token yanıt içinde).
-- **Nasıl alınır:** https://resend.com — ücretsiz kademe.
-- **Production:** anahtar girildiğinde gerçek gönderim adaptörü etkinleşir (sonraki sprint kalemi).
+- **Ne:** İşlemsel e-postalar (doğrulama, parola sıfırlama, satın alma onayı, hoş geldin, destek).
+- **Zorunlu mu:** Hayır. Yoksa **ConsoleEmailProvider** (e-posta gitmez, loglanır); doğrulama/sıfırlama **devToken** modunda (token yanıt içinde).
+- **Nasıl alınır:** https://resend.com — ücretsiz kademe; `EMAIL_FROM` için doğrulanmış gönderen alan adı.
+- **Production:** `RESEND_API_KEY` girilince gerçek gönderim (`ResendEmailProvider`, yeniden-denemeli) otomatik etkinleşir; kod değişmez.
+- **İlgili:** `SUPPORT_EMAIL` (destek talebi kutusu; varsayılan `destek@ehliyetakademi.app`).
 
 ### `AUTH_SECRET`
 
@@ -60,15 +61,17 @@ Yerel geliştirme için `apps/web/.env.example` → `apps/web/.env.local` kopyal
 
 ---
 
-## Ödeme (ROADMAP Faz 16)
+## Ödeme (ROADMAP Faz 16 · Sprint 4 · ADR-008)
 
-### `PAYMENT_PROVIDER` / `LEMONSQUEEZY_API_KEY` / `STRIPE_SECRET_KEY`
+**Model: TEK-SEFERLİK satın alma (abonelik YOK).** Sağlayıcı: **LemonSqueezy (Merchant of Record)**.
 
-- **Ne:** Abonelik + kurs planı (web-first faturalama).
-- **Zorunlu mu:** Hayır. `PAYMENT_PROVIDER=mock` (varsayılan) → sahte checkout + webhook simülasyonu.
-- **Nasıl alınır:** [LemonSqueezy](https://lemonsqueezy.com) (tercih, MoR) / [Stripe](https://stripe.com).
-- **Local:** mock ile satın-alma/iade akışları test edilir (gerçek para yok).
-- **Production:** gerçek anahtar + webhook imza sırrı (`PAYMENT_WEBHOOK_SECRET`).
+### `LEMONSQUEEZY_API_KEY` / `LEMONSQUEEZY_STORE_ID` / `LEMONSQUEEZY_WEBHOOK_SECRET` / `LEMONSQUEEZY_VARIANT_<PRODUCT>`
+
+- **Ne:** Gerçek tek-seferlik tahsilat (hosted checkout + HMAC imzalı webhook + makbuz doğrulaması).
+- **Zorunlu mu:** Hayır. Üçü de yoksa **MockGateway** (gerçek para yok; tam akış demo). Üçü de girilince `LemonSqueezyGateway` otomatik devreye girer.
+- **Variant eşlemesi:** her ürün için `LEMONSQUEEZY_VARIANT_PREMIUM_TEORI`, `..._KOMPLE_B` vb. (ürün id'si BÜYÜK_SNAKE).
+- **Nasıl alınır:** [LemonSqueezy](https://lemonsqueezy.com) — mağaza + ürün/variant + webhook (URL: `/api/webhooks/lemonsqueezy`, secret).
+- **Local/Prod:** mock ile satın-alma akışları test edilir; anahtarlar girilince gerçek tahsilat. **Fiyat her zaman sunucuda katalogdan doğrulanır.**
 
 ---
 
@@ -119,6 +122,18 @@ için (aşağıdaki sıra ile) bootstrap kuralları çalışır. `/admin` ve `/a
   `getSearchProvider()` fabrikasına adaptör eklenir, **uygulama/UI kodu değişmez** (yeniden-yazımsız takılır).
 
 ---
+
+## Üretim sağlamlaştırma (ROADMAP Faz 30/31 · Sprint 4)
+
+| ENV                    | Ne                                        | Zorunlu      | Varsayılan                       |
+| ---------------------- | ----------------------------------------- | ------------ | -------------------------------- |
+| `LOG_LEVEL`            | Yapısal log eşiği (debug/info/warn/error) | Hayır        | prod: `info`, dev: `debug`       |
+| `RATE_LIMIT_DISABLED`  | Hız sınırını kapat (yalnız test/e2e)      | Hayır        | kapalı (sınır aktif); e2e'de `1` |
+| `SUPPORT_EMAIL`        | Destek talebi alıcı kutusu                | Hayır        | `destek@ehliyetakademi.app`      |
+| `NEXT_PUBLIC_SITE_URL` | E-posta bağlantı tabanı (doğrula/sıfırla) | Prod'da evet | prod URL                         |
+
+- Hız sınırlama bellek-içidir (serverless'te örnek-başına); ölçekte Upstash/Redis adaptörü aynı arayüzle takılır.
+- Loglar üretimde tek-satır JSON; bilinen sır anahtarları (key/secret/token/…) redakte edilir.
 
 ## Deploy (Vercel — ROADMAP Faz 21) ✅ KURULU
 

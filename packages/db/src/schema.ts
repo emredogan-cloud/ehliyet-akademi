@@ -7,6 +7,7 @@ import {
   text,
   timestamp,
   integer,
+  boolean,
   jsonb,
   primaryKey,
   uniqueIndex,
@@ -20,10 +21,20 @@ export const users = pgTable(
     name: text('name').notNull().default(''),
     passwordHash: text('password_hash').notNull(),
     role: text('role').notNull().default('user'), // user | editor | admin (Sprint 2 RBAC)
+    emailVerified: boolean('email_verified').notNull().default(false), // Sprint 4 — e-posta doğrulama
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [uniqueIndex('users_email_uq').on(t.email)]
 );
+
+/** E-posta doğrulama tokenları (Sprint 4). */
+export const emailVerificationTokens = pgTable('email_verification_tokens', {
+  tokenHash: text('token_hash').primaryKey(),
+  userId: text('user_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+});
 
 /** Çok-cihaz oturumlar: her giriş bir satır; token'ın yalnız SHA-256 hash'i saklanır. */
 export const sessions = pgTable('sessions', {
@@ -69,6 +80,7 @@ export const purchases = pgTable(
     productId: text('product_id').notNull(),
     priceTRY: integer('price_try').notNull(),
     provider: text('provider').notNull().default('mock'), // mock | lemonsqueezy | stripe
+    externalRef: text('external_ref'), // Sprint 4 — sağlayıcı sipariş/makbuz id'si (idempotent webhook)
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [uniqueIndex('purchases_user_product_uq').on(t.userId, t.productId)]

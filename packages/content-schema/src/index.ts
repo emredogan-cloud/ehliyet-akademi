@@ -125,6 +125,8 @@ export const Lesson = z.object({
   reviewCards: z.array(ReviewCard).default([]),
   practiceQuestionIds: z.array(z.string()).default([]),
   figureId: z.string().optional(),
+  /** Sprint 4 — premium içerik kapısı. true ise ilgili paket olmadan içeriği kilitlidir. */
+  premium: z.boolean().default(false),
 });
 export type Lesson = z.infer<typeof Lesson>;
 /** Yazım tipi: Sprint 3 zenginleştirme alanları girişte opsiyoneldir. */

@@ -1,12 +1,17 @@
 import { eq } from 'drizzle-orm';
 import { getDb, users, passwordResetTokens } from '@ea/db';
 import { newToken, sha256, json, validEmail, guarded } from '@/lib/server/auth';
+import { checkRateLimit } from '@/lib/server/rate-limit';
+import { getEmailProvider, emailConfigured, passwordResetEmail } from '@/lib/server/email';
 
 /**
- * Parola sıfırlama talebi. E-posta servisi (RESEND_API_KEY) yapılandırılmadıysa
- * token yanıtta döner (devToken) — dürüst etiketli geliştirme modu (ENV_SETUP_GUIDE).
+ * Parola sıfırlama talebi. E-posta servisi (RESEND_API_KEY) varsa sıfırlama bağlantısı
+ * e-postayla gönderilir; yoksa token yanıtta döner (devToken — dürüst geliştirme modu).
  */
 export const POST = guarded(async (req: Request): Promise<Response> => {
+  const limited = checkRateLimit(req, { bucket: 'forgot', limit: 5, windowMs: 60_000 });
+  if (limited) return limited;
+
   let body: { email?: string };
   try {
     body = await req.json();
@@ -29,9 +34,9 @@ export const POST = guarded(async (req: Request): Promise<Response> => {
     expiresAt: new Date(Date.now() + 3600_000), // 1 saat
   });
 
-  const emailConfigured = Boolean(process.env.RESEND_API_KEY);
-  if (emailConfigured) {
-    // Gerçek e-posta adaptörü Sprint 2+ (ENV geldiğinde): burada gönderilir.
+  if (emailConfigured()) {
+    const base = process.env.NEXT_PUBLIC_SITE_URL ?? '';
+    await getEmailProvider().send(email, passwordResetEmail(`${base}/sifirla?token=${token}`));
     return json({ ok: true, sent: true });
   }
   return json({

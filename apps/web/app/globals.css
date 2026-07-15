@@ -835,3 +835,112 @@ table.tbl {
     transition: none;
   }
 }
+
+/* ============ Sprint 4 — ticaret, premium, yasal ============ */
+
+/* Premium rozet */
+.premium-badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #7a5b00;
+  background: linear-gradient(90deg, #ffe08a, #ffc84a);
+  border: 1px solid #e0a92e;
+}
+.premium-badge--owned {
+  color: #04231f;
+  background: linear-gradient(90deg, #7ff0e0, #14b8a6);
+  border-color: #0e9384;
+}
+
+/* Kilitli ders (paywall) */
+.paywall {
+  text-align: center;
+  margin-top: 20px;
+  border: 1px dashed var(--border-strong);
+  background: color-mix(in srgb, var(--primary) 5%, var(--surface));
+}
+
+/* Modal (satın alma diyaloğu) */
+.modal-scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 100;
+}
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  max-width: 440px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  animation: modal-in 0.18s ease;
+}
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* Çerez rıza bannerı */
+.cookie-consent {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  z-index: 90;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+  padding: 14px 16px;
+}
+.cookie-consent__body {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 900px;
+  margin: 0 auto;
+  font-size: 0.9rem;
+}
+.cookie-consent__actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Yasal footer bağlantıları */
+.site__legal {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  font-size: 0.85rem;
+}
+
+/* Yasal sayfa okunabilirliği */
+.legal h2 {
+  margin-top: 26px;
+  font-size: 1.15rem;
+}
+.legal p,
+.legal li {
+  line-height: 1.7;
+}
+
+@media (min-width: 720px) {
+  .modal {
+    padding: 26px;
+  }
+}

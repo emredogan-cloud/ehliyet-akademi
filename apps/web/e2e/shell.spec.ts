@@ -25,7 +25,8 @@ test('mobil: çekmece açılır/kapanır', async ({ page }) => {
   await expect(sidebar).not.toBeInViewport();
   await page.getByTestId('drawer-toggle').click();
   await expect(sidebar).toBeInViewport();
-  await page.locator('.scrim').click();
+  // Çekmecenin SAĞINDAKI scrim alanına dokun (çekmece 300px, viewport 390px) — dışarı tıkla-kapat.
+  await page.locator('.scrim').click({ position: { x: 350, y: 400 } });
   await expect(sidebar).not.toBeInViewport();
 });
 

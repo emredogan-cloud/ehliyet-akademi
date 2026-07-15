@@ -79,6 +79,7 @@ export const THEORY_EXTRA_LESSONS: LessonInput[] = [
   {
     id: 'sollama-serit',
     slug: 'sollama-serit',
+    premium: true,
     no: 7,
     subject: 'trafik',
     title: 'Güvenli Sollama ve Şerit Kullanımı',

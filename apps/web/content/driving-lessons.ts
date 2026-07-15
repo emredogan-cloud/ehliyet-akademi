@@ -160,6 +160,7 @@ export const DRIVING_LESSONS: LessonInput[] = [
   {
     id: 'park-manevra',
     slug: 'park-manevra',
+    premium: true,
     no: 17,
     subject: 'pratik',
     title: 'Park Manevraları: Paralel ve Geri Park',
@@ -234,6 +235,7 @@ export const DRIVING_LESSONS: LessonInput[] = [
   {
     id: 'kavsak-uygulama',
     slug: 'kavsak-uygulama',
+    premium: true,
     no: 18,
     subject: 'pratik',
     title: 'Kavşak ve Dönel Kavşak Uygulaması',

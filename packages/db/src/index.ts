@@ -76,6 +76,16 @@ CREATE UNIQUE INDEX IF NOT EXISTS purchases_user_product_uq ON purchases(user_id
 
 ALTER TABLE users ADD COLUMN IF NOT EXISTS role TEXT NOT NULL DEFAULT 'user';
 
+-- Sprint 4: e-posta doğrulama + ödeme makbuz referansı
+ALTER TABLE users ADD COLUMN IF NOT EXISTS email_verified BOOLEAN NOT NULL DEFAULT false;
+ALTER TABLE purchases ADD COLUMN IF NOT EXISTS external_ref TEXT;
+
+CREATE TABLE IF NOT EXISTS email_verification_tokens (
+  token_hash TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  expires_at TIMESTAMPTZ NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS content_items (
   id TEXT PRIMARY KEY,
   type TEXT NOT NULL,

@@ -9,6 +9,8 @@ import { LessonJsonLd } from '@/components/JsonLd';
 import { PremiumBadge } from '@/components/PremiumBadge';
 import { PremiumLessonGate } from '@/components/PremiumLessonGate';
 import { LessonViewTracker } from '@/components/LessonViewTracker';
+import { Callout } from '@/components/ui/Callout';
+import { CompareTable } from '@/components/ui/CompareTable';
 import type { ReactNode } from 'react';
 
 export function generateStaticParams() {
@@ -115,6 +117,8 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
                   {sec.badge && <span className="badge">{BADGE_LABEL[sec.badge]}</span>}
                 </h2>
                 <p className="prose" dangerouslySetInnerHTML={{ __html: mdBold(sec.body) }} />
+                {sec.compare && <CompareTable {...sec.compare} />}
+                {sec.callout && <Callout {...sec.callout} />}
               </section>
             ))}
 

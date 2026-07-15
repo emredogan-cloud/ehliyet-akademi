@@ -5,6 +5,7 @@ import { LESSONS } from '@/content/lessons';
 import { SIGNS } from '@/content/signs';
 import { VEHICLE_PARTS } from '@/content/vehicle';
 import { HeroArt } from '@/components/marketing/HeroArt';
+import { Reveal } from '@/components/ui/Reveal';
 
 export const metadata: Metadata = {
   title: 'B Sınıfı Ehliyet Sınavına Akıllı Hazırlık',
@@ -128,36 +129,41 @@ export default function HomePage() {
         <HeroArt />
       </section>
 
-      <h2 className="section-title">Neler var?</h2>
-      <div className="feature-grid">
-        {FEATURES.map((f) => (
-          <a className="feature-card" key={f.title} href={f.href}>
-            <span className="feature-card__icon" aria-hidden>
-              {f.icon}
-            </span>
-            <strong>{f.title}</strong>
-            <span className="muted" style={{ fontSize: '0.88rem' }}>
-              {f.desc}
-            </span>
-          </a>
-        ))}
-      </div>
-
-      <h2 className="section-title">Öğrenme yolculuğun</h2>
-      <div className="journey-flow">
-        {JOURNEY.map((step, i) => (
-          <div className="journey-flow__step" key={step}>
-            <span className="journey-flow__num">{i + 1}</span>
-            <span>{step}</span>
-            {i < JOURNEY.length - 1 && (
-              <span className="journey-flow__arrow" aria-hidden>
-                →
+      <Reveal as="section">
+        <h2 className="section-title">Neler var?</h2>
+        <div className="feature-grid">
+          {FEATURES.map((f) => (
+            <a className="feature-card" key={f.title} href={f.href}>
+              <span className="feature-card__icon" aria-hidden>
+                {f.icon}
               </span>
-            )}
-          </div>
-        ))}
-      </div>
+              <strong>{f.title}</strong>
+              <span className="muted" style={{ fontSize: '0.88rem' }}>
+                {f.desc}
+              </span>
+            </a>
+          ))}
+        </div>
+      </Reveal>
 
+      <Reveal as="section">
+        <h2 className="section-title">Öğrenme yolculuğun</h2>
+        <div className="journey-flow">
+          {JOURNEY.map((step, i) => (
+            <div className="journey-flow__step" key={step}>
+              <span className="journey-flow__num">{i + 1}</span>
+              <span>{step}</span>
+              {i < JOURNEY.length - 1 && (
+                <span className="journey-flow__arrow" aria-hidden>
+                  →
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+      </Reveal>
+
+      <Reveal as="section">
       <h2 className="section-title">Teorik e-Sınav dağılımı</h2>
       <p className="muted" style={{ marginTop: 0 }}>
         Gerçek e-Sınav: {EXAM_BLUEPRINT.totalQuestions} soru · {EXAM_BLUEPRINT.durationMinutes} dk ·
@@ -188,21 +194,24 @@ export default function HomePage() {
           );
         })}
       </div>
+      </Reveal>
 
-      <h2 className="section-title">Neden Ehliyet Akademi?</h2>
-      <div className="feature-grid">
-        {TRUST.map((t) => (
-          <div className="feature-card feature-card--static" key={t.title}>
-            <span className="feature-card__icon" aria-hidden>
-              {t.icon}
-            </span>
-            <strong>{t.title}</strong>
-            <span className="muted" style={{ fontSize: '0.88rem' }}>
-              {t.desc}
-            </span>
-          </div>
-        ))}
-      </div>
+      <Reveal as="section">
+        <h2 className="section-title">Neden Ehliyet Akademi?</h2>
+        <div className="feature-grid">
+          {TRUST.map((t) => (
+            <div className="feature-card feature-card--static" key={t.title}>
+              <span className="feature-card__icon" aria-hidden>
+                {t.icon}
+              </span>
+              <strong>{t.title}</strong>
+              <span className="muted" style={{ fontSize: '0.88rem' }}>
+                {t.desc}
+              </span>
+            </div>
+          ))}
+        </div>
+      </Reveal>
 
       <section className="cta-band">
         <h2 style={{ margin: '0 0 8px' }}>Hazırlığa bugün başla</h2>

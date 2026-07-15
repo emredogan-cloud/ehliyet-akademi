@@ -29,6 +29,24 @@ test('trafik dersinden işaret galerisine bağlantı', async ({ page }) => {
   await expect(page.getByRole('link', { name: /İşaret galerisi/ })).toBeVisible();
 });
 
+test('ders içi görsel bloklar: callout + karşılaştırma tablosu (Bölüm D)', async ({ page }) => {
+  await page.goto('/dersler/trafik-isaretleri');
+  // Karşılaştırma tablosu (DUR / Yol Ver, renk-şekil) görünür
+  const table = page.locator('table.cmp').first();
+  await expect(table).toBeVisible();
+  await expect(table.getByText('Tehlike uyarısı')).toBeVisible();
+  // Callout vurgu kutusu görünür
+  await expect(page.locator('.callout').first()).toBeVisible();
+  await expect(page.getByText('Sınavda ağır kusur')).toBeVisible();
+});
+
+test('premium boş durum: işaret araması sonuç yoksa', async ({ page }) => {
+  await page.goto('/isaretler');
+  await page.getByTestId('sign-search').fill('zzzxyq');
+  await expect(page.getByTestId('signs-empty')).toBeVisible();
+  await expect(page.getByText(/bulunamadı/)).toBeVisible();
+});
+
 test('araç tanıma: bileşen kartları + görseller (sistemlere göre)', async ({ page }) => {
   await page.goto('/arac');
   await expect(page.getByTestId('arac')).toBeVisible();

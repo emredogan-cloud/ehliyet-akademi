@@ -85,11 +85,30 @@ export type Question = z.infer<typeof Question>;
 /** Yazım tipi: `.default([])` alanları (whyWrong/tags) girişte opsiyoneldir. */
 export type QuestionInput = z.input<typeof Question>;
 
-/** Ders bölümü (rozetli anlatım). */
+/** Vurgu kutusu (callout) — ders içi görsel öne çıkarma. */
+export const Callout = z.object({
+  tone: z.enum(['info', 'success', 'warning', 'danger']),
+  title: z.string().min(2).optional(),
+  text: z.string().min(2),
+});
+export type Callout = z.infer<typeof Callout>;
+
+/** Karşılaştırma tablosu — metin-ağırlıklı anlatımı görselleştirir. */
+export const CompareTable = z.object({
+  caption: z.string().min(2).optional(),
+  headers: z.array(z.string().min(1)).min(2).max(4),
+  rows: z.array(z.array(z.string()).min(2).max(4)).min(1),
+});
+export type CompareTable = z.infer<typeof CompareTable>;
+
+/** Ders bölümü (rozetli anlatım + opsiyonel görsel bloklar). */
 export const LessonSection = z.object({
   heading: z.string().min(2),
   badge: Badge.optional(),
   body: z.string().min(2),
+  /** Program 1 · Bölüm D — bölüm gövdesini görselleştiren opsiyonel bloklar (geriye dönük uyumlu). */
+  callout: Callout.optional(),
+  compare: CompareTable.optional(),
 });
 export type LessonSection = z.infer<typeof LessonSection>;
 

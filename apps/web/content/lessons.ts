@@ -26,11 +26,39 @@ const raw: LessonInput[] = [
         heading: 'İşaretlerin dili: renk ve şekil',
         badge: 'official',
         body: 'Trafik işaretleri renk ve şekilleriyle anlam taşır. Üçgen ve kırmızı kenarlı işaretler genellikle **tehlike uyarısı**; kırmızı daire içindeki işaretler **yasak/tanzim**; mavi işaretler **mecburiyet veya bilgi** anlatır. İşareti önce grubundan tanımak, tek tek ezberlemekten daha güçlüdür.',
+        compare: {
+          caption: 'Renk-şekil grubunu okuyabilirsen yeni bir işareti bile tahmin edebilirsin',
+          headers: ['İşaret tipi', 'Anlamı', 'Örnek'],
+          rows: [
+            ['Üçgen · kırmızı kenar', 'Tehlike uyarısı', 'Kaygan yol, tehlikeli viraj'],
+            ['Kırmızı daire', 'Yasak / tanzim', 'Girişi olmayan yol, hız sınırı'],
+            ['Mavi daire', 'Mecburiyet', 'İleri mecburi yön'],
+            ['Mavi dikdörtgen', 'Bilgi', 'Hastane, otobüs durağı'],
+          ],
+        },
+        callout: {
+          tone: 'info',
+          title: 'Hafıza kancası',
+          text: 'Renk **niyeti**, şekil **grubu** söyler. Kırmızı = "yapma/dikkat", mavi = "yap/bilgi".',
+        },
       },
       {
         heading: 'DUR ve Yol Ver',
         badge: 'official',
         body: 'Sekizgen kırmızı **DUR** işaretinde araç tam durur ve geçiş hakkı olana yol verir. Ters üçgen **Yol Ver** işaretinde gerekirse durarak öncelik verilir. İkisinde de amaç kavşak güvenliğidir.',
+        compare: {
+          headers: ['Ölçüt', 'DUR (sekizgen)', 'Yol Ver (ters üçgen)'],
+          rows: [
+            ['Durmak', 'Her zaman **tam dur**', 'Gerekirse dur'],
+            ['Şekil', 'Sekizgen', 'Ters üçgen'],
+            ['Amaç', 'Koşulsuz durup öncelik ver', 'Uygun boşlukta öncelik ver'],
+          ],
+        },
+        callout: {
+          tone: 'danger',
+          title: 'Sınavda ağır kusur',
+          text: 'DUR levhasında **tekerlekler tam durmadan** yavaşlayıp geçmek, sınavda ve gerçek trafikte ciddi hatadır.',
+        },
       },
       {
         heading: 'Neden önemli?',
@@ -90,11 +118,25 @@ const raw: LessonInput[] = [
         heading: 'Koma (yan yatış) pozisyonu',
         badge: 'official',
         body: 'Bilinci kapalı ama **solunumu olan** kazazedeye yan yatış (koma) pozisyonu verilir. Böylece dil kökünün hava yolunu tıkaması ve kusmukla boğulma önlenir.',
+        callout: {
+          tone: 'warning',
+          title: 'Ayrım',
+          text: 'Solunum **varsa** → koma pozisyonu. Solunum **yoksa** → temel yaşam desteği (göğüs basısı). Önce solunumu değerlendir.',
+        },
       },
       {
         heading: 'Dış kanama',
         badge: 'safety',
         body: 'Dış kanamada ilk yöntem, temiz bezle **doğrudan baskı** ve bölgeyi kalp seviyesinin üstüne kaldırmaktır. Turnike yalnız durdurulamayan, hayatı tehdit eden uzuv kanamalarında son çaredir.',
+        compare: {
+          caption: 'Kanama kontrolünde sıra',
+          headers: ['Yöntem', 'Ne zaman', 'Öncelik'],
+          rows: [
+            ['Doğrudan baskı', 'Her dış kanamada ilk adım', '1 (ilk)'],
+            ['Bölgeyi kalp üstüne kaldırma', 'Baskıya ek olarak', '2'],
+            ['Turnike', 'Durdurulamayan, hayatı tehdit eden uzuv kanaması', 'Son çare'],
+          ],
+        },
       },
     ],
     mistakes: [
@@ -149,6 +191,20 @@ const raw: LessonInput[] = [
         heading: 'Hararet (kırmızı ısı) ikazı',
         badge: 'safety',
         body: 'Isı göstergesi kırmızıya gelirse **güvenli yerde durup** motoru soğutun. Sıcak motorda radyatör/soğutma suyu kapağı **açılmaz** (yanma riski).',
+        compare: {
+          caption: 'Gösterge ikaz rengini oku',
+          headers: ['İkaz rengi', 'Anlamı', 'Davranış'],
+          rows: [
+            ['Kırmızı', 'Acil / ciddi arıza', 'Güvenli yerde **hemen** dur'],
+            ['Sarı / turuncu', 'Uyarı, kontrol gerek', 'En kısa sürede kontrol ettir'],
+            ['Yeşil / mavi', 'Sistem aktif (bilgi)', 'Normal — işlem gerekmez'],
+          ],
+        },
+        callout: {
+          tone: 'danger',
+          title: 'Yanma riski',
+          text: 'Sıcak motorda radyatör kapağını **açma**; basınçlı kaynar su fışkırıp yakabilir. Motor soğusun.',
+        },
       },
     ],
     mistakes: [
@@ -197,11 +253,24 @@ const raw: LessonInput[] = [
         heading: 'Sağdan gelen önceliklidir',
         badge: 'official',
         body: 'Işık veya görevli bulunmayan, **eşit yolların** kesiştiği kavşakta geçiş önceliği **sağdan gelen** araçtadır. Emin değilsen yavaşla; öncelik vermek asla hata değildir.',
+        callout: {
+          tone: 'success',
+          title: 'Altın kural',
+          text: 'Şüphedeysen **yol ver**. Öncelik vermek asla kusur sayılmaz; önceliği zorla almak kaza sebebidir.',
+        },
       },
       {
         heading: 'Ana yol – tali yol',
         badge: 'official',
         body: 'Tali yoldan ana yola çıkan sürücü, **ana yoldaki trafiğe yol vermek** zorundadır. Levhalar (ana yol / yol ver / dur) bu ilişkiyi bildirir.',
+        compare: {
+          headers: ['Durum', 'Öncelik kimde?', 'Sen ne yaparsın?'],
+          rows: [
+            ['Tali yoldan ana yola çıkış', 'Ana yoldaki araç', 'Yol ver, boşluk bekle'],
+            ['Ana yolda düz gidiş', 'Sende', 'Dikkatle devam et'],
+            ['Işıksız eşit kavşak', 'Sağdan gelen', 'Sağdakine yol ver'],
+          ],
+        },
       },
       {
         heading: 'Dönüşte öncelik',
@@ -259,6 +328,11 @@ const raw: LessonInput[] = [
         heading: 'Empati ve hoşgörü',
         badge: 'best',
         body: 'Acemi sürücü, yaşlı yaya, acelesi olan servis... Diğer yol kullanıcısının durumunu anlamak (**empati**), davranışı yumuşatır. Gerekirse **hakkından feragat etmek** olgunluktur.',
+        callout: {
+          tone: 'info',
+          title: 'Adab sorularında ipucu',
+          text: 'Şıklarda **güvenlik + saygı + sakinlik** olan seçenek neredeyse her zaman doğrudur; öfke/inat içeren şık yanlıştır.',
+        },
       },
       {
         heading: 'Geçiş üstünlüğü',

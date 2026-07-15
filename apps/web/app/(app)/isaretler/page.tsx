@@ -14,6 +14,7 @@ import {
   type TrafficSign,
 } from '@/content/signs';
 import { TrafficSign as SignSvg } from '@/components/signs/TrafficSign';
+import { EmptyState } from '@/components/ui/EmptyState';
 
 const CATS: Array<SignCategory | 'all'> = [
   'all',
@@ -116,11 +117,12 @@ export default function IsaretlerPage() {
       </div>
 
       {list.length === 0 ? (
-        <div className="card" data-testid="signs-empty" style={{ marginTop: 16 }}>
-          <p className="muted" style={{ margin: 0 }}>
-            "{q}" için işaret bulunamadı. Farklı bir kelime dene.
-          </p>
-        </div>
+        <EmptyState
+          testId="signs-empty"
+          icon="🔎"
+          title={`"${q}" için işaret bulunamadı`}
+          hint="Farklı bir kelimeyle ara ya da bir kategori seç. Örneğin: hız, viraj, dur, park."
+        />
       ) : (
         <div className="sign-grid" data-testid="signs-gallery">
           {list.map((s) => (

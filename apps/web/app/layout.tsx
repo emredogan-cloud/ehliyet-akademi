@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { SiteJsonLd } from '@/components/JsonLd';
 import { RegisterSW } from '@/components/RegisterSW';
 import { CookieConsent } from '@/components/CookieConsent';
+import { AnalyticsLoader } from '@/components/AnalyticsLoader';
 import './globals.css';
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ehliyet-akademi-nine.vercel.app';
@@ -57,6 +58,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <SiteJsonLd />
         <RegisterSW />
+        <AnalyticsLoader />
         {children}
         <CookieConsent />
       </body>

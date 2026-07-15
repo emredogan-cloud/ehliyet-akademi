@@ -5,10 +5,15 @@
  * yoksa kilit + satın alma diyaloğu. Güvenlik/ilk-yardım dersleri premium işaretlenmez.
  */
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { canAccessLesson, productForLesson } from '@/lib/entitlements';
 import { loadEntitlements } from '@/lib/payments';
 import { productById, type ProductId } from '@/lib/products';
-import { PurchaseDialog } from './PurchaseDialog';
+
+// Performans (Sprint 5): satın alma diyaloğu ilk ders paketinden ayrılır (yalnız kilit açılınca yüklenir).
+const PurchaseDialog = dynamic(() => import('./PurchaseDialog').then((m) => m.PurchaseDialog), {
+  ssr: false,
+});
 
 export function PremiumLessonGate({ slug, children }: { slug: string; children: React.ReactNode }) {
   const [owned, setOwned] = useState<string[] | null>(null);

@@ -27,6 +27,7 @@ function norm(s: string): string {
     .replace(/[^a-z0-9\s]/g, ' ');
 }
 
+// Genel Türkçe dolgu/soru sözcükleri — grounding sinyali taşımaz (halüsinasyon kapısı için genişletildi).
 const STOPWORDS = new Set([
   'nedir',
   'nasil',
@@ -40,12 +41,63 @@ const STOPWORDS = new Set([
   'ile',
   'mi',
   'mu',
+  'kadar',
+  'zaman',
+  'gibi',
+  'daha',
+  'cok',
+  'sonra',
+  'once',
+  'neden',
+  'nerede',
+  'neresi',
+  'kimdir',
+  'kim',
+  'olan',
+  'olarak',
+  'var',
+  'yok',
+  'ise',
+  'ne',
+  'bu',
+  'su',
+  'her',
+  'hem',
+  'ama',
+  'veya',
+  'yani',
+  'gore',
+  'ister',
+  'istiyorum',
+  'oner',
+  'onerir',
+  'nezaman',
 ]);
 
 function tokens(s: string): string[] {
   return norm(s)
     .split(/\s+/)
     .filter((t) => t.length > 2 && !STOPWORDS.has(t));
+}
+
+/**
+ * Önek-duyarlı belirteç eşleşmesi (Türkçe sondan-eklemeli morfoloji için).
+ * qt ile herhangi bir içerik belirteci ct, en az 3 karakterlik ortak ÖNEK paylaşıyorsa eşleşir
+ * (biri diğerinin önekiyse). Böylece "levha/levhanın" eşleşir ama "maçı" ↔ "amacı" gibi
+ * kelime-ORTASI rastlantısal alt-dize eşleşmeleri elenir.
+ */
+function scoreTokens(qs: string[], hayTokens: string[]): number {
+  let score = 0;
+  for (const qt of qs) {
+    for (const ct of hayTokens) {
+      const shared = Math.min(qt.length, ct.length);
+      if (shared >= 3 && (ct.startsWith(qt) || qt.startsWith(ct))) {
+        score += qt.length;
+        break;
+      }
+    }
+  }
+  return score;
 }
 
 export interface Grounding {
@@ -60,18 +112,16 @@ export function retrieve(query: string): Grounding {
   if (!qs.length) return {};
   let bestQ: { q: Question; score: number } | null = null;
   for (const q of allQuestions()) {
-    const hay = norm(q.stem + ' ' + q.topic + ' ' + q.explanation);
-    let score = 0;
-    for (const t of qs) if (hay.includes(t)) score += t.length;
+    const hay = tokens(q.stem + ' ' + q.topic + ' ' + q.explanation);
+    const score = scoreTokens(qs, hay);
     if (score > 0 && (!bestQ || score > bestQ.score)) bestQ = { q, score };
   }
   let bestL: { slug: string; title: string; score: number } | null = null;
   for (const l of LESSONS) {
-    const hay = norm(
+    const hay = tokens(
       l.title + ' ' + l.summary + ' ' + l.sections.map((s) => s.heading + ' ' + s.body).join(' ')
     );
-    let score = 0;
-    for (const t of qs) if (hay.includes(t)) score += t.length;
+    const score = scoreTokens(qs, hay);
     if (score > 0 && (!bestL || score > bestL.score))
       bestL = { slug: l.slug, title: l.title, score };
   }

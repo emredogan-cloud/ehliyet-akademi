@@ -13,6 +13,8 @@ import {
   formatStudyPlan,
   lessonForSubject,
   dueCount,
+  examReadinessAnalysis,
+  formatReadinessAnalysis,
 } from './study';
 
 const NOW = 1_800_000_000_000;
@@ -126,5 +128,23 @@ describe('ders eşlemeleri', () => {
     for (const s of ['trafik', 'ilkyardim', 'motor', 'adab'] as const) {
       expect(lessonForSubject(s)).toBeTruthy();
     }
+  });
+});
+
+describe('examReadinessAnalysis', () => {
+  it('cevap geçmişinden hazırlık skoru + trafik ışığı + en zayıf konular', () => {
+    const answers: AnswerLog[] = [
+      ...[1, 2, 3, 4].map((i) => ans('trafik', 'hiz', i > 2, i)),
+      ans('ilkyardim', 'tyd', false, 5),
+      ans('ilkyardim', 'tyd', false, 6),
+    ];
+    const a = examReadinessAnalysis(answers);
+    expect(a.overall).toBeGreaterThanOrEqual(0);
+    expect(a.overall).toBeLessThanOrEqual(100);
+    expect(['kirmizi', 'sari', 'yesil']).toContain(a.light);
+    expect(a.weakest.length).toBeGreaterThan(0);
+    const msg = formatReadinessAnalysis(a);
+    expect(msg).toMatch(/Hazırlık skorun/);
+    expect(msg).toMatch(/MEB\/MTSK/);
   });
 });

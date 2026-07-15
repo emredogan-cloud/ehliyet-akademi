@@ -13,10 +13,12 @@ import {
 import { allQuestions, questionById } from '@ea/question-bank';
 import {
   statsFromAnswers,
+  computeReadiness,
   selectNext,
   isDue,
   type SrsCard,
   type SelectableQuestion,
+  type TrafficLight,
 } from '@ea/srs-engine';
 import { LESSONS } from '@/content/lessons';
 import type { AnswerLog } from './progress';
@@ -264,6 +266,47 @@ export function formatStudyPlan(plan: StudyPlan): string {
       `${i + 1}. **${stepKindLabel(s.kind)} — ${s.title}**\n   ${s.detail} · [aç](${s.href})`
   );
   return `${plan.summary}\n\n${lines.join('\n')}${DISCLAIMER}`;
+}
+
+/* ---------- sınav hazırlığı analizi ---------- */
+
+export interface ReadinessAnalysis {
+  overall: number; // 0..100
+  light: TrafficLight;
+  predictedPassProbability: number; // 0..1
+  message: string;
+  weakest: WeakTopic[];
+}
+
+/** Cevap geçmişinden sınav hazırlığı analizi (ağırlıklı ustalık + en zayıf konular). */
+export function examReadinessAnalysis(answers: AnswerLog[]): ReadinessAnalysis {
+  const { subjects } = statsFromAnswers(answers);
+  const r = computeReadiness(subjects);
+  return {
+    overall: r.overall,
+    light: r.light,
+    predictedPassProbability: r.predictedPassProbability,
+    message: r.message,
+    weakest: weakTopics(answers, { minAnswered: 1, limit: 3 }),
+  };
+}
+
+/** Sınav hazırlığı analizini sohbet mesajına dönüştürür (grounded). */
+export function formatReadinessAnalysis(a: ReadinessAnalysis): string {
+  const lightLabel =
+    a.light === 'yesil' ? '🟢 Yeşil' : a.light === 'sari' ? '🟡 Sarı' : '🔴 Kırmızı';
+  const lines = [
+    `**Hazırlık skorun: %${a.overall}** (${lightLabel}) · tahmini geçme olasılığı %${Math.round(a.predictedPassProbability * 100)}.`,
+    a.message,
+  ];
+  if (a.weakest.length) {
+    lines.push(
+      '\nEn çok gelişime açık konular: ' +
+        a.weakest.map((w) => `**${w.topic}** (%${Math.round(w.mastery * 100)})`).join(', ') +
+        '.'
+    );
+  }
+  return lines.join('\n') + DISCLAIMER;
 }
 
 /** Yanlış cevabın KANITA DAYALI açıklaması — soru açıklaması + çeldirici notu + ders bağlantısı. */

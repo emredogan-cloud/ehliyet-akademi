@@ -16,6 +16,8 @@ import {
   weakTopics,
   formatWeakTopics,
   personalizedReview,
+  examReadinessAnalysis,
+  formatReadinessAnalysis,
 } from '@/lib/study';
 
 /** Çok hafif markdown: **kalın** + [link](url). Girdi kendi ürettiğimiz metindir. */
@@ -34,11 +36,12 @@ const SUGGESTIONS = [
   'Rampada geri kaymamak için ne yapılır?',
 ];
 
-type Action = 'plan' | 'weak' | 'review';
+type Action = 'plan' | 'weak' | 'review' | 'readiness';
 const ACTIONS: Array<{ id: Action; label: string }> = [
   { id: 'plan', label: '📋 Ne çalışmalıyım?' },
   { id: 'weak', label: '🎯 Zayıf konularım' },
   { id: 'review', label: '🔁 Kişisel tekrar hazırla' },
+  { id: 'readiness', label: '📊 Sınav hazırlığım nasıl?' },
 ];
 
 export function AICoach() {
@@ -62,11 +65,25 @@ export function AICoach() {
     push('user', q);
     setInput('');
     setBusy(true);
-    const answer = await getAIProvider().ask(q);
-    track({
-      name: 'ai_question_asked',
-      props: { grounded: !answer.includes('eşleşme bulamadım') },
-    });
+    let answer = '';
+    let grounded = true;
+    try {
+      // Sunucu grounded AI (model soyutlaması + halüsinasyon kapısı + fallback).
+      const res = await fetch('/api/ai/ask', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ question: q }),
+      });
+      if (!res.ok) throw new Error('http');
+      const d = (await res.json()) as { answer: string; grounded: boolean };
+      answer = d.answer;
+      grounded = d.grounded;
+    } catch {
+      // Çevrimdışı/sunucu hatası → yerel grounded mock (asla kırılmaz).
+      answer = await getAIProvider().ask(q);
+      grounded = !answer.includes('eşleşme bulamadım');
+    }
+    track({ name: 'ai_question_asked', props: { grounded } });
     push('assistant', answer);
     setBusy(false);
   }
@@ -85,6 +102,9 @@ export function AICoach() {
     } else if (action === 'weak') {
       userLabel = 'Zayıf konularım neler?';
       reply = formatWeakTopics(weakTopics(answers, { minAnswered: 2, limit: 6 }));
+    } else if (action === 'readiness') {
+      userLabel = 'Sınav hazırlığım nasıl?';
+      reply = formatReadinessAnalysis(examReadinessAnalysis(answers));
     } else {
       userLabel = 'Bana kişisel bir tekrar seti hazırla.';
       const ids = personalizedReview(answers, cards, now, 10);

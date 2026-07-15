@@ -28,3 +28,12 @@ test('trafik dersinden işaret galerisine bağlantı', async ({ page }) => {
   await page.goto('/dersler/trafik-isaretleri');
   await expect(page.getByRole('link', { name: /İşaret galerisi/ })).toBeVisible();
 });
+
+test('araç tanıma: bileşen kartları + görseller (sistemlere göre)', async ({ page }) => {
+  await page.goto('/arac');
+  await expect(page.getByTestId('arac')).toBeVisible();
+  const parts = page.getByTestId('vehicle-part');
+  expect(await parts.count()).toBeGreaterThan(15);
+  await expect(page.getByRole('img', { name: 'Akü' })).toBeVisible();
+  await expect(page.getByTestId('vsys-motor-bolmesi')).toBeVisible();
+});

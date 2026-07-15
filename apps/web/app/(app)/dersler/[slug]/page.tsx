@@ -180,6 +180,11 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
             🚸 İşaret galerisi
           </a>
         )}
+        {(lesson.subject === 'motor' || lesson.subject === 'pratik') && (
+          <a className="btn btn--ghost" href="/arac">
+            🚙 Araç tanıma
+          </a>
+        )}
         <a className="btn btn--ghost" href="/dersler">
           Tüm dersler
         </a>

@@ -15,10 +15,15 @@ import {
 import { SEED_QUESTIONS } from './questions';
 import { EXTRA_QUESTIONS } from './questions-2';
 import { TRAFIK_QUESTIONS } from './questions-trafik';
+import { TRAFIK_QUESTIONS_2 } from './questions-trafik-2';
 import { ILKYARDIM_QUESTIONS } from './questions-ilkyardim';
+import { ILKYARDIM_QUESTIONS_2 } from './questions-ilkyardim-2';
 import { MOTOR_QUESTIONS } from './questions-motor';
+import { MOTOR_QUESTIONS_2 } from './questions-motor-2';
 import { ADAB_QUESTIONS } from './questions-adab';
+import { ADAB_QUESTIONS_2 } from './questions-adab-2';
 import { PRATIK_QUESTIONS } from './questions-pratik';
+import { PRATIK_QUESTIONS_2 } from './questions-pratik-2';
 
 export { SEED_QUESTIONS, EXTRA_QUESTIONS };
 
@@ -27,10 +32,15 @@ const RAW: QuestionInput[] = [
   ...SEED_QUESTIONS,
   ...EXTRA_QUESTIONS,
   ...TRAFIK_QUESTIONS,
+  ...TRAFIK_QUESTIONS_2,
   ...ILKYARDIM_QUESTIONS,
+  ...ILKYARDIM_QUESTIONS_2,
   ...MOTOR_QUESTIONS,
+  ...MOTOR_QUESTIONS_2,
   ...ADAB_QUESTIONS,
+  ...ADAB_QUESTIONS_2,
   ...PRATIK_QUESTIONS,
+  ...PRATIK_QUESTIONS_2,
 ];
 
 /** Doğrulanmış, varsayılanları dolu banka (yükleme anında parse — bozuk içerik build'i kırar). */

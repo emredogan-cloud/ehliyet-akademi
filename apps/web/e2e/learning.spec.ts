@@ -49,3 +49,44 @@ test('yeni dersler yayında: kavşak + trafik adabı', async ({ page }) => {
   await expect(page.getByRole('link', { name: /Kavşaklar ve Geçiş Önceliği/ })).toBeVisible();
   await expect(page.getByRole('link', { name: /Trafik Adabı: Saygı/ })).toBeVisible();
 });
+
+/* ---------- Sprint 3 — genişletilmiş öğrenme deneyimi ---------- */
+
+test('zengin ders: görsel + özet + tekrar kartı çevir + alıştırma geri bildirimi', async ({
+  page,
+}) => {
+  await page.goto('/dersler/hiz-takip');
+  await expect(page.getByRole('img', { name: /takip mesafesi/i })).toBeVisible();
+  await expect(page.getByText('Özet — aklında kalsın')).toBeVisible();
+
+  const card = page.getByTestId('review-card').first();
+  await expect(card).toBeVisible();
+  await card.click();
+  await expect(card).toHaveAttribute('aria-pressed', 'true');
+
+  const opt = page.getByTestId('practice-opt').first();
+  await expect(opt).toBeVisible();
+  await opt.click();
+  await expect(page.getByTestId('practice-explain').first()).toBeVisible();
+});
+
+test('Sürüş Akademisi dersi (park manevra) görselle render olur', async ({ page }) => {
+  await page.goto('/dersler/park-manevra');
+  await expect(page.getByRole('img', { name: /park manevra/i })).toBeVisible();
+  await expect(page.getByTestId('practice-q').first()).toBeVisible();
+});
+
+test('çalışma planı: adımlar + ustalık radar', async ({ page }) => {
+  await page.goto('/calisma-plani');
+  await expect(page.getByTestId('study-plan')).toBeVisible();
+  await expect(page.getByTestId('plan-steps')).toBeVisible();
+  await expect(page.getByRole('img', { name: /ustalık radar/i })).toBeVisible();
+});
+
+test('AI Koç: kişisel rehberlik (ne çalışmalıyım) grounded yanıt verir', async ({ page }) => {
+  await page.goto('/ai-koc');
+  await page.getByTestId('coach-action-plan').click();
+  const ai = page.getByTestId('msg-ai');
+  await expect(ai).toBeVisible();
+  await expect(ai).toContainText('MEB/MTSK');
+});

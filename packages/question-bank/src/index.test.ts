@@ -57,4 +57,23 @@ describe('soru bankası bütünlüğü', () => {
     expect(counts['motor']).toBeGreaterThanOrEqual(dist.motor);
     expect(counts['adab']).toBeGreaterThanOrEqual(dist.adab);
   });
+
+  it('Sprint 3: banka anlamlı biçimde genişledi (≥150 soru, her ders derinleşti)', () => {
+    expect(SEED_QUESTIONS.length).toBeGreaterThanOrEqual(150);
+    const counts = subjectCounts();
+    // Her teorik ders bir sınav-dağılımından fazlasını içerir (çeşitlilik için tampon).
+    expect(counts['trafik']).toBeGreaterThanOrEqual(40);
+    expect(counts['ilkyardim']).toBeGreaterThanOrEqual(25);
+    expect(counts['motor']).toBeGreaterThanOrEqual(25);
+    expect(counts['adab']).toBeGreaterThanOrEqual(20);
+    expect(counts['pratik']).toBeGreaterThanOrEqual(20);
+  });
+
+  it('Sprint 3: zenginleştirilmiş metaveri — yeni sorular whyWrong/objective/tags taşır', () => {
+    const enriched = allQuestions().filter(
+      (q) => (q.whyWrong?.length ?? 0) > 0 && q.objective && (q.tags?.length ?? 0) > 0
+    );
+    // En az 140 soru tam zenginleştirilmiş metaveriye sahip (Sprint 3 eklemeleri).
+    expect(enriched.length).toBeGreaterThanOrEqual(140);
+  });
 });

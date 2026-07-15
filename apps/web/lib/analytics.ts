@@ -12,7 +12,7 @@ export type AnalyticsEvent =
       props: { correct: number; total: number; streak: number };
     }
   | { name: 'purchase_completed'; props: { productId: string; priceTRY: number } }
-  | { name: 'ai_question_asked'; props: { grounded: boolean } };
+  | { name: 'ai_question_asked'; props: { grounded: boolean; action?: string } };
 
 export interface AnalyticsSink {
   track(e: AnalyticsEvent): void;

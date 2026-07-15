@@ -64,6 +64,14 @@ export const Question = z
     answerIndex: z.number().int().nonnegative(),
     explanation: z.string().min(8),
     badge: Badge.optional(),
+    /**
+     * Sprint 3 — zenginleştirilmiş öğrenme metaverisi (hepsi opsiyonel, geriye dönük uyumlu).
+     * `whyWrong`: çeldiricilerin neden yanlış olduğu (öğretici geri bildirim).
+     * `objective`: sorunun ölçtüğü öğrenme kazanımı. `tags`: konu etiketleri (arama/SRS/filtre).
+     */
+    whyWrong: z.array(z.string().min(3)).default([]),
+    objective: z.string().min(4).optional(),
+    tags: z.array(z.string().min(2)).default([]),
     /** İçerik yönetişimi: özgünlük + uzman onay izi. */
     review: ReviewStatus.default('draft'),
     reviewedBy: z.string().optional(),
@@ -74,6 +82,8 @@ export const Question = z
     path: ['answerIndex'],
   });
 export type Question = z.infer<typeof Question>;
+/** Yazım tipi: `.default([])` alanları (whyWrong/tags) girişte opsiyoneldir. */
+export type QuestionInput = z.input<typeof Question>;
 
 /** Ders bölümü (rozetli anlatım). */
 export const LessonSection = z.object({
@@ -82,6 +92,13 @@ export const LessonSection = z.object({
   body: z.string().min(2),
 });
 export type LessonSection = z.infer<typeof LessonSection>;
+
+/** Tekrar kartı (aktif hatırlama) — ön yüz soru/ipucu, arka yüz cevap. */
+export const ReviewCard = z.object({
+  front: z.string().min(2),
+  back: z.string().min(2),
+});
+export type ReviewCard = z.infer<typeof ReviewCard>;
 
 export const Lesson = z.object({
   id: z.string().regex(/^[a-z0-9-]+$/),
@@ -97,8 +114,21 @@ export const Lesson = z.object({
   tips: z.array(z.string()).default([]),
   quizQuestionIds: z.array(z.string()).default([]),
   references: z.array(z.string()).default([]),
+  /**
+   * Sprint 3 — derinleştirilmiş ders yapısı (hepsi opsiyonel, geriye dönük uyumlu).
+   * memoryTips: hafıza teknikleri · examStrategy: sınav stratejisi · keyTakeaways: özet maddeleri
+   * reviewCards: aktif hatırlama kartları · practiceQuestionIds: alıştırma soruları · figureId: görsel eşlemesi
+   */
+  memoryTips: z.array(z.string().min(3)).default([]),
+  examStrategy: z.array(z.string().min(3)).default([]),
+  keyTakeaways: z.array(z.string().min(3)).default([]),
+  reviewCards: z.array(ReviewCard).default([]),
+  practiceQuestionIds: z.array(z.string()).default([]),
+  figureId: z.string().optional(),
 });
 export type Lesson = z.infer<typeof Lesson>;
+/** Yazım tipi: Sprint 3 zenginleştirme alanları girişte opsiyoneldir. */
+export type LessonInput = z.input<typeof Lesson>;
 
 /** Gerçek e-Sınav yapısı — ROADMAP C.1 (doğrulanmış dağılım). */
 export const EXAM_BLUEPRINT = {

@@ -5,12 +5,12 @@
  * bilgisi; tümü KENDİ İFADEMİZLE (hiçbir uygulama/site sorusu kopyalanmadı — ROADMAP C.4/E.6).
  * `review: 'draft'` → yayından önce alan uzmanı onayı gerekir.
  */
-import type { Question } from '@ea/content-schema';
+import type { QuestionInput } from '@ea/content-schema';
 
 const SRC = 'Resmî MEB/ODSGM müfredatı ve Karayolları Trafik mevzuatı (özgün ifade)';
 const SRC_FA = 'Resmî temel ilk yardım bilgisi (özgün ifade) — uzman onayı bekliyor';
 
-export const EXTRA_QUESTIONS: Question[] = [
+export const EXTRA_QUESTIONS: QuestionInput[] = [
   // ——— TRAFİK VE ÇEVRE (+17 → toplam 23) ———
   {
     id: 'trafik-007',

@@ -1,10 +1,12 @@
 /**
- * Teorik akademi dersleri (ROADMAP Faz 9/10). İçerik ADR-005 şemasıyla doğrulanır.
- * Özgün içerik (ROADMAP E.6). Başlangıç kümesi; Faz 9 ile 4 dersin tümüne genişletilir.
+ * Akademi dersleri (ROADMAP Faz 9/10 · Sprint 3). İçerik ADR-005 şemasıyla doğrulanır.
+ * Özgün içerik (ROADMAP E.6). Çekirdek 5 ders + genişletilmiş teorik (9) + Sürüş Akademisi (5) = 19.
  */
-import { parseLesson, type Lesson } from '@ea/content-schema';
+import { parseLesson, type Lesson, type LessonInput } from '@ea/content-schema';
+import { THEORY_EXTRA_LESSONS } from './theory-lessons';
+import { DRIVING_LESSONS } from './driving-lessons';
 
-const raw: Lesson[] = [
+const raw: LessonInput[] = [
   {
     id: 'trafik-isaretleri',
     slug: 'trafik-isaretleri',
@@ -48,6 +50,20 @@ const raw: Lesson[] = [
     ],
     tips: ['Renk-şekil grubunu öğrenin: yeni bir işareti bile grubundan tahmin edebilirsiniz.'],
     quizQuestionIds: ['trafik-001', 'trafik-003'],
+    practiceQuestionIds: ['trafik-101', 'trafik-108', 'trafik-115'],
+    figureId: 'signs',
+    keyTakeaways: [
+      'Üçgen + kırmızı kenar = tehlike uyarısı.',
+      'Kırmızı daire = yasak/tanzim; mavi = mecburiyet/bilgi.',
+      'DUR sekizgeninde araç tam durur.',
+    ],
+    reviewCards: [
+      { front: 'Üçgen, kırmızı kenarlı işaret ne anlatır?', back: 'Tehlike uyarısı.' },
+      {
+        front: 'Sekizgen kırmızı DUR işaretinde ne yapılır?',
+        back: 'Tam durup geçiş hakkı olana yol verilir.',
+      },
+    ],
     references: ['Karayolları Trafik Yönetmeliği — işaretler'],
   },
   {
@@ -89,6 +105,20 @@ const raw: Lesson[] = [
     ],
     tips: ['ABC sırasını bir cümle olarak ezberleyin: "Hava - Soluk - Dolaşım".'],
     quizQuestionIds: ['ilkyardim-001', 'ilkyardim-003', 'ilkyardim-005'],
+    practiceQuestionIds: ['ilkyardim-101', 'ilkyardim-110', 'ilkyardim-118'],
+    figureId: 'abc',
+    keyTakeaways: [
+      'Önce olay yeri ve kendi güvenliğin, sonra ABC.',
+      'Bilinci kapalı ama solunumu olan kazazedeye koma pozisyonu.',
+      'Dış kanamada ilk yöntem doğrudan baskı.',
+    ],
+    reviewCards: [
+      { front: 'İlk yardımda ABC neyi ifade eder?', back: 'Hava yolu, Solunum, Dolaşım.' },
+      {
+        front: 'Bilinci kapalı, solunumu olan kazazedeye hangi pozisyon?',
+        back: 'Koma (yan yatış) pozisyonu.',
+      },
+    ],
     references: ['Resmî temel ilk yardım rehberleri — uzman onayı gereklidir'],
   },
   {
@@ -129,6 +159,23 @@ const raw: Lesson[] = [
     ],
     tips: ['Gösterge panelinde kırmızı ikaz = ciddi/acil; sarı ikaz = dikkat/kontrol.'],
     quizQuestionIds: ['motor-001', 'motor-002', 'motor-005'],
+    practiceQuestionIds: ['motor-101', 'motor-110', 'motor-120'],
+    figureId: 'dashboard',
+    keyTakeaways: [
+      'Motor yağı yağlar; fren yavaşlatır; akü elektrik depolar.',
+      'ABS ani frende tekerlek kilitlenmesini önler.',
+      'Kırmızı ikaz = dur/acil; sarı ikaz = en kısa sürede kontrol.',
+    ],
+    reviewCards: [
+      {
+        front: 'ABS ani frenlemede ne sağlar?',
+        back: 'Tekerlek kilitlenmesini önler, direksiyon hakimiyeti korunur.',
+      },
+      {
+        front: 'Hararet ikazı yanınca ne yapılır?',
+        back: 'Güvenli yerde durup motoru soğutmak; sıcakken radyatör kapağı açılmaz.',
+      },
+    ],
     references: ['Araç tekniği temel bilgisi'],
   },
   {
@@ -175,6 +222,17 @@ const raw: Lesson[] = [
     ],
     tips: ['Kavşağa yaklaşırken sol-ileri-sağ tarayın; yeşilde bile kısa kontrol yapın.'],
     quizQuestionIds: ['trafik-003', 'trafik-011', 'trafik-012'],
+    practiceQuestionIds: ['trafik-102', 'trafik-106', 'trafik-116'],
+    figureId: 'junction',
+    keyTakeaways: [
+      'Işıksız eşit kavşakta sağdaki önce geçer.',
+      'Tali yoldan çıkan ana yola yol verir.',
+      'Sola dönen, karşıdan düz gelene yol verir.',
+    ],
+    reviewCards: [
+      { front: 'Işıksız eşit kavşakta öncelik kimde?', back: 'Sağdan gelen araçta.' },
+      { front: 'Tali yoldan ana yola çıkarken?', back: 'Ana yoldaki trafiğe yol verilir.' },
+    ],
     references: ['Karayolları Trafik Yönetmeliği — kavşaklarda geçiş hakkı'],
   },
   {
@@ -218,12 +276,32 @@ const raw: Lesson[] = [
       'Sınavda da adab sorularının mantığı hep aynıdır: güvenlik + saygı + sakinlik olan şık doğrudur.',
     ],
     quizQuestionIds: ['adab-001', 'adab-002', 'adab-003', 'adab-005'],
+    practiceQuestionIds: ['adab-101', 'adab-108', 'adab-115'],
+    keyTakeaways: [
+      'Trafikte hataya misillemeyle karşılık verme.',
+      'Empati ve hoşgörü kazayı önler.',
+      'Geçiş üstünlüğü olan araca güvenle yol aç.',
+    ],
+    reviewCards: [
+      {
+        front: 'Öfkeli bir sürücüye en doğru tepki?',
+        back: 'Sakin kalıp mesafe açmak; inatlaşmamak.',
+      },
+      {
+        front: 'Sireni açık ambulans yaklaşınca?',
+        back: 'Sağa yanaşıp yavaşlamak, gerekirse durmak.',
+      },
+    ],
     references: ['MEB Trafik Adabı müfredatı'],
   },
 ];
 
-/** Şema doğrulaması modül yüklenirken çalışır — bozuk içerik build’i kırar. */
-export const LESSONS: Lesson[] = raw.map(parseLesson);
+/**
+ * Tüm dersler: çekirdek 5 + genişletilmiş teorik (9) + Sürüş Akademisi (5).
+ * Şema doğrulaması modül yüklenirken çalışır — bozuk içerik build'i kırar (varsayılanlar dolar).
+ */
+const ALL_RAW: LessonInput[] = [...raw, ...THEORY_EXTRA_LESSONS, ...DRIVING_LESSONS];
+export const LESSONS: Lesson[] = ALL_RAW.map(parseLesson).sort((a, b) => a.no - b.no);
 
 export function lessonBySlug(slug: string): Lesson | undefined {
   return LESSONS.find((l) => l.slug === slug);

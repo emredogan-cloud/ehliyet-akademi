@@ -7,12 +7,12 @@
  * Not: Bu seed, motorun çalıştığını kanıtlayan başlangıç kümesidir; ROADMAP Faz 11
  * üretim hattı ile konu başına 100+'a genişletilir.
  */
-import type { Question } from '@ea/content-schema';
+import type { QuestionInput } from '@ea/content-schema';
 
 const SRC = 'Resmî MEB/ODSGM müfredatı ve Karayolları Trafik mevzuatı (özgün ifade)';
 const SRC_FA = 'Resmî temel ilk yardım bilgisi (özgün ifade) — uzman onayı bekliyor';
 
-export const SEED_QUESTIONS: Question[] = [
+export const SEED_QUESTIONS: QuestionInput[] = [
   // ——— TRAFİK VE ÇEVRE BİLGİSİ ———
   {
     id: 'trafik-001',

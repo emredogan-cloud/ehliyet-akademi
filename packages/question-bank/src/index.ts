@@ -1,15 +1,40 @@
 /**
  * @ea/question-bank — özgün soru bankası + erişim yardımcıları.
  * ROADMAP Faz 11/12. İçerik hukuku: C.4/E.6 (özgün; kopya yasak).
+ *
+ * Sprint 3: banka konu başına genişletildi (145 yeni özgün soru). Ham kayıtlar YÜKLENİRKEN
+ * Zod ile parse edilir → varsayılanlar (whyWrong/tags) dolar ve bozuk içerik anında yakalanır.
  */
-import { type Question, type Subject, validateBank } from '@ea/content-schema';
+import {
+  parseQuestion,
+  validateBank,
+  type Question,
+  type QuestionInput,
+  type Subject,
+} from '@ea/content-schema';
 import { SEED_QUESTIONS } from './questions';
 import { EXTRA_QUESTIONS } from './questions-2';
+import { TRAFIK_QUESTIONS } from './questions-trafik';
+import { ILKYARDIM_QUESTIONS } from './questions-ilkyardim';
+import { MOTOR_QUESTIONS } from './questions-motor';
+import { ADAB_QUESTIONS } from './questions-adab';
+import { PRATIK_QUESTIONS } from './questions-pratik';
 
 export { SEED_QUESTIONS, EXTRA_QUESTIONS };
 
-/** Birleşik banka (seed + genişletme; ileride CMS/DB ile birleşir). */
-const BANK: Question[] = [...SEED_QUESTIONS, ...EXTRA_QUESTIONS];
+/** Ham kayıtlar (seed + genişletmeler). İleride CMS/DB ile birleşir. */
+const RAW: QuestionInput[] = [
+  ...SEED_QUESTIONS,
+  ...EXTRA_QUESTIONS,
+  ...TRAFIK_QUESTIONS,
+  ...ILKYARDIM_QUESTIONS,
+  ...MOTOR_QUESTIONS,
+  ...ADAB_QUESTIONS,
+  ...PRATIK_QUESTIONS,
+];
+
+/** Doğrulanmış, varsayılanları dolu banka (yükleme anında parse — bozuk içerik build'i kırar). */
+const BANK: Question[] = RAW.map(parseQuestion);
 
 /** Tüm banka. */
 export function allQuestions(): Question[] {
@@ -31,7 +56,14 @@ export function subjectCounts(): Record<string, number> {
   return out;
 }
 
+/** Konu bazlı adet dağılımı (Sprint 3 kapsama raporu için). */
+export function topicCounts(): Record<string, number> {
+  const out: Record<string, number> = {};
+  for (const q of BANK) out[q.topic] = (out[q.topic] ?? 0) + 1;
+  return out;
+}
+
 /** Bankanın bütünlük doğrulaması — testte ve CI verify'de kullanılır. */
 export function verifyBank() {
-  return validateBank(BANK);
+  return validateBank(RAW);
 }

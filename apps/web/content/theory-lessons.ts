@@ -24,16 +24,36 @@ export const THEORY_EXTRA_LESSONS: LessonInput[] = [
         heading: 'Yol türüne göre hız sınırları',
         badge: 'official',
         body: 'Otomobil için azami hız, yolun türüne göre değişir: yerleşim yeri içinde **50 km/s**, yerleşim yeri dışındaki bölünmemiş yollarda **90 km/s**, bölünmüş yollarda **110 km/s** ve otoyolda **120 km/s**. Bu değerler tavan sınırdır; hava, görüş ve yol durumu kötüyse yasal sınırın altına inmek zorunludur. Levha varsa levhadaki düşük değer geçerlidir.',
+        compare: {
+          caption: 'Otomobil için yol türüne göre azami hız',
+          headers: ['Yol türü', 'Azami hız'],
+          rows: [
+            ['Yerleşim yeri içi', '**50 km/s**'],
+            ['Bölünmemiş şehirlerarası yol', '**90 km/s**'],
+            ['Bölünmüş yol', '**110 km/s**'],
+            ['Otoyol', '**120 km/s**'],
+          ],
+        },
       },
       {
         heading: 'İki saniye kuralı',
         badge: 'safety',
         body: 'Güvenli takip mesafesi metreyle değil, zamanla ölçülür. Öndeki araç sabit bir noktayı (levha, ağaç) geçtiğinde "bir-saniye, iki-saniye" diye sayın; siz aynı noktaya iki saniyeden önce ulaşıyorsanız **çok yakınsınız**. İki saniye, tepki süreniz artı frenleme için gereken en az boşluğu bırakır; hız arttıkça bu süre daha uzun bir mesafeye karşılık gelir.',
+        callout: {
+          tone: 'info',
+          title: 'Aklında kalsın',
+          text: 'Mesafeyi metreyle değil zamanla ölç: öndeki araç bir noktayı geçince **iki saniye** sayabiliyorsan mesafe güvenlidir.',
+        },
       },
       {
         heading: 'Islak ve kötü havada mesafe',
         badge: 'safety',
         body: 'Yağmur, kar, buz veya sisde lastiklerin yola tutunması azalır ve fren mesafesi belirgin biçimde uzar. Bu koşullarda takip mesafesini **iki katına**, buzlanmada daha da fazlaya çıkarın. Görüşün düştüğü her durumda hızı da düşürmek, mesafeyi büyütmenin en kolay yoludur.',
+        callout: {
+          tone: 'warning',
+          title: 'Islak zeminde dikkat',
+          text: 'Yağmur, kar veya buzda fren mesafesi uzar; takip mesafeni **en az iki katına** çıkar ve hızını düşür.',
+        },
       },
       {
         heading: 'Neden bu kadar önemli?',
@@ -96,6 +116,11 @@ export const THEORY_EXTRA_LESSONS: LessonInput[] = [
         heading: 'Sollama soldan yapılır',
         badge: 'official',
         body: 'Kural olarak öndeki araç **sol şeritten** geçilir; sağdan sollama yasaktır. Sollamadan önce ayna kontrolü yapılır, sol sinyal verilir ve arkadan hızlı bir aracın gelmediğinden emin olunur. Geçiş bittiğinde sağ sinyalle güvenli biçimde tekrar sağ şeride dönülür. İstisna: dönel kavşak ve trafiğin şeritlere ayrıldığı durumlar farklı işler.',
+        callout: {
+          tone: 'danger',
+          title: 'Sağdan sollama yasak',
+          text: 'Öndeki araç kural olarak **soldan** geçilir; sağdan sollamak kural ihlalidir ve kör noktada kaza riskini artırır.',
+        },
       },
       {
         heading: 'Karşı yön görüşü şart',
@@ -106,6 +131,17 @@ export const THEORY_EXTRA_LESSONS: LessonInput[] = [
         heading: 'Sollamanın yasak olduğu yerler',
         badge: 'official',
         body: 'Tepe üstü, keskin viraj, yaya geçidi, kavşak, köprü ve tünel gibi görüşün kısıtlı veya çakışma riskinin yüksek olduğu yerlerde sollama **yasaktır**. Kesik çizginin devamlı (tek/çift düz) çizgiye döndüğü yerde de şerit değiştirilmez. Bu noktalar tam da kaza olasılığının en yüksek olduğu yerlerdir.',
+        compare: {
+          caption: 'Sollamanın yasak olduğu yerler ve nedeni',
+          headers: ['Yer', 'Neden yasak'],
+          rows: [
+            ['Tepe üstü', 'Karşı yön görülemez'],
+            ['Keskin viraj', 'Görüş kısıtlıdır'],
+            ['Yaya geçidi', 'Yaya aniden çıkabilir'],
+            ['Kavşak', 'Çakışma riski yüksektir'],
+            ['Köprü ve tünel', 'Dar, kaçış alanı yoktur'],
+          ],
+        },
       },
       {
         heading: 'Şerit disiplini',
@@ -171,16 +207,36 @@ export const THEORY_EXTRA_LESSONS: LessonInput[] = [
         heading: 'Kısa far mı, uzun far mı?',
         badge: 'official',
         body: 'Uzun far, önü aydınlatarak uzağı görmenizi sağlar; ancak karşıdan araç geldiğinde veya öndeki aracı yakından takip ederken sürücüyü **kör eder**. Bu yüzden karşılaşmalarda ve şehir içi aydınlatılmış yollarda **kısa far** (yakın huzme) kullanılır. Boş, karanlık kırsal yolda uzun fardan yararlanabilir, karşıdan araç görünce hemen kısaya dönersiniz.',
+        compare: {
+          caption: 'Hangi durumda hangi far?',
+          headers: ['Durum', 'Kullanılacak far'],
+          rows: [
+            ['Karşıdan araç gelirken', 'Kısa (yakın) far'],
+            ['Şehir içi aydınlatılmış yol', 'Kısa far'],
+            ['Öndeki aracı yakından takip', 'Kısa far'],
+            ['Boş, karanlık kırsal yol', 'Uzun far'],
+          ],
+        },
       },
       {
         heading: 'Sisde ne yapılır?',
         badge: 'safety',
         body: 'Sisde uzun far, su damlacıklarından yansıyarak önünüzü **beyaz bir perdeye** çevirir ve görüşü azaltır. Bu nedenle sisde **kısa far** ve varsa **sis farları** kullanılır, hız düşürülür, takip mesafesi artırılır. Sis arka lambası aracın arkadan görünmesini sağlar; sis dağılınca göz almaması için kapatılır.',
+        callout: {
+          tone: 'warning',
+          title: 'Siste doğru davranış',
+          text: 'Uzun far siste görüşü perde gibi kapatır. Siste **kısa far + sis farı** kullan, hızını düşür, mesafeni artır.',
+        },
       },
       {
         heading: 'Karşı araca uzun far yakmayın',
         badge: 'safety',
         body: 'Karşıdan gelen sürücünün gözü uzun farla bir an için kamaşırsa, o kişi birkaç saniye adeta kör sürüş yapar. Bu, gecenin en tehlikeli hatalarından biridir. Karşı araç size uzun far yakarsa ışığa değil, **kendi şeridinizin sağ kenarına** bakarak yolda kalın ve yavaşlayın.',
+        callout: {
+          tone: 'danger',
+          title: 'Karşı araca uzun far yakma',
+          text: 'Karşıdan gelenin gözü bir an kamaşırsa birkaç saniye kör sürer. Bu gecenin en tehlikeli hatalarından biridir.',
+        },
       },
     ],
     mistakes: [
@@ -244,6 +300,11 @@ export const THEORY_EXTRA_LESSONS: LessonInput[] = [
         heading: 'Yaya geçidinde öncelik yayanındır',
         badge: 'official',
         body: 'Işıkla yönetilmeyen yaya geçitlerinde geçiş önceliği **yayaya** aittir. Geçide yaklaşan sürücü hızını azaltır, gerekirse durur ve yayanın karşıya güvenle geçmesini bekler. Geçitte veya geçide adım atmış yayanın önünden geçmeye çalışmak hem kural ihlalidir hem de en ağır sonuçlu kazalara yol açar.',
+        callout: {
+          tone: 'danger',
+          title: 'Öncelik yayanındır',
+          text: 'Işıksız yaya geçidinde geçiş önceliği **yayaya** aittir. Geçide yaklaşırken yavaşla, gerekirse tamamen dur.',
+        },
       },
       {
         heading: 'Okul geçidi ve okul çevresi',
@@ -254,6 +315,15 @@ export const THEORY_EXTRA_LESSONS: LessonInput[] = [
         heading: 'Çocuk, yaşlı ve engelliye ek özen',
         badge: 'safety',
         body: 'Çocuk mesafe ve hızı ölçemez, yaşlı yavaş hareket eder, görme engelli beyaz baston veya rehber köpekle yol alır. Bu yayalar için sürücü **her zaman ek önlem** almak, gerektiğinde tamamen durmak zorundadır. Trafikte önceliği güçlünün değil, korunması gerekenin lehine kullanmak temel ilkedir.',
+        compare: {
+          caption: 'Ek özen gerektiren yayalar',
+          headers: ['Yaya', 'Neden ek özen gerekir'],
+          rows: [
+            ['Çocuk', 'Mesafe ve hızı ölçemez, aniden çıkar'],
+            ['Yaşlı', 'Yavaş hareket eder'],
+            ['Görme engelli', 'Beyaz baston veya rehber köpekle yürür'],
+          ],
+        },
       },
     ],
     mistakes: [
@@ -315,6 +385,11 @@ export const THEORY_EXTRA_LESSONS: LessonInput[] = [
         heading: 'Neden ekonomik sürüş?',
         badge: 'best',
         body: 'Yakıtın bir kısmı, sürüş tarzından dolayı boşa gider. Sabit ve öngörülü sürüş; trafiği ileriden okuyarak yumuşak hızlanmak ve zamanında yavaşlamak, hem **yakıt tüketimini** hem de egzozdan çıkan zararlı gazları azaltır. Ekonomik sürüş aynı zamanda daha az fren-lastik aşınması ve daha güvenli bir sürüş demektir.',
+        callout: {
+          tone: 'success',
+          title: 'Ekonomik sürüşün özeti',
+          text: 'Yumuşak kalkış ve erken yavaşlama; hem yakıtı hem emisyonu düşürür, üstelik daha güvenlidir.',
+        },
       },
       {
         heading: 'Gereksiz rölantiden kaçının',
@@ -325,6 +400,16 @@ export const THEORY_EXTRA_LESSONS: LessonInput[] = [
         heading: 'Ani hızlanma ve frenden kaçının',
         badge: 'safety',
         body: 'Sert gaz ve ani fren, yakıtı en çok harcatan iki davranıştır ve arkadan gelenler için de risk yaratır. Uygun viteste, motoru zorlamadan ve düşük devirde gitmek; kavşağa yaklaşırken gazı erken bırakıp aracın kendiliğinden yavaşlamasını sağlamak **verimi artırır**. Düzgün bakımlı araç, doğru lastik basıncı da tüketimi düşürür.',
+        compare: {
+          caption: 'Savurgan davranış yerine ekonomik alternatif',
+          headers: ['Savurgan davranış', 'Ekonomik alternatif'],
+          rows: [
+            ['Uzun süre rölanti', 'Uzun beklemede motoru durdur'],
+            ['Sert gaz / ani kalkış', 'Yumuşak hızlan'],
+            ['Ani fren', 'Gazı erken bırak, kendiliğinden yavaşla'],
+            ['Düşük lastik basıncı', 'Doğru basınç ve düzenli bakım'],
+          ],
+        },
       },
       {
         heading: 'Egzoz emisyonu ve çevre bilinci',
@@ -390,16 +475,34 @@ export const THEORY_EXTRA_LESSONS: LessonInput[] = [
         heading: 'Sürücü belgesi ve zorunlu sigorta',
         badge: 'official',
         body: 'Araç kullanmak için o sınıfa uygun **sürücü belgesine** sahip olmak zorunludur; belgesiz veya uygun olmayan sınıfla sürüş yaptırımı olan bir ihlaldir. Ayrıca her motorlu araç için **Zorunlu Mali Sorumluluk (trafik) Sigortası** yaptırılmalıdır. Bu sigorta, kazada karşı tarafın (üçüncü kişilerin) zararını güvence altına alır; kasko ise isteğe bağlıdır ve kendi aracınızı kapsar.',
+        compare: {
+          caption: 'Zorunlu trafik sigortası ve kasko farkı',
+          headers: ['Özellik', 'Zorunlu trafik sigortası', 'Kasko'],
+          rows: [
+            ['Yaptırma', '**Zorunlu**', 'İsteğe bağlı'],
+            ['Kapsam', 'Karşı tarafın (3. kişi) zararı', 'Kendi aracınız'],
+          ],
+        },
       },
       {
         heading: 'Alkol sınırı ve emniyet kemeri',
         badge: 'official',
         body: 'Özel otomobil sürücüleri için kandaki alkol sınırı **0,50 promildir**; bu değerin üzerinde araç kullanmak yasaktır. Ticari araç ve bazı sürücüler için sınır sıfır kabul edilir; en güvenlisi alkollüyken hiç direksiyona geçmemektir. Emniyet kemeri ise araçta ilgili koltuklarda **takılması zorunludur**; kaza anında savrulmayı ve ağır yaralanmayı önlediği için hayat kurtarır.',
+        callout: {
+          tone: 'info',
+          title: 'Alkol sınırı',
+          text: 'Özel otomobilde kandaki alkol sınırı **0,50 promildir**; ticari araçta sıfır kabul edilir. En doğrusu alkollüyken hiç sürmemektir.',
+        },
       },
       {
         heading: 'Kaza sonrası yükümlülükler',
         badge: 'safety',
         body: 'Kazaya karışan sürücü **olay yerinde durmak**, gerekli önlemleri almak (ikaz üçgeni, dörtlü flaşör) ve yaralı varsa yardım sağlayıp ilgili birimlere haber vermek zorundadır. Yaralanmalı kazada araçların yeri işaretlenmeden gereksiz oynatılmaz; ölüm/yaralanma varsa kolluğa (polis/jandarma) haber verilir. Olay yerinden kaçmak ağır sonuçları olan bir suçtur.',
+        callout: {
+          tone: 'danger',
+          title: 'Kaza sonrası sıra: Dur - Önlem - Yardım - Haber',
+          text: 'Olay yerinde dur, ikaz üçgeni ve dörtlü flaşörle önlem al, yaralıya yardım et ve gerekiyorsa kolluğa haber ver. **Olay yerinden kaçmak suçtur.**',
+        },
       },
       {
         heading: 'Neden hepsi zorunlu?',
@@ -475,16 +578,35 @@ export const THEORY_EXTRA_LESSONS: LessonInput[] = [
         heading: 'Önce doğrudan baskı ve yükseltme',
         badge: 'official',
         body: 'Dış kanamada ilk ve en etkili yöntem, temiz bir bez veya gazlı bezle yara üzerine **doğrudan baskı** uygulamak ve mümkünse kanayan bölgeyi **kalp seviyesinin üstüne kaldırmaktır**. Baskıyı bırakmadan sürdürün; bez kana doyarsa çıkarmadan üzerine yenisini ekleyin. Bu iki basit hareket, kanamaların büyük çoğunluğunu durdurur.',
+        compare: {
+          caption: 'Dış kanama kontrolünde yöntem sırası',
+          headers: ['Yöntem', 'Ne zaman'],
+          rows: [
+            ['Doğrudan baskı + yükseltme', 'İlk ve en etkili yöntem'],
+            ['Bezi çıkarmadan üzerine ekleme', 'Bez kana doyduğunda'],
+            ['Turnike', 'Durdurulamayan uzuv kanamasında son çare'],
+          ],
+        },
       },
       {
         heading: 'Turnike son çaredir',
         badge: 'safety',
         body: 'Turnike ancak baskıyla **durdurulamayan**, hayatı tehdit eden uzuv kanamalarında (örneğin kopma) uygulanır; çünkü uzun süre kan akışını tümden keser ve doku zarar görebilir. Turnike uygulandıysa üzerine **uygulama saati** yazılır ve turnike gevşetilmeden hızla sağlık ekibine ulaşılır. Boyun, gövde gibi turnike konamayan yerlerde yalnızca baskı sürdürülür.',
+        callout: {
+          tone: 'warning',
+          title: 'Turnike son çaredir',
+          text: 'Turnike yalnız baskıyla durdurulamayan uzuv kanamasında uygulanır ve üzerine mutlaka **uygulama saati** yazılır.',
+        },
       },
       {
         heading: 'Şok ve pozisyonu',
         badge: 'official',
         body: 'Ciddi kanama, sıvı kaybı veya ağır yaralanmada dolaşım bozulur ve **şok** gelişebilir: soluk ve soğuk-nemli deri, hızlı-zayıf nabız, hızlı solunum, huzursuzluk. Bilinci yerinde ve tersini gerektiren bir yaralanma yoksa kazazede sırtüstü yatırılır, **ayakları yaklaşık 30 cm yukarı** kaldırılır (şok pozisyonu) ve üzeri örtülerek **üşümesi önlenir**.',
+        callout: {
+          tone: 'info',
+          title: 'Şok pozisyonu',
+          text: 'Sırtüstü yatır, **ayakları ~30 cm yükselt** ve üzerini örterek sıcak tut. Şok belirtisi: soluk, soğuk-nemli deri ve hızlı-zayıf nabız.',
+        },
       },
     ],
     mistakes: [
@@ -548,16 +670,35 @@ export const THEORY_EXTRA_LESSONS: LessonInput[] = [
         heading: 'Bilinç ve solunum kontrolü',
         badge: 'official',
         body: 'Önce olay yeri güvenliği sağlanır. Kazazedenin omzuna hafifçe dokunup seslenerek **bilinci** kontrol edilir. Yanıt yoksa hava yolunu açmak için **baş geriye, çene yukarı** pozisyonu verilir ve bak-dinle-hisset ile **solunum** 10 saniye kadar değerlendirilir. Bilinç kapalı ve solunum yoksa vakit kaybetmeden temel yaşam desteğine başlanır.',
+        callout: {
+          tone: 'info',
+          title: 'Sıra: Bak - Ara - Bas',
+          text: 'Önce bilinci ve solunumu **bak-dinle-hisset** ile kontrol et, sonra 112, sonra kalp masajı.',
+        },
       },
       {
         heading: '112 hemen aranır',
         badge: 'safety',
         body: 'Kazazedede bilinç ve solunum yoksa, kalp masajına başlamadan hemen **112 acil çağrı** aranır veya çevredeki birine aratılır. Mümkünse **hoparlör** açılarak yönlendirme alınır ve varsa **OED (otomatik defibrilatör)** istenir. Erken haber vermek, profesyonel ekibin en kısa sürede ulaşması için hayati önemdedir.',
+        callout: {
+          tone: 'danger',
+          title: 'Vakit kaybetme',
+          text: 'Bilinç ve solunum yoksa masaja başlamadan hemen **112** aranır veya çevredeki birine aratılır. Gecikme hayat kaybettirir.',
+        },
       },
       {
         heading: 'Kalp masajı: hız, derinlik, oran',
         badge: 'official',
         body: 'Eller göğüs kemiğinin ortasına, dirsekler gergin şekilde yerleştirilir. Bası hızı **dakikada 100-120**, derinlik yetişkinde **yaklaşık 5 cm** olmalı ve her basıdan sonra göğsün tam yükselmesine izin verilmelidir. Uygulama **30 kalp masajı + 2 suni solunum** (30:2) döngüsü hâlinde, ekip gelene ya da kazazede canlanma belirtisi gösterene kadar aralıksız sürdürülür.',
+        compare: {
+          caption: 'Yetişkinde kalp masajı ölçütleri',
+          headers: ['Ölçüt', 'Değer'],
+          rows: [
+            ['Bası hızı', 'Dakikada **100-120**'],
+            ['Bası derinliği', 'Yaklaşık **5 cm**'],
+            ['Masaj : suni solunum', '**30 : 2**'],
+          ],
+        },
       },
       {
         heading: 'Hava yolu ve suni solunum',
@@ -627,16 +768,35 @@ export const THEORY_EXTRA_LESSONS: LessonInput[] = [
         heading: 'İkaz renklerinin anlamı',
         badge: 'official',
         body: 'Gösterge panelindeki ışıklar renk koduyla aciliyet bildirir. **Kırmızı** ikaz "dur / acil" anlamına gelir; ciddi bir arıza veya güvenlik sorunu vardır, araç en kısa sürede güvenli biçimde durdurulmalıdır. **Sarı (turuncu)** ikaz "dikkat, en kısa sürede kontrol ettir" der; yola devam edilebilir ama sorun ihmal edilmemelidir. Yeşil ve mavi ışıklar ise arıza değil, bir sistemin çalıştığını (sinyal, far vb.) gösterir.',
+        compare: {
+          caption: 'İkaz ışığı renginin anlamı',
+          headers: ['Renk', 'Anlam', 'Ne yapmalı'],
+          rows: [
+            ['Kırmızı', 'Dur / acil', 'Güvenli yerde hemen dur'],
+            ['Sarı (turuncu)', 'Dikkat', 'En kısa sürede kontrol ettir'],
+            ['Yeşil / Mavi', 'Sistem çalışıyor', 'Arıza değil, bilgilendirir'],
+          ],
+        },
       },
       {
         heading: 'Kırmızı ikazlar: hemen dur',
         badge: 'safety',
         body: 'Kırmızı yanan **hararet (motor ısısı)**, **yağ basıncı** ve **şarj (akü)** ikazları en kritik olanlardır. Bu ışıklardan biri yolda yanarsa güvenli bir yere çekip motoru durdurmak gerekir; yola devam etmek motora kalıcı ve pahalı hasar verebilir. Kırmızı ikazı "sonra bakarım" diye görmezden gelmek en sık yapılan ve en pahalıya mal olan hatadır.',
+        callout: {
+          tone: 'danger',
+          title: 'Kırmızı acil üçlüsü: Hararet - Yağ - Şarj',
+          text: 'Bu ikazlardan biri yolda yanarsa güvenli yere çekip **motoru durdur**; devam etmek motora kalıcı hasar verir.',
+        },
       },
       {
         heading: 'Hararet, yağ basıncı, şarj',
         badge: 'official',
         body: 'Hararet ikazı motorun aşırı ısındığını gösterir; durup soğumasını bekleyin, **sıcak motorda radyatör kapağını açmayın**. Yağ basıncı ikazı yağlamanın yetersizliğine işaret eder; motoru derhâl durdurmazsanız parçalar kuru sürtünmeyle zarar görür. Şarj ikazı akünün şarj edilmediğini (genelde alternatör/kayış) gösterir; araç bir süre aküyle gider ama en kısa sürede kontrol ettirilmelidir.',
+        callout: {
+          tone: 'warning',
+          title: 'Sıcak motorda dikkat',
+          text: 'Hararet ikazında durup motoru soğut; **sıcak motorda radyatör kapağını açma**, fışkıran sıcak sıvı ağır yanık yapabilir.',
+        },
       },
       {
         heading: 'Sarı ikazlar: en kısa sürede kontrol',

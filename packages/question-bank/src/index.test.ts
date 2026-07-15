@@ -58,22 +58,22 @@ describe('soru bankası bütünlüğü', () => {
     expect(counts['adab']).toBeGreaterThanOrEqual(dist.adab);
   });
 
-  it('Program 1: banka büyük ölçekte genişledi (≥350 soru, her ders derinleşti)', () => {
-    expect(SEED_QUESTIONS.length).toBeGreaterThanOrEqual(350);
+  it('Program 1: banka 100+/konu ölçeğine ulaştı (≥500 soru, her ders ≥100)', () => {
+    expect(SEED_QUESTIONS.length).toBeGreaterThanOrEqual(500);
     const counts = subjectCounts();
-    // Her teorik ders sınav-dağılımının çok üstünde (çeşitlilik + tekrarsız deneme).
+    // Program 1 hedefi: her konuda 100+ özgün soru.
     expect(counts['trafik']).toBeGreaterThanOrEqual(100);
-    expect(counts['ilkyardim']).toBeGreaterThanOrEqual(60);
-    expect(counts['motor']).toBeGreaterThanOrEqual(60);
-    expect(counts['adab']).toBeGreaterThanOrEqual(45);
-    expect(counts['pratik']).toBeGreaterThanOrEqual(45);
+    expect(counts['ilkyardim']).toBeGreaterThanOrEqual(100);
+    expect(counts['motor']).toBeGreaterThanOrEqual(100);
+    expect(counts['adab']).toBeGreaterThanOrEqual(100);
+    expect(counts['pratik']).toBeGreaterThanOrEqual(100);
   });
 
   it('Program 1: zenginleştirilmiş metaveri — yeni sorular whyWrong/objective/tags taşır', () => {
     const enriched = allQuestions().filter(
       (q) => (q.whyWrong?.length ?? 0) > 0 && q.objective && (q.tags?.length ?? 0) > 0
     );
-    // En az 340 soru tam zenginleştirilmiş metaveriye sahip.
-    expect(enriched.length).toBeGreaterThanOrEqual(340);
+    // En az 470 soru tam zenginleştirilmiş metaveriye sahip.
+    expect(enriched.length).toBeGreaterThanOrEqual(470);
   });
 });

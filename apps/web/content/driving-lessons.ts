@@ -25,11 +25,25 @@ export const DRIVING_LESSONS: LessonInput[] = [
         heading: 'Ayar sırası: önce koltuk, sonra ayna',
         badge: 'instructor',
         body: 'Hazırlığın ilk adımı **koltuğu ayarlamaktır**. Debriyaja tam basabildiğinizde dizinizde hafif kırış kalmalı, sırtınız koltuğa yaslıyken kollarınızı düz uzattığınızda bilekleriniz direksiyonun üst kenarına değmeli. Aynalar mutlaka koltuktan sonra ayarlanır; çünkü koltuğun konumu değişince aynaların açısı da kayar ve tekrar kurmanız gerekir.',
+        callout: {
+          tone: 'info',
+          title: 'Hafıza ipucu',
+          text: 'Hazırlık sırasını şöyle hatırla: **Koltuk - Ayna - Kemer - Kontak**. Koltuğu değiştirince ayna açısı kaydığı için ayna her zaman koltuktan sonra ayarlanır.',
+        },
       },
       {
         heading: 'Kemer ve gösterge kontrolü',
         badge: 'safety',
         body: 'Emniyet kemeri hem yasal zorunluluk hem de ilk güvenlik adımıdır; kemer göğüs ve kalça kemiğinden geçmeli, boyna veya karına gelmemelidir. Kontağı açtığınızda gösterge panelinde ikaz lambaları kısa süre yanıp söner: **kırmızı ikazlar acil ve ciddi** (yağ basıncı, fren, akü şarj), **sarı ikazlar dikkat/kontrol** anlamı taşır. Kalıcı yanan kırmızı bir ikazla yola çıkılmaz.',
+        compare: {
+          caption: 'Gösterge panelindeki ikaz renkleri',
+          headers: ['İkaz rengi', 'Anlamı', 'Ne yapmalı'],
+          rows: [
+            ['**Kırmızı**', 'Acil ve ciddi (yağ, fren, şarj)', 'Yola çıkma; dur ve kontrol et'],
+            ['**Sarı / turuncu**', 'Dikkat ve kontrol uyarısı', 'En kısa sürede kontrol ettir'],
+            ['**Yeşil / mavi**', 'Bilgi (sinyal, uzun far açık)', 'Normaldir; işlevin açık demek'],
+          ],
+        },
       },
       {
         heading: 'Motoru çalıştırmadan önce',
@@ -40,6 +54,11 @@ export const DRIVING_LESSONS: LessonInput[] = [
         heading: 'Çevre kontrolü ve hareket',
         badge: 'safety',
         body: 'Araç hareket etmeden önce iç ve dış aynaları, ardından **kör noktayı omuz üstünden** kontrol edin ve gideceğiniz yöne sinyal verin. Bu sıra (ayna - sinyal - kör nokta - manevra) hem arkadan gelen trafiği görmenizi hem de niyetinizi diğer sürücülere bildirmenizi sağlar. Kaldırımdan ayrılırken yayaları da tarayın.',
+        callout: {
+          tone: 'danger',
+          title: 'Kör noktayı atlama',
+          text: 'Aynalar aracın hemen yanındaki **kör noktayı göstermez**. Harekete geçmeden önce omzunun üstünden dönüp bu alanı bizzat kontrol et; oradan aniden bir bisikletli, motosiklet ya da yaya çıkabilir.',
+        },
       },
     ],
     mistakes: [
@@ -102,21 +121,50 @@ export const DRIVING_LESSONS: LessonInput[] = [
         heading: 'Kavrama noktası nedir?',
         badge: 'instructor',
         body: 'Kavrama noktası, debriyaj pedalını yavaşça bırakırken motor gücünün tekerleklere **geçmeye başladığı andır**. Bu noktada motorun sesi hafif kalınlaşır, aracın burnu biraz kalkar ve gövdede küçük bir titreşim hissedilir. **Yarım debriyaj**, pedalı tam bırakmadan bu buluşma bölgesinde tutarak gücü kademeli aktarmaktır; kalkışın kalbi burasıdır.',
+        callout: {
+          tone: 'info',
+          title: 'Kavrama noktasının üç işareti',
+          text: 'Kavrama noktasına geldiğini şu üç işaretten anlarsın: motor sesi **kalınlaşır**, aracın burnu hafifçe **kalkar** ve gövdede küçük bir **titreşim** olur.',
+        },
       },
       {
         heading: 'Düz zeminde yumuşak kalkış',
         badge: 'instructor',
         body: 'Birinci vitese takın, hafifçe gaza basın ve debriyajı **kavrama noktasına kadar yavaşça** bırakın. Araç hareketlenmeye başlayınca gazı biraz artırıp debriyajı kademeli olarak tam bırakın. Debriyajı bir anda bırakmak motoru boğar ve araç **stop** eder; asıl beceri, pedalı kavrama noktasında bir an bekletebilmektir.',
+        compare: {
+          caption: 'Manuel araçta pedallar (soldan sağa)',
+          headers: ['Pedal', 'Görevi', 'Hangi ayak'],
+          rows: [
+            ['**Debriyaj** (en solda)', 'Motor gücünü keser, vites değiştirir', 'Sol ayak'],
+            ['**Fren** (ortada)', 'Aracı yavaşlatır ve durdurur', 'Sağ ayak'],
+            ['**Gaz** (en sağda)', 'Motor gücünü artırır', 'Sağ ayak'],
+          ],
+        },
       },
       {
         heading: 'Rampada kalkış: üç ayağın dengesi',
         badge: 'instructor',
         body: 'Yokuşta el freni çekiliyken debriyajı kavrama noktasına getirin ve aynı anda hafif gaz verin. Aracın öne asıldığını (ses ve titreşim) hissettiğiniz anda **el frenini yavaşça indirin**. Bu üçlü denge (el freni - gaz - debriyaj) sayesinde araç geri kaymadan öne doğru hareket eder.',
+        compare: {
+          caption: 'Rampada kalkış: üçlü denge sırası',
+          headers: ['Sıra', 'Hareket'],
+          rows: [
+            ['1', 'El freni çekiliyken debriyajı kavrama noktasına getir'],
+            ['2', 'Aynı anda hafifçe gaz ver'],
+            ['3', 'Araç öne asıldığını hissedince el frenini yavaşça indir'],
+            ['4', 'Debriyajı kademeli olarak tam bırak'],
+          ],
+        },
       },
       {
         heading: 'Geri kaymanın tehlikesi',
         badge: 'safety',
         body: 'Rampada geri kayma, hemen arkanızdaki araca çarpma riski taşıdığı için ciddi bir güvenlik hatasıdır ve sınavda güvenliği tehlikeye atan bir hareket olarak değerlendirilebilir. El freni yöntemi bu riski ortadan kaldırdığı için en güvenli ve en çok önerilen tekniktir.',
+        callout: {
+          tone: 'danger',
+          title: 'Geri kayma ağır bir hatadır',
+          text: 'Rampada geri kaymak, arkandaki araca çarpma riski taşıdığı için güvenliği tehlikeye atan ağır bir hatadır. **El freni yöntemi** bu riski ortadan kaldırır; en güvenli teknik budur.',
+        },
       },
     ],
     mistakes: [
@@ -182,16 +230,35 @@ export const DRIVING_LESSONS: LessonInput[] = [
         heading: 'Paralel park adımları',
         badge: 'instructor',
         body: 'Aracı park boşluğunun yanındaki araçla yaklaşık aynı hizaya getirin. Geri gelirken direksiyonu boşluğa doğru kırın; arka tekerlek bordür hizasına yaklaşınca direksiyonu düzeltip sonra ters yöne kırarak aracın önünü içeri alın. Her aşamada **dur, bak, sonra devam et**; manevra tek hamlede değil, kontrollü parçalarla tamamlanır.',
+        compare: {
+          caption: 'Park türleri: paralel ve dik park',
+          headers: ['Özellik', 'Paralel park', 'Dik (geri) park'],
+          rows: [
+            ['Konum', 'Yol kenarına, araçlara paralel', 'Yola dik ceplerin içine'],
+            ['Manevra', 'Geri gel, kır, düzelt, ters kır', 'Geri geri cebe hizala'],
+            ['Anahtar beceri', 'Referans noktası ve zamanlama', 'Ayna ve kör nokta kontrolü'],
+          ],
+        },
       },
       {
         heading: 'Geri park ve kör nokta',
         badge: 'safety',
         body: 'Geri manevrada yalnızca aynalara güvenmek yeterli değildir; arka ve yan aynalara ek olarak **omuz üstünden kör noktayı** ve arka camı kontrol edin. Aynaların göremediği alandan aniden bir yaya, çocuk ya da bisikletli çıkabilir. Görüş kısıtlıysa yavaşlayın, gerekiyorsa tamamen durun.',
+        callout: {
+          tone: 'danger',
+          title: 'Sadece aynalara güvenme',
+          text: 'Geri manevrada aynaların göremediği bir alan vardır. Arka ve yan aynalara ek olarak **omzunun üstünden dönüp arka camı ve kör noktayı** kontrol et; oradan çocuk ya da bisikletli çıkabilir.',
+        },
       },
       {
         heading: 'Yavaş araç, kontrollü direksiyon',
         badge: 'instructor',
         body: 'Manevrada aracı debriyajla rölantiye yakın bir hızda yürütün ve direksiyonu **kararlı ama kontrollü** çevirin. Araç yavaş olduğunda pozisyon hatasını fark edip düzeltmek kolaydır; hız arttıkça hem hata büyür hem de düzeltme şansı azalır. Hızda değil, kontrolde başarı vardır.',
+        callout: {
+          tone: 'success',
+          title: 'Yavaş araç, kolay düzeltme',
+          text: 'Aracı debriyajla **rölantiye yakın** yürüt. Yavaşken pozisyon hatasını fark edip düzeltmek kolaydır; emin olmadığında durup çevreyi taramak hata değil, doğru manevranın parçasıdır.',
+        },
       },
     ],
     mistakes: [
@@ -252,11 +319,26 @@ export const DRIVING_LESSONS: LessonInput[] = [
         heading: 'Yaklaşırken tara ve erken sinyal ver',
         badge: 'instructor',
         body: 'Kavşağa yaklaşırken önce hızınızı azaltın, ardından **sol - ileri - sağ** yönünde tarama yapın ve gideceğiniz yöne göre sinyali erken verin. Sinyalin amacı niyetinizi diğer sürücülere önceden bildirmektir; dönüşün tam üstünde verilen geç bir sinyal işe yaramaz. Doğru şeridi de kavşağa girmeden seçin.',
+        compare: {
+          caption: 'Kavşak / dönel kavşak aşama sırası',
+          headers: ['Aşama', 'Yapılması gereken'],
+          rows: [
+            ['Yaklaşırken', 'Yavaşla, sol-ileri-sağ tara, erken sinyal ver'],
+            ['Girişte', 'Halkadaki (soldan gelen) araca yol ver'],
+            ['İçerideyken', 'Şeridini koru, çıkışını izle'],
+            ['Çıkışta', 'Sağ sinyal ver, ayna kontrolüyle ayrıl'],
+          ],
+        },
       },
       {
         heading: 'Dönel kavşakta yol verme',
         badge: 'official',
         body: 'İşaretlerle aksi belirtilmedikçe dönel kavşakta **halkanın içindeki (soldan gelen) araç önceliklidir**. Girişte yavaşlayın, halkadaki trafiğe yol verin ve ancak uygun bir boşluk oluştuğunda içeri girin. Zorlayarak girmek çarpışma riski yaratır; beklemek her zaman daha güvenlidir.',
+        callout: {
+          tone: 'info',
+          title: 'Dönel kavşakta öncelik',
+          text: 'İşaretlerle aksi belirtilmedikçe **halkanın içindeki (soldan gelen) araç önceliklidir**. Giren araç yol verir; zorlamak yerine uygun boşluğu beklemek her zaman daha güvenlidir.',
+        },
       },
       {
         heading: 'Çıkışta sinyal ver',
@@ -267,6 +349,11 @@ export const DRIVING_LESSONS: LessonInput[] = [
         heading: 'Kavşakta yayaya öncelik',
         badge: 'safety',
         body: 'Dönüş yaparken yaya geçidini kullanan yayaya yol vermek zorunludur. Ayrıca çıkışı dolu bir kavşağa, yolunuz açık olsa bile girmeyin; kavşak ortasında sıkışıp kalmak trafiği kilitler ve tehlike yaratır. Emin olamadığınız her durumda yavaşlayıp öncelik verin.',
+        callout: {
+          tone: 'danger',
+          title: 'Yayaya ve dolu kavşağa dikkat',
+          text: 'Dönüşte yaya geçidindeki yayaya yol vermek **zorunludur**. Ayrıca çıkışı dolu bir kavşağa yolun açık olsa bile girme; ortada sıkışmak trafiği kilitler ve tehlike yaratır.',
+        },
       },
     ],
     mistakes: [
@@ -329,6 +416,22 @@ export const DRIVING_LESSONS: LessonInput[] = [
         heading: 'İki tür hata: kaldıran ve kıran',
         badge: 'examiner',
         body: 'Direksiyon sınavında hatalar aynı ağırlıkta değildir. **Bazı hatalar güvenliği doğrudan tehlikeye attığı için sınavı anında bitirir** ya da hakemin müdahalesini (frene veya direksiyona el atması) gerektirir. **Bazı hatalar ise güvenliği yıkmaz ama puan kırar**; ayna kontrolünü atlamak, geç sinyal vermek ya da sarsıntılı kalkış gibi. Kesin bir puan tablosu ezberlemeye çalışmak yerine bu mantığı kavramak daha değerlidir: hangi hata güvenliği bozuyorsa o ağırdır.',
+        compare: {
+          caption: 'İki tür hata: kaldıran ve kıran',
+          headers: ['Hata türü', 'Örnek', 'Sonuç'],
+          rows: [
+            [
+              '**Ağır (elemeli)**',
+              'Geçiş hakkı ihlali, hakemin frene müdahalesi',
+              'Sınavı doğrudan bitirir',
+            ],
+            [
+              '**Puan kıran**',
+              'Ayna atlama, geç sinyal, sarsıntılı kalkış',
+              'Puan düşürür ama elemez',
+            ],
+          ],
+        },
       },
       {
         heading: 'Sık atlanan küçük ama pahalı adımlar',
@@ -339,11 +442,21 @@ export const DRIVING_LESSONS: LessonInput[] = [
         heading: 'Güvenliği tehlikeye atan hareket',
         badge: 'safety',
         body: 'Hakemin ayağının frene gitmesi, yayaya veya geçiş hakkı olan araca yol vermemek, kavşakta hatalı geçiş yapmak en ağır hatalardır; çünkü bunlar gerçek bir kaza riski taşır. Bu yüzden emin olamadığınız her durumda ilkeniz nettir: **yavaşlayın ve yol verin**. Fazla temkinli olmak nadiren, aceleci olmak ise sık kaybettirir.',
+        callout: {
+          tone: 'warning',
+          title: 'Şüphede yavaşla ve yol ver',
+          text: 'Emin olamadığın her durumda ilken nettir: **yavaşla ve yol ver**. Hakemin ayağının frene gitmesi en ağır hatalardandır; aceleci olmak, temkinli olmaktan çok daha sık kaybettirir.',
+        },
       },
       {
         heading: 'Sınav kaygısıyla başa çıkma',
         badge: 'instructor',
         body: 'Gerginlik doğaldır ama yönetilebilir. Sınavdan önce yavaş ve derin nefes alın (yaklaşık dört saniye al, dört saniye ver); bu, kalp atışını ve titremeyi yatıştırır. Adımlarınızı içinizden ya da alçak sesle **sesli düşünmek** (ayna - sinyal - manevra) hem odağı korur hem adım atlamayı önler. Bir hata yaptığınızda paniğe kapılıp zincirleme hataya sürüklenmeyin; o hatayı bırakıp bir sonraki harekete odaklanın.',
+        callout: {
+          tone: 'success',
+          title: 'Kaygıyı yönetmenin pratiği',
+          text: 'Sınavdan önce yavaş ve derin nefes al (dört saniye al, dört saniye ver). Adımları içinden **sesli düşün** (ayna - sinyal - manevra); bu hem odağı korur hem adım atlamayı önler. Bir hata yaptığında ona takılma, sonraki harekete geç.',
+        },
       },
     ],
     mistakes: [

@@ -1,8 +1,18 @@
 # FINAL DEVELOPMENT REPORT — Ehliyet Akademi
 
-_Tarih: 2026-07-15 (v8 — SPRINT 5: AI platformu + analitik + gözlemlenebilirlik + güvenlik) · Depo: `emredogan-cloud/ehliyet-akademi` (**public**) · Tek doğru kaynak: `ROADMAP.md` (v3.1, 36 faz)_
+_Tarih: 2026-07-15 (v9 — SPRINT 6: oyunlaştırma + topluluk + platform zekâsı; SON planlı uygulama sprinti) · Depo: `emredogan-cloud/ehliyet-akademi` (**public**) · Tek doğru kaynak: `ROADMAP.md` (v3.1, 36 faz)_
 
 ---
+
+## 0-S6. SPRINT 6 Eki (v9) — Platform Tamamlama, Oyunlaştırma & Final Vizyon
+
+**Oyunlaştırma** (Faz 34: XP/seviye/hedef/çalışma ısı haritası/öğrenme yolculuğu + `/ilerleme` panosu),
+**topluluk** (Faz 32/33: dürüst XP kademe lider tablosu — uydurma rakip yok — + günlük meydan okuma +
+davet; arkadaş sistemi=gelecek mimarisi) ve **platform zekâsı** (Faz 35: öğrenme içgörüleri + akıllı
+uygulama-içi dürtmeler) uygulandı; hepsi kullanıcının GERÇEK verisinden. 164 unit/integration + 44 e2e +
+CI/CodeQL yeşil + prod deploy + canlı doğrulama (`/ilerleme` gerçek veriyle). **SON planlı uygulama sprinti.**
+Ek strateji belgeleri: `VISUAL_TRANSFORMATION_ROADMAP.md` (7 bölüm, varlık üretilmedi) + `FINAL_PLATFORM_AUDIT.md`
+(Kritik/Yüksek/Orta/Düşük). Ayrıntı: `SPRINT_6_REPORT.md`.
 
 ## 0-S5. SPRINT 5 Eki (v8) — AI Platformu, Analitik & Güvenlik Sertleştirme
 
@@ -64,32 +74,34 @@ e-Sınav dağılımını (23/12/9/6 = 50) tam karşılayacak **53 özgün soruya
 
 ## 2. Faz Durumu (ROADMAP eşlemesi)
 
-| Faz       | Ad                                             | Durum                                                                                                                                                 |
-| --------- | ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0–4       | Mühendislik · Strateji · Mimari · Next.js göçü | ✅ Tamamlandı (önceki oturum)                                                                                                                         |
-| 5–8       | BİM · Tasarım · UI/UX · Frontend               | ✅ Tamamlandı                                                                                                                                         |
-| 9         | Öğrenme Sistemi (SRS)                          | ✅ **Tamamlandı** — SM-2 pratik döngüsü canlıda (/calis)                                                                                              |
-| 10        | Teorik Akademi                                 | ✅ **Sprint 3 — 14 teorik ders** (zengin yapı: özet/hafıza/strateji/tekrar kartı/alıştırma)                                                           |
-| 11–12     | Pratik + Soru Bankası                          | ✅ **Sprint 3 — 198 özgün soru (82 konu)** + zenginleştirilmiş metaveri; 100+/konu ölçekleme sürüyor                                                  |
-| 13        | Simülasyonlar                                  | ✅ **e-Sınav simülatörü canlıda** (50/45dk/35 baraj) + **Sürüş Akademisi 5 direksiyon dersi** (Sprint 3)                                              |
-| 14        | Görsel İçerik                                  | ✅ **Sprint 3 — 12 erişilebilir inline SVG** (role=img + aria-label; figureId eşlemesi)                                                               |
-| 15        | SEO                                            | ✅ JSON-LD (Org/WebSite/LearningResource/Quiz) + sitemap/robots — canlıda doğrulandı                                                                  |
-| 16        | Monetizasyon                                   | ✅ **Sprint 4 — gerçek ödeme mimarisi** (ADR-008 LemonSqueezy + webhook + makbuz; mock varsayılan) + premium erişim kontrolü; gerçek tahsilat ENV ile |
-| 30        | Güvenlik / Uyum                                | ✅ **Sprint 5 — CSP + tam güvenlik başlığı seti + CSRF middleware + secrets validation + OWASP review** (+ Sprint 4 KVKK/rıza); WAF/pen-test kalan    |
-| 31        | Gözlemlenebilirlik                             | ✅ **Sprint 5 — /api/health + captureException (Sentry-hazır) + instrumentation** (+ Sprint 4 logger/hata sınırları)                                  |
-| 17        | ASO                                            | ○ Planlı (retention kanıtı sonrası — ROADMAP sırası gereği)                                                                                           |
-| 18        | Mobil/PWA                                      | ✅ SW + manifest — **prod'da kayıt doğrulandı**                                                                                                       |
-| 19        | Genişleme                                      | ○ Planlı                                                                                                                                              |
-| 20        | Test & QA                                      | ✅ Çekirdek — 43 unit + 10 e2e CI'da                                                                                                                  |
-| 21        | Yayın                                          | ✅ **PRODUCTION DEPLOY + tarayıcı doğrulaması**                                                                                                       |
-| 22        | AI Platformu                                   | ✅ **Sprint 5 — sunucu grounded AI** (`/api/ai/ask` + halüsinasyon kapısı + model soyutlaması + fallback + eval %100); gerçek model ENV ile           |
-| 23        | Analitik                                       | ✅ **Sprint 5 — rıza-kapılı sağlayıcı katmanı** (GA4/Clarity/PostHog `enabledProviders`); gizlilik-öncelikli no-op; gerçek anahtarlar ENV ile         |
-| 24        | CMS                                            | ✅ **Sprint 2** — şema-öncelikli özel çekirdek (ADR-007); içerik hattı + sürüm + denetim; Payload'a açık kapı                                         |
-| 25        | Admin                                          | ✅ **Sprint 2** — /admin aynı SaaS kabuğunda; RBAC (user/editor/admin); istemci+sunucu koruması; denetim kaydı                                        |
-| 26–27     | Auth / Veritabanı                              | ✅ **Sprint 1** — özel credentials + @ea/db çift sürücü + cihazlar-arası senkron (prod DATABASE_URL bekliyor)                                         |
-| 28        | Arama                                          | ✅ **Sprint 2** — `SearchProvider` soyutlaması + LocalSearchProvider; Meili/Typesense/Algolia yeniden-yazımsız takılır                                |
-| 34        | Alışkanlık Döngüsü                             | ◑ Seri + 8 başarı rozeti + panel entegrasyonu canlıda                                                                                                 |
-| 29–33, 35 | Diğer kurumsal                                 | ○ Planlı (gerçek tahsilat, güvenlik sertleştirme, gözlemlenebilirlik, topluluk, platform zekâsı)                                                      |
+| Faz   | Ad                                             | Durum                                                                                                                                                 |
+| ----- | ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0–4   | Mühendislik · Strateji · Mimari · Next.js göçü | ✅ Tamamlandı (önceki oturum)                                                                                                                         |
+| 5–8   | BİM · Tasarım · UI/UX · Frontend               | ✅ Tamamlandı                                                                                                                                         |
+| 9     | Öğrenme Sistemi (SRS)                          | ✅ **Tamamlandı** — SM-2 pratik döngüsü canlıda (/calis)                                                                                              |
+| 10    | Teorik Akademi                                 | ✅ **Sprint 3 — 14 teorik ders** (zengin yapı: özet/hafıza/strateji/tekrar kartı/alıştırma)                                                           |
+| 11–12 | Pratik + Soru Bankası                          | ✅ **Sprint 3 — 198 özgün soru (82 konu)** + zenginleştirilmiş metaveri; 100+/konu ölçekleme sürüyor                                                  |
+| 13    | Simülasyonlar                                  | ✅ **e-Sınav simülatörü canlıda** (50/45dk/35 baraj) + **Sürüş Akademisi 5 direksiyon dersi** (Sprint 3)                                              |
+| 14    | Görsel İçerik                                  | ✅ **Sprint 3 — 12 erişilebilir inline SVG** (role=img + aria-label; figureId eşlemesi)                                                               |
+| 15    | SEO                                            | ✅ JSON-LD (Org/WebSite/LearningResource/Quiz) + sitemap/robots — canlıda doğrulandı                                                                  |
+| 16    | Monetizasyon                                   | ✅ **Sprint 4 — gerçek ödeme mimarisi** (ADR-008 LemonSqueezy + webhook + makbuz; mock varsayılan) + premium erişim kontrolü; gerçek tahsilat ENV ile |
+| 30    | Güvenlik / Uyum                                | ✅ **Sprint 5 — CSP + tam güvenlik başlığı seti + CSRF middleware + secrets validation + OWASP review** (+ Sprint 4 KVKK/rıza); WAF/pen-test kalan    |
+| 31    | Gözlemlenebilirlik                             | ✅ **Sprint 5 — /api/health + captureException (Sentry-hazır) + instrumentation** (+ Sprint 4 logger/hata sınırları)                                  |
+| 17    | ASO                                            | ○ Planlı (retention kanıtı sonrası — ROADMAP sırası gereği)                                                                                           |
+| 18    | Mobil/PWA                                      | ✅ SW + manifest — **prod'da kayıt doğrulandı**                                                                                                       |
+| 19    | Genişleme                                      | ○ Planlı                                                                                                                                              |
+| 20    | Test & QA                                      | ✅ Çekirdek — 43 unit + 10 e2e CI'da                                                                                                                  |
+| 21    | Yayın                                          | ✅ **PRODUCTION DEPLOY + tarayıcı doğrulaması**                                                                                                       |
+| 22    | AI Platformu                                   | ✅ **Sprint 5 — sunucu grounded AI** (`/api/ai/ask` + halüsinasyon kapısı + model soyutlaması + fallback + eval %100); gerçek model ENV ile           |
+| 23    | Analitik                                       | ✅ **Sprint 5 — rıza-kapılı sağlayıcı katmanı** (GA4/Clarity/PostHog `enabledProviders`); gizlilik-öncelikli no-op; gerçek anahtarlar ENV ile         |
+| 24    | CMS                                            | ✅ **Sprint 2** — şema-öncelikli özel çekirdek (ADR-007); içerik hattı + sürüm + denetim; Payload'a açık kapı                                         |
+| 25    | Admin                                          | ✅ **Sprint 2** — /admin aynı SaaS kabuğunda; RBAC (user/editor/admin); istemci+sunucu koruması; denetim kaydı                                        |
+| 26–27 | Auth / Veritabanı                              | ✅ **Sprint 1** — özel credentials + @ea/db çift sürücü + cihazlar-arası senkron (prod DATABASE_URL bekliyor)                                         |
+| 28    | Arama                                          | ✅ **Sprint 2** — `SearchProvider` soyutlaması + LocalSearchProvider; Meili/Typesense/Algolia yeniden-yazımsız takılır                                |
+| 34    | Alışkanlık Döngüsü                             | ✅ **Sprint 6 — XP/seviye/hedef/ısı haritası/yolculuk + `/ilerleme` panosu** (+ seri/rozet)                                                           |
+| 32–33 | Topluluk / Bilgi                               | ✅ **Sprint 6 — dürüst XP kademe lider tablosu + günlük meydan okuma + davet**; arkadaş sistemi=gelecek mimarisi                                      |
+| 35    | Platform Zekâsı                                | ✅ **Sprint 6 — öğrenme içgörüleri + akıllı dürtmeler + öneri/adaptif** (+ Sprint 5 grounded AI)                                                      |
+| 29    | (Kurumsal kalan)                               | ◑ Gerçek tahsilat/e-posta/AI/analitik/izleme ENV bekliyor (mimari hazır — `FINAL_PLATFORM_AUDIT.md`)                                                  |
 
 ## 3a. Kabuk Redesign Turu (v3)
 
@@ -115,13 +127,13 @@ e-Sınav dağılımını (23/12/9/6 = 50) tam karşılayacak **53 özgün soruya
 
 ## 4. Test & CI Sonuçları
 
-| Kapı               | Sonuç                                                                                                                                   |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
-| Birim/entegrasyon  | ✅ **148** (113 web + 35 paket: schema 9 · srs 12 · bank 10 · db 4)                                                                     |
-| E2E (Playwright)   | ✅ **41** (8 spec: shell 8 · learning 8 · commerce 5 · auth 5 · admin 5 · security 4 · core 4 · monet. 2) — **CI'da**, production build |
-| Production build   | ✅ 29 sayfa + 22 API rotası                                                                                                             |
-| **GitHub Actions** | ✅ **YEŞİL** (quality/e2e/gitleaks/CodeQL) — her faz push'unda izlendi                                                                  |
-| gitleaks/CodeQL    | ✅ temiz                                                                                                                                |
+| Kapı               | Sonuç                                                                                                                                                    |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Birim/entegrasyon  | ✅ **164** (129 web + 35 paket: schema 9 · srs 12 · bank 10 · db 4)                                                                                      |
+| E2E (Playwright)   | ✅ **44** (9 spec: shell 8 · learning 8 · commerce 5 · auth 5 · admin 5 · security 4 · core 4 · gamification 3 · monet. 2) — **CI'da**, production build |
+| Production build   | ✅ 30 sayfa + 22 API rotası                                                                                                                              |
+| **GitHub Actions** | ✅ **YEŞİL** (quality/e2e/gitleaks/CodeQL) — her faz push'unda izlendi                                                                                   |
+| gitleaks/CodeQL    | ✅ temiz                                                                                                                                                 |
 
 ## 5. Production Doğrulaması (gerçek tarayıcı, canlı URL)
 
@@ -138,8 +150,8 @@ e-Sınav dağılımını (23/12/9/6 = 50) tam karşılayacak **53 özgün soruya
 
 ## 6. İstatistikler
 
-- **Commit:** 23 (Conventional) · hepsi main'de, CI yeşil.
-- **Kod:** ~15k satır TS/TSX/CSS (tahmini) · 4 paket + 1 app · 29 sayfa + 22 API rotası.
+- **Commit:** 26 (Conventional) · hepsi main'de, CI yeşil.
+- **Kod:** ~17k satır TS/TSX/CSS (tahmini) · 4 paket + 1 app · 30 sayfa + 22 API rotası.
 - **İçerik:** **198 özgün soru (82 konu) · 19 ders · 12 SVG görsel** — tümü kaynak-izli, `review: draft` (E.6 uyum; uzman onayı bekliyor). İçerik hattı binlerce kaleme ölçeklenmeye hazır (CMS + yönetişim + arama).
 
 ## 7. Kalan İş (ROADMAP sırasıyla)

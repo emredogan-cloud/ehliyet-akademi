@@ -3,7 +3,7 @@
 > Ani kesinti sonrası devam için. Tek doğru kaynak: üst dizin `ROADMAP.md` (v3.1, 36 faz).
 > Ayrıntı: `STATUS.md` · GO/NO-GO: `FINAL_RELEASE_READINESS_REPORT.md`.
 
-_Son güncelleme: 2026-07-15 · SPRINT 5 sonrası_
+_Son güncelleme: 2026-07-15 · SPRINT 6 (son planlı uygulama sprinti) sonrası_
 
 ## Kilit durum
 
@@ -11,7 +11,17 @@ _Son güncelleme: 2026-07-15 · SPRINT 5 sonrası_
 - **CI GERÇEK ve YEŞİL:** repo PUBLIC; Actions (quality/E2E/gitleaks/CodeQL) her push'ta; branch protection açık.
 - **MONETIZASYON PİVOTU (bağlayıcı):** abonelik YOK → **tek-seferlik paketler** (5 paket; Komple B = lifetime). ROADMAP Faz 16 güncellendi. Ödeme mock (demo); üretim tahsilatı = LemonSqueezy/Stripe one-time adaptörü kalan iş.
 
-## SPRINT 5 (en güncel tur) — AI platformu, analitik, gözlemlenebilirlik, güvenlik, performans
+## SPRINT 6 (en güncel tur) — Oyunlaştırma, topluluk, platform zekâsı (SON planlı sprint)
+
+- **Oyunlaştırma (Faz 34):** `lib/gamification.ts` (totalXp/levelForXp/xpToReach/dailyGoal/weeklyGoal/studyHeatmap/learningJourney; XP sabitleri; hepsi saf/testli). `components/StudyHeatmap.tsx` (SVG). Yeni `app/(app)/ilerleme/page.tsx` (data-testid=ilerleme/level-title/daily-challenge/journey/insights).
+- **Topluluk (Faz 32/33):** `lib/community.ts` (tierForXp [Bronz→Elmas, uydurma rakip YOK], dailyChallenge deterministik, getOrCreateReferralCode/referralLink, Friend arayüzü=gelecek). ea:referral:v1.
+- **Platform zekâsı (Faz 35):** `lib/insights.ts` (learningInsights — best/worst/trend/tempo/due), `lib/notifications.ts` (computeNudges — streak-risk/due-cards/start-today), `components/NudgeBanner.tsx` (Dashboard'da).
+- **Gerçek veri:** progress.ts +loadCounters/incrementExamsFinished (ea:counters:v1) +loadViewedLessons/markLessonViewed (ea:lessonsViewed:v1). ExamSimulator finish→incrementExamsFinished; `components/LessonViewTracker.tsx` (lesson page). authClient SYNC_KEYS + api/state ALLOWED_KEYS bu iki key eklendi. Sidebar +İlerleme(XP).
+- **e2e `gamification.spec.ts`** (3: ilerleme panosu, panel nudge, davet kopyala). Panel testinde nudge storageState fresh veriyle görünür.
+- **3 belge:** SPRINT_6_REPORT.md, VISUAL_TRANSFORMATION_ROADMAP.md (subagent, 367 satır, 7 bölüm — asset YOK), FINAL_PLATFORM_AUDIT.md (Kritik 0 / Yüksek: DATABASE_URL, tahsilat/e-posta ENV, ilk yardım uzman onayı, yasal hukukçu / Orta / Düşük).
+- **Canlı doğrulandı:** /ilerleme gerçek veriyle (Seviye 2, 165 XP, Bronz, ısı haritası bugün dolu), 0 konsol.
+
+## SPRINT 5 — AI platformu, analitik, gözlemlenebilirlik, güvenlik, performans
 
 - **AI (ADR-010):** `lib/server/ai.ts` (answerGrounded: retrieve→halüsinasyon kapısı→MockModel/AnthropicModel→fallback; SYSTEM_PROMPT; aiConfigured=ANTHROPIC_API_KEY). `/api/ai/ask` (rate-limited, no DB). `lib/server/ai-eval.ts` (AI_EVAL_CASES + runEval; test %100). `lib/ai.ts` retrieve YENİDEN yazıldı: önek-duyarlı token eşleşme (scoreTokens, startsWith her iki yön, min 3) + genişletilmiş STOPWORDS (kadar/zaman/kim/…). AICoach send() → fetch /api/ai/ask (yerel mock fallback) + coach-action-readiness (examReadinessAnalysis/formatReadinessAnalysis, study.ts'e eklendi).
 - **Analitik (ADR-011):** `lib/analytics.ts` genişletildi (event union + enabledProviders(consent,cfg) saf/testli + ProviderSink + analyticsConfig). `components/AnalyticsLoader.tsx` (root layout; rıza+ENV varsa GA4/Clarity/PostHog yükler). ENV yok → no-op.
@@ -85,8 +95,8 @@ _Son güncelleme: 2026-07-15 · SPRINT 5 sonrası_
 
 ## Son durum
 
-- **Testler:** 148 unit/integration (113 web + 35 paket) + 41 e2e ✅ · build 29 sayfa + 22 API rotası ✅ · CI ✅ · CodeQL ✅ · **prod tarayıcı doğrulaması ✅** (konsol/CSP 0 hata).
+- **Testler:** 164 unit/integration (129 web + 35 paket) + 44 e2e ✅ · build 30 sayfa + 22 API rotası ✅ · CI ✅ · CodeQL ✅ · **prod tarayıcı doğrulaması ✅** (konsol/CSP 0 hata).
 - **İçerik:** 198 soru (82 konu) + 19 ders (Sprint 3). Tümü review:draft (uzman onayı bekliyor, özellikle ilk yardım).
-- **DUR:** Sprint 5 sonrası durdu; Sprint 6 direktif olmadan başlatılmaz.
+- **DUR:** Sprint 6 SON planlı uygulama sprintiydi. Yeni uygulama sprinti direktif olmadan başlatılmaz (görsel dönüşüm = ayrı yol haritası).
 - **Kalan dış aksiyonlar (ENV):** DATABASE_URL (Neon), LEMONSQUEEZY_* (tahsilat), RESEND_API_KEY (e-posta), ANTHROPIC_API_KEY (gerçek AI), NEXT_PUBLIC_GA_ID/CLARITY_ID/POSTHOG_KEY (analitik), SENTRY_DSN (izleme), yasal metin hukukçu onayı. Kod hazır; hepsi ENV ile aktifleşir.
 - Dependabot 9 PR bekliyor (major bump'lar) — hijyen turu.

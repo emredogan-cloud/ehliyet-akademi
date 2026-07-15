@@ -2,7 +2,7 @@
 
 > Tek doğru kaynak: üst dizindeki `ROADMAP.md` (v3.1, Faz 0–35).
 
-_Son güncelleme: 2026-07-15 · SPRINT 5 (AI platformu + analitik + gözlemlenebilirlik + güvenlik) sonrası_
+_Son güncelleme: 2026-07-15 · SPRINT 6 (oyunlaştırma + topluluk + platform zekâsı) — SON planlı uygulama sprinti sonrası_
 
 ### Yaptım
 
@@ -75,9 +75,19 @@ _Son güncelleme: 2026-07-15 · SPRINT 5 (AI platformu + analitik + gözlemleneb
 - **Kalite:** 148 unit/integration (+18) + 41 e2e (+4) + CI yeşil + CodeQL yeşil + prod deploy + **canlı doğrulama** (güvenlik başlıkları/health/CSRF 403/grounded AI, 0 CSP ihlali).
 - Ayrıntı: `SPRINT_5_REPORT.md` · ADR-010/011 · `SECURITY_REVIEW.md`.
 
+### Yaptım (SPRINT 6 — SON planlı uygulama sprinti) ✅
+
+- **Oyunlaştırma (Faz 34):** `lib/gamification.ts` (XP gerçek veriden, seviye+unvan, günlük/haftalık hedef, GitHub-tarzı çalışma ısı haritası, öğrenme yolculuğu) + `StudyHeatmap` + yeni **`/ilerleme`** panosu (XP/seviye/kademe/meydan okuma/hedefler/ısı haritası/içgörüler/yolculuk/başarı vitrini/davet).
+- **Topluluk (Faz 32/33):** `lib/community.ts` — dürüst XP kademe lider tablosu (uydurma rakip YOK), deterministik günlük meydan okuma, davet kodu + bağlantı; arkadaş sistemi = gelecek mimarisi.
+- **Platform zekâsı (Faz 35):** `lib/insights.ts` (öğrenme içgörüleri) + `lib/notifications.ts` (gizlilik-dostu dürtmeler) + `NudgeBanner` (panel).
+- **Gerçek veri:** progress.ts sayaçları (examsFinished) + görülen dersler; ExamSimulator + LessonViewTracker besler; syncSet/state allowlist genişledi.
+- **Release candidate + final denetim:** her sprint/ADR/API/ENV/deploy/güvenlik/doküman gözden geçirildi → `FINAL_PLATFORM_AUDIT.md` (Kritik/Yüksek/Orta/Düşük, dürüst).
+- **Kalite:** 164 unit/integration (+16) + 44 e2e (+3) + CI yeşil + CodeQL yeşil + prod deploy + **canlı doğrulama** (`/ilerleme` gerçek veriyle: Seviye 2, 165 XP, Bronz, ısı haritası; 0 konsol hatası).
+- **Strateji belgeleri:** `SPRINT_6_REPORT.md` · `VISUAL_TRANSFORMATION_ROADMAP.md` (7 bölüm, varlık ÜRETİLMEDİ) · `FINAL_PLATFORM_AUDIT.md`.
+
 ### Yapıyorum
 
-- Sprint 5 kapanışı (rapor + dokümantasyon). **DUR: Sprint 6 başlatılmadı** (direktif).
+- Sprint 6 kapanışı (rapor + 2 strateji belgesi). **DUR: Yeni uygulama sprinti YOK** (direktif — son planlı sprint).
 
 ### Yapacağım (ROADMAP sırası — sonraki sorumlu nokta)
 

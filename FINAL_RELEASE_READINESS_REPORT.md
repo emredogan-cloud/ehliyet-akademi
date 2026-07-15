@@ -1,6 +1,6 @@
 # FINAL RELEASE READINESS REPORT — Ehliyet Akademi
 
-_Tarih: 2026-07-15 (v8 — Sprint 5 sonrası) · Tek doğru kaynak: `ROADMAP.md` (v3.1)_
+_Tarih: 2026-07-15 (v9 — Sprint 6 sonrası; SON planlı uygulama sprinti) · Tek doğru kaynak: `ROADMAP.md` (v3.1)_
 
 ---
 
@@ -29,9 +29,10 @@ _Tarih: 2026-07-15 (v8 — Sprint 5 sonrası) · Tek doğru kaynak: `ROADMAP.md`
 | **Payments (tek-seferlik)** | 🟢 (mimari)/🟡 (canlı)        | **Sprint 4:** LemonSqueezy adaptörü + HMAC webhook + makbuz + idempotency + premium erişim kontrolü **hazır**; gerçek tahsilat `LEMONSQUEEZY_*` ENV bekliyor (o gelene dek demo, etiketli)                         |
 | **E-posta**                 | 🟢 (mimari)                   | **Sprint 4:** Resend adaptörü + 5 şablon + doğrulama/reset/onay/destek akışları; gerçek gönderim `RESEND_API_KEY` bekliyor (yoksa console/devToken)                                                                |
 | **Yasal / KVKK**            | 🟡 (taslak)                   | **Sprint 4:** 4 yasal sayfa + rıza + veri dışa aktarma + hesap silme **hazır**; metinler **hukukçu onayı** + gerçek şirket bilgisi bekliyor                                                                        |
-| **Test**                    | 🟢                            | 148 unit/integration + 41 e2e; **CI'da** koşuyor                                                                                                                                                                   |
+| **Test**                    | 🟢                            | 164 unit/integration + 44 e2e; **CI'da** koşuyor                                                                                                                                                                   |
 | **İçerik derinliği**        | 🟢 (temel)                    | **Sprint 3:** 198 özgün soru (82 konu) + 19 zengin ders + 12 SVG; 100+/konu ölçekleme sürüyor; ilk yardım uzman onayı bekliyor                                                                                     |
 | **Öğrenme deneyimi**        | 🟢                            | Grounded AI asistanı (çalışma planı/zayıf konu/kişisel tekrar) + tekrar kartları + alıştırma + ustalık radarı — canlı                                                                                              |
+| **Oyunlaştırma / Topluluk** | 🟢                            | **Sprint 6:** XP/seviye/hedef/ısı haritası/yolculuk + dürüst XP kademe lider tablosu + günlük meydan okuma + davet + içgörüler/dürtmeler — canlı (`/ilerleme`)                                                     |
 | **CI**                      | 🟢                            | Actions yeşil (quality/e2e/gitleaks/CodeQL); kırmızı→düzelt→yeşil disiplini uygulandı                                                                                                                              |
 | **Deploy doğrulaması**      | 🟢                            | Preview + Production; canlıda tarayıcı ile 8 akış doğrulandı (geliştirme raporu §5)                                                                                                                                |
 

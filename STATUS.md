@@ -2,7 +2,16 @@
 
 > Tek doğru kaynak: üst dizindeki `ROADMAP.md` (v3.1, Faz 0–35).
 
-_Son güncelleme: 2026-07-15 · SPRINT 6 (oyunlaştırma + topluluk + platform zekâsı) — SON planlı uygulama sprinti sonrası_
+_Son güncelleme: 2026-07-16 · PROGRAM 1 (Görsel Dönüşüm & İçerik Genişletme) tamamlandı_
+
+### Yaptım (PROGRAM 1 — Görsel Dönüşüm & İçerik Genişletme) ✅
+
+- **Görsel kimlik dönüşümü ✅** — metin-ağırlıklıdan premium/görsel/etkileşimliye. **42 özgün SVG trafik işareti** + etkileşimli galeri (`/isaretler`: 8 kategori, TR-arama, flip-kart öğrenme); **21 özgün SVG araç bileşeni** + referans sayfası (`/arac`, 4 sistem); premium vitrin (split-hero + özgün yol sahnesi + gerçek istatistik bandı + görsel hikâye + güven kartları).
+- **Uygulama içi görsel cila ✅** — `Callout` (4 ton), `CompareTable`, `Reveal` (scroll-reveal, reduced-motion güvenli), `EmptyState`; `LessonSection` şeması geriye dönük uyumlu `callout`/`compare` ile genişletildi (mimari değişmedi); **19 dersin tümü** görsel bloklarla zenginleştirildi (**31 callout + 20 karşılaştırma tablosu**).
+- **İçerik genişletme ✅** — soru bankası **398 → 534 özgün soru**; **her konu ≥100** (trafik 123, ilk yardım 104, motor 103, adab 102, pratik 102); her yeni soru whyWrong/objective/tags/difficulty/badge/review/sourceRef metaverili; kimlik çakışması sıfır; fail-fast Zod doğrulama.
+- **Telif-güvenli ✅** — telifli düzen/çizim/içerik kopyalanmadı; standart işaret şekil/renkleri serbest, piktogramlar özgün çizim; sorular kendi ifademizle. Tıbbi içerik `review:'draft'` (uzman onayı).
+- **Kapılar ✅** — 145 web birim + paket testleri + **49 e2e** yeşil; typecheck/prettier temiz; build 75 sayfa; **CI yeşil** (Lint·Typecheck·Test·Build + E2E + gitleaks + CodeQL); **production deploy sağlıklı** + gerçek tarayıcı doğrulaması (0 konsol hatası).
+- Raporlar: `PROGRAM_1_REPORT.md`, `VISUAL_COMPLETION_REPORT.md`, `CONTENT_EXPANSION_REPORT.md`.
 
 ### Yaptım
 

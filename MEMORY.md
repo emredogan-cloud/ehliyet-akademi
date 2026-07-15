@@ -3,9 +3,23 @@
 > Ani kesinti sonrası devam için. Tek doğru kaynak: üst dizin `ROADMAP.md` (v3.1, 36 faz).
 > Ayrıntı: `STATUS.md` · GO/NO-GO: `FINAL_RELEASE_READINESS_REPORT.md`.
 
-_Son güncelleme: 2026-07-15 · SPRINT 6 (son planlı uygulama sprinti) sonrası_
+_Son güncelleme: 2026-07-16 · PROGRAM 1 (Görsel Dönüşüm & İçerik Genişletme) tamamlandı_
 
 ## Kilit durum
+
+## PROGRAM 1 (en güncel) — Görsel Dönüşüm & İçerik Genişletme ✅
+
+- **Yaklaşım:** yeni roadmap YOK, mimari yeniden tasarım YOK; `VISUAL_TRANSFORMATION_ROADMAP.md` izlendi. Telifsiz/özgün-öncelikli.
+- **İşaretler:** `components/signs/TrafficSign.tsx` (parametrik shell+glyph, 26 özgün glyph, sabit işaret renkleri). `content/signs.ts` (42 işaret, 8 kategori, `filterSigns`/`signById`). `app/(app)/isaretler/page.tsx` (client galeri: `sign-search`, `cat-<c>` çipler, flip-kart `sign-card`, `signs-gallery`/`signs-empty`). 7 test.
+- **Araç:** `components/vehicle/VehicleFigure.tsx` (21 özgün line-art, `VEHICLE_PART_IDS`). `content/vehicle.ts` (21 parça, 4 sistem, `partsBySystem`). `app/(app)/arac/page.tsx` (server, `vehicle-part`/`vsys-<sys>`/`arac`). 5 test.
+- **Vitrin:** `components/marketing/HeroArt.tsx` (özgün SVG yol sahnesi + 3 TrafficSign overlay). `app/(marketing)/page.tsx` (split-hero, gerçek istatistik: subjectCounts/LESSONS/SIGNS/VEHICLE_PARTS, feature/journey/dist/trust, Reveal ile sarılı). Uydurma testimonial YOK.
+- **Bölüm D bileşenleri:** `components/ui/{Callout,CompareTable,Reveal,EmptyState}.tsx`. Şema: `@ea/content-schema`'da `Callout` + `CompareTable` tipleri; `LessonSection`'a opsiyonel `callout`/`compare` (geriye dönük uyumlu). Ders render (`dersler/[slug]/page.tsx`) bunları basar. 19 dersin TÜMÜ zenginleştirildi (31 callout + 20 tablo): lessons.ts (core 5), theory-lessons.ts (9), driving-lessons.ts (5).
+- **Soru bankası:** `questions-{adab,motor,ilkyardim,pratik}-3.ts` (batch-3, +136) index.ts'e wire edildi. **534 toplam, her konu ≥100** (trafik 123/ilkyardim 104/motor 103/adab 102/pratik 102). Test kapısı: `index.test.ts` ≥500 toplam + her konu ≥100 + ≥470 zenginleştirilmiş.
+- **CSS:** globals.css Program 1 blokları (sign gallery, landing hero/feature/journey/dist, callout/cmp/empty-state/reveal — reduced-motion korumalı).
+- **vitest.config.ts** include: `content/**/*.test.ts` eklendi (signs/vehicle/lessons-visual testleri).
+- **Kapılar:** 145 web birim + 49 e2e (`e2e/visual.spec.ts` 5) yeşil; CI yeşil (bir format hatası düzeltildi `b16a543`); production deploy sağlıklı, canlı doğrulandı (0 konsol). Commit'ler: C `b78d6f4`, D `4b1eebd`+`b16a543`, E `404d92d`.
+- **Raporlar:** `PROGRAM_1_REPORT.md`, `VISUAL_COMPLETION_REPORT.md`, `CONTENT_EXPANSION_REPORT.md`.
+- **STOP:** Program 1 tamamlandı; Program 2 BAŞLATILMADI (direktif).
 
 - **PRODUCTION CANLI:** https://ehliyet-akademi-nine.vercel.app (Vercel, proje `ehliyet-akademi`, rootDirectory=`apps/web`, NEXT_PUBLIC_SITE_URL env set). Deploy: `vercel deploy --prod --yes` (kökten).
 - **CI GERÇEK ve YEŞİL:** repo PUBLIC; Actions (quality/E2E/gitleaks/CodeQL) her push'ta; branch protection açık.

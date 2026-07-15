@@ -7,7 +7,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { SUBJECT_LABEL } from '@ea/content-schema';
 import { buildExam, scoreExam, type BuiltExam, type ExamResult } from '../lib/exam';
-import { appendAnswers, touchStreak } from '../lib/progress';
+import { appendAnswers, touchStreak, incrementExamsFinished } from '../lib/progress';
 import { canStartFreeExam, consumeFreeExam, loadEntitlements } from '../lib/payments';
 import { hasCapability } from '../lib/products';
 import { track } from '../lib/analytics';
@@ -89,6 +89,7 @@ export function ExamSimulator() {
       }))
     );
     touchStreak();
+    incrementExamsFinished();
     track({
       name: 'exam_finished',
       props: { correct: r.correct, total: r.total, passed: r.passed },

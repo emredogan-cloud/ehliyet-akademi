@@ -8,6 +8,7 @@ import { loadAnswers, loadStreak } from '@/lib/progress';
 import { loadReadiness, type StoredReadiness } from '@/lib/storage';
 import { loadEntitlements } from '@/lib/payments';
 import { computeAchievements, earnedCount } from '@/lib/achievements';
+import { NudgeBanner } from '@/components/NudgeBanner';
 
 const LIGHT_LABEL: Record<string, string> = {
   yesil: 'Hazır',
@@ -78,6 +79,7 @@ export function Dashboard() {
 
   return (
     <div data-testid="dashboard">
+      <NudgeBanner />
       <div
         className="grid"
         style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))' }}

@@ -30,6 +30,7 @@ const NAV: Array<{ group: string; items: Array<{ href: string; label: string; ic
   {
     group: 'İlerleme',
     items: [
+      { href: '/ilerleme', label: 'İlerleme (XP)', icon: '🎮' },
       { href: '/hazirlik-skorum', label: 'Hazırlık Skorum', icon: '🚦' },
       { href: '/calisma-plani', label: 'Çalışma Planım', icon: '📋' },
       { href: '/basarilar', label: 'Başarılar', icon: '🏆' },

@@ -77,3 +77,28 @@ export function touchStreak(now = Date.now()): StreakState {
   safeSet(STREAK_KEY, next);
   return next;
 }
+
+/* ---- Sayaçlar + görülen dersler (Sprint 6 oyunlaştırma; gerçek veriden XP) ---- */
+const COUNTERS_KEY = 'ea:counters:v1';
+const VIEWED_KEY = 'ea:lessonsViewed:v1';
+
+export interface Counters {
+  examsFinished: number;
+}
+export function loadCounters(): Counters {
+  return safeGet<Counters>(COUNTERS_KEY, { examsFinished: 0 });
+}
+export function incrementExamsFinished(): Counters {
+  const c = loadCounters();
+  const next = { ...c, examsFinished: (c.examsFinished ?? 0) + 1 };
+  safeSet(COUNTERS_KEY, next);
+  return next;
+}
+
+export function loadViewedLessons(): string[] {
+  return safeGet<string[]>(VIEWED_KEY, []);
+}
+export function markLessonViewed(slug: string): void {
+  const cur = loadViewedLessons();
+  if (!cur.includes(slug)) safeSet(VIEWED_KEY, [...cur, slug]);
+}

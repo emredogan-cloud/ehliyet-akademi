@@ -944,3 +944,73 @@ table.tbl {
     padding: 26px;
   }
 }
+
+/* ============ Sprint 6 — oyunlaştırma & topluluk ============ */
+
+.level-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+/* Öğrenme yolculuğu (dikey zaman çizelgesi) */
+.journey {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+}
+.journey__step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 0;
+  border-left: 2px solid var(--border);
+  padding-left: 16px;
+  margin-left: 11px;
+  color: var(--text-3);
+}
+.journey__step--done {
+  color: var(--text);
+  font-weight: 600;
+}
+.journey__dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--border-strong);
+  background: var(--surface);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  margin-left: -28px;
+  flex-shrink: 0;
+}
+.journey__step--done .journey__dot {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #04231f;
+  font-weight: 800;
+}
+
+/* Uygulama-içi dürtme (nudge) bannerı */
+.nudge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--primary-100);
+  background: var(--primary-050);
+  margin-bottom: 14px;
+}
+.nudge__text {
+  flex: 1;
+  font-size: 0.92rem;
+}
+.nudge--warn {
+  border-color: var(--yellow);
+  background: color-mix(in srgb, var(--yellow) 10%, var(--surface));
+}

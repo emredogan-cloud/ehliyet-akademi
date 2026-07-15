@@ -10,6 +10,8 @@ const ALLOWED_KEYS = new Set([
   'ea:readiness:v1',
   'ea:entitlements:v1',
   'ea:examQuota:v1',
+  'ea:counters:v1',
+  'ea:lessonsViewed:v1',
   'ea:theme',
 ]);
 const MAX_VALUE_BYTES = 512 * 1024; // kayıt başına üst sınır

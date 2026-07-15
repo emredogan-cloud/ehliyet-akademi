@@ -8,6 +8,7 @@ import { LessonPractice } from '@/components/LessonPractice';
 import { LessonJsonLd } from '@/components/JsonLd';
 import { PremiumBadge } from '@/components/PremiumBadge';
 import { PremiumLessonGate } from '@/components/PremiumLessonGate';
+import { LessonViewTracker } from '@/components/LessonViewTracker';
 import type { ReactNode } from 'react';
 
 export function generateStaticParams() {
@@ -55,6 +56,7 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
   return (
     <article style={{ maxWidth: 760, margin: '0 auto' }}>
       <LessonJsonLd lesson={lesson} />
+      <LessonViewTracker slug={lesson.slug} premium={lesson.premium} />
       <p className="muted" style={{ marginBottom: 4 }}>
         {SUBJECT_LABEL[lesson.subject]} · {lesson.minutes} dk okuma
       </p>

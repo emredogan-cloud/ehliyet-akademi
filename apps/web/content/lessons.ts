@@ -131,6 +131,95 @@ const raw: Lesson[] = [
     quizQuestionIds: ['motor-001', 'motor-002', 'motor-005'],
     references: ['Araç tekniği temel bilgisi'],
   },
+  {
+    id: 'kavsak-oncelik',
+    slug: 'kavsak-oncelik',
+    no: 4,
+    subject: 'trafik',
+    title: 'Kavşaklar ve Geçiş Önceliği',
+    summary:
+      'Işıklı/ışıksız kavşakta kim önce geçer? Sağdan gelen kuralı, ana yol–tali yol ve dönüş önceliği.',
+    minutes: 9,
+    objectives: [
+      'Işıksız eşit kavşakta "sağdan gelen" kuralını uygulamak',
+      'Ana yol–tali yol önceliğini bilmek',
+      'Dönüşte karşıdan düz gelene yol vermek',
+    ],
+    sections: [
+      {
+        heading: 'Sağdan gelen önceliklidir',
+        badge: 'official',
+        body: 'Işık veya görevli bulunmayan, **eşit yolların** kesiştiği kavşakta geçiş önceliği **sağdan gelen** araçtadır. Emin değilsen yavaşla; öncelik vermek asla hata değildir.',
+      },
+      {
+        heading: 'Ana yol – tali yol',
+        badge: 'official',
+        body: 'Tali yoldan ana yola çıkan sürücü, **ana yoldaki trafiğe yol vermek** zorundadır. Levhalar (ana yol / yol ver / dur) bu ilişkiyi bildirir.',
+      },
+      {
+        heading: 'Dönüşte öncelik',
+        badge: 'official',
+        body: 'Sola dönen sürücü, **karşıdan düz gelen** araca ve geçidi kullanan yayaya yol verir. Dönüş, uygun boşluk beklenerek tamamlanır.',
+      },
+      {
+        heading: 'Kavşakta beklememe',
+        badge: 'safety',
+        body: 'Çıkışı dolu bir kavşağa yeşil ışıkta bile girilmez — kavşak ortasında kalmak trafiği kilitler ve tehlikelidir.',
+      },
+    ],
+    mistakes: [
+      {
+        text: 'Işıksız kavşakta önceliği hızla "kapmaya" çalışmak.',
+        fix: 'Kurala göre davran; şüphede **yol ver** — güvenli olan budur.',
+      },
+    ],
+    tips: ['Kavşağa yaklaşırken sol-ileri-sağ tarayın; yeşilde bile kısa kontrol yapın.'],
+    quizQuestionIds: ['trafik-003', 'trafik-011', 'trafik-012'],
+    references: ['Karayolları Trafik Yönetmeliği — kavşaklarda geçiş hakkı'],
+  },
+  {
+    id: 'trafik-adabi',
+    slug: 'trafik-adabi',
+    no: 5,
+    subject: 'adab',
+    title: 'Trafik Adabı: Saygı, Sabır, Empati',
+    summary:
+      'Trafik adabı kural bilgisinden fazlasıdır: öfke yönetimi, hoşgörü, empati ve geçiş üstünlüğüne saygı.',
+    minutes: 7,
+    objectives: [
+      'Trafikte öfke/stresle sağlıklı başa çıkmak',
+      'Empati ve hoşgörünün güvenliğe katkısını açıklamak',
+      'Geçiş üstünlüğü olan araçlara doğru davranmak',
+    ],
+    sections: [
+      {
+        heading: 'Öfke aracı sürmesin',
+        badge: 'instructor',
+        body: 'Trafikte hata olur — sizin de olur. Hataya **misillemeyle** cevap vermek (yaklaşmak, selektör, korna) kaza riskini büyütür. Sakin kalın, mesafeyi açın; amaç haklı çıkmak değil, **güvenle varmak**.',
+      },
+      {
+        heading: 'Empati ve hoşgörü',
+        badge: 'best',
+        body: 'Acemi sürücü, yaşlı yaya, acelesi olan servis... Diğer yol kullanıcısının durumunu anlamak (**empati**), davranışı yumuşatır. Gerekirse **hakkından feragat etmek** olgunluktur.',
+      },
+      {
+        heading: 'Geçiş üstünlüğü',
+        badge: 'official',
+        body: 'Siren/tepe lambası açık ambulans, itfaiye ve benzeri araçlara **güvenli biçimde yol açmak** zorunludur; sağa yanaşıp yavaşlayın, gerekiyorsa durun.',
+      },
+    ],
+    mistakes: [
+      {
+        text: 'İnatlaşıp şerit "kaptırmamak".',
+        fix: 'Bir aracın önünüze girmesi yolculuğunuzu saniyeler etkiler; inatlaşma kazayı **dakikalarla değil hayatla** ödetebilir.',
+      },
+    ],
+    tips: [
+      'Sınavda da adab sorularının mantığı hep aynıdır: güvenlik + saygı + sakinlik olan şık doğrudur.',
+    ],
+    quizQuestionIds: ['adab-001', 'adab-002', 'adab-003', 'adab-005'],
+    references: ['MEB Trafik Adabı müfredatı'],
+  },
 ];
 
 /** Şema doğrulaması modül yüklenirken çalışır — bozuk içerik build’i kırar. */

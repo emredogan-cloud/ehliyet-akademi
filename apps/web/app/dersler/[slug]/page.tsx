@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { BADGE_LABEL, SUBJECT_LABEL } from '@ea/content-schema';
 import { LESSONS, lessonBySlug } from '../../../content/lessons';
+import { LessonFigure } from '../../../components/LessonFigure';
 
 export function generateStaticParams() {
   return LESSONS.map((l) => ({ slug: l.slug }));
@@ -51,6 +52,8 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
           ))}
         </ul>
       </div>
+
+      <LessonFigure lessonId={lesson.id} />
 
       {lesson.sections.map((sec, k) => (
         <section key={k} style={{ margin: '26px 0' }}>

@@ -1,11 +1,8 @@
 import { describe, it, expect } from 'vitest';
-import {
-  SEED_QUESTIONS,
-  verifyBank,
-  questionsBySubject,
-  subjectCounts,
-  questionById,
-} from './index';
+import { EXAM_BLUEPRINT } from '@ea/content-schema';
+import { allQuestions, verifyBank, questionsBySubject, subjectCounts, questionById } from './index';
+
+const SEED_QUESTIONS = allQuestions();
 
 describe('soru bankası bütünlüğü', () => {
   it('tüm sorular şemaya uygun ve id benzersiz', () => {
@@ -50,5 +47,14 @@ describe('soru bankası bütünlüğü', () => {
     for (const q of SEED_QUESTIONS) {
       expect(q.sourceRef, `${q.id} sourceRef eksik`).toBeTruthy();
     }
+  });
+
+  it('banka TAM e-Sınav dağılımını karşılar (23/12/9/6) — Faz 12/13 gereksinimi', () => {
+    const counts = subjectCounts();
+    const dist = EXAM_BLUEPRINT.distribution;
+    expect(counts['trafik']).toBeGreaterThanOrEqual(dist.trafik);
+    expect(counts['ilkyardim']).toBeGreaterThanOrEqual(dist.ilkyardim);
+    expect(counts['motor']).toBeGreaterThanOrEqual(dist.motor);
+    expect(counts['adab']).toBeGreaterThanOrEqual(dist.adab);
   });
 });

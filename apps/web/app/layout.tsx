@@ -56,6 +56,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <nav className="nav" aria-label="Ana menü">
               <a href="/dersler">Dersler</a>
               <a href="/e-sinav">e-Sınav</a>
+              <a href="/calis">Çalış</a>
+              <a href="/deneme-sinavi">Deneme</a>
               <a href="/tani">Tanı Denemesi</a>
               <a href="/hazirlik-skorum">Hazırlık Skorum</a>
             </nav>

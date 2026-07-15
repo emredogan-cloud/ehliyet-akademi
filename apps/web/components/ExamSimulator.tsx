@@ -5,7 +5,6 @@
  * Resmî MEB sınavı DEĞİLDİR; gerçek sınav formatında denemedir (dürüst etiket).
  */
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type { Question } from '@ea/content-schema';
 import { SUBJECT_LABEL } from '@ea/content-schema';
 import { buildExam, scoreExam, type BuiltExam, type ExamResult } from '../lib/exam';
 import { appendAnswers, touchStreak } from '../lib/progress';
@@ -50,11 +49,11 @@ export function ExamSimulator() {
     };
   }, [exam, result]);
 
-  // Süre bitti → otomatik teslim
+  // Süre bitti → otomatik teslim. (Bilinçli dar bağımlılık: yalnız `left` değişince
+  // kontrol edilir; finish referansı her render'da tazedir ve exam/result'ı içeride okur.)
   useEffect(() => {
     if (exam && !result && left === 0) finish();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [left]);
+  }, [left]); // eslint-disable-line
 
   const answeredCount = useMemo(() => answers.filter((a) => a !== null).length, [answers]);
 

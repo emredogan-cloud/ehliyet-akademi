@@ -3,6 +3,7 @@
  * ADR-004: sağlayıcı-agnostik; şimdilik LocalStorage. Sunucu hesabına geçişte aynı arayüz DB'ye bağlanır.
  */
 import type { Subject, TrafficLight } from '@ea/srs-engine';
+import { syncSet } from './authClient';
 
 export interface StoredReadiness {
   overall: number;
@@ -18,11 +19,7 @@ const KEY = 'ea:readiness:v1';
 
 export function saveReadiness(r: StoredReadiness): void {
   if (typeof window === 'undefined') return;
-  try {
-    window.localStorage.setItem(KEY, JSON.stringify(r));
-  } catch {
-    /* kota/gizli mod — sessiz geç */
-  }
+  syncSet(KEY, r);
 }
 
 export function loadReadiness(): StoredReadiness | null {

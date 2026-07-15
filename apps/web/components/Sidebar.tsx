@@ -7,6 +7,7 @@
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { loadStreak } from '@/lib/progress';
+import { me, fullSync, type AuthUser } from '@/lib/authClient';
 
 const NAV: Array<{ group: string; items: Array<{ href: string; label: string; icon: string }> }> = [
   {
@@ -47,6 +48,15 @@ export function Sidebar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [streak, setStreak] = useState(0);
+  const [user, setUser] = useState<AuthUser | null>(null);
+
+  // Oturum var mı? Varsa cihaz-açılış senkronu (Epic 4) — çerez kalıcı, localStorage boş olabilir.
+  useEffect(() => {
+    void me().then((u) => {
+      setUser(u);
+      if (u) void fullSync().then(() => setStreak(loadStreak().current));
+    });
+  }, []);
 
   useEffect(() => {
     setStreak(loadStreak().current);
@@ -95,27 +105,38 @@ export function Sidebar() {
           </span>
         </a>
         <nav className="sidebar__nav">
-          {NAV.map((g) => (
-            <div key={g.group} className="sidebar__group">
-              <div className="sidebar__group-title">{g.group}</div>
-              {g.items.map((it) => {
-                const active = pathname === it.href || pathname.startsWith(it.href + '/');
-                return (
-                  <a
-                    key={it.href}
-                    href={it.href}
-                    className={`side-link ${active ? 'side-link--active' : ''}`}
-                    aria-current={active ? 'page' : undefined}
-                  >
-                    <span className="side-link__icon" aria-hidden>
-                      {it.icon}
-                    </span>
-                    {it.label}
-                  </a>
-                );
-              })}
-            </div>
-          ))}
+          {NAV.map((g) => {
+            const items =
+              g.group === 'Hesap'
+                ? [
+                    user
+                      ? { href: '/profil', label: user.name || 'Profil', icon: '👤' }
+                      : { href: '/giris', label: 'Giriş Yap', icon: '🔑' },
+                    ...g.items,
+                  ]
+                : g.items;
+            return (
+              <div key={g.group} className="sidebar__group">
+                <div className="sidebar__group-title">{g.group}</div>
+                {items.map((it) => {
+                  const active = pathname === it.href || pathname.startsWith(it.href + '/');
+                  return (
+                    <a
+                      key={it.href}
+                      href={it.href}
+                      className={`side-link ${active ? 'side-link--active' : ''}`}
+                      aria-current={active ? 'page' : undefined}
+                    >
+                      <span className="side-link__icon" aria-hidden>
+                        {it.icon}
+                      </span>
+                      {it.label}
+                    </a>
+                  );
+                })}
+              </div>
+            );
+          })}
         </nav>
         <div className="sidebar__foot">
           <a href="/" className="muted">

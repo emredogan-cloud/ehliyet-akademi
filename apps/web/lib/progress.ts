@@ -4,6 +4,7 @@
  */
 import type { Subject } from '@ea/content-schema';
 import type { SrsCard } from '@ea/srs-engine';
+import { syncSet } from './authClient';
 
 const CARDS_KEY = 'ea:cards:v1';
 const ANSWERS_KEY = 'ea:answers:v1';
@@ -34,11 +35,8 @@ function safeGet<T>(key: string, fallback: T): T {
 }
 function safeSet(key: string, value: unknown): void {
   if (typeof window === 'undefined') return;
-  try {
-    window.localStorage.setItem(key, JSON.stringify(value));
-  } catch {
-    /* kota — sessiz */
-  }
+  // Sprint 1: yerel + (girişliyse) sunucu senkronu tek noktadan.
+  syncSet(key, value);
 }
 
 /* ---- SRS kartları ---- */

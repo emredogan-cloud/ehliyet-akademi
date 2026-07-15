@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { syncSet } from '@/lib/authClient';
 
 type Theme = 'auto' | 'light' | 'dark';
 const THEME_KEY = 'ea:theme';
@@ -26,7 +27,7 @@ export default function AyarlarPage() {
     setTheme(t);
     try {
       if (t === 'auto') localStorage.removeItem(THEME_KEY);
-      else localStorage.setItem(THEME_KEY, t);
+      else syncSet(THEME_KEY, t); // ham değer — kök tema scripti okur; girişliyse senkronlanır
     } catch {
       /* sessiz */
     }

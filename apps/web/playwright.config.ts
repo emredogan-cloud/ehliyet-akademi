@@ -15,9 +15,11 @@ export default defineConfig({
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    command: `pnpm exec next dev --port ${PORT}`,
+    // Production build + start: PGlite native-ESM yüklemesi ve gerçek runtime davranışı
+    // (dev bundler farklılıklarından bağımsız, CI ile birebir).
+    command: `pnpm run build && pnpm exec next start --port ${PORT}`,
     url: BASE_URL,
     reuseExistingServer: !process.env.CI,
-    timeout: 120_000,
+    timeout: 240_000,
   },
 });

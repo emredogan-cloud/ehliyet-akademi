@@ -6,7 +6,9 @@ const nextConfig: NextConfig = {
   // Yerel e2e/dev'de 127.0.0.1 ↔ localhost çapraz-origin uyarısını sustur.
   allowedDevOrigins: ['127.0.0.1', 'localhost'],
   // Workspace TS paketleri derlemeden kullanılır (ADR-002/005).
-  transpilePackages: ['@ea/content-schema', '@ea/question-bank', '@ea/srs-engine'],
+  transpilePackages: ['@ea/content-schema', '@ea/question-bank', '@ea/srs-engine', '@ea/db'],
+  // Native/wasm sürücüler sunucu bundle'ına alınmaz (Faz 27):
+  serverExternalPackages: ['@electric-sql/pglite', 'pg'],
   // Güvenlik başlıkları (ROADMAP Faz 30 temeli).
   async headers() {
     return [

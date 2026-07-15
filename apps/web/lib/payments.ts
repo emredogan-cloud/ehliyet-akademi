@@ -6,6 +6,7 @@
  * Fiyat-bütünlüğü: gösterilen fiyat kataloğun TEK kaynağından gelir (lib/products).
  */
 import { productById, type ProductId } from './products';
+import { syncSet } from './authClient';
 
 export interface CheckoutResult {
   ok: boolean;
@@ -33,11 +34,7 @@ export function loadEntitlements(): string[] {
 export function grantEntitlement(productId: ProductId): string[] {
   const cur = loadEntitlements();
   if (!cur.includes(productId)) cur.push(productId);
-  try {
-    window.localStorage.setItem(ENTITLEMENTS_KEY, JSON.stringify(cur));
-  } catch {
-    /* sessiz */
-  }
+  syncSet(ENTITLEMENTS_KEY, cur);
   return cur;
 }
 
@@ -85,7 +82,7 @@ export function consumeFreeExam(now = Date.now()): void {
     const cur = raw ? (JSON.parse(raw) as { day: string; count: number }) : null;
     const next =
       cur && cur.day === today ? { day: today, count: cur.count + 1 } : { day: today, count: 1 };
-    window.localStorage.setItem(QUOTA_KEY, JSON.stringify(next));
+    syncSet(QUOTA_KEY, next);
   } catch {
     /* sessiz */
   }

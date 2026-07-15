@@ -7,6 +7,7 @@
 import { useEffect, useState } from 'react';
 import { PRODUCTS, type Product } from '../lib/products';
 import { getPaymentProvider, loadEntitlements } from '../lib/payments';
+import { isAuthed, me, serverPurchase } from '../lib/authClient';
 import { track } from '../lib/analytics';
 
 export function Pricing() {
@@ -15,15 +16,29 @@ export function Pricing() {
   const [busy, setBusy] = useState<string | null>(null);
 
   useEffect(() => {
-    setOwned(loadEntitlements());
+    void me().finally(() => setOwned(loadEntitlements()));
   }, []);
 
   async function buy(p: Product) {
     setBusy(p.id);
     setMsg('');
+    // Girişliyse: sunucu-taraflı kalıcı sahiplik (Epic 3). Değilse: yerel demo + not.
+    if (isAuthed()) {
+      const owned = await serverPurchase(p.id);
+      setBusy(null);
+      if (owned) {
+        setMsg(
+          `${p.title} hesabına KALICI olarak tanımlandı (demo ödeme — tüm cihazlarında geçerli).`
+        );
+        setOwned(owned);
+      } else {
+        setMsg('Satın alma başarısız — tekrar dene.');
+      }
+      return;
+    }
     const res = await getPaymentProvider().checkout(p.id);
     setBusy(null);
-    setMsg(res.message);
+    setMsg(res.message + ' Not: hesapla giriş yaparsan satın alman tüm cihazlarında geçerli olur.');
     if (res.ok) {
       track({ name: 'purchase_completed', props: { productId: p.id, priceTRY: p.priceTRY } });
       setOwned(loadEntitlements());

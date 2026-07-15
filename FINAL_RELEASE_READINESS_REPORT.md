@@ -1,6 +1,6 @@
 # FINAL RELEASE READINESS REPORT — Ehliyet Akademi
 
-_Tarih: 2026-07-15 (v5 — Sprint 2 sonrası) · Tek doğru kaynak: `ROADMAP.md` (v3.1)_
+_Tarih: 2026-07-15 (v6 — Sprint 3 sonrası) · Tek doğru kaynak: `ROADMAP.md` (v3.1)_
 
 ---
 
@@ -25,7 +25,9 @@ _Tarih: 2026-07-15 (v5 — Sprint 2 sonrası) · Tek doğru kaynak: `ROADMAP.md`
 | **RBAC / Denetim**          | 🟢         | user/editor/admin; `requireRole` (401/403); rol bootstrap; öz-adminlik kilidi; tam `audit_logs`                                                                               |
 | **Arama**                   | 🟢 (temel) | `SearchProvider` soyutlaması + LocalSearchProvider canlıda; Meili/Typesense/Algolia yeniden-yazımsız takılır                                                                  |
 | **Payments (tek-seferlik)** | 🟡         | Model + katalog + entitlement + kota **canlıda (demo)**; gerçek tahsilat koşullu-GO listesi                                                                                   |
-| **Test**                    | 🟢         | 81 unit/integration + 28 e2e; **CI'da** koşuyor                                                                                                                               |
+| **Test**                    | 🟢         | 94 unit/integration + 32 e2e; **CI'da** koşuyor                                                                                                                               |
+| **İçerik derinliği**        | 🟢 (temel) | **Sprint 3:** 198 özgün soru (82 konu) + 19 zengin ders + 12 SVG; 100+/konu ölçekleme sürüyor; ilk yardım uzman onayı bekliyor                                                |
+| **Öğrenme deneyimi**        | 🟢         | Grounded AI asistanı (çalışma planı/zayıf konu/kişisel tekrar) + tekrar kartları + alıştırma + ustalık radarı — canlı                                                         |
 | **CI**                      | 🟢         | Actions yeşil (quality/e2e/gitleaks/CodeQL); kırmızı→düzelt→yeşil disiplini uygulandı                                                                                         |
 | **Deploy doğrulaması**      | 🟢         | Preview + Production; canlıda tarayıcı ile 8 akış doğrulandı (geliştirme raporu §5)                                                                                           |
 
@@ -33,7 +35,7 @@ _Tarih: 2026-07-15 (v5 — Sprint 2 sonrası) · Tek doğru kaynak: `ROADMAP.md`
 
 1. **Demo ödeme yanlış anlaşılması** — düşük/orta: UI'da açık "demo ödeme — gerçek tahsilat yapılmaz" etiketi var; gerçek satış öncesi koşullu-GO listesi tamamlanmalı.
 2. ~~Entitlement/ilerleme yalnız cihazda~~ → **ÇÖZÜLDÜ (Sprint 1):** hesapla giriş → sunucu senkronu + restore. Kalan: prod DATABASE_URL (Neon şartları — kullanıcı kabulü; link SPRINT_1_REPORT.md).
-3. **İçerik hacmi** — orta: 53 soru tam sınav dağılımını karşılar ama tekrar eden denemelerde çeşitlilik sınırlı; 100+/konu + uzman onayı (`review: approved`) hedefi açık.
+3. ~~İçerik hacmi (53 soru)~~ → **AZALDI (Sprint 3):** 198 özgün soru (82 konu) + 19 ders; çeşitlilik belirgin arttı. Kalan: 100+/konu ölçekleme + `review: approved` (şu an tümü draft).
 4. **İlk yardım içeriği uzman onayı** — yüksek önem: yayın etiketi "uzman onayı bekliyor"; onay süreci tamamlanmalı.
 5. **Dependabot 9 PR** (major bump'lar) — düşük: ayrı hijyen turu.
 6. **`ehliyet-akademi.vercel.app` yalın adı başka projeye ait** — düşük: kanonik adres `-nine`; özel domain alınca önemsizleşir.

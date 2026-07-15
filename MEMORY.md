@@ -3,7 +3,7 @@
 > Ani kesinti sonrası devam için. Tek doğru kaynak: üst dizin `ROADMAP.md` (v3.1, 36 faz).
 > Ayrıntı: `STATUS.md` · GO/NO-GO: `FINAL_RELEASE_READINESS_REPORT.md`.
 
-_Son güncelleme: 2026-07-15 · SPRINT 2 sonrası_
+_Son güncelleme: 2026-07-15 · SPRINT 3 sonrası_
 
 ## Kilit durum
 
@@ -11,7 +11,17 @@ _Son güncelleme: 2026-07-15 · SPRINT 2 sonrası_
 - **CI GERÇEK ve YEŞİL:** repo PUBLIC; Actions (quality/E2E/gitleaks/CodeQL) her push'ta; branch protection açık.
 - **MONETIZASYON PİVOTU (bağlayıcı):** abonelik YOK → **tek-seferlik paketler** (5 paket; Komple B = lifetime). ROADMAP Faz 16 güncellendi. Ödeme mock (demo); üretim tahsilatı = LemonSqueezy/Stripe one-time adaptörü kalan iş.
 
-## SPRINT 2 (en güncel tur) — CMS/Admin/İçerik hattı/Medya/Arama
+## SPRINT 3 (en güncel tur) — İçerik & öğrenme deneyimi
+
+- **Soru bankası 198 özgün soru** (trafik 63/ilkyardim 42/motor 39/adab 26/pratik 28; 82 konu). Dosyalar: `packages/question-bank/src/questions-{trafik,ilkyardim,motor,adab,pratik}.ts` (yeni id namespace -101+). index.ts: RAW→`parseQuestion` map (yüklemede Zod parse). Gate: ≥150 soru + ≥140 zenginleştirilmiş.
+- **19 ders**: `content/lessons.ts` (çekirdek 5, zenginleştirildi) + `theory-lessons.ts` (THEORY_EXTRA_LESSONS, no 6-14) + `driving-lessons.ts` (DRIVING_LESSONS, no 15-19). `LESSONS = [...].map(parseLesson).sort(no)`.
+- **Şema:** Question +whyWrong/objective/tags; Lesson +memoryTips/examStrategy/keyTakeaways/reviewCards/practiceQuestionIds/figureId + ReviewCard. **QuestionInput/LessonInput** (z.input) yazım tipleri — kaynak dosyalar bu tiple, parse çıktı tipini (defaults dolu) verir.
+- **AI/çalışma zekâsı:** `lib/study.ts` (weakTopics/buildStudyPlan/personalizedReview/explainWrongAnswer/nextStudySuggestion/formatWeakTopics/formatStudyPlan) — grounded, saf, testli (`study.test.ts`). AICoach.tsx: coach-action-{plan,weak,review} + ?soru= prefill. Yeni sayfa `/calisma-plani` (data-testid=study-plan/plan-steps) + `MasteryRadar.tsx` (4 eksen SVG).
+- **Görseller:** `LessonFigure.tsx` figureId ile 12 SVG. `LessonPractice.tsx` (client): review-card flip + practice-q anında geri bildirim. Sidebar'a "Çalışma Planım" (İlerleme grubu).
+- **Analytics:** `ai_question_asked` props +`action?`.
+- **Canlı doğrulandı:** /dersler/hiz-takip (görsel+özet+kart+alıştırma grounded), /calisma-plani (radar+adımlar), /ai-koc (kişisel plan).
+
+## SPRINT 2 — CMS/Admin/İçerik hattı/Medya/Arama
 
 - **CMS (ADR-007):** şema-öncelikli özel çekirdek (Payload'a açık kapı). `packages/db/src/cms.ts` = content_items/content_versions/media_assets/audit_logs (JSONB payload, Zod doğrulama). Türler: lesson/question/article/seo_page/kb; `locale`+`licence` kolonları (gelecekteki sınıflar).
 - **İçerik hattı:** `@ea/content-schema` WORKFLOW state machine `draft→in_review→approved→published→retired` + `canTransition`/`validatePayload`. `lib/server/cms.ts` = createContent/updateContent(sürüm+1)/transitionContent(sunucuda zorlar + audit + arama kancası)/list/get/listPublished/upload/list/getMedia/listUsers/setUserRole/listAudit/adminStats.
@@ -54,6 +64,7 @@ _Son güncelleme: 2026-07-15 · SPRINT 2 sonrası_
 
 ## Son durum
 
-- **Testler:** 81 unit/integration (48 web + 33 paket) + 28 e2e ✅ · build 22 sayfa + 15 API rotası ✅ · CI ✅ · **prod tarayıcı doğrulaması ✅** (konsol 0 hata).
-- **DUR:** Sprint 2 sonrası durdu; Sprint 3 direktif olmadan başlatılmaz.
+- **Testler:** 94 unit/integration (59 web + 35 paket) + 32 e2e ✅ · build 23 sayfa + 15 API rotası ✅ · CI ✅ · CodeQL ✅ · **prod tarayıcı doğrulaması ✅** (konsol 0 hata).
+- **İçerik:** 198 soru (82 konu) + 19 ders (Sprint 3). Tümü review:draft (uzman onayı bekliyor, özellikle ilk yardım).
+- **DUR:** Sprint 3 sonrası durdu; Sprint 4 direktif olmadan başlatılmaz.
 - Dependabot 9 PR bekliyor (major bump'lar) — hijyen turu.

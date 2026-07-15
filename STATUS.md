@@ -2,7 +2,7 @@
 
 > Tek doğru kaynak: üst dizindeki `ROADMAP.md` (v3.1, Faz 0–35).
 
-_Son güncelleme: 2026-07-15 · SPRINT 2 (CMS+Admin+içerik hattı+medya+arama soyutlaması) sonrası_
+_Son güncelleme: 2026-07-15 · SPRINT 3 (içerik genişletme + öğrenme deneyimi) sonrası_
 
 ### Yaptım
 
@@ -45,9 +45,19 @@ _Son güncelleme: 2026-07-15 · SPRINT 2 (CMS+Admin+içerik hattı+medya+arama s
 - **Kalite:** 81 unit/integration + 28 e2e (production build) + CI yeşil + prod deploy + **canlı tarayıcı doğrulaması** (arama sonuç veriyor · /admin misafirde RBAC reddi · admin API oturumsuz 401).
 - Ayrıntı: `SPRINT_2_REPORT.md` · karar: `docs/adr/007-cms.md`.
 
+### Yaptım (SPRINT 3) ✅ — içerik & öğrenme deneyimi
+
+- **Soru bankası 53 → 198 özgün soru** (trafik 63 · ilkyardim 42 · motor 39 · adab 26 · pratik 28; 82 konu); zenginleştirilmiş metaveri (whyWrong/objective/tags); banka yüklemede Zod parse (bozuk içerik build kırar). 5 ayrı dosya `questions-{trafik,ilkyardim,motor,adab,pratik}.ts`.
+- **Dersler 5 → 19** (Teorik Akademi 14 + Sürüş Akademisi 5). Her ders: kazanımlar, rozetli bölümler, hatalar, hafıza teknikleri, sınav stratejisi, özet, tekrar kartları (çevrilir), alıştırma soruları (anında geri bildirim), görsel, AI giriş noktası. `content/{lessons,theory-lessons,driving-lessons}.ts`.
+- **Görsel sistem:** LessonFigure 4 → 12 erişilebilir SVG (takip mesafesi, sollama, yaya, TYD, araç, rampa, park, dönel kavşak) — figureId ile eşlenir.
+- **AI öğrenme asistanı (grounded):** `lib/study.ts` (weakTopics, buildStudyPlan, personalizedReview, explainWrongAnswer, nextStudySuggestion) — kullanıcının kendi verisinden. AI Koç'a 3 aksiyon + yeni `/calisma-plani` (adımlar + ustalık radarı).
+- **Şema (geriye dönük uyumlu):** Question +whyWrong/objective/tags; Lesson +memoryTips/examStrategy/keyTakeaways/reviewCards/practiceQuestionIds/figureId; QuestionInput/LessonInput yazım tipleri.
+- **Kalite:** 94 unit/integration (+11 study, +2 bank) + 32 e2e (+4) + typecheck + build (23 sayfa) + CI yeşil + prod deploy + **canlı tarayıcı doğrulaması** (ders/alıştırma/plan/AI/görsel — konsol 0 hata).
+- Ayrıntı: `SPRINT_3_REPORT.md`.
+
 ### Yapıyorum
 
-- Sprint 2 kapanışı (rapor + dokümantasyon). **DUR: Sprint 3 başlatılmadı** (direktif).
+- Sprint 3 kapanışı (rapor + dokümantasyon). **DUR: Sprint 4 başlatılmadı** (direktif).
 
 ### Yapacağım (ROADMAP sırası — sonraki sorumlu nokta)
 
@@ -59,4 +69,4 @@ _Son güncelleme: 2026-07-15 · SPRINT 2 (CMS+Admin+içerik hattı+medya+arama s
 - ~~Actions faturalandırma kilidi~~ → **çözüldü** (repo public; CI ücretsiz ve yeşil).
 - Dependabot PR'ları (9 adet, major sürümler) bekliyor — ayrı hijyen turunda ele alınacak.
 - Ödeme **demo modda** (gerçek tahsilat yok) — üretim tahsilatı için LemonSqueezy/Stripe one-time adaptörü + webhook (Faz 16 kalan iş).
-- İçerik: 53 soru/5 ders = sağlam çekirdek; hedef konu başına 100+ (uzman onaylı) — üretim hattı hazır.
+- İçerik: **198 soru (82 konu) / 19 ders** (Sprint 3); hedef konu başına 100+ (uzman onaylı) — üretim hattı hazır, sürüyor. İlk yardım içeriği uzman onayı bekliyor (review: draft).

@@ -1,6 +1,20 @@
 # ADR-004 — Kimlik doğrulama soyutlaması
 
-**Statü:** Kabul edildi (ROADMAP Faz 4 "auth = kilit taşı", Faz 30)
+**Statü:** Kabul edildi · **Sprint 1'de uygulandı (2026-07-15)**
+
+## Sprint 1 karar güncellemesi — sağlayıcı karşılaştırması
+
+| Aday                           | Değerlendirme                                                                                                                               |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Clerk                          | Güçlü DX ama harici hesap + vendor kilidi; otonom kurulamaz                                                                                 |
+| Auth.js v5                     | Olgun; ancak Credentials akışında ek soyutlama katmanı ve konfig yükü                                                                       |
+| Supabase/Firebase              | Platform kilidi + harici hesap gerektirir                                                                                                   |
+| **Özel credentials (SEÇİLDİ)** | node:crypto scrypt + DB-destekli oturum: sıfır harici bağımlılık, tam kontrol, test edilebilir; Clerk/Auth.js adaptörü sonradan takılabilir |
+
+Uygulama: scrypt(N=16384) parola; oturum = rastgele 256-bit token (yalnız SHA-256 hash'i DB'de),
+httpOnly+SameSite=Lax çerez, 30 gün, çok-cihaz (oturum başına satır); forgot/reset token akışı
+(e-posta servisi yoksa dürüst devToken modu); tüm uçlar `guarded()` ile DB-yapılandırma
+hatasında 503 döner.
 
 ## Bağlam
 

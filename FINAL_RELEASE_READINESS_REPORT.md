@@ -1,6 +1,6 @@
 # FINAL RELEASE READINESS REPORT — Ehliyet Akademi
 
-_Tarih: 2026-07-15 (v3 — SaaS kabuk + kurumsal fazlar sonrası) · Tek doğru kaynak: `ROADMAP.md` (v3.1)_
+_Tarih: 2026-07-15 (v4 — Sprint 1 sonrası) · Tek doğru kaynak: `ROADMAP.md` (v3.1)_
 
 ---
 
@@ -30,7 +30,7 @@ _Tarih: 2026-07-15 (v3 — SaaS kabuk + kurumsal fazlar sonrası) · Tek doğru 
 ## Açık Riskler
 
 1. **Demo ödeme yanlış anlaşılması** — düşük/orta: UI'da açık "demo ödeme — gerçek tahsilat yapılmaz" etiketi var; gerçek satış öncesi koşullu-GO listesi tamamlanmalı.
-2. **Entitlement/ilerleme yalnız cihazda** (localStorage) — orta: auth+DB kalıcılığı (Faz 4 omurgası hazır) taşınmalı; cihaz değişiminde kayıp olur.
+2. ~~Entitlement/ilerleme yalnız cihazda~~ → **ÇÖZÜLDÜ (Sprint 1):** hesapla giriş → sunucu senkronu + restore. Kalan: prod DATABASE_URL (Neon şartları — kullanıcı kabulü; link SPRINT_1_REPORT.md).
 3. **İçerik hacmi** — orta: 53 soru tam sınav dağılımını karşılar ama tekrar eden denemelerde çeşitlilik sınırlı; 100+/konu + uzman onayı (`review: approved`) hedefi açık.
 4. **İlk yardım içeriği uzman onayı** — yüksek önem: yayın etiketi "uzman onayı bekliyor"; onay süreci tamamlanmalı.
 5. **Dependabot 9 PR** (major bump'lar) — düşük: ayrı hijyen turu.

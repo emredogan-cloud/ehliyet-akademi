@@ -2,7 +2,7 @@
 
 > Tek doğru kaynak: üst dizindeki `ROADMAP.md` (v3.1, Faz 0–35).
 
-_Son güncelleme: 2026-07-15 · Kabuk redesign + kurumsal fazlar sonrası_
+_Son güncelleme: 2026-07-15 · SPRINT 1 (auth+DB+entitlements+senkron) sonrası_
 
 ### Yaptım
 
@@ -25,9 +25,18 @@ _Son güncelleme: 2026-07-15 · Kabuk redesign + kurumsal fazlar sonrası_
 - **Ayarlar ✅** — tema (sistem/açık/koyu, FOUC'suz kalıcı — e2e) + veri dışa aktar/sıfırla.
 - Kapılar: **27 unit + 18 e2e** + build (24 sayfa) + **CI yeşil** + prod deploy + canlı doğrulama.
 
+### Yaptım (SPRINT 1) ✅
+
+- **Auth:** özel credentials (scrypt + DB oturum, çok-cihaz, forgot/reset) — /giris, /profil (korumalı), dinamik Sidebar. ADR-004 güncellendi.
+- **DB (Faz 26/27):** @ea/db — Drizzle şema + çift sürücü (PGlite yerel / Postgres prod); idempotent bootstrap; PGlite-Next bundling sorunu webpackIgnore ile çözüldü.
+- **Entitlements:** sunucu-taraflı tek-seferlik satın alma (fiyat sunucuda) + restore; Pricing entegre.
+- **Senkron:** syncSet + fullSync — cihaz A→B ilerleme/paket senkronu e2e ile kanıtlı.
+- **Kalite:** 39 unit/integration + 23 e2e (production build üstünde) + CI yeşil + prod deploy.
+- **Tek dış aksiyon:** production DATABASE_URL → Neon marketplace şartları kullanıcı kabulü bekliyor (SPRINT_1_REPORT.md'de link). O gelene dek prod auth uçları bilinçli 503.
+
 ### Yapıyorum
 
-- Kapanış dokümantasyonu (FINAL raporları v3).
+- Sprint 1 kapanışı (rapor + dokümantasyon).
 
 ### Yapacağım (ROADMAP sırası — sonraki sorumlu nokta)
 

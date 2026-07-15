@@ -17,7 +17,20 @@ Yerel geliştirme için `apps/web/.env.example` → `apps/web/.env.local` kopyal
 - **Zorunlu mu:** Hayır (yerelde). Set edilmezse **PGlite** (gömülü WASM Postgres) kullanılır.
 - **Nasıl alınır:** [Neon](https://neon.tech) / [Vercel Postgres](https://vercel.com/storage/postgres) — ücretsiz kademe var.
 - **Local:** boş bırak → PGlite (`.pglite/` altında dosya). Migrasyon: `pnpm --filter @ea/db migrate`.
-- **Production:** Neon connection string; `pnpm --filter @ea/db migrate:deploy`.
+- **Production:** Neon connection string. **Tek kullanıcı aksiyonu bekleniyor:** Vercel-Neon
+  entegrasyonu CLI'dan başlatıldı; marketplace şartlarını kabul etmek gerekiyor →
+  https://vercel.com/emre30283-4955s-projects/~/integrations/accept-terms/neon?source=cli
+  Kabul sonrası: `vercel integration add neon` yeniden çalıştırılır, DATABASE_URL otomatik
+  bağlanır ve `vercel deploy --prod --yes` ile auth canlıda aktifleşir (kod hazır; şema
+  ilk bağlantıda idempotent bootstrap ile kurulur). Şartlar kabul edilene dek auth uçları
+  üretimde dostane 503 döner; uygulamanın hesapsız akışları tam çalışır.
+
+### `RESEND_API_KEY` (parola sıfırlama e-postası)
+
+- **Ne:** Parola sıfırlama bağlantısını e-postayla göndermek için.
+- **Zorunlu mu:** Hayır. Yoksa sistem dürüst 'devToken' modunda çalışır (token yanıt içinde).
+- **Nasıl alınır:** https://resend.com — ücretsiz kademe.
+- **Production:** anahtar girildiğinde gerçek gönderim adaptörü etkinleşir (Sprint 2).
 
 ### `AUTH_SECRET`
 

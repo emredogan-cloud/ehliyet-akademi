@@ -1,8 +1,15 @@
 # FINAL DEVELOPMENT REPORT — Ehliyet Akademi
 
-_Tarih: 2026-07-15 (v3 — kabuk redesign + kurumsal fazlar sonrası) · Depo: `emredogan-cloud/ehliyet-akademi` (**public**) · Tek doğru kaynak: `ROADMAP.md` (v3.1, 36 faz)_
+_Tarih: 2026-07-15 (v4 — SPRINT 1: auth+DB+entitlements+senkron) · Depo: `emredogan-cloud/ehliyet-akademi` (**public**) · Tek doğru kaynak: `ROADMAP.md` (v3.1, 36 faz)_
 
 ---
+
+## 0. SPRINT 1 Eki (v4)
+
+Auth (özel credentials), kalıcı veritabanı (@ea/db: PGlite→Neon), sunucu-taraflı tek-seferlik
+entitlements + restore ve cihazlar-arası ilerleme senkronu uygulandı; 39 unit/integration +
+23 e2e (production build) + CI yeşil + prod deploy. Tek dış aksiyon: DATABASE_URL (Neon
+marketplace şartları — kullanıcı kabulü). Ayrıntı: `SPRINT_1_REPORT.md`.
 
 ## 1. Yönetici Özeti
 

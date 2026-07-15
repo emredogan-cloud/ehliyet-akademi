@@ -2,7 +2,7 @@
 
 > Tek doğru kaynak: üst dizindeki `ROADMAP.md` (v3.1, Faz 0–35).
 
-_Son güncelleme: 2026-07-15 · SPRINT 4 (ticaret + yasal + üretim servisleri) sonrası_
+_Son güncelleme: 2026-07-15 · SPRINT 5 (AI platformu + analitik + gözlemlenebilirlik + güvenlik) sonrası_
 
 ### Yaptım
 
@@ -65,9 +65,19 @@ _Son güncelleme: 2026-07-15 · SPRINT 4 (ticaret + yasal + üretim servisleri) 
 - **Kalite:** 130 unit/integration (+35) + 37 e2e (+5) + CI yeşil + CodeQL yeşil + prod deploy + **canlı tarayıcı** (premium unlock/çerez/yasal/API kapıları).
 - Ayrıntı: `SPRINT_4_REPORT.md` · ADR-008/009.
 
+### Yaptım (SPRINT 5) ✅ — AI platformu, analitik, gözlemlenebilirlik, güvenlik, performans
+
+- **AI (ADR-010):** sunucu grounded yanıtlama `/api/ai/ask` — retrieval + halüsinasyon kapısı (eşleşme yoksa reddet) + model soyutlaması (Mock varsayılan / Anthropic ENV) + prompt orkestrasyonu + fallback; önek-duyarlı Türkçe eşleşme; değerlendirme kümesi + %100 skor. AICoach sunucu rotasını kullanır (yerel fallback) + sınav hazırlığı aksiyonu.
+- **Analitik (ADR-011):** rıza-kapılı sağlayıcı katmanı (GA4/Clarity/PostHog); `enabledProviders` saf+testli; AnalyticsLoader yalnız rıza+ENV varsa yükler; genişletilmiş olay sözlüğü. No-op varsayılan (gizlilik-öncelikli).
+- **Gözlemlenebilirlik:** `/api/health` + observability lib (Sentry-hazır) + instrumentation (açılışta env/sır doğrulaması) + yapısal logger.
+- **Güvenlik:** CSP + tam güvenlik başlığı seti (next.config, SSG-uyumlu) + CSRF same-origin middleware (webhook muaf) + secrets validation + `SECURITY_REVIEW.md` (OWASP Top 10).
+- **Performans:** PurchaseDialog dynamic import (code-split) + loading.tsx streaming + cache başlıkları. CSP render'ı kırmadı.
+- **Kalite:** 148 unit/integration (+18) + 41 e2e (+4) + CI yeşil + CodeQL yeşil + prod deploy + **canlı doğrulama** (güvenlik başlıkları/health/CSRF 403/grounded AI, 0 CSP ihlali).
+- Ayrıntı: `SPRINT_5_REPORT.md` · ADR-010/011 · `SECURITY_REVIEW.md`.
+
 ### Yapıyorum
 
-- Sprint 4 kapanışı (rapor + dokümantasyon). **DUR: Sprint 5 başlatılmadı** (direktif).
+- Sprint 5 kapanışı (rapor + dokümantasyon). **DUR: Sprint 6 başlatılmadı** (direktif).
 
 ### Yapacağım (ROADMAP sırası — sonraki sorumlu nokta)
 

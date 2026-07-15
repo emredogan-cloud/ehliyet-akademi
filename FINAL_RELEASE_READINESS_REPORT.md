@@ -1,6 +1,6 @@
 # FINAL RELEASE READINESS REPORT — Ehliyet Akademi
 
-_Tarih: 2026-07-15 (v7 — Sprint 4 sonrası) · Tek doğru kaynak: `ROADMAP.md` (v3.1)_
+_Tarih: 2026-07-15 (v8 — Sprint 5 sonrası) · Tek doğru kaynak: `ROADMAP.md` (v3.1)_
 
 ---
 
@@ -8,30 +8,32 @@ _Tarih: 2026-07-15 (v7 — Sprint 4 sonrası) · Tek doğru kaynak: `ROADMAP.md`
 
 - **🟢 GO (yayında):** Ürün **production'da canlı**: https://ehliyet-akademi-nine.vercel.app — **SaaS kabuk (sidebar+panel)**, tanı→hazırlık skoru, 5 ders+görseller, AI koç (mock), başarılar, arama, tema, SRS pratiği+seri, **gerçek formatlı e-Sınav simülatörü**, tek-seferlik paket vitrini (demo ödeme), PWA. CI yeşil, tarayıcı doğrulaması eksiksiz. **Public beta olarak kullanıcı almaya hazır.**
 - **🟡 KOŞULLU (para almadan önce):** ödeme **mimarisi Sprint 4'te tamamlandı** (ADR-008 LemonSqueezy adaptörü + HMAC webhook + makbuz doğrulaması + idempotency; yasal taslak metinler + çerez rızası + hesap silme hazır) — ancak canlı satış için **kullanıcı aksiyonu** gerekir: `LEMONSQUEEZY_*` + `RESEND_API_KEY` + prod `DATABASE_URL` ENV'leri ve yasal metinlerin **hukukçu onayı**. O gelene dek satın alma **demo modda** (etiketli).
-- **🔴 NO-GO:** ROADMAP'in tam vizyonu (gerçek AI platformu, topluluk, platform zekâsı — Faz 22/32/33/35 vb.) henüz üretimde değil; "Türkiye'nin en gelişmiş platformu" iddiasıyla pazarlama bu fazlar sonrası. **(Faz 24 CMS · 25 Admin · 26/27 Auth-DB · 28 Arama çekirdekleri artık tamam.)**
+- **🔴 NO-GO:** ROADMAP'in kalan vizyonu (ASO/mağaza, topluluk, platform zekâsı — Faz 17/32/33/35 vb.) henüz üretimde değil; "Türkiye'nin en gelişmiş platformu" iddiasıyla pazarlama bu fazlar sonrası. **(Faz 22 AI · 23 analitik · 24 CMS · 25 Admin · 26/27 Auth-DB · 28 Arama · 30 güvenlik · 31 gözlemlenebilirlik çekirdekleri artık tamam.)**
 
 ## Alan Bazlı Kontroller
 
-| Alan                        | Durum                  | Not                                                                                                                                                                                        |
-| --------------------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Production Readiness**    | 🟢                     | Vercel prod canlı; SSG+ISR-hazır; 0 konsol hatası; deploy tek komut                                                                                                                        |
-| **ENV**                     | 🟢                     | Rehber güncel (deploy bölümü eklendi); tek zorunlu env yok; `NEXT_PUBLIC_SITE_URL` prod'da set                                                                                             |
-| **Security / Uyum**         | 🟢 (temel)             | **Sprint 4:** rate-limit + yapısal logger (sır redaksiyonu) + KVKK/gizlilik/çerez rıza + hesap silme + hata sınırları · gitleaks/CodeQL/branch protection ✅ · CSP/pen-test Faz 30 kalan   |
-| **Performance**             | 🟢                     | SSG, ~103 kB paylaşımlı JS; prod hızlı (CWV-dostu); Lighthouse CI eşiği sonraki hijyen turu                                                                                                |
-| **Accessibility**           | 🟢 (temel)             | Semantik, skip-link, odak, aria-live, kontrast; tam axe-regresyon Faz 20 genişletmesi                                                                                                      |
-| **SEO**                     | 🟢 (temel)             | Crawl'lanabilir URL + sitemap(prod URL) + robots + **JSON-LD canlıda** · programatik/pillar içerik Faz 15 devamı                                                                           |
-| **AI**                      | 🟡 (mock)              | **AI Koç canlıda** — grounded mock (halüsinasyon=0, uyarı etiketli); gerçek model ENV ile takılır                                                                                          |
-| **CMS / Admin**             | 🟢 (temel)             | **Sprint 2:** özel CMS çekirdeği + içerik hattı (durum makinesi + sürüm + denetim) + /admin RBAC — canlı (yazma uçları DATABASE_URL bekliyor); zengin blok-editör sonraki tur              |
-| **RBAC / Denetim**          | 🟢                     | user/editor/admin; `requireRole` (401/403); rol bootstrap; öz-adminlik kilidi; tam `audit_logs`                                                                                            |
-| **Arama**                   | 🟢 (temel)             | `SearchProvider` soyutlaması + LocalSearchProvider canlıda; Meili/Typesense/Algolia yeniden-yazımsız takılır                                                                               |
-| **Payments (tek-seferlik)** | 🟢 (mimari)/🟡 (canlı) | **Sprint 4:** LemonSqueezy adaptörü + HMAC webhook + makbuz + idempotency + premium erişim kontrolü **hazır**; gerçek tahsilat `LEMONSQUEEZY_*` ENV bekliyor (o gelene dek demo, etiketli) |
-| **E-posta**                 | 🟢 (mimari)            | **Sprint 4:** Resend adaptörü + 5 şablon + doğrulama/reset/onay/destek akışları; gerçek gönderim `RESEND_API_KEY` bekliyor (yoksa console/devToken)                                        |
-| **Yasal / KVKK**            | 🟡 (taslak)            | **Sprint 4:** 4 yasal sayfa + rıza + veri dışa aktarma + hesap silme **hazır**; metinler **hukukçu onayı** + gerçek şirket bilgisi bekliyor                                                |
-| **Test**                    | 🟢                     | 130 unit/integration + 37 e2e; **CI'da** koşuyor                                                                                                                                           |
-| **İçerik derinliği**        | 🟢 (temel)             | **Sprint 3:** 198 özgün soru (82 konu) + 19 zengin ders + 12 SVG; 100+/konu ölçekleme sürüyor; ilk yardım uzman onayı bekliyor                                                             |
-| **Öğrenme deneyimi**        | 🟢                     | Grounded AI asistanı (çalışma planı/zayıf konu/kişisel tekrar) + tekrar kartları + alıştırma + ustalık radarı — canlı                                                                      |
-| **CI**                      | 🟢                     | Actions yeşil (quality/e2e/gitleaks/CodeQL); kırmızı→düzelt→yeşil disiplini uygulandı                                                                                                      |
-| **Deploy doğrulaması**      | 🟢                     | Preview + Production; canlıda tarayıcı ile 8 akış doğrulandı (geliştirme raporu §5)                                                                                                        |
+| Alan                        | Durum                         | Not                                                                                                                                                                                                                |
+| --------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Production Readiness**    | 🟢                            | Vercel prod canlı; SSG+ISR-hazır; 0 konsol hatası; deploy tek komut                                                                                                                                                |
+| **ENV**                     | 🟢                            | Rehber güncel (deploy bölümü eklendi); tek zorunlu env yok; `NEXT_PUBLIC_SITE_URL` prod'da set                                                                                                                     |
+| **Security / Uyum**         | 🟢                            | **Sprint 5:** CSP + tam güvenlik başlığı seti (HSTS/nosniff/DENY/…) + CSRF middleware + secrets validation + OWASP review (SECURITY_REVIEW.md) · (+Sprint 4 rate-limit/KVKK/rıza/hesap silme) · WAF/pen-test kalan |
+| **Performance**             | 🟢                            | SSG, ~103 kB paylaşımlı JS; prod hızlı (CWV-dostu); Lighthouse CI eşiği sonraki hijyen turu                                                                                                                        |
+| **Accessibility**           | 🟢 (temel)                    | Semantik, skip-link, odak, aria-live, kontrast; tam axe-regresyon Faz 20 genişletmesi                                                                                                                              |
+| **SEO**                     | 🟢 (temel)                    | Crawl'lanabilir URL + sitemap(prod URL) + robots + **JSON-LD canlıda** · programatik/pillar içerik Faz 15 devamı                                                                                                   |
+| **AI**                      | 🟢 (mimari)/🟡 (gerçek model) | **Sprint 5:** sunucu grounded AI (`/api/ai/ask` + halüsinasyon kapısı + model soyutlaması + fallback + eval %100) canlıda; gerçek model `ANTHROPIC_API_KEY` ENV bekliyor (yoksa mock, 0 halüsinasyon)              |
+| **Analitik**                | 🟢 (mimari)                   | **Sprint 5:** rıza-kapılı GA4/Clarity/PostHog katmanı; gizlilik-öncelikli no-op; gerçek anahtarlar `NEXT_PUBLIC_*` ENV bekliyor                                                                                    |
+| **Gözlemlenebilirlik**      | 🟢 (temel)                    | **Sprint 5:** /api/health + captureException (Sentry-hazır) + instrumentation + yapısal logger; `SENTRY_DSN` ENV ile tam izleme                                                                                    |
+| **CMS / Admin**             | 🟢 (temel)                    | **Sprint 2:** özel CMS çekirdeği + içerik hattı (durum makinesi + sürüm + denetim) + /admin RBAC — canlı (yazma uçları DATABASE_URL bekliyor); zengin blok-editör sonraki tur                                      |
+| **RBAC / Denetim**          | 🟢                            | user/editor/admin; `requireRole` (401/403); rol bootstrap; öz-adminlik kilidi; tam `audit_logs`                                                                                                                    |
+| **Arama**                   | 🟢 (temel)                    | `SearchProvider` soyutlaması + LocalSearchProvider canlıda; Meili/Typesense/Algolia yeniden-yazımsız takılır                                                                                                       |
+| **Payments (tek-seferlik)** | 🟢 (mimari)/🟡 (canlı)        | **Sprint 4:** LemonSqueezy adaptörü + HMAC webhook + makbuz + idempotency + premium erişim kontrolü **hazır**; gerçek tahsilat `LEMONSQUEEZY_*` ENV bekliyor (o gelene dek demo, etiketli)                         |
+| **E-posta**                 | 🟢 (mimari)                   | **Sprint 4:** Resend adaptörü + 5 şablon + doğrulama/reset/onay/destek akışları; gerçek gönderim `RESEND_API_KEY` bekliyor (yoksa console/devToken)                                                                |
+| **Yasal / KVKK**            | 🟡 (taslak)                   | **Sprint 4:** 4 yasal sayfa + rıza + veri dışa aktarma + hesap silme **hazır**; metinler **hukukçu onayı** + gerçek şirket bilgisi bekliyor                                                                        |
+| **Test**                    | 🟢                            | 148 unit/integration + 41 e2e; **CI'da** koşuyor                                                                                                                                                                   |
+| **İçerik derinliği**        | 🟢 (temel)                    | **Sprint 3:** 198 özgün soru (82 konu) + 19 zengin ders + 12 SVG; 100+/konu ölçekleme sürüyor; ilk yardım uzman onayı bekliyor                                                                                     |
+| **Öğrenme deneyimi**        | 🟢                            | Grounded AI asistanı (çalışma planı/zayıf konu/kişisel tekrar) + tekrar kartları + alıştırma + ustalık radarı — canlı                                                                                              |
+| **CI**                      | 🟢                            | Actions yeşil (quality/e2e/gitleaks/CodeQL); kırmızı→düzelt→yeşil disiplini uygulandı                                                                                                                              |
+| **Deploy doğrulaması**      | 🟢                            | Preview + Production; canlıda tarayıcı ile 8 akış doğrulandı (geliştirme raporu §5)                                                                                                                                |
 
 ## Açık Riskler
 
@@ -44,7 +46,7 @@ _Tarih: 2026-07-15 (v7 — Sprint 4 sonrası) · Tek doğru kaynak: `ROADMAP.md`
 
 ## Bilinen Kısıtlar
 
-Faz 17/19/22/23/29–33/35 üretimde değil (ROADMAP'te planlı; **24/25/26/27/28 tamam**) · CMS/admin yazma uçları prod DATABASE_URL bekliyor (o gelene dek bilinçli 503) · zengin CMS blok-editörü sonraki tur · hazırlık-skoru tahmini kalibrasyonu gerçek geçme verisiyle rafine edilecek (Faz 35) · Lighthouse-CI/görsel-regresyon kapıları henüz zorunlu-check değil.
+Faz 17/19/29/32/33/35 üretimde değil (ROADMAP'te planlı; **22/23/24/25/26/27/28/30/31 tamam**) · CMS/admin/hesap/ödeme yazma uçları prod DATABASE_URL bekliyor (o gelene dek bilinçli 503) · gerçek AI/analitik/Sentry/tahsilat/e-posta ENV bekliyor · CSP `'unsafe-inline'` (SSG kısıtı; nonce ertelendi) · rate-limit bellek-içi · WAF/pen-test yok · Lighthouse-CI/görsel-regresyon kapıları henüz zorunlu-check değil.
 
 ## Yayın Sonrası İlk Adımlar (öneri, ROADMAP sırasına uygun)
 

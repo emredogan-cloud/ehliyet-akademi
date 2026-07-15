@@ -3,7 +3,7 @@
 > Ani kesinti sonrası devam için. Tek doğru kaynak: üst dizin `ROADMAP.md` (v3.1, 36 faz).
 > Ayrıntı: `STATUS.md` · GO/NO-GO: `FINAL_RELEASE_READINESS_REPORT.md`.
 
-_Son güncelleme: 2026-07-15 · SPRINT 4 sonrası_
+_Son güncelleme: 2026-07-15 · SPRINT 5 sonrası_
 
 ## Kilit durum
 
@@ -11,7 +11,17 @@ _Son güncelleme: 2026-07-15 · SPRINT 4 sonrası_
 - **CI GERÇEK ve YEŞİL:** repo PUBLIC; Actions (quality/E2E/gitleaks/CodeQL) her push'ta; branch protection açık.
 - **MONETIZASYON PİVOTU (bağlayıcı):** abonelik YOK → **tek-seferlik paketler** (5 paket; Komple B = lifetime). ROADMAP Faz 16 güncellendi. Ödeme mock (demo); üretim tahsilatı = LemonSqueezy/Stripe one-time adaptörü kalan iş.
 
-## SPRINT 4 (en güncel tur) — Ticaret, yasal & üretim servisleri
+## SPRINT 5 (en güncel tur) — AI platformu, analitik, gözlemlenebilirlik, güvenlik, performans
+
+- **AI (ADR-010):** `lib/server/ai.ts` (answerGrounded: retrieve→halüsinasyon kapısı→MockModel/AnthropicModel→fallback; SYSTEM_PROMPT; aiConfigured=ANTHROPIC_API_KEY). `/api/ai/ask` (rate-limited, no DB). `lib/server/ai-eval.ts` (AI_EVAL_CASES + runEval; test %100). `lib/ai.ts` retrieve YENİDEN yazıldı: önek-duyarlı token eşleşme (scoreTokens, startsWith her iki yön, min 3) + genişletilmiş STOPWORDS (kadar/zaman/kim/…). AICoach send() → fetch /api/ai/ask (yerel mock fallback) + coach-action-readiness (examReadinessAnalysis/formatReadinessAnalysis, study.ts'e eklendi).
+- **Analitik (ADR-011):** `lib/analytics.ts` genişletildi (event union + enabledProviders(consent,cfg) saf/testli + ProviderSink + analyticsConfig). `components/AnalyticsLoader.tsx` (root layout; rıza+ENV varsa GA4/Clarity/PostHog yükler). ENV yok → no-op.
+- **Gözlemlenebilirlik:** `app/api/health/route.ts` (GET, DB'ye dokunmaz). `lib/server/observability.ts` (captureException/Message, Sentry-hazır). `instrumentation.ts` (register→logEnvChecks). `lib/server/env-check.ts` (checkEnv saf/testli).
+- **Güvenlik:** `next.config.ts` buildCsp() (SSG statik CSP; analitik domainleri yalnız ENV'le; 'unsafe-inline' bilinçli) + tam header seti (HSTS/X-Frame DENY/nosniff/Referrer/Permissions). `middleware.ts` (CSRF same-origin, matcher /api/:path*, webhook muaf, mutating metodlar). `SECURITY_REVIEW.md` (OWASP Top 10).
+- **Performans:** PremiumLessonGate → `dynamic(() => import(PurchaseDialog), {ssr:false})`. `app/(app)/loading.tsx` streaming iskeleti. next.config /icon.svg cache header.
+- **e2e:** `security.spec.ts` (4: güvenlik başlıkları/CSP, /api/health, CSRF çapraz-origin 403, grounded AI + readiness aksiyonu).
+- **Canlı doğrulandı:** CSP+başlıklar (curl), /api/health 200, /api/ai/ask grounded, CSRF 403, /ai-koc grounded yanıt 0 konsol/CSP hatası.
+
+## SPRINT 4 — Ticaret, yasal & üretim servisleri
 
 - **Ödeme (ADR-008 LemonSqueezy MoR):** `lib/server/checkout.ts` (PaymentGateway/MockGateway/LemonSqueezyGateway/validateReceipt/variantForProduct); `/api/checkout` + `/api/webhooks/lemonsqueezy` (HAM gövde HMAC + parseOrder order_created + idempotent external_ref + confirmation email). Client `lib/checkoutClient.ts` startCheckout (mock→serverPurchase / 401|503→local grant / redirect→url). ENV: LEMONSQUEEZY_API_KEY/STORE_ID/WEBHOOK_SECRET/VARIANT_<PRODUCT>.
 - **E-posta (ADR-009 Resend):** `lib/server/email.ts` (EmailProvider/Console/Resend + welcomeEmail/verificationEmail/passwordResetEmail/purchaseConfirmationEmail/supportRequestEmail; escapeHtml). Bağlı: register (welcome+verify), forgot (reset link), `/api/auth/verify` (+`/dogrula`), `/sifirla`, `/api/support`. ENV: RESEND_API_KEY/EMAIL_FROM/SUPPORT_EMAIL.
@@ -75,8 +85,8 @@ _Son güncelleme: 2026-07-15 · SPRINT 4 sonrası_
 
 ## Son durum
 
-- **Testler:** 130 unit/integration (95 web + 35 paket) + 37 e2e ✅ · build 29 sayfa + 20 API rotası ✅ · CI ✅ · CodeQL ✅ · **prod tarayıcı doğrulaması ✅** (konsol 0 hata).
+- **Testler:** 148 unit/integration (113 web + 35 paket) + 41 e2e ✅ · build 29 sayfa + 22 API rotası ✅ · CI ✅ · CodeQL ✅ · **prod tarayıcı doğrulaması ✅** (konsol/CSP 0 hata).
 - **İçerik:** 198 soru (82 konu) + 19 ders (Sprint 3). Tümü review:draft (uzman onayı bekliyor, özellikle ilk yardım).
-- **DUR:** Sprint 4 sonrası durdu; Sprint 5 direktif olmadan başlatılmaz.
-- **Kalan dış aksiyonlar (ENV):** DATABASE_URL (Neon), LEMONSQUEEZY_* (tahsilat), RESEND_API_KEY (e-posta), yasal metin hukukçu onayı. Kod hazır; hepsi ENV ile aktifleşir.
+- **DUR:** Sprint 5 sonrası durdu; Sprint 6 direktif olmadan başlatılmaz.
+- **Kalan dış aksiyonlar (ENV):** DATABASE_URL (Neon), LEMONSQUEEZY_* (tahsilat), RESEND_API_KEY (e-posta), ANTHROPIC_API_KEY (gerçek AI), NEXT_PUBLIC_GA_ID/CLARITY_ID/POSTHOG_KEY (analitik), SENTRY_DSN (izleme), yasal metin hukukçu onayı. Kod hazır; hepsi ENV ile aktifleşir.
 - Dependabot 9 PR bekliyor (major bump'lar) — hijyen turu.

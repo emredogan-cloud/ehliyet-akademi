@@ -48,16 +48,18 @@ Yerel geliştirme için `apps/web/.env.example` → `apps/web/.env.local` kopyal
 
 ---
 
-## AI (ROADMAP Faz 22)
+## AI (ROADMAP Faz 22 · ADR-010 · Sprint 5)
 
-### `AI_PROVIDER` / `ANTHROPIC_API_KEY` / `OPENAI_API_KEY`
+### `ANTHROPIC_API_KEY` / `ANTHROPIC_MODEL` / `OPENAI_API_KEY`
 
-- **Ne:** AI koç/açıklama/soru-taslak üretimi ve görsel üretimi.
-- **Zorunlu mu:** Hayır. `AI_PROVIDER=mock` (varsayılan) → **deterministik mock yanıtlar** (grounded, banka/müfredattan).
-- **Nasıl alınır:** [console.anthropic.com](https://console.anthropic.com) / [platform.openai.com](https://platform.openai.com).
-- **Local:** `mock` ile tam akış test edilir (halüsinasyon = 0, maliyet = 0).
-- **Production:** gerçek anahtar **yalnız sunucu ortam değişkeni**; asla istemci koduna/repoya girmez. Görsel üretim yalnız build/script aşamasında.
-- **Güvenlik:** üst dizindeki `.env`'de bulunan gerçek `OPENAI_API_KEY` bu repoya **taşınmaz**; ihtiyaç olursa CI/Vercel secret olarak girilir.
+- **Ne:** Grounded AI koç yanıtı. Sunucu-taraflı `/api/ai/ask`: retrieval + **halüsinasyon kapısı** →
+  model. `ANTHROPIC_API_KEY` yoksa **MockModel** (deterministik, bağlamdan kompozisyon, 0 halüsinasyon).
+- **Zorunlu mu:** Hayır. Anahtar gelince `AnthropicModel` otomatik devreye girer (varsayılan model
+  `ANTHROPIC_MODEL` ile ayarlanır); hata olursa mock'a **fallback**.
+- **Nasıl alınır:** [console.anthropic.com](https://console.anthropic.com).
+- **Güvenlik:** anahtar **yalnız sunucu ortam değişkeni**; istemciye/repoya asla girmez. Halüsinasyon
+  önleme: eşleşme yoksa model çağrılmaz (reddedilir); `ai-eval.ts` %100 doğruluk kapısı.
+- Not: üst dizindeki gerçek `OPENAI_API_KEY` bu repoya **taşınmaz**; görsel üretim yalnız build/script aşamasında.
 
 ---
 

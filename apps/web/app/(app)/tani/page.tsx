@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import { Diagnostic } from '../../components/Diagnostic';
-import { pickDiagnostic } from '../../lib/diagnostic';
+import { Diagnostic } from '@/components/Diagnostic';
+import { pickDiagnostic } from '@/lib/diagnostic';
 
 export const metadata: Metadata = {
   title: 'Tanı Denemesi',

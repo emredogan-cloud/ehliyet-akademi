@@ -16,6 +16,7 @@ import {
   touchStreak,
   loadStreak,
 } from '../lib/progress';
+import { track } from '../lib/analytics';
 
 const SESSION_SIZE = 10;
 
@@ -75,6 +76,10 @@ export function Practice({ pool }: { pool: Question[] }) {
       setI(i + 1);
       setChosen(null);
     } else {
+      track({
+        name: 'practice_session_completed',
+        props: { correct: correctCount, total: queue.length, streak },
+      });
       setDone(true);
     }
   }

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Pricing } from '../../components/Pricing';
+import { Pricing } from '@/components/Pricing';
 
 export const metadata: Metadata = {
   title: 'Fiyatlandırma — Bir Kez Öde, Ömür Boyu',

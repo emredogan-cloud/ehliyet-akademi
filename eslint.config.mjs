@@ -21,8 +21,8 @@ export default tseslint.config(
   prettier,
   {
     rules: {
-      // Ürün kuralı: konsol gürültüsü yok (uyarı/log yalnız bilinçli)
-      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      // Ürün kuralı: konsol gürültüsü yok (uyarı/hata/debug — analitik sink — bilinçli)
+      'no-console': ['warn', { allow: ['warn', 'error', 'debug'] }],
       '@typescript-eslint/no-unused-vars': [
         'error',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },

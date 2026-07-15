@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { BADGE_LABEL, SUBJECT_LABEL } from '@ea/content-schema';
-import { LESSONS, lessonBySlug } from '../../../content/lessons';
-import { LessonFigure } from '../../../components/LessonFigure';
-import { LessonJsonLd } from '../../../components/JsonLd';
+import { LESSONS, lessonBySlug } from '@/content/lessons';
+import { LessonFigure } from '@/components/LessonFigure';
+import { LessonJsonLd } from '@/components/JsonLd';
 
 export function generateStaticParams() {
   return LESSONS.map((l) => ({ slug: l.slug }));

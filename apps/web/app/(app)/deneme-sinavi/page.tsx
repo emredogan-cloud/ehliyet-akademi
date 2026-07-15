@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import { ExamSimulator } from '../../components/ExamSimulator';
-import { ExamJsonLd } from '../../components/JsonLd';
+import { ExamSimulator } from '@/components/ExamSimulator';
+import { ExamJsonLd } from '@/components/JsonLd';
 
 export const metadata: Metadata = {
   title: 'Deneme Sınavı (e-Sınav Simülatörü)',

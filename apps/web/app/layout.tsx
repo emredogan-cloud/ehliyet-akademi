@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
-import { SiteJsonLd } from '../components/JsonLd';
-import { RegisterSW } from '../components/RegisterSW';
+import { SiteJsonLd } from '@/components/JsonLd';
+import { RegisterSW } from '@/components/RegisterSW';
 import './globals.css';
 
+const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ehliyet-akademi-nine.vercel.app';
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://ehliyet-akademi.example'),
+  metadataBase: new URL(SITE),
   title: {
     default: 'Ehliyet Akademi — B Sınıfı Teorik + Direksiyon Sınavı Hazırlık',
     template: '%s · Ehliyet Akademi',
@@ -42,44 +44,19 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="tr">
+    <html lang="tr" suppressHydrationWarning>
+      <head>
+        {/* Tema tercihini ilk boyamadan önce uygula (FOUC engelle) — Ayarlar sayfası yönetir. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem('ea:theme');if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}`,
+          }}
+        />
+      </head>
       <body>
         <SiteJsonLd />
         <RegisterSW />
-        <a className="skip-link" href="#main">
-          İçeriğe atla
-        </a>
-        <header className="topbar">
-          <div className="container topbar__inner">
-            <a className="brand" href="/" aria-label="Ehliyet Akademi ana sayfa">
-              🚗{' '}
-              <span>
-                <b>Ehliyet</b> Akademi
-              </span>
-            </a>
-            <nav className="nav" aria-label="Ana menü">
-              <a href="/dersler">Dersler</a>
-              <a href="/e-sinav">e-Sınav</a>
-              <a href="/calis">Çalış</a>
-              <a href="/deneme-sinavi">Deneme</a>
-              <a href="/tani">Tanı Denemesi</a>
-              <a href="/hazirlik-skorum">Hazırlık Skorum</a>
-              <a href="/fiyatlandirma">Fiyatlandırma</a>
-            </nav>
-          </div>
-        </header>
-        <main id="main" className="container" tabIndex={-1}>
-          {children}
-        </main>
-        <footer className="site">
-          <div className="container">
-            <p>
-              Ehliyet Akademi · Eğitim amaçlı hazırlık platformu. Resmî sınav ve güncel kural için
-              MEB/MTSK ve sürücü kursunuz esastır. Bu bir <em>resmî MEB sınavı değildir</em>; gerçek
-              sınav formatında denemedir.
-            </p>
-          </div>
-        </footer>
+        {children}
       </body>
     </html>
   );

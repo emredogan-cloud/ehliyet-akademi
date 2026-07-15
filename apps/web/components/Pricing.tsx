@@ -7,6 +7,7 @@
 import { useEffect, useState } from 'react';
 import { PRODUCTS, type Product } from '../lib/products';
 import { getPaymentProvider, loadEntitlements } from '../lib/payments';
+import { track } from '../lib/analytics';
 
 export function Pricing() {
   const [owned, setOwned] = useState<string[]>([]);
@@ -23,7 +24,10 @@ export function Pricing() {
     const res = await getPaymentProvider().checkout(p.id);
     setBusy(null);
     setMsg(res.message);
-    if (res.ok) setOwned(loadEntitlements());
+    if (res.ok) {
+      track({ name: 'purchase_completed', props: { productId: p.id, priceTRY: p.priceTRY } });
+      setOwned(loadEntitlements());
+    }
   }
 
   return (

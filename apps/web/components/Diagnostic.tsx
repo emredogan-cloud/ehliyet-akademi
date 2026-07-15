@@ -5,6 +5,7 @@ import type { Question } from '@ea/content-schema';
 import { SUBJECT_LABEL } from '@ea/content-schema';
 import { computeReadiness, statsFromAnswers, type Readiness } from '@ea/srs-engine';
 import { saveReadiness, type StoredReadiness } from '../lib/storage';
+import { track } from '../lib/analytics';
 
 type Answer = { q: Question; chosen: number; correct: boolean };
 
@@ -63,6 +64,10 @@ export function Diagnostic({ questions }: { questions: Question[] }) {
         at: Date.now(),
       };
       saveReadiness(stored);
+      track({
+        name: 'diagnostic_completed',
+        props: { correct: stored.correct, total: stored.answered, overall: r.overall },
+      });
       setDone(true);
     }
   }

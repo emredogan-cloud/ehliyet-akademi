@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { SUBJECT_LABEL } from '@ea/content-schema';
-import { loadReadiness, type StoredReadiness } from '../../lib/storage';
+import { loadReadiness, type StoredReadiness } from '@/lib/storage';
 
 const LIGHT_LABEL: Record<string, string> = {
   yesil: 'Yeşil — hazır',

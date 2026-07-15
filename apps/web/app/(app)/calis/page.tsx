@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { allQuestions } from '@ea/question-bank';
-import { Practice } from '../../components/Practice';
+import { Practice } from '@/components/Practice';
 
 export const metadata: Metadata = {
   title: 'Akıllı Çalışma (SRS)',

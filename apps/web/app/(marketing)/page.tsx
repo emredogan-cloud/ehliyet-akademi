@@ -24,6 +24,9 @@ export default function HomePage() {
           hazırlık.
         </p>
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+          <a className="btn btn--onhero" href="/panel">
+            Uygulamayı aç →
+          </a>
           <a className="btn btn--onhero" href="/tani">
             Tanı denemesine başla →
           </a>

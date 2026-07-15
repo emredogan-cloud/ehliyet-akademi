@@ -10,6 +10,7 @@ import { buildExam, scoreExam, type BuiltExam, type ExamResult } from '../lib/ex
 import { appendAnswers, touchStreak } from '../lib/progress';
 import { canStartFreeExam, consumeFreeExam, loadEntitlements } from '../lib/payments';
 import { hasCapability } from '../lib/products';
+import { track } from '../lib/analytics';
 
 function fmt(sec: number): string {
   const m = Math.floor(sec / 60);
@@ -88,6 +89,10 @@ export function ExamSimulator() {
       }))
     );
     touchStreak();
+    track({
+      name: 'exam_finished',
+      props: { correct: r.correct, total: r.total, passed: r.passed },
+    });
   }
 
   if (!exam) {

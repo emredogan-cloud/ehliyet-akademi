@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { SUBJECT_LABEL } from '@ea/content-schema';
-import { LESSONS } from '../../content/lessons';
+import { LESSONS } from '@/content/lessons';
 
 export const metadata: Metadata = {
   title: 'Dersler',

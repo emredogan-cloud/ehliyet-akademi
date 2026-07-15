@@ -64,8 +64,7 @@ tam çalışır; hesap/ticaret uçları hata değil, bilinçli "yapılandırma b
   bir ilk yardım eğitmeni tarafından onaylanmadan güvenle SUNULMAMALI. _Neden yüksek:_ yanlış tıbbi bilgi
   zarar potansiyeli. _Aksiyon:_ uzman inceleme döngüsü (içerik hattı Sprint 2'de hazır; `review:approved`).
 - **#H4 — Yasal metinler taslak/hukukçu onayı yok.** Gizlilik/KVKK/Kullanım/Çerez sayfaları yer-tutuculu
-  taslak. _Neden yüksek:_ kişisel veri toplama + ticaret öncesi hukuki zorunluluk. _Aksiyon:_ avukat incelemesi
-  - gerçek şirket bilgileri.
+  taslak. _Neden yüksek:_ kişisel veri toplama + ticaret öncesi hukuki zorunluluk. _Aksiyon:_ avukat incelemesi ve gerçek şirket bilgileri.
 
 ### 🟡 Orta
 

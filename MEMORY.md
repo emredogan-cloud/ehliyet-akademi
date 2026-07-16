@@ -3,9 +3,21 @@
 > Ani kesinti sonrası devam için. Tek doğru kaynak: üst dizin `ROADMAP.md` (v3.1, 36 faz).
 > Ayrıntı: `STATUS.md` · GO/NO-GO: `FINAL_RELEASE_READINESS_REPORT.md`.
 
-_Son güncelleme: 2026-07-16 · PROGRAM 1 (Görsel Dönüşüm & İçerik Genişletme) tamamlandı_
+_Son güncelleme: 2026-07-16 · PROGRAM 2 · Faz 1 tamamlandı (plan: PROGRAM_2_ROADMAP.md, 9 faz)_
 
 ## Kilit durum
+
+## PROGRAM 2 (en güncel) — Faz 1: Premium Görsel Varlık Kütüphanesi ✅
+
+- **Plan:** `PROGRAM_2_ROADMAP.md` (9 faz: varlık kütüphanesi → etkileşimli medya → animasyon → video → AI görsel → işaret 120+ → araç 70+ → harita/senaryo → 1500+ soru). Faz sırası 1→2→3→5→6→7→8→9; Faz 4 video içerik dış bağımlılık.
+- **Pipeline:** `scripts/assets/catalog.mjs` (34 varlık, prompt kataloğu; STYLE=markasız/plakasız/yüzsüz/metin yok) + `generate.mjs` (OpenAI gpt-image-1, quality high, 1536×1024 WebP@85, `--only/--force/--quality/--dry`, retry+eşzamanlılık 3; OPENAI_API_KEY kökteki .env'de).
+- **34 görsel:** `apps/web/public/assets/vehicle/*.webp` (~5.4MB). QC: kontak-sayfa + Chrome; `fog-lights` ve `emergency-kit` marka (VW) ihlali → prompt sıkılaştırılıp yeniden üretildi. Kabul edilen işlevsel harfler: PRNDL, INT/LOW/HIGH, AIRBAG.
+- **Manifest:** `apps/web/content/asset-manifest.ts` — VisualAsset (id/src/title/alt TR/w/h/license/tags), `visualAssetById`, `LESSON_PHOTOS` (6 ders); test: `asset-manifest.test.ts` (dosya var + RIFF/WEBP + <400KB + eşleme çözülür).
+- **UI:** `components/ui/AssetImage.tsx` (next/image, figure, data-testid=asset-image), `components/LessonPhotos.tsx` (data-testid=lesson-photos). CSS: `.asset-figure`, `.lesson-photos`, `.vehicle-grid` (240px+ — /arac'ın dar sign-grid'de 110px render sorunu bununla çözüldü, commit b870ae6).
+- **vehicle.ts:** BASE_PARTS(21, photo=id; lights→light-switch, wrench→wheel-bolts) + EXTRA_PARTS(13 foto-öncelikli) = **34 parça**; test: şema VEYA foto zorunlu + relatedLessonSlug çözülür (kırık 'seritler-donusler'→'sollama-serit' düzeltildi).
+- **Kapılar:** 152 birim + 51 e2e yeşil; CI+CodeQL yeşil (lint fix c50a99d); prod canlı doğrulandı 0 konsol. Commit'ler: roadmap ab80b22, Faz1 bb19516, fix c50a99d, grid b870ae6.
+- **Operasyonel not:** vercel deploy YALNIZ repo kökünden; yanlış dizinden deploy "apps" projesi yarattı → `vercel project rm apps` ile silindi. Yerel e2e için server'ı Playwright'ın kendisi başlatmalı (manuel `next start` RATE_LIMIT_DISABLED içermez → admin/auth testleri 429 ile düşer).
+- **Maliyet:** ~9 USD (36 üretim, high). Faz 6-7 aynı hattı kullanacak.
 
 ## PROGRAM 1 (en güncel) — Görsel Dönüşüm & İçerik Genişletme ✅
 

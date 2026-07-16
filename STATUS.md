@@ -2,7 +2,16 @@
 
 > Tek doğru kaynak: üst dizindeki `ROADMAP.md` (v3.1, Faz 0–35).
 
-_Son güncelleme: 2026-07-16 · PROGRAM 1 (Görsel Dönüşüm & İçerik Genişletme) tamamlandı_
+_Son güncelleme: 2026-07-16 · PROGRAM 2 · Faz 1 (Premium Görsel Varlık Kütüphanesi) tamamlandı — plan: `PROGRAM_2_ROADMAP.md` (9 faz)_
+
+### Yaptım (PROGRAM 2 · Faz 1 — Premium Görsel Varlık Kütüphanesi) ✅
+
+- **Üretim hattı ✅** — `scripts/assets/{catalog,generate}.mjs`: OpenAI gpt-image-1 → WebP@85 1536×1024; eşzamanlılık + retry; `--only/--force/--quality/--dry`; sır `.env`den, asla commit'te değil.
+- **34 premium fotogerçekçi görsel ✅** — markasız/plakasız/yüzsüz; kontak-sayfayla insan-gözü QC (2 marka ihlali reddedilip yeniden üretildi); ort. ~160KB, tümü <400KB bütçede.
+- **Manifest + bileşenler ✅** — `content/asset-manifest.ts` (TR alt metin, lisans izi, `LESSON_PHOTOS`), `AssetImage` (lazy+responsive+erişilebilir), `LessonPhotos` (mobil scroll-snap şerit).
+- **Entegrasyon ✅** — araç kütüphanesi **21→34 parça** (13 foto-öncelikli yeni); `/arac` foto-öncelikli + katlanır şema + `vehicle-grid`; 6 derse foto şeridi; kırık ders bağlantısı düzeltildi + test kapısı.
+- **Kapılar ✅** — 152 birim + 51 e2e; CI+CodeQL yeşil; prod deploy + gerçek tarayıcı doğrulaması (0 konsol). Canlıda bulunan 110px-render ve lint sorunları anında düzeltildi; yanlışlıkla oluşan Vercel projesi silindi.
+- Rapor: `PROGRAM_2_PHASE_1_REPORT.md`. Sıradaki: **Faz 2 — Etkileşimli Medya**.
 
 ### Yaptım (PROGRAM 1 — Görsel Dönüşüm & İçerik Genişletme) ✅
 

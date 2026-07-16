@@ -2,7 +2,15 @@
 
 > Tek doğru kaynak: üst dizindeki `ROADMAP.md` (v3.1, Faz 0–35).
 
-_Son güncelleme: 2026-07-16 · PROGRAM 2 · Faz 7 (Araç Bilgisi — 70 bileşen) tamamlandı — plan: `PROGRAM_2_ROADMAP.md` (9 faz)_
+_Son güncelleme: 2026-07-16 · PROGRAM 2 · Faz 8 (Harita & Senaryo) tamamlandı — plan: `PROGRAM_2_ROADMAP.md` (9 faz)_
+
+### Yaptım (PROGRAM 2 · Faz 8 — Harita & Senaryo Öğrenme) ✅
+
+- **ADR-015 ✅** — özgün kuş-bakışı SVG sahneler (Street View/OSM bilinçli reddedildi: CSP/gizlilik/telif); kişisel konum verisi yok.
+- **Sahne DSL'i + motor ✅** — `SceneSpec`→`SceneCanvas` (yol/zebra/araç/yaya/işaret rozeti); `ScenarioRunner` karar→açıklama→skor; graf bütünlüğü test kapısı.
+- **7 özgün senaryo ✅** — sağdan gelen, dönel kavşak, tali yol, ambulans, yaya geçidi, dar geçit, okul bölgesi; `/senaryolar` + kenar çubuğu.
+- **Kapılar ✅** — 183 birim + 61 e2e; CI yeşil; production canlı.
+- Rapor: `PROGRAM_2_PHASE_8_REPORT.md`. Sıradaki: **Faz 9 — 1500+ soru**.
 
 ### Yaptım (PROGRAM 2 · Faz 7 — Araç Bilgisi Genişletmesi) ✅
 

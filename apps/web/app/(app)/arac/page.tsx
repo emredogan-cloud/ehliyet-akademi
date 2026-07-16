@@ -27,7 +27,7 @@ export default function AracPage() {
           <h2 className="section-title" style={{ marginTop: 0 }}>
             {SYSTEM_LABEL[sys]}
           </h2>
-          <div className="sign-grid" data-testid={`vsys-${sys}`}>
+          <div className="vehicle-grid" data-testid={`vsys-${sys}`}>
             {grouped[sys].map((p) => (
               <div className="card" key={p.id} style={{ margin: 0 }} data-testid="vehicle-part">
                 {p.photo ? (

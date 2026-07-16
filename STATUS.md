@@ -2,7 +2,16 @@
 
 > Tek doğru kaynak: üst dizindeki `ROADMAP.md` (v3.1, Faz 0–35).
 
-_Son güncelleme: 2026-07-16 · PROGRAM 2 · Faz 4 (Video Öğrenme) tamamlandı — plan: `PROGRAM_2_ROADMAP.md` (9 faz)_
+_Son güncelleme: 2026-07-16 · PROGRAM 2 · Faz 5 (AI Görsel Öğrenme) tamamlandı — plan: `PROGRAM_2_ROADMAP.md` (9 faz)_
+
+### Yaptım (PROGRAM 2 · Faz 5 — AI Görsel Öğrenme) ✅
+
+- **Grounded görsel eşleyici ✅** — `lib/visual-match.ts`: AI yanıtlarına yalnız kendi kataloglarımızdan görsel kart; kelime-sınırı + ad önceliği; katalog-dışı asla (test garantili).
+- **AI Koç kartları ✅** — yanıt altında işaret SVG'si / bileşen fotoğrafı, galerilere bağlantılı (canlı: DUR + Yol Ver).
+- **/gorsel-quiz ✅** — 76 öğelik havuz, aynı-kategori çeldiriciler, skor + açıklama + zayıflar destesi (iki-doğruda-çıkar); kenar çubuğunda.
+- **ADR-014 ✅** — vizyon/kamera mimarisi tasarımı (cihazda-kalır varsayılan, açık rıza, sıfır saklama, katalog-kimliği eşleme).
+- **Kapılar ✅** — 169 birim + 58 e2e; CI yeşil; production canlı doğrulandı (0 konsol).
+- Rapor: `PROGRAM_2_PHASE_5_REPORT.md`. Sıradaki: **Faz 6 — İşaret Genişletmesi (≥120)**.
 
 ### Yaptım (PROGRAM 2 · Faz 4 — Video Öğrenme) ✅
 

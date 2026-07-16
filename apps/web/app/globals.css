@@ -2463,3 +2463,97 @@ table.tbl {
   font-size: var(--fs-xs);
   color: var(--red);
 }
+
+/* ============================================================
+   Program 3 · Faz C — Layout sistemi (components/ui/layout)
+   PageHeader + Section + Grid/Stack/Row · referans 003-panel
+   ============================================================ */
+
+/* PageHeader */
+.page-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+  margin: 0 0 var(--sp-6);
+}
+.page-head__titles {
+  min-width: 0;
+}
+.page-head__title {
+  margin: 0;
+  font-size: var(--fs-3xl);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.page-head__emoji {
+  font-weight: 400;
+}
+.page-head__sub {
+  margin: var(--sp-2) 0 0;
+  color: var(--text-2);
+  font-size: var(--fs-lg);
+  max-width: 68ch;
+}
+.page-head__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-shrink: 0;
+}
+
+/* Section */
+.section {
+  margin: 0 0 var(--sp-8);
+}
+.section__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  margin: 0 0 var(--sp-4);
+  flex-wrap: wrap;
+}
+.section__title {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin: 0;
+  font-size: var(--fs-xl);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.section__icon {
+  color: var(--primary);
+  display: inline-flex;
+  font-size: 1.15em;
+}
+.section__action {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-shrink: 0;
+}
+
+/* Grid — auto-fill + minmax (duyarlı, kırılmaz) */
+.grid-auto {
+  display: grid;
+  gap: var(--grid-gap, var(--sp-4));
+  grid-template-columns: repeat(auto-fill, minmax(var(--grid-min, 240px), 1fr));
+}
+@media (min-width: 640px) {
+  .grid-auto {
+    grid-template-columns: repeat(auto-fit, minmax(var(--grid-min, 240px), 1fr));
+  }
+}
+
+/* Stack / Row */
+.stack {
+  display: flex;
+  flex-direction: column;
+}
+.row {
+  display: flex;
+}

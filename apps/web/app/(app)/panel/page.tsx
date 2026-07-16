@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Dashboard } from '@/components/Dashboard';
+import { PageHeader } from '@/components/ui/layout';
 
 export const metadata: Metadata = {
   title: 'Panel',
@@ -10,10 +11,11 @@ export const metadata: Metadata = {
 export default function PanelPage() {
   return (
     <>
-      <h1 style={{ margin: '6px 0 4px' }}>Panel</h1>
-      <p className="muted" style={{ marginTop: 0 }}>
-        Hoş geldin! İşte güncel durumun.
-      </p>
+      <PageHeader
+        title="Panel"
+        emoji="👋"
+        subtitle="Hoş geldin! İyi bir güncelle harika bir sürüşle devam et."
+      />
       <Dashboard />
     </>
   );

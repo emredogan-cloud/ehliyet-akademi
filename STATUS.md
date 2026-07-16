@@ -2,7 +2,15 @@
 
 > Tek doğru kaynak: üst dizindeki `ROADMAP.md` (v3.1, Faz 0–35).
 
-_Son güncelleme: 2026-07-16 · PROGRAM 2 · Faz 2 (Etkileşimli Medya) tamamlandı — plan: `PROGRAM_2_ROADMAP.md` (9 faz)_
+_Son güncelleme: 2026-07-16 · PROGRAM 2 · Faz 3 (Hareket & Animasyon) tamamlandı — plan: `PROGRAM_2_ROADMAP.md` (9 faz)_
+
+### Yaptım (PROGRAM 2 · Faz 3 — Hareket & Animasyon) ✅
+
+- **ADR-012 ✅** — özgün SVG + CSS keyframes (Lottie/Rive/Motion değerlendirildi; sıfır bağımlılık, CSP/PWA uyumlu); ADR indeksi 007–012 tamamlandı.
+- **4 özgün animasyon ✅** — paralel park, dik park, sağdan gelen kavşak, ambulansa yol (yanıp sönen tepe lambası); `AnimPlayer` oynat/duraklat/baştan; adımlar daima görünür; reduced-motion → bilgilendirici statik poz.
+- **Doğruluk ✅** — manevra fiziği kare kare tarayıcıda izlendi; geri park burun dönüş yönü yayın öncesi düzeltildi.
+- **Kapılar ✅** — 158 birim + 55 e2e; CI+CodeQL yeşil; production canlı doğrulandı (0 konsol).
+- Rapor: `PROGRAM_2_PHASE_3_REPORT.md`. Sıradaki: **Faz 4 — Video Öğrenme (mimari)**.
 
 ### Yaptım (PROGRAM 2 · Faz 2 — Etkileşimli Medya) ✅
 

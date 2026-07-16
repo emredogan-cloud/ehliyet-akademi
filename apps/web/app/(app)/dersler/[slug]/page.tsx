@@ -13,6 +13,7 @@ import { Callout } from '@/components/ui/Callout';
 import { CompareTable } from '@/components/ui/CompareTable';
 import { LessonPhotos } from '@/components/LessonPhotos';
 import { LessonInteractive } from '@/components/media/LessonInteractive';
+import { LessonAnimations } from '@/components/anim/LessonAnimations';
 import type { ReactNode } from 'react';
 
 export function generateStaticParams() {
@@ -101,6 +102,7 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
 
       <LessonPhotos slug={lesson.slug} />
       <LessonInteractive slug={lesson.slug} />
+      <LessonAnimations slug={lesson.slug} />
       <LessonFigure figureId={lesson.figureId} lessonId={lesson.id} />
 
       {(() => {

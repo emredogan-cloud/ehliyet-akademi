@@ -1705,6 +1705,241 @@ table.tbl {
   padding: 14px;
 }
 
+/* ============================================================
+   Program 2 · Faz 3 — Eğitsel animasyonlar (ADR-012: özgün SVG + CSS)
+   Hareket yalnız transform; play-state ile duraklatma; reduced-motion'da statik.
+   ============================================================ */
+.lesson-anims {
+  display: grid;
+  gap: 20px;
+  margin: 20px 0;
+}
+.animp {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+}
+.animp__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.animp__controls {
+  display: flex;
+  gap: 8px;
+}
+.animp__btn {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+.animp__stage svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.animp__stage--paused .anim-car,
+.animp__stage--paused .anim-beacon {
+  animation-play-state: paused !important;
+}
+.animp__desc {
+  margin: 10px 16px 0;
+  font-size: 0.88rem;
+}
+.animp__steps {
+  margin: 8px 16px 14px;
+  padding-left: 22px;
+  color: var(--text-2);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.anim-car {
+  animation-duration: var(--anim-dur, 8s);
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+/* Paralel park: yaklaş → hizalan → sağa kırarak geri gir → düzel */
+.anim-parallel {
+  animation-name: kf-parallel;
+}
+@keyframes kf-parallel {
+  0% {
+    transform: translate(-30px, 96px) rotate(90deg);
+  }
+  30% {
+    transform: translate(300px, 96px) rotate(90deg);
+  }
+  38% {
+    transform: translate(300px, 96px) rotate(90deg);
+  }
+  60% {
+    transform: translate(250px, 148px) rotate(66deg);
+  }
+  82% {
+    transform: translate(216px, 178px) rotate(86deg);
+  }
+  92%,
+  100% {
+    transform: translate(213px, 182px) rotate(90deg);
+  }
+}
+
+/* Dik park: koridordan yaklaş → kavisle cebe dön → dik dur */
+.anim-perp {
+  animation-name: kf-perp;
+}
+@keyframes kf-perp {
+  0% {
+    transform: translate(-30px, 185px) rotate(90deg);
+  }
+  38% {
+    transform: translate(150px, 185px) rotate(90deg);
+  }
+  68% {
+    transform: translate(222px, 120px) rotate(28deg);
+  }
+  88%,
+  100% {
+    transform: translate(235px, 50px) rotate(0deg);
+  }
+}
+
+/* Sağdan gelen: ego çizgide durur; sağdan gelen (alttan) geçer; sonra ego geçer */
+.anim-row-ego {
+  animation-name: kf-row-ego;
+}
+@keyframes kf-row-ego {
+  0% {
+    transform: translate(-30px, 137px) rotate(90deg);
+  }
+  28% {
+    transform: translate(128px, 137px) rotate(90deg);
+  }
+  62% {
+    transform: translate(128px, 137px) rotate(90deg);
+  }
+  100% {
+    transform: translate(460px, 137px) rotate(90deg);
+  }
+}
+.anim-row-other {
+  animation-name: kf-row-other;
+}
+@keyframes kf-row-other {
+  0% {
+    transform: translate(228px, 280px) rotate(0deg);
+  }
+  15% {
+    transform: translate(228px, 245px) rotate(0deg);
+  }
+  60% {
+    transform: translate(228px, -60px) rotate(0deg);
+  }
+  100% {
+    transform: translate(228px, -60px) rotate(0deg);
+  }
+}
+
+/* Ambulansa yol: ego + öndeki sağa yanaşıp yavaşlar; ambulans soldan geçer */
+.anim-ey-ego {
+  animation-name: kf-ey-ego;
+}
+@keyframes kf-ey-ego {
+  0% {
+    transform: translate(150px, 100px) rotate(90deg);
+  }
+  30% {
+    transform: translate(205px, 100px) rotate(90deg);
+  }
+  48% {
+    transform: translate(255px, 162px) rotate(90deg);
+  }
+  78% {
+    transform: translate(300px, 162px) rotate(90deg);
+  }
+  100% {
+    transform: translate(360px, 104px) rotate(90deg);
+  }
+}
+.anim-ey-front {
+  animation-name: kf-ey-front;
+}
+@keyframes kf-ey-front {
+  0% {
+    transform: translate(300px, 100px) rotate(90deg);
+  }
+  26% {
+    transform: translate(345px, 100px) rotate(90deg);
+  }
+  44% {
+    transform: translate(392px, 162px) rotate(90deg);
+  }
+  100% {
+    transform: translate(455px, 162px) rotate(90deg);
+  }
+}
+.anim-ey-amb {
+  animation-name: kf-ey-amb;
+}
+@keyframes kf-ey-amb {
+  0% {
+    transform: translate(-60px, 100px);
+  }
+  35% {
+    transform: translate(60px, 100px);
+  }
+  100% {
+    transform: translate(500px, 100px);
+  }
+}
+.anim-beacon {
+  animation: kf-beacon 0.6s linear infinite;
+}
+@keyframes kf-beacon {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-car,
+  .anim-beacon {
+    animation: none !important;
+  }
+  /* Statik son-poz: her sahnenin bilgilendirici karesi */
+  .anim-parallel {
+    transform: translate(213px, 182px) rotate(90deg);
+  }
+  .anim-perp {
+    transform: translate(235px, 50px) rotate(0deg);
+  }
+  .anim-row-ego {
+    transform: translate(128px, 137px) rotate(90deg);
+  }
+  .anim-row-other {
+    transform: translate(228px, 120px) rotate(0deg);
+  }
+  .anim-ey-ego {
+    transform: translate(255px, 162px) rotate(90deg);
+  }
+  .anim-ey-front {
+    transform: translate(392px, 162px) rotate(90deg);
+  }
+  .anim-ey-amb {
+    transform: translate(120px, 100px);
+  }
+}
+
 /* Beliriş (scroll-reveal) hareket sistemi */
 .reveal {
   opacity: 0;

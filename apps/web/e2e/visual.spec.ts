@@ -113,6 +113,25 @@ test('adım akışı + karşılaştırma kaydırıcısı (Program 2 · Faz 2)', 
   await expect(page.getByTestId('compare-slider')).toContainText('1,6 mm');
 });
 
+test('eğitsel animasyon: oynat/duraklat + baştan (Program 2 · Faz 3)', async ({ page }) => {
+  await page.goto('/dersler/kavsak-oncelik');
+  const anim = page.getByTestId('anim-right-of-way');
+  await anim.scrollIntoViewIfNeeded();
+  await expect(anim).toBeVisible();
+  // Sahne SVG'si erişilebilir etiketle render edilir
+  await expect(anim.getByRole('img', { name: /Kavşak animasyonu/ })).toBeVisible();
+  // Duraklat → stage paused durumuna geçer
+  const stage = anim.locator('.animp__stage');
+  await expect(stage).toHaveAttribute('data-playing', 'true');
+  await anim.getByTestId('anim-toggle').click();
+  await expect(stage).toHaveAttribute('data-playing', 'false');
+  // Baştan → yeniden oynar
+  await anim.getByTestId('anim-restart').click();
+  await expect(stage).toHaveAttribute('data-playing', 'true');
+  // Adım metinleri her zaman görünür (reduced-motion bilgi eşdeğerliği)
+  await expect(anim.locator('.animp__steps li')).toHaveCount(4);
+});
+
 test('/arac interaktif keşif: hotspot + zoom inceleme (Program 2 · Faz 2)', async ({ page }) => {
   await page.goto('/arac');
   await expect(page.getByTestId('hotspots')).toBeVisible();

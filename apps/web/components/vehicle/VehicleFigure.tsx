@@ -334,6 +334,43 @@ const PARTS: Record<string, () => React.ReactNode> = {
       </text>
     </g>
   ),
+  // Program 2 · Faz 7 — foto üretimi (bütçe limiti) yerine özgün şema (dürüst geçici çözüm)
+  'fire-extinguisher': () => (
+    <g {...S}>
+      <rect x="66" y="34" width="28" height="56" rx="8" fill="#d92d20" stroke="none" />
+      <rect x="72" y="26" width="16" height="10" rx="3" />
+      <path d="M72 26 q-14 -6 -22 6" />
+      <rect x="70" y="48" width="20" height="22" rx="3" fill="#fff" stroke="none" />
+      <path d="M60 96 h40" strokeDasharray="4 4" />
+    </g>
+  ),
+  'warning-triangle-road': () => (
+    <g {...S}>
+      <rect x="10" y="76" width="140" height="12" fill="var(--surface-3)" stroke="none" />
+      <rect x="112" y="58" width="34" height="18" rx="4" fill="var(--text-3)" stroke="none" />
+      <path d="M36 76 L48 54 L60 76 Z" fill="#d92d20" stroke="none" />
+      <path d="M42 73 L48 61 L54 73 Z" fill="#fff" stroke="none" />
+      <path d="M64 82 h40" stroke={ACC} strokeDasharray="6 5" />
+      <text
+        x="84"
+        y="100"
+        textAnchor="middle"
+        style={{ font: '600 10px var(--font)', fill: 'var(--text-3)', stroke: 'none' }}
+      >
+        ≥30 m
+      </text>
+    </g>
+  ),
+  'child-lock': () => (
+    <g {...S}>
+      <rect x="40" y="26" width="80" height="66" rx="8" />
+      <rect x="52" y="40" width="24" height="14" rx="3" fill={ACC} stroke="none" />
+      <path d="M64 62 v14" />
+      <circle cx="64" cy="82" r="6" />
+      <path d="M96 44 v10 a8 8 0 0 0 16 0 v-10" />
+      <rect x="94" y="34" width="20" height="12" rx="3" />
+    </g>
+  ),
 };
 
 export const VEHICLE_PART_IDS = Object.keys(PARTS);

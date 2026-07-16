@@ -193,6 +193,98 @@ export const VISUAL_ASSETS: VisualAsset[] = [
     'Reflektör üçgen, reflektif yelek ve ilk yardım çantası',
     ['guvenlik', 'acil']
   ),
+  // ——— Program 2 · Faz 7 — araç bilgisi genişletmesi (36 varlık) ———
+  asset('wiper-blade', 'Silecek Lastiği', 'Ön cam silecek lastiğinin yakın görünümü', [
+    'dis',
+    'gorus',
+    'bakim',
+  ]),
+  asset('isofix', 'ISOFIX Bağlantısı', 'Arka koltuktaki ISOFIX çocuk koltuğu bağlantı noktaları', [
+    'kabin',
+    'guvenlik',
+  ]),
+  asset('climate-controls', 'Klima Kumandası', 'Kalorifer ve klima döner kumanda paneli', [
+    'kabin',
+    'kumanda',
+  ]),
+  asset('window-switches', 'Cam Kumandaları', 'Kapı kolçağındaki elektrikli cam düğmeleri', [
+    'kabin',
+    'kumanda',
+  ]),
+  asset('fuel-cap', 'Yakıt Depo Kapağı', 'Açık yakıt dolum kapağı ve depo ağzı', ['dis', 'yakit']),
+  asset('exhaust', 'Egzoz', 'Araç arkasındaki egzoz çıkışı', ['dis', 'motor']),
+  asset('suspension', 'Süspansiyon & Amortisör', 'Helezon yay ve amortisör (teker sökülü)', [
+    'dis',
+    'bakim',
+  ]),
+  asset('brake-disc', 'Fren Diski', 'Jant arkasında görünen fren diski ve kaliper', [
+    'dis',
+    'fren',
+  ]),
+  asset('brake-pads', 'Fren Balatası', 'Yeni fren balataları yakın görünüm', [
+    'dis',
+    'fren',
+    'bakim',
+  ]),
+  asset('timing-belt', 'Triger Kayışı', 'Motorun triger kayışı ve dişlileri', [
+    'motor-bolmesi',
+    'bakim',
+  ]),
+  asset('alternator', 'Alternatör', 'Motor üzerindeki alternatör ve kayışı', [
+    'motor-bolmesi',
+    'elektrik',
+  ]),
+  asset('serpentine-belt', 'V Kayışı', 'Motor yardımcı sistem kayışı ve kasnaklar', [
+    'motor-bolmesi',
+    'bakim',
+  ]),
+  asset('radiator-fan', 'Radyatör Fanı', 'Radyatör arkasındaki soğutma fanı', [
+    'motor-bolmesi',
+    'sogutma',
+  ]),
+  asset('cabin-filter', 'Polen Filtresi', 'Değiştirilen polen (kabin) filtresi', [
+    'kabin',
+    'bakim',
+  ]),
+  asset('air-filter', 'Hava Filtresi', 'Açık kutusunda motor hava filtresi', [
+    'motor-bolmesi',
+    'bakim',
+  ]),
+  asset('oil-filter', 'Yağ Filtresi', 'Motor yağ filtresi kartuşu', ['motor-bolmesi', 'bakim']),
+  asset('spark-plug', 'Buji', 'Yeni bir buji yakın görünüm', ['motor-bolmesi', 'bakim']),
+  asset('car-key', 'Anahtar & İmmobilizer', 'Uzaktan kumandalı araç anahtarı', [
+    'kabin',
+    'guvenlik',
+  ]),
+  asset('obd-port', 'OBD Arıza Soketi', 'Direksiyon altındaki OBD-II soketi', ['kabin', 'bakim']),
+  asset('tow-rope', 'Çekme Halatı', 'Sarılı çekme halatı ve kancaları', ['guvenlik', 'acil']),
+  asset('wheel-chock', 'Takoz', 'Tekerleğin arkasına yerleştirilmiş takoz', ['guvenlik', 'bakim']),
+  asset('snow-chain-fitting', 'Zincir Takma', 'Lastiğe takılmış kar zinciri', ['dis', 'guvenlik']),
+  asset('alloy-wheel', 'Jant & Sibop', 'Alaşım jant ve sibop yakın görünümü', ['dis', 'lastik']),
+  asset('tyre-pressure', 'Lastik Basıncı Ölçümü', 'Sibopta lastik basıncı ölçen el', [
+    'dis',
+    'lastik',
+    'kontrol',
+  ]),
+  asset('tie-rod', 'Rot Başı', 'Direksiyon rot başı mafsalı (liftte)', ['dis', 'bakim']),
+  asset('cv-axle', 'Aks Körüğü', 'Ön aks CV mafsal körüğü', ['dis', 'bakim']),
+  asset('catalytic', 'Katalitik Konvertör', 'Araç altındaki katalitik konvertör', ['dis', 'motor']),
+  asset('park-sensor', 'Park Sensörü', 'Arka tampondaki park sensörleri', ['dis', 'guvenlik']),
+  asset('rear-camera', 'Geri Görüş Kamerası', 'Bagaj kolu yanındaki geri görüş kamerası', [
+    'dis',
+    'guvenlik',
+  ]),
+  asset('windshield-chip', 'Cam Çatlağı', 'Ön camdaki taş izi çatlak', ['dis', 'gorus']),
+  asset('oil-cap', 'Yağ Dolum Kapağı', 'Motor yağı dolum kapağı', ['motor-bolmesi', 'yag']),
+  asset('temp-gauge', 'Hararet Göstergesi', 'Gösterge panelindeki hararet ibresi', [
+    'kabin',
+    'gosterge',
+  ]),
+  asset('jump-cables', 'Takviye Kablosu', 'Kırmızı-siyah akü takviye kabloları', [
+    'guvenlik',
+    'acil',
+    'elektrik',
+  ]),
 ];
 
 const BY_ID = new Map(VISUAL_ASSETS.map((a) => [a.id, a]));

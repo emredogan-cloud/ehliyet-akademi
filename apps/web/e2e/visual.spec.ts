@@ -152,6 +152,23 @@ test('video öğrenme: oynatıcı + bölümler + yer imi + transkript (Program 2
   await expect(page.getByTestId('planned-badge').first()).toHaveText('Çekim planlanıyor');
 });
 
+test('araç bileşeni: arama + detay sayfası + kontrol adımları (Program 2 · Faz 7)', async ({
+  page,
+}) => {
+  await page.goto('/arac');
+  // ≥70 bileşen
+  expect(await page.getByTestId('vehicle-part').count()).toBeGreaterThanOrEqual(70);
+  // Arama süzer
+  await page.getByTestId('part-search').fill('triger');
+  await expect(page.getByTestId('vehicle-part')).toHaveCount(1);
+  await expect(page.getByText('Triger Kayışı')).toBeVisible();
+  // Detay sayfası: kontrol adımları + sık hata
+  await page.goto('/arac/timing-belt');
+  await expect(page.getByTestId('part-detail')).toBeVisible();
+  await expect(page.getByTestId('part-inspection')).toBeVisible();
+  await expect(page.getByText('Sık yapılan hata')).toBeVisible();
+});
+
 test('işaret detay sayfası: eğitim alanları + karıştırma karşılaştırması (Program 2 · Faz 6)', async ({
   page,
 }) => {

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { AICoach } from '@/components/AICoach';
+import { PageHeader } from '@/components/ui/layout';
 
 export const metadata: Metadata = {
   title: 'AI Koç',
@@ -10,10 +11,11 @@ export const metadata: Metadata = {
 export default function AIKocPage() {
   return (
     <>
-      <h1 style={{ margin: '6px 0 4px' }}>AI Koç</h1>
-      <p className="muted" style={{ marginTop: 0 }}>
-        İçeriğe dayalı (grounded) çalışma arkadaşın.
-      </p>
+      <PageHeader
+        title="AI Koç"
+        emoji="🤖"
+        subtitle="İçeriğe dayalı (grounded) çalışma arkadaşın."
+      />
       <AICoach />
     </>
   );

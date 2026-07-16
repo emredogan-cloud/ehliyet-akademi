@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { syncSet, me, restorePurchases, type AuthUser } from '@/lib/authClient';
 import { CONSENT_KEY, readConsent, type Consent } from '@/components/CookieConsent';
+import { PageHeader } from '@/components/ui/layout';
 
 type Theme = 'auto' | 'light' | 'dark';
 const THEME_KEY = 'ea:theme';
@@ -149,10 +150,11 @@ export default function AyarlarPage() {
 
   return (
     <>
-      <h1 style={{ margin: '6px 0 4px' }}>Ayarlar</h1>
-      <p className="muted" style={{ marginTop: 0 }}>
-        Tema, verilerin, hesabın ve gizlilik tercihlerin.
-      </p>
+      <PageHeader
+        title="Ayarlar"
+        emoji="⚙️"
+        subtitle="Tema, verilerin, hesabın ve gizlilik tercihlerin."
+      />
 
       {note && (
         <p className="explain" role="status" data-testid="settings-note">

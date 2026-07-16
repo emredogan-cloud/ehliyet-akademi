@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { VIDEOS } from '@/content/videos';
 import { VideoPlayer } from '@/components/video/VideoPlayer';
+import { PageHeader } from '@/components/ui/layout';
 
 export const metadata: Metadata = {
   title: 'Video Dersler',
@@ -13,12 +14,17 @@ export default function VideolarPage() {
   const planned = VIDEOS.filter((v) => v.status === 'planned');
   return (
     <div data-testid="videolar">
-      <h1 style={{ margin: '24px 0 6px' }}>Video Dersler</h1>
-      <p className="muted" style={{ marginTop: 0 }}>
-        Bölümler, senkron transkript ve yer imleriyle video öğrenme. Mevcut videolar kendi animasyon
-        sistemimizden üretilmiş <strong>%100 özgün</strong> anlatımlardır; gerçek çekim müfredatı
-        aşağıda açıkça “planlanıyor” olarak listelenir.
-      </p>
+      <PageHeader
+        title="Video Dersler"
+        emoji="🎬"
+        subtitle={
+          <>
+            Bölümler, senkron transkript ve yer imleriyle video öğrenme. Mevcut videolar kendi
+            animasyon sistemimizden üretilmiş <strong>%100 özgün</strong> anlatımlardır; gerçek
+            çekim müfredatı aşağıda açıkça “planlanıyor” olarak listelenir.
+          </>
+        }
+      />
 
       {available.map((v) => (
         <section key={v.id} style={{ margin: '26px 0' }}>

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { computeAchievements, type Achievement } from '@/lib/achievements';
 import { loadAnswers, loadStreak } from '@/lib/progress';
 import { loadEntitlements } from '@/lib/payments';
+import { PageHeader } from '@/components/ui/layout';
 
 export default function BasarilarPage() {
   const [list, setList] = useState<Achievement[] | null>(null);
@@ -25,10 +26,11 @@ export default function BasarilarPage() {
 
   return (
     <>
-      <h1 style={{ margin: '6px 0 4px' }}>Başarılar</h1>
-      <p className="muted" style={{ marginTop: 0 }}>
-        Çalıştıkça rozetler açılır — hepsi kutlama, hiçbiri baskı.
-      </p>
+      <PageHeader
+        title="Başarılar"
+        emoji="🏆"
+        subtitle="Çalıştıkça rozetler açılır — hepsi kutlama, hiçbiri baskı."
+      />
       {!list ? (
         <div className="grid" aria-busy="true">
           {[1, 2, 3].map((k) => (

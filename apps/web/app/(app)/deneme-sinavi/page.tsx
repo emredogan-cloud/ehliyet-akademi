@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { ExamSimulatorLazy } from '@/components/ExamSimulatorLazy';
 import { ExamJsonLd } from '@/components/JsonLd';
+import { PageHeader } from '@/components/ui/layout';
 
 export const metadata: Metadata = {
   title: 'Deneme Sınavı (e-Sınav Simülatörü)',
@@ -11,10 +12,15 @@ export const metadata: Metadata = {
 export default function DenemeSinaviPage() {
   return (
     <>
-      <h1 style={{ margin: '24px 0 6px' }}>Deneme Sınavı</h1>
-      <p className="muted" style={{ marginTop: 0 }}>
-        Gerçek sınav formatında simülasyon. Bu bir <em>resmî MEB sınavı değildir</em>.
-      </p>
+      <PageHeader
+        title="Deneme Sınavı"
+        emoji="⏱️"
+        subtitle={
+          <>
+            Gerçek sınav formatında simülasyon. Bu bir <em>resmî MEB sınavı değildir</em>.
+          </>
+        }
+      />
       <ExamJsonLd />
       <ExamSimulatorLazy />
     </>

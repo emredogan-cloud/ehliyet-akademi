@@ -10,6 +10,7 @@ import { TrafficSign as SignSvg } from '@/components/signs/TrafficSign';
 import { AssetImage } from '@/components/ui/AssetImage';
 import { signById } from '@/content/signs';
 import { buildRound, quizPool, type VisualQuizRound } from '@/lib/visual-quiz';
+import { PageHeader } from '@/components/ui/layout';
 
 const KEY = 'ea:visualQuiz:v1';
 
@@ -86,11 +87,16 @@ export default function GorselQuizPage() {
 
   return (
     <div data-testid="gorsel-quiz" style={{ maxWidth: 640, margin: '0 auto' }}>
-      <h1 style={{ margin: '24px 0 6px' }}>Görsel Quiz</h1>
-      <p className="muted" style={{ marginTop: 0 }}>
-        {poolSize} görselden rastgele: işareti/bileşeni gör, adını bil. Yanlışların "zayıflar"
-        destene düşer; iki kez doğru bilince çıkar.
-      </p>
+      <PageHeader
+        title="Görsel Quiz"
+        emoji="📸"
+        subtitle={
+          <>
+            {poolSize} görselden rastgele: işareti/bileşeni gör, adını bil. Yanlışların "zayıflar"
+            destene düşer; iki kez doğru bilince çıkar.
+          </>
+        }
+      />
 
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', margin: '12px 0' }}>
         <button

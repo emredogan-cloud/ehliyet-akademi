@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { SCENARIOS } from '@/content/scenarios';
 import { ScenarioRunner } from '@/components/scenario/ScenarioRunner';
 import { SceneCanvas } from '@/components/scenario/SceneCanvas';
+import { PageHeader } from '@/components/ui/layout';
 
 export default function SenaryolarPage() {
   const [active, setActive] = useState<string | null>(null);
@@ -21,11 +22,16 @@ export default function SenaryolarPage() {
 
   return (
     <div data-testid="senaryolar">
-      <h1 style={{ margin: '24px 0 6px' }}>Sürüş Senaryoları</h1>
-      <p className="muted" style={{ marginTop: 0 }}>
-        {SCENARIOS.length} kuş-bakışı karar senaryosu: sahneyi gör, kararını ver, sonucun nedenini
-        öğren. Yanlış karar ceza değil — açıklaması en değerli kısımdır.
-      </p>
+      <PageHeader
+        title="Sürüş Senaryoları"
+        emoji="🗺️"
+        subtitle={
+          <>
+            {SCENARIOS.length} kuş-bakışı karar senaryosu: sahneyi gör, kararını ver, sonucun
+            nedenini öğren. Yanlış karar ceza değil — açıklaması en değerli kısımdır.
+          </>
+        }
+      />
       <div className="vehicle-grid">
         {SCENARIOS.map((s) => {
           const first = s.steps.find((st) => st.id === s.start)!;

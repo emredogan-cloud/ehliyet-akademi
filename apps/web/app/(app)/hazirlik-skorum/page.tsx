@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { SUBJECT_LABEL } from '@ea/content-schema';
 import { loadReadiness, type StoredReadiness } from '@/lib/storage';
+import { PageHeader } from '@/components/ui/layout';
 
 const LIGHT_LABEL: Record<string, string> = {
   yesil: 'Yeşil — hazır',
@@ -21,7 +22,7 @@ export default function HazirlikSkorumPage() {
 
   return (
     <>
-      <h1 style={{ margin: '24px 0 6px' }}>Hazırlık Skorum</h1>
+      <PageHeader title="Hazırlık Skorum" emoji="🚦" />
       {!loaded ? (
         <p className="muted">Yükleniyor…</p>
       ) : !r ? (

@@ -3,6 +3,7 @@ import { VEHICLE_PARTS } from '@/content/vehicle';
 import { VehicleGallery } from '@/components/vehicle/VehicleGallery';
 import { Hotspots } from '@/components/media/Hotspots';
 import { ZoomImage } from '@/components/media/ZoomImage';
+import { PageHeader } from '@/components/ui/layout';
 
 export const metadata: Metadata = {
   title: 'Araç Tanıma',
@@ -13,11 +14,16 @@ export const metadata: Metadata = {
 export default function AracPage() {
   return (
     <div data-testid="arac">
-      <h1 style={{ margin: '24px 0 6px' }}>Araç Tanıma</h1>
-      <p className="muted" style={{ marginTop: 0 }}>
-        {VEHICLE_PARTS.length} bileşen — direksiyon sınavı ve araç tekniği için premium fotoğraflı
-        rehber. Her kartın detay sayfasında kontrol adımları ve sık hatalar var.
-      </p>
+      <PageHeader
+        title="Araç Tanıma"
+        emoji="🚗"
+        subtitle={
+          <>
+            {VEHICLE_PARTS.length} bileşen — direksiyon sınavı ve araç tekniği için premium
+            fotoğraflı rehber. Her kartın detay sayfasında kontrol adımları ve sık hatalar var.
+          </>
+        }
+      />
 
       <section style={{ margin: '22px 0' }}>
         <h2 className="section-title" style={{ marginTop: 0 }}>

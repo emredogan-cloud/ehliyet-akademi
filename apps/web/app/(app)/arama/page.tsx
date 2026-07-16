@@ -3,6 +3,7 @@
 /** Arama (Faz 28): SearchProvider soyutlaması üzerinden — Meili/Typesense/Algolia takılabilir. */
 import { useEffect, useMemo, useState } from 'react';
 import { getSearchProvider, type SearchHit } from '@/lib/search';
+import { PageHeader } from '@/components/ui/layout';
 
 export default function AramaPage() {
   const [q, setQ] = useState('');
@@ -27,10 +28,11 @@ export default function AramaPage() {
 
   return (
     <>
-      <h1 style={{ margin: '6px 0 4px' }}>Arama</h1>
-      <p className="muted" style={{ marginTop: 0 }}>
-        Ders ve soru bankasında anında ara. (Sağlayıcı: {provider.name})
-      </p>
+      <PageHeader
+        title="Arama"
+        emoji="🔍"
+        subtitle={<>Ders ve soru bankasında anında ara. (Sağlayıcı: {provider.name})</>}
+      />
       <input
         className="chat__input"
         style={{ width: '100%', maxWidth: 560 }}

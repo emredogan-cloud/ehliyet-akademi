@@ -38,6 +38,7 @@ import {
 } from '@/lib/community';
 import { learningInsights, type Insight } from '@/lib/insights';
 import { StudyHeatmap } from '@/components/StudyHeatmap';
+import { PageHeader } from '@/components/ui/layout';
 
 interface State {
   level: LevelInfo;
@@ -129,10 +130,11 @@ export default function IlerlemePage() {
 
   return (
     <div data-testid="ilerleme">
-      <h1 style={{ margin: '6px 0 4px' }}>İlerleme</h1>
-      <p className="muted" style={{ marginTop: 0 }}>
-        XP, seviye, hedefler ve çalışma haritan — hepsi senin verinden.
-      </p>
+      <PageHeader
+        title="İlerleme"
+        emoji="📈"
+        subtitle="XP, seviye, hedefler ve çalışma haritan — hepsi senin verinden."
+      />
 
       {/* XP + Seviye + Kademe */}
       <div className="level-hero card" style={{ borderColor: 'var(--primary-100)' }}>

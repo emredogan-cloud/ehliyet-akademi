@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Diagnostic } from '@/components/Diagnostic';
 import { pickDiagnostic } from '@/lib/diagnostic';
+import { PageHeader } from '@/components/ui/layout';
 
 export const metadata: Metadata = {
   title: 'Tanı Denemesi',
@@ -11,10 +12,16 @@ export default function TaniPage() {
   const questions = pickDiagnostic(8);
   return (
     <>
-      <h1 style={{ margin: '24px 0 6px' }}>Tanı Denemesi</h1>
-      <p className="muted" style={{ marginTop: 0 }}>
-        {questions.length} soru · dört teorik dersten dengeli. Sonunda hazırlık skorunu göreceksin.
-      </p>
+      <PageHeader
+        title="Tanı Denemesi"
+        emoji="🎯"
+        subtitle={
+          <>
+            {questions.length} soru · dört teorik dersten dengeli. Sonunda hazırlık skorunu
+            göreceksin.
+          </>
+        }
+      />
       <Diagnostic questions={questions} />
     </>
   );

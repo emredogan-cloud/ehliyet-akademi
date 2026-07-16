@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { EXAM_BLUEPRINT, SUBJECT_LABEL, THEORY_SUBJECTS } from '@ea/content-schema';
 import { subjectCounts } from '@ea/question-bank';
+import { PageHeader } from '@/components/ui/layout';
 
 export const metadata: Metadata = {
   title: 'e-Sınav Hazırlık',
@@ -14,12 +15,17 @@ export default function ESinavPage() {
   const counts = subjectCounts();
   return (
     <>
-      <h1 style={{ margin: '24px 0 6px' }}>Teorik e-Sınav</h1>
-      <p className="muted" style={{ marginTop: 0 }}>
-        Gerçek sınav: {EXAM_BLUEPRINT.totalQuestions} soru · {EXAM_BLUEPRINT.durationMinutes} dk ·
-        geçmek için {EXAM_BLUEPRINT.passCorrect} doğru. Bu bir <em>resmî MEB sınavı değildir</em>;
-        gerçek sınav formatında denemedir.
-      </p>
+      <PageHeader
+        title="Teorik e-Sınav"
+        emoji="📝"
+        subtitle={
+          <>
+            Gerçek sınav: {EXAM_BLUEPRINT.totalQuestions} soru · {EXAM_BLUEPRINT.durationMinutes} dk
+            · geçmek için {EXAM_BLUEPRINT.passCorrect} doğru. Bu bir{' '}
+            <em>resmî MEB sınavı değildir</em>; gerçek sınav formatında denemedir.
+          </>
+        }
+      />
       <div className="grid">
         {THEORY.map((s) => (
           <div className="card" key={s}>

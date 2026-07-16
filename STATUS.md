@@ -2,7 +2,19 @@
 
 > Tek doğru kaynak: üst dizindeki `ROADMAP.md` (v3.1, Faz 0–35).
 
-_Son güncelleme: 2026-07-16 · PROGRAM 2 · Faz 8 (Harita & Senaryo) tamamlandı — plan: `PROGRAM_2_ROADMAP.md` (9 faz)_
+_Son güncelleme: 2026-07-16 · PROGRAM 2 TAMAMLANDI (9/9 faz) — kapanış: `PROGRAM_2_REPORT.md`_
+
+### Yaptım (PROGRAM 2 · Faz 9 — Büyük İçerik Genişletmesi) ✅
+
+- **Soru bankası 534 → 1534 ✅** (4 dalga; trafik 368/ilkyardim 299/motor 298/adab 272/pratik 297; 0 çakışma; tam metaverili).
+- **Özgünlük denetimi ✅** — `similarity-check.mjs`: mevcut bankada 9 şüpheli çift, 8 duplike düzeltildi; final tarama temiz.
+- **Büyüme yan etkileri ✅** — AI grounding eşiği sertleştirildi (halüsinasyon kapısı dayanıklı); /deneme-sinavi & /calisma-plani İlk Yük JS 561/584→104 kB (ssr:false kod-bölme; sınav akışı doğrulandı).
+- **Kapılar ✅** — 218 birim + 61 e2e; banka kapısı ≥1500 + konu bazlı; CI yeşil; production doğrulandı (0 konsol).
+- Raporlar: `PROGRAM_2_PHASE_9_REPORT.md` + **kapanış `PROGRAM_2_REPORT.md`** (9 fazın roadmap'e karşı gözden geçirimi).
+
+### PROGRAM 2 KAPANIŞ ✅
+
+9 fazın tümü tamamlandı: premium görsel kütüphane, etkileşimli medya, animasyon, video, AI görsel öğrenme, 121 işaret, 70 araç bileşeni, senaryo motoru, 1534 soru. ADR-012–015 eklendi. 5 yeni sayfa. Telifsiz/özgün, gizlilik-öncelikli, dürüst. **Program 3 başlatılmadı.**
 
 ### Yaptım (PROGRAM 2 · Faz 8 — Harita & Senaryo Öğrenme) ✅
 

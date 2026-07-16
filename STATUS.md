@@ -2,7 +2,15 @@
 
 > Tek doğru kaynak: üst dizindeki `ROADMAP.md` (v3.1, Faz 0–35).
 
-_Son güncelleme: 2026-07-16 · PROGRAM 2 · Faz 5 (AI Görsel Öğrenme) tamamlandı — plan: `PROGRAM_2_ROADMAP.md` (9 faz)_
+_Son güncelleme: 2026-07-16 · PROGRAM 2 · Faz 6 (İşaret Genişletmesi — 121 işaret) tamamlandı — plan: `PROGRAM_2_ROADMAP.md` (9 faz)_
+
+### Yaptım (PROGRAM 2 · Faz 6 — Trafik İşareti Genişletmesi) ✅
+
+- **Katalog 42 → 121 işaret ✅** (8 kategori; mevzuata-uygun, özgün içerik); piktogram motoru 26 → **59 glyph** + `GLYPH_IDS` test kapısı; glyphText taşması düzeltildi.
+- **121 detay sayfası ✅** — `/isaretler/[id]`: anlam + hafıza/hata callout + 'Karıştırma! Farkı gör' (6 çift) + bankadan grounded soru + quiz/ders bağları; galeriden bağlantı.
+- **Görsel quiz havuzu otomatik 153 ✅**; eşleyici sıralaması ad>anahtar olarak düzeltildi.
+- **Kapılar ✅** — 174 birim + 59 e2e; CI yeşil; production doğrulandı (121 vitrin istatistiği canlı).
+- Rapor: `PROGRAM_2_PHASE_6_REPORT.md`. Sıradaki: **Faz 7 — Araç Bilgisi (≥70 bileşen)**.
 
 ### Yaptım (PROGRAM 2 · Faz 5 — AI Görsel Öğrenme) ✅
 

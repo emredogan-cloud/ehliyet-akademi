@@ -86,18 +86,39 @@ function tokens(s: string): string[] {
  * (biri diğerinin önekiyse). Böylece "levha/levhanın" eşleşir ama "maçı" ↔ "amacı" gibi
  * kelime-ORTASI rastlantısal alt-dize eşleşmeleri elenir.
  */
-function scoreTokens(qs: string[], hayTokens: string[]): number {
+interface MatchStats {
+  score: number;
+  /** Eşleşen ayrı sorgu token sayısı. */
+  count: number;
+  /** Eşleşen en uzun sorgu token'ı (özgüllük göstergesi). */
+  maxLen: number;
+}
+
+function scoreTokens(qs: string[], hayTokens: string[]): MatchStats {
   let score = 0;
+  let count = 0;
+  let maxLen = 0;
   for (const qt of qs) {
     for (const ct of hayTokens) {
       const shared = Math.min(qt.length, ct.length);
       if (shared >= 3 && (ct.startsWith(qt) || qt.startsWith(ct))) {
         score += qt.length;
+        count += 1;
+        if (qt.length > maxLen) maxLen = qt.length;
         break;
       }
     }
   }
-  return score;
+  return { score, count, maxLen };
+}
+
+/**
+ * Grounding eşiği: tek bir kısa rastlantısal kelime ("otel", "maç") konu-DIŞI bir
+ * isteği grounded yapmamalı. Grounding için ya ≥2 ayrı token eşleşmeli ya da tek
+ * eşleşen token yeterince özgül olmalı (≥6 harf). Bu, halüsinasyon kapısını korur.
+ */
+function qualifies(m: MatchStats): boolean {
+  return m.count >= 2 || m.maxLen >= 6;
 }
 
 export interface Grounding {
@@ -113,17 +134,17 @@ export function retrieve(query: string): Grounding {
   let bestQ: { q: Question; score: number } | null = null;
   for (const q of allQuestions()) {
     const hay = tokens(q.stem + ' ' + q.topic + ' ' + q.explanation);
-    const score = scoreTokens(qs, hay);
-    if (score > 0 && (!bestQ || score > bestQ.score)) bestQ = { q, score };
+    const m = scoreTokens(qs, hay);
+    if (qualifies(m) && (!bestQ || m.score > bestQ.score)) bestQ = { q, score: m.score };
   }
   let bestL: { slug: string; title: string; score: number } | null = null;
   for (const l of LESSONS) {
     const hay = tokens(
       l.title + ' ' + l.summary + ' ' + l.sections.map((s) => s.heading + ' ' + s.body).join(' ')
     );
-    const score = scoreTokens(qs, hay);
-    if (score > 0 && (!bestL || score > bestL.score))
-      bestL = { slug: l.slug, title: l.title, score };
+    const m = scoreTokens(qs, hay);
+    if (qualifies(m) && (!bestL || m.score > bestL.score))
+      bestL = { slug: l.slug, title: l.title, score: m.score };
   }
   return {
     question: bestQ?.q,

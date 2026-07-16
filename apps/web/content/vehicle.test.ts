@@ -1,18 +1,38 @@
 import { describe, it, expect } from 'vitest';
 import { VEHICLE_PARTS, partsBySystem, vehiclePartById } from './vehicle';
 import { VEHICLE_PART_IDS } from '@/components/vehicle/VehicleFigure';
+import { visualAssetById } from './asset-manifest';
 
 describe('araç bileşen kütüphanesi', () => {
-  it('yeterli bileşen + benzersiz id', () => {
-    expect(VEHICLE_PARTS.length).toBeGreaterThanOrEqual(18);
+  it('yeterli bileşen + benzersiz id (Faz 1: foto-öncelikli genişleme)', () => {
+    expect(VEHICLE_PARTS.length).toBeGreaterThanOrEqual(30);
     const ids = new Set(VEHICLE_PARTS.map((p) => p.id));
     expect(ids.size).toBe(VEHICLE_PARTS.length);
   });
 
-  it('her bileşenin görseli VehicleFigure kaydında var', () => {
+  it('her bileşenin görseli var: çizim şeması VEYA premium fotoğraf', () => {
     const known = new Set(VEHICLE_PART_IDS);
     for (const p of VEHICLE_PARTS) {
-      expect(known.has(p.id), p.id).toBe(true);
+      const hasDiagram = known.has(p.id);
+      const hasPhoto = Boolean(p.photo && visualAssetById(p.photo));
+      expect(hasDiagram || hasPhoto, p.id).toBe(true);
+    }
+  });
+
+  it('foto referansları manifest içinde çözülür', () => {
+    for (const p of VEHICLE_PARTS) {
+      if (p.photo) {
+        expect(visualAssetById(p.photo), `${p.id} → ${p.photo}`).toBeDefined();
+      }
+    }
+  });
+
+  it('ilgili ders bağlantıları gerçek derslere çözülür (kırık link yok)', async () => {
+    const { lessonBySlug } = await import('./lessons');
+    for (const p of VEHICLE_PARTS) {
+      if (p.relatedLessonSlug) {
+        expect(lessonBySlug(p.relatedLessonSlug), `${p.id} → ${p.relatedLessonSlug}`).toBeDefined();
+      }
     }
   });
 

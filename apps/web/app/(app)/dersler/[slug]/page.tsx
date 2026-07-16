@@ -11,6 +11,7 @@ import { PremiumLessonGate } from '@/components/PremiumLessonGate';
 import { LessonViewTracker } from '@/components/LessonViewTracker';
 import { Callout } from '@/components/ui/Callout';
 import { CompareTable } from '@/components/ui/CompareTable';
+import { LessonPhotos } from '@/components/LessonPhotos';
 import type { ReactNode } from 'react';
 
 export function generateStaticParams() {
@@ -97,6 +98,7 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
         </ul>
       </div>
 
+      <LessonPhotos slug={lesson.slug} />
       <LessonFigure figureId={lesson.figureId} lessonId={lesson.id} />
 
       {(() => {

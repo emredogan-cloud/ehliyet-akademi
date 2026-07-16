@@ -1414,6 +1414,44 @@ table.tbl {
   margin-top: 6px;
 }
 
+/* Premium görsel varlıklar (Program 2 · Faz 1) */
+.asset-figure {
+  margin: 0 0 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface-2);
+}
+.asset-figure__img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.asset-figure__cap {
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  color: var(--text-3);
+  border-top: 1px solid var(--border);
+}
+.lesson-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 18px 0;
+}
+@media (max-width: 700px) {
+  .lesson-photos {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 6px;
+  }
+  .lesson-photos .asset-figure {
+    flex: 0 0 85%;
+    scroll-snap-align: start;
+  }
+}
+
 /* Beliriş (scroll-reveal) hareket sistemi */
 .reveal {
   opacity: 0;

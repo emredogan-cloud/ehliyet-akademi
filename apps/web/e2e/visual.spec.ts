@@ -51,7 +51,31 @@ test('araç tanıma: bileşen kartları + görseller (sistemlere göre)', async 
   await page.goto('/arac');
   await expect(page.getByTestId('arac')).toBeVisible();
   const parts = page.getByTestId('vehicle-part');
-  expect(await parts.count()).toBeGreaterThan(15);
-  await expect(page.getByRole('img', { name: 'Akü' })).toBeVisible();
+  expect(await parts.count()).toBeGreaterThan(25);
   await expect(page.getByTestId('vsys-motor-bolmesi')).toBeVisible();
+});
+
+test('premium fotoğraflar: /arac foto kartları + şema aç/kapa (Program 2 · Faz 1)', async ({
+  page,
+}) => {
+  await page.goto('/arac');
+  // Premium foto kartları render edilir
+  const photos = page.getByTestId('asset-image');
+  expect(await photos.count()).toBeGreaterThan(25);
+  // Akü fotosu erişilebilir alt metniyle görünür
+  await expect(
+    page.getByRole('img', { name: 'Motor bölmesindeki araç aküsü ve kutup başları' })
+  ).toBeVisible();
+  // Çizim şeması <details> ile açılabilir
+  const toggle = page.getByTestId('diagram-toggle').first();
+  await toggle.scrollIntoViewIfNeeded();
+  await toggle.click();
+  await expect(page.getByRole('img', { name: 'Motor Bölmesi' }).first()).toBeVisible();
+});
+
+test('ders sayfası premium foto şeridi (Program 2 · Faz 1)', async ({ page }) => {
+  await page.goto('/dersler/motor-temel');
+  const strip = page.getByTestId('lesson-photos');
+  await expect(strip).toBeVisible();
+  expect(await strip.getByTestId('asset-image').count()).toBeGreaterThanOrEqual(3);
 });

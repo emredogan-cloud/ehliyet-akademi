@@ -19,9 +19,11 @@ export interface VehiclePart {
   desc: string;
   tip: string;
   relatedLessonSlug?: string;
+  /** Program 2 · Faz 1 — premium fotoğraf (asset-manifest kimliği). */
+  photo?: string;
 }
 
-export const VEHICLE_PARTS: VehiclePart[] = [
+const BASE_PARTS: VehiclePart[] = [
   // Motor bölmesi
   {
     id: 'engine-bay',
@@ -197,6 +199,140 @@ export const VEHICLE_PARTS: VehiclePart[] = [
     tip: 'Öndeki araçla hizala; ayna + kör nokta kontrolüyle yavaşça manevra yap.',
     relatedLessonSlug: 'park-manevra',
   },
+];
+
+/**
+ * Program 2 · Faz 1 — foto-öncelikli yeni bileşenler (çizim şeması yok; premium fotoğrafla gelir).
+ */
+const EXTRA_PARTS: VehiclePart[] = [
+  {
+    id: 'warning-lights',
+    name: 'İkaz Lambaları',
+    system: 'kabin',
+    desc: 'Gösterge panelindeki renkli uyarı lambaları; sistem durumunu bildirir.',
+    tip: 'Kontak açılınca kısa süre hepsi yanar (öz test); sürüşte yanan kırmızı = dur, sarı = kontrol.',
+    relatedLessonSlug: 'gosterge-ikaz',
+    photo: 'warning-lights',
+  },
+  {
+    id: 'dashboard-buttons',
+    name: 'Konsol Düğmeleri',
+    system: 'kabin',
+    desc: 'Dörtlü flaşör, cam rezistansı gibi merkezî kumanda düğmeleri.',
+    tip: 'Dörtlü flaşörün (kırmızı üçgen) yerini ezberle; arıza/tehlikede refleksle basabilmelisin.',
+    relatedLessonSlug: 'gosterge-ikaz',
+    photo: 'dashboard-buttons',
+  },
+  {
+    id: 'steering-controls',
+    name: 'Direksiyon Kumandaları',
+    system: 'kabin',
+    desc: 'Direksiyon üzerindeki tuşlar ve arkasındaki kumanda kolları.',
+    tip: 'Gözün yoldayken kullanabilmen için kumandaların yerini sürüşten önce öğren.',
+    relatedLessonSlug: 'arac-hazirlik',
+    photo: 'steering-controls',
+  },
+  {
+    id: 'turn-signal-stalk',
+    name: 'Sinyal Kolu',
+    system: 'kabin',
+    desc: 'Sol taraftaki kol; sinyaller ve far seçimi.',
+    tip: 'Dönüş/şerit değişiminden yeterince önce sinyal ver; manevra bitince söndüğünü doğrula.',
+    relatedLessonSlug: 'sollama-serit',
+    photo: 'turn-signal-stalk',
+  },
+  {
+    id: 'wiper-controls',
+    name: 'Silecek Kumandası',
+    system: 'kabin',
+    desc: 'Sağ taraftaki kol; silecek hızı ve cam suyu püskürtme.',
+    tip: 'Yağmur başlar başlamaz sileceği kademesine göre ayarla; görüş güvenliğin önceliklidir.',
+    relatedLessonSlug: 'arac-hazirlik',
+    photo: 'wiper-controls',
+  },
+  {
+    id: 'mirror-adjust',
+    name: 'Ayna Ayarı',
+    system: 'kabin',
+    desc: 'Elektrikli ayna ayar kumandası (kapı kolçağında).',
+    tip: 'Aynaları koltuk ayarından SONRA ayarla; yan aynada aracın kenarı ince bir şerit görünmeli.',
+    relatedLessonSlug: 'arac-hazirlik',
+    photo: 'mirror-adjust',
+  },
+  {
+    id: 'seat-controls',
+    name: 'Koltuk Ayarları',
+    system: 'kabin',
+    desc: 'Koltuk ileri-geri kızağı, yükseklik pompası ve sırt açısı ayarı.',
+    tip: 'Debriyaja tam basarken diz hafif kırık kalmalı; direksiyona bilek mesafesi ölçüsünü kullan.',
+    relatedLessonSlug: 'arac-hazirlik',
+    photo: 'seat-controls',
+  },
+  {
+    id: 'seat-belt',
+    name: 'Emniyet Kemeri',
+    system: 'kabin',
+    desc: 'Çarpışmada tutunmayı sağlayan üç noktalı kemer sistemi.',
+    tip: 'Kemeri boyun değil köprücük kemiği üzerinden geçir; kıvrılmış kemer koruma sağlamaz.',
+    relatedLessonSlug: 'arac-hazirlik',
+    photo: 'seat-belt',
+  },
+  {
+    id: 'automatic-gearbox',
+    name: 'Otomatik Vites',
+    system: 'kabin',
+    desc: 'P-R-N-D konumlu otomatik şanzıman seçici.',
+    tip: 'Park için P + el freni; D↔R geçişinde araç TAM durmuş olmalı.',
+    relatedLessonSlug: 'debriyaj-rampa',
+    photo: 'automatic-gearbox',
+  },
+  {
+    id: 'headlights',
+    name: 'Farlar',
+    system: 'dis',
+    desc: 'Kısa ve uzun huzmeli ön aydınlatma.',
+    tip: 'Karşıdan araç gelince uzun farı kısaya al; gündüz yağış/sis varsa kısa farı yak.',
+    relatedLessonSlug: 'isik-gece',
+    photo: 'headlights',
+  },
+  {
+    id: 'fog-lights',
+    name: 'Sis Farları',
+    system: 'dis',
+    desc: 'Tampon altına yerleştirilmiş, sis/yoğun yağışta kullanılan lambalar.',
+    tip: 'Sis farını yalnız görüş ciddi düşünce kullan; açık havada kullanmak diğer sürücüleri rahatsız eder.',
+    relatedLessonSlug: 'isik-gece',
+    photo: 'fog-lights',
+  },
+  {
+    id: 'boot',
+    name: 'Bagaj',
+    system: 'dis',
+    desc: 'Yük alanı; stepne, kriko ve zorunlu ekipman burada taşınır.',
+    tip: 'Yükü dengeli ve sabitlenmiş taşı; arka camı kapatacak yükseklikte yükleme yapma.',
+    relatedLessonSlug: 'arac-hazirlik',
+    photo: 'boot',
+  },
+  {
+    id: 'emergency-kit',
+    name: 'Acil Durum Ekipmanı',
+    system: 'muayene',
+    desc: 'Reflektör üçgen, reflektif yelek ve ilk yardım seti — araçta bulunması zorunlu.',
+    tip: 'Arızada üçgeni aracın en az 30 m gerisine koy; yola inmeden önce reflektif yeleği giy.',
+    relatedLessonSlug: 'arac-hazirlik',
+    photo: 'emergency-kit',
+  },
+];
+
+/** Çizimli temel parçaların premium fotoğraf eşlemesi (kimlik farklıysa belirt). */
+const BASE_PHOTO: Record<string, string> = {
+  lights: 'light-switch',
+  wrench: 'wheel-bolts',
+};
+
+export const VEHICLE_PARTS: VehiclePart[] = [
+  ...BASE_PARTS.map((p) => ({ ...p, photo: BASE_PHOTO[p.id] ?? p.id })),
+  ...EXTRA_PARTS,
 ];
 
 export function partsBySystem(): Record<VehicleSystem, VehiclePart[]> {

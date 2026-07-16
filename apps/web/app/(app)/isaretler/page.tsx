@@ -60,17 +60,16 @@ function SignFlipCard({ sign }: { sign: TrafficSign }) {
           <strong style={{ fontSize: '0.9rem' }}>{sign.name}</strong>
           <span style={{ fontSize: '0.82rem' }}>{sign.meaning}</span>
           <span style={{ fontSize: '0.76rem', color: 'var(--text-3)' }}>💡 {sign.memoryTip}</span>
-          {sign.relatedLessonSlug && (
-            <span
-              style={{ fontSize: '0.76rem', color: 'var(--primary)' }}
-              onClick={(e) => {
-                e.stopPropagation();
-                window.location.href = `/dersler/${sign.relatedLessonSlug}`;
-              }}
-            >
-              İlgili ders →
-            </span>
-          )}
+          <span
+            style={{ fontSize: '0.76rem', color: 'var(--primary)', fontWeight: 700 }}
+            data-testid="sign-detail-link"
+            onClick={(e) => {
+              e.stopPropagation();
+              window.location.href = `/isaretler/${sign.id}`;
+            }}
+          >
+            Detay sayfası →
+          </span>
         </span>
       </span>
     </button>

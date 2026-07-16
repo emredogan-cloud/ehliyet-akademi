@@ -214,7 +214,300 @@ const GLYPHS: Record<string, (fg: string) => React.ReactNode> = {
       strokeLinejoin="round"
     />
   ),
+  // ——— Program 2 · Faz 6 genişletmesi (özgün piktogramlar) ———
+  hillUp: (fg) => (
+    <g>
+      <path d="M22 72 L78 40 L78 72 Z" fill={fg} />
+      <text x="30" y="42" fontSize="16" fontWeight="700" fill={fg}>
+        %10
+      </text>
+    </g>
+  ),
+  narrowRight: (fg) => (
+    <g stroke={fg} strokeWidth="7" fill="none" strokeLinecap="round">
+      <path d="M34 26 V74" />
+      <path d="M66 26 Q60 50 66 74" />
+    </g>
+  ),
+  narrowLeft: (fg) => (
+    <g stroke={fg} strokeWidth="7" fill="none" strokeLinecap="round">
+      <path d="M66 26 V74" />
+      <path d="M34 26 Q40 50 34 74" />
+    </g>
+  ),
+  gravel: (fg) => (
+    <g fill={fg}>
+      <path d="M22 66 h34 l8 -14 h-18 l-6 8 h-12 z" />
+      <circle cx="30" cy="72" r="5" />
+      <circle cx="48" cy="72" r="5" />
+      <circle cx="66" cy="44" r="3" />
+      <circle cx="74" cy="36" r="3" />
+      <circle cx="70" cy="54" r="3" />
+    </g>
+  ),
+  wind: (fg) => (
+    <g>
+      <path d="M36 30 V76" stroke={fg} strokeWidth="6" strokeLinecap="round" />
+      <path d="M36 30 L74 36 L36 48 Z" fill={fg} />
+    </g>
+  ),
+  tunnel: (fg) => (
+    <path
+      d="M26 74 V52 Q26 28 50 28 Q74 28 74 52 V74 H62 V54 Q62 40 50 40 Q38 40 38 54 V74 Z"
+      fill={fg}
+    />
+  ),
+  rocks: (fg) => (
+    <g fill={fg}>
+      <path d="M24 30 L44 34 L38 48 L22 46 Z" />
+      <path d="M46 44 L60 48 L54 60 L42 56 Z" />
+      <path d="M30 74 h44 l-8 -12 h-30 z" />
+    </g>
+  ),
+  quay: (fg) => (
+    <g>
+      <path d="M24 56 L52 48" stroke={fg} strokeWidth="6" strokeLinecap="round" />
+      <g transform="rotate(20 44 40)">
+        <rect x="30" y="34" width="26" height="10" rx="3" fill={fg} />
+        <circle cx="36" cy="47" r="4" fill={fg} />
+        <circle cx="50" cy="47" r="4" fill={fg} />
+      </g>
+      <path
+        d="M24 70 q6 -6 12 0 q6 6 12 0 q6 -6 12 0 q6 6 12 0"
+        fill="none"
+        stroke={fg}
+        strokeWidth="5"
+        strokeLinecap="round"
+      />
+    </g>
+  ),
+  airplane: (fg) => (
+    <path
+      d="M20 62 L80 62 L64 50 L52 50 L40 34 L32 34 L38 50 L26 50 L20 44 L14 44 L18 56 Z"
+      fill={fg}
+      transform="rotate(-8 50 50)"
+    />
+  ),
+  tram: (fg) => (
+    <g fill={fg}>
+      <rect x="30" y="30" width="40" height="34" rx="6" />
+      <rect x="36" y="36" width="12" height="10" fill="#ffffff" opacity="0.85" />
+      <rect x="52" y="36" width="12" height="10" fill="#ffffff" opacity="0.85" />
+      <circle cx="38" cy="70" r="5" />
+      <circle cx="62" cy="70" r="5" />
+      <path d="M44 30 L50 20 L56 30" stroke={fg} strokeWidth="4" fill="none" />
+    </g>
+  ),
+  truck: (fg) => (
+    <g fill={fg}>
+      <rect x="18" y="38" width="38" height="22" rx="3" />
+      <path d="M56 44 h16 l8 10 v6 h-24 z" />
+      <circle cx="30" cy="66" r="6" />
+      <circle cx="66" cy="66" r="6" />
+    </g>
+  ),
+  motorcycle: (fg) => (
+    <g fill={fg}>
+      <circle cx="26" cy="64" r="9" fill="none" stroke={fg} strokeWidth="5" />
+      <circle cx="74" cy="64" r="9" fill="none" stroke={fg} strokeWidth="5" />
+      <path
+        d="M26 64 L44 48 H58 L66 40 H74 L66 52 L74 64"
+        fill="none"
+        stroke={fg}
+        strokeWidth="6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <rect x="40" y="42" width="14" height="7" rx="3" />
+    </g>
+  ),
+  tractor: (fg) => (
+    <g fill={fg}>
+      <circle cx="32" cy="62" r="12" fill="none" stroke={fg} strokeWidth="6" />
+      <circle cx="68" cy="66" r="7" fill="none" stroke={fg} strokeWidth="5" />
+      <path
+        d="M40 50 h16 v-14 h10 l6 20"
+        fill="none"
+        stroke={fg}
+        strokeWidth="6"
+        strokeLinejoin="round"
+      />
+    </g>
+  ),
+  handcart: (fg) => (
+    <g fill="none" stroke={fg} strokeWidth="6" strokeLinecap="round">
+      <path d="M30 34 L58 34 L66 56 L38 56 Z" fill={fg} />
+      <path d="M66 42 L80 38" />
+      <circle cx="50" cy="66" r="7" />
+    </g>
+  ),
+  horseCart: (fg) => (
+    <g fill={fg}>
+      <path d="M22 44 q8 -10 16 0 l-2 10 h-12 z" />
+      <path d="M24 40 q-2 -8 6 -8" fill="none" stroke={fg} strokeWidth="4" />
+      <rect x="46" y="40" width="26" height="12" rx="2" />
+      <circle cx="58" cy="62" r="8" fill="none" stroke={fg} strokeWidth="5" />
+      <path d="M38 46 h10" stroke={fg} strokeWidth="4" />
+    </g>
+  ),
+  deer: (fg) => (
+    <g fill={fg}>
+      <path d="M30 70 L36 52 L32 40 L44 48 L60 44 L72 52 L66 60 L68 70 L60 70 L58 60 L44 62 L42 70 Z" />
+      <path
+        d="M64 44 L60 30 M64 44 L70 28 M60 36 L54 30 M68 34 L74 30"
+        stroke={fg}
+        strokeWidth="4"
+        fill="none"
+        strokeLinecap="round"
+      />
+    </g>
+  ),
+  chains: (fg) => (
+    <g fill="none" stroke={fg} strokeWidth="5">
+      <circle cx="50" cy="50" r="24" />
+      <circle cx="50" cy="50" r="10" />
+      {[0, 60, 120, 180, 240, 300].map((a) => (
+        <circle
+          key={a}
+          cx={50 + 24 * Math.cos((a * Math.PI) / 180)}
+          cy={50 + 24 * Math.sin((a * Math.PI) / 180)}
+          r="5"
+          fill={fg}
+          stroke="none"
+        />
+      ))}
+    </g>
+  ),
+  uTurn: (fg) => (
+    <g fill="none" stroke={fg} strokeWidth="8" strokeLinecap="round">
+      <path d="M36 72 V44 Q36 28 50 28 Q64 28 64 44 V60" />
+      <path d="M54 54 L64 70 L74 54" fill={fg} stroke="none" />
+    </g>
+  ),
+  turnLeft: (fg) => (
+    <g fill="none" stroke={fg} strokeWidth="9" strokeLinecap="round">
+      <path d="M62 74 V50 Q62 38 50 38 H40" />
+      <path d="M44 26 L28 38 L44 50" fill={fg} stroke="none" />
+    </g>
+  ),
+  turnRight: (fg) => (
+    <g fill="none" stroke={fg} strokeWidth="9" strokeLinecap="round">
+      <path d="M38 74 V50 Q38 38 50 38 H60" />
+      <path d="M56 26 L72 38 L56 50" fill={fg} stroke="none" />
+    </g>
+  ),
+  phone: (fg) => (
+    <path
+      d="M32 26 q18 -8 36 0 l-6 12 q-12 -5 -24 0 Z M30 40 q-8 18 4 34 l10 -8 q-7 -10 -2 -20 Z M70 40 l-12 6 q5 10 -2 20 l10 8 q12 -16 4 -34 Z"
+      fill={fg}
+    />
+  ),
+  wrenchTool: (fg) => (
+    <g fill={fg}>
+      <path d="M30 24 l8 0 0 12 8 0 0 -12 8 0 0 20 -24 0 Z" />
+      <rect x="38" y="44" width="8" height="32" rx="3" />
+    </g>
+  ),
+  fuel: (fg) => (
+    <g fill={fg}>
+      <rect x="30" y="28" width="26" height="46" rx="4" />
+      <rect x="35" y="34" width="16" height="12" fill="#ffffff" opacity="0.85" />
+      <path
+        d="M58 40 h6 l8 10 v18 a5 5 0 0 1 -10 0 v-12 h-4"
+        fill="none"
+        stroke={fg}
+        strokeWidth="5"
+      />
+    </g>
+  ),
+  bed: (fg) => (
+    <g fill={fg}>
+      <path d="M20 64 V40 h6 v14 h48 a8 8 0 0 1 8 8 v10 h-6 v-6 H26 v6 h-6 z" />
+      <circle cx="34" cy="46" r="6" />
+    </g>
+  ),
+  cutlery: (fg) => (
+    <g fill={fg}>
+      <path d="M36 24 v20 a6 6 0 0 1 -12 0 V24 h4 v18 h4 V24 Z" />
+      <rect x="28" y="46" width="6" height="30" rx="3" />
+      <path d="M62 24 q10 0 10 14 q0 12 -8 14 v24 h-6 V24 Z" />
+    </g>
+  ),
+  fountain: (fg) => (
+    <g fill={fg}>
+      <rect x="34" y="46" width="22" height="30" rx="3" />
+      <path d="M56 50 h10 q4 0 4 5 v6 h-6 v-4 h-8" />
+      <path d="M68 64 q-3 8 0 10 q6 -2 0 -10" />
+      <rect x="30" y="40" width="30" height="8" rx="2" />
+    </g>
+  ),
+  tent: (fg) => (
+    <g fill="none" stroke={fg} strokeWidth="6" strokeLinecap="round">
+      <path d="M22 72 L50 30 L78 72 Z" strokeLinejoin="round" />
+      <path d="M50 72 L50 48" />
+    </g>
+  ),
+  bus: (fg) => (
+    <g fill={fg}>
+      <rect x="22" y="32" width="56" height="32" rx="6" />
+      <rect x="28" y="38" width="12" height="10" fill="#ffffff" opacity="0.85" />
+      <rect x="44" y="38" width="12" height="10" fill="#ffffff" opacity="0.85" />
+      <rect x="60" y="38" width="12" height="10" fill="#ffffff" opacity="0.85" />
+      <circle cx="34" cy="68" r="6" />
+      <circle cx="66" cy="68" r="6" />
+    </g>
+  ),
+  keepRight: (fg) => (
+    <g fill="none" stroke={fg} strokeWidth="9" strokeLinecap="round">
+      <path d="M42 26 V44 Q42 56 54 60 L62 64" />
+      <path d="M62 48 L72 68 L50 66" fill={fg} stroke="none" />
+    </g>
+  ),
+  priorityArrows: (fg) => (
+    <g>
+      <path
+        d="M38 74 V34 M38 34 L30 46 M38 34 L46 46"
+        fill="none"
+        stroke={fg}
+        strokeWidth="8"
+        strokeLinecap="round"
+      />
+      <path
+        d="M62 30 V66 M62 66 L56 58 M62 66 L68 58"
+        fill="none"
+        stroke={RED}
+        strokeWidth="6"
+        strokeLinecap="round"
+      />
+    </g>
+  ),
+  deadEnd: (fg) => (
+    <g>
+      <path d="M50 76 V40" stroke={fg} strokeWidth="10" />
+      <rect x="30" y="26" width="40" height="10" fill={RED} />
+    </g>
+  ),
+  endBar: (fg) => (
+    <g stroke={fg} strokeWidth="5" opacity="0.9">
+      {[-14, 0, 14].map((o) => (
+        <path key={o} d={`M${30 + o} 74 L${58 + o} 26`} />
+      ))}
+    </g>
+  ),
+  snow: (fg) => (
+    <g stroke={fg} strokeWidth="4" strokeLinecap="round">
+      {[0, 60, 120].map((a) => (
+        <path key={a} d="M50 26 V74" transform={`rotate(${a} 50 50)`} />
+      ))}
+      {[0, 60, 120, 180, 240, 300].map((a) => (
+        <path key={a} d="M50 30 L44 38 M50 30 L56 38" transform={`rotate(${a} 50 50)`} />
+      ))}
+    </g>
+  ),
 };
+
+/** Katalog doğrulaması için piktogram kimlikleri (test kapısı). */
+export const GLYPH_IDS = Object.keys(GLYPHS);
 
 function Shell({ shape, children }: { shape: SignShape; children?: React.ReactNode }) {
   switch (shape) {
@@ -332,7 +625,7 @@ export function TrafficSign({
             textAnchor="middle"
             dominantBaseline="central"
             style={{
-              font: `800 ${glyphText.length > 2 ? 26 : 34}px system-ui, sans-serif`,
+              font: `800 ${glyphText.length > 4 ? 15 : glyphText.length > 2 ? 24 : 34}px system-ui, sans-serif`,
               fill: fg,
             }}
           >

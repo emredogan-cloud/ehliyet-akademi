@@ -38,20 +38,19 @@ export function matchVisuals(text: string, limit = 2): VisualMatches {
   const signs: TrafficSign[] = [];
   const parts: VehiclePart[] = [];
 
-  // 1. geçiş: AD eşleşmesi (güçlü sinyal) — 2. geçiş: anahtar kelime.
+  // Öncelik sırası: (1) işaret ADI, (2) bileşen ADI, (3) işaret anahtar kelimesi.
+  // Ad eşleşmesi güçlü sinyaldir; anahtar kelimeler ("rampa" gibi) en sona kalır.
   for (const s of SIGNS) {
     if (signs.length >= limit) break;
     if (hasTerm(t, s.name)) signs.push(s);
   }
-  for (const s of SIGNS) {
-    if (signs.length >= limit) break;
-    if (!signs.includes(s) && s.keywords.some((k) => hasTerm(t, k))) signs.push(s);
-  }
   for (const p of VEHICLE_PARTS) {
     if (signs.length + parts.length >= limit) break;
-    if (hasTerm(t, p.name)) {
-      parts.push(p);
-    }
+    if (hasTerm(t, p.name)) parts.push(p);
+  }
+  for (const s of SIGNS) {
+    if (signs.length + parts.length >= limit) break;
+    if (!signs.includes(s) && s.keywords.some((k) => hasTerm(t, k))) signs.push(s);
   }
   return { signs, parts };
 }

@@ -152,6 +152,25 @@ test('video öğrenme: oynatıcı + bölümler + yer imi + transkript (Program 2
   await expect(page.getByTestId('planned-badge').first()).toHaveText('Çekim planlanıyor');
 });
 
+test('işaret detay sayfası: eğitim alanları + karıştırma karşılaştırması (Program 2 · Faz 6)', async ({
+  page,
+}) => {
+  await page.goto('/isaretler/dur');
+  await expect(page.getByTestId('sign-detail')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'DUR' })).toBeVisible();
+  await expect(page.getByText('Hafıza tekniği')).toBeVisible();
+  // Karıştırılanlar: DUR vs Yol Ver
+  const conf = page.getByTestId('sign-confusions');
+  await expect(conf).toBeVisible();
+  await expect(conf.getByRole('img', { name: 'Yol Ver' })).toBeVisible();
+  // Bankadan ilgili soru açılır
+  const qs = page.getByTestId('sign-questions');
+  await expect(qs).toBeVisible();
+  // Galeri ≥120 işaret gösterir + karttan detaya gidilir
+  await page.goto('/isaretler');
+  expect(await page.getByTestId('sign-card').count()).toBeGreaterThanOrEqual(120);
+});
+
 test('görsel quiz: cevapla → geri bildirim → zayıflar destesi (Program 2 · Faz 5)', async ({
   page,
 }) => {

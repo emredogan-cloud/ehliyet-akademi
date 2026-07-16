@@ -1,59 +1,139 @@
 /* Tasarım tokenları (ADR-006) — v1'in tema sisteminden taşındı. Koyu/açık, erişilebilir. */
+/* ============================================================
+   Program 3 · Faz A — Design Tokens (navy + teal design system)
+   Renkler temaya bağlı; ölçek/motion/tipografi tokenları tema-nötr.
+   Token adları KORUNDU → tüm app otomatik yeni temaya geçer.
+   ============================================================ */
 :root {
-  --bg: #eef1ee;
+  /* Açık tema (referans koyu; açık tutarlı biçimde türetildi) */
+  --bg: #f4f6fb;
   --surface: #ffffff;
-  --surface-2: #f7f9f7;
-  --surface-3: #eef2ef;
-  --border: #dbe1dc;
-  --border-strong: #c4ccc5;
-  --text: #16211d;
-  --text-2: #47554e;
-  --text-3: #71807a;
-  --primary: #0f766e;
-  --primary-700: #0b544e;
-  --primary-050: #e9f4f2;
-  --primary-100: #d5eae7;
+  --surface-2: #f7f9fd;
+  --surface-3: #eef2f9;
+  --border: #e3e8f1;
+  --border-strong: #ccd6e6;
+  --text: #0f1826;
+  --text-2: #46566b;
+  --text-3: #74839a;
+  --primary: #0d9488;
+  --primary-700: #0b7268;
+  --primary-050: #e6f7f4;
+  --primary-100: #cdeee9;
+  --primary-bright: #14b8a6;
   --accent: #f59e0b;
   --red: #dc2626;
-  --yellow: #c2740a;
-  --green: #16794a;
+  --yellow: #d97706;
+  --green: #16a34a;
   --blue: #2563eb;
+
+  /* Aksan çekirdek hue'ları (tema-nötr; tinted zeminler color-mix ile) */
+  --accent-teal: #2dd4bf;
+  --accent-amber: #f5a623;
+  --accent-blue: #3b82f6;
+  --accent-purple: #8b5cf6;
+  --accent-red: #ef4444;
+  --accent-green: #22c55e;
+
+  /* Yarıçap */
   --radius: 16px;
   --radius-sm: 10px;
-  --shadow-1: 0 1px 3px rgba(16, 33, 29, 0.08);
-  --shadow-2: 0 6px 20px rgba(16, 33, 29, 0.1);
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+
+  /* Boşluk ölçeği (8px ızgara) */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+
+  /* Tipografi ölçeği */
+  --fs-xs: 0.78rem;
+  --fs-sm: 0.88rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.15rem;
+  --fs-xl: 1.4rem;
+  --fs-2xl: 1.9rem;
+  --fs-3xl: 2.6rem;
+
+  /* İkon boyutları */
+  --ic-sm: 18px;
+  --ic-md: 22px;
+  --ic-lg: 28px;
+
+  /* Motion */
+  --dur-fast: 0.14s;
+  --dur-base: 0.24s;
+  --dur-slow: 0.4s;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Blur / opaklık */
+  --blur-sm: 8px;
+  --blur-md: 16px;
+  --op-muted: 0.72;
+  --op-faint: 0.5;
+
+  /* Gölge */
+  --shadow-1: 0 1px 3px rgba(16, 24, 40, 0.08);
+  --shadow-2: 0 10px 30px rgba(16, 24, 40, 0.1);
+  --shadow-glow: 0 0 0 rgba(0, 0, 0, 0);
+
   --font: 'Segoe UI', system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 :root[data-theme='dark'] {
-  --bg: #071614;
-  --surface: #0e2320;
-  --surface-2: #123029;
-  --surface-3: #163a32;
-  --border: #1d3f39;
-  --border-strong: #2b544b;
-  --text: #e9f2ef;
-  --text-2: #a9bdb6;
-  --text-3: #78908a;
+  /* Koyu tema = referans (new-image/) navy paleti */
+  --bg: #050b16;
+  --surface: #0b1523;
+  --surface-2: #0f1c2e;
+  --surface-3: #14243a;
+  --border: #1c2c44;
+  --border-strong: #29405f;
+  --text: #e8eef7;
+  --text-2: #9fb0c6;
+  --text-3: #6d7f97;
   --primary: #2dd4bf;
-  --primary-700: #5ee3d2;
-  --primary-050: #0f322d;
-  --primary-100: #14423b;
+  --primary-700: #5eead4;
+  --primary-050: #0b2b2a;
+  --primary-100: #113a37;
+  --primary-bright: #2dd4bf;
+  --accent: #f5a623;
+  --red: #f87171;
+  --yellow: #fbbf24;
+  --green: #34d399;
+  --blue: #60a5fa;
+  --shadow-1: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 12px 34px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 26px rgba(45, 212, 191, 0.22);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --bg: #071614;
-    --surface: #0e2320;
-    --surface-2: #123029;
-    --surface-3: #163a32;
-    --border: #1d3f39;
-    --border-strong: #2b544b;
-    --text: #e9f2ef;
-    --text-2: #a9bdb6;
-    --text-3: #78908a;
+    --bg: #050b16;
+    --surface: #0b1523;
+    --surface-2: #0f1c2e;
+    --surface-3: #14243a;
+    --border: #1c2c44;
+    --border-strong: #29405f;
+    --text: #e8eef7;
+    --text-2: #9fb0c6;
+    --text-3: #6d7f97;
     --primary: #2dd4bf;
-    --primary-700: #5ee3d2;
-    --primary-050: #0f322d;
-    --primary-100: #14423b;
+    --primary-700: #5eead4;
+    --primary-050: #0b2b2a;
+    --primary-100: #113a37;
+    --primary-bright: #2dd4bf;
+    --accent: #f5a623;
+    --red: #f87171;
+    --yellow: #fbbf24;
+    --green: #34d399;
+    --blue: #60a5fa;
+    --shadow-1: 0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-2: 0 12px 34px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 26px rgba(45, 212, 191, 0.22);
   }
 }
 

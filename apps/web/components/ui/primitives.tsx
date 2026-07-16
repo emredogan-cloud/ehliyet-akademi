@@ -41,6 +41,8 @@ export function Card({
   style?: CSSProperties;
   href?: string;
   onClick?: () => void;
+  role?: string;
+  'aria-label'?: string;
   'data-testid'?: string;
 }) {
   const accentStyle = accent

@@ -3174,3 +3174,92 @@ table.tbl {
   border-color: var(--border-strong);
   color: var(--text);
 }
+
+/* ============================================================
+   Program 3 · Faz F — Panel/Dashboard (referans 003)
+   ============================================================ */
+.section__link {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--primary);
+  white-space: nowrap;
+}
+.section__link:hover {
+  text-decoration: none;
+  filter: brightness(1.1);
+}
+
+.mastery {
+  display: flex;
+  flex-direction: column;
+}
+.mastery-row {
+  display: grid;
+  grid-template-columns: auto minmax(120px, 1.1fr) 2fr auto auto;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) 0;
+}
+.mastery-row + .mastery-row {
+  border-top: 1px solid var(--border);
+}
+.mastery-row__icon {
+  --m-accent: var(--accent-teal);
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  color: var(--m-accent);
+  background: color-mix(in srgb, var(--m-accent) 16%, var(--surface-2));
+  flex: 0 0 auto;
+}
+.mastery-row__label {
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  min-width: 0;
+}
+.mastery-row__bar {
+  min-width: 0;
+}
+.mastery-row__pct {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--text-2);
+  text-align: right;
+  min-width: 42px;
+}
+.mastery-row__link {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--primary);
+  white-space: nowrap;
+}
+.mastery-row__link:hover {
+  text-decoration: none;
+  filter: brightness(1.1);
+}
+@media (max-width: 720px) {
+  .mastery-row {
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      'icon label pct'
+      'bar bar bar';
+    row-gap: var(--sp-2);
+  }
+  .mastery-row__icon {
+    grid-area: icon;
+  }
+  .mastery-row__label {
+    grid-area: label;
+  }
+  .mastery-row__pct {
+    grid-area: pct;
+  }
+  .mastery-row__bar {
+    grid-area: bar;
+  }
+  .mastery-row__link {
+    display: none;
+  }
+}

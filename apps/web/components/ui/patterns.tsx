@@ -172,7 +172,14 @@ export function ActionCard({
         <h3 className="action-card__title">{title}</h3>
       </div>
       <p className="action-card__desc">{desc}</p>
-      <Button variant="accent" accent={accent} size="md" full href={cta.href}>
+      <Button
+        variant="accent"
+        accent={accent}
+        size="md"
+        full
+        href={cta.href}
+        aria-label={`${title}: ${cta.label}`}
+      >
         {cta.label}
         <Icon name="chevron-right" size={16} />
       </Button>

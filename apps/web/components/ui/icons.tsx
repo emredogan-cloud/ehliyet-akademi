@@ -35,7 +35,11 @@ export type IconName =
   | 'chevron-down'
   | 'tools'
   | 'sun'
-  | 'moon';
+  | 'moon'
+  | 'trafficlight'
+  | 'firstaid'
+  | 'road'
+  | 'flame';
 
 /* Her ikon: 24×24 viewBox, stroke tabanlı, currentColor. */
 const PATHS: Record<IconName, ReactElement> = {
@@ -214,6 +218,29 @@ const PATHS: Record<IconName, ReactElement> = {
     </>
   ),
   moon: <path d="M20 13.5A8 8 0 1 1 10.5 4a6.5 6.5 0 0 0 9.5 9.5Z" />,
+  trafficlight: (
+    <>
+      <rect x="8" y="2.5" width="8" height="19" rx="4" />
+      <circle cx="12" cy="7" r="1.4" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="17" r="1.4" fill="currentColor" stroke="none" />
+    </>
+  ),
+  firstaid: (
+    <>
+      <rect x="3.5" y="5.5" width="17" height="13" rx="3" />
+      <path d="M12 9v6M9 12h6" />
+    </>
+  ),
+  road: (
+    <>
+      <path d="M7 3 3 21M17 3l4 18" />
+      <path d="M12 4v2M12 10v3M12 17v3" />
+    </>
+  ),
+  flame: (
+    <path d="M12 3s5 4 5 8.5A5 5 0 0 1 7 12c0-1.5.6-2.8 1.4-3.7C8.9 9.5 10 10 10 11c1-.5 1.5-2 1-3.5-.4-1.4.3-3.2 1-4.5Z" />
+  ),
 };
 
 export function Icon({

@@ -1,9 +1,14 @@
 'use client';
 
-/** Akıllı dürtme bannerı (Sprint 6) — kullanıcının kendi verisinden en önemli 1 nazik hatırlatma. */
+/**
+ * Akıllı dürtme bannerı (Sprint 6 · Program 3 Faz F redesign) —
+ * kullanıcının kendi verisinden en önemli 1 nazik hatırlatma.
+ * Referans 003-panel hero bandı görünümü: aksan kart + ikon rozeti + metin + Başla.
+ */
 import { useEffect, useState } from 'react';
 import { loadAnswers, loadStreak, loadCards } from '@/lib/progress';
 import { computeNudges, type Nudge } from '@/lib/notifications';
+import { Card, IconBadge, Button, type Accent } from '@/components/ui/primitives';
 
 export function NudgeBanner() {
   const [nudge, setNudge] = useState<Nudge | null>(null);
@@ -14,19 +19,20 @@ export function NudgeBanner() {
   }, []);
 
   if (!nudge) return null;
+  const accent: Accent = nudge.tone === 'warn' ? 'amber' : 'teal';
   return (
-    <div
-      className={`nudge ${nudge.tone === 'warn' ? 'nudge--warn' : ''}`}
-      data-testid="nudge"
-      role="status"
-    >
-      <span aria-hidden style={{ fontSize: '1.3rem' }}>
+    <Card accent={accent} className="hero-banner" data-testid="nudge" role="status">
+      <IconBadge accent={accent} size="lg">
         {nudge.icon}
-      </span>
-      <span className="nudge__text">{nudge.text}</span>
-      <a className="btn btn--sm" href={nudge.href}>
-        Başla
-      </a>
-    </div>
+      </IconBadge>
+      <div className="hero-banner__body">
+        <div className="hero-banner__title">{nudge.text}</div>
+      </div>
+      <div className="hero-banner__action">
+        <Button variant="primary" href={nudge.href}>
+          Başla →
+        </Button>
+      </div>
+    </Card>
   );
 }

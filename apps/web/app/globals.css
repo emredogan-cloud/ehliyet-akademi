@@ -2086,3 +2086,13 @@ table.tbl {
     transition: none;
   }
 }
+
+/* Program 2 · Faz 8 — senaryo kartları */
+.scenario-card {
+  font: inherit;
+  color: inherit;
+  border: 1px solid var(--border);
+}
+.scenario-card:hover {
+  border-color: var(--primary);
+}

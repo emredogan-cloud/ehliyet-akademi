@@ -152,6 +152,26 @@ test('video öğrenme: oynatıcı + bölümler + yer imi + transkript (Program 2
   await expect(page.getByTestId('planned-badge').first()).toHaveText('Çekim planlanıyor');
 });
 
+test('sürüş senaryosu: karar → açıklama → özet (Program 2 · Faz 8)', async ({ page }) => {
+  await page.goto('/senaryolar');
+  expect(await page.getByTestId('scenario-card').count()).toBeGreaterThanOrEqual(6);
+  // "Sağdan gelen" senaryosunu başlat (2 adımlı)
+  await page.getByTestId('scenario-card').first().click();
+  await expect(page.getByTestId('scenario-runner')).toBeVisible();
+  await expect(page.getByTestId('scenario-prompt')).toContainText('sağdan araç geliyor');
+  // Güvenli kararı seç → geri bildirim
+  await page.getByTestId('scenario-option').first().click();
+  await expect(page.getByTestId('scenario-feedback')).toContainText('Güvenli karar');
+  await page.getByTestId('scenario-continue').click();
+  // 2. adım → bitir → özet
+  await expect(page.getByTestId('scenario-prompt')).toContainText('kavşak boş');
+  await page.getByTestId('scenario-option').first().click();
+  await page.getByTestId('scenario-continue').click();
+  await expect(page.getByTestId('scenario-summary')).toContainText('2/2 güvenli karar');
+  await page.getByTestId('scenario-exit').click();
+  await expect(page.getByTestId('scenario-card').first()).toBeVisible();
+});
+
 test('araç bileşeni: arama + detay sayfası + kontrol adımları (Program 2 · Faz 7)', async ({
   page,
 }) => {

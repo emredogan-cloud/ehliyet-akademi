@@ -5,7 +5,7 @@
  */
 
 /** Kuş-bakışı araç gövdesi (22×44). Merkez (0,0) — transform kolaylığı için. */
-function Car({ body, roof = 'rgba(255,255,255,0.35)' }: { body: string; roof?: string }) {
+export function Car({ body, roof = 'rgba(255,255,255,0.35)' }: { body: string; roof?: string }) {
   return (
     <g>
       <rect x={-11} y={-22} width={22} height={44} rx={6} fill={body} />

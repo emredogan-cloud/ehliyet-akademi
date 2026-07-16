@@ -2,7 +2,15 @@
 
 > Tek doğru kaynak: üst dizindeki `ROADMAP.md` (v3.1, Faz 0–35).
 
-_Son güncelleme: 2026-07-16 · PROGRAM 2 · Faz 1 (Premium Görsel Varlık Kütüphanesi) tamamlandı — plan: `PROGRAM_2_ROADMAP.md` (9 faz)_
+_Son güncelleme: 2026-07-16 · PROGRAM 2 · Faz 2 (Etkileşimli Medya) tamamlandı — plan: `PROGRAM_2_ROADMAP.md` (9 faz)_
+
+### Yaptım (PROGRAM 2 · Faz 2 — Etkileşimli Medya) ✅
+
+- **Bileşenler ✅** — `components/media/`: Hotspots (buton-tabanlı, Escape), CompareSlider (native range), StepFlow (7 adım), ZoomImage (dialog + zoom/pan), LessonInteractive.
+- **İçerik ✅** — motor bölmesi turu (piksel-doğrulamalı koordinatlar; yanlış etiket düzeltildi), pedal turu, lastik aşınması (yeni `tyre-worn` varlığı), sürüş öncesi kontrol akışı; bütünlük testleri.
+- **Entegrasyon ✅** — motor-temel + debriyaj-rampa + arac-hazirlik dersleri, /arac İnteraktif keşif.
+- **Kapılar ✅** — 156 birim + 54 e2e; CI+CodeQL yeşil; production'da etkileşimli olarak doğrulandı (0 konsol). 360° gerekçeyle ertelendi.
+- Rapor: `PROGRAM_2_PHASE_2_REPORT.md`. Sıradaki: **Faz 3 — Hareket & Animasyon**.
 
 ### Yaptım (PROGRAM 2 · Faz 1 — Premium Görsel Varlık Kütüphanesi) ✅
 

@@ -25,6 +25,7 @@ const NAV: Array<{ group: string; items: Array<{ href: string; label: string; ic
     group: 'Pratik',
     items: [
       { href: '/calis', label: 'Akıllı Çalışma', icon: '🧠' },
+      { href: '/gorsel-quiz', label: 'Görsel Quiz', icon: '📸' },
       { href: '/deneme-sinavi', label: 'Deneme Sınavı', icon: '⏱️' },
       { href: '/tani', label: 'Tanı Denemesi', icon: '🎯' },
       { href: '/ai-koc', label: 'AI Koç', icon: '🤖' },

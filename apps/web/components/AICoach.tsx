@@ -8,6 +8,9 @@
  */
 import { useEffect, useState } from 'react';
 import { getAIProvider, type AIMessage } from '@/lib/ai';
+import { matchVisuals, type VisualMatches } from '@/lib/visual-match';
+import { TrafficSign as SignSvg } from '@/components/signs/TrafficSign';
+import { AssetImage } from '@/components/ui/AssetImage';
 import { track } from '@/lib/analytics';
 import { loadAnswers, loadCards } from '@/lib/progress';
 import {
@@ -44,8 +47,10 @@ const ACTIONS: Array<{ id: Action; label: string }> = [
   { id: 'readiness', label: '📊 Sınav hazırlığım nasıl?' },
 ];
 
+type CoachMessage = AIMessage & { visuals?: VisualMatches };
+
 export function AICoach() {
-  const [messages, setMessages] = useState<AIMessage[]>([]);
+  const [messages, setMessages] = useState<CoachMessage[]>([]);
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
 
@@ -55,8 +60,8 @@ export function AICoach() {
     if (soru) setInput(soru);
   }, []);
 
-  function push(role: AIMessage['role'], text: string) {
-    setMessages((m) => [...m, { role, text }]);
+  function push(role: AIMessage['role'], text: string, visuals?: VisualMatches) {
+    setMessages((m) => [...m, { role, text, visuals }]);
   }
 
   async function send(text: string) {
@@ -84,7 +89,9 @@ export function AICoach() {
       grounded = !answer.includes('eşleşme bulamadım');
     }
     track({ name: 'ai_question_asked', props: { grounded } });
-    push('assistant', answer);
+    // Faz 5: yanıta grounded görsel kart iliştir (yalnız kendi kataloglarımızdan).
+    const visuals = grounded ? matchVisuals(`${q} ${answer}`) : undefined;
+    push('assistant', answer, visuals);
     setBusy(false);
   }
 
@@ -164,12 +171,39 @@ export function AICoach() {
           </div>
         )}
         {messages.map((m, k) => (
-          <div
-            key={k}
-            className={`chat__msg chat__msg--${m.role === 'user' ? 'user' : 'ai'}`}
-            data-testid={m.role === 'user' ? 'msg-user' : 'msg-ai'}
-            dangerouslySetInnerHTML={{ __html: mdLite(m.text) }}
-          />
+          <div key={k}>
+            <div
+              className={`chat__msg chat__msg--${m.role === 'user' ? 'user' : 'ai'}`}
+              data-testid={m.role === 'user' ? 'msg-user' : 'msg-ai'}
+              dangerouslySetInnerHTML={{ __html: mdLite(m.text) }}
+            />
+            {m.visuals && (m.visuals.signs.length > 0 || m.visuals.parts.length > 0) && (
+              <div className="chat__visuals" data-testid="ai-visuals">
+                {m.visuals.signs.map((sg) => (
+                  <a key={sg.id} className="chat__visual" href="/isaretler" title={sg.meaning}>
+                    <SignSvg
+                      shape={sg.shape}
+                      glyph={sg.glyph}
+                      glyphText={sg.glyphText}
+                      label={sg.name}
+                      size={56}
+                    />
+                    <span>{sg.name}</span>
+                  </a>
+                ))}
+                {m.visuals.parts.map((pt) => (
+                  <a key={pt.id} className="chat__visual" href="/arac" title={pt.desc}>
+                    {pt.photo && (
+                      <span className="chat__visual-photo">
+                        <AssetImage assetId={pt.photo} caption={false} />
+                      </span>
+                    )}
+                    <span>{pt.name}</span>
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
         ))}
         {busy && (
           <div className="chat__msg chat__msg--ai skeleton" style={{ width: 180, height: 40 }} />

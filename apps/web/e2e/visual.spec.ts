@@ -152,6 +152,34 @@ test('video öğrenme: oynatıcı + bölümler + yer imi + transkript (Program 2
   await expect(page.getByTestId('planned-badge').first()).toHaveText('Çekim planlanıyor');
 });
 
+test('görsel quiz: cevapla → geri bildirim → zayıflar destesi (Program 2 · Faz 5)', async ({
+  page,
+}) => {
+  await page.goto('/gorsel-quiz');
+  await expect(page.getByTestId('gorsel-quiz')).toBeVisible();
+  const options = page.getByTestId('vq-option');
+  await expect(options).toHaveCount(4);
+  // Bir seçenek işaretle → geri bildirim + açıklama + skor günceli
+  await options.first().click();
+  await expect(page.getByTestId('vq-feedback')).toBeVisible();
+  await expect(page.getByTestId('vq-score')).toContainText('/1');
+  // Sonraki tur yüklenir
+  await page.getByTestId('vq-next').click();
+  await expect(page.getByTestId('vq-feedback')).not.toBeVisible();
+  await expect(page.getByTestId('vq-option')).toHaveCount(4);
+});
+
+test('AI koç: grounded yanıta görsel kart iliştirir (Program 2 · Faz 5)', async ({ page }) => {
+  await page.goto('/ai-koc');
+  await page.getByTestId('chat-input').fill('DUR levhasında ne yapılır?');
+  await page.getByTestId('chat-send').click();
+  await expect(page.getByTestId('msg-ai')).toBeVisible();
+  // Yanıt "dur" işaretiyle eşleşir → katalogdan görsel kart
+  const visuals = page.getByTestId('ai-visuals');
+  await expect(visuals).toBeVisible();
+  await expect(visuals.getByRole('img', { name: 'DUR', exact: true })).toBeVisible();
+});
+
 test('/arac interaktif keşif: hotspot + zoom inceleme (Program 2 · Faz 2)', async ({ page }) => {
   await page.goto('/arac');
   await expect(page.getByTestId('hotspots')).toBeVisible();

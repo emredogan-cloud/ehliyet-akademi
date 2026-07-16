@@ -3,17 +3,19 @@
 ROADMAP.md **ne** ve **neden**i tanımlar; ADR'ler **nasıl** kararlarını kaydeder.
 Her ADR: Bağlam · Karar · Sonuçlar. Statü: Kabul edildi / Önerildi / Reddedildi / Değiştirildi.
 
-| #                                     | Karar                                              | Statü |
-| ------------------------------------- | -------------------------------------------------- | ----- |
-| [001](001-framework-nextjs.md)        | Çatı: Next.js App Router                           | Kabul |
-| [002](002-monorepo.md)                | Monorepo yapısı (pnpm + turbo)                     | Kabul |
-| [003](003-database.md)                | Veritabanı: Postgres + Drizzle; yerelde PGlite     | Kabul |
-| [004](004-auth.md)                    | Kimlik doğrulama soyutlaması                       | Kabul |
-| [005](005-content-model.md)           | Tipli içerik + özgün soru bankası modeli           | Kabul |
-| [006](006-styling.md)                 | Stil: v1 tasarım tokenlarının taşınması            | Kabul |
-| [007](007-cms.md)                     | CMS: şema-öncelikli özel çekirdek                  | Kabul |
-| [008](008-payments.md)                | Ödeme: LemonSqueezy (MoR), tek-seferlik            | Kabul |
-| [009](009-email.md)                   | E-posta: Resend + sağlayıcı soyutlaması            | Kabul |
-| [010](010-ai-platform.md)             | AI: grounded sunucu hattı + halüsinasyon kapısı    | Kabul |
-| [011](011-analytics-observability.md) | Analitik & gözlemlenebilirlik (rıza kapılı)        | Kabul |
-| [012](012-motion-animation.md)        | Hareket/animasyon: özgün SVG + CSS (bağımlılıksız) | Kabul |
+| #                                     | Karar                                              | Statü    |
+| ------------------------------------- | -------------------------------------------------- | -------- |
+| [001](001-framework-nextjs.md)        | Çatı: Next.js App Router                           | Kabul    |
+| [002](002-monorepo.md)                | Monorepo yapısı (pnpm + turbo)                     | Kabul    |
+| [003](003-database.md)                | Veritabanı: Postgres + Drizzle; yerelde PGlite     | Kabul    |
+| [004](004-auth.md)                    | Kimlik doğrulama soyutlaması                       | Kabul    |
+| [005](005-content-model.md)           | Tipli içerik + özgün soru bankası modeli           | Kabul    |
+| [006](006-styling.md)                 | Stil: v1 tasarım tokenlarının taşınması            | Kabul    |
+| [007](007-cms.md)                     | CMS: şema-öncelikli özel çekirdek                  | Kabul    |
+| [008](008-payments.md)                | Ödeme: LemonSqueezy (MoR), tek-seferlik            | Kabul    |
+| [009](009-email.md)                   | E-posta: Resend + sağlayıcı soyutlaması            | Kabul    |
+| [010](010-ai-platform.md)             | AI: grounded sunucu hattı + halüsinasyon kapısı    | Kabul    |
+| [011](011-analytics-observability.md) | Analitik & gözlemlenebilirlik (rıza kapılı)        | Kabul    |
+| [012](012-motion-animation.md)        | Hareket/animasyon: özgün SVG + CSS (bağımlılıksız) | Kabul    |
+| [013](013-video-learning.md)          | Video: self-host native player, dürüst katalog     | Kabul    |
+| [014](014-vision-architecture.md)     | Vizyon/kamera mimarisi (gizlilik-öncelikli)        | Önerildi |

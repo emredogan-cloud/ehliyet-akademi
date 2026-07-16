@@ -2027,6 +2027,45 @@ table.tbl {
   border-top: 1px solid var(--border);
 }
 
+/* ============================================================
+   Program 2 · Faz 5 — AI görsel öğrenme
+   ============================================================ */
+.vq-wrong {
+  border-color: var(--red) !important;
+  color: var(--red) !important;
+}
+.chat__visuals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 6px 0 10px 4px;
+}
+.chat__visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  text-decoration: none;
+  color: var(--text-2);
+  font-size: 0.78rem;
+  max-width: 130px;
+  text-align: center;
+}
+.chat__visual:hover {
+  border-color: var(--primary);
+}
+.chat__visual-photo {
+  display: block;
+  width: 110px;
+}
+.chat__visual-photo .asset-figure {
+  margin: 0;
+}
+
 /* Beliriş (scroll-reveal) hareket sistemi */
 .reveal {
   opacity: 0;

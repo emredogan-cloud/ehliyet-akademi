@@ -119,13 +119,15 @@ türetilir, tutarlı).
 
 ## 5. Asset List (eksik assetler)
 
-Yeni tasarım bazı ekranlarda zengin görsel ister. **Öncelik:** açık lisanslı gerçek görsel →
-OpenAI üretimi → **plan** (`ASSET_GENERATION_PLAN.md`).
+Yeni tasarım bazı ekranlarda zengin görsel ister. Detaylar: `ASSET_GENERATION_PLAN.md`.
 
-> **Kısıt (dürüst):** Program 2 Faz 7'de **OpenAI faturalandırma sert limiti** aşıldı
-> (`billing_hard_limit_reached`). Bu nedenle asset **üretimi şu an bloke**; yaklaşım:
-> tüm görsel ihtiyaçları `ASSET_GENERATION_PLAN.md`'de üretim-hazır prompt'larla planlanır,
-> yerine SVG/mevcut varlık geçici çözümüyle UI çalışır kalır, bütçe açılınca tek komutla üretilir.
+> **OpenAI ASLA geliştirmeyi bloke etmez (kural).** Her görsel ihtiyacında sıra:
+> **(1)** asset zaten varsa → kullan · **(2)** eşdeğer mevcut asset varsa → yeniden kullan ·
+> **(3)** yoksa → **temiz placeholder** (SVG/gradient/skeleton) kullan ve geliştirmeye devam et ·
+> **(4)** OpenAI sonradan uygun olursa → placeholder'ları üretilen asset'lerle değiştir.
+> Program 2 Faz 7'de faturalandırma sert limiti aşılmıştı; bu iş akışı sayesinde uygulama
+> bundan bağımsız ilerler. Tüm assetler `ASSET_GENERATION_PLAN.md`'de üretim-hazır prompt'larla
+> planlıdır; hiçbir ekran asset yüzünden yarım kalmaz.
 
 İhtiyaç duyulan yeni assetler (detay plan dosyada):
 
@@ -138,25 +140,36 @@ OpenAI üretimi → **plan** (`ASSET_GENERATION_PLAN.md`).
 
 ---
 
-## 6. Implementation Order
+## 6. Implementation Order — **COMPONENT-FIRST**
 
-Kabuk-önce, yaprak-sonra (her ekran kendi PNG'siyle doğrulanır):
+Paylaşılan design system **önce** tamamlanır; sayfalar sonra o sisteme geçer. Bu, çift işi
+önler ve her ekranda tutarlılığı garanti eder.
 
-- **Faz A — Design System temeli:** tokenlar (globals.css yeniden yapılandırma, geriye dönük
-  uyumlu alias'larla), `Card`/`Button`/`StatCard`/`ProgressBar`/`Badge` primitifleri, motion util.
-- **Faz B — Kabuk:** `AppShell` + `Sidebar` + `TopBar` (003 referansı) → tüm app sayfalarını etkiler.
-- **Faz C — Landing:** 001/002.
-- **Faz D — Panel:** 003 (dashboard içeriği).
-- **Faz E — Öğren:** dersler(004/005) + dersler/[slug](030/031) + isaretler(006/007) +
-  detay şablonu(008: isaretler/[id] + arac/[id]) + arac + videolar.
-- **Faz F — Pratik:** calis(012) + gorsel-quiz(009) + senaryolar(013/014) +
-  deneme-sinavi(015/016/018/019) + tani(011) + e-sinav(010) + ai-koc(020).
-- **Faz G — İlerleme:** ilerleme(021/022) + calisma-plani(023/024) + basarilar(025) +
-  hazirlik-skorum + arama(026).
-- **Faz H — Hesap:** giris(027) + fiyatlandirma(028) + ayarlar(029) + profil + admin (türetilmiş).
-- **Faz I — Global görsel denetim + kapanış raporu.**
+**Design Tokens → Core UI Components → Layout System → Application Shell → Shared Patterns →
+Individual Pages → Final Polish**
 
-Her faz sonunda: CI (lint/typecheck/test/build/e2e/CodeQL) yeşil + production deploy + tarayıcı QA.
+- **Faz A — Design Tokens:** globals.css yeniden yapılandırma (geriye dönük uyumlu alias'larla);
+  merkezi renk/space/radius/shadow/blur/motion/opacity/font-scale/icon tokenları. Magic-number YOK.
+- **Faz B — Core UI Components:** `components/ui/` primitive katmanı — `Card`, `Button`, `StatCard`,
+  `ProgressBar`/`ProgressRing`, `Badge`, `Chip`, `IconBadge`, `Field/Input`, `Callout` (restyle).
+  Her biri varyant + token temelli; bir kez yazılır, her yerde kullanılır.
+- **Faz C — Layout System:** grid/spacing yardımcıları, sayfa `PageHeader`, iki-kolon/kart-ızgara
+  düzenleri, responsive kırılım yardımcıları.
+- **Faz D — Application Shell:** `AppShell` + `Sidebar` + `TopBar` (003 referansı) → tüm app
+  sayfalarını etkiler; ayrı commit + tam e2e + tarayıcı doğrulaması.
+- **Faz E — Shared Patterns:** `DetailTemplate` (008), `LessonCard`, `ActionCard`, `HeroBanner`,
+  gallery grid + filtre çipleri, sınav/sohbet kabukları, empty/loading/skeleton.
+- **Faz F — Individual Pages:** primitifler + kalıplarla her sayfa (referans PNG'siyle doğrulanır):
+  Landing(001/002) · Panel(003) · Öğren [dersler 004/005, dersler/[slug] 030/031, isaretler
+  006/007, detay şablonu 008 → isaretler/[id]+arac/[id], arac, videolar] · Pratik [calis 012,
+  gorsel-quiz 009, senaryolar 013/014, deneme-sinavi 015/016/018/019, tani 011, e-sinav 010,
+  ai-koc 020] · İlerleme [ilerleme 021/022, calisma-plani 023/024, basarilar 025, hazirlik-skorum,
+  arama 026] · Hesap [giris 027, fiyatlandirma 028, ayarlar 029, profil, admin türetilmiş].
+- **Faz G — Final Polish:** global görsel denetim (eski component/renk/spacing/ikon/typography/motion
+  kalıntısı taraması) + `PROGRAM_3_UI_REPORT.md`.
+
+Her ekran sonunda: build + tarayıcı doğrulaması + responsive + erişilebilirlik + production deploy +
+CI doğrulaması. Her faz sonunda CI (lint/typecheck/test/build/e2e/CodeQL) yeşil.
 
 ---
 

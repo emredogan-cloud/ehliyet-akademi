@@ -68,8 +68,74 @@ _Ehliyet Akademi · 2026-07-16_
 - **Format:** SVG (inline) · **Ekran:** 003 stat kartları, ilerleme halkaları
 - **Üretim:** elde SVG (halka progress, alev/streak, kupa). Geçici: mevcut emoji/`MasteryRadar`.
 
+### A7 · lesson-hero
+
+- **Dosya adı:** `lesson-hero.webp` · **Klasör:** `apps/web/public/assets/ui/` · **Boyut:** 1536×1024
+- **Format:** WebP (şeffaf) · **Transparent:** Evet · **Ekran:** dersler(004/005) + ders detay(030/031) başlık
+- **Prompt:** `Faded night city skyline with a teal-lit road, traffic light and a small car and a warning-sign pole, soft cyan glow, mostly transparent dark background, decorative header illustration.`
+- **Negative:** `text, logo, plate, busy detail` · **Geçici:** SVG silüet (mevcut çizim dili).
+
+### A8 · signs-hero
+
+- **Dosya adı:** `signs-hero.webp` · **Klasör:** `apps/web/public/assets/ui/` · **Boyut:** 1536×1024
+- **Format:** WebP (şeffaf) · **Transparent:** Evet · **Ekran:** isaretler(006/007) başlık
+- **Prompt:** `A cluster of blank glowing road-sign poles (triangle, circle, octagon shapes, no symbols) along a faded teal-lit road at dusk, transparent dark background, decorative.`
+- **Negative:** `text, readable sign symbols, logo, plate` · **Geçici:** `TrafficSign` SVG kompozisyonu.
+
+### A9 · vehicle-hero
+
+- **Dosya adı:** `vehicle-hero.webp` · **Klasör:** `apps/web/public/assets/ui/` · **Boyut:** 1536×1024
+- **Format:** WebP (şeffaf) · **Transparent:** Evet · **Ekran:** arac(+[id]) başlık
+- **Prompt:** `Exploded-style faded illustration of a modern car with subtle cyan highlight lines pointing to engine bay, wheels and cabin, transparent dark background, technical yet clean.`
+- **Negative:** `text, logo, plate, brand` · **Geçici:** mevcut premium araç fotoğrafı.
+
+### A10 · progress-hero
+
+- **Dosya adı:** `progress-hero.webp` · **Klasör:** `apps/web/public/assets/ui/` · **Boyut:** 1536×1024
+- **Format:** WebP (şeffaf) · **Transparent:** Evet · **Ekran:** ilerleme(021/022) + calisma-plani başlık
+- **Prompt:** `Abstract upward-trending glowing teal graph and floating trophy/medal shapes over a dark transparent background, motivational, clean, subtle particles.`
+- **Negative:** `text, logo, people` · **Geçici:** SVG grafik + emoji.
+
+### A11 · aicoach-hero
+
+- **Dosya adı:** `aicoach-hero.webp` · **Klasör:** `apps/web/public/assets/ui/` · **Boyut:** 1536×1024
+- **Format:** WebP (şeffaf) · **Transparent:** Evet · **Ekran:** ai-koc(020) başlık/boş durum
+- **Prompt:** `Friendly rounded robot mascot (purple-blue gradient glow, cyan eyes) beside floating chat bubbles and knowledge cards, transparent dark background, approachable.`
+- **Negative:** `text, human face, weapon, logo` · **Geçici:** A4 avatar + 🤖.
+
+### A12 · premium-banner
+
+- **Dosya adı:** `premium-banner.webp` · **Klasör:** `apps/web/public/assets/ui/` · **Boyut:** 1536×1024
+- **Format:** WebP · **Transparent:** Hayır · **Ekran:** fiyatlandirma(028) + sidebar Premium kartı
+- **Prompt:** `Premium subscription banner: glowing golden crown and shield with soft teal and amber light rays over a deep navy gradient, elegant, no text.`
+- **Negative:** `text, logo, plate, people` · **Geçici:** amber/teal gradient + 👑.
+
+### A13 · empty-illustration
+
+- **Dosya adı:** `empty-illustration.webp` · **Klasör:** `apps/web/public/assets/ui/` · **Boyut:** 1024×1024
+- **Format:** WebP (şeffaf) · **Transparent:** Evet · **Ekran:** tüm boş durumlar (`EmptyState`)
+- **Prompt:** `Minimal friendly illustration of an empty road with a small signpost and a magnifying glass, soft teal accents, transparent dark background, calm.`
+- **Negative:** `text, logo, clutter` · **Geçici:** mevcut `EmptyState` emoji + daire.
+
+### A14 · loading-illustration
+
+- **Dosya adı:** `loading-illustration.webp` · **Klasör:** `apps/web/public/assets/ui/` · **Boyut:** 1024×1024
+- **Format:** WebP (şeffaf) · **Transparent:** Evet · **Ekran:** ağır yükleme durumları
+- **Prompt:** `Minimal loading illustration: a stylized spinning steering wheel or road loop with teal glow, transparent dark background, simple.`
+- **Negative:** `text, logo` · **Geçici:** mevcut `.skeleton` shimmer (yeterli; illüstrasyon opsiyonel).
+
+### A15 · error-404
+
+- **Dosya adı:** `error-404.webp` · **Klasör:** `apps/web/public/assets/ui/` · **Boyut:** 1024×1024
+- **Format:** WebP (şeffaf) · **Transparent:** Evet · **Ekran:** `not-found.tsx` / `error.tsx`
+- **Prompt:** `Friendly 404 illustration: a small car at a dead-end road sign under a starry night, soft teal glow, transparent dark background, no numerals rendered as text.`
+- **Negative:** `readable text, logo, plate` · **Geçici:** SVG çıkmaz-yol işareti + "404" metni koda gömülü.
+
 ## Toplam
 
-- **API-üretimi (bütçe bekliyor):** A1–A4 (4 fotogerçekçi görsel).
+- **API-üretimi (bütçe bekleyen, planlı):** A1–A4, A7–A15 (fotogerçekçi/illüstrasyon hero + görseller).
 - **Elde SVG (bloke değil, hemen yapılabilir):** A5, A6 (ikon + stat sanatı).
-- Üretim hattı hazır; id'ler `catalog.mjs`'e eklendiğinde tek komut yeterli.
+- **KURAL:** Hiçbir asset geliştirmeyi bloke etmez — her ekran mevcut asset / eşdeğer / temiz
+  placeholder ile eksiksiz çalışır; bütçe açılınca id'ler `scripts/assets/catalog.mjs`'e eklenip
+  `node scripts/assets/generate.mjs --only <id...> --quality high` ile tek komutta üretilip
+  placeholder'lar değiştirilir (manifest kimliği = dosya adı → otomatik bağlanır).

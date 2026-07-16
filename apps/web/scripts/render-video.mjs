@@ -8,6 +8,7 @@
  * Not: Sahne markup'ı components/anim/scenes.tsx + globals.css keyframe'lerinin kopyasıdır;
  *      sahneler değişirse burası da güncellenmelidir (test: videolar diskte + boyut makul).
  */
+/* global document */
 import { mkdirSync, rmSync, existsSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 import { resolve, join } from 'node:path';

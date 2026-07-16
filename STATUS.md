@@ -2,7 +2,15 @@
 
 > Tek doğru kaynak: üst dizindeki `ROADMAP.md` (v3.1, Faz 0–35).
 
-_Son güncelleme: 2026-07-16 · PROGRAM 2 · Faz 6 (İşaret Genişletmesi — 121 işaret) tamamlandı — plan: `PROGRAM_2_ROADMAP.md` (9 faz)_
+_Son güncelleme: 2026-07-16 · PROGRAM 2 · Faz 7 (Araç Bilgisi — 70 bileşen) tamamlandı — plan: `PROGRAM_2_ROADMAP.md` (9 faz)_
+
+### Yaptım (PROGRAM 2 · Faz 7 — Araç Bilgisi Genişletmesi) ✅
+
+- **Katalog 34 → 70 bileşen ✅** — 36 yeni bileşen `inspection[]` (2–4 adım) + `mistake` ile; teknik doğruluk denetimli.
+- **33 yeni premium görsel ✅** (insan QC; 1 logo ffmpeg delogo ile temizlendi). OpenAI bütçe limiti 3 görseli engelledi → özgün çizim şeması geri dönüşü (dürüst; tek komutla yeniden üretilebilir).
+- **70 detay sayfası ✅** — `/arac/[id]`: foto/şema + kontrol adımları + hata callout + grounded banka soruları; `/arac` aramalı galeri.
+- **Kapılar ✅** — 178 birim + 60 e2e; CI yeşil; production doğrulandı (0 konsol).
+- Rapor: `PROGRAM_2_PHASE_7_REPORT.md`. Sıradaki: **Faz 8 — Harita & Senaryo**.
 
 ### Yaptım (PROGRAM 2 · Faz 6 — Trafik İşareti Genişletmesi) ✅
 

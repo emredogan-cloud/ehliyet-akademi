@@ -2176,3 +2176,290 @@ table.tbl {
 .scenario-card:hover {
   border-color: var(--primary);
 }
+
+/* ============================================================
+   Program 3 · Faz B — Core UI primitifleri (components/ui/primitives)
+   ============================================================ */
+
+/* Card */
+.ui-card {
+  --card-accent: var(--accent-teal);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-5);
+  color: inherit;
+  text-decoration: none;
+  display: block;
+}
+.ui-card--accent {
+  border-color: color-mix(in srgb, var(--card-accent) 40%, var(--border));
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--card-accent) 9%, var(--surface)),
+    var(--surface) 55%
+  );
+}
+.ui-card--glow {
+  box-shadow:
+    var(--shadow-2),
+    0 0 30px color-mix(in srgb, var(--card-accent) 22%, transparent);
+}
+.ui-card--interactive {
+  transition:
+    transform var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    box-shadow var(--dur-base) var(--ease);
+  cursor: pointer;
+}
+.ui-card--interactive:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--card-accent) 55%, var(--border));
+  box-shadow: var(--shadow-2);
+  text-decoration: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ui-card--interactive:hover {
+    transform: none;
+  }
+}
+
+/* Button */
+.ui-btn {
+  --btn-accent: var(--accent-teal);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  font-weight: 700;
+  font-family: inherit;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    filter var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease);
+  white-space: nowrap;
+}
+.ui-btn--sm {
+  padding: 7px 13px;
+  font-size: var(--fs-sm);
+}
+.ui-btn--md {
+  padding: 11px 20px;
+  font-size: var(--fs-md);
+}
+.ui-btn--lg {
+  padding: 14px 26px;
+  font-size: var(--fs-lg);
+}
+.ui-btn--full {
+  width: 100%;
+}
+.ui-btn:hover {
+  filter: brightness(1.08);
+  text-decoration: none;
+}
+.ui-btn:active {
+  transform: translateY(1px);
+}
+.ui-btn[disabled],
+.ui-btn[aria-disabled='true'] {
+  opacity: 0.5;
+  cursor: default;
+  filter: none;
+}
+.ui-btn--primary {
+  background: linear-gradient(180deg, var(--primary-bright), var(--primary));
+  color: #06231f;
+}
+.ui-btn--ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+.ui-btn--ghost:hover {
+  background: var(--surface-2);
+  filter: none;
+}
+.ui-btn--accent {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--btn-accent) 92%, #fff 8%),
+    var(--btn-accent)
+  );
+  color: #0a1220;
+}
+.ui-btn--soft {
+  background: color-mix(in srgb, var(--btn-accent) 16%, var(--surface));
+  color: var(--btn-accent);
+  border-color: color-mix(in srgb, var(--btn-accent) 30%, transparent);
+}
+
+/* IconBadge */
+.ui-iconbadge {
+  --ib-accent: var(--accent-teal);
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--ib-accent) 16%, var(--surface-2));
+  color: var(--ib-accent);
+  flex: 0 0 auto;
+}
+.ui-iconbadge--sm {
+  width: 34px;
+  height: 34px;
+  font-size: 16px;
+}
+.ui-iconbadge--md {
+  width: 44px;
+  height: 44px;
+  font-size: 20px;
+}
+.ui-iconbadge--lg {
+  width: 56px;
+  height: 56px;
+  font-size: 26px;
+  border-radius: 18px;
+}
+
+/* Badge / Chip */
+.ui-badge {
+  --badge-accent: var(--accent-teal);
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--badge-accent);
+  background: color-mix(in srgb, var(--badge-accent) 15%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--badge-accent) 30%, transparent);
+}
+.ui-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-2);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition:
+    background var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+  font-family: inherit;
+}
+.ui-chip:hover {
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+.ui-chip--active {
+  background: color-mix(in srgb, var(--primary) 18%, var(--surface));
+  color: var(--primary);
+  border-color: color-mix(in srgb, var(--primary) 45%, transparent);
+}
+.ui-chip__count {
+  opacity: 0.75;
+  font-size: var(--fs-xs);
+}
+
+/* StatCard */
+.ui-stat {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+}
+.ui-stat__body {
+  min-width: 0;
+}
+.ui-stat__value {
+  font-size: var(--fs-2xl);
+  font-weight: 800;
+  line-height: 1.05;
+  color: var(--text);
+}
+.ui-stat__label {
+  font-size: var(--fs-sm);
+  color: var(--text-3);
+  margin-top: 2px;
+}
+.ui-stat__chev {
+  margin-left: auto;
+  color: var(--text-3);
+  font-size: 1.4rem;
+}
+
+/* ProgressBar */
+.ui-progress {
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  overflow: hidden;
+}
+.ui-progress__fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--primary), var(--primary-bright));
+  transition: width var(--dur-slow) var(--ease);
+}
+
+/* ProgressRing */
+.ui-ring {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+}
+.ui-ring__label {
+  position: absolute;
+  font-size: var(--fs-sm);
+  font-weight: 800;
+  color: var(--text);
+}
+
+/* Field / Input */
+.ui-field {
+  display: block;
+}
+.ui-field__label {
+  display: block;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-2);
+  margin-bottom: 6px;
+}
+.ui-input {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font: inherit;
+  transition: border-color var(--dur-fast) var(--ease);
+}
+.ui-input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+.ui-input::placeholder {
+  color: var(--text-3);
+}
+.ui-field__hint {
+  display: block;
+  margin-top: 6px;
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+.ui-field__error {
+  display: block;
+  margin-top: 6px;
+  font-size: var(--fs-xs);
+  color: var(--red);
+}

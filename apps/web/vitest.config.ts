@@ -10,7 +10,12 @@ export default defineConfig({
   },
   test: {
     environment: 'node',
-    include: ['lib/**/*.test.ts', 'app/**/*.test.ts', 'content/**/*.test.ts'],
+    include: [
+      'lib/**/*.test.ts',
+      'app/**/*.test.ts',
+      'content/**/*.test.ts',
+      'components/**/*.test.ts',
+    ],
     globals: false,
   },
 });

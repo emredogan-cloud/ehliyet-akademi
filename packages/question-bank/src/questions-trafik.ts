@@ -13,17 +13,24 @@ export const TRAFIK_QUESTIONS: Question[] = [
     subject: 'trafik',
     topic: 'hiz',
     difficulty: 'kolay',
-    stem: 'Yerleşim yeri içinde otomobiller için genel azami hız sınırı kaç km/saattir?',
-    options: ['30', '40', '50', '60'],
-    answerIndex: 2,
-    explanation:
-      'Yerleşim yeri içindeki yollarda otomobiller için genel azami hız 50 km/saattir; ayrı bir levha yoksa bu sınır geçerlidir.',
-    whyWrong: [
-      '30 ve 40 km/s ancak özel levhayla bildirilen daha düşük sınırlardır.',
-      '60 km/s yerleşim yeri içi genel sınırın üzerindedir.',
+    stem: 'Yağışlı, sisli veya buzlanma olan bir yolda sürücü hızını nasıl ayarlamalıdır?',
+    options: [
+      'Yasal hız sınırında sabit olarak devam eder',
+      'Hızını yol ve hava koşullarına göre yasal sınırın da altına düşürür',
+      'Trafiği aksatmamak için hızını artırır',
+      'Yalnızca sisli havada yavaşlar, yağmurda gerek yoktur',
     ],
-    objective: 'Yerleşim yeri içi genel hız sınırını bilmek.',
-    tags: ['hiz-siniri', 'yerlesim-yeri', 'otomobil'],
+    answerIndex: 1,
+    explanation:
+      'Yasal hız sınırı bir tavandır; her koşulda o hızla gidilebileceği anlamına gelmez. Görüşün azaldığı veya yol tutuşunun düştüğü yağışlı, sisli ve buzlu havalarda sürücü hızını koşullara göre azaltmak, gerekirse yasal sınırın çok altına inmek zorundadır.',
+    whyWrong: [
+      'Yasal sınır azami değerdir; kötü koşulda bu hızda gitmek güvenli ve kurallara uygun değildir.',
+      'Hızı artırmak fren ve durma mesafesini uzatarak tehlikeyi büyütür.',
+      'Yağmur da görüşü ve yol tutuşunu azaltır; yavaşlama yalnızca sise özgü değildir.',
+    ],
+    objective:
+      'Kötü hava ve yol koşullarında hızın koşullara göre azaltılması zorunluluğunu kavramak.',
+    tags: ['hiz', 'hava-kosullari', 'yagis-sis'],
     badge: 'official',
     review: 'draft',
     sourceRef: SRC,

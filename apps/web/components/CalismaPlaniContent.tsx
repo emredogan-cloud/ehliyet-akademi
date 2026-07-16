@@ -9,6 +9,7 @@ import { SUBJECT_LABEL, THEORY_SUBJECTS } from '@ea/content-schema';
 import { statsFromAnswers } from '@ea/srs-engine';
 import { loadAnswers, loadCards } from '@/lib/progress';
 import { MasteryRadar, type RadarDatum } from '@/components/MasteryRadar';
+import { PageHeader } from '@/components/ui/layout';
 import {
   buildStudyPlan,
   weakTopics,
@@ -42,10 +43,11 @@ export function CalismaPlaniContent() {
 
   return (
     <>
-      <h1 style={{ margin: '6px 0 4px' }}>Çalışma Planım</h1>
-      <p className="muted" style={{ marginTop: 0 }}>
-        Cevaplarına ve tekrar kartlarına göre uyarlanan sıralı plan — sen çalıştıkça güncellenir.
-      </p>
+      <PageHeader
+        title="Çalışma Planım"
+        emoji="📋"
+        subtitle="Cevaplarına ve tekrar kartlarına göre uyarlanan sıralı plan — sen çalıştıkça güncellenir."
+      />
 
       {!plan ? (
         <div className="grid" aria-busy="true">

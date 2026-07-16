@@ -1940,6 +1940,93 @@ table.tbl {
   }
 }
 
+/* ============================================================
+   Program 2 · Faz 4 — Video öğrenme (ADR-013: self-host, native video)
+   ============================================================ */
+.vplayer {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+}
+.vplayer__video {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #000;
+}
+.vplayer__bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+}
+.vplayer__chapters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.vplayer__tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.vplayer__tools select {
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 3px 6px;
+}
+.vplayer__bm {
+  padding: 5px 10px;
+  font-size: 0.82rem;
+}
+.vplayer__marks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 0 14px 10px;
+}
+.vplayer__transcript {
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+}
+.vplayer__transcript ul {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+.vplayer__transcript button {
+  background: none;
+  border: none;
+  color: var(--text-2);
+  font: inherit;
+  font-size: 0.88rem;
+  text-align: left;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  width: 100%;
+}
+.vplayer__transcript button:hover {
+  background: var(--surface-2);
+}
+.vplayer__cue--on button {
+  background: color-mix(in srgb, var(--primary) 14%, var(--surface));
+  color: var(--text);
+}
+.vplayer__summary {
+  padding: 10px 14px 14px;
+  border-top: 1px solid var(--border);
+}
+
 /* Beliriş (scroll-reveal) hareket sistemi */
 .reveal {
   opacity: 0;

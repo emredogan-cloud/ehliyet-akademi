@@ -17,6 +17,7 @@ const NAV: Array<{ group: string; items: Array<{ href: string; label: string; ic
       { href: '/dersler', label: 'Dersler', icon: '📚' },
       { href: '/isaretler', label: 'Trafik İşaretleri', icon: '🚸' },
       { href: '/arac', label: 'Araç Tanıma', icon: '🚙' },
+      { href: '/videolar', label: 'Video Dersler', icon: '🎬' },
       { href: '/e-sinav', label: 'Teorik e-Sınav', icon: '📝' },
     ],
   },

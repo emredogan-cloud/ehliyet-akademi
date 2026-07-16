@@ -132,6 +132,26 @@ test('eğitsel animasyon: oynat/duraklat + baştan (Program 2 · Faz 3)', async 
   await expect(anim.locator('.animp__steps li')).toHaveCount(4);
 });
 
+test('video öğrenme: oynatıcı + bölümler + yer imi + transkript (Program 2 · Faz 4)', async ({
+  page,
+}) => {
+  await page.goto('/videolar');
+  await expect(page.getByTestId('videolar')).toBeVisible();
+  const player = page.getByTestId('video-parallel-park');
+  await expect(player).toBeVisible();
+  // Bölüm çipleri
+  expect(await player.getByTestId('video-chapter').count()).toBeGreaterThanOrEqual(4);
+  // Transkript + özet
+  await expect(player.getByTestId('video-transcript')).toContainText('direksiyonu sağa kır');
+  await expect(player.getByTestId('video-summary')).toBeVisible();
+  // Yer imi ekle → kalıcı liste görünür
+  await player.getByTestId('video-bookmark').click();
+  await expect(player.getByTestId('video-bookmarks')).toBeVisible();
+  // Planlanan müfredat dürüst rozetli
+  expect(await page.getByTestId('video-planned').count()).toBeGreaterThanOrEqual(3);
+  await expect(page.getByTestId('planned-badge').first()).toHaveText('Çekim planlanıyor');
+});
+
 test('/arac interaktif keşif: hotspot + zoom inceleme (Program 2 · Faz 2)', async ({ page }) => {
   await page.goto('/arac');
   await expect(page.getByTestId('hotspots')).toBeVisible();

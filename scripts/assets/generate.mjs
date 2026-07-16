@@ -100,7 +100,7 @@ async function generateOne(asset, attempt = 1) {
 
 let failed = 0;
 const pending = [...queue];
-async function worker(n) {
+async function worker() {
   while (pending.length) {
     const asset = pending.shift();
     if (!asset) break;
@@ -112,6 +112,6 @@ async function worker(n) {
     }
   }
 }
-await Promise.all(Array.from({ length: Math.min(CONCURRENCY, queue.length) }, (_, i) => worker(i)));
+await Promise.all(Array.from({ length: Math.min(CONCURRENCY, queue.length) }, () => worker()));
 console.log(`bitti: ${queue.length - failed} başarılı, ${failed} hatalı`);
 process.exit(failed ? 1 : 0);

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { ExamSimulator } from '@/components/ExamSimulator';
+import { ExamSimulatorLazy } from '@/components/ExamSimulatorLazy';
 import { ExamJsonLd } from '@/components/JsonLd';
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export default function DenemeSinaviPage() {
         Gerçek sınav formatında simülasyon. Bu bir <em>resmî MEB sınavı değildir</em>.
       </p>
       <ExamJsonLd />
-      <ExamSimulator />
+      <ExamSimulatorLazy />
     </>
   );
 }

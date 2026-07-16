@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { PageHeader } from '@/components/ui/layout';
 
 interface Media {
   id: string;
@@ -57,7 +58,7 @@ export default function AdminMedia() {
   return (
     <div>
       <div className="toolbar">
-        <h1 style={{ margin: 0, marginRight: 'auto' }}>Medya Kütüphanesi</h1>
+        <PageHeader title="Medya Kütüphanesi" emoji="🖼️" />
         <input
           ref={fileRef}
           type="file"

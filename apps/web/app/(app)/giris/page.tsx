@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { login, register, forgotPassword, resetPassword } from '@/lib/authClient';
+import { PageHeader } from '@/components/ui/layout';
 
 type Mode = 'login' | 'register' | 'forgot' | 'reset';
 
@@ -72,10 +73,15 @@ export default function GirisPage() {
 
   return (
     <div style={{ maxWidth: 440, margin: '24px auto' }}>
-      <h1 style={{ margin: '0 0 4px' }}>Hesap</h1>
-      <p className="muted" style={{ marginTop: 0 }}>
-        Hesap; ilerlemeni, seri ve paketlerini <strong>tüm cihazlarında</strong> senkronlar.
-      </p>
+      <PageHeader
+        title="Hesap"
+        emoji="🔑"
+        subtitle={
+          <>
+            Hesap; ilerlemeni, seri ve paketlerini <strong>tüm cihazlarında</strong> senkronlar.
+          </>
+        }
+      />
 
       <div style={{ display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
         <Tab m="login" label="Giriş" />

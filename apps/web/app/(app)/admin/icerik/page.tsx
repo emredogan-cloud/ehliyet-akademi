@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { PageHeader } from '@/components/ui/layout';
 
 interface Row {
   id: string;
@@ -70,7 +71,7 @@ export default function AdminContent() {
   return (
     <div>
       <div className="toolbar">
-        <h1 style={{ margin: 0, marginRight: 'auto' }}>İçerik</h1>
+        <PageHeader title="İçerik" emoji="📝" />
         <button
           className="btn"
           onClick={quickCreateArticle}

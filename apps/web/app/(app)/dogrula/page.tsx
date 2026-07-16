@@ -2,6 +2,7 @@
 
 /** E-posta doğrulama iniş sayfası (Sprint 4) — e-postadaki bağlantı buraya gelir. */
 import { useEffect, useState } from 'react';
+import { PageHeader } from '@/components/ui/layout';
 
 export default function DogrulaPage() {
   const [status, setStatus] = useState<'loading' | 'ok' | 'error'>('loading');
@@ -30,8 +31,11 @@ export default function DogrulaPage() {
             <div style={{ fontSize: '2rem' }} aria-hidden>
               ✅
             </div>
-            <h1 style={{ margin: '8px 0' }}>E-postan doğrulandı</h1>
-            <p className="muted">Teşekkürler! Hesabın artık tam etkin.</p>
+            <PageHeader
+              title="E-postan doğrulandı"
+              emoji="✉️"
+              subtitle="Teşekkürler! Hesabın artık tam etkin."
+            />
             <a className="btn" href="/panel">
               Panele git
             </a>
@@ -42,11 +46,11 @@ export default function DogrulaPage() {
             <div style={{ fontSize: '2rem' }} aria-hidden>
               ⚠️
             </div>
-            <h1 style={{ margin: '8px 0' }}>Bağlantı geçersiz</h1>
-            <p className="muted">
-              Doğrulama bağlantısı geçersiz veya süresi dolmuş. Profilinden yeni bir bağlantı
-              isteyebilirsin.
-            </p>
+            <PageHeader
+              title="Bağlantı geçersiz"
+              emoji="✉️"
+              subtitle="Doğrulama bağlantısı geçersiz veya süresi dolmuş. Profilinden yeni bir bağlantı isteyebilirsin."
+            />
             <a className="btn btn--ghost" href="/profil">
               Profilim
             </a>

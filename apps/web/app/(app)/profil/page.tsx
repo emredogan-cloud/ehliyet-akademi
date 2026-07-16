@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { me, logout, restorePurchases, type AuthUser } from '@/lib/authClient';
 import { PRODUCTS } from '@/lib/products';
+import { PageHeader } from '@/components/ui/layout';
 
 export default function ProfilPage() {
   const router = useRouter();
@@ -40,7 +41,7 @@ export default function ProfilPage() {
   if (!user) {
     return (
       <div className="card" style={{ maxWidth: 500 }} data-testid="profile-guest">
-        <h1 style={{ marginTop: 0 }}>Profil</h1>
+        <PageHeader title="Profil" emoji="👤" />
         <p>Bu sayfa hesap gerektirir. Giriş yap — ilerlemen tüm cihazlarında seninle gelsin.</p>
         <a className="btn" href="/giris" data-testid="go-login">
           Giriş yap / Kayıt ol
@@ -51,10 +52,7 @@ export default function ProfilPage() {
 
   return (
     <div style={{ maxWidth: 560 }} data-testid="profile">
-      <h1 style={{ margin: '0 0 4px' }}>Profil</h1>
-      <p className="muted" style={{ marginTop: 0 }}>
-        Hesabın ve kalıcı satın almaların.
-      </p>
+      <PageHeader title="Profil" emoji="👤" subtitle="Hesabın ve kalıcı satın almaların." />
 
       <div className="card" style={{ marginBottom: 14 }}>
         <p style={{ margin: 0 }}>

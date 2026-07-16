@@ -4,6 +4,7 @@ import { vehiclePartById, SYSTEM_LABEL } from '@/content/vehicle';
 import { allPartIds, questionsForPart } from '@/content/vehicle-extras';
 import { AssetImage } from '@/components/ui/AssetImage';
 import { VehicleFigure, VEHICLE_PART_IDS } from '@/components/vehicle/VehicleFigure';
+import { Breadcrumb } from '@/components/ui/patterns';
 
 export function generateStaticParams() {
   return allPartIds().map((id) => ({ id }));
@@ -31,10 +32,16 @@ export default async function PartDetailPage({ params }: { params: Promise<{ id:
 
   return (
     <article style={{ maxWidth: 720, margin: '0 auto' }} data-testid="part-detail">
-      <p className="muted" style={{ marginBottom: 4 }}>
-        Araç Tanıma · {SYSTEM_LABEL[part.system]}
-      </p>
-      <h1 style={{ margin: '0 0 14px' }}>{part.name}</h1>
+      <Breadcrumb
+        items={[
+          { label: 'Araç Tanıma', href: '/arac' },
+          { label: SYSTEM_LABEL[part.system] },
+          { label: part.name },
+        ]}
+      />
+      <h1 className="page-head__title" style={{ margin: '2px 0 16px', fontSize: 'var(--fs-2xl)' }}>
+        {part.name}
+      </h1>
 
       {part.photo && (
         <AssetImage assetId={part.photo} priority sizes="(max-width: 760px) 100vw, 680px" />

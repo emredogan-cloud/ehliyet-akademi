@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import { PageHeader } from '@/components/ui/layout';
 
 interface U {
   id: string;
@@ -43,10 +44,11 @@ export default function AdminUsers() {
 
   return (
     <div>
-      <h1 style={{ margin: '0 0 4px' }}>Kullanıcılar</h1>
-      <p className="muted" style={{ marginTop: 0 }}>
-        Rol yönetimi (user / editor / admin). Kendi admin yetkini düşüremezsin.
-      </p>
+      <PageHeader
+        title="Kullanıcılar"
+        emoji="👥"
+        subtitle="Rol yönetimi (user / editor / admin). Kendi admin yetkini düşüremezsin."
+      />
       {msg && (
         <div className="explain" role="status">
           {msg}

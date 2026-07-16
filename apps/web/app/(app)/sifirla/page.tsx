@@ -3,6 +3,7 @@
 /** Parola sıfırlama iniş sayfası (Sprint 4) — e-postadaki bağlantı buraya gelir. */
 import { useEffect, useState } from 'react';
 import { resetPassword } from '@/lib/authClient';
+import { PageHeader } from '@/components/ui/layout';
 
 export default function SifirlaPage() {
   const [token, setToken] = useState('');
@@ -28,7 +29,7 @@ export default function SifirlaPage() {
   return (
     <div style={{ maxWidth: 420, margin: '32px auto' }}>
       <div className="card" data-testid="reset-page">
-        <h1 style={{ marginTop: 0 }}>Parolanı sıfırla</h1>
+        <PageHeader title="Parolanı sıfırla" emoji="♻️" />
         {done ? (
           <>
             <p className="muted">Parolan güncellendi. Yeni parolanla giriş yapabilirsin.</p>

@@ -12,6 +12,7 @@ import { LessonViewTracker } from '@/components/LessonViewTracker';
 import { Callout } from '@/components/ui/Callout';
 import { CompareTable } from '@/components/ui/CompareTable';
 import { LessonPhotos } from '@/components/LessonPhotos';
+import { Breadcrumb } from '@/components/ui/patterns';
 import { LessonInteractive } from '@/components/media/LessonInteractive';
 import { LessonAnimations } from '@/components/anim/LessonAnimations';
 import type { ReactNode } from 'react';
@@ -62,9 +63,13 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
     <article style={{ maxWidth: 760, margin: '0 auto' }}>
       <LessonJsonLd lesson={lesson} />
       <LessonViewTracker slug={lesson.slug} premium={lesson.premium} />
-      <p className="muted" style={{ marginBottom: 4 }}>
-        {SUBJECT_LABEL[lesson.subject]} · {lesson.minutes} dk okuma
-      </p>
+      <Breadcrumb
+        items={[
+          { label: 'Dersler', href: '/dersler' },
+          { label: SUBJECT_LABEL[lesson.subject] },
+          { label: `${lesson.minutes} dk okuma` },
+        ]}
+      />
       <h1
         style={{
           margin: '0 0 10px',

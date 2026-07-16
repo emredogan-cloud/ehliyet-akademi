@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { signById, CATEGORY_LABEL } from '@/content/signs';
 import { allSignIds, confusionsFor, questionsForSign } from '@/content/sign-extras';
 import { TrafficSign } from '@/components/signs/TrafficSign';
+import { Breadcrumb } from '@/components/ui/patterns';
 
 export function generateStaticParams() {
   return allSignIds().map((id) => ({ id }));
@@ -29,10 +30,16 @@ export default async function SignDetailPage({ params }: { params: Promise<{ id:
 
   return (
     <article style={{ maxWidth: 720, margin: '0 auto' }} data-testid="sign-detail">
-      <p className="muted" style={{ marginBottom: 4 }}>
-        Trafik İşaretleri · {CATEGORY_LABEL[sign.category]}
-      </p>
-      <h1 style={{ margin: '0 0 14px' }}>{sign.name}</h1>
+      <Breadcrumb
+        items={[
+          { label: 'Trafik İşaretleri', href: '/isaretler' },
+          { label: CATEGORY_LABEL[sign.category] },
+          { label: sign.name },
+        ]}
+      />
+      <h1 className="page-head__title" style={{ margin: '2px 0 16px', fontSize: 'var(--fs-2xl)' }}>
+        {sign.name}
+      </h1>
 
       <div
         className="card"

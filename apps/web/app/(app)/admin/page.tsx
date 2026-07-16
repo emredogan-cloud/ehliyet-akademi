@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { PageHeader } from '@/components/ui/layout';
 
 interface Stats {
   content: number;
@@ -22,10 +23,11 @@ export default function AdminHome() {
 
   return (
     <div>
-      <h1 style={{ margin: '0 0 4px' }}>Yönetim — Genel Bakış</h1>
-      <p className="muted" style={{ marginTop: 0 }}>
-        İçerik hattı, medya ve kullanıcıların özeti.
-      </p>
+      <PageHeader
+        title="Yönetim — Genel Bakış"
+        emoji="🛠️"
+        subtitle="İçerik hattı, medya ve kullanıcıların özeti."
+      />
       {err && (
         <div className="explain" role="alert">
           {err}

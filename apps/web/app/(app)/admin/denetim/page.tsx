@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { PageHeader } from '@/components/ui/layout';
 
 interface Log {
   id: string;
@@ -22,10 +23,11 @@ export default function AdminAudit() {
 
   return (
     <div>
-      <h1 style={{ margin: '0 0 4px' }}>Denetim Kaydı</h1>
-      <p className="muted" style={{ marginTop: 0 }}>
-        Tüm ayrıcalıklı işlemlerin değiştirilemez izi (ROADMAP Faz 25/30).
-      </p>
+      <PageHeader
+        title="Denetim Kaydı"
+        emoji="🔍"
+        subtitle="Tüm ayrıcalıklı işlemlerin değiştirilemez izi (ROADMAP Faz 25/30)."
+      />
       {!rows ? (
         <div className="skeleton" style={{ height: 200 }} />
       ) : rows.length === 0 ? (

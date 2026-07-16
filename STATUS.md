@@ -2,7 +2,15 @@
 
 > Tek doğru kaynak: üst dizindeki `ROADMAP.md` (v3.1, Faz 0–35).
 
-_Son güncelleme: 2026-07-16 · PROGRAM 2 · Faz 3 (Hareket & Animasyon) tamamlandı — plan: `PROGRAM_2_ROADMAP.md` (9 faz)_
+_Son güncelleme: 2026-07-16 · PROGRAM 2 · Faz 4 (Video Öğrenme) tamamlandı — plan: `PROGRAM_2_ROADMAP.md` (9 faz)_
+
+### Yaptım (PROGRAM 2 · Faz 4 — Video Öğrenme) ✅
+
+- **ADR-013 ✅** — self-host native video (3P istek yok, CSP değişmedi); MP4+WebM çift kodek; Mux ölçek yolu belgeli.
+- **Özgün video hattı ✅** — animasyon sahneleri → Playwright kare yakalama → ffmpeg; 2 video (paralel park, sağdan gelen) + poster + TR WebVTT.
+- **Oynatıcı ✅** — bölüm atlama, senkron transkript, yer imleri (localStorage), hız, klavye; `/videolar` + kenar çubuğu; planlanan çekimler dürüst rozetli.
+- **Kapılar ✅** — 162 birim + 56 e2e; CI yeşil (2 çakışma düzeltildi); production canlı doğrulandı (0 konsol).
+- Rapor: `PROGRAM_2_PHASE_4_REPORT.md`. Sıradaki: **Faz 5 — AI Görsel Öğrenme**.
 
 ### Yaptım (PROGRAM 2 · Faz 3 — Hareket & Animasyon) ✅
 

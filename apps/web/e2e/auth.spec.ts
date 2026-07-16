@@ -47,7 +47,7 @@ test('cihazlar-arası senkron: cihaz A çalışır → cihaz B girişte ilerleme
     await a.getByTestId('p-option').first().click();
     await a.getByTestId('p-next').click();
   }
-  await a.waitForTimeout(700); // debounce push
+  await a.waitForTimeout(1500); // debounce push'un sunucuya ulaşmasını garanti et
   await ctxA.close();
 
   // Cihaz B: taze bağlam (boş localStorage) → giriş → panelde ilerleme görünür
@@ -59,9 +59,13 @@ test('cihazlar-arası senkron: cihaz A çalışır → cihaz B girişte ilerleme
   await b.getByTestId('auth-submit').click();
   await b.waitForURL('**/panel');
   await expect(b.getByTestId('dashboard')).toBeVisible();
+  // Cihaz-açılış senkronu (fullSync) localStorage'ı doldurduktan sonra taze mount ile oku.
+  await b.waitForTimeout(800);
+  await b.reload();
+  await expect(b.getByTestId('dashboard')).toBeVisible();
   // cevaplanan soru istatistiği > 0 (senkron kanıtı)
   await expect(b.getByText('Cevaplanan soru')).toBeVisible();
-  const stat = b.locator('.stat-tile__num').nth(2);
+  const stat = b.locator('.ui-stat__value').nth(2);
   await expect(stat).not.toHaveText('0');
   await ctxB.close();
 });

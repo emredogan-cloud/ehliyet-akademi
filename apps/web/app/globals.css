@@ -3263,3 +3263,22 @@ table.tbl {
     display: none;
   }
 }
+
+/* Program 3 · Faz F — Arama kutusu (ikon + input); referans 006 arama alanı */
+.search-box {
+  position: relative;
+  margin: var(--sp-2) 0 var(--sp-4);
+  max-width: 640px;
+}
+.search-box__icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-3);
+  pointer-events: none;
+}
+.search-box__input {
+  padding-left: 42px;
+  height: 48px;
+}

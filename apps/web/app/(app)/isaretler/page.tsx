@@ -1,8 +1,8 @@
 'use client';
 
 /**
- * Trafik İşaretleri Galerisi (Program 1 · Görsel Dönüşüm) — özgün SVG işaret sistemi.
- * Kategori filtresi + arama + flip-kart öğrenme modu (ön: görsel, arka: anlam).
+ * Trafik İşaretleri Galerisi (Program 3 · Faz F, referans 006-işaretler):
+ * PageHeader + arama kutusu + kategori Chip filtresi + flip-kart işaret ızgarası.
  */
 import { useMemo, useState } from 'react';
 import {
@@ -15,6 +15,9 @@ import {
 } from '@/content/signs';
 import { TrafficSign as SignSvg } from '@/components/signs/TrafficSign';
 import { EmptyState } from '@/components/ui/EmptyState';
+import { PageHeader } from '@/components/ui/layout';
+import { Chip } from '@/components/ui/primitives';
+import { Icon } from '@/components/ui/icons';
 
 const CATS: Array<SignCategory | 'all'> = [
   'all',
@@ -84,34 +87,31 @@ export default function IsaretlerPage() {
 
   return (
     <>
-      <h1 style={{ margin: '6px 0 4px' }}>Trafik İşaretleri</h1>
-      <p className="muted" style={{ marginTop: 0 }}>
-        {SIGNS.length} özgün işaret. Karta dokun → anlamını gör. Kategoriye göre süz veya ara.
-      </p>
+      <PageHeader
+        title="Trafik İşaretleri"
+        emoji="🚸"
+        subtitle={`${SIGNS.length} özgün işaret. Karta dokun → anlamını gör. Kategoriye göre süz veya ara.`}
+      />
 
-      <div className="toolbar" style={{ marginTop: 12 }}>
+      <div className="search-box">
+        <span className="search-box__icon" aria-hidden>
+          <Icon name="search" size={20} />
+        </span>
         <input
+          className="ui-input search-box__input"
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="İşaret ara… (örn. hız, viraj, dur, park)"
           aria-label="İşaret ara"
           data-testid="sign-search"
-          style={{ minWidth: 240, flex: 1 }}
         />
       </div>
 
-      <div className="chip-row" role="tablist" aria-label="Kategori">
+      <div className="chip-row" role="group" aria-label="Kategori">
         {CATS.map((c) => (
-          <button
-            key={c}
-            className={`chip ${cat === c ? 'chip--on' : ''}`}
-            onClick={() => setCat(c)}
-            data-testid={`cat-${c}`}
-            role="tab"
-            aria-selected={cat === c}
-          >
+          <Chip key={c} active={cat === c} onClick={() => setCat(c)} data-testid={`cat-${c}`}>
             {c === 'all' ? `Tümü (${SIGNS.length})` : `${CATEGORY_LABEL[c]} (${counts[c] ?? 0})`}
-          </button>
+          </Chip>
         ))}
       </div>
 

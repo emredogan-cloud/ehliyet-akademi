@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { partsBySystem, SYSTEM_LABEL, VEHICLE_PARTS, type VehicleSystem } from '@/content/vehicle';
 import { VehicleFigure, VEHICLE_PART_IDS } from '@/components/vehicle/VehicleFigure';
 import { AssetImage } from '@/components/ui/AssetImage';
+import { Hotspots } from '@/components/media/Hotspots';
+import { ZoomImage } from '@/components/media/ZoomImage';
 
 export const metadata: Metadata = {
   title: 'Araç Tanıma',
@@ -21,6 +23,19 @@ export default function AracPage() {
         {VEHICLE_PARTS.length} bileşen — direksiyon sınavı ve araç tekniği için premium fotoğraflı
         rehber. Her kart bileşenin görevini ve pratik ipucunu içerir.
       </p>
+
+      <section style={{ margin: '22px 0' }}>
+        <h2 className="section-title" style={{ marginTop: 0 }}>
+          İnteraktif keşif
+        </h2>
+        <div className="lesson-interactive" style={{ margin: 0 }}>
+          <Hotspots sceneId="engine-bay-tour" />
+          <ZoomImage
+            assetId="fuse-box"
+            caption="Sigorta kutusunu yakınlaştırarak incele — renkler amper değerini gösterir."
+          />
+        </div>
+      </section>
 
       {ORDER.map((sys) => (
         <section key={sys} style={{ marginTop: 26 }}>

@@ -163,6 +163,11 @@ export const VISUAL_ASSETS: VisualAsset[] = [
   asset('handbrake', 'El Freni', 'Orta konsoldaki el freni kolu', ['kabin', 'kumanda', 'fren']),
   // Dış & lastikler
   asset('tyre', 'Lastik', 'Lastik diş derinliği ve yanak yakın görünümü', ['dis', 'lastik']),
+  asset('tyre-worn', 'Aşınmış Lastik', 'Diş derinliği azalmış, aşınmış lastik yakın görünümü', [
+    'dis',
+    'lastik',
+    'guvenlik',
+  ]),
   asset('wheel-bolts', 'Bijonlar', 'Bijon anahtarıyla sökülen tekerlek bijonları', [
     'dis',
     'lastik',

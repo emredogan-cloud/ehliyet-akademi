@@ -79,3 +79,48 @@ test('ders sayfası premium foto şeridi (Program 2 · Faz 1)', async ({ page })
   await expect(strip).toBeVisible();
   expect(await strip.getByTestId('asset-image').count()).toBeGreaterThanOrEqual(3);
 });
+
+test('etkileşimli hotspot turu: aç/kapa + klavye (Program 2 · Faz 2)', async ({ page }) => {
+  await page.goto('/dersler/motor-temel');
+  const hotspots = page.getByTestId('hotspots');
+  await hotspots.scrollIntoViewIfNeeded();
+  await expect(hotspots).toBeVisible();
+  // Nokta tıkla → açıklama balonu açılır
+  await page.getByTestId('hotspot-0').click();
+  const pop = page.getByTestId('hotspot-pop');
+  await expect(pop).toBeVisible();
+  await expect(pop).toContainText('Soğutma Suyu');
+  // Escape kapatır (klavye erişilebilirliği)
+  await page.keyboard.press('Escape');
+  await expect(pop).not.toBeVisible();
+});
+
+test('adım akışı + karşılaştırma kaydırıcısı (Program 2 · Faz 2)', async ({ page }) => {
+  await page.goto('/dersler/arac-hazirlik');
+  // Adım akışı: ileri git → ilerleme değişir
+  const flow = page.getByTestId('stepflow');
+  await flow.scrollIntoViewIfNeeded();
+  await expect(flow).toBeVisible();
+  await expect(page.getByTestId('stepflow-progress')).toHaveText('1 / 7');
+  await page.getByTestId('stepflow-next').click();
+  await expect(page.getByTestId('stepflow-progress')).toHaveText('2 / 7');
+  await expect(page.getByTestId('stepflow-title')).toContainText('Lastikler');
+  // Karşılaştırma kaydırıcısı: range klavye/fill ile hareket eder
+  const range = page.getByTestId('compare-range');
+  await range.scrollIntoViewIfNeeded();
+  await range.fill('20');
+  await expect(range).toHaveValue('20');
+  await expect(page.getByTestId('compare-slider')).toContainText('1,6 mm');
+});
+
+test('/arac interaktif keşif: hotspot + zoom inceleme (Program 2 · Faz 2)', async ({ page }) => {
+  await page.goto('/arac');
+  await expect(page.getByTestId('hotspots')).toBeVisible();
+  // Zoom aç → overlay; kapat → kaybolur
+  const opener = page.getByTestId('zoom-open');
+  await opener.scrollIntoViewIfNeeded();
+  await opener.click();
+  await expect(page.getByTestId('zoom-overlay')).toBeVisible();
+  await page.getByTestId('zoom-close').click();
+  await expect(page.getByTestId('zoom-overlay')).not.toBeVisible();
+});

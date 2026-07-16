@@ -208,6 +208,13 @@ export const ASSETS = [
     prompt: `Close-up of a car tyre showing tread depth grooves and sidewall, wheel arch above, daylight. ${STYLE}`,
   },
   {
+    id: 'tyre-worn',
+    title: 'Aşınmış Lastik',
+    alt: 'Diş derinliği azalmış, aşınmış lastik yakın görünümü',
+    tags: ['dis', 'lastik', 'guvenlik'],
+    prompt: `Close-up of a badly worn car tyre with shallow tread grooves nearly smooth in the center band, same angle and framing as a standard tyre tread close-up: tyre and sidewall filling the frame, wheel arch above, daylight. ${STYLE}`,
+  },
+  {
     id: 'wheel-bolts',
     title: 'Bijonlar',
     alt: 'Bijon anahtarıyla sökülen tekerlek bijonları',

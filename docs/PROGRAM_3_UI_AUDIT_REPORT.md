@@ -31,17 +31,17 @@ tutarlılığı açısından ayrıca gözden geçirildi.
 
 ## 3. Uygulanan Değişiklikler (10 commit, hepsi CI-yeşil)
 
-| Commit | Kapsam |
-| --- | --- |
+| Commit    | Kapsam                                                                                                                                                |
+| --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `536152f` | Landing tam taşıma (001/002): kalkan-marka topbar + teal Giriş Yap, koyu hero, stepper, dağılım kartları, güven kartları, CTA bandı, 4 sütunlu footer |
-| `64cab4f` | Ortak quiz kabuğu (`ui/quiz.tsx`: QuizLayout/QuizPanel/DonutStat/QuizNav/HintCard) + `/tani` (011) + `/calis` (012) |
-| `cd547a9` | `/gorsel-quiz` (009) + `/e-sinav` merkezi (010, gerçek kullanıcı verisiyle ray) |
-| `05f39a6` | Deneme sınavı 4 durum (015/016/018/019): illüstrasyonlu giriş, timer barı + navigatör, kazandın/kaldın kahraman sonuç + konu donutları |
-| `ea95472` | `/ai-koc` (020), `/basarilar` (025), `/arama` (026), `/fiyatlandirma` (028 — öne çıkan Komple B + 4 gerçek paket), `/ayarlar` (029) |
-| `29fc2b4` | `/giris` (027 iki sütun auth), `/ilerleme` (021/022), `/calisma-plani` (023/024), ders detayı rayı + PrevNext + AI bandı (030/031) |
-| `1f210ff` | Senaryolar cilası (013), dersler kupa CTA bandı (005), topbar gerçek seri çipi |
-| `4665d43` | Üretilmiş varlıkların bağlanması (aşağıda §5) |
-| + | `ASSET_PROMPT_LIBRARY.md` düzeltmeleri + bu raporlar |
+| `64cab4f` | Ortak quiz kabuğu (`ui/quiz.tsx`: QuizLayout/QuizPanel/DonutStat/QuizNav/HintCard) + `/tani` (011) + `/calis` (012)                                   |
+| `cd547a9` | `/gorsel-quiz` (009) + `/e-sinav` merkezi (010, gerçek kullanıcı verisiyle ray)                                                                       |
+| `05f39a6` | Deneme sınavı 4 durum (015/016/018/019): illüstrasyonlu giriş, timer barı + navigatör, kazandın/kaldın kahraman sonuç + konu donutları                |
+| `ea95472` | `/ai-koc` (020), `/basarilar` (025), `/arama` (026), `/fiyatlandirma` (028 — öne çıkan Komple B + 4 gerçek paket), `/ayarlar` (029)                   |
+| `29fc2b4` | `/giris` (027 iki sütun auth), `/ilerleme` (021/022), `/calisma-plani` (023/024), ders detayı rayı + PrevNext + AI bandı (030/031)                    |
+| `1f210ff` | Senaryolar cilası (013), dersler kupa CTA bandı (005), topbar gerçek seri çipi                                                                        |
+| `4665d43` | Üretilmiş varlıkların bağlanması (aşağıda §5)                                                                                                         |
+| +         | `ASSET_PROMPT_LIBRARY.md` düzeltmeleri + bu raporlar                                                                                                  |
 
 Kurallara uyum: **iş mantığı değişmedi** (sınav kotası/puanlama, SRS, satın alma,
 auth, ayarlar handler'ları bire bir korundu); **tüm data-testid'ler ve e2e metin

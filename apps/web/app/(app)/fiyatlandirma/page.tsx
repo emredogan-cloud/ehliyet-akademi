@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import { Pricing } from '@/components/Pricing';
 import { PageHeader } from '@/components/ui/layout';
+import { PricingView } from './PricingView';
 
 export const metadata: Metadata = {
   title: 'Fiyatlandırma — Bir Kez Öde, Ömür Boyu',
@@ -13,15 +13,14 @@ export default function FiyatlandirmaPage() {
     <>
       <PageHeader
         title="Fiyatlandırma"
-        emoji="⭐"
         subtitle={
           <>
-            <strong>Abonelik yok.</strong> Bir kez öde, paket ömür boyu senin. Ücretsiz kademe: tanı
+            <strong>Abonelik yok.</strong> Tek ödeme, ömür boyu erişim. Ücretsiz kademe: tanı
             denemesi + günde 1 deneme sınavı + SRS pratiği.
           </>
         }
       />
-      <Pricing />
+      <PricingView />
     </>
   );
 }

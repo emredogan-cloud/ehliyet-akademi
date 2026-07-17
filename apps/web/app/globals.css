@@ -4112,3 +4112,72 @@ table.tbl {
   font-size: var(--fs-sm);
   margin-bottom: 4px;
 }
+
+/* AI Koç (ref 020) */
+.coach-hero {
+  align-items: flex-start;
+}
+.coach-hero__bot {
+  font-size: 2.6rem;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--accent-purple) 18%, var(--surface-2));
+  flex: 0 0 auto;
+}
+.coach-hero__src {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--sp-3);
+  --tag-accent: var(--primary);
+}
+.coach-samples {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--sp-2);
+}
+.coach-sample {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--fs-sm);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease);
+}
+.coach-sample:hover {
+  border-color: var(--primary);
+  background: var(--surface-3);
+}
+.coach-sample__ic {
+  color: var(--primary);
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+.coach-form {
+  display: flex;
+  gap: var(--sp-2);
+  margin-top: var(--sp-4);
+}
+.coach-form .ui-input {
+  flex: 1;
+}
+.coach-lock {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-xs);
+  margin: 8px 0 0;
+}

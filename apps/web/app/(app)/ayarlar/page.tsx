@@ -1,16 +1,61 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { syncSet, me, restorePurchases, type AuthUser } from '@/lib/authClient';
 import { CONSENT_KEY, readConsent, type Consent } from '@/components/CookieConsent';
-import { PageHeader } from '@/components/ui/layout';
+import { PageHeader, Grid } from '@/components/ui/layout';
+import { Card, Button, IconBadge, Chip, type Accent } from '@/components/ui/primitives';
+import { QuizLayout, QuizPanel, InfoRow } from '@/components/ui/quiz';
+import { Icon, type IconName } from '@/components/ui/icons';
 
 type Theme = 'auto' | 'light' | 'dark';
 const THEME_KEY = 'ea:theme';
 
+const THEME_LABEL: Record<Theme, string> = { auto: 'Sistem', light: 'Açık', dark: 'Koyu' };
+const THEME_ICON: Record<Theme, IconName> = { auto: 'gear', light: 'sun', dark: 'moon' };
+
+const LEGAL_LINKS = [
+  { href: '/gizlilik', label: 'Gizlilik Politikası' },
+  { href: '/kullanim-kosullari', label: 'Kullanım Koşulları' },
+  { href: '/cerez-politikasi', label: 'Çerez Politikası' },
+  { href: '/kvkk', label: 'KVKK Aydınlatma Metni' },
+];
+
 function applyTheme(t: Theme) {
   if (t === 'auto') document.documentElement.removeAttribute('data-theme');
   else document.documentElement.setAttribute('data-theme', t);
+}
+
+/** Ref 029 bölüm kartı: renkli ikon rozeti + başlık + açıklama + içerik. */
+function SectionCard({
+  icon,
+  accent,
+  title,
+  sub,
+  children,
+}: {
+  icon: IconName;
+  accent: Accent;
+  title: string;
+  sub?: string;
+  children: ReactNode;
+}) {
+  return (
+    <Card accent={accent} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sp-3)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--sp-3)' }}>
+        <IconBadge accent={accent} size="md">
+          <Icon name={icon} size={20} />
+        </IconBadge>
+        <div>
+          <h3 style={{ margin: 0, fontSize: 'var(--fs-md)' }}>{title}</h3>
+          {sub && (
+            <p style={{ margin: 0, color: 'var(--text-3)', fontSize: 'var(--fs-xs)' }}>{sub}</p>
+          )}
+        </div>
+      </div>
+      {children}
+    </Card>
+  );
 }
 
 export default function AyarlarPage() {
@@ -137,23 +182,14 @@ export default function AyarlarPage() {
     setNote(analytics ? 'Analitik çerezleri açıldı.' : 'Analitik çerezleri kapatıldı.');
   }
 
-  const Btn = ({ v, label }: { v: Theme; label: string }) => (
-    <button
-      className={`btn ${theme === v ? '' : 'btn--ghost'}`}
-      onClick={() => choose(v)}
-      aria-pressed={theme === v}
-      data-testid={`theme-${v}`}
-    >
-      {label}
-    </button>
-  );
+  const themeChoices: Theme[] = ['auto', 'light', 'dark'];
 
   return (
     <>
       <PageHeader
         title="Ayarlar"
         emoji="⚙️"
-        subtitle="Tema, verilerin, hesabın ve gizlilik tercihlerin."
+        subtitle="Hesabını, öğrenme deneyimini ve uygulama tercihlerini yönet."
       />
 
       {note && (
@@ -162,115 +198,182 @@ export default function AyarlarPage() {
         </p>
       )}
 
-      <div className="card" style={{ marginBottom: 16 }}>
-        <h3 style={{ marginTop: 0 }}>Tema</h3>
-        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-          <Btn v="auto" label="🖥️ Sistem" />
-          <Btn v="light" label="☀️ Açık" />
-          <Btn v="dark" label="🌙 Koyu" />
-        </div>
-      </div>
+      <QuizLayout
+        main={
+          <Grid min="260px">
+            <SectionCard icon="sun" accent="amber" title="Görünüm" sub="Uygulamanın temasını seç.">
+              <div style={{ display: 'flex', gap: 'var(--sp-2)', flexWrap: 'wrap' }}>
+                {themeChoices.map((t) => (
+                  <Chip
+                    key={t}
+                    active={theme === t}
+                    onClick={() => choose(t)}
+                    data-testid={`theme-${t}`}
+                  >
+                    <Icon name={THEME_ICON[t]} size={15} /> {THEME_LABEL[t]}
+                  </Chip>
+                ))}
+              </div>
+            </SectionCard>
 
-      <div className="card" style={{ marginBottom: 16 }}>
-        <h3 style={{ marginTop: 0 }}>Verilerim</h3>
-        <p className="muted">
-          İlerleme, SRS kartları, seri ve paketler tarayıcında saklanır; girişliysen sunucuyla
-          senkronlanır.
-        </p>
-        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-          <button className="btn btn--ghost" onClick={exportData} data-testid="export-data">
-            ⬇️ Dışa aktar (JSON)
-          </button>
-          <button
-            className="btn"
-            style={{ background: 'var(--red)' }}
-            onClick={resetData}
-            data-testid="reset-data"
-          >
-            🗑️ Bu cihazı sıfırla
-          </button>
-        </div>
-      </div>
+            <SectionCard
+              icon="book"
+              accent="blue"
+              title="Öğrenme Verileri"
+              sub="Verilerini yönet ve yedekle."
+            >
+              <p style={{ margin: 0, color: 'var(--text-2)', fontSize: 'var(--fs-sm)' }}>
+                İlerleme, SRS kartları, seri ve paketler tarayıcında saklanır; girişliysen sunucuyla
+                senkronlanır.
+              </p>
+              <div style={{ display: 'flex', gap: 'var(--sp-2)', flexWrap: 'wrap' }}>
+                <Button variant="ghost" size="sm" onClick={exportData} data-testid="export-data">
+                  ⬇️ Dışa aktar (JSON)
+                </Button>
+                <Button
+                  variant="accent"
+                  accent="red"
+                  size="sm"
+                  onClick={resetData}
+                  data-testid="reset-data"
+                >
+                  🗑️ Bu cihazı sıfırla
+                </Button>
+              </div>
+            </SectionCard>
 
-      <div className="card" style={{ marginBottom: 16 }}>
-        <h3 style={{ marginTop: 0 }}>Çerez ve gizlilik</h3>
-        <p className="muted">
-          Zorunlu çerezler her zaman etkindir. Analitik çerezleri:{' '}
-          <strong>{consent?.analytics ? 'açık' : 'kapalı'}</strong>.
-        </p>
-        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-          <button
-            className="btn btn--ghost"
-            onClick={() => setAnalyticsConsent(true)}
-            data-testid="consent-on"
-          >
-            Analitiği aç
-          </button>
-          <button
-            className="btn btn--ghost"
-            onClick={() => setAnalyticsConsent(false)}
-            data-testid="consent-off"
-          >
-            Analitiği kapat
-          </button>
-        </div>
-      </div>
+            <SectionCard
+              icon="lock"
+              accent="purple"
+              title="Çerez ve gizlilik"
+              sub="Gizlilik tercihlerini yönet."
+            >
+              <p style={{ margin: 0, color: 'var(--text-2)', fontSize: 'var(--fs-sm)' }}>
+                Zorunlu çerezler her zaman etkindir. Analitik çerezleri:{' '}
+                <strong>{consent?.analytics ? 'açık' : 'kapalı'}</strong>.
+              </p>
+              <div style={{ display: 'flex', gap: 'var(--sp-2)', flexWrap: 'wrap' }}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setAnalyticsConsent(true)}
+                  data-testid="consent-on"
+                >
+                  Analitiği aç
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setAnalyticsConsent(false)}
+                  data-testid="consent-off"
+                >
+                  Analitiği kapat
+                </Button>
+              </div>
+            </SectionCard>
 
-      <div className="card" style={{ marginBottom: 16 }}>
-        <h3 style={{ marginTop: 0 }}>Hesap</h3>
-        {user ? (
+            <SectionCard
+              icon="user"
+              accent="teal"
+              title="Hesap"
+              sub="Oturum ve satın almalarını yönet."
+            >
+              {user ? (
+                <>
+                  <p style={{ margin: 0, color: 'var(--text-2)', fontSize: 'var(--fs-sm)' }}>
+                    {user.email} olarak giriş yaptın.
+                  </p>
+                  <div style={{ display: 'flex', gap: 'var(--sp-2)', flexWrap: 'wrap' }}>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={doRestore}
+                      data-testid="restore-purchases"
+                    >
+                      Satın almaları geri yükle
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={resendVerification}
+                      data-testid="resend-verify"
+                    >
+                      E-posta doğrulama gönder
+                    </Button>
+                    <Button
+                      variant="accent"
+                      accent="red"
+                      size="sm"
+                      onClick={deleteAccount}
+                      data-testid="delete-account"
+                    >
+                      Hesabı sil
+                    </Button>
+                  </div>
+                </>
+              ) : (
+                <p style={{ margin: 0, color: 'var(--text-2)', fontSize: 'var(--fs-sm)' }}>
+                  <a href="/giris">Giriş yap</a> — satın almaların ve ilerlemen tüm cihazlarına
+                  senkronlansın.
+                </p>
+              )}
+            </SectionCard>
+
+            <SectionCard
+              icon="shield"
+              accent="green"
+              title="Yasal"
+              sub="Yasal metinler ve politikalar."
+            >
+              <ul
+                style={{
+                  listStyle: 'none',
+                  margin: 0,
+                  padding: 0,
+                  display: 'grid',
+                  gap: 'var(--sp-2)',
+                }}
+              >
+                {LEGAL_LINKS.map((l) => (
+                  <li key={l.href}>
+                    <a
+                      href={l.href}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: 'var(--sp-2)',
+                        fontSize: 'var(--fs-sm)',
+                      }}
+                    >
+                      {l.label}
+                      <Icon name="chevron-right" size={15} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </SectionCard>
+          </Grid>
+        }
+        aside={
           <>
-            <p className="muted">{user.email} olarak giriş yaptın.</p>
-            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-              <button
-                className="btn btn--ghost"
-                onClick={doRestore}
-                data-testid="restore-purchases"
-              >
-                Satın almaları geri yükle
-              </button>
-              <button
-                className="btn btn--ghost"
-                onClick={resendVerification}
-                data-testid="resend-verify"
-              >
-                E-posta doğrulama gönder
-              </button>
-              <button
-                className="btn"
-                style={{ background: 'var(--red)' }}
-                onClick={deleteAccount}
-                data-testid="delete-account"
-              >
-                Hesabı sil
-              </button>
-            </div>
+            <QuizPanel title="Günün ipucu" icon="sun">
+              <p style={{ margin: 0, color: 'var(--text-2)', fontSize: 'var(--fs-sm)' }}>
+                Araç kullanırken dikkatin yolda olsun. Güvenli sürüş, hayatı korur.
+              </p>
+            </QuizPanel>
+            <QuizPanel title="Hesap durumu" icon="user">
+              <InfoRow icon={THEME_ICON[theme]} label="Tema" value={THEME_LABEL[theme]} />
+              <InfoRow icon="login" label="Oturum" value={user ? user.email : 'Misafir'} />
+              <InfoRow
+                icon="shield"
+                label="Analitik"
+                value={consent?.analytics ? 'Açık' : 'Kapalı'}
+              />
+            </QuizPanel>
           </>
-        ) : (
-          <p className="muted">
-            <a href="/giris">Giriş yap</a> — satın almaların ve ilerlemen tüm cihazlarına
-            senkronlansın.
-          </p>
-        )}
-      </div>
-
-      <div className="card">
-        <h3 style={{ marginTop: 0 }}>Yasal</h3>
-        <ul className="prose" style={{ margin: 0 }}>
-          <li>
-            <a href="/gizlilik">Gizlilik Politikası</a>
-          </li>
-          <li>
-            <a href="/kullanim-kosullari">Kullanım Koşulları</a>
-          </li>
-          <li>
-            <a href="/cerez-politikasi">Çerez Politikası</a>
-          </li>
-          <li>
-            <a href="/kvkk">KVKK Aydınlatma Metni</a>
-          </li>
-        </ul>
-      </div>
+        }
+      />
     </>
   );
 }

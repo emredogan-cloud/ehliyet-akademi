@@ -21,7 +21,12 @@ import {
   personalizedReview,
   examReadinessAnalysis,
   formatReadinessAnalysis,
+  type WeakTopic,
+  type StudyStep,
 } from '@/lib/study';
+import { SUBJECT_LABEL } from '@ea/content-schema';
+import { Icon } from '@/components/ui/icons';
+import { QuizLayout, QuizPanel, DonutStat } from '@/components/ui/quiz';
 
 /** Çok hafif markdown: **kalın** + [link](url). Girdi kendi ürettiğimiz metindir. */
 function mdLite(s: string): string {
@@ -53,11 +58,25 @@ export function AICoach() {
   const [messages, setMessages] = useState<CoachMessage[]>([]);
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
+  // Ray verileri (salt görüntü — kullanıcının kendi geçmişinden).
+  const [rail, setRail] = useState<{
+    answered: number;
+    correct: number;
+    weak: WeakTopic[];
+    steps: StudyStep[];
+  }>({ answered: 0, correct: 0, weak: [], steps: [] });
 
   // Ders sayfasından gelen ?soru= derin bağlantısını giriş kutusuna doldur (SSR-güvenli).
   useEffect(() => {
     const soru = new URLSearchParams(window.location.search).get('soru');
     if (soru) setInput(soru);
+    const answers = loadAnswers();
+    setRail({
+      answered: answers.length,
+      correct: answers.filter((a) => a.correct).length,
+      weak: weakTopics(answers, { minAnswered: 2, limit: 4 }),
+      steps: buildStudyPlan(answers, loadCards(), Date.now()).steps.slice(0, 4),
+    });
   }, []);
 
   function push(role: AIMessage['role'], text: string, visuals?: VisualMatches) {
@@ -125,22 +144,34 @@ export function AICoach() {
     push('assistant', reply);
   }
 
-  return (
+  const main = (
     <div>
-      <div className="explain" role="note" style={{ maxWidth: 720 }}>
-        🤖 <strong>Öğrenme asistanı:</strong> yanıtlar yalnız Ehliyet Akademi içeriğinden (dersler +
-        soru bankası) ve <strong>senin çalışma verinden</strong> türetilir — tahmin/halüsinasyon
-        üretmez. <em>AI hata yapabilir; resmî kural için MEB/MTSK esastır.</em>
+      <div className="ui-card ui-card--accent hero-banner coach-hero" role="note">
+        <span className="coach-hero__bot" aria-hidden>
+          🤖
+        </span>
+        <div className="hero-banner__body">
+          <div className="hero-banner__title">Merhaba! 👋</div>
+          <div className="hero-banner__text">
+            Ehliyet Akademi içerikleriyle güçlendirilmiş AI koçun burada. Dersler, soru bankası ve
+            senin çalışma verinden yararlanarak sana özel, güvenilir ve güncel cevaplar veririm —
+            tahmin/halüsinasyon üretmem.{' '}
+            <em>AI hata yapabilir; resmî kural için MEB/MTSK esastır.</em>
+          </div>
+          <span className="ui-tag ui-tag--accent coach-hero__src">
+            <Icon name="shield" size={14} /> Kaynağım: Ehliyet Akademi (MEB uyumlu içerikler)
+          </span>
+        </div>
       </div>
 
       <div
         className="coach-actions"
-        style={{ display: 'flex', gap: 8, flexWrap: 'wrap', margin: '12px 0' }}
+        style={{ display: 'flex', gap: 8, flexWrap: 'wrap', margin: '14px 0' }}
       >
         {ACTIONS.map((a) => (
           <button
             key={a.id}
-            className="btn btn--ghost"
+            className="ui-chip"
             onClick={() => coach(a.id)}
             disabled={busy}
             data-testid={`coach-action-${a.id}`}
@@ -152,22 +183,26 @@ export function AICoach() {
 
       <div className="chat" data-testid="chat" aria-live="polite">
         {messages.length === 0 && (
-          <div className="card">
-            <p className="muted" style={{ marginTop: 0 }}>
-              Bir konu sor — ya da yukarıdan kişisel rehberlik iste. Örnek sorular:
-            </p>
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          <div className="ui-card quiz-card">
+            <p style={{ marginTop: 0, fontWeight: 700 }}>Örnek sorulara göz at 👇</p>
+            <div className="coach-samples">
               {SUGGESTIONS.map((s) => (
                 <button
                   key={s}
-                  className="btn btn--ghost"
+                  className="coach-sample"
                   onClick={() => send(s)}
                   data-testid="suggestion"
                 >
+                  <span className="coach-sample__ic" aria-hidden>
+                    <Icon name="target" size={16} />
+                  </span>
                   {s}
                 </button>
               ))}
             </div>
+            <p className="muted" style={{ margin: '12px 0 0', fontSize: 'var(--fs-xs)' }}>
+              ✨ Bunlar sadece örnek. İstediğin her şeyi sorabilirsin!
+            </p>
           </div>
         )}
         {messages.map((m, k) => (
@@ -211,24 +246,120 @@ export function AICoach() {
       </div>
 
       <form
-        className="chat__form"
+        className="chat__form coach-form"
         onSubmit={(e) => {
           e.preventDefault();
           void send(input);
         }}
       >
         <input
-          className="chat__input"
+          className="ui-input"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Sorunu yaz… (örn. yaya geçidinde öncelik kimde?)"
           aria-label="AI koça soru"
           data-testid="chat-input"
         />
-        <button className="btn" disabled={busy || !input.trim()} data-testid="chat-send">
-          Sor
+        <button
+          className="ui-btn ui-btn--primary ui-btn--md"
+          disabled={busy || !input.trim()}
+          data-testid="chat-send"
+        >
+          <Icon name="login" size={16} /> Sor
         </button>
       </form>
+      <p className="muted coach-lock">
+        <Icon name="lock" size={13} /> Yanıtlar, yalnızca Ehliyet Akademi içeriklerine dayanır ve
+        tahmin/halüsinasyon üretmez.
+      </p>
     </div>
   );
+
+  const okPct = rail.answered ? Math.round((rail.correct / rail.answered) * 100) : 0;
+  const aside = (
+    <>
+      <QuizPanel title="Bugünkü Genel Özetin" icon="trending">
+        <DonutStat
+          pct={okPct}
+          center={`%${okPct}`}
+          sub="Doğru Oranı"
+          rows={[
+            { color: 'var(--accent-green)', label: 'Doğru', value: rail.correct },
+            { color: 'var(--accent-red)', label: 'Yanlış', value: rail.answered - rail.correct },
+            { color: 'var(--text-3)', label: 'Çözülen soru', value: rail.answered },
+          ]}
+        />
+      </QuizPanel>
+      <QuizPanel
+        title="Zayıf Konuların"
+        icon="target"
+        action={
+          <a className="section__link" href="/calisma-plani">
+            Detaylara git →
+          </a>
+        }
+      >
+        {rail.weak.length === 0 ? (
+          <p className="muted" style={{ margin: 0, fontSize: 'var(--fs-sm)' }}>
+            Henüz yeterli veri yok — birkaç alıştırma çöz, zayıf konuların burada görünsün.
+          </p>
+        ) : (
+          <div style={{ display: 'grid', gap: 10 }}>
+            {rail.weak.map((w) => {
+              const pct = Math.round(w.mastery * 100);
+              const color =
+                pct < 50
+                  ? 'var(--accent-red)'
+                  : pct < 70
+                    ? 'var(--accent-amber)'
+                    : 'var(--accent-green)';
+              return (
+                <div key={w.topic}>
+                  <div className="exam-bar-row">
+                    <span>
+                      {SUBJECT_LABEL[w.subject]} · {w.topic}
+                    </span>
+                    <span className="muted">%{pct}</span>
+                  </div>
+                  <div className="ui-progress">
+                    <span
+                      className="ui-progress__fill"
+                      style={{ width: `${pct}%`, background: color }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </QuizPanel>
+      <QuizPanel title="Önerilen Çalışma Planı" icon="calendar">
+        {rail.steps.length === 0 ? (
+          <p className="muted" style={{ margin: 0, fontSize: 'var(--fs-sm)' }}>
+            Plan için önce biraz veri gerekiyor — tanı denemesiyle başla.
+          </p>
+        ) : (
+          <ul className="exam-tips">
+            {rail.steps.map((s) => (
+              <li key={s.title}>
+                <span className="exam-tips__check" aria-hidden>
+                  <Icon name="check-circle" size={15} />
+                </span>
+                <a href={s.href}>{s.title}</a>
+              </li>
+            ))}
+          </ul>
+        )}
+        <a
+          className="ui-btn ui-btn--primary ui-btn--sm ui-btn--full"
+          href="/calisma-plani"
+          style={{ marginTop: 12 }}
+        >
+          Planı gör +
+        </a>
+      </QuizPanel>
+    </>
+  );
+
+  return <QuizLayout main={main} aside={aside} />;
 }

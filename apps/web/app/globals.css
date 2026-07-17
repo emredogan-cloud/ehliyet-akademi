@@ -3607,3 +3607,219 @@ table.tbl {
   border-top: 1px solid var(--border);
   padding-top: var(--sp-4);
 }
+
+/* ============================================================
+   Program 3.1 — Quiz kabuğu (ref 009/011/012/016 ortak ray dili)
+   ============================================================ */
+.quiz-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-5);
+  align-items: start;
+}
+@media (min-width: 1060px) {
+  .quiz-grid {
+    grid-template-columns: 1.6fr 0.9fr;
+  }
+}
+.quiz-grid__main {
+  min-width: 0;
+}
+.quiz-grid__aside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  min-width: 0;
+}
+@media (max-width: 1059px) {
+  .quiz-grid__aside {
+    display: none; /* dar ekranda ray gizlenir — ana akış öncelikli (ref mobil davranışı) */
+  }
+}
+
+.quiz-panel {
+  padding: var(--sp-4) var(--sp-5);
+}
+.quiz-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-3);
+}
+.quiz-panel__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: var(--fs-md);
+  font-weight: 700;
+}
+.quiz-panel__ic {
+  color: var(--primary);
+  display: inline-flex;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+  font-size: var(--fs-sm);
+}
+.info-row__ic {
+  color: var(--text-3);
+  display: inline-flex;
+}
+.info-row__label {
+  color: var(--text-2);
+}
+.info-row__value {
+  margin-left: auto;
+  font-weight: 700;
+  color: var(--text);
+  text-align: right;
+}
+
+/* Donut */
+.donut {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+}
+.donut__ring {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+}
+.donut__ring svg {
+  display: block;
+}
+.donut__center {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  line-height: 1.1;
+}
+.donut__center strong {
+  font-size: var(--fs-xl);
+  font-weight: 800;
+}
+.donut__center small {
+  color: var(--text-3);
+  font-size: var(--fs-xs);
+}
+.donut__rows {
+  flex: 1;
+  min-width: 120px;
+  display: grid;
+  gap: 6px;
+}
+.donut__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--fs-sm);
+}
+.donut__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 99px;
+  flex: 0 0 auto;
+}
+.donut__label {
+  color: var(--text-2);
+}
+.donut__value {
+  margin-left: auto;
+  font-weight: 700;
+}
+
+/* Soru navigasyonu */
+.qnav__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.qnav__dot {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-strong);
+  color: var(--text-2);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+}
+.qnav__dot--correct {
+  background: color-mix(in srgb, var(--accent-green) 22%, var(--surface));
+  border-color: color-mix(in srgb, var(--accent-green) 55%, transparent);
+  color: var(--accent-green);
+}
+.qnav__dot--wrong {
+  background: color-mix(in srgb, var(--accent-red) 24%, var(--surface));
+  border-color: color-mix(in srgb, var(--accent-red) 55%, transparent);
+  color: var(--accent-red);
+}
+.qnav__dot--current {
+  border-color: var(--primary);
+  color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 22%, transparent);
+}
+.qnav__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: var(--sp-3);
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+.qnav__leg {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.qnav__mini {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 99px;
+  border: 1px solid var(--border-strong);
+}
+
+/* İpucu */
+.quiz-hint {
+  border-color: color-mix(in srgb, var(--accent-amber) 30%, var(--border));
+}
+.quiz-hint__bulb {
+  font-size: 1rem;
+}
+.quiz-hint__text {
+  margin: 0;
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+}
+
+/* Soru kartı sarmalayıcı — quiz ana bloğu kart içinde (ref 011/012) */
+.quiz-card {
+  padding: var(--sp-5) var(--sp-6);
+}
+
+/* Pratik (SRS) seri bandı — ref 012-A */
+.quiz-streak {
+  padding: var(--sp-3) var(--sp-5);
+}
+.quiz-streak__flame {
+  font-size: 1.3rem;
+}
+.quiz-streak__text {
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+}
+.quiz-streak__text strong {
+  color: var(--text);
+}

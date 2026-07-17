@@ -6,6 +6,15 @@ import { SUBJECT_LABEL } from '@ea/content-schema';
 import { computeReadiness, statsFromAnswers, type Readiness } from '@ea/srs-engine';
 import { saveReadiness, type StoredReadiness } from '../lib/storage';
 import { track } from '../lib/analytics';
+import {
+  QuizLayout,
+  QuizPanel,
+  InfoRow,
+  DonutStat,
+  QuizNav,
+  HintCard,
+  type QuizNavState,
+} from './ui/quiz';
 
 type Answer = { q: Question; chosen: number; correct: boolean };
 
@@ -127,8 +136,16 @@ export function Diagnostic({ questions }: { questions: Question[] }) {
 
   if (!q) return null; // güvenlik: tüm sorular bitti ama done henüz set edilmediyse
   const pct = Math.round((i / total) * 100);
-  return (
-    <div className="quiz" data-testid="diagnostic">
+  const correctSoFar = answers.filter((a) => a.correct).length;
+  const navStates: QuizNavState[] = Array.from({ length: total }, (_, k) => {
+    const past = answers[k];
+    if (past) return past.correct ? 'correct' : 'wrong';
+    if (k === i) return 'current';
+    return 'todo';
+  });
+
+  const main = (
+    <div className="ui-card quiz-card quiz" data-testid="diagnostic">
       <div className="progress" aria-hidden>
         <span style={{ width: `${pct}%` }} />
       </div>
@@ -172,4 +189,35 @@ export function Diagnostic({ questions }: { questions: Question[] }) {
       )}
     </div>
   );
+
+  const aside = (
+    <>
+      <QuizPanel title="Sınav Bilgileri" icon="clipboard">
+        <InfoRow icon="clipboard" label="Soru Sayısı" value={total} />
+        <InfoRow icon="layers" label="Konu" value="4 teorik ders" />
+        <InfoRow icon="timer" label="Süre (tavsiye)" value="10 dakika" />
+        <InfoRow icon="check-circle" label="Geçme Kriteri" value="%70 ve üzeri" />
+      </QuizPanel>
+      <QuizPanel title="İlerleme" icon="trending">
+        <DonutStat
+          pct={pct}
+          center={`%${pct}`}
+          sub="Tamamlandı"
+          rows={[
+            { color: 'var(--accent-green)', label: 'Doğru', value: correctSoFar },
+            { color: 'var(--accent-red)', label: 'Yanlış', value: answers.length - correctSoFar },
+            { color: 'var(--text-3)', label: 'Kalan', value: total - answers.length },
+          ]}
+        />
+      </QuizPanel>
+      <QuizPanel title="Soru Navigasyonu" icon="target">
+        <QuizNav states={navStates} />
+      </QuizPanel>
+      <HintCard>
+        Soruları dikkatlice okuyun ve acele etmeyin. Doğru cevaplar için bilgilerinizi kullanın.
+      </HintCard>
+    </>
+  );
+
+  return <QuizLayout main={main} aside={aside} />;
 }

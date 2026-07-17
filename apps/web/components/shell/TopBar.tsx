@@ -7,7 +7,9 @@
  */
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { me, logout, type AuthUser } from '@/lib/authClient';
+import { loadStreak } from '@/lib/progress';
 import { Icon } from '@/components/ui/icons';
 
 type Theme = 'auto' | 'light' | 'dark';
@@ -26,15 +28,22 @@ function initials(user: AuthUser | null): string {
 
 export function TopBar() {
   const router = useRouter();
+  const pathname = usePathname();
   const [user, setUser] = useState<AuthUser | null>(null);
   const [openMenu, setOpenMenu] = useState<'none' | 'bell' | 'avatar'>('none');
   const [theme, setTheme] = useState<Theme>('auto');
+  const [streak, setStreak] = useState(0);
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     void me().then(setUser);
     setTheme(currentTheme());
   }, []);
+
+  // Seri çipi (ref kabuk dili) — rota değişince tazele; gerçek veriden.
+  useEffect(() => {
+    setStreak(loadStreak().current);
+  }, [pathname]);
 
   // Dışarı tıklayınca / ESC ile menüyü kapat
   useEffect(() => {
@@ -79,6 +88,12 @@ export function TopBar() {
 
   return (
     <div className="topbar-float" ref={rootRef}>
+      {/* Günlük seri çipi (gerçek veri) */}
+      {streak > 0 && (
+        <a className="topbar-streak" href="/ilerleme" title="Günlük çalışma serin">
+          <span aria-hidden>🔥</span> {streak} gün
+        </a>
+      )}
       {/* Tema anahtarı */}
       <button
         type="button"

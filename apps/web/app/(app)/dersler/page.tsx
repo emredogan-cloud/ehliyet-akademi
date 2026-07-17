@@ -86,6 +86,27 @@ export default function DerslerPage() {
           </Section>
         );
       })}
+
+      <div className="ui-card ui-card--accent hero-banner" style={{ marginTop: 'var(--sp-4)' }}>
+        <span
+          className="ui-iconbadge ui-iconbadge--lg"
+          style={{ ['--ib-accent' as string]: 'var(--accent-amber)' }}
+          aria-hidden
+        >
+          <Icon name="trophy" size={26} />
+        </span>
+        <div className="hero-banner__body">
+          <div className="hero-banner__title">
+            Sınavda başarıya giden yol, iyi bir hazırlıkla başlar.
+          </div>
+          <div className="hero-banner__text">Düzenli çalış, tekrar yap ve kendine güven!</div>
+        </div>
+        <div className="hero-banner__action">
+          <a className="ui-btn ui-btn--primary ui-btn--md" href="/calis">
+            Çalışmaya devam et →
+          </a>
+        </div>
+      </div>
     </>
   );
 }

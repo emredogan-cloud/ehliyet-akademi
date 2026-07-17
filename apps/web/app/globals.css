@@ -4380,3 +4380,21 @@ table.tbl {
   font-weight: 700;
   flex: 0 0 auto;
 }
+
+/* TopBar seri çipi */
+.topbar-streak {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--accent-amber) 14%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--accent-amber) 32%, transparent);
+  color: var(--text);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+}
+.topbar-streak:hover {
+  text-decoration: none;
+  filter: brightness(1.06);
+}

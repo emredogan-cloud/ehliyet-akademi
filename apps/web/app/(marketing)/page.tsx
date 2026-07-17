@@ -6,6 +6,8 @@ import { SIGNS } from '@/content/signs';
 import { VEHICLE_PARTS } from '@/content/vehicle';
 import { HeroArt } from '@/components/marketing/HeroArt';
 import { Reveal } from '@/components/ui/Reveal';
+import { Icon, type IconName } from '@/components/ui/icons';
+import type { Accent } from '@/components/ui/primitives';
 
 export const metadata: Metadata = {
   title: 'B Sınıfı Ehliyet Sınavına Akıllı Hazırlık',
@@ -13,163 +15,175 @@ export const metadata: Metadata = {
     'Tanı denemesiyle hazırlık skorunu öğren, zayıf konularına odaklan, ilk denemede geç. Teorik e-Sınav + direksiyon pratiği, özgün trafik işaretleri ve araç görselleriyle.',
 };
 
-const FEATURES = [
+const FEATURES: Array<{
+  icon: IconName;
+  accent: Accent;
+  title: string;
+  desc: string;
+  href: string;
+}> = [
   {
-    icon: '🎯',
-    title: 'Tanı → Hazırlık skoru',
+    icon: 'target',
+    accent: 'teal',
+    title: 'Tanı + Hazırlık skoru',
     desc: 'Kısa denemeyle seviyeni ölç; trafik ışığıyla ders durumunu gör.',
     href: '/tani',
   },
   {
-    icon: '🧠',
+    icon: 'brain',
+    accent: 'purple',
     title: 'Akıllı tekrar (SRS)',
     desc: 'Yanlışlarını tam unutmadan önce, doğru zamanda tekrar sorar.',
     href: '/calis',
   },
   {
-    icon: '⏱️',
+    icon: 'timer',
+    accent: 'blue',
     title: 'Gerçek e-Sınav simülatörü',
     desc: '50 soru · 45 dk · 35 baraj — birebir sınav formatı.',
     href: '/deneme-sinavi',
   },
   {
-    icon: '🚸',
+    icon: 'sign',
+    accent: 'amber',
     title: 'Trafik işaretleri galerisi',
     desc: 'Özgün SVG işaret sistemi; kategori süz, ara, çevir-öğren.',
     href: '/isaretler',
   },
   {
-    icon: '🚙',
+    icon: 'car',
+    accent: 'green',
     title: 'Araç tanıma',
     desc: 'Motor bölmesinden pedallara — direksiyon için görselli rehber.',
     href: '/arac',
   },
   {
-    icon: '🤖',
+    icon: 'bot',
+    accent: 'red',
     title: 'Grounded AI Koç',
     desc: 'Yalnız kendi içeriğimizden yanıt; halüsinasyon üretmez.',
     href: '/ai-koc',
   },
 ];
 
-const JOURNEY = [
-  'Tanı denemesi',
-  'Zayıf konuya odak',
-  'Aralıklı tekrar',
-  'Deneme sınavı',
-  'İlk denemede geç',
-];
+const JOURNEY = ['Tanı denemesi', 'Zayıf konuya odak', 'Aralıklı tekrar', 'Deneme sınavı'] as const;
 
-const TRUST = [
+const TRUST: Array<{ icon: IconName; accent: Accent; title: string; desc: string }> = [
   {
-    icon: '✍️',
+    icon: 'rocket',
+    accent: 'teal',
     title: '%100 özgün içerik',
     desc: 'Resmî MEB müfredatından, kendi ifademizle. Kopya soru yok.',
   },
   {
-    icon: '🚫',
+    icon: 'ban',
+    accent: 'red',
     title: 'Reklamsız & dikkat dağıtmayan',
     desc: 'Karanlık desen yok; motivasyon kutlamadır, baskı değil.',
   },
   {
-    icon: '📴',
+    icon: 'wifi-off',
+    accent: 'amber',
     title: 'Offline çalışır (PWA)',
     desc: 'İnternet olmadan da derslere ve pratiğe devam et.',
   },
   {
-    icon: '🔒',
-    title: 'Gizlilik-öncelikli',
+    icon: 'lock',
+    accent: 'green',
+    title: 'Gizlilik öncelikli',
     desc: 'İlerlemen cihazında; rızasız izleyici yüklenmez (KVKK-dostu).',
   },
 ];
 
+const SUBJECT_META: Record<string, { icon: IconName; accent: Accent }> = {
+  trafik: { icon: 'trafficlight', accent: 'teal' },
+  ilkyardim: { icon: 'firstaid', accent: 'amber' },
+  motor: { icon: 'car', accent: 'purple' },
+  adab: { icon: 'road', accent: 'blue' },
+};
+
 export default function HomePage() {
   const counts = subjectCounts();
   const totalQ = Object.values(counts).reduce((a, b) => a + b, 0);
-  const stats = [
-    { n: `${totalQ}`, cap: 'özgün soru' },
-    { n: `${LESSONS.length}`, cap: 'ders' },
-    { n: `${SIGNS.length}`, cap: 'trafik işareti' },
-    { n: `${VEHICLE_PARTS.length}`, cap: 'araç görseli' },
+  const stats: Array<{ icon: IconName; n: string; cap: string }> = [
+    { icon: 'clipboard', n: `${totalQ}`, cap: 'Özgün Soru' },
+    { icon: 'check-circle', n: `${LESSONS.length}`, cap: 'Ders' },
+    { icon: 'book', n: `${SIGNS.length}`, cap: 'Trafik İşareti' },
+    { icon: 'car', n: `${VEHICLE_PARTS.length}`, cap: 'Araç Görseli' },
   ];
 
   return (
     <>
-      <section className="hero hero--split">
-        <div className="hero__copy">
-          <p className="hero__eyebrow">B SINIFI · TEORİK e-SINAV + DİREKSİYON</p>
-          <h1>
-            Bugün girsen <span className="grad">geçer miydin?</span>
+      {/* ── Hero (ref 001) ─────────────────────────────────── */}
+      <section className="mk-hero">
+        <div className="mk-hero__copy">
+          <p className="mk-hero__eyebrow">B SINIFI · TEORİK · SINAV · DİREKSİYON</p>
+          <h1 className="mk-hero__title">
+            Bugün girsen <span className="mk-hero__grad">geçer miydin?</span>
           </h1>
-          <p>
-            Kısa bir tanı denemesiyle <strong>hazırlık skorunu</strong> öğren, tam da zayıf olduğun
-            konulara çalış. Ezber soru yağmuru değil — akıllı, görsel, sınav-odaklı hazırlık.
+          <p className="mk-hero__lead">
+            Kısa bir tanı denemesiyle <strong className="mk-hero__key">hazırlık skorunu</strong>{' '}
+            öğren, hangi konularda eksiğin olduğunu gör ve sana özel çalışma planınla sınavda
+            başarıya ulaş.
           </p>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <a className="btn btn--onhero" href="/tani">
-              Ücretsiz tanı denemesi →
+          <div className="mk-hero__cta">
+            <a className="ui-btn ui-btn--primary ui-btn--lg" href="/tani">
+              <Icon name="user" size={18} /> Ücretsiz tanı denemesi →
             </a>
-            <a
-              className="btn btn--ghost"
-              href="/panel"
-              style={{ color: '#fff', borderColor: 'rgba(255,255,255,.5)' }}
-            >
-              Uygulamayı aç
+            <a className="ui-btn ui-btn--ghost ui-btn--lg" href="/panel">
+              <Icon name="phone" size={18} /> Uygulamayı aç
             </a>
           </div>
-          <div className="hero__stats">
+          <div className="mk-hero__stats">
             {stats.map((s) => (
-              <div key={s.cap}>
-                <div className="hero__stat-n">{s.n}</div>
-                <div className="hero__stat-c">{s.cap}</div>
+              <div key={s.cap} className="mk-hero__stat">
+                <span className="mk-hero__stat-ic" aria-hidden>
+                  <Icon name={s.icon} size={20} />
+                </span>
+                <span>
+                  <span className="mk-hero__stat-n">{s.n}</span>
+                  <span className="mk-hero__stat-c">{s.cap}</span>
+                </span>
               </div>
             ))}
           </div>
         </div>
-        <HeroArt />
+        <div className="mk-hero__art">
+          <HeroArt />
+        </div>
       </section>
 
+      {/* ── 4 adımlı yolculuk (ref 002-A) ─────────────────── */}
       <Reveal as="section">
-        <h2 className="section-title">Neler var?</h2>
-        <div className="feature-grid">
-          {FEATURES.map((f) => (
-            <a className="feature-card" key={f.title} href={f.href}>
-              <span className="feature-card__icon" aria-hidden>
-                {f.icon}
-              </span>
-              <strong>{f.title}</strong>
-              <span className="muted" style={{ fontSize: '0.88rem' }}>
-                {f.desc}
-              </span>
-            </a>
-          ))}
-        </div>
-      </Reveal>
-
-      <Reveal as="section">
-        <h2 className="section-title">Öğrenme yolculuğun</h2>
-        <div className="journey-flow">
+        <div className="mk-stepper" role="list" aria-label="Öğrenme yolculuğu">
           {JOURNEY.map((step, i) => (
-            <div className="journey-flow__step" key={step}>
-              <span className="journey-flow__num">{i + 1}</span>
-              <span>{step}</span>
-              {i < JOURNEY.length - 1 && (
-                <span className="journey-flow__arrow" aria-hidden>
-                  →
+            <div className="mk-stepper__item" role="listitem" key={step}>
+              <span className="mk-stepper__pill">
+                <span className="mk-stepper__num">{i + 1}</span>
+                {step}
+                <span aria-hidden className="mk-stepper__go">
+                  {i === 0 ? '✓' : '→'}
                 </span>
-              )}
+              </span>
+              {i < JOURNEY.length && <span className="mk-stepper__dash" aria-hidden />}
             </div>
           ))}
+          <div className="mk-stepper__item" role="listitem">
+            <span className="mk-stepper__pill mk-stepper__pill--win">
+              <Icon name="trophy" size={16} /> İlk denemede geç
+            </span>
+          </div>
         </div>
       </Reveal>
 
+      {/* ── e-Sınav dağılımı (ref 002-B) ──────────────────── */}
       <Reveal as="section">
-        <h2 className="section-title">Teorik e-Sınav dağılımı</h2>
+        <h2 className="section-title mk-title">Teorik e-Sınav dağılımı</h2>
         <p className="muted" style={{ marginTop: 0 }}>
           Gerçek e-Sınav: {EXAM_BLUEPRINT.totalQuestions} soru · {EXAM_BLUEPRINT.durationMinutes} dk
           · geçmek için {EXAM_BLUEPRINT.passCorrect} doğru. Bankada toplam {totalQ} özgün soru.
         </p>
-        <div className="dist-grid">
+        <div className="grid-auto" style={{ ['--grid-min' as string]: '240px' }}>
           {(
             Object.keys(EXAM_BLUEPRINT.distribution) as Array<
               keyof typeof EXAM_BLUEPRINT.distribution
@@ -177,53 +191,107 @@ export default function HomePage() {
           ).map((s) => {
             const need = EXAM_BLUEPRINT.distribution[s];
             const have = counts[s] ?? 0;
+            const meta = SUBJECT_META[s] ?? { icon: 'book', accent: 'teal' };
             return (
-              <div className="dist-card" key={s}>
-                <div className="dist-card__bar" aria-hidden>
-                  <span
-                    style={{
-                      width: `${Math.min(100, (need / EXAM_BLUEPRINT.totalQuestions) * 100 * 2)}%`,
-                    }}
-                  />
+              <div className="ui-card mk-dist" key={s}>
+                <span
+                  className="mastery-row__icon"
+                  style={{ ['--m-accent' as string]: `var(--accent-${meta.accent})` }}
+                  aria-hidden
+                >
+                  <Icon name={meta.icon} size={20} />
+                </span>
+                <div className="mk-dist__body">
+                  <strong>{SUBJECT_LABEL[s]}</strong>
+                  <div
+                    className="ui-progress"
+                    role="progressbar"
+                    aria-valuenow={need}
+                    aria-valuemin={0}
+                    aria-valuemax={EXAM_BLUEPRINT.totalQuestions}
+                    aria-label={`${SUBJECT_LABEL[s]} soru payı`}
+                  >
+                    <span
+                      className="ui-progress__fill"
+                      style={{ width: `${(need / EXAM_BLUEPRINT.totalQuestions) * 100}%` }}
+                    />
+                  </div>
+                  <p className="muted mk-dist__meta">
+                    {need} soru · bankada {have} hazır
+                  </p>
                 </div>
-                <strong>{SUBJECT_LABEL[s]}</strong>
-                <p className="muted" style={{ margin: '4px 0 0', fontSize: '0.84rem' }}>
-                  {need} soru · bankada {have} hazır
-                </p>
               </div>
             );
           })}
         </div>
       </Reveal>
 
+      {/* ── Neler var? (ref 001-J) ────────────────────────── */}
       <Reveal as="section">
-        <h2 className="section-title">Neden Ehliyet Akademi?</h2>
-        <div className="feature-grid">
+        <h2 className="section-title mk-title">Neler var?</h2>
+        <div className="grid-auto" style={{ ['--grid-min' as string]: '160px' }}>
+          {FEATURES.map((f) => (
+            <a className="ui-card ui-card--interactive mk-feature" key={f.title} href={f.href}>
+              <span
+                className="ui-iconbadge ui-iconbadge--md"
+                style={{ ['--ib-accent' as string]: `var(--accent-${f.accent})` }}
+                aria-hidden
+              >
+                <Icon name={f.icon} size={22} />
+              </span>
+              <strong>{f.title}</strong>
+              <span className="muted mk-feature__desc">{f.desc}</span>
+              <span className="mk-feature__go" aria-hidden>
+                →
+              </span>
+            </a>
+          ))}
+        </div>
+      </Reveal>
+
+      {/* ── Neden Ehliyet Akademi? (ref 002-C) ────────────── */}
+      <Reveal as="section">
+        <h2 className="section-title mk-title">Neden Ehliyet Akademi?</h2>
+        <div className="grid-auto" style={{ ['--grid-min' as string]: '240px' }}>
           {TRUST.map((t) => (
-            <div className="feature-card feature-card--static" key={t.title}>
-              <span className="feature-card__icon" aria-hidden>
-                {t.icon}
+            <div className="ui-card mk-feature" key={t.title}>
+              <span
+                className="ui-iconbadge ui-iconbadge--md"
+                style={{ ['--ib-accent' as string]: `var(--accent-${t.accent})` }}
+                aria-hidden
+              >
+                <Icon name={t.icon} size={22} />
               </span>
               <strong>{t.title}</strong>
-              <span className="muted" style={{ fontSize: '0.88rem' }}>
-                {t.desc}
-              </span>
+              <span className="muted mk-feature__desc">{t.desc}</span>
             </div>
           ))}
         </div>
       </Reveal>
 
-      <section className="cta-band">
-        <h2 style={{ margin: '0 0 8px' }}>Hazırlığa bugün başla</h2>
-        <p className="muted" style={{ marginTop: 0 }}>
-          Ücretsiz tanı denemesiyle nerede olduğunu gör; gerisini birlikte tamamlayalım.
-        </p>
-        <a className="btn" href="/tani">
-          Tanı denemesine başla →
-        </a>
+      {/* ── CTA bandı (ref 002-D) ─────────────────────────── */}
+      <section className="mk-cta">
+        <div className="mk-cta__art" aria-hidden>
+          <Icon name="shield" size={54} strokeWidth={1.4} />
+        </div>
+        <div className="mk-cta__body">
+          <h2 className="mk-cta__title">
+            Hazırlığa <span className="mk-hero__grad">bugün</span> başla
+          </h2>
+          <p className="muted">
+            Ücretsiz tanı denemesiyle nerede olduğunu gör, güçlü ve zayıf konularını birlikte
+            tamamlayalım.
+          </p>
+          <a className="ui-btn ui-btn--primary ui-btn--lg" href="/tani">
+            Tanı denemesine başla →
+          </a>
+        </div>
+        <div className="mk-cta__flag" aria-hidden>
+          🏁
+        </div>
       </section>
 
-      <p className="muted" style={{ marginTop: 22, fontSize: '0.82rem', textAlign: 'center' }}>
+      <p className="muted mk-smallprint">
         Sorular resmî müfredattan, kendi ifademizle yazılmıştır (uzman onay süreci sürer). Öğrenci
         deneyimleri, yayın sonrası doğrulanmış geri bildirimlerle burada yer alacaktır.
       </p>

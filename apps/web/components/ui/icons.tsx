@@ -39,7 +39,15 @@ export type IconName =
   | 'trafficlight'
   | 'firstaid'
   | 'road'
-  | 'flame';
+  | 'flame'
+  | 'rocket'
+  | 'ban'
+  | 'wifi-off'
+  | 'lock'
+  | 'book'
+  | 'check-circle'
+  | 'gradcap'
+  | 'phone';
 
 /* Her ikon: 24×24 viewBox, stroke tabanlı, currentColor. */
 const PATHS: Record<IconName, ReactElement> = {
@@ -240,6 +248,60 @@ const PATHS: Record<IconName, ReactElement> = {
   ),
   flame: (
     <path d="M12 3s5 4 5 8.5A5 5 0 0 1 7 12c0-1.5.6-2.8 1.4-3.7C8.9 9.5 10 10 10 11c1-.5 1.5-2 1-3.5-.4-1.4.3-3.2 1-4.5Z" />
+  ),
+  rocket: (
+    <>
+      <path d="M12 15c-1.5-4.5 0-9 4.5-11.5 1 .5 2.5 2 3 3C17 11 12.5 12.5 12 15Z" />
+      <path d="M12 15c-1-1-2-2-3-3l-3.5 1L8 9.5M12 15l3-3 1.5 5.5-3.5 2.5" />
+      <path d="M6 18c-1 1-1.5 2.5-1.5 2.5S6 20 7 19" />
+      <circle cx="15.5" cy="8.5" r="1.1" />
+    </>
+  ),
+  ban: (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="m6 6 12 12" />
+    </>
+  ),
+  'wifi-off': (
+    <>
+      <path d="M2.5 8.5C5 6.3 8.3 5 12 5c1.2 0 2.4.14 3.5.4M21.5 8.5a15 15 0 0 0-3-2M5.5 12a9.5 9.5 0 0 1 5-2.4M18.5 12c-.8-.8-1.8-1.4-2.8-1.9M8.5 15.4A5.5 5.5 0 0 1 12 14c1.3 0 2.5.4 3.5 1.4" />
+      <circle cx="12" cy="18.5" r="1" fill="currentColor" stroke="none" />
+      <path d="m3 3 18 18" />
+    </>
+  ),
+  lock: (
+    <>
+      <rect x="5.5" y="10.5" width="13" height="9.5" rx="2.5" />
+      <path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" />
+      <circle cx="12" cy="15" r="1" fill="currentColor" stroke="none" />
+    </>
+  ),
+  book: (
+    <>
+      <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15.5H6.5A2.5 2.5 0 0 0 4 21V5.5Z" />
+      <path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20" />
+      <path d="M8 7h8M8 10h5" />
+    </>
+  ),
+  'check-circle': (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="m8.5 12 2.4 2.4L15.5 9.5" />
+    </>
+  ),
+  gradcap: (
+    <>
+      <path d="M12 4 2.5 8.5 12 13l9.5-4.5L12 4Z" />
+      <path d="M6.5 10.8V15c0 1.5 2.5 3 5.5 3s5.5-1.5 5.5-3v-4.2" />
+      <path d="M21.5 8.5V14" />
+    </>
+  ),
+  phone: (
+    <>
+      <rect x="7" y="2.5" width="10" height="19" rx="2.5" />
+      <path d="M10.5 5h3M11 18.5h2" />
+    </>
   ),
 };
 

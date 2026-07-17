@@ -3823,3 +3823,64 @@ table.tbl {
 .quiz-streak__text strong {
   color: var(--text);
 }
+
+/* e-Sınav merkezi (ref 010) */
+.esx-subject {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.esx-subject__count {
+  position: absolute;
+  top: var(--sp-4);
+  right: var(--sp-4);
+}
+.esx-subject__title {
+  margin: var(--sp-2) 0 0;
+  font-size: var(--fs-md);
+}
+.esx-subject__meta {
+  margin: 0;
+  font-size: var(--fs-xs);
+}
+.esx-subject__prog {
+  display: grid;
+  gap: 4px;
+  margin-top: var(--sp-2);
+  font-size: var(--fs-xs);
+}
+.esx-cta {
+  display: flex;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  margin: var(--sp-5) 0;
+}
+.esx-banner {
+  margin-bottom: var(--sp-5);
+}
+.esx-banner__actions {
+  display: flex;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+  margin-top: var(--sp-3);
+}
+.esx-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-5);
+}
+.esx-strip__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.esx-strip__title {
+  display: block;
+  font-size: var(--fs-sm);
+}
+.esx-strip__desc {
+  display: block;
+  font-size: var(--fs-xs);
+}

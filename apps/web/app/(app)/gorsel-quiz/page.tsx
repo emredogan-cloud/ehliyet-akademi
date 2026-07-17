@@ -11,6 +11,7 @@ import { AssetImage } from '@/components/ui/AssetImage';
 import { signById } from '@/content/signs';
 import { buildRound, quizPool, type VisualQuizRound } from '@/lib/visual-quiz';
 import { PageHeader } from '@/components/ui/layout';
+import { QuizLayout, QuizPanel, DonutStat, InfoRow, HintCard } from '@/components/ui/quiz';
 
 const KEY = 'ea:visualQuiz:v1';
 
@@ -84,24 +85,14 @@ export default function GorselQuizPage() {
 
   if (!round) return null;
   const sign = round.kind === 'sign' ? signById(round.itemId) : undefined;
+  const okPct = score.total ? Math.round((score.ok / score.total) * 100) : 0;
 
-  return (
-    <div data-testid="gorsel-quiz" style={{ maxWidth: 640, margin: '0 auto' }}>
-      <PageHeader
-        title="Görsel Quiz"
-        emoji="📸"
-        subtitle={
-          <>
-            {poolSize} görselden rastgele: işareti/bileşeni gör, adını bil. Yanlışların "zayıflar"
-            destene düşer; iki kez doğru bilince çıkar.
-          </>
-        }
-      />
-
-      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', margin: '12px 0' }}>
+  const main = (
+    <div data-testid="gorsel-quiz">
+      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', margin: '0 0 14px' }}>
         <button
           type="button"
-          className={`chip${mode === 'mixed' ? ' chip--on' : ''}`}
+          className={`ui-chip${mode === 'mixed' ? ' ui-chip--active' : ''}`}
           onClick={() => {
             setMode('mixed');
             next('mixed');
@@ -111,7 +102,7 @@ export default function GorselQuizPage() {
         </button>
         <button
           type="button"
-          className={`chip${mode === 'weak' ? ' chip--on' : ''}`}
+          className={`ui-chip${mode === 'weak' ? ' ui-chip--active' : ''}`}
           data-testid="vq-mode-weak"
           disabled={weak.length === 0}
           onClick={() => {
@@ -123,15 +114,15 @@ export default function GorselQuizPage() {
         </button>
         <span
           className="muted"
-          style={{ marginLeft: 'auto', fontSize: '0.9rem' }}
+          style={{ marginLeft: 'auto', fontSize: '0.9rem', alignSelf: 'center' }}
           data-testid="vq-score"
         >
           Skor: {score.ok}/{score.total}
         </span>
       </div>
 
-      <div className="card" style={{ textAlign: 'center' }} data-testid="vq-stage">
-        <span className="badge">{round.groupLabel}</span>
+      <div className="ui-card quiz-card" style={{ textAlign: 'center' }} data-testid="vq-stage">
+        <span className="ui-badge">{round.groupLabel}</span>
         <div style={{ display: 'grid', placeItems: 'center', margin: '14px 0' }}>
           {sign ? (
             <SignSvg
@@ -139,7 +130,7 @@ export default function GorselQuizPage() {
               glyph={sign.glyph}
               glyphText={sign.glyphText}
               label="Quiz görseli"
-              size={150}
+              size={170}
             />
           ) : (
             <div style={{ maxWidth: 380, width: '100%' }}>
@@ -147,13 +138,13 @@ export default function GorselQuizPage() {
             </div>
           )}
         </div>
-        <p style={{ margin: '0 0 12px', fontWeight: 600 }}>{round.prompt}</p>
-        <div style={{ display: 'grid', gap: 8 }}>
+        <p style={{ margin: '0 0 14px', fontWeight: 700, fontSize: '1.1rem' }}>{round.prompt}</p>
+        <div role="group" aria-label="Seçenekler" style={{ textAlign: 'left' }}>
           {round.options.map((o, i) => {
-            let cls = 'btn btn--ghost';
+            let cls = 'opt';
             if (picked !== null) {
-              if (i === round.answerIndex) cls = 'btn';
-              else if (i === picked) cls = 'btn btn--ghost vq-wrong';
+              if (i === round.answerIndex) cls += ' correct';
+              else if (i === picked) cls += ' wrong';
             }
             return (
               <button
@@ -162,21 +153,22 @@ export default function GorselQuizPage() {
                 className={cls}
                 data-testid="vq-option"
                 onClick={() => answer(i)}
-                style={{ justifyContent: 'flex-start' }}
+                disabled={picked !== null}
               >
-                {o}
+                <span className="opt__key">{String.fromCharCode(65 + i)}</span>
+                <span>{o}</span>
               </button>
             );
           })}
         </div>
         {picked !== null && (
-          <div style={{ marginTop: 14 }} data-testid="vq-feedback">
-            <p style={{ margin: 0, fontWeight: 700 }}>
-              {picked === round.answerIndex ? '✅ Doğru!' : '❌ Yanlış — zayıflar destene eklendi.'}
-            </p>
-            <p className="muted" style={{ margin: '6px 0 0', fontSize: '0.9rem' }}>
+          <div style={{ marginTop: 14, textAlign: 'left' }} data-testid="vq-feedback">
+            <div className="explain" role="status">
+              <strong>
+                {picked === round.answerIndex ? 'Doğru! ' : 'Yanlış — zayıflar destene eklendi. '}
+              </strong>
               {round.explanation}
-            </p>
+            </div>
             <button
               type="button"
               className="btn"
@@ -190,5 +182,48 @@ export default function GorselQuizPage() {
         )}
       </div>
     </div>
+  );
+
+  const aside = (
+    <>
+      <QuizPanel title="İlerleme" icon="trending">
+        <DonutStat
+          pct={okPct}
+          center={`%${okPct}`}
+          sub="Doğru Oranı"
+          rows={[
+            { color: 'var(--accent-green)', label: 'Doğru', value: score.ok },
+            { color: 'var(--accent-red)', label: 'Yanlış', value: score.total - score.ok },
+            { color: 'var(--text-3)', label: 'Toplam', value: score.total },
+          ]}
+        />
+      </QuizPanel>
+      <QuizPanel title="Konu Bilgisi" icon="layers">
+        <InfoRow icon="sign" label="Kategori" value={round.groupLabel} />
+        <InfoRow icon="image" label="Havuz" value={`${poolSize} görsel`} />
+        <InfoRow icon="flame" label="Zayıflar destesi" value={`${weak.length} görsel`} />
+      </QuizPanel>
+      <HintCard>
+        {picked !== null && sign?.memoryTip
+          ? sign.memoryTip
+          : 'Görseli dikkatle incele: şekil ve renk, işaretin ailesini (tehlike/yasak/bilgi) ele verir.'}
+      </HintCard>
+    </>
+  );
+
+  return (
+    <>
+      <PageHeader
+        title="Görsel Quiz"
+        emoji="📸"
+        subtitle={
+          <>
+            {poolSize} görselden rastgele: işareti/bileşeni gör, adını bil. Yanlışların "zayıflar"
+            destene düşer; iki kez doğru bilince çıkar.
+          </>
+        }
+      />
+      <QuizLayout main={main} aside={aside} />
+    </>
   );
 }

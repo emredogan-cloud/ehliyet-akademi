@@ -164,9 +164,13 @@ export function PricingView() {
                 </p>
 
                 <div style={{ margin: 'var(--sp-5) 0 0' }} aria-hidden>
-                  <IconBadge accent="teal" size="lg">
-                    <Icon name="shield" size={28} />
-                  </IconBadge>
+                  {/* Üretilmiş premium amblemi (ASSET A12 / 028-A) */}
+                  <img
+                    src="/assets/ui/premium-banner.webp"
+                    alt=""
+                    className="premium-emblem"
+                    aria-hidden
+                  />
                 </div>
 
                 <ul

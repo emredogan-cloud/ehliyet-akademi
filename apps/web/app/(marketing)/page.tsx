@@ -4,7 +4,6 @@ import { subjectCounts } from '@ea/question-bank';
 import { LESSONS } from '@/content/lessons';
 import { SIGNS } from '@/content/signs';
 import { VEHICLE_PARTS } from '@/content/vehicle';
-import { HeroArt } from '@/components/marketing/HeroArt';
 import { Reveal } from '@/components/ui/Reveal';
 import { Icon, type IconName } from '@/components/ui/icons';
 import type { Accent } from '@/components/ui/primitives';
@@ -149,7 +148,15 @@ export default function HomePage() {
           </div>
         </div>
         <div className="mk-hero__art">
-          <HeroArt />
+          {/* Üretilmiş kahraman görseli (ASSET A1 / 001-A) */}
+          <img
+            src="/assets/ui/landing-hero.webp"
+            alt=""
+            width={1536}
+            height={1024}
+            className="mk-hero__img"
+            aria-hidden
+          />
         </div>
       </section>
 

@@ -4398,3 +4398,57 @@ table.tbl {
   text-decoration: none;
   filter: brightness(1.06);
 }
+
+/* Üretilmiş varlıklar (Program 3.1 §6 — otomatik bağlanan görseller) */
+.mk-hero__img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-2);
+  display: block;
+}
+.nudge-art {
+  height: 96px;
+  width: auto;
+  display: block;
+}
+@media (max-width: 720px) {
+  .nudge-art {
+    display: none;
+  }
+}
+.coach-hero__img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  display: block;
+}
+.premium-emblem {
+  width: 100%;
+  max-width: 420px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  display: block;
+  margin: 0 auto var(--sp-3);
+}
+.nf-art {
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+  border-radius: var(--radius);
+  display: block;
+  margin: 0 auto var(--sp-3);
+}
+.page-decor {
+  height: 92px;
+  width: auto;
+  max-width: 280px;
+  object-fit: contain;
+  display: block;
+}
+@media (max-width: 900px) {
+  .page-decor {
+    display: none;
+  }
+}

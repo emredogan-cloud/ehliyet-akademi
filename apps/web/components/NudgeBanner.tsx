@@ -28,6 +28,10 @@ export function NudgeBanner() {
       <div className="hero-banner__body">
         <div className="hero-banner__title">{nudge.text}</div>
       </div>
+      <div className="hero-banner__art" aria-hidden>
+        {/* Üretilmiş panel araç görseli (ASSET A2 / 003-B) */}
+        <img src="/assets/ui/panel-hero-car.webp" alt="" className="nudge-art" />
+      </div>
       <div className="hero-banner__action">
         <Button variant="primary" href={nudge.href}>
           Başla →

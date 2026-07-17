@@ -148,7 +148,8 @@ export function AICoach() {
     <div>
       <div className="ui-card ui-card--accent hero-banner coach-hero" role="note">
         <span className="coach-hero__bot" aria-hidden>
-          🤖
+          {/* Üretilmiş maskot (ASSET A4 / 020-A) */}
+          <img src="/assets/ui/ai-coach-avatar.webp" alt="" className="coach-hero__img" />
         </span>
         <div className="hero-banner__body">
           <div className="hero-banner__title">Merhaba! 👋</div>

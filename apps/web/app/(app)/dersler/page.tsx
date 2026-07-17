@@ -37,6 +37,10 @@ export default function DerslerPage() {
         title="Dersler"
         emoji="📚"
         subtitle="Teorik akademi + Sürüş Akademisi. Her ders görselli, özetli; sonunda tekrar kartları ve alıştırma soruları var."
+        actions={
+          /* Üretilmiş başlık dekoru (ASSET A7) */
+          <img src="/assets/ui/lesson-hero.webp" alt="" className="page-decor" aria-hidden />
+        }
       />
 
       {GROUP_ORDER.map((subject) => {

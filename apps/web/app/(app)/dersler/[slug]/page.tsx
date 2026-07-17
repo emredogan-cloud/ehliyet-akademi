@@ -260,7 +260,8 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
 
       <div className="ui-card ui-card--accent hero-banner" style={{ marginTop: 'var(--sp-6)' }}>
         <span className="coach-hero__bot" aria-hidden>
-          🤖
+          {/* Üretilmiş maskot (ASSET A4 / 020-A) */}
+          <img src="/assets/ui/ai-coach-avatar.webp" alt="" className="coach-hero__img" />
         </span>
         <div className="hero-banner__body">
           <div className="hero-banner__title">Takıldığın yer mi var?</div>

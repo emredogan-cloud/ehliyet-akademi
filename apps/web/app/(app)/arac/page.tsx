@@ -23,6 +23,10 @@ export default function AracPage() {
             fotoğraflı rehber. Her kartın detay sayfasında kontrol adımları ve sık hatalar var.
           </>
         }
+        actions={
+          // Üretilmiş başlık dekoru (ASSET A9)
+          <img src="/assets/ui/vehicle-hero.webp" alt="" className="page-decor" aria-hidden />
+        }
       />
 
       <section style={{ margin: '22px 0' }}>

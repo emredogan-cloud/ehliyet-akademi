@@ -58,6 +58,36 @@ describe('checkout + webhook (Epic 1)', () => {
     expect(((await r.json()) as { mode: string }).mode).toBe('mock');
   });
 
+  it('gerçek ödeme yapılandırıldığında doğrudan purchase-grant 409 reddedilir (LCP)', async () => {
+    const { POST: purchasesPost } = await import('@/app/api/purchases/route');
+    const r0 = await register(
+      post('/api/auth/register', {
+        email: `lcp-gate-${T}@test.dev`,
+        password: 'Sifre12345',
+        name: 'Gate',
+      })
+    );
+    const cookie = cookieOf(r0);
+    process.env.LEMONSQUEEZY_API_KEY = 'test_key';
+    process.env.LEMONSQUEEZY_STORE_ID = '1';
+    process.env.LEMONSQUEEZY_WEBHOOK_SECRET = 'whsec';
+    try {
+      const res = await purchasesPost(
+        post('/api/purchases', { productId: 'simulator-paketi' }, cookie)
+      );
+      expect(res.status).toBe(409);
+    } finally {
+      delete process.env.LEMONSQUEEZY_API_KEY;
+      delete process.env.LEMONSQUEEZY_STORE_ID;
+      delete process.env.LEMONSQUEEZY_WEBHOOK_SECRET;
+    }
+    // ENV temizlenince mock akış yeniden çalışır (idempotent kontrol değil; davranış kapısı).
+    const res2 = await purchasesPost(
+      post('/api/purchases', { productId: 'simulator-paketi' }, cookie)
+    );
+    expect(res2.status).toBe(200);
+  });
+
   it('checkout oturumsuz 401; bilinmeyen ürün 404', async () => {
     expect((await checkout(post('/api/checkout', { productId: 'premium-teori' }))).status).toBe(
       401

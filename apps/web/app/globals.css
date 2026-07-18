@@ -4452,3 +4452,20 @@ table.tbl {
     display: none;
   }
 }
+
+/* Chat markdown (gerçek model yanıtları — LCP) */
+.chat__h {
+  display: block;
+  margin: 6px 0 2px;
+  color: var(--text);
+}
+.chat__li {
+  display: block;
+  padding-left: 8px;
+}
+.chat__hr {
+  display: block;
+  height: 1px;
+  background: var(--border);
+  margin: 8px 0;
+}

@@ -28,10 +28,26 @@ import { SUBJECT_LABEL } from '@ea/content-schema';
 import { Icon } from '@/components/ui/icons';
 import { QuizLayout, QuizPanel, DonutStat } from '@/components/ui/quiz';
 
-/** Çok hafif markdown: **kalın** + [link](url). Girdi kendi ürettiğimiz metindir. */
+/**
+ * Çok hafif markdown: **kalın**, [link](/url), # başlık, - madde, --- ayraç.
+ * Girdi kendi ürettiğimiz/model yanıtı metindir; önce HTML kaçışı yapılır.
+ * (Gerçek model (Anthropic) yanıtları başlık/madde kullanır — LCP genişletmesi.)
+ */
 function mdLite(s: string): string {
   const esc = s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  return esc
+  const lines = esc.split('\n').map((line) => {
+    const t = line.trim();
+    if (/^-{3,}$/.test(t)) return '<span class="chat__hr"></span>';
+    const h = t.match(/^#{1,4}\s+(.*)$/);
+    if (h) return `<strong class="chat__h">${h[1]}</strong>`;
+    const li = t.match(/^[-*]\s+(.*)$/);
+    if (li) return `<span class="chat__li">• ${li[1]}</span>`;
+    const num = t.match(/^(\d+)[.)]\s+(.*)$/);
+    if (num) return `<span class="chat__li">${num[1]}. ${num[2]}</span>`;
+    return line;
+  });
+  return lines
+    .join('\n')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\[(.+?)\]\((\/[^)]+)\)/g, '<a href="$2">$1</a>')
     .replace(/\n/g, '<br/>');

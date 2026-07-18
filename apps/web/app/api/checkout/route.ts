@@ -13,7 +13,10 @@ export const POST = guarded(async (req: Request): Promise<Response> => {
   if (limited) return limited;
 
   const user = await getSessionUser(req);
-  if (!user) return json({ error: 'Oturum gerekli.' }, { status: 401 });
+  if (!user) {
+    // provider bilgisini dön ki istemci gerçek-ödeme modunda demo-grant yapmasın (LCP).
+    return json({ error: 'Oturum gerekli.', provider: getPaymentGateway().name }, { status: 401 });
+  }
 
   let body: { productId?: string };
   try {

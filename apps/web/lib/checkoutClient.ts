@@ -13,6 +13,8 @@ export interface CheckoutOutcome {
   ok: boolean;
   message: string;
   redirected?: boolean;
+  /** Gerçek ödeme modunda misafir: satın alma için giriş gerekir. */
+  needsLogin?: boolean;
 }
 
 export async function startCheckout(productId: ProductId): Promise<CheckoutOutcome> {
@@ -27,10 +29,19 @@ export async function startCheckout(productId: ProductId): Promise<CheckoutOutco
       mode?: string;
       url?: string;
       error?: string;
+      provider?: string;
     };
 
     if (res.status === 401 || res.status === 503) {
-      // Misafir veya hesap sistemi henüz bağlı değil → yerel demo grant (dürüst etiketli).
+      // Gerçek sağlayıcı aktifken demo-grant YOK (LCP) — satın alma girişle yapılır.
+      if (data.provider && data.provider !== 'mock') {
+        return {
+          ok: false,
+          needsLogin: true,
+          message: 'Satın almak için önce giriş yapmalısın — paketin hesabına kalıcı yazılır.',
+        };
+      }
+      // Mock/dev: yerel demo grant (dürüst etiketli).
       grantEntitlement(productId);
       return {
         ok: true,
@@ -48,8 +59,8 @@ export async function startCheckout(productId: ProductId): Promise<CheckoutOutco
     if (owned) return { ok: true, message: 'Paketin hesabına tanımlandı (demo ödeme).' };
     return { ok: false, message: 'Satın alma tamamlanamadı, tekrar dene.' };
   } catch {
-    grantEntitlement(productId);
-    return { ok: true, message: 'Demo modda bu cihaza tanımlandı.' };
+    // Sunucuya ulaşılamadı: sahiplik VERME — gerçek ödeme modunda bu bir gelir açığı olur.
+    return { ok: false, message: 'Bağlantı hatası — lütfen tekrar dene.' };
   }
 }
 

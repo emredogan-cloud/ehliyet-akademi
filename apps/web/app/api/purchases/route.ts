@@ -2,6 +2,7 @@ import { eq } from 'drizzle-orm';
 import { getDb, purchases } from '@ea/db';
 import { getSessionUser, json, newId, guarded } from '@/lib/server/auth';
 import { productById } from '@/lib/products';
+import { paymentConfigured } from '@/lib/server/checkout';
 import { getEmailProvider, purchaseConfirmationEmail } from '@/lib/server/email';
 
 /** Sahiplik listesi (restore purchases — Epic 3). */
@@ -28,6 +29,15 @@ export const GET = guarded(async (req: Request): Promise<Response> => {
 export const POST = guarded(async (req: Request): Promise<Response> => {
   const user = await getSessionUser(req);
   if (!user) return json({ error: 'Oturum gerekli.' }, { status: 401 });
+
+  // GÜVENLİK (LCP): gerçek ödeme sağlayıcısı yapılandırıldığında doğrudan grant KAPALIDIR —
+  // sahiplik yalnız ödeme webhook'u ile yazılır. Mock modda (yerel/dev/e2e) eski akış korunur.
+  if (paymentConfigured()) {
+    return json(
+      { error: 'Gerçek ödeme aktif — satın alma, ödeme sayfası üzerinden yapılır.' },
+      { status: 409 }
+    );
+  }
 
   let body: { productId?: string };
   try {

@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { PRODUCTS, type Product } from '@/lib/products';
 import { getPaymentProvider, loadEntitlements } from '@/lib/payments';
 import { isAuthed, me, serverPurchase } from '@/lib/authClient';
+import { startCheckout } from '@/lib/checkoutClient';
 import { track } from '@/lib/analytics';
 import { Card, Button, Badge, IconBadge, type Accent } from '@/components/ui/primitives';
 import { Section, Grid, Stack } from '@/components/ui/layout';
@@ -49,7 +50,15 @@ function OwnedBadge({ productId }: { productId: string }) {
   );
 }
 
-export function PricingView() {
+export function PricingView({
+  realPayments = false,
+  purchasable,
+}: {
+  /** Sunucudan: gerçek ödeme sağlayıcısı (LemonSqueezy) yapılandırıldı mı? */
+  realPayments?: boolean;
+  /** Sunucudan: satın alınabilir ürün id'leri (gerçek modda variant'ı tanımlı olanlar). */
+  purchasable?: string[];
+}) {
   const [owned, setOwned] = useState<string[]>([]);
   const [msg, setMsg] = useState<string>('');
   const [busy, setBusy] = useState<string | null>(null);
@@ -58,10 +67,27 @@ export function PricingView() {
     void me().finally(() => setOwned(loadEntitlements()));
   }, []);
 
+  const canBuy = (id: string) => !purchasable || purchasable.includes(id);
+
   async function buy(p: Product) {
     setBusy(p.id);
     setMsg('');
-    // Girişliyse: sunucu-taraflı kalıcı sahiplik (Epic 3). Değilse: yerel demo + not.
+
+    // GERÇEK ÖDEME (LCP): herkes ödeme oturumu üzerinden — girişli kullanıcı hosted
+    // checkout'a yönlenir, sahiplik webhook ile yazılır; misafire giriş istenir.
+    if (realPayments) {
+      const res = await startCheckout(p.id);
+      setBusy(null);
+      if (res.needsLogin) {
+        setMsg('Satın almak için önce giriş yapmalısın — paketin hesabına kalıcı yazılır.');
+        window.location.href = '/giris';
+        return;
+      }
+      if (!res.redirected) setMsg(res.message);
+      return;
+    }
+
+    // MOCK/DEV: eski dürüst demo akışı (yerel geliştirme ve e2e).
     if (isAuthed()) {
       const owned = await serverPurchase(p.id);
       setBusy(null);
@@ -264,7 +290,7 @@ export function PricingView() {
                       <div style={{ marginTop: 'auto', paddingTop: 'var(--sp-2)' }}>
                         {has ? (
                           <OwnedBadge productId={p.id} />
-                        ) : (
+                        ) : canBuy(p.id) ? (
                           <Button
                             variant="soft"
                             accent="teal"
@@ -275,6 +301,16 @@ export function PricingView() {
                             data-testid={`buy-${p.id}`}
                           >
                             {busy === p.id ? 'İşleniyor…' : 'Satın al'}
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            full
+                            disabled
+                            data-testid={`soon-${p.id}`}
+                          >
+                            Yakında — şimdilik Komple paket
                           </Button>
                         )}
                       </div>
@@ -317,9 +353,18 @@ export function PricingView() {
       />
 
       <p style={{ marginTop: 'var(--sp-5)', color: 'var(--text-3)', fontSize: 'var(--fs-sm)' }}>
-        Yinelenen ücret yok; satın alınan paketler kalıcıdır. Şu an <strong>demo ödeme</strong>{' '}
-        modundadır — gerçek tahsilat yapılmaz (üretimde web-first sağlayıcı bağlanır; bkz.
-        ENV_SETUP_GUIDE).
+        {realPayments ? (
+          <>
+            Yinelenen ücret yok; satın alınan paketler kalıcıdır. Ödemeler{' '}
+            <strong>LemonSqueezy</strong> güvenli altyapısıyla alınır; fatura e-postana gönderilir.
+          </>
+        ) : (
+          <>
+            Yinelenen ücret yok; satın alınan paketler kalıcıdır. Şu an <strong>demo ödeme</strong>{' '}
+            modundadır — gerçek tahsilat yapılmaz (üretimde web-first sağlayıcı bağlanır; bkz.
+            ENV_SETUP_GUIDE).
+          </>
+        )}
       </p>
     </div>
   );

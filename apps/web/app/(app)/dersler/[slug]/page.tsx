@@ -21,6 +21,9 @@ import { QuizPanel, InfoRow } from '@/components/ui/quiz';
 import { Icon } from '@/components/ui/icons';
 import type { ReactNode } from 'react';
 
+// Yalnız kataloğdaki dersler geçerli; bilinmeyen slug → gerçek 404 (soft-404 önlenir).
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return LESSONS.map((l) => ({ slug: l.slug }));
 }

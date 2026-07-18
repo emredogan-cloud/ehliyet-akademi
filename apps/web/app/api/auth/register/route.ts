@@ -55,12 +55,15 @@ export const POST = guarded(async (req: Request): Promise<Response> => {
       })()
     : false;
   let role: 'user' | 'admin' = adminEmails.includes(email) || patternMatch ? 'admin' : 'user';
-  if (role === 'user') {
+  // GÜVENLİK (C2): "sistemde admin yoksa ilk kayıt admin olur" bootstrap'ı YALNIZ geliştirmede.
+  // Üretimde bir saldırgan bu yarışı kazanıp admin olabilirdi → üretimde admin YALNIZ açık
+  // allowlist (ADMIN_EMAILS / ADMIN_EMAIL_PATTERN) ile atanır; owner admini seed/atamalı.
+  if (role === 'user' && process.env.NODE_ENV !== 'production') {
     const admins = await db
       .select({ n: sql<number>`count(*)` })
       .from(users)
       .where(eq(users.role, 'admin'));
-    if (Number(admins[0]?.n ?? 0) === 0) role = 'admin'; // ilk kullanıcı kurulum admini
+    if (Number(admins[0]?.n ?? 0) === 0) role = 'admin'; // ilk kullanıcı kurulum admini (yalnız dev)
   }
 
   const id = newId();

@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { allQuestions } from '@ea/question-bank';
 import { Practice } from '@/components/Practice';
 import { PageHeader } from '@/components/ui/layout';
 import { buildMetadata } from '@/lib/seo/metadata';
@@ -11,8 +10,8 @@ export const metadata: Metadata = buildMetadata({
   path: '/calis',
 });
 
+// Soru bankası artık Practice içinde istemcide tembel yüklenir (props ile gömülmez) → ilk yük hafif.
 export default function CalisPage() {
-  const pool = allQuestions().filter((q) => q.subject !== 'pratik');
   return (
     <>
       <PageHeader
@@ -20,7 +19,7 @@ export default function CalisPage() {
         emoji="🧠"
         subtitle="Aralıklı tekrar (SM-2) + zayıf konu önceliği. Her oturum ~10 soru."
       />
-      <Practice pool={pool} />
+      <Practice />
     </>
   );
 }

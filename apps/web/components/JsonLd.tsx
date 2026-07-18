@@ -23,11 +23,13 @@ import {
   ORG_ID,
 } from '@/lib/seo/schema';
 
-/** Genel JSON-LD script yazıcı — herhangi bir schema nesnesini basar. */
+/**
+ * Genel JSON-LD script yazıcı. GÜVENLİK (M6): `<` kaçırılır → içerikte `</script>` geçse bile
+ * script bloğundan çıkış yapılamaz (gelecekte CMS/kullanıcı içeriği schema'ya akarsa XSS önlenir).
+ */
 export function JsonLd({ data }: { data: object }) {
-  return (
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />
-  );
+  const html = JSON.stringify(data).replace(/</g, '\\u003c');
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
 /** Kök: Organization + WebSite(+SearchAction) tek @graph içinde (paylaşılan @id). */

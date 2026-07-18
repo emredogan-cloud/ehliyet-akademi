@@ -210,7 +210,13 @@ export default function IlerlemePage() {
         subtitle="XP, seviye, hedefler ve çalışma haritan — hepsi senin verinden."
         actions={
           // Üretilmiş başlık dekoru (ASSET A10)
-          <img src="/assets/ui/progress-hero.webp" alt="" className="page-decor" aria-hidden />
+          <img
+            src="/assets/ui/progress-hero.webp"
+            alt=""
+            className="page-decor"
+            aria-hidden
+            loading="lazy"
+          />
         }
       />
 

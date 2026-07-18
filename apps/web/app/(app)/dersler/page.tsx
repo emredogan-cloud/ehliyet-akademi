@@ -60,7 +60,13 @@ export default function DerslerPage() {
         subtitle="Teorik akademi + Sürüş Akademisi. Her ders görselli, özetli; sonunda tekrar kartları ve alıştırma soruları var."
         actions={
           /* Üretilmiş başlık dekoru (ASSET A7) */
-          <img src="/assets/art/workzone-scene.webp" alt="" className="page-decor" aria-hidden />
+          <img
+            src="/assets/art/workzone-scene.webp"
+            alt=""
+            className="page-decor"
+            aria-hidden
+            loading="lazy"
+          />
         }
       />
 

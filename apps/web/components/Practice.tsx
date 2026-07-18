@@ -21,7 +21,7 @@ import { QuizLayout, QuizPanel, DonutStat, QuizNav, HintCard, type QuizNavState 
 
 const SESSION_SIZE = 10;
 
-export function Practice({ pool }: { pool: Question[] }) {
+export function Practice() {
   const [queue, setQueue] = useState<Question[]>([]);
   const [i, setI] = useState(0);
   const [chosen, setChosen] = useState<number | null>(null);
@@ -36,6 +36,7 @@ export function Practice({ pool }: { pool: Question[] }) {
 
   // Oturum kuyruğunu kur (yalnız istemcide — localStorage).
   useEffect(() => {
+    let alive = true;
     const cards = loadCards();
     const answers = loadAnswers();
     const { topicMastery, subjects } = statsFromAnswers(answers);
@@ -48,17 +49,26 @@ export function Practice({ pool }: { pool: Question[] }) {
         return { label: SUBJECT_LABEL[s], pct: st ? Math.round(st.mastery * 100) : 0 };
       })
     );
-    const ids = selectNext(
-      pool.map((q) => ({ id: q.id, subject: q.subject, topic: q.topic })),
-      cards,
-      topicMastery,
-      now,
-      SESSION_SIZE
-    );
-    const byId = new Map(pool.map((q) => [q.id, q]));
-    setQueue(ids.map((id) => byId.get(id)!).filter(Boolean));
-    setReady(true);
-  }, [pool]);
+    // Soru bankası (1534) tembel yüklenir → önceden props ile sayfaya gömülüyordu (~340 KB gzip
+    // ilk yük); artık istemcide async yüklenir, sayfa payload'ı düşer (PERF).
+    void import('@ea/question-bank').then(({ allQuestions }) => {
+      if (!alive) return;
+      const pool = allQuestions().filter((qq) => qq.subject !== 'pratik');
+      const ids = selectNext(
+        pool.map((qq) => ({ id: qq.id, subject: qq.subject, topic: qq.topic })),
+        cards,
+        topicMastery,
+        now,
+        SESSION_SIZE
+      );
+      const byId = new Map(pool.map((qq) => [qq.id, qq]));
+      setQueue(ids.map((id) => byId.get(id)!).filter(Boolean));
+      setReady(true);
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   const q = queue[i];
   const pct = useMemo(() => (queue.length ? Math.round((i / queue.length) * 100) : 0), [i, queue]);

@@ -27,7 +27,13 @@ export default function AracPage() {
         }
         actions={
           // Üretilmiş başlık dekoru (ASSET A9)
-          <img src="/assets/ui/vehicle-hero.webp" alt="" className="page-decor" aria-hidden />
+          <img
+            src="/assets/ui/vehicle-hero.webp"
+            alt=""
+            className="page-decor"
+            aria-hidden
+            loading="lazy"
+          />
         }
       />
 

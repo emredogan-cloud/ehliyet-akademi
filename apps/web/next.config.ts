@@ -69,9 +69,14 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ['@electric-sql/pglite', 'pg'],
   // Güvenlik başlıkları + CSP (ROADMAP Faz 30 · Sprint 5).
   async headers() {
+    const immutable = 'public, max-age=31536000, immutable';
     return [
       { source: '/:path*', headers: SECURITY_HEADERS },
       { source: '/icon.svg', headers: [{ key: 'Cache-Control', value: 'public, max-age=86400' }] },
+      // Statik içerik görselleri (124 webp) önceden max-age=0 idi → her yüklemede yeniden doğrulanıyordu.
+      // İçerik-kararlı varlıklar (deploy ile versiyonlanır); uzun immutable cache (PERF).
+      { source: '/assets/:path*', headers: [{ key: 'Cache-Control', value: immutable }] },
+      { source: '/videos/:path*', headers: [{ key: 'Cache-Control', value: immutable }] },
     ];
   },
 };

@@ -13,6 +13,11 @@ export const GET = guarded(async (req: Request): Promise<Response> => {
       'content-type': m.mime,
       'content-length': String(buf.length),
       'cache-control': 'public, max-age=31536000, immutable',
+      // GÜVENLİK (M4): yüklü SVG/JSON aynı origin'de doğrudan açılırsa gömülü script çalışabilir.
+      // `sandbox` CSP + nosniff: <img> gömmeyi bozmaz ama üst-düzey gezinmede script'i etkisizleştirir.
+      'content-security-policy': "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+      'x-content-type-options': 'nosniff',
+      'content-disposition': 'inline',
     },
   });
 });

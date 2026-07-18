@@ -39,10 +39,15 @@ export const POST = guarded(async (req: Request): Promise<Response> => {
     await getEmailProvider().send(email, passwordResetEmail(`${base}/sifirla?token=${token}`));
     return json({ ok: true, sent: true });
   }
-  return json({
-    ok: true,
-    sent: false,
-    devToken: token,
-    note: 'E-posta servisi yapılandırılmadı; token geliştirme amacıyla döndürüldü.',
-  });
+  // GÜVENLİK (C1): sıfırlama tokenı yanıtta YALNIZ geliştirmede döner. Üretimde e-posta
+  // yapılandırılmamışsa token ASLA sızdırılmaz (aksi halde e-posta bilinen hesap ele geçirilir).
+  if (process.env.NODE_ENV !== 'production') {
+    return json({
+      ok: true,
+      sent: false,
+      devToken: token,
+      note: 'E-posta servisi yapılandırılmadı; token geliştirme amacıyla döndürüldü.',
+    });
+  }
+  return json({ ok: true, sent: false });
 });

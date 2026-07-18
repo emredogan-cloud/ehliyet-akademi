@@ -33,11 +33,17 @@ export function rateLimit(
   return { ok: b.count <= limit, remaining, resetMs: b.resetAt - now };
 }
 
-/** İstemci IP'si (proxy başlıklarından; yoksa 'local'). */
+/**
+ * İstemci IP'si. GÜVENLİK: `x-forwarded-for` istemci tarafından eklenebilir (leftmost sahte olabilir)
+ * → başlık döndürerek hız-sınırı atlanabiliyordu. Vercel'in GÜVENİLİR set ettiği `x-real-ip` önce
+ * gelir; yoksa XFF leftmost'a düşülür (yerel/dev), o da yoksa 'local'.
+ */
 export function clientIp(req: Request): string {
+  const real = req.headers.get('x-real-ip');
+  if (real) return real.trim();
   const xf = req.headers.get('x-forwarded-for');
   if (xf) return xf.split(',')[0]!.trim();
-  return req.headers.get('x-real-ip') ?? 'local';
+  return 'local';
 }
 
 /**

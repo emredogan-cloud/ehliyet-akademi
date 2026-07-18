@@ -7,6 +7,9 @@ import { Breadcrumb } from '@/components/ui/patterns';
 import { SignJsonLd, FaqJsonLd } from '@/components/JsonLd';
 import { buildMetadata } from '@/lib/seo/metadata';
 
+// Yalnız kataloğdaki işaretler geçerli; bilinmeyen id → gerçek 404 (soft-404 önlenir).
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return allSignIds().map((id) => ({ id }));
 }

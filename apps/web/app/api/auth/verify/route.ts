@@ -54,10 +54,15 @@ export const POST = guarded(async (req: Request): Promise<Response> => {
     await getEmailProvider().send(user.email, verificationEmail(link));
     return json({ ok: true, sent: true });
   }
-  return json({
-    ok: true,
-    sent: false,
-    devToken: token,
-    note: 'E-posta servisi yapılandırılmadı; token geliştirme amacıyla döndürüldü.',
-  });
+  // GÜVENLİK (C1): token yanıtta YALNIZ geliştirmede döner. Üretimde e-posta yapılandırılmamışsa
+  // token ASLA sızdırılmaz (aksi halde hesap ele geçirme). Üretimde RESEND_API_KEY zorunludur.
+  if (process.env.NODE_ENV !== 'production') {
+    return json({
+      ok: true,
+      sent: false,
+      devToken: token,
+      note: 'E-posta servisi yapılandırılmadı; token geliştirme amacıyla döndürüldü.',
+    });
+  }
+  return json({ ok: true, sent: false });
 });

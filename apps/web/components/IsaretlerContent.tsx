@@ -107,7 +107,13 @@ export function IsaretlerContent() {
         subtitle={`${SIGNS.length} özgün işaret. Karta dokun → anlamını gör. Kategoriye göre süz veya ara.`}
         actions={
           /* Üretilmiş başlık dekoru (ASSET A8) */
-          <img src="/assets/ui/signs-hero.webp" alt="" className="page-decor" aria-hidden />
+          <img
+            src="/assets/ui/signs-hero.webp"
+            alt=""
+            className="page-decor"
+            aria-hidden
+            loading="lazy"
+          />
         }
       />
 

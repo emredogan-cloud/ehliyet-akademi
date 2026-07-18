@@ -37,11 +37,14 @@ function mdLite(s: string): string {
     if (num) return `<span class="chat__li">${num[1]}. ${num[2]}</span>`;
     return line;
   });
-  return lines
-    .join('\n')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\[(.+?)\]\((\/[^)]+)\)/g, '<a href="$2">$1</a>')
-    .replace(/\n/g, '<br/>');
+  return (
+    lines
+      .join('\n')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      // GÜVENLİK (L2): href yalnız güvenli URL karakterleri — tırnak/boşluk yok → attribute injection önlenir.
+      .replace(/\[(.+?)\]\((\/[^)"'\s]+)\)/g, '<a href="$2">$1</a>')
+      .replace(/\n/g, '<br/>')
+  );
 }
 
 const SUGGESTIONS = [

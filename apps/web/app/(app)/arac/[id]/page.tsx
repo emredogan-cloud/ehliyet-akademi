@@ -8,6 +8,9 @@ import { Breadcrumb } from '@/components/ui/patterns';
 import { VehicleJsonLd, FaqJsonLd } from '@/components/JsonLd';
 import { buildMetadata } from '@/lib/seo/metadata';
 
+// Yalnız kataloğdaki bileşenler geçerli; bilinmeyen id → gerçek 404 (soft-404 önlenir).
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return allPartIds().map((id) => ({ id }));
 }

@@ -170,7 +170,7 @@ export default function HomePage() {
           </div>
         </div>
         <div className="mk-hero__art">
-          {/* Üretilmiş kahraman görseli (ASSET A1 / 001-A) */}
+          {/* Üretilmiş kahraman görseli (ASSET A1 / 001-A) — LCP öğesi: yüksek öncelik, tembel DEĞİL. */}
           <img
             src="/assets/ui/landing-hero.webp"
             alt=""
@@ -178,6 +178,8 @@ export default function HomePage() {
             height={1024}
             className="mk-hero__img"
             aria-hidden
+            fetchPriority="high"
+            decoding="async"
           />
         </div>
       </section>

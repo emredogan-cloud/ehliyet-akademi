@@ -1,8 +1,13 @@
 import { eq } from 'drizzle-orm';
 import { getDb, users } from '@ea/db';
 import { verifyPassword, createSession, sessionSetCookie, json, guarded } from '@/lib/server/auth';
+import { checkRateLimit } from '@/lib/server/rate-limit';
 
 export const POST = guarded(async (req: Request): Promise<Response> => {
+  // Kimlik-doldurma/parola brute-force savunması (register/forgot/verify ile aynı).
+  const limited = checkRateLimit(req, { bucket: 'login', limit: 8, windowMs: 60_000 });
+  if (limited) return limited;
+
   let body: { email?: string; password?: string };
   try {
     body = await req.json();
@@ -10,7 +15,7 @@ export const POST = guarded(async (req: Request): Promise<Response> => {
     return json({ error: 'Geçersiz istek gövdesi.' }, { status: 400 });
   }
   const email = (body.email ?? '').trim().toLowerCase();
-  const password = body.password ?? '';
+  const password = (body.password ?? '').slice(0, 200); // aşırı uzun parola scryptSync'i yormasın (L4)
 
   const db = await getDb();
   const rows = await db.select().from(users).where(eq(users.email, email));

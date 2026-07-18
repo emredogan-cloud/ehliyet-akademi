@@ -192,9 +192,9 @@ export function PricingView({
                 <div style={{ margin: 'var(--sp-5) 0 0' }} aria-hidden>
                   {/* Üretilmiş premium amblemi (ASSET A12 / 028-A) */}
                   <img
-                    src="/assets/ui/premium-banner.webp"
+                    src="/assets/art/premium-emblem-3d.webp"
                     alt=""
-                    className="premium-emblem"
+                    className="premium-emblem premium-emblem--3d"
                     aria-hidden
                   />
                 </div>

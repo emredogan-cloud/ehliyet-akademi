@@ -4469,3 +4469,199 @@ table.tbl {
   background: var(--border);
   margin: 8px 0;
 }
+
+/* ============================================================
+   LCP — /assets entegrasyonu (doğal kompozisyonlar)
+   ============================================================ */
+/* Bant illüstrasyonları */
+.banner-art {
+  display: grid;
+  place-items: center;
+  width: 96px;
+  flex: 0 0 auto;
+}
+.banner-art img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.45));
+}
+.banner-art--lg {
+  width: 132px;
+}
+
+/* Seviye kartı avatarı (ref 021-A) */
+.level-avatar {
+  display: block;
+  flex: 0 0 auto;
+  width: 84px;
+  height: 84px;
+  min-width: 84px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 2px solid color-mix(in srgb, var(--primary) 55%, transparent);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--primary) 30%, transparent);
+}
+.level-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Meydan okuma bandı gece-yol sahnesi (ref 021-C) — sağa yaslanır, kenarı erir */
+.challenge-art {
+  display: block;
+  width: 220px;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.challenge-art img {
+  width: 100%;
+  height: 86px;
+  object-fit: cover;
+  display: block;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 26%);
+  mask-image: linear-gradient(90deg, transparent, #000 26%);
+}
+@media (max-width: 860px) {
+  .challenge-art {
+    display: none;
+  }
+}
+
+/* Davet bandı çak-el + hediye (ref 022-D/E) */
+.invite-art {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.invite-art img {
+  width: 74px;
+  height: 74px;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.4));
+}
+@media (max-width: 720px) {
+  .invite-art {
+    display: none;
+  }
+}
+
+/* Deneme sınavı kupa sonucu (ref 019-A) */
+.exam-hero__art {
+  width: 88px;
+  height: 88px;
+  object-fit: cover;
+  border-radius: 999px;
+  display: block;
+}
+
+/* Senaryo kuşbakışı kapak (ref 013-A) */
+.scenario-cover {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  display: block;
+}
+
+/* Giriş promo gece sahnesi (ref 027-E) — alt banda erir */
+.auth-promo__scene {
+  margin: 0 0 var(--sp-4);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.auth-promo__scene img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  object-position: center 62%;
+  display: block;
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent);
+  mask-image: linear-gradient(180deg, #000 55%, transparent);
+}
+
+/* Landing CTA beyaz sedan (ref 002-D) — kenardan taşan kompozisyon */
+.mk-cta__art--car {
+  width: 230px;
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+.mk-cta__art--car img {
+  width: 100%;
+  height: auto;
+  display: block;
+  -webkit-mask-image: linear-gradient(90deg, #000 70%, transparent);
+  mask-image: linear-gradient(90deg, #000 70%, transparent);
+}
+
+/* Premium 3D amblem (ref 028-A) */
+.premium-emblem--3d {
+  height: 190px;
+  object-fit: contain;
+  background: transparent;
+}
+
+/* Ders kartı üretilmiş ikon (ref 004-B) */
+.lesson-card__img {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  flex: 0 0 auto;
+}
+.lesson-card__img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35));
+}
+
+/* Aksiyon kartı üretilmiş ikon (ref 003-E) */
+.action-card__img {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 auto;
+}
+.action-card__img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Landing özellik ikonu (üretilmiş tile) */
+.mk-feature__img {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+}
+.mk-feature__img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Araç posterleri */
+.poster-card {
+  display: grid;
+  gap: var(--sp-2);
+  padding: var(--sp-3);
+}
+.poster-card img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  display: block;
+}
+.poster-card strong {
+  font-size: var(--fs-sm);
+}

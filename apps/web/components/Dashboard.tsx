@@ -172,6 +172,7 @@ export function Dashboard() {
           {!r && (
             <ActionCard
               icon="target"
+              iconSrc="/assets/feature-icons/tani.webp"
               accent="teal"
               title="Tanı denemesi"
               desc="Önce seviyeni ölç — hazırlık skorun çıksın."
@@ -180,6 +181,7 @@ export function Dashboard() {
           )}
           <ActionCard
             icon="brain"
+            iconSrc="/assets/feature-icons/beyin.webp"
             accent="amber"
             glow
             title="Akıllı çalışma"
@@ -188,6 +190,7 @@ export function Dashboard() {
           />
           <ActionCard
             icon="timer"
+            iconSrc="/assets/feature-icons/kronometre.webp"
             accent="blue"
             title="Deneme sınavı"
             desc="Gerçek format: 50 soru · 45 dakika."
@@ -195,6 +198,7 @@ export function Dashboard() {
           />
           <ActionCard
             icon="bot"
+            iconSrc="/assets/feature-icons/ai.webp"
             accent="purple"
             title="AI Koç"
             desc="Takıldığın konuyu sor; içerikten kaynaklı yanıt al."

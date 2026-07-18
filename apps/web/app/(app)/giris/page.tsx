@@ -131,6 +131,10 @@ export default function GirisPage() {
             </div>
           ))}
         </div>
+        <div className="auth-promo__scene" aria-hidden>
+          {/* Gece yol sahnesi (ref 027-E) */}
+          <img src="/assets/art/sedan-side.webp" alt="" />
+        </div>
         <div className="ui-card auth-promo__note">
           <span className="mastery-row__icon" aria-hidden>
             <Icon name="clipboard" size={20} />

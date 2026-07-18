@@ -42,6 +42,40 @@ export default function AracPage() {
         </div>
       </section>
 
+      <section style={{ margin: '26px 0' }}>
+        <h2 className="section-title" style={{ marginTop: 0 }}>
+          Araç Rehber Posterleri
+        </h2>
+        <p className="muted" style={{ marginTop: 0, fontSize: 'var(--fs-sm)' }}>
+          Ehliyet kursu aracının bölge bölge rehberi — postere tıkla, tam boyutunda incele.
+        </p>
+        <div className="grid-auto" style={{ ['--grid-min' as string]: '260px' }}>
+          {[
+            {
+              src: '/assets/vehicle-posters/gosterge-paneli.webp',
+              t: 'Gösterge Paneli İşaretleri',
+            },
+            { src: '/assets/vehicle-posters/arac-ici-kontroller.webp', t: 'Araç İçi Kontroller' },
+            { src: '/assets/vehicle-posters/kaput-alti.webp', t: 'Kaput Altı Rehberi' },
+            { src: '/assets/vehicle-posters/bagaj-ici.webp', t: 'Bagaj Malzemeleri' },
+            { src: '/assets/vehicle-posters/materyaller-genel.webp', t: 'Genel Materyal Haritası' },
+            { src: '/assets/vehicle-posters/ikaz-isiklari.webp', t: 'İkaz Işıkları Seti' },
+          ].map((pst) => (
+            <a
+              key={pst.src}
+              className="ui-card ui-card--interactive poster-card"
+              href={pst.src}
+              target="_blank"
+              rel="noopener"
+              aria-label={`${pst.t} — tam boyut aç`}
+            >
+              <img src={pst.src} alt={pst.t} loading="lazy" />
+              <strong>{pst.t}</strong>
+            </a>
+          ))}
+        </div>
+      </section>
+
       <VehicleGallery />
     </div>
   );

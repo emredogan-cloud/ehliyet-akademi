@@ -216,6 +216,10 @@ export default function IlerlemePage() {
 
       {/* XP + Seviye + Kademe */}
       <Card accent="teal" className="level-hero">
+        <span className="level-avatar" aria-hidden>
+          {/* 3D sürücü avatarı (ref 021-A) */}
+          <img src="/assets/art/avatar-1.webp" alt="" />
+        </span>
         <div style={{ flex: 1, minWidth: 240 }}>
           <div style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-3)' }}>
             Seviye {s.level.level}
@@ -259,6 +263,12 @@ export default function IlerlemePage() {
             </Button>
           }
           data-testid="daily-challenge"
+          art={
+            <span className="challenge-art" aria-hidden>
+              {/* Gece yolu sahnesi (ref 021-C) */}
+              <img src="/assets/art/night-road-city.webp" alt="" />
+            </span>
+          }
         />
       </Section>
 
@@ -431,6 +441,13 @@ export default function IlerlemePage() {
       {/* Davet */}
       <Section title="Arkadaşını davet et" icon={<Icon name="rocket" size={18} />}>
         <HeroBanner
+          art={
+            <span className="invite-art" aria-hidden>
+              {/* 3D çak-el + hediye (ref 022-D/E) */}
+              <img src="/assets/art/high-five.webp" alt="" />
+              <img src="/assets/art/gift-xp.webp" alt="" />
+            </span>
+          }
           icon="rocket"
           accent="teal"
           title="Bağlantını paylaş — birlikte çalışmak motivasyonu artırır."

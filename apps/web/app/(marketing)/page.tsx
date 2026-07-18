@@ -16,6 +16,7 @@ export const metadata: Metadata = {
 
 const FEATURES: Array<{
   icon: IconName;
+  img: string;
   accent: Accent;
   title: string;
   desc: string;
@@ -24,6 +25,7 @@ const FEATURES: Array<{
   {
     icon: 'target',
     accent: 'teal',
+    img: '/assets/feature-icons/tani.webp',
     title: 'Tanı + Hazırlık skoru',
     desc: 'Kısa denemeyle seviyeni ölç; trafik ışığıyla ders durumunu gör.',
     href: '/tani',
@@ -31,6 +33,7 @@ const FEATURES: Array<{
   {
     icon: 'brain',
     accent: 'purple',
+    img: '/assets/feature-icons/beyin.webp',
     title: 'Akıllı tekrar (SRS)',
     desc: 'Yanlışlarını tam unutmadan önce, doğru zamanda tekrar sorar.',
     href: '/calis',
@@ -38,6 +41,7 @@ const FEATURES: Array<{
   {
     icon: 'timer',
     accent: 'blue',
+    img: '/assets/feature-icons/kronometre.webp',
     title: 'Gerçek e-Sınav simülatörü',
     desc: '50 soru · 45 dk · 35 baraj — birebir sınav formatı.',
     href: '/deneme-sinavi',
@@ -45,6 +49,7 @@ const FEATURES: Array<{
   {
     icon: 'sign',
     accent: 'amber',
+    img: '/assets/feature-icons/isaret.webp',
     title: 'Trafik işaretleri galerisi',
     desc: 'Özgün SVG işaret sistemi; kategori süz, ara, çevir-öğren.',
     href: '/isaretler',
@@ -52,6 +57,7 @@ const FEATURES: Array<{
   {
     icon: 'car',
     accent: 'green',
+    img: '/assets/feature-icons/arac.webp',
     title: 'Araç tanıma',
     desc: 'Motor bölmesinden pedallara — direksiyon için görselli rehber.',
     href: '/arac',
@@ -59,6 +65,7 @@ const FEATURES: Array<{
   {
     icon: 'bot',
     accent: 'red',
+    img: '/assets/feature-icons/ai.webp',
     title: 'Grounded AI Koç',
     desc: 'Yalnız kendi içeriğimizden yanıt; halüsinasyon üretmez.',
     href: '/ai-koc',
@@ -239,12 +246,8 @@ export default function HomePage() {
         <div className="grid-auto" style={{ ['--grid-min' as string]: '160px' }}>
           {FEATURES.map((f) => (
             <a className="ui-card ui-card--interactive mk-feature" key={f.title} href={f.href}>
-              <span
-                className="ui-iconbadge ui-iconbadge--md"
-                style={{ ['--ib-accent' as string]: `var(--accent-${f.accent})` }}
-                aria-hidden
-              >
-                <Icon name={f.icon} size={22} />
+              <span className="mk-feature__img" aria-hidden>
+                <img src={f.img} alt="" />
               </span>
               <strong>{f.title}</strong>
               <span className="muted mk-feature__desc">{f.desc}</span>
@@ -278,8 +281,9 @@ export default function HomePage() {
 
       {/* ── CTA bandı (ref 002-D) ─────────────────────────── */}
       <section className="mk-cta">
-        <div className="mk-cta__art" aria-hidden>
-          <Icon name="shield" size={54} strokeWidth={1.4} />
+        <div className="mk-cta__art mk-cta__art--car" aria-hidden>
+          {/* Beyaz sedan (ref 002-D) */}
+          <img src="/assets/art/sedan-side.webp" alt="" />
         </div>
         <div className="mk-cta__body">
           <h2 className="mk-cta__title">

@@ -256,7 +256,12 @@ export function ExamSimulator() {
           className={`ui-card exam-hero ${result.passed ? 'exam-hero--win' : 'exam-hero--fail'}`}
         >
           <div className="exam-hero__medal" aria-hidden>
-            {result.passed ? <Icon name="trophy" size={44} /> : <Icon name="ban" size={44} />}
+            {result.passed ? (
+              /* 3D kupa + konfeti (ref 019-A) */
+              <img src="/assets/art/trophy-confetti.webp" alt="" className="exam-hero__art" />
+            ) : (
+              <Icon name="ban" size={44} />
+            )}
           </div>
           <div className="exam-hero__ribbon">{result.passed ? 'TEBRİKLER!' : 'SONUÇ'}</div>
           <h2 className="exam-hero__title">

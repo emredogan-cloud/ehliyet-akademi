@@ -15,6 +15,12 @@ import { Icon } from '@/components/ui/icons';
 export default function SenaryolarPage() {
   const [active, setActive] = useState<string | null>(null);
 
+  // Üretilmiş kuşbakışı kapaklar (ref 013-A) — id eşleşirse SVG önizleme yerine kullanılır.
+  const COVER: Record<string, string> = {
+    'sagdan-gelen': '/assets/art/intersection-topdown.webp',
+    'donel-kavsak': '/assets/art/roundabout-topdown.webp',
+  };
+
   if (active) {
     return (
       <div style={{ maxWidth: 680, margin: '0 auto' }} data-testid="senaryolar">
@@ -64,7 +70,11 @@ export default function SenaryolarPage() {
               onClick={() => setActive(s.id)}
               data-testid="scenario-card"
             >
-              <SceneCanvas scene={first.scene} label={s.title} />
+              {COVER[s.id] ? (
+                <img src={COVER[s.id]} alt="" className="scenario-cover" aria-hidden />
+              ) : (
+                <SceneCanvas scene={first.scene} label={s.title} />
+              )}
               <h3 style={{ margin: '10px 0 4px', fontSize: '1rem' }}>{s.title}</h3>
               <p className="muted" style={{ margin: 0, fontSize: '0.85rem' }}>
                 {s.description}

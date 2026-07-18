@@ -150,6 +150,7 @@ export function HeroBanner({
    Referans: panel “Bugün ne yapalım?” kartları. İkon + başlık + açıklama + renkli CTA. */
 export function ActionCard({
   icon,
+  iconSrc,
   accent = 'teal',
   title,
   desc,
@@ -157,6 +158,8 @@ export function ActionCard({
   glow = false,
 }: {
   icon: IconName;
+  /** Üretilmiş renkli ikon görseli — varsa çizgi-ikon yerine (ref 003-E). */
+  iconSrc?: string;
   accent?: Accent;
   title: string;
   desc: string;
@@ -166,9 +169,15 @@ export function ActionCard({
   return (
     <Card accent={accent} glow={glow} className="action-card">
       <div className="action-card__head">
-        <IconBadge accent={accent} size="md">
-          <Icon name={icon} size={20} />
-        </IconBadge>
+        {iconSrc ? (
+          <span className="action-card__img" aria-hidden>
+            <img src={iconSrc} alt="" />
+          </span>
+        ) : (
+          <IconBadge accent={accent} size="md">
+            <Icon name={icon} size={20} />
+          </IconBadge>
+        )}
         <h3 className="action-card__title">{title}</h3>
       </div>
       <p className="action-card__desc">{desc}</p>
@@ -191,6 +200,7 @@ export function ActionCard({
    Referans: dersler ızgara kartı. İkon rozeti + (premium) + başlık + açıklama + meta + yer imi. */
 export function LessonCard({
   icon,
+  iconSrc,
   accent = 'teal',
   title,
   desc,
@@ -200,6 +210,8 @@ export function LessonCard({
   'data-testid': testId,
 }: {
   icon: IconName;
+  /** Üretilmiş renkli ikon görseli — varsa çizgi-ikon yerine kullanılır (ref 004-B). */
+  iconSrc?: string;
   accent?: Accent;
   title: string;
   desc?: string;
@@ -218,9 +230,15 @@ export function LessonCard({
       data-testid={testId}
     >
       <div className="lesson-card__top">
-        <IconBadge accent={accent} size="lg">
-          <Icon name={icon} size={26} />
-        </IconBadge>
+        {iconSrc ? (
+          <span className="lesson-card__img" aria-hidden>
+            <img src={iconSrc} alt="" />
+          </span>
+        ) : (
+          <IconBadge accent={accent} size="lg">
+            <Icon name={icon} size={26} />
+          </IconBadge>
+        )}
         {premium && <Badge accent="amber">Premium</Badge>}
       </div>
       <h3 className="lesson-card__title">{title}</h3>

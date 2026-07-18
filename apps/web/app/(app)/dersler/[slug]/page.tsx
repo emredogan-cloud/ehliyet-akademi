@@ -53,6 +53,11 @@ function InfoCard({ title, color, items }: { title: string; color: string; items
   );
 }
 
+/** Ders-özel kazanım sahneleri (ref 030-A) — üretilmiş görseller, slug ile eşlenir. */
+const KAZANIM_ART: Record<string, string> = {
+  'sollama-serit': '/assets/art/overtake-scene.webp',
+};
+
 export default async function LessonPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const lesson = lessonBySlug(slug);
@@ -140,9 +145,17 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
         main={
           <>
             <div
-              className="card"
+              className="card kazanim-card"
               style={{ background: 'var(--primary-050)', borderColor: 'var(--primary-100)' }}
             >
+              {KAZANIM_ART[lesson.slug] && (
+                <img
+                  src={KAZANIM_ART[lesson.slug]}
+                  alt=""
+                  className="kazanim-card__art"
+                  aria-hidden
+                />
+              )}
               <strong>Kazanımlar</strong>
               <ul className="prose" style={{ margin: '8px 0 0' }}>
                 {lesson.objectives.map((o, k) => (
@@ -261,7 +274,7 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
       <div className="ui-card ui-card--accent hero-banner" style={{ marginTop: 'var(--sp-6)' }}>
         <span className="coach-hero__bot" aria-hidden>
           {/* Üretilmiş maskot (ASSET A4 / 020-A) */}
-          <img src="/assets/ui/ai-coach-avatar.webp" alt="" className="coach-hero__img" />
+          <img src="/assets/art/robot-wave.webp" alt="" className="coach-hero__img" />
         </span>
         <div className="hero-banner__body">
           <div className="hero-banner__title">Takıldığın yer mi var?</div>

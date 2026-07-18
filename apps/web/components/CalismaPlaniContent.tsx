@@ -103,14 +103,9 @@ export function CalismaPlaniContent() {
           </>
         }
         art={
-          /* 3D görsel varlığı beklemede — yer tutucu ikon rozetleri. */
-          <span style={{ display: 'flex', gap: 'var(--sp-2)' }}>
-            <IconBadge accent="teal" size="lg">
-              <Icon name="calendar" size={26} />
-            </IconBadge>
-            <IconBadge accent="green" size="lg">
-              <Icon name="target" size={26} />
-            </IconBadge>
+          /* 3D takvim+hedef illüstrasyonu (ref 023-A) */
+          <span className="banner-art banner-art--lg" aria-hidden>
+            <img src="/assets/art/calendar-target.webp" alt="" />
           </span>
         }
       />

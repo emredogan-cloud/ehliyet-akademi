@@ -27,6 +27,25 @@ const GROUP_META: Record<Subject, { icon: IconName; accent: Accent }> = {
   adab: { icon: 'road', accent: 'blue' },
   pratik: { icon: 'target', accent: 'green' },
 };
+// Ders-özel üretilmiş ikonlar (ref 004-B) — eşleşmeyen dersler çizgi-ikon + aksanla kalır.
+const LESSON_ICON: Record<string, string> = {
+  'trafik-isaretleri': '/assets/lesson-icons/yon-levhalari.webp',
+  'kavsak-oncelik': '/assets/lesson-icons/kavsak.webp',
+  'kavsak-uygulama': '/assets/lesson-icons/kavsak.webp',
+  'hiz-takip': '/assets/lesson-icons/hiz-guvenlik.webp',
+  'sollama-serit': '/assets/lesson-icons/direksiyon.webp',
+  'isik-gece': '/assets/lesson-icons/gece-suruc.webp',
+  'yaya-gecidi': '/assets/lesson-icons/yaya.webp',
+  'cevre-yakit': '/assets/lesson-icons/cevre.webp',
+  'yasal-sorumluluk': '/assets/lesson-icons/yasal-belge.webp',
+  'trafik-adabi': '/assets/lesson-icons/yaya.webp',
+  'ilk-yardim-temel': '/assets/lesson-icons/ilkyardim.webp',
+  'kanama-sok': '/assets/lesson-icons/kanama.webp',
+  'tyd-kalp-masaji': '/assets/lesson-icons/solunum.webp',
+  'motor-temel': '/assets/lesson-icons/motor.webp',
+  'gosterge-ikaz': '/assets/lesson-icons/gosterge.webp',
+};
+
 // Kart ikonlarına referanstaki gibi çeşitlilik: grup içinde aksan döngüsü.
 const ACCENT_CYCLE: Accent[] = ['teal', 'blue', 'green', 'purple', 'amber', 'red'];
 
@@ -39,7 +58,7 @@ export default function DerslerPage() {
         subtitle="Teorik akademi + Sürüş Akademisi. Her ders görselli, özetli; sonunda tekrar kartları ve alıştırma soruları var."
         actions={
           /* Üretilmiş başlık dekoru (ASSET A7) */
-          <img src="/assets/ui/lesson-hero.webp" alt="" className="page-decor" aria-hidden />
+          <img src="/assets/art/workzone-scene.webp" alt="" className="page-decor" aria-hidden />
         }
       />
 
@@ -77,6 +96,7 @@ export default function DerslerPage() {
                   <LessonCard
                     key={l.id}
                     icon={gm.icon}
+                    iconSrc={LESSON_ICON[l.slug]}
                     accent={ACCENT_CYCLE[i % ACCENT_CYCLE.length]}
                     title={l.title}
                     desc={l.summary}

@@ -104,8 +104,9 @@ export function ESinavContent({ counts }: { counts: Record<string, number> }) {
       </div>
 
       <div className="ui-card ui-card--accent hero-banner esx-banner">
-        <span className="ui-iconbadge ui-iconbadge--lg" aria-hidden>
-          <Icon name="timer" size={26} />
+        <span className="banner-art" aria-hidden>
+          {/* 3D pano+kronometre illüstrasyonu (ref 010-B) */}
+          <img src="/assets/art/checklist-timer.webp" alt="" />
         </span>
         <div className="hero-banner__body">
           <div className="hero-banner__title">Deneme sınavı ile kendini test et</div>

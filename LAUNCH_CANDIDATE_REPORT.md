@@ -5,14 +5,22 @@ _Prepared: 2026-07-18_
 
 ## Verdict: 🟢 GO (as a launch candidate)
 
-The platform is **production-ready from an engineering standpoint** and can be deployed to
-production today. It runs end-to-end, every quality gate is green, and every real integration for
-which credentials exist is live and verified. The remaining gate to a **public, revenue-taking
-launch** is **owner/business setup, not code** — legal contracts, a live payment provider, and a
-production domain. Those are enumerated in `OWNER_ACTIONS_BEFORE_PUBLIC_LAUNCH.md`.
+The platform is **production-ready from an engineering standpoint** and is **already deployed and
+live**. It runs end-to-end, every quality gate is green, and — verified against the live production
+deployment — **all four real integrations are configured and working: Neon (DB), Resend (email),
+LemonSqueezy (payments), and Anthropic (AI).** The remaining gate to a **public, revenue-taking
+launch** is **owner/business verification, not code** — legal contracts, confirming the payment
+webhook/variants and email sending-domain, and a branded production domain. Those are enumerated in
+`OWNER_ACTIONS_BEFORE_PUBLIC_LAUNCH.md`.
 
-- **Ship the code:** ✅ ready now.
-- **Take real money & announce publicly:** ⏳ gated on the owner checklist (payments, legal, domain).
+- **Ship the code:** ✅ done — live at `ehliyet-akademi-nine.vercel.app`.
+- **Real services in production:** ✅ DB + email + payments + AI all configured (verified live).
+- **Take real money & announce publicly:** ⏳ gated on the owner checklist (legal, payment/email
+  verification, branded domain).
+
+> **Environment note:** this report distinguishes the **production** deployment (all real services
+> live) from the **local dev** box used for the test suite (deliberate mock/console fallbacks for
+> deterministic E2E — see §10). Launch readiness below refers to **production**.
 
 ---
 
@@ -110,17 +118,22 @@ allowlist-driven in production; CodeQL runs in CI.
 
 ## 9. Real services status
 
-| Service              | Provider                  | Status in this environment    | Verified                                                              |
-| -------------------- | ------------------------- | ----------------------------- | --------------------------------------------------------------------- |
-| Database             | Neon Postgres             | ✅ Live (`DATABASE_URL`)      | Register, `/api/state` sync, content pipeline all round-trip via curl |
-| AI Koç               | Anthropic                 | ✅ Live (`ANTHROPIC_API_KEY`) | Real grounded markdown response returned                              |
-| Email                | Resend                    | ⚠️ Fallback (console mode)    | Auth works; owner must add `RESEND_API_KEY`                           |
-| Payments             | LemonSqueezy              | ⚠️ Fallback (mock)            | Full code path ready; owner must add keys + variant                   |
-| Analytics/Monitoring | GA/PostHog/Clarity/Sentry | ⚪ Off until IDs set          | Consent-gated hooks in place                                          |
+Verified against the **live production deployment** (`ehliyet-akademi-nine.vercel.app`) — all four
+real integrations are configured and responding:
 
-The fallback modes are **deliberate and honest** — the app is fully usable without paid services, and
-flips to real behavior the moment credentials are supplied. No mock data is presented to users as if
-it were real.
+| Service              | Provider                  | Production (verified live)                                                              | Local dev / test env          |
+| -------------------- | ------------------------- | --------------------------------------------------------------------------------------- | ----------------------------- |
+| Database             | Neon Postgres             | ✅ Live — `/api/health` reports `db: configured`                                        | Real Neon or in-memory PGlite |
+| AI Koç               | Anthropic                 | ✅ Live — real grounded markdown answer returned                                        | Live (key present)            |
+| Email                | Resend                    | ✅ Configured — `/api/health` reports `email: resend`                                   | Console fallback              |
+| Payments             | LemonSqueezy              | ✅ Configured — `payments: lemonsqueezy`; `komple-b` purchasable, others show "Yakında" | Mock gateway                  |
+| Analytics/Monitoring | GA/PostHog/Clarity/Sentry | ⚪ Off until IDs set (consent-gated hooks in place)                                     | Off                           |
+
+**Production runs on real services today.** Where a service is intentionally left in fallback (the
+local test box), the app degrades honestly — friendly 503s and deterministic mocks, never fake data
+presented as real. What still needs the **owner** is _verification_, not wiring: confirm the Resend
+sending-domain is DNS-verified, the LemonSqueezy webhook secret + all intended variant mappings are
+set, and run one real test purchase. See `OWNER_ACTIONS_BEFORE_PUBLIC_LAUNCH.md`.
 
 ## 10. E2E determinism (engineering note)
 
@@ -139,17 +152,22 @@ does not reduce coverage of the production paths.
 
 ## 11. Known limitations (not launch blockers)
 
-- **Email and payments run in fallback mode here** because no credentials are set. They are
-  code-complete and flip on when the owner supplies keys (see owner checklist §2–§3).
-- **`OPENAI_API_KEY` is present but unused** — the AI path uses Anthropic. Owner should remove it or
-  wire it intentionally.
-- **Analytics/Sentry are off** until IDs are provided (consent-gated).
-- These are all **owner-configuration** items, not defects.
+- **Payment & email keys are set in production, but their _external_ setup needs owner confirmation**
+  — Resend sending-domain DNS verification, LemonSqueezy webhook secret + full variant coverage, and
+  one real test purchase. (Local dev intentionally runs mock/console for deterministic tests.)
+- **`OPENAI_API_KEY` is present in env but unused** — the AI path uses Anthropic. Owner should remove
+  it or wire it intentionally.
+- **Analytics/Sentry are off** until IDs are provided (consent-gated). Sentry is strongly recommended
+  before opening traffic.
+- These are all **owner-configuration/verification** items, not code defects.
 
 ## 12. Next step
 
-Follow `OWNER_ACTIONS_BEFORE_PUBLIC_LAUNCH.md`. The minimum path to a public, revenue-taking launch:
-legal entity + consumer contracts, LemonSqueezy live with a test purchase, a production domain with
-`NEXT_PUBLIC_SITE_URL`, and (strongly recommended) Resend email + Sentry before sending traffic.
+Production is deployed and running on real services. Follow `OWNER_ACTIONS_BEFORE_PUBLIC_LAUNCH.md`
+to close the **business** gate to a public, revenue-taking launch: legal entity + consumer contracts,
+confirm the LemonSqueezy webhook/variants with a real test purchase, verify the Resend sending-domain,
+attach a branded production domain (+ `NEXT_PUBLIC_SITE_URL`), and (strongly recommended) add Sentry
+before driving traffic.
 
-**Engineering readiness: complete. The product is a GO to deploy as a launch candidate.**
+**Engineering readiness: complete and deployed. Production runs on real services. The product is a
+GO — public launch is now a business/verification step, not an engineering one.**

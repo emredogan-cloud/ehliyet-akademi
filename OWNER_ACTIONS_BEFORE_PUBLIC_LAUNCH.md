@@ -8,9 +8,13 @@ autonomously because they need real accounts, real money, legal identity, creden
 external verification. Everything technically completable in code has already been done and is
 recorded in `LAUNCH_CANDIDATE_REPORT.md`.
 
-The product **already runs end-to-end today** in a safe fallback mode (mock payments, console
-email, in-memory/real DB). None of the items below block _running_ the app — they block turning on
-**real revenue, real email, and a public announcement**. Work them top-to-bottom.
+The product **is already deployed and live** at `ehliyet-akademi-nine.vercel.app`, and — verified
+against that live deployment — **all four real services are already configured in production**: Neon
+(DB), Resend (email), LemonSqueezy (payments), and Anthropic (AI). So the payment/email items below
+are mostly **"verify and complete"**, not "set up from scratch". None of the items block _running_
+the app — they block a confident **public announcement and taking real revenue at scale**. Work them
+top-to-bottom. (Your local dev box uses mock payments / console email on purpose — that is only for
+deterministic tests and does not reflect production.)
 
 ---
 
@@ -46,16 +50,18 @@ Turkey sells a paid education service here, so these are non-negotiable before t
 - [ ] 🟠 **Content licensing** — confirm you have the right to publish the question bank
       (1534 questions) and all generated illustrations commercially.
 
-## 2. Payments — LemonSqueezy (🔴 Blocker for revenue)
+## 2. Payments — LemonSqueezy (🟠 Configured in production — verify & complete)
 
-The code is fully wired for LemonSqueezy (hosted checkout + webhook entitlement grant). It is
-currently in **mock mode** because no keys are set. To turn on real payments:
+**Live production already reports `payments: lemonsqueezy`**, and the pricing page shows `komple-b`
+as purchasable with other packages correctly gated to **"Yakında"** (no variant mapped yet). So the
+API key is set and the code path is live. What remains is to **confirm the setup is complete and
+safe** before promoting it:
 
-- [ ] 🔴 **Create/verify a LemonSqueezy store** and complete their KYC/payout onboarding
-      (bank account, tax details). This is the money-in path.
-- [ ] 🔴 **Create a product + variant** in LemonSqueezy for each paid package you sell. Today only
-      `komple-b` has a variant mapping in code; decide which packages are actually purchasable.
-- [ ] 🔴 Set in Vercel (Production):
+- [ ] 🔴 **Confirm the LemonSqueezy store KYC/payout onboarding is complete** (bank account, tax
+      details) so money can actually settle.
+- [ ] 🟠 **Add a variant mapping for every package you intend to sell.** Only `komple-b` is
+      purchasable today; the rest show "Yakında" by design until you map them.
+- [ ] 🔴 **Confirm these are set in Vercel (Production)** — the API key clearly is; verify the rest:
   - `LEMONSQUEEZY_API_KEY`
   - `LEMONSQUEEZY_STORE_ID`
   - `LEMONSQUEEZY_WEBHOOK_SECRET` — **required** if the API key is set; the app refuses to trust
@@ -74,19 +80,17 @@ currently in **mock mode** because no keys are set. To turn on real payments:
 > (`/api/purchases` returns 409) so nobody can self-grant a package without paying. Verified in code
 > and integration tests.
 
-## 3. Transactional email — Resend (🟠 Important)
+## 3. Transactional email — Resend (🟠 Configured in production — verify deliverability)
 
-Email is in **console mode** (verification/reset tokens are logged, not sent). Auth still works, but
-users cannot self-serve password reset by email.
+**Live production already reports `email: resend`**, so the API key is set and the app sends real
+email (not the console/dev-token fallback). What remains is to confirm deliverability:
 
-- [ ] 🟠 **Create a Resend account** and verify your sending **domain** (add their DKIM/SPF/Return-Path
-      DNS records at your domain registrar). Until the domain is verified, delivery is unreliable.
-- [ ] 🟠 Set in Vercel (Production):
-  - `RESEND_API_KEY`
-  - `EMAIL_FROM` — e.g. `Ehliyet Akademi <noreply@your-domain.com>` (must be on the verified domain)
-  - `SUPPORT_EMAIL` — where support replies/inbound should go
-- [ ] 🟠 After enabling, request a password reset in prod and confirm the email arrives and the link
-      works. (With email configured, the dev-token fallback disappears automatically.)
+- [ ] 🟠 **Verify your sending domain in Resend** (DKIM/SPF/Return-Path DNS records at your registrar).
+      A set API key is not enough — until the domain is verified, mail may land in spam or bounce.
+- [ ] 🟠 **Confirm `EMAIL_FROM` and `SUPPORT_EMAIL`** in Vercel (Production) use that verified domain,
+      e.g. `Ehliyet Akademi <noreply@your-domain.com>`.
+- [ ] 🟠 **Send a real password reset in prod** and confirm the email arrives (inbox, not spam) and the
+      reset link works end-to-end.
 
 ## 4. Domain & site URL (🔴 Blocker for a public brand)
 
@@ -124,12 +128,13 @@ The app has provider-agnostic hooks; nothing is sent until you supply IDs.
 - [ ] 🟢 **Admin allowlist** — set `ADMIN_EMAILS` (comma-separated) for production so admin access is
       explicit. (The `admin-e2e-*` pattern is test-only and not used in prod.)
 
-## 7. Post-deploy verification (🟠 do this on the live URL, after §2–§4)
+## 7. Post-deploy verification (🟠 on the live URL)
 
+- [x] ✅ **AI Koç** — confirmed live: a real grounded markdown answer is returned in production.
+- [x] ✅ **Health** — `/api/health` reports `db: configured, email: resend, payments: lemonsqueezy`.
 - [ ] 🟠 Register a real account → confirm it persists (Neon).
 - [ ] 🟠 Complete a real (test-mode) purchase → confirm entitlement + cross-device restore.
-- [ ] 🟠 Trigger a password reset → confirm the email arrives (needs §3).
-- [ ] 🟠 Ask the AI Koç a question → confirm a real grounded answer.
+- [ ] 🟠 Trigger a password reset → confirm the email arrives in the inbox (needs domain verify, §3).
 - [ ] 🟢 Paste the homepage URL into the [Facebook Sharing Debugger] and
       [Twitter Card Validator] → confirm the `og.jpg` card renders.
 - [ ] 🟢 Run Lighthouse on the live URL → confirm Core Web Vitals stay green under real network.
@@ -146,14 +151,19 @@ listings are optional:
 
 ---
 
-## Summary: the minimum set to take real money and announce
+## Summary: the minimum set to confidently announce & take money at scale
+
+The code is deployed and production already runs on real DB, email, payments, and AI. The remaining
+gate is **business/verification**, not engineering:
 
 1. Legal entity + consumer contracts reviewed (§1).
-2. LemonSqueezy live + webhook + one test purchase (§2).
-3. Production domain + `NEXT_PUBLIC_SITE_URL` (§4).
-4. (Strongly recommended) Resend email (§3) and Sentry (§6) before you send traffic.
+2. Confirm the LemonSqueezy store payout/KYC is complete and run one real **test purchase** end-to-end
+   (§2). Map variants for any package still showing "Yakında".
+3. Verify the Resend **sending domain** so email lands in inboxes (§3).
+4. Attach a branded production domain + set `NEXT_PUBLIC_SITE_URL` (§4).
+5. (Strongly recommended) add Sentry (§6) before you drive real traffic.
 
-Everything else in this repo is done, tested, and deployment-ready. See
+Everything in this repo is done, tested, deployed, and verified live. See
 `LAUNCH_CANDIDATE_REPORT.md` for the full engineering record and the GO/NO-GO verdict.
 
 [Facebook Sharing Debugger]: https://developers.facebook.com/tools/debug/

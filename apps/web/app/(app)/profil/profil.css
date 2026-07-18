@@ -1,0 +1,621 @@
+/*
+ * Profil sayfası — sayfaya özel düzen (referans: new-image/032-profil-page.png).
+ * Tüm sınıflar `pf-` ön ekiyle (çakışmayı önler). Yalnız globals.css tasarım
+ * jetonlarını (token) kullanır — koyu, kartlı, teal aksanlı görsel dil.
+ */
+
+.pf {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+/* ─────────────────────────── Kart temeli ─────────────────────────── */
+.pf-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--sp-5);
+  box-shadow: var(--shadow-1);
+}
+
+.pf-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+.pf-card__title {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin: 0;
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--text);
+}
+.pf-card__title svg {
+  color: var(--primary);
+  flex: none;
+}
+.pf-card__titlewrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.pf-card__sub {
+  margin: 0;
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+.pf-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--primary);
+  white-space: nowrap;
+}
+.pf-card__link:hover {
+  text-decoration: underline;
+}
+
+/* ─────────────────────────── Hero ─────────────────────────── */
+.pf-hero {
+  display: grid;
+  grid-template-columns: minmax(300px, 1.7fr) repeat(3, minmax(0, 1fr));
+  gap: var(--sp-6);
+  background:
+    radial-gradient(
+      120% 140% at 100% 0%,
+      color-mix(in srgb, var(--primary) 10%, transparent),
+      transparent 55%
+    ),
+    var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-6);
+  box-shadow: var(--shadow-1);
+}
+
+.pf-id {
+  display: flex;
+  gap: var(--sp-4);
+  align-items: flex-start;
+}
+.pf-avatar {
+  flex: none;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 14%, var(--surface));
+  border: 2px solid color-mix(in srgb, var(--primary) 55%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 10%, transparent);
+}
+.pf-id__body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pf-id__name {
+  margin: 0;
+  font-size: var(--fs-2xl);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--text);
+}
+.pf-id__mailrow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+.pf-id__mail {
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+  word-break: break-all;
+}
+.pf-id__sync {
+  margin: 6px 0 0;
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pf-id__sync strong {
+  color: var(--green);
+}
+.pf-id__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-top: var(--sp-3);
+}
+
+/* Hero alt bölümleri (senkron / güvenlik / üyelik) */
+.pf-hcell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.pf-hcell__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+.pf-hcell__head svg {
+  color: var(--pf-accent, var(--primary));
+  flex: none;
+}
+.pf-hcell__status {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--text);
+}
+.pf-hcell__note {
+  margin: 0 0 var(--sp-1);
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+.pf-hcell__btn {
+  margin-top: auto;
+}
+
+/* ─────────────────────────── Butonlar / pill ─────────────────────────── */
+.pf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: 9px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-strong);
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease);
+}
+.pf-btn svg {
+  flex: none;
+}
+.pf-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.pf-btn--full {
+  width: 100%;
+}
+.pf-btn--primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #04201d;
+}
+.pf-btn--primary:hover {
+  background: var(--primary-700);
+  border-color: var(--primary-700);
+  color: #04201d;
+}
+.pf-btn--danger:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+/* ─────────────────────────── Rozet / pill ─────────────────────────── */
+.pf-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--pf-badge, var(--green));
+  background: color-mix(in srgb, var(--pf-badge, var(--green)) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--pf-badge, var(--green)) 35%, transparent);
+}
+.pf-badge svg {
+  flex: none;
+}
+
+/* ─────────────────────────── Ana ızgara ─────────────────────────── */
+.pf-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: var(--sp-4);
+  align-items: start;
+}
+.pf-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  min-width: 0;
+}
+
+/* ─────────────────────────── Bilgi satırları ─────────────────────────── */
+.pf-rows {
+  display: flex;
+  flex-direction: column;
+}
+.pf-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-2);
+  margin: 0 calc(-1 * var(--sp-2));
+  border-radius: var(--radius-sm);
+  border-top: 1px solid var(--border);
+  color: inherit;
+  transition: background var(--dur-fast) var(--ease);
+}
+.pf-row:first-child {
+  border-top: none;
+}
+a.pf-row:hover {
+  background: var(--surface-2);
+}
+.pf-row__ic {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+}
+.pf-row__body {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.pf-row__label {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+.pf-row__value {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text);
+  word-break: break-word;
+}
+.pf-row__value.pf-muted {
+  color: var(--text-3);
+  font-weight: 500;
+  font-style: italic;
+}
+.pf-row__end {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  color: var(--text-3);
+  flex: none;
+}
+.pf-row__end svg {
+  color: var(--text-3);
+}
+
+/* ─────────────────────────── İstatistik döşemeleri ─────────────────────────── */
+.pf-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sp-3);
+}
+.pf-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: var(--sp-3);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+.pf-stat__ic {
+  color: var(--pf-accent, var(--primary));
+}
+.pf-stat__label {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+.pf-stat__value {
+  font-size: var(--fs-xl);
+  font-weight: 800;
+  line-height: 1.05;
+  color: var(--text);
+}
+.pf-stat__value small {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-2);
+  margin-left: 2px;
+}
+
+/* XP / seviye çubuğu */
+.pf-xp {
+  margin-top: var(--sp-4);
+  padding: var(--sp-4);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+.pf-xp__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-2);
+}
+.pf-xp__level {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--text);
+}
+.pf-xp__val {
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+  white-space: nowrap;
+}
+.pf-bar {
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--text-3) 22%, transparent);
+  overflow: hidden;
+}
+.pf-bar__fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--primary), var(--accent-green));
+  transition: width var(--dur-slow) var(--ease-out);
+}
+.pf-xp__next {
+  margin: var(--sp-2) 0 0;
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+
+/* ─────────────────────────── Faturalar ─────────────────────────── */
+.pf-inv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: var(--sp-3) 0;
+  border-top: 1px solid var(--border);
+}
+.pf-inv:first-of-type {
+  border-top: none;
+}
+.pf-inv__title {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text);
+}
+.pf-inv__meta {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+.pf-inv__price {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+}
+.pf-empty {
+  margin: var(--sp-2) 0 var(--sp-3);
+  font-size: var(--fs-sm);
+  color: var(--text-3);
+}
+.pf-status {
+  margin: 0 0 var(--sp-3);
+  padding: 10px var(--sp-4);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+  color: var(--text);
+  font-size: var(--fs-sm);
+}
+
+/* ─────────────────────────── Başarılar ─────────────────────────── */
+.pf-ach__hero {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-4);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  margin-bottom: var(--sp-4);
+}
+.pf-ach__ring {
+  flex: none;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--accent-amber);
+  background: color-mix(in srgb, var(--accent-amber) 14%, transparent);
+  border: 2px solid color-mix(in srgb, var(--accent-amber) 45%, transparent);
+}
+.pf-ach__count {
+  font-size: var(--fs-2xl);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text);
+}
+.pf-ach__count small {
+  font-size: var(--fs-lg);
+  color: var(--text-3);
+  font-weight: 700;
+}
+.pf-ach__label {
+  font-size: var(--fs-sm);
+  color: var(--text-3);
+}
+.pf-ach__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+.pf-ach__item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-2) 0;
+}
+.pf-ach__emoji {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+  background: var(--surface-3);
+}
+.pf-ach__meta {
+  min-width: 0;
+}
+.pf-ach__t {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text);
+}
+.pf-ach__d {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+.pf-ach__foot {
+  margin-top: var(--sp-3);
+}
+
+/* ─────────────────────────── Destek kartı ─────────────────────────── */
+.pf-support {
+  background:
+    radial-gradient(
+      120% 130% at 100% 0%,
+      color-mix(in srgb, var(--accent-purple) 30%, transparent),
+      transparent 60%
+    ),
+    color-mix(in srgb, var(--accent-purple) 14%, var(--surface));
+  border-color: color-mix(in srgb, var(--accent-purple) 35%, var(--border));
+}
+.pf-support__title {
+  margin: 0 0 4px;
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--text);
+}
+.pf-support__text {
+  margin: 0 0 var(--sp-4);
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+}
+
+/* ─────────────────────────── Hızlı işlemler ─────────────────────────── */
+.pf-quick {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sp-3);
+}
+.pf-action {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: inherit;
+  transition:
+    border-color var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease);
+}
+.pf-action:hover {
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+.pf-action__ic {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: var(--pf-accent, var(--primary));
+  background: color-mix(in srgb, var(--pf-accent, var(--primary)) 14%, transparent);
+}
+.pf-action__body {
+  flex: 1;
+  min-width: 0;
+}
+.pf-action__t {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text);
+}
+.pf-action__d {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+.pf-action__chev {
+  flex: none;
+  color: var(--text-3);
+}
+
+/* ─────────────────────────── Duyarlı ─────────────────────────── */
+@media (max-width: 1080px) {
+  .pf-hero {
+    grid-template-columns: 1fr 1fr;
+  }
+  .pf-id {
+    grid-column: 1 / -1;
+  }
+  .pf-grid {
+    grid-template-columns: 1fr;
+  }
+  .pf-quick {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 640px) {
+  .pf-hero {
+    grid-template-columns: 1fr;
+    padding: var(--sp-4);
+  }
+  .pf-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+  .pf-quick {
+    grid-template-columns: 1fr;
+  }
+  .pf-avatar {
+    width: 72px;
+    height: 72px;
+    font-size: 1.5rem;
+  }
+}

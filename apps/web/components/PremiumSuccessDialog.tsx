@@ -40,7 +40,9 @@ export function PremiumSuccessDialog({ owned, onClose }: { owned: string[]; onCl
           aria-label="Kapat"
           data-testid="premium-close"
         >
-          <Icon name="chevron-down" size={18} />
+          <span aria-hidden style={{ fontSize: '1.1rem', lineHeight: 1 }}>
+            ✕
+          </span>
         </button>
 
         <div className="premium-modal__crown" aria-hidden>

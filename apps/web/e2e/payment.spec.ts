@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 
 /**
  * FINAL SPRINT — ödeme kök-neden regresyon kilidi.
@@ -11,7 +11,7 @@ let n = 0;
 const uniqueEmail = (p: string) => `${p}-${Date.now()}-${n++}@example.com`;
 const PW = 'Test1234!';
 
-async function registerUI(page: import('@playwright/test').Page, email: string) {
+async function registerUI(page: Page, email: string) {
   await page.goto('/giris');
   await page.getByTestId('tab-register').click();
   await page.getByTestId('name').fill('Ödeme Test');

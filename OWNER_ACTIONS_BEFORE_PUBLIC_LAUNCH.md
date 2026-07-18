@@ -28,13 +28,20 @@ Priority: 🔴 before opening registration/taking money · 🟠 at/around launch
 
 ## 2. Payments — LemonSqueezy (🔴 for revenue)
 
-- [ ] 🔴 **Verify the hosted-checkout redirect** end-to-end (the known owner-side item): click "Satın
-      al" on `/fiyatlandirma` in production and confirm the LemonSqueezy checkout opens correctly.
-- [ ] 🔴 **Do one real (test-mode) purchase** and confirm: the webhook fires, the entitlement is
-      granted server-side, and it restores on another device/session.
+> **The "premium not granted after payment" bug is FIXED in code.** Root cause: the webhook wrote the
+> `purchases` table but the client only synced entitlements from a separate store, so the paid
+> package never auto-unlocked. The app now reconciles server purchases → entitlements on every load
+> and on checkout return (`?checkout=success`), sets the checkout `redirect_url`, and shows a success
+> popup. Verified end-to-end in tests. Your remaining steps are a normal go-live check, not debugging.
+
+- [ ] 🔴 **Set `LEMONSQUEEZY_VARIANT_KOMPLE_B`** in Vercel Production to the variant id of your one
+      package (the app is now a **single-package** model — only Komple B is sold).
+- [ ] 🔴 **Do one real (test-mode) purchase** on the live site and confirm: checkout opens → after
+      paying you land back on `/fiyatlandirma?checkout=success` → the premium popup appears → premium
+      is unlocked (and restores on another device via login).
 - [ ] 🔴 **Confirm store payout/KYC is complete** (bank + tax) so money can settle.
-- [ ] 🟠 **Map a variant for every package** you intend to sell (only `komple-b` is purchasable today;
-      others intentionally show "Yakında" until you add `LEMONSQUEEZY_VARIANT_<ID>`).
+- [ ] 🟢 **Upload the product image** to LemonSqueezy: use
+      `apps/web/public/new_icon-lemonsqueezy.png` (1024×1024, generated for this).
 
 ## 3. Domain & DNS (🔴 for the branded site)
 

@@ -893,7 +893,10 @@ export default function AyarlarPage() {
             <p className="st-tip">
               Araç kullanırken dikkatin yolda olsun. Güvenli sürüş, hem seni hem çevreni korur.
             </p>
-            <div className="st-tip-art" aria-hidden />
+            {/* Üretilmiş gece-yol görseli — ipucu kartına doğal doku (FINAL SPRINT P7 asset reuse). */}
+            <div className="st-tip-art">
+              <img src="/assets/art/night-road-city.webp" alt="" loading="lazy" />
+            </div>
           </Card>
 
           <Card icon="user" accent="teal" title="Hesap durumu">

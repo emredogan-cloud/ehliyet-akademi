@@ -16,3 +16,14 @@ test-results/
 .DS_Store
 .vercel
 .env*
+
+# Yerel ajan/araç yapılandırması (repoya girmez)
+.claude/
+.agents/
+skills-lock.json
+
+# Kaynak görsel çalışma dizinleri — uygulamada servis EDİLMEYEN ham girdiler.
+# Servis edilen optimize sürümler apps/web/public/assets/ altında (izlenir).
+/assets/
+/new-image/
+/apps/web/public/ui/

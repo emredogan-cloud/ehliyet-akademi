@@ -27,12 +27,28 @@ export const metadata: Metadata = {
   applicationName: 'Ehliyet Akademi',
   manifest: '/manifest.webmanifest',
   icons: { icon: '/icon.svg', apple: '/icon.svg' },
+  alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     locale: 'tr_TR',
     siteName: 'Ehliyet Akademi',
+    url: SITE,
     title: 'Ehliyet Akademi — Sınava akıllı hazırlık',
     description: 'Tanı denemesi → hazırlık skoru. Zayıf konularına odaklan, ilk denemede geç.',
+    images: [
+      {
+        url: '/og.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Ehliyet Akademi — Bugün girsen geçer miydin?',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ehliyet Akademi — Sınava akıllı hazırlık',
+    description: 'Tanı denemesi → hazırlık skoru. Zayıf konularına odaklan, ilk denemede geç.',
+    images: ['/og.jpg'],
   },
   robots: { index: true, follow: true },
 };

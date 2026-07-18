@@ -7,23 +7,14 @@
  * Tahmin/halüsinasyon yoktur.
  */
 import { useEffect, useState } from 'react';
-import { getAIProvider, type AIMessage } from '@/lib/ai';
+import type { AIMessage } from '@/lib/ai';
 import { matchVisuals, type VisualMatches } from '@/lib/visual-match';
 import { TrafficSign as SignSvg } from '@/components/signs/TrafficSign';
 import { AssetImage } from '@/components/ui/AssetImage';
 import { track } from '@/lib/analytics';
 import { loadAnswers, loadCards } from '@/lib/progress';
-import {
-  buildStudyPlan,
-  formatStudyPlan,
-  weakTopics,
-  formatWeakTopics,
-  personalizedReview,
-  examReadinessAnalysis,
-  formatReadinessAnalysis,
-  type WeakTopic,
-  type StudyStep,
-} from '@/lib/study';
+// lib/study soru bankasını (1534) çeker → tembel import ile ilk yükten çıkarılır (LCP perf).
+import type { WeakTopic, StudyStep } from '@/lib/study';
 import { SUBJECT_LABEL } from '@ea/content-schema';
 import { Icon } from '@/components/ui/icons';
 import { QuizLayout, QuizPanel, DonutStat } from '@/components/ui/quiz';
@@ -74,25 +65,13 @@ export function AICoach() {
   const [messages, setMessages] = useState<CoachMessage[]>([]);
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
-  // Ray verileri (salt görüntü — kullanıcının kendi geçmişinden).
-  const [rail, setRail] = useState<{
-    answered: number;
-    correct: number;
-    weak: WeakTopic[];
-    steps: StudyStep[];
-  }>({ answered: 0, correct: 0, weak: [], steps: [] });
 
   // Ders sayfasından gelen ?soru= derin bağlantısını giriş kutusuna doldur (SSR-güvenli).
+  // (Ray verileri ayrı <CoachRail/> bileşenindedir — tembel bank yüklemesi giriş kutusunu
+  //  yeniden render edip sıfırlamasın diye ayrıştırıldı; LCP kararlılık düzeltmesi.)
   useEffect(() => {
     const soru = new URLSearchParams(window.location.search).get('soru');
     if (soru) setInput(soru);
-    const answers = loadAnswers();
-    setRail({
-      answered: answers.length,
-      correct: answers.filter((a) => a.correct).length,
-      weak: weakTopics(answers, { minAnswered: 2, limit: 4 }),
-      steps: buildStudyPlan(answers, loadCards(), Date.now()).steps.slice(0, 4),
-    });
   }, []);
 
   function push(role: AIMessage['role'], text: string, visuals?: VisualMatches) {
@@ -120,6 +99,8 @@ export function AICoach() {
       grounded = d.grounded;
     } catch {
       // Çevrimdışı/sunucu hatası → yerel grounded mock (asla kırılmaz).
+      // Soru bankası (1534 soru) yalnız bu fallback anında tembel yüklenir — ilk yük hafif kalır (LCP perf).
+      const { getAIProvider } = await import('@/lib/ai');
       answer = await getAIProvider().ask(q);
       grounded = !answer.includes('eşleşme bulamadım');
     }
@@ -130,26 +111,27 @@ export function AICoach() {
     setBusy(false);
   }
 
-  /** Kişisel rehberlik: kullanıcının kendi verisinden grounded mesaj üretir. */
-  function coach(action: Action) {
+  /** Kişisel rehberlik: kullanıcının kendi verisinden grounded mesaj üretir (bank tembel yüklenir). */
+  async function coach(action: Action) {
     if (busy) return;
     const answers = loadAnswers();
     const cards = loadCards();
     const now = Date.now();
+    const study = await import('@/lib/study');
     let userLabel = '';
     let reply = '';
     if (action === 'plan') {
       userLabel = 'Bugün ne çalışmalıyım?';
-      reply = formatStudyPlan(buildStudyPlan(answers, cards, now));
+      reply = study.formatStudyPlan(study.buildStudyPlan(answers, cards, now));
     } else if (action === 'weak') {
       userLabel = 'Zayıf konularım neler?';
-      reply = formatWeakTopics(weakTopics(answers, { minAnswered: 2, limit: 6 }));
+      reply = study.formatWeakTopics(study.weakTopics(answers, { minAnswered: 2, limit: 6 }));
     } else if (action === 'readiness') {
       userLabel = 'Sınav hazırlığım nasıl?';
-      reply = formatReadinessAnalysis(examReadinessAnalysis(answers));
+      reply = study.formatReadinessAnalysis(study.examReadinessAnalysis(answers));
     } else {
       userLabel = 'Bana kişisel bir tekrar seti hazırla.';
-      const ids = personalizedReview(answers, cards, now, 10);
+      const ids = study.personalizedReview(answers, cards, now, 10);
       reply =
         ids.length > 0
           ? `Sana özel **${ids.length} soruluk** tekrar seti hazır: vadesi gelen kartların ve en zayıf konuların önceliklendirildi.\n\n[Kişisel tekrarı başlat](/calis?mod=tekrar)\n\n_Set, cevap geçmişin ve SRS kartlarından üretildi._`
@@ -292,8 +274,41 @@ export function AICoach() {
     </div>
   );
 
+  return <QuizLayout main={main} aside={<CoachRail />} />;
+}
+
+/**
+ * Sağ ray (salt görüntü) — kullanıcının kendi geçmişinden. Kendi state'i olan AYRI bileşen:
+ * soru bankasını (1534) çeken tembel `lib/study` importunun geç gelen setState'i yalnız burayı
+ * yeniden render eder; AICoach'un giriş kutusuna dokunmaz (fill+click yarışını önler — LCP).
+ */
+function CoachRail() {
+  const [rail, setRail] = useState<{
+    answered: number;
+    correct: number;
+    weak: WeakTopic[];
+    steps: StudyStep[];
+  }>({ answered: 0, correct: 0, weak: [], steps: [] });
+
+  useEffect(() => {
+    const answers = loadAnswers();
+    setRail((r) => ({
+      ...r,
+      answered: answers.length,
+      correct: answers.filter((a) => a.correct).length,
+    }));
+    // Zayıf konu + plan hesapları soru bankasını gerektirir → tembel yüklenir (ilk yük hafif).
+    void import('@/lib/study').then(({ weakTopics, buildStudyPlan }) => {
+      setRail((r) => ({
+        ...r,
+        weak: weakTopics(answers, { minAnswered: 2, limit: 4 }),
+        steps: buildStudyPlan(answers, loadCards(), Date.now()).steps.slice(0, 4),
+      }));
+    });
+  }, []);
+
   const okPct = rail.answered ? Math.round((rail.correct / rail.answered) * 100) : 0;
-  const aside = (
+  return (
     <>
       <QuizPanel title="Bugünkü Genel Özetin" icon="trending">
         <DonutStat
@@ -377,6 +392,4 @@ export function AICoach() {
       </QuizPanel>
     </>
   );
-
-  return <QuizLayout main={main} aside={aside} />;
 }

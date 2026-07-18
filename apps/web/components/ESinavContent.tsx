@@ -12,7 +12,6 @@ import { statsFromAnswers } from '@ea/srs-engine';
 import { loadAnswers, loadCounters } from '@/lib/progress';
 import { loadEntitlements, canStartFreeExam } from '@/lib/payments';
 import { hasCapability } from '@/lib/products';
-import { weakTopics } from '@/lib/study';
 import { Icon, type IconName } from '@/components/ui/icons';
 import { QuizLayout, QuizPanel, DonutStat, InfoRow } from '@/components/ui/quiz';
 import { Callout } from '@/components/ui/patterns';
@@ -55,8 +54,11 @@ export function ESinavContent({ counts }: { counts: Record<string, number> }) {
     setAnswered(answers.length);
     setCorrect(answers.filter((a) => a.correct).length);
     setExams(loadCounters().examsFinished);
-    const weak = weakTopics(answers, { limit: 1 });
-    setWeakest(weak.length && weak[0] ? SUBJECT_LABEL[weak[0].subject] : null);
+    // En zayıf ders — statsFromAnswers'tan türetilir (soru bankasını çekmeye gerek yok; LCP perf).
+    const weakest = subjects
+      .filter((sv) => sv.answered >= 2)
+      .sort((a, b) => a.mastery - b.mastery)[0];
+    setWeakest(weakest ? SUBJECT_LABEL[weakest.subject as keyof typeof SUBJECT_LABEL] : null);
     setUnlimited(hasCapability(loadEntitlements(), 'sinirsiz-deneme'));
     setFreeLeft(canStartFreeExam());
   }, []);

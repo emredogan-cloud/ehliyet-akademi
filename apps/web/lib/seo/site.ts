@@ -29,8 +29,8 @@ export const SITE_DESCRIPTION =
 /** Sosyal/knowledge-graph bağlantıları — YALNIZ gerçek profiller eklenir (owner doldurur). */
 export const SITE_SAME_AS: string[] = [];
 
-/** Marka logosu (SVG — ölçeklenebilir). */
-export const SITE_LOGO_PATH = '/icon.svg';
+/** Marka logosu (new_icon.png'den üretilmiş 512px PNG — FINAL SPRINT P2). */
+export const SITE_LOGO_PATH = '/icon-512.png';
 /** 1200×630 sosyal önizleme kartı. */
 export const SITE_OG_IMAGE_PATH = '/og.jpg';
 

@@ -27,10 +27,12 @@ export const metadata: Metadata = {
   ],
   applicationName: 'Ehliyet Akademi',
   manifest: '/manifest.webmanifest',
+  // Uygulama ikonu: new_icon.png'den üretilmiş (FINAL SPRINT P2). Tüm boyutlar PNG.
   icons: {
     icon: [
-      { url: '/icon.svg', type: 'image/svg+xml' },
       { url: '/favicon.ico', sizes: '48x48' },
+      { url: '/icon-192.png', type: 'image/png', sizes: '192x192' },
+      { url: '/icon-512.png', type: 'image/png', sizes: '512x512' },
     ],
     apple: '/apple-touch-icon.png',
     shortcut: '/favicon.ico',

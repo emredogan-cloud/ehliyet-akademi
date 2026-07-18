@@ -1,18 +1,31 @@
 import type { Metadata } from 'next';
 import { EXAM_BLUEPRINT, SUBJECT_LABEL } from '@ea/content-schema';
-import { subjectCounts } from '@ea/question-bank';
+import { subjectCounts, allQuestions } from '@ea/question-bank';
 import { LESSONS } from '@/content/lessons';
 import { SIGNS } from '@/content/signs';
 import { VEHICLE_PARTS } from '@/content/vehicle';
 import { Reveal } from '@/components/ui/Reveal';
 import { Icon, type IconName } from '@/components/ui/icons';
 import type { Accent } from '@/components/ui/primitives';
+import { CourseJsonLd, FaqJsonLd } from '@/components/JsonLd';
+import { buildMetadata } from '@/lib/seo/metadata';
+import { HOME_FAQ } from '@/lib/seo/faq';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'B Sınıfı Ehliyet Sınavına Akıllı Hazırlık',
   description:
-    'Tanı denemesiyle hazırlık skorunu öğren, zayıf konularına odaklan, ilk denemede geç. Teorik e-Sınav + direksiyon pratiği, özgün trafik işaretleri ve araç görselleriyle.',
-};
+    'Türkiye’nin en gelişmiş ehliyet eğitim platformu: özgün soru bankası, AI Koç, ders anlatımları, trafik işaretleri ve deneme sınavları. Tanı denemesiyle hazırlık skorunu öğren, ilk denemede geç.',
+  path: '/',
+  keywords: [
+    'ehliyet sınavı',
+    'ehliyet eğitimi',
+    'B sınıfı ehliyet',
+    'e-sınav hazırlık',
+    'ehliyet deneme sınavı',
+    'trafik işaretleri',
+    'ehliyet soru bankası',
+  ],
+});
 
 const FEATURES: Array<{
   icon: IconName;
@@ -120,6 +133,8 @@ export default function HomePage() {
 
   return (
     <>
+      <CourseJsonLd lessonCount={LESSONS.length} questionCount={allQuestions().length} />
+      <FaqJsonLd items={HOME_FAQ} />
       {/* ── Hero (ref 001) ─────────────────────────────────── */}
       <section className="mk-hero">
         <div className="mk-hero__copy">
@@ -299,6 +314,21 @@ export default function HomePage() {
         </div>
         <div className="mk-cta__flag" aria-hidden>
           🏁
+        </div>
+      </section>
+
+      {/* ── SSS (AEO/AI Overviews — FaqJsonLd ile birebir) ──── */}
+      <section className="mk-faq" aria-labelledby="sss-baslik">
+        <h2 id="sss-baslik" className="mk-section__title" style={{ textAlign: 'center' }}>
+          Sık Sorulan Sorular
+        </h2>
+        <div className="mk-faq__list">
+          {HOME_FAQ.map((f) => (
+            <details key={f.question} className="mk-faq__item">
+              <summary className="mk-faq__q">{f.question}</summary>
+              <p className="mk-faq__a">{f.answer}</p>
+            </details>
+          ))}
         </div>
       </section>
 

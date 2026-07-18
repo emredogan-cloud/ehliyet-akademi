@@ -2,18 +2,33 @@ import type { Metadata } from 'next';
 import { VIDEOS } from '@/content/videos';
 import { VideoPlayer } from '@/components/video/VideoPlayer';
 import { PageHeader } from '@/components/ui/layout';
+import { VideoListJsonLd } from '@/components/JsonLd';
+import { buildMetadata } from '@/lib/seo/metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'Video Dersler',
   description:
     'Animasyonlu manevra anlatımları ve planlanan gerçek çekim video müfredatı — bölümler, transkript ve yer imleriyle.',
-};
+  path: '/videolar',
+});
 
 export default function VideolarPage() {
   const available = VIDEOS.filter((v) => v.status === 'available');
   const planned = VIDEOS.filter((v) => v.status === 'planned');
   return (
     <div data-testid="videolar">
+      {/* VideoObject yalnız gerçek (available) videolar için — planlanan videolar schema üretmez. */}
+      <VideoListJsonLd
+        videos={available.map((v) => ({
+          id: v.id,
+          title: v.title,
+          description: v.description,
+          poster: v.poster,
+          src: v.src,
+          duration: v.duration,
+          transcript: v.transcript,
+        }))}
+      />
       <PageHeader
         title="Video Dersler"
         emoji="🎬"

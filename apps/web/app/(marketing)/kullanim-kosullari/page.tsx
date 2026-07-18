@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
+import { buildMetadata } from '@/lib/seo/metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'Kullanım Koşulları',
   description:
     'Ehliyet Akademi kullanım koşulları: hizmetin kapsamı, tek seferlik satın alma ve ömür boyu erişim modeli, dijital içerikte cayma hakkı, sorumluluk reddi ve uygulanacak hukuk.',
-};
+  path: '/kullanim-kosullari',
+});
 
 export default function KullanimKosullariPage() {
   return (

@@ -5,12 +5,14 @@ import { PageHeader, Section, Grid } from '@/components/ui/layout';
 import { LessonCard } from '@/components/ui/patterns';
 import { Icon, type IconName } from '@/components/ui/icons';
 import type { Accent } from '@/components/ui/primitives';
+import { buildMetadata } from '@/lib/seo/metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'Dersler',
   description:
     'Trafik, ilk yardım, araç tekniği, trafik adabı ve direksiyon (sürüş akademisi) dersleri — kısa, görsel, sınav odaklı.',
-};
+  path: '/dersler',
+});
 
 const GROUP_ORDER: Subject[] = ['trafik', 'ilkyardim', 'motor', 'adab', 'pratik'];
 const GROUP_NOTE: Record<Subject, string> = {

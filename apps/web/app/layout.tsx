@@ -4,9 +4,10 @@ import { SiteJsonLd } from '@/components/JsonLd';
 import { RegisterSW } from '@/components/RegisterSW';
 import { CookieConsent } from '@/components/CookieConsent';
 import { AnalyticsLoader } from '@/components/AnalyticsLoader';
+import { SITE_URL } from '@/lib/seo/site';
 import './globals.css';
 
-const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ehliyet-akademi-nine.vercel.app';
+const SITE = SITE_URL;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
@@ -26,8 +27,17 @@ export const metadata: Metadata = {
   ],
   applicationName: 'Ehliyet Akademi',
   manifest: '/manifest.webmanifest',
-  icons: { icon: '/icon.svg', apple: '/icon.svg' },
-  alternates: { canonical: '/' },
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: '48x48' },
+    ],
+    apple: '/apple-touch-icon.png',
+    shortcut: '/favicon.ico',
+  },
+  // PROGRAM SEO — KÖK canonical KALDIRILDI: '/' tüm alt sayfalara miras kalıp hepsini ana sayfaya
+  // kanonikleştiriyordu (Google onları kopya sanıyordu). Her sayfa artık `buildMetadata({path})` ile
+  // KENDİ self-canonical'ını verir; ana sayfa canonical'ı (marketing)/page.tsx'te tanımlıdır.
   openGraph: {
     type: 'website',
     locale: 'tr_TR',
@@ -50,7 +60,29 @@ export const metadata: Metadata = {
     description: 'Tanı denemesi → hazırlık skoru. Zayıf konularına odaklan, ilk denemede geç.',
     images: ['/og.jpg'],
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
+  // Arama motoru doğrulaması — owner env değeri girince meta tag otomatik basılır (owner action).
+  verification: {
+    ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+      ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+      : {}),
+    ...(process.env.NEXT_PUBLIC_YANDEX_VERIFICATION
+      ? { yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION }
+      : {}),
+    ...(process.env.NEXT_PUBLIC_BING_VERIFICATION
+      ? { other: { 'msvalidate.01': process.env.NEXT_PUBLIC_BING_VERIFICATION } }
+      : {}),
+  },
 };
 
 export const viewport: Viewport = {

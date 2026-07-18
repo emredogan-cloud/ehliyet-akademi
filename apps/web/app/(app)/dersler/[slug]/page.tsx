@@ -6,6 +6,7 @@ import { LESSONS, lessonBySlug } from '@/content/lessons';
 import { LessonFigure } from '@/components/LessonFigure';
 import { LessonPractice } from '@/components/LessonPractice';
 import { LessonJsonLd } from '@/components/JsonLd';
+import { buildMetadata } from '@/lib/seo/metadata';
 import { PremiumBadge } from '@/components/PremiumBadge';
 import { PremiumLessonGate } from '@/components/PremiumLessonGate';
 import { LessonViewTracker } from '@/components/LessonViewTracker';
@@ -31,8 +32,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const lesson = lessonBySlug(slug);
-  if (!lesson) return { title: 'Ders bulunamadı' };
-  return { title: lesson.title, description: lesson.summary };
+  if (!lesson) return { title: 'Ders bulunamadı', robots: { index: false, follow: false } };
+  return buildMetadata({
+    title: lesson.title,
+    description: lesson.summary,
+    path: `/dersler/${lesson.slug}`,
+    type: 'article',
+    keywords: [lesson.title, 'ehliyet dersi', SUBJECT_LABEL[lesson.subject], 'B sınıfı ehliyet'],
+  });
 }
 
 /** İki kolonlu bilgi kutusu. */
@@ -75,7 +82,15 @@ export default async function LessonPage({ params }: { params: Promise<{ slug: s
 
   return (
     <article style={{ maxWidth: 1120, margin: '0 auto' }}>
-      <LessonJsonLd lesson={lesson} />
+      <LessonJsonLd
+        lesson={lesson}
+        breadcrumb={[
+          { name: 'Ana Sayfa', path: '/' },
+          { name: 'Dersler', path: '/dersler' },
+          { name: SUBJECT_LABEL[lesson.subject] },
+          { name: lesson.title, path: `/dersler/${lesson.slug}` },
+        ]}
+      />
       <LessonViewTracker slug={lesson.slug} premium={lesson.premium} />
       <Breadcrumb
         items={[

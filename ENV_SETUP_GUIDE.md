@@ -145,9 +145,11 @@ için (aşağıdaki sıra ile) bootstrap kuralları çalışır. `/admin` ve `/a
 
 ### `NEXT_PUBLIC_SITE_URL` ✅ set edildi
 
-- **Ne:** Kanonik site URL'i (sitemap, JSON-LD, OG).
-- **Değer (production):** `https://ehliyet-akademi-nine.vercel.app`
-- **Nasıl:** `vercel env add NEXT_PUBLIC_SITE_URL production` (özel domain alınırsa güncellenir).
+- **Ne:** Kanonik site URL'i (sitemap, JSON-LD, OG, canonical).
+- **Değer (production):** `https://ehliyetegitim.com` ← markalı üretim alan adı (PROGRAM SEO).
+- **Not:** Kod varsayılanı da artık `https://ehliyetegitim.com` (`lib/seo/site.ts`); env yalnız
+  override içindir. Önizleme (Vercel preview) dağıtımları `*.vercel.app` kullanabilir.
+- **Nasıl:** `vercel env add NEXT_PUBLIC_SITE_URL production` → değer: `https://ehliyetegitim.com`.
 
 ### Deploy komutları
 

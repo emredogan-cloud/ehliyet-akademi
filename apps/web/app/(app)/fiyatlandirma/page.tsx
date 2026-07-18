@@ -3,12 +3,14 @@ import { PageHeader } from '@/components/ui/layout';
 import { PRODUCTS } from '@/lib/products';
 import { paymentConfigured, variantForProduct } from '@/lib/server/checkout';
 import { PricingView } from './PricingView';
+import { buildMetadata } from '@/lib/seo/metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'Fiyatlandırma — Bir Kez Öde, Ömür Boyu',
   description:
     'Abonelik yok: tek seferlik paketlerle kalıcı erişim. Premium Teori, Direksiyon, Simülatör, Soru Bankası ve Komple B Ehliyet Paketi.',
-};
+  path: '/fiyatlandirma',
+});
 
 // Ödeme sağlayıcı durumu ENV'den okunur (server) → istemciye dürüst bayraklar geçer.
 export const dynamic = 'force-dynamic';

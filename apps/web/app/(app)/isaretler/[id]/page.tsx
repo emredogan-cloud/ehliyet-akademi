@@ -4,6 +4,8 @@ import { signById, CATEGORY_LABEL } from '@/content/signs';
 import { allSignIds, confusionsFor, questionsForSign } from '@/content/sign-extras';
 import { TrafficSign } from '@/components/signs/TrafficSign';
 import { Breadcrumb } from '@/components/ui/patterns';
+import { SignJsonLd, FaqJsonLd } from '@/components/JsonLd';
+import { buildMetadata } from '@/lib/seo/metadata';
 
 export function generateStaticParams() {
   return allSignIds().map((id) => ({ id }));
@@ -16,8 +18,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const sign = signById(id);
-  if (!sign) return { title: 'İşaret bulunamadı' };
-  return { title: `${sign.name} — Trafik İşareti`, description: sign.meaning };
+  if (!sign) return { title: 'İşaret bulunamadı', robots: { index: false, follow: false } };
+  return buildMetadata({
+    title: `${sign.name} — Trafik İşareti Anlamı`,
+    description: `${sign.meaning} ${sign.name} levhası ne anlama gelir, nerede kullanılır ve sınavda nasıl sorulur — Ehliyet Akademi.`,
+    path: `/isaretler/${sign.id}`,
+    type: 'article',
+    keywords: [sign.name, 'trafik işareti', 'trafik levhası', ...(sign.keywords ?? [])],
+  });
 }
 
 export default async function SignDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -27,9 +35,28 @@ export default async function SignDetailPage({ params }: { params: Promise<{ id:
 
   const confusions = confusionsFor(sign.id);
   const questions = questionsForSign(sign);
+  const breadcrumb = [
+    { name: 'Ana Sayfa', path: '/' },
+    { name: 'Trafik İşaretleri', path: '/isaretler' },
+    { name: CATEGORY_LABEL[sign.category] },
+    { name: sign.name, path: `/isaretler/${sign.id}` },
+  ];
 
   return (
     <article style={{ maxWidth: 720, margin: '0 auto' }} data-testid="sign-detail">
+      <SignJsonLd
+        sign={{
+          id: sign.id,
+          name: sign.name,
+          meaning: sign.meaning,
+          categoryLabel: CATEGORY_LABEL[sign.category],
+          keywords: sign.keywords,
+        }}
+        breadcrumb={breadcrumb}
+      />
+      {questions.length > 0 && (
+        <FaqJsonLd items={questions.map((q) => ({ question: q.stem, answer: q.explanation }))} />
+      )}
       <Breadcrumb
         items={[
           { label: 'Trafik İşaretleri', href: '/isaretler' },

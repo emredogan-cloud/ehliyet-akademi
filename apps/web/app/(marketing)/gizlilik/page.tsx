@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
+import { buildMetadata } from '@/lib/seo/metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'Gizlilik Politikası',
   description:
     'Ehliyet Akademi gizlilik politikası: hangi kişisel verileri işliyoruz, hangi amaçla, ne kadar süreyle saklıyoruz ve haklarınızı nasıl kullanabilirsiniz.',
-};
+  path: '/gizlilik',
+});
 
 export default function GizlilikPage() {
   return (

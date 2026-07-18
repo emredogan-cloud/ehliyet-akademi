@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { vehiclePartById, SYSTEM_LABEL } from '@/content/vehicle';
+import { vehiclePartById, partsBySystem, SYSTEM_LABEL } from '@/content/vehicle';
 import { allPartIds, questionsForPart } from '@/content/vehicle-extras';
 import { AssetImage } from '@/components/ui/AssetImage';
 import { VehicleFigure, VEHICLE_PART_IDS } from '@/components/vehicle/VehicleFigure';
 import { Breadcrumb } from '@/components/ui/patterns';
+import { VehicleJsonLd, FaqJsonLd } from '@/components/JsonLd';
+import { buildMetadata } from '@/lib/seo/metadata';
 
 export function generateStaticParams() {
   return allPartIds().map((id) => ({ id }));
@@ -17,8 +19,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const part = vehiclePartById(id);
-  if (!part) return { title: 'Bileşen bulunamadı' };
-  return { title: `${part.name} — Araç Tanıma`, description: part.desc };
+  if (!part) return { title: 'Bileşen bulunamadı', robots: { index: false, follow: false } };
+  return buildMetadata({
+    title: `${part.name} — Araç Tanıma`,
+    description: `${part.desc} ${part.name}: ne işe yarar, nasıl kontrol edilir ve direksiyon sınavında neden önemli — Ehliyet Akademi.`,
+    path: `/arac/${part.id}`,
+    type: 'article',
+    keywords: [part.name, 'araç tekniği', 'direksiyon', SYSTEM_LABEL[part.system]],
+  });
 }
 
 const HAS_DIAGRAM = new Set(VEHICLE_PART_IDS);
@@ -29,9 +37,24 @@ export default async function PartDetailPage({ params }: { params: Promise<{ id:
   if (!part) notFound();
 
   const questions = questionsForPart(part);
+  // İlgili bileşenler — aynı sistemdeki kardeşler (crawl derinliği + kullanıcı keşfi).
+  const related = (partsBySystem()[part.system] ?? []).filter((p) => p.id !== part.id).slice(0, 4);
+  const breadcrumb = [
+    { name: 'Ana Sayfa', path: '/' },
+    { name: 'Araç Tanıma', path: '/arac' },
+    { name: SYSTEM_LABEL[part.system] },
+    { name: part.name, path: `/arac/${part.id}` },
+  ];
 
   return (
     <article style={{ maxWidth: 720, margin: '0 auto' }} data-testid="part-detail">
+      <VehicleJsonLd
+        part={{ id: part.id, name: part.name, desc: part.desc, steps: part.inspection }}
+        breadcrumb={breadcrumb}
+      />
+      {questions.length > 0 && (
+        <FaqJsonLd items={questions.map((q) => ({ question: q.stem, answer: q.explanation }))} />
+      )}
       <Breadcrumb
         items={[
           { label: 'Araç Tanıma', href: '/arac' },
@@ -107,6 +130,21 @@ export default async function PartDetailPage({ params }: { params: Promise<{ id:
               </p>
             </details>
           ))}
+        </section>
+      )}
+
+      {related.length > 0 && (
+        <section style={{ marginTop: 22 }} data-testid="part-related">
+          <h2 className="section-title" style={{ marginTop: 0 }}>
+            {SYSTEM_LABEL[part.system]} — ilgili bileşenler
+          </h2>
+          <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.9 }}>
+            {related.map((r) => (
+              <li key={r.id}>
+                <a href={`/arac/${r.id}`}>{r.name}</a>
+              </li>
+            ))}
+          </ul>
         </section>
       )}
 

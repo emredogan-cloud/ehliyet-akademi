@@ -4,12 +4,14 @@ import { VehicleGallery } from '@/components/vehicle/VehicleGallery';
 import { Hotspots } from '@/components/media/Hotspots';
 import { ZoomImage } from '@/components/media/ZoomImage';
 import { PageHeader } from '@/components/ui/layout';
+import { buildMetadata } from '@/lib/seo/metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'Araç Tanıma',
   description:
     'Direksiyon ve araç tekniği için araç bileşenleri: motor bölmesi, kabin kumandaları, lastikler ve muayene noktaları — premium fotoğraflar, kontrol adımları ve detay sayfalarıyla.',
-};
+  path: '/arac',
+});
 
 export default function AracPage() {
   return (

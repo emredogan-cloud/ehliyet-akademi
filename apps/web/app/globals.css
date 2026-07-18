@@ -3548,6 +3548,44 @@ table.tbl {
   text-align: center;
 }
 
+/* SSS (AEO) — açılır soru-cevap listesi */
+.mk-faq {
+  max-width: 760px;
+  margin: var(--sp-7, 40px) auto var(--sp-5);
+}
+.mk-faq__list {
+  display: grid;
+  gap: var(--sp-3);
+  margin-top: var(--sp-4);
+}
+.mk-faq__item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md, 12px);
+  background: var(--surface);
+  padding: var(--sp-3) var(--sp-4);
+}
+.mk-faq__q {
+  cursor: pointer;
+  font-weight: 700;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+.mk-faq__q::after {
+  content: '+';
+  color: var(--primary);
+  font-weight: 700;
+}
+.mk-faq__item[open] .mk-faq__q::after {
+  content: '−';
+}
+.mk-faq__a {
+  margin: var(--sp-3) 0 0;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
 /* Footer */
 .mk-footer {
   display: grid;

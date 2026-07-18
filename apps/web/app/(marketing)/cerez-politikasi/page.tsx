@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
+import { buildMetadata } from '@/lib/seo/metadata';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'Çerez Politikası',
   description:
     'Ehliyet Akademi çerez politikası: zorunlu çerezler, tercih çerezleri, yerel depolama, opsiyonel analitik ve çerez rızasını yönetme yöntemleri.',
-};
+  path: '/cerez-politikasi',
+});
 
 export default function CerezPolitikasiPage() {
   return (

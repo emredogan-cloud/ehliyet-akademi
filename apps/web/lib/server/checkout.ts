@@ -5,6 +5,7 @@
  */
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { productById, type Product } from '../products';
+import { SITE_URL } from '../seo/site';
 
 export interface CheckoutSession {
   /** 'mock' → istemci mevcut sunucu-taraflı grant akışını kullanır; 'redirect' → hosted checkout. */
@@ -80,7 +81,13 @@ export class LemonSqueezyGateway implements PaymentGateway {
       body: JSON.stringify({
         data: {
           type: 'checkouts',
-          attributes: { checkout_data: { custom: { user_id: userId, product_id: product.id } } },
+          attributes: {
+            // custom → webhook meta.custom_data olarak geri döner (sahiplik ilişkilendirme).
+            checkout_data: { custom: { user_id: userId, product_id: product.id } },
+            // Ödeme sonrası uygulamaya dönüş: istemci ?checkout=success ile sahipliği uzlaştırıp
+            // başarı açılışını gösterir (webhook gecikmesine karşı yeniden dener).
+            product_options: { redirect_url: `${SITE_URL}/fiyatlandirma?checkout=success` },
+          },
           relationships: {
             store: { data: { type: 'stores', id: this.storeId } },
             variant: { data: { type: 'variants', id: variantId } },
@@ -146,20 +153,26 @@ export function getPaymentGateway(): PaymentGateway {
 
 /**
  * Makbuz doğrulaması: sipariş kataloğa göre geçerli mi?
- * Ürün var + (fiyat > 0 ise) katalog fiyatıyla tutarlı. Uyumsuzluk → geçersiz (audit için sebep döner).
+ * `valid` = ürün katalogda VAR (sahiplik verilir). `priceOk` = tutar katalog fiyatıyla birebir.
+ *
+ * ÖNEMLİ: fiyat uyuşmazlığı artık HARD-REJECT DEĞİL — yalnız uyarı olarak işaretlenir. Gerçek
+ * webhook HMAC ile imzalıdır (veri LemonSqueezy'den, güvenilir); vergi/yuvarlama/kupon nedeniyle
+ * `total` katalog fiyatından farklı olabilir. Ödeme yapan kullanıcının erişimini kaybetmemesi için
+ * bilinen ürün → grant edilir; uyuşmazlık audit için loglanır. (Mock gateway prod'da erişilemez.)
  */
 export function validateReceipt(order: WebhookOrder): {
   valid: boolean;
   product?: Product;
+  priceOk: boolean;
   reason?: string;
 } {
   const product = productById(order.productId);
-  if (!product) return { valid: false, reason: 'unknown_product' };
-  if (order.totalTRY > 0 && order.totalTRY !== product.priceTRY)
-    return {
-      valid: false,
-      product,
-      reason: `price_mismatch:${order.totalTRY}!=${product.priceTRY}`,
-    };
-  return { valid: true, product };
+  if (!product) return { valid: false, priceOk: false, reason: 'unknown_product' };
+  const priceOk = order.totalTRY <= 0 || order.totalTRY === product.priceTRY;
+  return {
+    valid: true,
+    product,
+    priceOk,
+    ...(priceOk ? {} : { reason: `price_mismatch:${order.totalTRY}!=${product.priceTRY}` }),
+  };
 }

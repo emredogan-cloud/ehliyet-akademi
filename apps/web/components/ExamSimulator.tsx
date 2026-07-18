@@ -207,8 +207,9 @@ export function ExamSimulator() {
         </div>
         {blocked && (
           <div className="explain" role="status" style={{ marginTop: 14 }} data-testid="exam-quota">
-            Bugünkü ücretsiz denemeni kullandın. <strong>Sınırsız deneme</strong> için tek-seferlik{' '}
-            <a href="/fiyatlandirma">Simülatör Paketi</a>ne göz at — abonelik yok, bir kez öde.
+            Bugünkü ücretsiz denemeni kullandın. <strong>Sınırsız deneme</strong> ve tüm premium
+            içerik için tek-seferlik <a href="/fiyatlandirma">Komple B Ehliyet Paketi</a>ne göz at —
+            abonelik yok, bir kez öde.
           </div>
         )}
         <div className="ui-card quiz-panel" style={{ marginTop: 'var(--sp-4)' }}>

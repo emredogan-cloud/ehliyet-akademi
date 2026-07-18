@@ -26,12 +26,12 @@ test('ücretsiz kota: günde 1 deneme; 2.si paket önerir; paket → sınırsız
   // 2. deneme (aynı gün) → kota mesajı
   await page.getByRole('button', { name: 'Yeni deneme' }).click();
   await expect(page.getByTestId('exam-quota')).toBeVisible();
-  await expect(page.getByTestId('exam-quota')).toContainText('Simülatör Paketi');
+  await expect(page.getByTestId('exam-quota')).toContainText('Komple B');
 
-  // Paketi al → artık sınırsız
+  // Komple paketi al → artık sınırsız (tek paket modeli)
   await page.goto('/fiyatlandirma');
-  await page.getByTestId('buy-simulator-paketi').click();
-  await expect(page.getByTestId('owned-simulator-paketi')).toBeVisible();
+  await page.getByTestId('buy-komple-b').click();
+  await expect(page.getByTestId('owned-komple-b')).toBeVisible();
   await page.goto('/deneme-sinavi');
   await page.getByTestId('exam-start').click();
   await expect(page.getByTestId('exam-running')).toBeVisible();

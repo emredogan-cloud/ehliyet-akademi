@@ -113,12 +113,28 @@ describe('checkout + webhook (Epic 1)', () => {
     expect(owned.purchases.some((p) => p.productId === 'komple-b')).toBe(true);
   });
 
-  it('webhook geçersiz makbuz (fiyat uyuşmazlığı) 400', async () => {
+  it('webhook fiyat uyuşmazlığı: imzalı webhook güvenilir → grant edilir (200) + loglanır', async () => {
+    // Fiyat uyuşmazlığı artık HARD-REJECT değil (vergi/yuvarlama) — bilinen ürün grant edilir.
     const body = JSON.stringify({
       productId: 'premium-teori',
       userId,
-      orderId: `bad-${T}`,
+      orderId: `warn-${T}`,
       totalTRY: 1,
+    });
+    const r = await webhook(raw('/api/webhooks/lemonsqueezy', body));
+    expect(r.status).toBe(200);
+    const owned = (await (await purchasesGet(get('/api/purchases', cookie))).json()) as {
+      purchases: Array<{ productId: string }>;
+    };
+    expect(owned.purchases.some((p) => p.productId === 'premium-teori')).toBe(true);
+  });
+
+  it('webhook bilinmeyen ürün → 400 (grant edilmez)', async () => {
+    const body = JSON.stringify({
+      productId: 'yok-boyle-urun',
+      userId,
+      orderId: `bad-${T}`,
+      totalTRY: 10,
     });
     expect((await webhook(raw('/api/webhooks/lemonsqueezy', body))).status).toBe(400);
   });

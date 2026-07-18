@@ -1,21 +1,24 @@
 'use client';
 
 /**
- * Fiyatlandırma görünümü (ref 028) — SALT SUNUM yenilemesi.
- * İş modeli aynen korunur: TEK-SEFERLİK satın alma, 5 gerçek paket, demo ödeme.
- * Satın alma mantığı components/Pricing.tsx ile birebir aynıdır (lib katmanı ortak).
+ * Fiyatlandırma görünümü (ref 028) — TEK PAKET modeli (FINAL SPRINT P1): yalnız Komple B
+ * satın alınabilir. Ödeme dönüşünde (?checkout=success) sahiplik uzlaştırılır + premium başarı
+ * açılışı gösterilir (P9). İş modeli/entitlement mimarisi korunur.
  */
-import { useEffect, useState } from 'react';
-import { PRODUCTS, type Product } from '@/lib/products';
+import { useEffect, useRef, useState } from 'react';
+import { PRODUCTS, type Product, unlockedFeatures } from '@/lib/products';
 import { getPaymentProvider, loadEntitlements } from '@/lib/payments';
-import { isAuthed, me, serverPurchase } from '@/lib/authClient';
+import { isAuthed, me, serverPurchase, reconcileEntitlements } from '@/lib/authClient';
 import { startCheckout } from '@/lib/checkoutClient';
 import { track } from '@/lib/analytics';
 import { Card, Button, Badge, IconBadge, type Accent } from '@/components/ui/primitives';
-import { Section, Grid, Stack } from '@/components/ui/layout';
+import { Section, Stack } from '@/components/ui/layout';
 import { QuizLayout } from '@/components/ui/quiz';
 import { Callout } from '@/components/ui/patterns';
 import { Icon, type IconName } from '@/components/ui/icons';
+import { PremiumSuccessDialog } from '@/components/PremiumSuccessDialog';
+
+const PREMIUM_WELCOME_KEY = 'ea:premiumWelcomeShown:v1';
 
 const BENEFITS: Array<{ icon: IconName; accent: Accent; title: string; text: string }> = [
   {
@@ -52,29 +55,79 @@ function OwnedBadge({ productId }: { productId: string }) {
 
 export function PricingView({
   realPayments = false,
-  purchasable,
 }: {
   /** Sunucudan: gerçek ödeme sağlayıcısı (LemonSqueezy) yapılandırıldı mı? */
   realPayments?: boolean;
-  /** Sunucudan: satın alınabilir ürün id'leri (gerçek modda variant'ı tanımlı olanlar). */
-  purchasable?: string[];
 }) {
   const [owned, setOwned] = useState<string[]>([]);
   const [msg, setMsg] = useState<string>('');
   const [busy, setBusy] = useState<string | null>(null);
+  const [showPremium, setShowPremium] = useState(false);
+  const returnedRef = useRef(false);
+
+  /** Komple sahipse premium başarı açılışını BİR KEZ göster (P9). */
+  function maybeShowPremium(list: string[]) {
+    if (!list.includes('komple-b')) return;
+    try {
+      if (localStorage.getItem(PREMIUM_WELCOME_KEY)) return;
+      localStorage.setItem(PREMIUM_WELCOME_KEY, '1');
+    } catch {
+      /* kota */
+    }
+    setShowPremium(true);
+  }
 
   useEffect(() => {
-    void me().finally(() => setOwned(loadEntitlements()));
+    const params = new URLSearchParams(window.location.search);
+    const isReturn = params.get('checkout') === 'success';
+    if (!isReturn) {
+      // Girişli kullanıcı için sahiplik SUNUCUDAN uzlaştırılır (purchases → entitlements) → webhook
+      // ile alınan paket bu sayfada da hemen "Sahipsin" görünür (localStorage yarışına bağlı değil).
+      void (async () => {
+        await me();
+        setOwned(isAuthed() ? await reconcileEntitlements() : loadEntitlements());
+      })();
+      return;
+    }
+    // ÖDEME DÖNÜŞÜ: sahipliği sunucudan uzlaştır (webhook gecikebilir → yeniden dener),
+    // gelince premium açılışını göster. Kök neden düzeltmesinin görünen ucu.
+    returnedRef.current = true;
+    let cancelled = false;
+    let tries = 0;
+    setMsg('Satın alman doğrulanıyor…');
+    void (async () => {
+      await me();
+      const poll = async () => {
+        if (cancelled) return;
+        const list = await reconcileEntitlements();
+        setOwned(list);
+        if (list.includes('komple-b')) {
+          setMsg('');
+          maybeShowPremium(list);
+          window.history.replaceState({}, '', '/fiyatlandirma');
+          return;
+        }
+        if (tries++ < 6) {
+          setTimeout(() => void poll(), 1500);
+        } else {
+          setMsg(
+            'Ödemen alındı. Premium erişimin birkaç dakika içinde açılır — istersen "Satın almayı geri yükle" ile hemen kontrol edebilirsin.'
+          );
+        }
+      };
+      await poll();
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, []);
-
-  const canBuy = (id: string) => !purchasable || purchasable.includes(id);
 
   async function buy(p: Product) {
     setBusy(p.id);
     setMsg('');
 
-    // GERÇEK ÖDEME (LCP): herkes ödeme oturumu üzerinden — girişli kullanıcı hosted
-    // checkout'a yönlenir, sahiplik webhook ile yazılır; misafire giriş istenir.
+    // GERÇEK ÖDEME: herkes ödeme oturumu üzerinden — girişli kullanıcı hosted checkout'a yönlenir,
+    // sahiplik webhook ile yazılır; dönüşte ?checkout=success uzlaştırır; misafire giriş istenir.
     if (realPayments) {
       const res = await startCheckout(p.id);
       setBusy(null);
@@ -87,15 +140,16 @@ export function PricingView({
       return;
     }
 
-    // MOCK/DEV: eski dürüst demo akışı (yerel geliştirme ve e2e).
+    // MOCK/DEV: dürüst demo akışı (yerel geliştirme ve e2e).
     if (isAuthed()) {
-      const owned = await serverPurchase(p.id);
+      const list = await serverPurchase(p.id);
       setBusy(null);
-      if (owned) {
+      if (list) {
         setMsg(
           `${p.title} hesabına KALICI olarak tanımlandı (demo ödeme — tüm cihazlarında geçerli).`
         );
-        setOwned(owned);
+        setOwned(list);
+        maybeShowPremium(list);
       } else {
         setMsg('Satın alma başarısız — tekrar dene.');
       }
@@ -106,23 +160,24 @@ export function PricingView({
     setMsg(res.message + ' Not: hesapla giriş yaparsan satın alman tüm cihazlarında geçerli olur.');
     if (res.ok) {
       track({ name: 'purchase_completed', props: { productId: p.id, priceTRY: p.priceTRY } });
-      setOwned(loadEntitlements());
+      const list = loadEntitlements();
+      setOwned(list);
+      maybeShowPremium(list);
     }
   }
 
   const komple = PRODUCTS.find((p) => p.id === 'komple-b');
-  const singles = PRODUCTS.filter((p) => p.id !== 'komple-b');
-  // Komple paketin gerçek kapsamı: tekil paketlerin tümü + kendi ek özellikleri
-  // ("Yukarıdaki her şey dahil" satırı, tekil paket adlarıyla açık yazılır).
+  // TEK PAKET (P1): Komple B'nin açtığı GERÇEK özellikler (yeteneklerden) + kalıcı-erişim satırları.
   const kompleChecklist = komple
     ? [
-        ...singles.map((p) => `${p.title} dahil`),
+        ...unlockedFeatures([komple.id]).map((f) => f.label),
         ...komple.features.filter((f) => f !== 'Yukarıdaki her şey dahil'),
       ]
     : [];
 
   return (
     <div>
+      {showPremium && <PremiumSuccessDialog owned={owned} onClose={() => setShowPremium(false)} />}
       {msg && (
         <div className="explain" role="status" data-testid="pay-msg">
           {msg}
@@ -245,80 +300,16 @@ export function PricingView({
               </Card>
             )}
 
-            <Section title="Tekil paketler" icon={<Icon name="layers" size={18} />}>
-              <Grid preset="cards">
-                {singles.map((p) => {
-                  const has = owned.includes(p.id);
-                  return (
-                    <Card
-                      key={p.id}
-                      data-testid={`product-${p.id}`}
-                      style={{ display: 'flex', flexDirection: 'column', gap: 'var(--sp-2)' }}
-                    >
-                      <h3 style={{ margin: 0, fontSize: 'var(--fs-md)' }}>{p.title}</h3>
-                      <p style={{ margin: 0, color: 'var(--text-3)', fontSize: 'var(--fs-xs)' }}>
-                        {p.blurb}
-                      </p>
-                      <div
-                        style={{
-                          fontSize: 'var(--fs-xl)',
-                          fontWeight: 800,
-                          color: 'var(--primary)',
-                        }}
-                      >
-                        {p.priceTRY} ₺{' '}
-                        <span
-                          style={{
-                            color: 'var(--text-3)',
-                            fontSize: 'var(--fs-xs)',
-                            fontWeight: 500,
-                          }}
-                        >
-                          · tek seferlik
-                        </span>
-                      </div>
-                      <ul className="exam-tips">
-                        {p.features.map((f) => (
-                          <li key={f}>
-                            <span className="exam-tips__check" aria-hidden>
-                              <Icon name="check-circle" size={15} />
-                            </span>
-                            {f}
-                          </li>
-                        ))}
-                      </ul>
-                      <div style={{ marginTop: 'auto', paddingTop: 'var(--sp-2)' }}>
-                        {has ? (
-                          <OwnedBadge productId={p.id} />
-                        ) : canBuy(p.id) ? (
-                          <Button
-                            variant="soft"
-                            accent="teal"
-                            size="sm"
-                            full
-                            onClick={() => buy(p)}
-                            disabled={busy !== null}
-                            data-testid={`buy-${p.id}`}
-                          >
-                            {busy === p.id ? 'İşleniyor…' : 'Satın al'}
-                          </Button>
-                        ) : (
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            full
-                            disabled
-                            data-testid={`soon-${p.id}`}
-                          >
-                            Yakında — şimdilik Komple paket
-                          </Button>
-                        )}
-                      </div>
-                    </Card>
-                  );
-                })}
-              </Grid>
-            </Section>
+            <p
+              style={{
+                textAlign: 'center',
+                color: 'var(--text-3)',
+                fontSize: 'var(--fs-sm)',
+                margin: 0,
+              }}
+            >
+              Tek paket, tek ödeme — her şey dahil. Ayrı ayrı paket seçmene gerek yok.
+            </p>
           </Stack>
         }
         aside={

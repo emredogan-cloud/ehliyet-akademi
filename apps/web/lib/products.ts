@@ -92,3 +92,28 @@ export function capabilitiesOf(owned: string[]): Set<Capability> {
 export function hasCapability(owned: string[], cap: Capability): boolean {
   return capabilitiesOf(owned).has(cap);
 }
+
+/** Yetenek → kullanıcıya gösterilecek "kilidi açıldı" etiketi + ikon (premium başarı açılışı). */
+export const CAPABILITY_FEATURE: Record<Capability, { icon: string; label: string }> = {
+  'ai-sinirsiz': { icon: 'bot', label: 'AI Koç: Sınırsız Kişisel Analiz' },
+  'sinirsiz-deneme': { icon: 'target', label: 'Sınırsız Deneme Sınavı' },
+  'soru-bankasi-tam': { icon: 'book', label: 'Tam Soru Bankası Erişimi' },
+  'teori-premium': { icon: 'gradcap', label: 'Tüm Premium Teori Dersleri' },
+  'direksiyon-premium': { icon: 'car', label: 'Premium Direksiyon İçeriği' },
+};
+
+/**
+ * Sahip olunan ürünlerden AÇILAN GERÇEK özellik listesi (premium başarı açılışında gösterilir).
+ * Sadece entitlement'ın gerçekten etkinleştirdiği yetenekler — placeholder metin YOK.
+ */
+export function unlockedFeatures(owned: string[]): Array<{ icon: string; label: string }> {
+  const order: Capability[] = [
+    'ai-sinirsiz',
+    'sinirsiz-deneme',
+    'soru-bankasi-tam',
+    'teori-premium',
+    'direksiyon-premium',
+  ];
+  const caps = capabilitiesOf(owned);
+  return order.filter((c) => caps.has(c)).map((c) => CAPABILITY_FEATURE[c]);
+}

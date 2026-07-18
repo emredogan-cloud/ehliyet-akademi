@@ -21,12 +21,21 @@ export async function POST(req: Request): Promise<Response> {
   }
 
   const order = gw.parseOrder(raw);
-  if (!order) return json({ ok: true, ignored: true }); // ilgisiz/tanınmayan olay
+  if (!order) {
+    // İlgisiz/tanınmayan olay VEYA custom_data eksik → grant yapılamaz. 200 ama LOGLA (kör 200 değil):
+    // "webhook 200 ama premium gelmedi" teşhisini kolaylaştırır.
+    logger.warn('webhook_unparseable', { provider: gw.name, len: raw.length });
+    return json({ ok: true, ignored: true });
+  }
 
   const check = validateReceipt(order);
   if (!check.valid || !check.product) {
     logger.warn('webhook_invalid_receipt', { reason: check.reason, order: order.orderId });
     return json({ error: 'invalid receipt' }, { status: 400 });
+  }
+  // Fiyat uyuşmazlığı artık reddetmez (imzalı webhook güvenilir) — audit için loglanır.
+  if (!check.priceOk) {
+    logger.warn('webhook_price_mismatch', { reason: check.reason, order: order.orderId });
   }
 
   try {

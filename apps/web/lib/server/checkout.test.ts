@@ -65,24 +65,34 @@ describe('validateReceipt (makbuz doğrulaması)', () => {
     expect(r.valid).toBe(false);
     expect(r.reason).toBe('unknown_product');
   });
-  it('fiyat uyuşmazlığı geçersiz', () => {
+  it('fiyat uyuşmazlığı: valid ama priceOk=false (imzalı webhook güvenilir → grant + uyarı)', () => {
     const r = validateReceipt({
       productId: 'premium-teori',
       userId: 'u',
       orderId: 'o',
       totalTRY: 1,
     });
-    expect(r.valid).toBe(false);
+    expect(r.valid).toBe(true);
+    expect(r.priceOk).toBe(false);
     expect(r.reason).toMatch(/price_mismatch/);
   });
-  it('doğru fiyat geçerli; total=0 (mock) da geçerli', () => {
-    expect(
-      validateReceipt({ productId: 'premium-teori', userId: 'u', orderId: 'o', totalTRY: 249 })
-        .valid
-    ).toBe(true);
-    expect(
-      validateReceipt({ productId: 'premium-teori', userId: 'u', orderId: 'o', totalTRY: 0 }).valid
-    ).toBe(true);
+  it('doğru fiyat geçerli + priceOk; total=0 (mock) da geçerli + priceOk', () => {
+    const exact = validateReceipt({
+      productId: 'premium-teori',
+      userId: 'u',
+      orderId: 'o',
+      totalTRY: 249,
+    });
+    expect(exact.valid).toBe(true);
+    expect(exact.priceOk).toBe(true);
+    const zero = validateReceipt({
+      productId: 'premium-teori',
+      userId: 'u',
+      orderId: 'o',
+      totalTRY: 0,
+    });
+    expect(zero.valid).toBe(true);
+    expect(zero.priceOk).toBe(true);
   });
 });
 

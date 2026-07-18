@@ -90,6 +90,30 @@ export async function fullSync(): Promise<void> {
     .filter((i) => i.value !== null);
   if (toPush.length)
     await api('/api/state', { method: 'PUT', body: JSON.stringify({ items: toPush }) });
+  // KÖK DÜZELTME (Ödeme): sahiplik SUNUCUDA `purchases` tablosunda tutulur (webhook oraya yazar),
+  // ama /api/state yalnız userState'i senkronlar → webhook ile alınan paket istemciye HİÇ ulaşmıyordu.
+  // Her senkronda purchases → ea:entitlements uzlaştırılır (giriş + çapraz-cihaz + checkout dönüşü).
+  await reconcileEntitlements();
+}
+
+/**
+ * Sunucudaki gerçek satın almaları (purchases tablosu) yerel yetki listesine (ea:entitlements)
+ * BİRLEŞTİRİR. Union: erişim asla kaldırılmaz (para ödemiş kullanıcı erişimini kaybetmez).
+ * Değişiklik varsa userState'e de itilir (tutarlılık). Döner: uzlaşmış sahiplik listesi.
+ */
+export async function reconcileEntitlements(): Promise<string[]> {
+  const { status, data } = await api<{ purchases?: Array<{ productId: string }> }>(
+    '/api/purchases'
+  );
+  if (status !== 200 || !Array.isArray(data.purchases)) {
+    return (readLocal('ea:entitlements:v1') as string[] | null) ?? [];
+  }
+  const owned = data.purchases.map((p) => p.productId);
+  const local = (readLocal('ea:entitlements:v1') as string[] | null) ?? [];
+  const merged = Array.from(new Set([...local, ...owned]));
+  const changed = merged.length !== local.length;
+  if (changed) syncSet('ea:entitlements:v1', merged);
+  return merged;
 }
 
 export async function me(): Promise<AuthUser | null> {

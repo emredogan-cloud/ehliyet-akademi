@@ -1,14 +1,13 @@
 import type { Metadata } from 'next';
 import { PageHeader } from '@/components/ui/layout';
-import { PRODUCTS } from '@/lib/products';
-import { paymentConfigured, variantForProduct } from '@/lib/server/checkout';
+import { paymentConfigured } from '@/lib/server/checkout';
 import { PricingView } from './PricingView';
 import { buildMetadata } from '@/lib/seo/metadata';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Fiyatlandırma — Bir Kez Öde, Ömür Boyu',
   description:
-    'Abonelik yok: tek seferlik paketlerle kalıcı erişim. Premium Teori, Direksiyon, Simülatör, Soru Bankası ve Komple B Ehliyet Paketi.',
+    'Abonelik yok: tek seferlik ödemeyle Komple B Ehliyet Paketi — tüm premium dersler, sınırsız deneme, tam soru bankası ve AI Koç ömür boyu erişim.',
   path: '/fiyatlandirma',
 });
 
@@ -17,11 +16,6 @@ export const dynamic = 'force-dynamic';
 
 export default function FiyatlandirmaPage() {
   const realPayments = paymentConfigured();
-  // Gerçek sağlayıcıda yalnız variant'ı tanımlı paketler satın alınabilir;
-  // mock modda (yerel/dev) tümü demo akışıyla alınabilir.
-  const purchasable = PRODUCTS.filter((p) => !realPayments || Boolean(variantForProduct(p.id))).map(
-    (p) => p.id
-  );
   return (
     <>
       <PageHeader
@@ -33,7 +27,7 @@ export default function FiyatlandirmaPage() {
           </>
         }
       />
-      <PricingView realPayments={realPayments} purchasable={purchasable} />
+      <PricingView realPayments={realPayments} />
     </>
   );
 }

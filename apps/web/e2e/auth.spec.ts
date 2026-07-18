@@ -79,8 +79,8 @@ test('kalıcı satın alma: girişli satın al → başka cihazda restore ile ge
   const a = await ctxA.newPage();
   await registerUI(a, email);
   await a.goto('/fiyatlandirma');
-  await a.getByTestId('buy-simulator-paketi').click();
-  await expect(a.getByTestId('owned-simulator-paketi')).toBeVisible();
+  await a.getByTestId('buy-komple-b').click();
+  await expect(a.getByTestId('owned-komple-b')).toBeVisible();
   await ctxA.close();
 
   const ctxB = await browser.newContext();
@@ -94,7 +94,7 @@ test('kalıcı satın alma: girişli satın al → başka cihazda restore ile ge
   await b.getByTestId('restore').click();
   await expect(b.getByTestId('restore-msg')).toContainText('geri yüklendi');
   await b.goto('/fiyatlandirma');
-  await expect(b.getByTestId('owned-simulator-paketi')).toBeVisible();
+  await expect(b.getByTestId('owned-komple-b')).toBeVisible();
   await ctxB.close();
 });
 

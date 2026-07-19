@@ -45,8 +45,13 @@ Priority: 🔴 before opening registration/taking money · 🟠 at/around launch
 
 ## 3. Domain & DNS (🔴 for the branded site)
 
-- [ ] 🔴 **Point `ehliyetegitim.com` at the Vercel project** (add apex + `www`, set the DNS records).
-      The code already treats `ehliyetegitim.com` as canonical.
+- [x] ✅ **`ehliyetegitim.com` is live** — resolves and serves the app (verified). DNS is pointed.
+- [ ] 🔴 **Align the canonical host.** The apex `ehliyetegitim.com` currently **308-redirects to
+      `www.ehliyetegitim.com`**, but the app's canonical URL is the **apex** (no `www`). This mismatch
+      (canonical → apex, but apex redirects to www) confuses search engines. Fix by making the **apex
+      the primary domain** in Vercel (redirect `www → apex`), so the canonical matches the served,
+      non-redirecting host. (Alternatively, set `NEXT_PUBLIC_SITE_URL=https://www.ehliyetegitim.com`
+      to canonicalize on www — but apex-primary is cleaner.)
 - [ ] 🔴 **Set `NEXT_PUBLIC_SITE_URL=https://ehliyetegitim.com`** in Vercel Production (makes it
       explicit for canonicals/OG/email links).
 - [ ] 🟠 **Redirect the old `ehliyet-akademi-nine.vercel.app` → `ehliyetegitim.com`** once DNS is

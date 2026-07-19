@@ -1148,14 +1148,14 @@ table.tbl {
   padding: 0;
   cursor: pointer;
   perspective: 1000px;
-  min-height: 190px;
+  min-height: 214px;
   font: inherit;
 }
 .sign-card__inner {
   position: relative;
   display: block;
   width: 100%;
-  min-height: 190px;
+  min-height: 214px;
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   transform-style: preserve-3d;
 }
@@ -1188,8 +1188,22 @@ table.tbl {
 .sign-card__back {
   transform: rotateY(180deg);
   justify-content: flex-start;
-  gap: 6px;
+  gap: 5px;
   overflow: hidden;
+}
+/* Taşmayı önle: anlam/hafıza metni satır-kırpar (tam metin detay sayfasında), detay bağlantısı
+   her zaman en altta sabit kalır — hiçbir metin kartın altından kesilmez (P6 taşma düzeltmesi). */
+.sign-card__back > span {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.35;
+}
+.sign-card__detail {
+  margin-top: auto;
+  padding-top: 2px;
 }
 .imp {
   font-size: 0.72rem;

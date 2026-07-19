@@ -49,6 +49,8 @@ function mdLite(s: string): string {
     lines
       .join('\n')
       .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      // _italik_ (ör. yasal uyarı satırı) — alt çizgi içermeyen kısa aralık; kelime içi bozmaz.
+      .replace(/_([^_\n]+)_/g, '<em>$1</em>')
       // GÜVENLİK (L2): href yalnız güvenli URL karakterleri — tırnak/boşluk yok → attribute injection önlenir.
       .replace(/\[(.+?)\]\((\/[^)"'\s]+)\)/g, '<a href="$2">$1</a>')
       .replace(/\n/g, '<br/>')

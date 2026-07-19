@@ -15,17 +15,34 @@ export interface AuthUser {
 
 /** Ham (JSON'suz) saklanan anahtarlar — kök tema scripti doğrudan okur. */
 const RAW_KEYS = new Set(['ea:theme']);
-/** Senkronlanan anahtarlar (sunucudaki izin listesiyle birebir). */
+/**
+ * Senkronlanan anahtarlar (userState / /api/state ile).
+ * NOT: `ea:entitlements:v1` KASITEN burada YOK — sahiplik `purchases` tablosunun türevidir, userState
+ * ile senkronlanMAZ. Aksi halde bir kullanıcının paketi aynı tarayıcıda başka kullanıcıya sızardı
+ * (P0). Entitlements yalnız `reconcileEntitlements()` ile purchases'tan yeniden yazılır (cache).
+ */
 export const SYNC_KEYS = [
   'ea:answers:v1',
   'ea:cards:v1',
   'ea:streak:v1',
   'ea:readiness:v1',
-  'ea:entitlements:v1',
   'ea:examQuota:v1',
   'ea:counters:v1',
   'ea:lessonsViewed:v1',
   'ea:theme',
+] as const;
+
+/** Kullanıcıya-özel anahtarlar — çıkışta temizlenir (tema/rıza cihaz tercihidir, KALIR). */
+const USER_SCOPED_KEYS = [
+  'ea:entitlements:v1',
+  'ea:answers:v1',
+  'ea:cards:v1',
+  'ea:streak:v1',
+  'ea:readiness:v1',
+  'ea:examQuota:v1',
+  'ea:counters:v1',
+  'ea:lessonsViewed:v1',
+  'ea:premiumWelcomeShown:v1',
 ] as const;
 
 let authed = false;
@@ -97,9 +114,10 @@ export async function fullSync(): Promise<void> {
 }
 
 /**
- * Sunucudaki gerçek satın almaları (purchases tablosu) yerel yetki listesine (ea:entitlements)
- * BİRLEŞTİRİR. Union: erişim asla kaldırılmaz (para ödemiş kullanıcı erişimini kaybetmez).
- * Değişiklik varsa userState'e de itilir (tutarlılık). Döner: uzlaşmış sahiplik listesi.
+ * Yetki cache'ini SUNUCUNUN `purchases` tablosuna göre YENİDEN YAZAR (authoritative SET, union DEĞİL).
+ * Sunucu bu kullanıcı için tek doğruluk kaynağıdır → aynı tarayıcıdaki BAŞKA kullanıcıdan kalan bayat
+ * yerel yetki SIZAMAZ (P0 kök düzeltmesi). Ağ hatasında yerel korunur (ödemiş kullanıcı erişim
+ * kaybetmez). Döner: bu kullanıcının gerçek sahiplik listesi.
  */
 export async function reconcileEntitlements(): Promise<string[]> {
   const { status, data } = await api<{ purchases?: Array<{ productId: string }> }>(
@@ -108,17 +126,15 @@ export async function reconcileEntitlements(): Promise<string[]> {
   if (status !== 200 || !Array.isArray(data.purchases)) {
     return (readLocal('ea:entitlements:v1') as string[] | null) ?? [];
   }
-  const owned = data.purchases.map((p) => p.productId);
-  const local = (readLocal('ea:entitlements:v1') as string[] | null) ?? [];
-  const merged = Array.from(new Set([...local, ...owned]));
-  const changed = merged.length !== local.length;
-  if (changed) syncSet('ea:entitlements:v1', merged);
-  return merged;
+  const owned = Array.from(new Set(data.purchases.map((p) => p.productId)));
+  writeLocal('ea:entitlements:v1', owned); // SET: sunucu neyse yerel odur (bayat yetki temizlenir)
+  return owned;
 }
 
 export async function me(): Promise<AuthUser | null> {
   const { status, data } = await api<{ user: AuthUser | null }>('/api/auth/me');
   authed = status === 200 && !!data.user;
+  if (authed && data.user) bindSession(data.user.id);
   return authed ? data.user : null;
 }
 
@@ -134,6 +150,7 @@ export async function register(
   if (status !== 201)
     return { ok: false, error: (data as { error?: string }).error ?? 'Kayıt başarısız.' };
   authed = true;
+  if (data.user) bindSession(data.user.id); // farklı önceki kullanıcı verisini temizle (P0)
   await fullSync();
   return { ok: true };
 }
@@ -149,6 +166,7 @@ export async function login(
   if (status !== 200)
     return { ok: false, error: (data as { error?: string }).error ?? 'Giriş başarısız.' };
   authed = true;
+  if (data.user) bindSession(data.user.id); // farklı önceki kullanıcı verisini temizle (P0)
   await fullSync();
   return { ok: true };
 }
@@ -156,6 +174,38 @@ export async function login(
 export async function logout(): Promise<void> {
   await api('/api/auth/logout', { method: 'POST', body: '{}' });
   authed = false;
+  // P0: kullanıcıya-özel yerel veriyi TEMİZLE → sonraki kullanıcı (aynı tarayıcı) bayat
+  // ilerleme/sahiplik/premium miras ALMAZ. Tema/rıza cihaz tercihidir, korunur.
+  clearUserScoped();
+  try {
+    localStorage.removeItem('ea:sessionUser');
+  } catch {
+    /* yoksay */
+  }
+}
+
+/** Kullanıcıya-özel localStorage anahtarlarını siler (çıkış / kullanıcı değişimi). */
+export function clearUserScoped(): void {
+  try {
+    for (const k of USER_SCOPED_KEYS) localStorage.removeItem(k);
+  } catch {
+    /* yoksay */
+  }
+}
+
+/**
+ * Yerel veriyi bir kullanıcıya BAĞLAR. Bu tarayıcıda daha önce BAŞKA kullanıcı oturum açtıysa
+ * (ea:sessionUser farklı), onun bayat verisi TEMİZLENİR → premium/ilerleme sızıntısı önlenir (P0).
+ * Misafirde işaret yoktur → ilk kayıtta veri KORUNUR (misafir ilerlemesi hesaba taşınır).
+ */
+function bindSession(userId: string): void {
+  try {
+    const prev = localStorage.getItem('ea:sessionUser');
+    if (prev && prev !== userId) clearUserScoped();
+    localStorage.setItem('ea:sessionUser', userId);
+  } catch {
+    /* yoksay */
+  }
 }
 
 export async function forgotPassword(

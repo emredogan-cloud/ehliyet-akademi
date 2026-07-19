@@ -65,3 +65,35 @@ test('mock satın alma → premium başarı açılışı BİR KEZ gösterilir (P
   await expect(page.getByTestId('premium-success')).not.toBeVisible();
   await expect(page.getByTestId('owned-komple-b')).toBeVisible();
 });
+
+test('P0: yeni hesap bayat localStorage yetkisini MİRAS ALMAZ', async ({ page }) => {
+  // Aynı tarayıcıda önceki bir kullanıcıdan kalmış bayat yetki simüle et.
+  await page.goto('/');
+  await page.evaluate(() =>
+    localStorage.setItem('ea:entitlements:v1', JSON.stringify(['komple-b']))
+  );
+  await registerUI(page, uniqueEmail('p0stale'));
+  await page.goto('/fiyatlandirma');
+  // Yeni kullanıcı komple-b'ye SAHİP OLMAMALI (sunucu authoritative reconcile).
+  await expect(page.getByTestId('buy-komple-b')).toBeVisible();
+  await expect(page.getByTestId('owned-komple-b')).toHaveCount(0);
+});
+
+test('P0: kullanıcı A satın alır → çıkış → kullanıcı B (aynı tarayıcı) premium miras ALMAZ', async ({
+  page,
+}) => {
+  // A kayıt + satın al
+  await registerUI(page, uniqueEmail('p0a'));
+  await page.goto('/fiyatlandirma');
+  await page.getByTestId('buy-komple-b').click();
+  await expect(page.getByTestId('owned-komple-b')).toBeVisible();
+  // A çıkış (kullanıcıya-özel veri temizlenir)
+  await page.goto('/profil');
+  await page.getByTestId('logout').click();
+  await page.waitForTimeout(400);
+  // B aynı tarayıcıda kayıt olur
+  await registerUI(page, uniqueEmail('p0b'));
+  await page.goto('/fiyatlandirma');
+  await expect(page.getByTestId('buy-komple-b')).toBeVisible();
+  await expect(page.getByTestId('owned-komple-b')).toHaveCount(0);
+});

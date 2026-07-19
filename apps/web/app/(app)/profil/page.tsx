@@ -7,9 +7,10 @@
  * uydurma yok — modelde olmayan alanlar (telefon, doğum tarihi) dürüstçe "Eklenmemiş".
  */
 import './profil.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { me, logout, restorePurchases, type AuthUser } from '@/lib/authClient';
+import { me, logout, restorePurchases, syncSet, type AuthUser } from '@/lib/authClient';
+import { AVATAR_KEY, loadAvatar, processAvatarFile } from '@/lib/avatar';
 import { productById } from '@/lib/products';
 import { loadAnswers, loadStreak, loadCounters, loadViewedLessons } from '@/lib/progress';
 import { loadEntitlements } from '@/lib/payments';
@@ -104,13 +105,49 @@ export default function ProfilPage() {
   const [owned, setOwned] = useState<string[]>([]);
   const [stats, setStats] = useState<Stats | null>(null);
   const [msg, setMsg] = useState('');
+  const [avatar, setAvatar] = useState('');
+  const [avatarBusy, setAvatarBusy] = useState(false);
+  const [avatarErr, setAvatarErr] = useState('');
+  const fileRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     void me().then((u) => {
       setUser(u);
       setLoaded(true);
     });
+    // Yerelden avatarı oku (fullSync giriş/kayıtta diğer cihazdan doldurmuş olabilir).
+    setAvatar(loadAvatar());
   }, []);
+
+  /** Dosya seç → doğrula + kare kırp + 256px + sıkıştır → optimistik önizleme + senkron. */
+  async function onAvatarPick(e: React.ChangeEvent<HTMLInputElement>): Promise<void> {
+    const file = e.target.files?.[0];
+    e.target.value = ''; // aynı dosya tekrar seçilebilsin
+    if (!file) return;
+    setAvatarErr('');
+    setAvatarBusy(true);
+    try {
+      const dataUrl = await processAvatarFile(file);
+      setAvatar(dataUrl); // optimistik önizleme
+      syncSet(AVATAR_KEY, dataUrl); // localStorage + (girişliyse) /api/state push
+    } catch (err) {
+      setAvatarErr(err instanceof Error ? err.message : 'Fotoğraf işlenemedi.');
+    } finally {
+      setAvatarBusy(false);
+    }
+  }
+
+  /** Fotoğrafı kaldır → baş harflere dön (yerelden sil + sunucuya boş it). */
+  function onAvatarRemove(): void {
+    setAvatar('');
+    setAvatarErr('');
+    syncSet(AVATAR_KEY, ''); // diğer cihazlarda da kalksın (fullSync boşu okur)
+    try {
+      localStorage.removeItem(AVATAR_KEY);
+    } catch {
+      /* yoksay */
+    }
+  }
 
   // Oturum doğrulandıktan sonra GERÇEK ilerleme verisini yükle.
   useEffect(() => {
@@ -278,10 +315,59 @@ export default function ProfilPage() {
       {/* ─── Hero ─── */}
       <section className="pf-hero">
         <div className="pf-id">
-          <div className="pf-avatar" aria-hidden>
-            {initials(name, user.email)}
+          <div className="pf-avatarwrap">
+            <div className="pf-avatar__box">
+              {avatar ? (
+                // Canvas çıktısı data URL — next/image gerekmez (proje genelinde <img> kullanılır).
+                <img
+                  className="pf-avatar pf-avatar--img"
+                  src={avatar}
+                  alt={`${name} profil fotoğrafı`}
+                />
+              ) : (
+                <div className="pf-avatar" aria-hidden>
+                  {initials(name, user.email)}
+                </div>
+              )}
+              <button
+                type="button"
+                className={`pf-avatar__edit${avatarBusy ? ' is-busy' : ''}`}
+                onClick={() => fileRef.current?.click()}
+                disabled={avatarBusy}
+                aria-busy={avatarBusy}
+                aria-label={avatar ? 'Profil fotoğrafını değiştir' : 'Profil fotoğrafı ekle'}
+                data-testid="avatar-edit"
+              >
+                {!avatarBusy && <Icon name="image" size={16} />}
+              </button>
+              <input
+                ref={fileRef}
+                type="file"
+                accept="image/*"
+                className="pf-avatar__input"
+                onChange={onAvatarPick}
+                tabIndex={-1}
+                aria-hidden
+                data-testid="avatar-input"
+              />
+            </div>
+            {avatar && (
+              <button
+                type="button"
+                className="pf-avatar__remove"
+                onClick={onAvatarRemove}
+                data-testid="avatar-remove"
+              >
+                Kaldır
+              </button>
+            )}
           </div>
           <div className="pf-id__body">
+            {avatarErr && (
+              <p className="pf-avatar__err" role="alert" data-testid="avatar-error">
+                {avatarErr}
+              </p>
+            )}
             <h2 className="pf-id__name" data-testid="profile-name">
               {name}
             </h2>

@@ -30,6 +30,7 @@ export const SYNC_KEYS = [
   'ea:aiQuota:v1',
   'ea:counters:v1',
   'ea:lessonsViewed:v1',
+  'ea:avatar:v1',
   'ea:theme',
 ] as const;
 
@@ -44,6 +45,7 @@ const USER_SCOPED_KEYS = [
   'ea:aiQuota:v1',
   'ea:counters:v1',
   'ea:lessonsViewed:v1',
+  'ea:avatar:v1',
   'ea:premiumWelcomeShown:v1',
 ] as const;
 

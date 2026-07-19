@@ -4859,3 +4859,142 @@ table.tbl {
 .poster-card strong {
   font-size: var(--fs-sm);
 }
+
+/* ============ AI Koç sohbet iyileştirmeleri (ChatGPT/Claude düzeyi · P22) ============ */
+/* Mesaj satırı: baloncuk + görsel kart + meta tek sütun; role'e göre hizalanır. */
+.chat-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-width: 100%;
+}
+.chat-row--user {
+  align-items: flex-end;
+  text-align: right;
+}
+.chat-row--ai {
+  align-items: flex-start;
+}
+.chat-row .chat__msg {
+  max-width: min(85%, 620px);
+  box-shadow: 0 1px 2px rgba(2, 8, 20, 0.05);
+}
+.chat-row--user .chat__msg {
+  text-align: left;
+}
+
+/* Meta satırı: kopyala / yeniden oluştur + zaman damgası. */
+.chat-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 0 4px;
+  min-height: 20px;
+}
+.chat-time {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+.chat-act {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-3);
+  font: inherit;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+.chat-act:hover:not(:disabled) {
+  color: var(--primary);
+  background: var(--surface-2);
+  border-color: var(--border);
+}
+.chat-act:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.chat-act__ic {
+  flex: 0 0 auto;
+}
+
+/* Sohbeti temizle çubuğu (sohbet doluyken görünür). */
+.chat-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  max-width: 720px;
+  margin-bottom: var(--sp-2);
+}
+.chat-clear {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text-2);
+  font: inherit;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+.chat-clear:hover:not(:disabled) {
+  color: var(--accent-red);
+  border-color: var(--accent-red);
+}
+.chat-clear:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* "Yazıyor" göstergesi: üç zıplayan nokta (reduced-motion global kuralıyla sabitlenir). */
+.chat-typing {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  width: auto;
+  min-height: 40px;
+  padding: 14px 18px;
+}
+.chat-typing__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text-3);
+  animation: chat-bounce 1.2s var(--ease) infinite;
+}
+.chat-typing__dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.chat-typing__dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes chat-bounce {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.45;
+  }
+  30% {
+    transform: translateY(-5px);
+    opacity: 1;
+  }
+}
+.chat-end {
+  width: 100%;
+  height: 1px;
+}

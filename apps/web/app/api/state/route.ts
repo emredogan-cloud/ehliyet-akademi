@@ -13,6 +13,7 @@ const ALLOWED_KEYS = new Set([
   'ea:aiQuota:v1',
   'ea:counters:v1',
   'ea:lessonsViewed:v1',
+  'ea:avatar:v1',
   'ea:theme',
 ]);
 const MAX_VALUE_BYTES = 512 * 1024; // kayıt başına üst sınır

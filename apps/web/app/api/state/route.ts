@@ -10,6 +10,7 @@ const ALLOWED_KEYS = new Set([
   'ea:readiness:v1',
   'ea:entitlements:v1',
   'ea:examQuota:v1',
+  'ea:aiQuota:v1',
   'ea:counters:v1',
   'ea:lessonsViewed:v1',
   'ea:theme',

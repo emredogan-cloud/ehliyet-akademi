@@ -13,6 +13,14 @@ import { TrafficSign as SignSvg } from '@/components/signs/TrafficSign';
 import { AssetImage } from '@/components/ui/AssetImage';
 import { track } from '@/lib/analytics';
 import { loadAnswers, loadCards } from '@/lib/progress';
+import {
+  loadEntitlements,
+  canAskFreeAI,
+  consumeFreeAI,
+  remainingFreeAI,
+  FREE_AI_DAILY,
+} from '@/lib/payments';
+import { hasCapability } from '@/lib/products';
 // lib/study soru bankasını (1534) çeker → tembel import ile ilk yükten çıkarılır (LCP perf).
 import type { WeakTopic, StudyStep } from '@/lib/study';
 import { SUBJECT_LABEL } from '@ea/content-schema';
@@ -68,6 +76,8 @@ export function AICoach() {
   const [messages, setMessages] = useState<CoachMessage[]>([]);
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
+  // Ücretsiz AI hakkı göstergesi (premium ise null → sınırsız).
+  const [aiLeft, setAiLeft] = useState<number | null>(null);
 
   // Ders sayfasından gelen ?soru= derin bağlantısını giriş kutusuna doldur (SSR-güvenli).
   // (Ray verileri ayrı <CoachRail/> bileşenindedir — tembel bank yüklemesi giriş kutusunu
@@ -75,6 +85,8 @@ export function AICoach() {
   useEffect(() => {
     const soru = new URLSearchParams(window.location.search).get('soru');
     if (soru) setInput(soru);
+    const premium = hasCapability(loadEntitlements(), 'ai-sinirsiz');
+    setAiLeft(premium ? null : remainingFreeAI());
   }, []);
 
   function push(role: AIMessage['role'], text: string, visuals?: VisualMatches) {
@@ -84,9 +96,22 @@ export function AICoach() {
   async function send(text: string) {
     const q = text.trim();
     if (!q || busy) return;
+    // PREMIUM STRATEJİSİ (P10): ücretsiz kademe günde FREE_AI_DAILY soru; premium sınırsız.
+    const premium = hasCapability(loadEntitlements(), 'ai-sinirsiz');
+    if (!premium && !canAskFreeAI()) {
+      push('user', q);
+      setInput('');
+      push(
+        'assistant',
+        `Bugünkü ücretsiz AI Koç hakkını kullandın (günde ${FREE_AI_DAILY} soru). **Sınırsız AI Koç** ve tüm premium içerik için:\n\n[Komple B paketine göz at →](/fiyatlandirma)\n\n_Yarın ücretsiz hakkın yenilenir._`
+      );
+      return;
+    }
     push('user', q);
     setInput('');
     setBusy(true);
+    if (!premium) consumeFreeAI();
+    setAiLeft(remainingFreeAI());
     let answer = '';
     let grounded = true;
     try {
@@ -270,9 +295,23 @@ export function AICoach() {
           <Icon name="login" size={16} /> Sor
         </button>
       </form>
-      <p className="muted coach-lock">
-        <Icon name="lock" size={13} /> Yanıtlar, yalnızca Ehliyet Akademi içeriklerine dayanır ve
-        tahmin/halüsinasyon üretmez.
+      <p className="muted coach-lock" style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+        <span>
+          <Icon name="lock" size={13} /> Yanıtlar, yalnızca Ehliyet Akademi içeriklerine dayanır ve
+          tahmin/halüsinasyon üretmez.
+        </span>
+        {aiLeft !== null && (
+          <span data-testid="ai-quota" style={{ marginLeft: 'auto', fontWeight: 600 }}>
+            {aiLeft > 0 ? (
+              <>
+                Bugün {aiLeft}/{FREE_AI_DAILY} ücretsiz soru ·{' '}
+                <a href="/fiyatlandirma">sınırsız için premium</a>
+              </>
+            ) : (
+              <a href="/fiyatlandirma">Ücretsiz hakkın doldu — sınırsız AI için premium →</a>
+            )}
+          </span>
+        )}
       </p>
     </div>
   );

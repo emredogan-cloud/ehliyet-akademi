@@ -87,3 +87,38 @@ export function consumeFreeExam(now = Date.now()): void {
     /* sessiz */
   }
 }
+
+/* ---- Ücretsiz kademe AI kotası: günde N soru (premium: sınırsız) — PREMIUM STRATEJİSİ (P10) ---- */
+const AI_QUOTA_KEY = 'ea:aiQuota:v1';
+export const FREE_AI_DAILY = 5;
+
+/** Bugün kaç ücretsiz AI sorusu kaldı (premium değilse). */
+export function remainingFreeAI(now = Date.now()): number {
+  if (typeof window === 'undefined') return FREE_AI_DAILY;
+  try {
+    const raw = window.localStorage.getItem(AI_QUOTA_KEY);
+    if (!raw) return FREE_AI_DAILY;
+    const { day, count } = JSON.parse(raw) as { day: string; count: number };
+    const today = new Date(now).toISOString().slice(0, 10);
+    if (day !== today) return FREE_AI_DAILY;
+    return Math.max(0, FREE_AI_DAILY - count);
+  } catch {
+    return FREE_AI_DAILY;
+  }
+}
+export function canAskFreeAI(now = Date.now()): boolean {
+  return remainingFreeAI(now) > 0;
+}
+export function consumeFreeAI(now = Date.now()): void {
+  if (typeof window === 'undefined') return;
+  try {
+    const today = new Date(now).toISOString().slice(0, 10);
+    const raw = window.localStorage.getItem(AI_QUOTA_KEY);
+    const cur = raw ? (JSON.parse(raw) as { day: string; count: number }) : null;
+    const next =
+      cur && cur.day === today ? { day: today, count: cur.count + 1 } : { day: today, count: 1 };
+    syncSet(AI_QUOTA_KEY, next);
+  } catch {
+    /* sessiz */
+  }
+}

@@ -62,12 +62,15 @@ function mockCompose(g: Grounding): string {
   return parts.join('') + DISCLAIMER;
 }
 
-const SYSTEM_PROMPT = `Sen "Ehliyet Akademi" öğrenme asistanısın. SADECE sana verilen BAĞLAM içindeki bilgiyi kullan.
-Kurallar:
-- Bağlamda olmayan hiçbir bilgiyi UYDURMA. Emin değilsen "içeriğimizde bulamadım" de.
-- Yanıtı Türkçe, kısa ve öğretici ver.
-- Resmî kural için MEB/MTSK'nın esas olduğunu belirt.
-- Tıbbi/hukuki kesin tavsiye verme; yalnız müfredat bilgisini açıkla.`;
+const SYSTEM_PROMPT = `Sen "Ehliyet Akademi"nin uzman ehliyet eğitim ekibisin. Şu uzmanların ortak bilgisiyle yanıt verirsin: direksiyon eğitmeni, MTSK sınav uzmanı, trafik polisi, araç tekniği eğitmeni, ilk yardım eğitmeni, trafik mevzuatı uzmanı ve sürücü adayı danışmanı.
+
+KAPSAM: YALNIZCA Türkiye B sınıfı ehliyet konuları — trafik kuralları ve işaretleri, ilk yardım, araç tekniği, trafik adabı, direksiyon (pratik) sınavı, e-Sınav süreci ve ehliyet başvuru/mevzuatı. Bu kapsam dışındaki soruları nazikçe reddet: "Ben yalnız ehliyet, trafik ve sürüş konularında yardımcı olurum."
+
+KURALLAR:
+- Sana BAĞLAM verildiyse ÖNCE onu esas al (grounded). Bağlam yoksa alan bilginle yanıtla — ama ASLA UYDURMA.
+- Kesin bir madde numarası, ceza tutarı veya resmî rakam gerekiyorsa ve emin değilsen, uydurma; "kesin ve güncel bilgi için MEB/MTSK esastır" diyerek yönlendir.
+- Türkçe, kısa, net ve öğretici yanıt ver; gerektiğinde adım adım (madde madde).
+- Kesin tıbbi veya hukuki tavsiye verme; müfredat/uygulama bilgisini açıkla.`;
 
 interface AIModel {
   readonly name: string;
@@ -111,8 +114,25 @@ export function aiConfigured(): boolean {
 /** Ana giriş: soruyu grounded biçimde yanıtla (halüsinasyon kapısı + model + fallback). */
 export async function answerGrounded(question: string): Promise<GroundedAnswer> {
   const g = retrieve(question);
-  // HALÜSİNASYON KAPISI: eşleşme yoksa model çağrılmaz.
+  // İçerik eşleşmesi YOK: gerçek model varsa alan-uzmanı modunda yanıtla (P7 — kapsam genişletmesi:
+  // meşru sürüş sorularını reddetmek yerine uzman ekip bilgisiyle, alan-dışını nazikçe reddederek
+  // yanıtla). Model yoksa (mock/dev) dürüstçe reddet — mock yalnız içerikten besteleyebilir.
   if (!g.question && !g.lessonSlug) {
+    if (aiConfigured()) {
+      try {
+        const model = new AnthropicModel();
+        const user = `SORU: ${question}\n\n(Doğrudan içerik bağlamı yok. Soru KAPSAM içindeyse uzman ekip bilginle yanıtla; kapsam dışıysa nazikçe reddet. Kesin rakam/madde gerekiyorsa MEB/MTSK'ya yönlendir.)`;
+        const text = await model.generate(SYSTEM_PROMPT, user);
+        return {
+          answer: text + DISCLAIMER,
+          grounded: true,
+          sources: [],
+          model: 'anthropic-domain',
+        };
+      } catch (e) {
+        logger.warn('ai_domain_fallback', { err: String(e) });
+      }
+    }
     return {
       answer:
         'Bu konuda içeriğimizde doğrudan bir eşleşme bulamadım. Soruyu biraz farklı ifade edebilir misin? (Örn. "DUR levhasında ne yapılır?", "kalp masajı dakikada kaç bası?") — Yalnız Ehliyet Akademi içeriğine dayanırım; tahmin yürütmem.',

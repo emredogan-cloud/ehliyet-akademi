@@ -88,6 +88,18 @@ test('RBAC: normal kullanıcı /admin göremez', async ({ browser }) => {
   await ctx.close();
 });
 
+test('Soru Zekâsı panosu gerçek metrikleri gösterir (QIP Faz 2)', async ({ page }) => {
+  await registerAdmin(page);
+  await page.goto('/admin/soru-zekasi');
+  await expect(page.getByTestId('qip-panel')).toBeVisible();
+  // Kalite + yineleme bölümleri görünür
+  await expect(page.getByTestId('qip-quality')).toBeVisible();
+  await expect(page.getByTestId('qip-dedup')).toBeVisible();
+  // Toplam soru sayısı gerçek bir değer (banka > 1000)
+  const total = await page.getByTestId('qip-stat-total').innerText();
+  expect(Number(total.replace(/\D/g, ''))).toBeGreaterThan(1000);
+});
+
 test('arama sayfası soyutlama üzerinden sonuç verir', async ({ page }) => {
   await page.goto('/arama');
   await page.getByTestId('search-input').fill('hız');

@@ -6,9 +6,20 @@
 import { allQuestions } from '@ea/question-bank';
 import { type NormalizedQuestion } from '@ea/content-schema';
 import { normalizeQuestion } from './normalize';
+import { classify, SUBJECT_FALLBACK_THEME, themeLabel } from './categorize';
+import {
+  scoreQuality,
+  qualitySummary,
+  type QualityBreakdown,
+  type QualitySummary,
+} from './quality';
+import { dedupReport, type DedupReport } from './dedup';
 
 export * from './normalize';
 export * from './ingest';
+export * from './categorize';
+export * from './quality';
+export * from './dedup';
 
 let _cache: NormalizedQuestion[] | null = null;
 let _byId: Map<string, NormalizedQuestion> | null = null;
@@ -87,5 +98,85 @@ export function qipCoverage(pool: NormalizedQuestion[] = normalizedQuestions()):
     duplicateFingerprintGroups,
     duplicateRecords,
     estimatedTotalMinutes: Math.round(totalSeconds / 60),
+  };
+}
+
+/* ================= Faz 2 — analiz katmanı (sınıflandırma + kalite) ================= */
+
+/** Normalleştirilmiş soru + Faz 2 zekâsı (tema sınıflandırması + kalite dökümü). */
+export interface AnalyzedQuestion extends NormalizedQuestion {
+  primaryTheme: string;
+  primaryThemeLabel: string;
+  themes: string[];
+  quality: QualityBreakdown;
+}
+
+const FALLBACK_THEME_IDS = new Set(Object.values(SUBJECT_FALLBACK_THEME).map((t) => t.id));
+
+let _analyzed: AnalyzedQuestion[] | null = null;
+let _dedup: DedupReport | null = null;
+
+/** Banka geneli yineleme raporu (bir kez hesaplanır — dedup, analiz katmanının pahalı adımı). */
+export function bankDedup(): DedupReport {
+  if (!_dedup) _dedup = dedupReport(normalizedQuestions());
+  return _dedup;
+}
+
+/**
+ * Tüm banka, Faz 2 analiziyle (bir kez hesaplanır). `subcategory` tema etiketiyle inceltilir,
+ * `qualityScore` (Faz 1'de rezerve) doldurulur; ham `topic` alanı korunur.
+ */
+export function analyzedQuestions(): AnalyzedQuestion[] {
+  if (_analyzed) return _analyzed;
+  const pool = normalizedQuestions();
+  const dd = bankDedup();
+  _analyzed = pool.map((q) => {
+    const c = classify(q);
+    const quality = scoreQuality(q, { nearDuplicates: dd.nearDuplicateCounts[q.id] ?? 0 });
+    return {
+      ...q,
+      subcategory: c.primaryLabel,
+      qualityScore: quality.total,
+      primaryTheme: c.primaryTheme,
+      primaryThemeLabel: c.primaryLabel,
+      themes: c.themes,
+      quality,
+    };
+  });
+  return _analyzed;
+}
+
+export interface QipIntelligence {
+  coverage: QipCoverage;
+  categoryDistribution: Record<string, number>;
+  themeDistribution: Array<{ id: string; label: string; count: number }>;
+  /** Ders yedeğine düşmeden bir özel temaya atanan soru sayısı. */
+  classifiedByTheme: number;
+  quality: QualitySummary;
+  dedup: DedupReport;
+}
+
+/** Faz 2 zekâ özeti — pano + rapor + testler için GERÇEK sayılar. */
+export function qipIntelligence(): QipIntelligence {
+  const analyzed = analyzedQuestions();
+  const coverage = qipCoverage();
+  const categoryDistribution: Record<string, number> = {};
+  const themeCounts = new Map<string, number>();
+  let classifiedByTheme = 0;
+  for (const q of analyzed) {
+    categoryDistribution[q.category] = (categoryDistribution[q.category] ?? 0) + 1;
+    themeCounts.set(q.primaryTheme, (themeCounts.get(q.primaryTheme) ?? 0) + 1);
+    if (!FALLBACK_THEME_IDS.has(q.primaryTheme)) classifiedByTheme++;
+  }
+  const themeDistribution = [...themeCounts.entries()]
+    .map(([id, count]) => ({ id, label: themeLabel(id), count }))
+    .sort((a, b) => b.count - a.count);
+  return {
+    coverage,
+    categoryDistribution,
+    themeDistribution,
+    classifiedByTheme,
+    quality: qualitySummary(analyzed.map((q) => q.quality)),
+    dedup: bankDedup(),
   };
 }

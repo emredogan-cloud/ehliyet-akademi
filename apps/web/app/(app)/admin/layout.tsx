@@ -11,6 +11,7 @@ const TABS = [
   { href: '/admin/kullanicilar', label: 'Kullanıcılar' },
   { href: '/admin/denetim', label: 'Denetim' },
   { href: '/admin/seo', label: 'SEO' },
+  { href: '/admin/soru-zekasi', label: 'Soru Zekâsı' },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

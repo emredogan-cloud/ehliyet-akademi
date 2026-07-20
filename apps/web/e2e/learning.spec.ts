@@ -1,5 +1,17 @@
 import { test, expect } from '@playwright/test';
 
+test('Koleksiyonlar: otomatik sınav setlerini gerçek sayılarla listeler (QIP Faz 5)', async ({
+  page,
+}) => {
+  await page.goto('/koleksiyonlar');
+  await expect(page.getByTestId('collections')).toBeVisible();
+  await expect(page.getByTestId('collection-gunun-sinavi')).toBeVisible();
+  await expect(page.getByTestId('collection-zor-sorular')).toBeVisible();
+  // örnek soruları göster
+  await page.getByTestId('collection-peek-gunun-sinavi').click();
+  await expect(page.getByTestId('collection-gunun-sinavi').locator('li').first()).toBeVisible();
+});
+
 test('SRS pratik oturumu: 10 soru → tamamlama + seri', async ({ page }) => {
   await page.goto('/calis');
   await expect(page.getByTestId('practice')).toBeVisible();

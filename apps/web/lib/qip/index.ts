@@ -26,6 +26,10 @@ export * from './graph';
 export * from './families';
 export * from './review';
 export * from './visual';
+export * from './exam';
+export * from './collections';
+export * from './analytics';
+export * from './adaptive';
 
 let _cache: NormalizedQuestion[] | null = null;
 let _byId: Map<string, NormalizedQuestion> | null = null;

@@ -119,7 +119,7 @@ pnpm test && pnpm build` (`pnpm gates`).
 | 2     | `PHASE_2_REPORT.md`                                     | ✅ done |
 | 3     | `PHASE_3_REPORT.md`                                     | ✅ done |
 | 4     | `PHASE_4_REPORT.md`                                     | ✅ done |
-| 5     | `PHASE_5_REPORT.md`                                     | pending |
+| 5     | `PHASE_5_REPORT.md`                                     | ✅ done |
 | 6     | `PHASE_6_REPORT.md` + `QUESTION_INTELLIGENCE_REPORT.md` | pending |
 
 ---

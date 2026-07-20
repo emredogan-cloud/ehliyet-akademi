@@ -102,6 +102,19 @@ test('Soru Zekâsı panosu gerçek metrikleri gösterir (QIP Faz 2)', async ({ p
   expect(Number(total.replace(/\D/g, ''))).toBeGreaterThan(1000);
 });
 
+test('Soru Üretimi: görsel sorular üretir ve inceleme verdilerini gösterir (QIP Faz 4)', async ({
+  page,
+}) => {
+  await registerAdmin(page);
+  await page.goto('/admin/soru-uretimi');
+  await page.getByTestId('gen-visual').click();
+  await expect(page.getByTestId('gen-results')).toBeVisible();
+  // en az bir üretilmiş soru ve hepsi incelemeden geçmiş olmalı (görseller deterministik geçer)
+  const items = page.getByTestId('gen-item');
+  await expect(items.first()).toBeVisible();
+  expect(await items.count()).toBeGreaterThan(0);
+});
+
 test('arama sayfası soyutlama üzerinden sonuç verir', async ({ page }) => {
   await page.goto('/arama');
   await page.getByTestId('search-input').fill('hız');

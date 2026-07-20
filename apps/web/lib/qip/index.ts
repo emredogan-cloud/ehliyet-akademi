@@ -24,6 +24,8 @@ export * from './quality';
 export * from './dedup';
 export * from './graph';
 export * from './families';
+export * from './review';
+export * from './visual';
 
 let _cache: NormalizedQuestion[] | null = null;
 let _byId: Map<string, NormalizedQuestion> | null = null;

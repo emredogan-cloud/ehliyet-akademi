@@ -72,9 +72,14 @@ KURALLAR:
 - Türkçe, kısa, net ve öğretici yanıt ver; gerektiğinde adım adım (madde madde).
 - Kesin tıbbi veya hukuki tavsiye verme; müfredat/uygulama bilgisini açıkla.`;
 
-interface AIModel {
+export interface AIModel {
   readonly name: string;
   generate(system: string, user: string): Promise<string>;
+}
+
+/** Gerçek Anthropic modeli fabrikası (QIP Faz 4 üretim/inceleme için de kullanılır). */
+export function anthropicModel(): AIModel {
+  return new AnthropicModel();
 }
 
 class AnthropicModel implements AIModel {

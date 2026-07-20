@@ -142,6 +142,16 @@ CREATE TABLE IF NOT EXISTS audit_logs (
   at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS audit_at_idx ON audit_logs(at);
+CREATE TABLE IF NOT EXISTS question_reports (
+  id TEXT PRIMARY KEY,
+  question_id TEXT NOT NULL,
+  kind TEXT NOT NULL,
+  message TEXT NOT NULL DEFAULT '',
+  user_id TEXT,
+  status TEXT NOT NULL DEFAULT 'open',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS question_reports_status_idx ON question_reports(status);
 `;
 
 let _db: Db | null = null;

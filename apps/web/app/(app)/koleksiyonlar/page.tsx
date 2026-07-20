@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { PageHeader } from '@/components/ui/layout';
+import { ReportQuestion } from '@/components/ReportQuestion';
 
 interface Collection {
   id: string;
@@ -92,7 +93,9 @@ export default function KoleksiyonlarPage() {
                 {open === c.id && (
                   <ul style={{ margin: '8px 0 0 18px', fontSize: '0.83rem' }}>
                     {c.sample.map((s) => (
-                      <li key={s.id}>{s.stem}</li>
+                      <li key={s.id} style={{ marginBottom: 6 }}>
+                        {s.stem} <ReportQuestion questionId={s.id} />
+                      </li>
                     ))}
                   </ul>
                 )}

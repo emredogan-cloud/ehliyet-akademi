@@ -85,3 +85,14 @@ export const purchases = pgTable(
   },
   (t) => [uniqueIndex('purchases_user_product_uq').on(t.userId, t.productId)]
 );
+
+/** Soru bildirimleri (QIP Faz 6 · Part 13 — topluluk incelemesi). Anonim de olabilir (user_id null). */
+export const questionReports = pgTable('question_reports', {
+  id: text('id').primaryKey(), // uuid
+  questionId: text('question_id').notNull(),
+  kind: text('kind').notNull(), // wrong-answer | unclear | typo | suggestion | other
+  message: text('message').notNull().default(''),
+  userId: text('user_id'), // opsiyonel — oturum varsa
+  status: text('status').notNull().default('open'), // open | resolved | dismissed
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+});

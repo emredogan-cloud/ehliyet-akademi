@@ -16,6 +16,7 @@ import {
 import { dedupReport, type DedupReport } from './dedup';
 import { graphStats, type GraphStats } from './graph';
 import { familyStats, type FamilyStats } from './families';
+import { validateQip, type QipValidation } from './validate';
 
 export * from './normalize';
 export * from './ingest';
@@ -30,6 +31,7 @@ export * from './exam';
 export * from './collections';
 export * from './analytics';
 export * from './adaptive';
+export * from './validate';
 
 let _cache: NormalizedQuestion[] | null = null;
 let _byId: Map<string, NormalizedQuestion> | null = null;
@@ -166,6 +168,7 @@ export interface QipIntelligence {
   dedup: DedupReport;
   graph: GraphStats;
   families: FamilyStats;
+  validation: QipValidation;
 }
 
 /** Faz 2 zekâ özeti — pano + rapor + testler için GERÇEK sayılar. */
@@ -192,5 +195,6 @@ export function qipIntelligence(): QipIntelligence {
     dedup: bankDedup(),
     graph: graphStats(),
     families: familyStats(),
+    validation: validateQip(),
   };
 }

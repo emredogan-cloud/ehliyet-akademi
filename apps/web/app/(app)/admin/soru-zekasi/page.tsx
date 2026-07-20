@@ -51,7 +51,18 @@ interface Intelligence {
     avgSize: number;
     questionsInMultiVariant: number;
   };
+  validation: {
+    score: number;
+    passed: boolean;
+    checks: Array<{ id: string; label: string; status: 'ok' | 'warn' | 'fail'; detail: string }>;
+  };
 }
+
+const VStatus: Record<string, { icon: string; color: string }> = {
+  ok: { icon: '✓', color: 'var(--accent-green)' },
+  warn: { icon: '!', color: 'var(--accent-amber)' },
+  fail: { icon: '✕', color: 'var(--accent-red)' },
+};
 
 const NODE_LABEL: Record<string, string> = {
   question: 'Soru',
@@ -131,6 +142,46 @@ export default function AdminQipPage() {
             <Stat label="Temaya atanan" value={`%${pctClassified}`} />
             <Stat label="Benzersiz parmak izi" value={data.coverage.uniqueFingerprints} />
             <Stat label="Tahmini süre (dk)" value={data.coverage.estimatedTotalMinutes} />
+          </div>
+
+          {/* Nihai Doğrulama */}
+          <h2 className="section-title" style={{ marginTop: 22 }}>
+            Nihai Doğrulama
+          </h2>
+          <div className="card" data-testid="qip-validation">
+            <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
+              <div
+                style={{
+                  fontSize: '2rem',
+                  fontWeight: 800,
+                  color: data.validation.passed ? 'var(--accent-green)' : 'var(--accent-red)',
+                }}
+              >
+                {data.validation.score}
+              </div>
+              <div>
+                <strong>{data.validation.passed ? 'GEÇTİ' : 'SORUN VAR'}</strong>
+                <div className="muted" style={{ fontSize: '0.78rem' }}>
+                  bütünlük · yineleme · kalite · denge · görsel · referans · grafik
+                </div>
+              </div>
+            </div>
+            <div style={{ display: 'grid', gap: 6, marginTop: 12 }}>
+              {data.validation.checks.map((c) => {
+                const m = VStatus[c.status]!;
+                return (
+                  <div
+                    key={c.id}
+                    style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: '0.85rem' }}
+                    data-testid={`qip-check-${c.id}`}
+                  >
+                    <span style={{ color: m.color, fontWeight: 800, minWidth: 14 }}>{m.icon}</span>
+                    <strong style={{ minWidth: 190 }}>{c.label}</strong>
+                    <span className="muted">{c.detail}</span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           {/* Kalite */}

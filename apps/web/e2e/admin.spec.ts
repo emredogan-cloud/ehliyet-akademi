@@ -115,6 +115,29 @@ test('Soru Üretimi: görsel sorular üretir ve inceleme verdilerini gösterir (
   expect(await items.count()).toBeGreaterThan(0);
 });
 
+test('Soru bildirimi → admin moderasyonu → çöz (QIP Faz 6 · Part 13)', async ({ page }) => {
+  await registerAdmin(page);
+
+  // Kullanıcı: koleksiyonlarda bir örnek soruyu bildir
+  await page.goto('/koleksiyonlar');
+  await page.getByTestId('collection-peek-gunun-sinavi').click();
+  await page.getByTestId('report-open').first().click();
+  await page.getByTestId('report-kind').first().selectOption('unclear');
+  await page.getByTestId('report-message').first().fill('e2e bildirim testi');
+  await page.getByTestId('report-submit').first().click();
+  await expect(page.getByTestId('report-thanks').first()).toBeVisible();
+
+  // Admin: moderasyon kuyruğunda görünür ve çözülebilir
+  await page.goto('/admin/bildirimler');
+  await expect(page.getByTestId('reports-list')).toBeVisible();
+  const items = page.getByTestId('report-item');
+  expect(await items.count()).toBeGreaterThan(0);
+  await page.getByTestId('report-resolve').first().click();
+  await expect(
+    page.getByTestId('reports-list').or(page.getByTestId('reports-empty'))
+  ).toBeVisible();
+});
+
 test('arama sayfası soyutlama üzerinden sonuç verir', async ({ page }) => {
   await page.goto('/arama');
   await page.getByTestId('search-input').fill('hız');

@@ -52,38 +52,171 @@ export type Difficulty = z.infer<typeof Difficulty>;
 export const ReviewStatus = z.enum(['draft', 'in-review', 'approved']);
 export type ReviewStatus = z.infer<typeof ReviewStatus>;
 
-/** Özgün soru — ROADMAP C.4/E.6: kaynak = resmî müfredat, kendi ifademizle. */
-export const Question = z
-  .object({
-    id: z.string().regex(/^[a-z0-9-]+$/),
-    subject: Subject,
-    topic: z.string().min(2),
-    difficulty: Difficulty.default('orta'),
-    stem: z.string().min(8),
-    options: z.array(z.string().min(1)).min(2).max(5),
-    answerIndex: z.number().int().nonnegative(),
-    explanation: z.string().min(8),
-    badge: Badge.optional(),
-    /**
-     * Sprint 3 — zenginleştirilmiş öğrenme metaverisi (hepsi opsiyonel, geriye dönük uyumlu).
-     * `whyWrong`: çeldiricilerin neden yanlış olduğu (öğretici geri bildirim).
-     * `objective`: sorunun ölçtüğü öğrenme kazanımı. `tags`: konu etiketleri (arama/SRS/filtre).
-     */
-    whyWrong: z.array(z.string().min(3)).default([]),
-    objective: z.string().min(4).optional(),
-    tags: z.array(z.string().min(2)).default([]),
-    /** İçerik yönetişimi: özgünlük + uzman onay izi. */
-    review: ReviewStatus.default('draft'),
-    reviewedBy: z.string().optional(),
-    sourceRef: z.string().optional(),
-  })
-  .refine((q) => q.answerIndex < q.options.length, {
-    message: 'answerIndex, options aralığında olmalı',
-    path: ['answerIndex'],
-  });
+/**
+ * Özgün soru gövdesi (refine'siz taban) — ROADMAP C.4/E.6: kaynak = resmî müfredat, kendi
+ * ifademizle. QIP Faz 1: `NormalizedQuestion` bu tabandan `.extend` ile türetilir.
+ */
+export const QuestionBase = z.object({
+  id: z.string().regex(/^[a-z0-9-]+$/),
+  subject: Subject,
+  topic: z.string().min(2),
+  difficulty: Difficulty.default('orta'),
+  stem: z.string().min(8),
+  options: z.array(z.string().min(1)).min(2).max(5),
+  answerIndex: z.number().int().nonnegative(),
+  explanation: z.string().min(8),
+  badge: Badge.optional(),
+  /**
+   * Sprint 3 — zenginleştirilmiş öğrenme metaverisi (hepsi opsiyonel, geriye dönük uyumlu).
+   * `whyWrong`: çeldiricilerin neden yanlış olduğu (öğretici geri bildirim).
+   * `objective`: sorunun ölçtüğü öğrenme kazanımı. `tags`: konu etiketleri (arama/SRS/filtre).
+   */
+  whyWrong: z.array(z.string().min(3)).default([]),
+  objective: z.string().min(4).optional(),
+  tags: z.array(z.string().min(2)).default([]),
+  /** İçerik yönetişimi: özgünlük + uzman onay izi. */
+  review: ReviewStatus.default('draft'),
+  reviewedBy: z.string().optional(),
+  sourceRef: z.string().optional(),
+});
+
+/** answerIndex, options aralığında mı? (Question + NormalizedQuestion ortak kısıtı) */
+const answerInRange = (q: { answerIndex: number; options: unknown[] }): boolean =>
+  q.answerIndex < q.options.length;
+const ANSWER_RANGE_MSG = {
+  message: 'answerIndex, options aralığında olmalı',
+  path: ['answerIndex'] as (string | number)[],
+};
+
+/** Özgün soru — kaynak = resmî müfredat, kendi ifademizle. */
+export const Question = QuestionBase.refine(answerInRange, ANSWER_RANGE_MSG);
 export type Question = z.infer<typeof Question>;
 /** Yazım tipi: `.default([])` alanları (whyWrong/tags) girişte opsiyoneldir. */
 export type QuestionInput = z.input<typeof Question>;
+
+/* ================= QIP (Soru Zekâsı Platformu) — Faz 1: normalleştirme ================= */
+
+/**
+ * Kaynak atıf metaverisi (BANK_QUESTİON Part 1 — kaynak izlenebilirliği).
+ * İçerik hukuku: `origin: 'authored'` (özgün) veya `'ai-generated'` (Faz 4, review:draft).
+ * Telif korumalı üçüncü taraf soru bankaları KOPYALANMAZ; bu yüzden `'imported'` yalnız
+ * açık lisanslı/kamuya açık kaynaklar için ayrılmıştır.
+ */
+export const QuestionSource = z.object({
+  origin: z.enum(['authored', 'ai-generated', 'imported']).default('authored'),
+  collection: z.string().optional(),
+  attribution: z.string().optional(),
+  license: z.string().default('proprietary'),
+  method: z.enum(['authored', 'curriculum', 'ai', 'import']).default('authored'),
+});
+export type QuestionSource = z.infer<typeof QuestionSource>;
+
+/** QIP üst kategori — ders (subject) → kategori etiketi (Faz 2 sınıflandırıcı inceltir). */
+export const QIP_CATEGORY_BY_SUBJECT: Record<Subject, string> = {
+  trafik: 'Trafik ve Çevre',
+  ilkyardim: 'İlk Yardım',
+  motor: 'Araç Tekniği',
+  adab: 'Trafik Adabı',
+  pratik: 'Direksiyon Uygulaması',
+};
+
+/** Zorluk → tahmini çözüm süresi (sn). MEB e-Sınav: 45 dk / 50 soru ≈ 54 sn ortalama. */
+export const EST_SECONDS_BY_DIFFICULTY: Record<Difficulty, number> = {
+  kolay: 45,
+  orta: 60,
+  zor: 80,
+};
+
+/**
+ * Türkçe-duyarlı metin katlama — parmak izi + benzerlik için kararlı kanonik biçim.
+ * Küçük harfe indirir, `ı→i`, aksanları (NFKD) ayıklar (ç→c, ş→s, ö→o, ü→u, ğ→g),
+ * noktalamayı boşluğa çevirir, boşlukları sadeleştirir.
+ */
+export function foldText(s: string): string {
+  return s
+    .toLocaleLowerCase('tr')
+    .replace(/ı/g, 'i')
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/** Deterministik FNV-1a 32-bit hash → 8 haneli hex (kripto gerektirmez; tarayıcı + node). */
+export function hash32(s: string): string {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 0x01000193);
+  }
+  return (h >>> 0).toString(16).padStart(8, '0');
+}
+
+/**
+ * İçerik parmak izi — katlanmış stem + SIRALI seçenek metinleri. Seçenek sırası
+ * bağımsızdır (çeldiriciler karıştırılsa da aynı parmak izi) → dedup için kararlı.
+ */
+export function questionFingerprint(q: { stem: string; options: string[] }): string {
+  const stem = foldText(q.stem);
+  const opts = q.options.map(foldText).sort().join('|');
+  return hash32(`${stem}##${opts}`);
+}
+
+/**
+ * Birleşik (unified) soru şeması — BANK_QUESTİON Part 2. Elle yazılan `Question`'ı
+ * QIP zekâ alanlarıyla zenginleştirir; normalleştirme hattının çıktısıdır.
+ */
+export const NormalizedQuestion = QuestionBase.extend({
+  category: z.string().min(2),
+  subcategory: z.string().min(2),
+  learningOutcome: z.string().optional(),
+  relatedLesson: z.string().optional(),
+  relatedSigns: z.array(z.string()).default([]),
+  relatedVehicleParts: z.array(z.string()).default([]),
+  estimatedSeconds: z.number().int().positive(),
+  commonMistakes: z.array(z.string()).default([]),
+  image: z.string().optional(),
+  video: z.string().optional(),
+  source: QuestionSource,
+  qualityScore: z.number().min(0).max(100).optional(),
+  fingerprint: z.string().min(4),
+  version: z.number().int().positive().default(1),
+}).refine(answerInRange, ANSWER_RANGE_MSG);
+export type NormalizedQuestion = z.infer<typeof NormalizedQuestion>;
+export type NormalizedQuestionInput = z.input<typeof NormalizedQuestion>;
+
+/**
+ * Taban normalleştirme — uygulama içeriği (levha/ders/parça) GEREKTİRMEYEN alanları doldurur.
+ * Cross-link alanları (relatedSigns/relatedVehicleParts/relatedLesson) uygulama katmanında
+ * (`apps/web/lib/qip`) eklenir; oraya `overrides` ile geçirilir.
+ */
+export function baseNormalize(
+  q: Question,
+  overrides: Partial<NormalizedQuestionInput> = {}
+): NormalizedQuestion {
+  const draft: NormalizedQuestionInput = {
+    ...q,
+    category: QIP_CATEGORY_BY_SUBJECT[q.subject],
+    subcategory: q.topic,
+    learningOutcome: q.objective,
+    relatedSigns: [],
+    relatedVehicleParts: [],
+    estimatedSeconds: EST_SECONDS_BY_DIFFICULTY[q.difficulty],
+    commonMistakes: q.whyWrong,
+    source: {
+      origin: 'authored',
+      collection: q.subject,
+      attribution: q.sourceRef,
+      license: 'proprietary',
+      method: 'curriculum',
+    },
+    fingerprint: questionFingerprint(q),
+    version: 1,
+    ...overrides,
+  };
+  return NormalizedQuestion.parse(draft);
+}
 
 /** Vurgu kutusu (callout) — ders içi görsel öne çıkarma. */
 export const Callout = z.object({

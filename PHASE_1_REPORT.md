@@ -22,18 +22,18 @@ authored `Question` via a shared `QuestionBase` object (`Question` was refactore
 all pre-existing `Question` parse/validate paths are byte-identical). `NormalizedQuestion` carries
 every field the roadmap's Part 2 unified schema requires:
 
-| Part 2 field       | Source in `NormalizedQuestion`                                        |
-| ------------------ | -------------------------------------------------------------------- |
+| Part 2 field                                                   | Source in `NormalizedQuestion`                                                |
+| -------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | Question / Choices / Correct Answer / Explanation / Difficulty | `stem` / `options` / `answerIndex` / `explanation` / `difficulty` (from base) |
-| Category / Subcategory | `category` (from subject) / `subcategory` (from topic)           |
-| Learning Outcome   | `learningOutcome` (= `objective`)                                    |
-| Related Lesson / Signs / Vehicle Parts | `relatedLesson` / `relatedSigns[]` / `relatedVehicleParts[]` (derived) |
-| Estimated Time     | `estimatedSeconds` (difficulty-based heuristic)                      |
-| Common Mistakes    | `commonMistakes` (= `whyWrong`)                                      |
-| Tags / Image / Video | `tags` (base) / `image?` / `video?`                                |
-| Source Metadata    | `source` (`QuestionSource`: origin/collection/attribution/license/method) |
-| Quality Score      | `qualityScore?` (reserved — populated in Phase 2)                    |
-| Review Status / Version | `review` (base) / `version`                                     |
+| Category / Subcategory                                         | `category` (from subject) / `subcategory` (from topic)                        |
+| Learning Outcome                                               | `learningOutcome` (= `objective`)                                             |
+| Related Lesson / Signs / Vehicle Parts                         | `relatedLesson` / `relatedSigns[]` / `relatedVehicleParts[]` (derived)        |
+| Estimated Time                                                 | `estimatedSeconds` (difficulty-based heuristic)                               |
+| Common Mistakes                                                | `commonMistakes` (= `whyWrong`)                                               |
+| Tags / Image / Video                                           | `tags` (base) / `image?` / `video?`                                           |
+| Source Metadata                                                | `source` (`QuestionSource`: origin/collection/attribution/license/method)     |
+| Quality Score                                                  | `qualityScore?` (reserved — populated in Phase 2)                             |
+| Review Status / Version                                        | `review` (base) / `version`                                                   |
 
 Plus `fingerprint` — a deterministic content hash reserved for dedup (Phase 2/6).
 
@@ -109,18 +109,18 @@ is a pure FNV-1a hash, so it runs identically in node, browser, and tests.
 
 ## Real coverage (measured, not estimated)
 
-| Metric                         | Value                                                                   |
-| ------------------------------ | ----------------------------------------------------------------------- |
-| Questions normalized           | **1534** (100% of the bank)                                             |
-| Categories                     | 5 — Trafik ve Çevre 368 · İlk Yardım 299 · Araç Tekniği 298 · Trafik Adabı 272 · Direksiyon 297 |
-| Difficulty mix                 | kolay 546 · orta 719 · zor 269                                          |
-| With `relatedLesson`           | 311 (20.3%)                                                             |
-| With `relatedSigns`            | 235 (15.3%)                                                             |
-| With `relatedVehicleParts`     | 200 (13.0%)                                                             |
-| With ≥1 sign/part cross-link   | 425 (27.7%)                                                             |
-| With `learningOutcome`         | 1481 (96.5%)                                                            |
-| Unique fingerprints            | 1534 → **0 exact duplicates**                                           |
-| Estimated total practice time  | 1487 min (~24.8 h)                                                      |
+| Metric                        | Value                                                                                           |
+| ----------------------------- | ----------------------------------------------------------------------------------------------- |
+| Questions normalized          | **1534** (100% of the bank)                                                                     |
+| Categories                    | 5 — Trafik ve Çevre 368 · İlk Yardım 299 · Araç Tekniği 298 · Trafik Adabı 272 · Direksiyon 297 |
+| Difficulty mix                | kolay 546 · orta 719 · zor 269                                                                  |
+| With `relatedLesson`          | 311 (20.3%)                                                                                     |
+| With `relatedSigns`           | 235 (15.3%)                                                                                     |
+| With `relatedVehicleParts`    | 200 (13.0%)                                                                                     |
+| With ≥1 sign/part cross-link  | 425 (27.7%)                                                                                     |
+| With `learningOutcome`        | 1481 (96.5%)                                                                                    |
+| Unique fingerprints           | 1534 → **0 exact duplicates**                                                                   |
+| Estimated total practice time | 1487 min (~24.8 h)                                                                              |
 
 ## Content & legal (guardrail honored)
 

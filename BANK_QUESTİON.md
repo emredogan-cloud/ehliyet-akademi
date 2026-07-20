@@ -1,4 +1,5 @@
 # QUESTION INTELLIGENCE PLATFORM (QIP)
+
 # MASSIVE QUESTION BANK, KNOWLEDGE GRAPH & EXAM GENERATION SYSTEM
 
 ROADMAP.md remains the historical roadmap.
@@ -13,7 +14,8 @@ This is NOT a redesign.
 
 This is a content intelligence program.
 
-------------------------------------------------------------
+---
+
 PRIMARY OBJECTIVE
 ------------------------------------------------------------
 
@@ -35,7 +37,8 @@ The objective is:
 
 • Visual Question System
 
-------------------------------------------------------------
+---
+
 PART 1
 QUESTION DISCOVERY
 ------------------------------------------------------------
@@ -86,7 +89,8 @@ Collect associated illustrations whenever available.
 
 Maintain source attribution metadata.
 
-------------------------------------------------------------
+---
+
 PART 2
 QUESTION NORMALIZATION
 ------------------------------------------------------------
@@ -137,7 +141,8 @@ Review Status
 
 Version
 
-------------------------------------------------------------
+---
+
 PART 3
 QUESTION KNOWLEDGE GRAPH
 ------------------------------------------------------------
@@ -182,7 +187,8 @@ Study Plan
 
 The graph should support future recommendations.
 
-------------------------------------------------------------
+---
+
 PART 4
 SMART CATEGORIZATION
 ------------------------------------------------------------
@@ -221,7 +227,8 @@ Legal Responsibilities
 
 Everything.
 
-------------------------------------------------------------
+---
+
 PART 5
 QUESTION QUALITY ANALYSIS
 ------------------------------------------------------------
@@ -246,7 +253,8 @@ Answer Confidence
 
 Language Quality
 
-------------------------------------------------------------
+---
+
 PART 6
 DUPLICATE DETECTION
 ------------------------------------------------------------
@@ -267,7 +275,8 @@ Remove duplicates.
 
 Merge variants where appropriate.
 
-------------------------------------------------------------
+---
+
 PART 7
 AI QUESTION GENERATION
 ------------------------------------------------------------
@@ -294,7 +303,8 @@ Maintain the same learning objective.
 
 Generate multiple variants.
 
-------------------------------------------------------------
+---
+
 PART 8
 VISUAL QUESTION GENERATION
 ------------------------------------------------------------
@@ -323,7 +333,8 @@ Generate additional images using the OpenAI image pipeline where required.
 
 Maintain one consistent visual style.
 
-------------------------------------------------------------
+---
+
 PART 9
 QUESTION FAMILIES
 ------------------------------------------------------------
@@ -338,7 +349,8 @@ Many variants
 
 Support adaptive learning.
 
-------------------------------------------------------------
+---
+
 PART 10
 DYNAMIC EXAM GENERATOR
 ------------------------------------------------------------
@@ -367,7 +379,8 @@ Randomized choices
 
 Every generated exam should feel unique.
 
-------------------------------------------------------------
+---
+
 PART 11
 ADAPTIVE LEARNING
 ------------------------------------------------------------
@@ -386,7 +399,8 @@ Strong topics
 
 Reduce repetition
 
-------------------------------------------------------------
+---
+
 PART 12
 QUESTION ANALYTICS
 ------------------------------------------------------------
@@ -407,7 +421,8 @@ Learning Progress
 
 Question Popularity
 
-------------------------------------------------------------
+---
+
 PART 13
 COMMUNITY REVIEW
 ------------------------------------------------------------
@@ -424,7 +439,8 @@ Flag unclear wording
 
 Flag wrong answers
 
-------------------------------------------------------------
+---
+
 PART 14
 AI REVIEWER
 ------------------------------------------------------------
@@ -445,7 +461,8 @@ Difficulty
 
 Consistency
 
-------------------------------------------------------------
+---
+
 PART 15
 CONTENT EXPANSION
 ------------------------------------------------------------
@@ -472,7 +489,8 @@ Educational references
 
 Everything should be searchable.
 
-------------------------------------------------------------
+---
+
 PART 16
 EXAM COLLECTIONS
 ------------------------------------------------------------
@@ -501,7 +519,8 @@ Random 50
 
 AI Challenge
 
-------------------------------------------------------------
+---
+
 PART 17
 FINAL VALIDATION
 ------------------------------------------------------------
@@ -522,7 +541,8 @@ Broken references
 
 Knowledge graph consistency
 
-------------------------------------------------------------
+---
+
 PART 18
 FINAL REPORT
 ------------------------------------------------------------
@@ -553,7 +573,8 @@ Remaining limitations
 
 Future scalability
 
-------------------------------------------------------------
+---
+
 MISSION
 
 Build the most complete driving-license question intelligence platform possible.

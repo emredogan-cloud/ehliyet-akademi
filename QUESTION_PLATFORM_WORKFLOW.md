@@ -113,14 +113,14 @@ pnpm test && pnpm build` (`pnpm gates`).
 
 ## 10. Report ledger
 
-| Phase | Report                                                  | Status      |
-| ----- | ------------------------------------------------------- | ----------- |
-| 1     | `PHASE_1_REPORT.md`                                     | ✅ done      |
-| 2     | `PHASE_2_REPORT.md`                                     | pending     |
-| 3     | `PHASE_3_REPORT.md`                                     | pending     |
-| 4     | `PHASE_4_REPORT.md`                                     | pending     |
-| 5     | `PHASE_5_REPORT.md`                                     | pending     |
-| 6     | `PHASE_6_REPORT.md` + `QUESTION_INTELLIGENCE_REPORT.md` | pending     |
+| Phase | Report                                                  | Status  |
+| ----- | ------------------------------------------------------- | ------- |
+| 1     | `PHASE_1_REPORT.md`                                     | ✅ done |
+| 2     | `PHASE_2_REPORT.md`                                     | pending |
+| 3     | `PHASE_3_REPORT.md`                                     | pending |
+| 4     | `PHASE_4_REPORT.md`                                     | pending |
+| 5     | `PHASE_5_REPORT.md`                                     | pending |
+| 6     | `PHASE_6_REPORT.md` + `QUESTION_INTELLIGENCE_REPORT.md` | pending |
 
 ---
 

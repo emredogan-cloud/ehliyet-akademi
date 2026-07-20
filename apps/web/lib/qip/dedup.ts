@@ -95,8 +95,8 @@ export interface DedupReport {
 
 const SHARED_TOKEN_PRUNE = 4; // en az bu kadar ortak jeton paylaşan çiftler karşılaştırılır
 
-/** Birleşim-bul (union-find) — yakın-yineleme kümeleri için. */
-class UnionFind {
+/** Birleşim-bul (union-find) — yakın-yineleme kümeleri + soru aileleri için. */
+export class UnionFind {
   private parent: number[];
   constructor(n: number) {
     this.parent = Array.from({ length: n }, (_, i) => i);

@@ -35,7 +35,42 @@ interface Intelligence {
     duplicateRatePct: number;
     topPairs: Array<{ a: string; b: string; similarity: number }>;
   };
+  graph: {
+    nodeCount: number;
+    edgeCount: number;
+    byNodeType: Record<string, number>;
+    byEdgeType: Record<string, number>;
+    orphanQuestions: number;
+    avgQuestionDegree: number;
+  };
+  families: {
+    totalFamilies: number;
+    multiVariant: number;
+    singletons: number;
+    largestSize: number;
+    avgSize: number;
+    questionsInMultiVariant: number;
+  };
 }
+
+const NODE_LABEL: Record<string, string> = {
+  question: 'Soru',
+  lesson: 'Ders',
+  sign: 'İşaret',
+  part: 'Araç Parçası',
+  topic: 'Konu',
+  theme: 'Tema',
+  subject: 'Ders (alan)',
+  scenario: 'Senaryo',
+};
+const EDGE_LABEL: Record<string, string> = {
+  'belongs-to': 'ait',
+  'about-topic': 'konu',
+  'classified-as': 'tema',
+  'related-lesson': 'ilgili ders',
+  'depicts-sign': 'işaret',
+  'depicts-part': 'parça',
+};
 
 function Bar({ value, max, color }: { value: number; max: number; color: string }) {
   const pct = max > 0 ? Math.round((value / max) * 100) : 0;
@@ -154,6 +189,50 @@ export default function AdminQipPage() {
                 </ul>
               </div>
             )}
+          </div>
+
+          {/* Bilgi grafiği */}
+          <h2 className="section-title" style={{ marginTop: 22 }}>
+            Bilgi Grafiği
+          </h2>
+          <div className="card" data-testid="qip-graph">
+            <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+              <Stat label="Düğüm" value={data.graph.nodeCount} />
+              <Stat label="Kenar" value={data.graph.edgeCount} />
+              <Stat label="Ort. soru derecesi" value={data.graph.avgQuestionDegree} />
+              <Stat label="Zengin bağı olmayan soru" value={data.graph.orphanQuestions} />
+            </div>
+            <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap', marginTop: 14 }}>
+              {Object.entries(data.graph.byNodeType).map(([k, v]) => (
+                <div key={k}>
+                  <div style={{ fontSize: '1.05rem', fontWeight: 700 }}>{v}</div>
+                  <div className="muted" style={{ fontSize: '0.72rem' }}>
+                    {NODE_LABEL[k] ?? k}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="muted" style={{ fontSize: '0.78rem', marginTop: 12 }}>
+              Kenarlar:{' '}
+              {Object.entries(data.graph.byEdgeType)
+                .map(([k, v]) => `${EDGE_LABEL[k] ?? k} ${v}`)
+                .join(' · ')}
+            </div>
+          </div>
+
+          {/* Soru aileleri */}
+          <h2 className="section-title" style={{ marginTop: 22 }}>
+            Soru Aileleri (bir kavram → çok varyant)
+          </h2>
+          <div className="card" data-testid="qip-families">
+            <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+              <Stat label="Aile" value={data.families.totalFamilies} />
+              <Stat label="Çok varyantlı" value={data.families.multiVariant} />
+              <Stat label="Tekil" value={data.families.singletons} />
+              <Stat label="En büyük aile" value={data.families.largestSize} />
+              <Stat label="Ort. boyut" value={data.families.avgSize} />
+              <Stat label="Adaptif kapsam (soru)" value={data.families.questionsInMultiVariant} />
+            </div>
           </div>
 
           {/* Tema dağılımı */}

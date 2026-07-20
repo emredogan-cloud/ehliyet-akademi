@@ -46,6 +46,8 @@ describe('GET /api/admin/qip', () => {
         themeDistribution: unknown[];
         quality: { count: number; avg: number };
         dedup: { total: number; exactDuplicateRecords: number };
+        graph: { nodeCount: number; edgeCount: number };
+        families: { totalFamilies: number };
       };
     };
     const q = body.intelligence;
@@ -54,5 +56,8 @@ describe('GET /api/admin/qip', () => {
     expect(q.themeDistribution.length).toBeGreaterThan(0);
     expect(q.quality.count).toBe(q.coverage.total);
     expect(q.dedup.exactDuplicateRecords).toBe(0);
+    expect(q.graph.nodeCount).toBeGreaterThan(q.coverage.total);
+    expect(q.graph.edgeCount).toBeGreaterThan(0);
+    expect(q.families.totalFamilies).toBeGreaterThan(0);
   });
 });

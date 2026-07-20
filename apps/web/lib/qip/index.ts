@@ -14,12 +14,16 @@ import {
   type QualitySummary,
 } from './quality';
 import { dedupReport, type DedupReport } from './dedup';
+import { graphStats, type GraphStats } from './graph';
+import { familyStats, type FamilyStats } from './families';
 
 export * from './normalize';
 export * from './ingest';
 export * from './categorize';
 export * from './quality';
 export * from './dedup';
+export * from './graph';
+export * from './families';
 
 let _cache: NormalizedQuestion[] | null = null;
 let _byId: Map<string, NormalizedQuestion> | null = null;
@@ -154,6 +158,8 @@ export interface QipIntelligence {
   classifiedByTheme: number;
   quality: QualitySummary;
   dedup: DedupReport;
+  graph: GraphStats;
+  families: FamilyStats;
 }
 
 /** Faz 2 zekâ özeti — pano + rapor + testler için GERÇEK sayılar. */
@@ -178,5 +184,7 @@ export function qipIntelligence(): QipIntelligence {
     classifiedByTheme,
     quality: qualitySummary(analyzed.map((q) => q.quality)),
     dedup: bankDedup(),
+    graph: graphStats(),
+    families: familyStats(),
   };
 }

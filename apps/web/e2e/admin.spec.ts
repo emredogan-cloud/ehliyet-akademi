@@ -92,9 +92,11 @@ test('Soru Zekâsı panosu gerçek metrikleri gösterir (QIP Faz 2)', async ({ p
   await registerAdmin(page);
   await page.goto('/admin/soru-zekasi');
   await expect(page.getByTestId('qip-panel')).toBeVisible();
-  // Kalite + yineleme bölümleri görünür
+  // Kalite + yineleme + bilgi grafiği + aileler bölümleri görünür (Faz 2 + Faz 3)
   await expect(page.getByTestId('qip-quality')).toBeVisible();
   await expect(page.getByTestId('qip-dedup')).toBeVisible();
+  await expect(page.getByTestId('qip-graph')).toBeVisible();
+  await expect(page.getByTestId('qip-families')).toBeVisible();
   // Toplam soru sayısı gerçek bir değer (banka > 1000)
   const total = await page.getByTestId('qip-stat-total').innerText();
   expect(Number(total.replace(/\D/g, ''))).toBeGreaterThan(1000);

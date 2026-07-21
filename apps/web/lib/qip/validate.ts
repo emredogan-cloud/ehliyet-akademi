@@ -28,8 +28,11 @@ export interface QipValidation {
   checks: ValidationCheck[];
 }
 
-/** Nihai doğrulama — tüm bankaya karşı. */
+let _validation: QipValidation | null = null;
+
+/** Nihai doğrulama — tüm bankaya karşı (statik banka → bir kez hesaplanır, önbellekli). */
 export function validateQip(): QipValidation {
+  if (_validation) return _validation;
   const checks: ValidationCheck[] = [];
   const bank = normalizedQuestions();
   const analyzed = analyzedQuestions();
@@ -134,5 +137,6 @@ export function validateQip(): QipValidation {
     (checks.reduce((a, c) => a + weight(c.status), 0) / checks.length) * 100
   );
   const passed = checks.every((c) => c.status !== 'fail');
-  return { score, passed, checks };
+  _validation = { score, passed, checks };
+  return _validation;
 }

@@ -14,6 +14,8 @@ export default tseslint.config(
       '**/playwright-report/**',
       '**/test-results/**',
       '**/next-env.d.ts',
+      // Telif korumalı MEB sınav-arşivi (referans-only) + indirme venv'i — asla linte/derlemeye girmez.
+      'sınav-soruları-pdf/**',
     ],
   },
   js.configs.recommended,

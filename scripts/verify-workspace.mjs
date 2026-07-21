@@ -55,6 +55,7 @@ const SKIP_DIRS = new Set([
   'coverage',
   'playwright-report',
   'test-results',
+  'sınav-soruları-pdf', // telif korumalı MEB sınav-arşivi (referans-only) + venv — taranmaz
 ]);
 let scanned = 0;
 function walk(dir) {

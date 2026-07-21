@@ -32,6 +32,7 @@ export * from './collections';
 export * from './analytics';
 export * from './adaptive';
 export * from './validate';
+export * from './archive';
 
 let _cache: NormalizedQuestion[] | null = null;
 let _byId: Map<string, NormalizedQuestion> | null = null;

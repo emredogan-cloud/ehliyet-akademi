@@ -27,3 +27,6 @@ skills-lock.json
 /assets/
 /new-image/
 /apps/web/public/ui/
+
+# Copyrighted MEB exam-paper archive — reference only, NEVER commit/republish (QIP 2.0 content-expansion)
+sınav-soruları-pdf/

@@ -17,5 +17,9 @@ export default defineConfig({
       'components/**/*.test.ts',
     ],
     globals: false,
+    // QIP zekâ katmanı (normalize+analyze+dedup+graph+families+validate) 1534 soru üzerinde soğuk
+    // önbellekle ağırdır; çok sayıda test dosyası eşzamanlı çalışırken 5 sn varsayılanı aşabilir.
+    testTimeout: 20000,
+    hookTimeout: 20000,
   },
 });

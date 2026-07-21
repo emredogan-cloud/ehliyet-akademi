@@ -59,5 +59,7 @@ describe('GET /api/admin/qip', () => {
     expect(q.graph.nodeCount).toBeGreaterThan(q.coverage.total);
     expect(q.graph.edgeCount).toBeGreaterThan(0);
     expect(q.families.totalFamilies).toBeGreaterThan(0);
-  });
+    // Cold-cache full-intelligence build (normalize+analyze+dedup+graph+families+validate) over
+    // 1534 questions under concurrent test load legitimately exceeds the 5s default → give it room.
+  }, 30000);
 });

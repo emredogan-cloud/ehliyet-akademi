@@ -12,17 +12,19 @@ import { VEHICLE_PARTS } from '@/content/vehicle';
 import { LESSONS } from '@/content/lessons';
 import { SCENARIOS } from '@/content/scenarios';
 import { analyzedQuestions, type AnalyzedQuestion } from './index';
+import { DRIVING_RULES } from './knowledge';
 
 export type NodeType =
-  'question' | 'lesson' | 'sign' | 'part' | 'topic' | 'theme' | 'subject' | 'scenario';
+  'question' | 'lesson' | 'sign' | 'part' | 'topic' | 'theme' | 'subject' | 'scenario' | 'rule';
 
 export type EdgeType =
-  | 'belongs-to' // question/lesson/topic/theme → subject
+  | 'belongs-to' // question/lesson/topic/theme/rule → subject
   | 'about-topic' // question → topic
   | 'classified-as' // question → theme
   | 'related-lesson' // question/sign/part/scenario → lesson
   | 'depicts-sign' // question → sign
-  | 'depicts-part'; // question → vehicle part
+  | 'depicts-part' // question → vehicle part
+  | 'rule-topic'; // rule (law/fact) → topic
 
 export interface GraphNode {
   id: string; // `${type}:${rawId}`
@@ -109,6 +111,18 @@ export function buildGraph(pool?: AnalyzedQuestion[]): Graph {
     if (q.relatedLesson) addEdge(g, qid, nid('lesson', q.relatedLesson), 'related-lesson');
     for (const sgn of q.relatedSigns) addEdge(g, qid, nid('sign', sgn), 'depicts-sign');
     for (const prt of q.relatedVehicleParts) addEdge(g, qid, nid('part', prt), 'depicts-part');
+  }
+
+  // Kural (kanun/olgu) düğümleri — Faz 2 bilgi katmanı; paylaşılan konu düğümleriyle bağlanır
+  // (özgün soru ↔ ortak konu ↔ ilgili kural). BANK_QUESTİON Part 3 "Law" vizyonu.
+  for (const r of DRIVING_RULES) {
+    const rid = addNode(g, 'rule', r.id, r.statement.slice(0, 80));
+    addEdge(g, rid, nid('subject', r.subject), 'belongs-to');
+    for (const t of r.topics) {
+      addNode(g, 'topic', t, t);
+      addEdge(g, rid, nid('topic', t), 'rule-topic');
+      addEdge(g, nid('topic', t), nid('subject', r.subject), 'belongs-to');
+    }
   }
 
   if (usingDefault) _graph = g;

@@ -20,8 +20,8 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "@ea/db": "workspace:*",
-    "drizzle-orm": "^0.44.0",
-    "@electric-sql/pglite": "^0.3.0",
+    "drizzle-orm": "^0.45.2",
+    "@electric-sql/pglite": "^0.5.4",
     "pg": "^8.16.0"
   },
   "devDependencies": {

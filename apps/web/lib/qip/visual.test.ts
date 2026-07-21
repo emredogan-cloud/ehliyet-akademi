@@ -1,7 +1,14 @@
 import { describe, it, expect } from 'vitest';
 import { NormalizedQuestion } from '@ea/content-schema';
 import { SIGNS } from '@/content/signs';
-import { generateSignQuestions, signMeaningQuestion, seededRng } from './visual';
+import { VEHICLE_PARTS } from '@/content/vehicle';
+import {
+  generateSignQuestions,
+  signMeaningQuestion,
+  seededRng,
+  generatePartQuestions,
+  generateVisualQuestions,
+} from './visual';
 import { reviewGenerated, buildReviewContext } from './review';
 import { normalizedQuestions } from './index';
 
@@ -43,5 +50,26 @@ describe('generateSignQuestions — görsel soru üretimi (Part 8)', () => {
     const passed = qs.filter((q) => reviewGenerated(q, ctx).ok).length;
     // Çoğunluk geçmeli (bazıları mevcut işaret sorularıyla yineleme olabilir → dürüst).
     expect(passed).toBeGreaterThan(qs.length * 0.6);
+  });
+});
+
+describe('generatePartQuestions — araç parçası görsel soruları (Faz 5)', () => {
+  it('her parça için şema-geçerli görsel soru (image ref + doğru ad)', () => {
+    const qs = generatePartQuestions();
+    expect(qs.length).toBe(VEHICLE_PARTS.length);
+    for (const q of qs.slice(0, 30)) {
+      expect(NormalizedQuestion.safeParse(q).success).toBe(true);
+      expect(q.image).toMatch(/^(part:|asset:)/);
+      expect(q.tags).toContain('gorsel');
+      expect(q.subject).toBe('motor');
+      const name = q.options[q.answerIndex]!;
+      expect(VEHICLE_PARTS.some((p) => p.name === name)).toBe(true);
+      expect(new Set(q.options).size).toBe(q.options.length);
+    }
+  });
+
+  it('generateVisualQuestions işaret + parça birleşir', () => {
+    const all = generateVisualQuestions();
+    expect(all.length).toBe(SIGNS.length + VEHICLE_PARTS.length);
   });
 });

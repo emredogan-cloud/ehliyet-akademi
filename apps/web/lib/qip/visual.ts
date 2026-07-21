@@ -9,6 +9,7 @@
  */
 import { Question, type NormalizedQuestion } from '@ea/content-schema';
 import { SIGNS, CATEGORY_LABEL, type TrafficSign } from '@/content/signs';
+import { VEHICLE_PARTS, SYSTEM_LABEL, type VehiclePart } from '@/content/vehicle';
 import { normalizeQuestion } from './normalize';
 
 export type Rng = () => number;
@@ -99,4 +100,67 @@ function hashSeed(s: string): number {
     h = Math.imul(h, 16777619);
   }
   return h >>> 0;
+}
+
+/* ================= Faz 5 · Görsel Genişletme — Araç parçaları ================= */
+
+/**
+ * Tek bir araç parçası için görsel "hangi parçadır?" sorusu (şema-geçerli, image ref'li).
+ * Çeldiriciler AYNI sistemden (motor bölmesi/kabin/dış) seçilir. Mevcut fotoğraf varsa image olur.
+ */
+export function partIdentifyQuestion(part: VehiclePart, rng: Rng): NormalizedQuestion {
+  const sameSystem = VEHICLE_PARTS.filter((p) => p.system === part.system && p.id !== part.id);
+  const others = VEHICLE_PARTS.filter((p) => p.system !== part.system && p.id !== part.id);
+  const pool = [...shuffle(sameSystem, rng), ...shuffle(others, rng)];
+  const distractors: string[] = [];
+  const seen = new Set([part.name]);
+  for (const p of pool) {
+    if (distractors.length >= 3) break;
+    if (!seen.has(p.name)) {
+      seen.add(p.name);
+      distractors.push(p.name);
+    }
+  }
+  const options = shuffle([part.name, ...distractors], rng);
+  const answerIndex = options.indexOf(part.name);
+
+  const raw = {
+    id: `gen-parca-${part.id}`,
+    subject: 'motor' as const,
+    topic: 'motor-parcalari',
+    difficulty: 'kolay' as const,
+    stem: 'Görselde gösterilen araç parçası/bileşeni hangisidir?',
+    options,
+    answerIndex,
+    explanation: `Bu bileşen "${part.name}" (${SYSTEM_LABEL[part.system]}) parçasıdır: ${part.desc}`,
+    tags: ['gorsel', 'arac-parca', part.system],
+    badge: 'instructor' as const,
+    review: 'draft' as const,
+    objective: `"${part.name}" araç bileşenini görselinden tanımak.`,
+    sourceRef: 'Özgün — doğrulanmış araç bileşeni kataloğundan üretildi',
+  };
+  const q = Question.parse(raw);
+  return normalizeQuestion(q, {
+    image: part.photo ? `asset:${part.photo}` : `part:${part.id}`,
+    relatedVehicleParts: [part.id],
+    relatedLesson: part.relatedLessonSlug,
+    source: {
+      origin: 'authored',
+      method: 'curriculum',
+      collection: 'gorsel-parca',
+      attribution: 'Doğrulanmış araç bileşeni kataloğu (özgün)',
+      license: 'proprietary',
+    },
+  });
+}
+
+/** Araç parçası görsel sorularını üret (deterministik, tohumlu). */
+export function generatePartQuestions(partIds?: string[]): NormalizedQuestion[] {
+  const targets = partIds ? VEHICLE_PARTS.filter((p) => partIds.includes(p.id)) : VEHICLE_PARTS;
+  return targets.map((p, i) => partIdentifyQuestion(p, seededRng(hashSeed(p.id) + i)));
+}
+
+/** Tüm görsel sorular (işaret + parça) — Faz 5 birleşik üretim. */
+export function generateVisualQuestions(): NormalizedQuestion[] {
+  return [...generateSignQuestions(), ...generatePartQuestions()];
 }

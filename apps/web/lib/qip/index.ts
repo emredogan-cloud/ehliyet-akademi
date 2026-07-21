@@ -35,6 +35,7 @@ export * from './validate';
 export * from './archive';
 export * from './knowledge';
 export * from './gaps';
+export * from './historical';
 
 let _cache: NormalizedQuestion[] | null = null;
 let _byId: Map<string, NormalizedQuestion> | null = null;

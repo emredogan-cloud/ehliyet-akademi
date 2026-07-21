@@ -33,6 +33,7 @@ const NAV: Array<{ group: string; items: NavItem[] }> = [
       { href: '/senaryolar', label: 'Senaryolar', icon: 'map' },
       { href: '/deneme-sinavi', label: 'Deneme Sınavı', icon: 'timer' },
       { href: '/koleksiyonlar', label: 'Koleksiyonlar', icon: 'clipboard' },
+      { href: '/cikmis-sinavlar', label: 'Çıkmış Sınav Formatları', icon: 'layers' },
       { href: '/tani', label: 'Tanı Denemesi', icon: 'target' },
       { href: '/ai-koc', label: 'AI Koç', icon: 'bot' },
     ],

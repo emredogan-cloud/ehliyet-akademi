@@ -12,6 +12,22 @@ test('Koleksiyonlar: otomatik sınav setlerini gerçek sayılarla listeler (QIP 
   await expect(page.getByTestId('collection-gunun-sinavi').locator('li').first()).toBeVisible();
 });
 
+test('Çıkmış Sınav Formatları: oturum → MEB formatında özgün deneme (QIP 2.0 Faz 6)', async ({
+  page,
+}) => {
+  await page.goto('/cikmis-sinavlar');
+  await expect(page.getByTestId('historical-disclaimer')).toBeVisible();
+  await expect(page.getByTestId('historical-years')).toBeVisible();
+  // bir oturuma gir
+  await page.getByTestId('historical-session-2018-02-10').click();
+  await expect(page.getByTestId('historical-exam')).toBeVisible();
+  await expect(page.getByTestId('historical-exam-disclaimer')).toBeVisible();
+  // 50 özgün soru + cevap gösterme
+  const qs = page.getByTestId('historical-question');
+  expect(await qs.count()).toBe(50);
+  await page.getByTestId('historical-reveal').click();
+});
+
 test('SRS pratik oturumu: 10 soru → tamamlama + seri', async ({ page }) => {
   await page.goto('/calis');
   await expect(page.getByTestId('practice')).toBeVisible();

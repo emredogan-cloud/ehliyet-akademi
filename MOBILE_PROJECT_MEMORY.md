@@ -12,7 +12,7 @@ phase: `MOBILE_ENGINEERING_DISCIPLINE.md` → this file → `MOBILE_APP_IMPLEMEN
 - [x] **Phase 4 — Practice & Exams** (2026-07-23) — DONE, CI green, device-validated (offline SRS + exams)
 - [x] **Phase 5 — AI Coach & Notifications** (2026-07-23) — DONE, CI green, device-validated (nudges + grounded chat + local notif)
 - [x] **Phase 6 — Progress & Gamification** (2026-07-23) — DONE, CI green, device-validated (XP/radar/heatmap/badges + bound Home)
-- [ ] Phase 7 — Premium (IAP)
+- [x] **Phase 7 — Premium (IAP)** (2026-07-24) — DONE, CI green, device-validated (paywall + gating + quotas; real Play purchase store-gated)
 - [ ] Phase 8 — Onboarding & Launch Prep
 - [ ] Phase 9 — Final Polish & Delight
 
@@ -418,3 +418,60 @@ flow (products from `apps/web/lib/products.ts` / capabilities like `sinirsiz-den
 (`Lesson.premium`, free exam/AI quotas — web uses `lib/payments.ts` `FREE_AI_DAILY`/exam quota). App-store
 IAP is REQUIRED for digital goods (LemonSqueezy web checkout can't ship in-app). Real store validation
 needs a signed build + Play Console; document honestly what can't be end-to-end tested on this host.
+
+---
+
+## Phase 7 — Premium / IAP (2026-07-24)
+
+**Completed:** Premium monetization surface. Backend `POST /api/iap/validate` (Bearer, catalog integrity,
+idempotent grant, FAIL-CLOSED in production). Mobile: products/capabilities/entitlements/quotas (Dart
+port), entitlements repo, in_app_purchase service, paywall, premium-lesson gating, AI+exam quota gates.
+
+**Architecture decisions:**
+
+- **Ownership derived from server, NEVER a synced key** (web P0: a synced `ea:entitlements:v1` could leak
+  between users on a shared device). Mobile `EntitlementsController` re-derives from `GET /api/purchases`
+  → owned list → caches `ea:entitlements:v1` (SET, server wins). `hasCapability(owned, cap)` drives gates.
+- **Server: catalog price integrity + idempotent insert** (unique(user,product)), `provider:'google_play'`,
+  `externalRef=purchaseToken` — same pattern as the LemonSqueezy webhook (a 4th provider path).
+- **FAIL-CLOSED (SECURITY):** real Play token verification needs a Google service account (absent here).
+  Grants without verification are allowed ONLY when `NODE_ENV!=production` (or `IAP_DEV_ACCEPT=1`);
+  production returns **503**. Closed a hole where any Bearer user could self-grant premium. Verified live:
+  prod `/api/iap/validate` → 503. Mirror of the mock-payment `paymentConfigured` guard.
+- **Free-tier quotas** (`QuotaRepository`): 5 AI/day + 1 exam/day (`ea:aiQuota:v1`/`ea:examQuota:v1`,
+  `{day,count}`), bypassed by `ai-sinirsiz`/`sinirsiz-deneme`. Gated in coach send + practice-hub exam tile.
+
+**Packages added:** `in_app_purchase` (3.x).
+
+**Lessons learned / problems solved:**
+
+- **`vitest` does NOT run `tsc`** — a `process.env.NODE_ENV='production'` assignment passed vitest but
+  FAILED CI typecheck (TS2540 read-only). FIX: use `vi.stubEnv('NODE_ENV', ...)` + `vi.unstubAllEnvs()`
+  (type-safe + no cross-test pollution). **ALWAYS run `pnpm --filter @ea/web typecheck` before pushing
+  web changes**, not just vitest.
+- **Deployed a security hole first** (dev-accept granted premium to any user in prod). Caught during
+  device/curl validation → added the fail-closed guard + redeployed + re-verified 503. Lesson: an
+  IAP-validate endpoint MUST fail closed when verification isn't configured.
+
+**Known limitations / technical debt:**
+
+- **Real Play purchase UNTESTABLE on this host** (documented, like iOS/FCM): needs Play Console + 5 managed
+  products (`premium_teori`/…/`komple_b`) + a signed AAB installed from Play + `GOOGLE_PLAY_SA_JSON` for
+  server verification. Flow/contract/gating/quotas built + tested; purchase round-trip is store-gated.
+- iOS/StoreKit path unbuilt (no macOS). A throwaway account got premium-teori during dev-mode testing
+  (before fail-closed) — note for test-data cleanup. Home 5px overflow (Phase 1) still deferred to Phase 9.
+
+**Risk register (rolled forward):** IAP now BUILT but store-gated (go-live needs Play Console + signing +
+service account). golden tests deferred; offline correctness de-risked. Phase 8 release build needs a
+signing keystore (may be a documented partial).
+
+**Device-validation summary:** Paywall renders (5 packs, Komple B "EN AVANTAJLI" 449₺, honest "Mağaza
+kullanılamıyor" + disabled Satın al, Geri yükle). Prod curl: validate (dev) granted + restore returned it;
+post-fix validate → 503. Lesson-lock + quota logic unit/widget tested.
+
+**For the next phase (Phase 8 — Onboarding & Launch Prep):** premium onboarding flow (first-run
+walkthrough), store assets/metadata (icon exists at `@mipmap/ic_launcher`; screenshots/description), and a
+RELEASE build (`flutter build apk --release` / appbundle). Release signing needs a keystore
+(`android/key.properties` + keystore file) — if absent, document as a partial (debug-signed) like IAP/iOS.
+Also: offline hardening pass (verify all screens degrade gracefully offline), and wire the 5px Home
+overflow fix here or defer to Phase 9. App id `com.ehliyetegitim.ehliyet_akademi`.

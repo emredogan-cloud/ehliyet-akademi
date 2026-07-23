@@ -15,18 +15,22 @@ class ReadinessRadar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
-    return SizedBox(
-      width: size,
-      height: size,
-      child: CustomPaint(
-        painter: _RadarPainter(
-          axes: axes,
-          grid: p.border,
-          gridStrong: p.borderStrong,
-          fill: p.primary.withValues(alpha: 0.22),
-          stroke: p.primary,
-          label: p.text2,
-          dot: p.primary,
+    final summary = axes.map((a) => '${a.label} %${(a.value * 100).round()}').join(', ');
+    return Semantics(
+      label: 'Ders bazında ustalık radarı: $summary',
+      child: SizedBox(
+        width: size,
+        height: size,
+        child: CustomPaint(
+          painter: _RadarPainter(
+            axes: axes,
+            grid: p.border,
+            gridStrong: p.borderStrong,
+            fill: p.primary.withValues(alpha: 0.22),
+            stroke: p.primary,
+            label: p.text2,
+            dot: p.primary,
+          ),
         ),
       ),
     );
@@ -105,9 +109,11 @@ class _RadarPainter extends CustomPainter {
       canvas.drawCircle(pt, 3, Paint()..color = dot);
     }
 
-    // Etiketler.
+    // Etiketler — eksen ucunun dışında, yöne göre hizalı (veri noktasıyla çakışmaz).
     for (var i = 0; i < n; i++) {
-      final tip = pointFor(i, 1.16);
+      final angle = -math.pi / 2 + i * 2 * math.pi / n;
+      final dir = Offset(math.cos(angle), math.sin(angle));
+      final anchor = center + dir * (radius + 16);
       final tp = TextPainter(
         text: TextSpan(
           text: axes[i].label,
@@ -115,8 +121,16 @@ class _RadarPainter extends CustomPainter {
         ),
         textDirection: TextDirection.ltr,
         textAlign: TextAlign.center,
-      )..layout(maxWidth: 80);
-      tp.paint(canvas, tip - Offset(tp.width / 2, tp.height / 2));
+      )..layout(maxWidth: 84);
+      // Yatay: sağ eksende sola-yasla, sol eksende sağa-yasla, tepe/dip ortala.
+      final dx = dir.dx > 0.3
+          ? 0.0
+          : dir.dx < -0.3
+          ? -tp.width
+          : -tp.width / 2;
+      // Dikey: dipte metni aşağı, tepede yukarı it.
+      final dy = dir.dy > 0.3 ? 0.0 : -tp.height;
+      tp.paint(canvas, anchor + Offset(dx, dy));
     }
   }
 

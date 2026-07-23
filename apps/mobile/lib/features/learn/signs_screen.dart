@@ -57,6 +57,7 @@ class _SignsScreenState extends State<SignsScreen> {
                       suffixIcon: _query.isEmpty
                           ? null
                           : IconButton(
+                              tooltip: 'Aramayı temizle',
                               icon: const Icon(Icons.close_rounded),
                               onPressed: () => setState(() => _query = ''),
                             ),

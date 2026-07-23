@@ -12,6 +12,11 @@ import '../features/learn/vehicle_detail_screen.dart';
 import '../features/learn/videos_screen.dart';
 import '../features/learn/video_detail_screen.dart';
 import '../features/practice/practice_screen.dart';
+import '../features/practice/practice_runner_screen.dart';
+import '../features/practice/exam_runner_screen.dart';
+import '../features/practice/collections_screen.dart';
+import '../features/practice/historical_screen.dart';
+import '../domain/practice/historical.dart';
 import '../features/coach/coach_screen.dart';
 import '../features/profile/profile_screen.dart';
 import '../features/auth/auth_screen.dart';
@@ -83,7 +88,41 @@ GoRouter _buildRouter() => GoRouter(
           ],
         ),
         StatefulShellBranch(
-          routes: [GoRoute(path: '/practice', builder: (_, _) => const PracticeScreen())],
+          routes: [
+            GoRoute(
+              path: '/practice',
+              builder: (_, _) => const PracticeScreen(),
+              routes: [
+                GoRoute(path: 'study', builder: (_, _) => const PracticeRunnerScreen()),
+                GoRoute(
+                  path: 'exam',
+                  builder: (_, _) =>
+                      const ExamRunnerScreen(source: ExamSource.standard, titleText: 'Deneme Sınavı'),
+                ),
+                GoRoute(path: 'collections', builder: (_, _) => const CollectionsScreen()),
+                GoRoute(
+                  path: 'collection/:id',
+                  builder: (_, state) => ExamRunnerScreen(
+                    source: ExamSource.collection,
+                    id: state.pathParameters['id'],
+                    titleText: 'Koleksiyon',
+                  ),
+                ),
+                GoRoute(path: 'historical', builder: (_, _) => const HistoricalScreen()),
+                GoRoute(
+                  path: 'historical/:id',
+                  builder: (_, state) {
+                    final id = state.pathParameters['id']!;
+                    return ExamRunnerScreen(
+                      source: ExamSource.historical,
+                      id: id,
+                      titleText: historicalSessionById(id)?.label ?? 'Geçmiş Sınav',
+                    );
+                  },
+                ),
+              ],
+            ),
+          ],
         ),
         StatefulShellBranch(
           routes: [GoRoute(path: '/coach', builder: (_, _) => const CoachScreen())],

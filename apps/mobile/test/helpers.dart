@@ -2,6 +2,7 @@ import 'package:ehliyet_akademi/app/app.dart';
 import 'package:ehliyet_akademi/core/storage/token_store.dart';
 import 'package:ehliyet_akademi/data/auth/auth_api.dart';
 import 'package:ehliyet_akademi/data/content/content_repository.dart';
+import 'package:ehliyet_akademi/data/practice/question_repository.dart';
 import 'package:ehliyet_akademi/domain/auth/app_user.dart';
 import 'package:ehliyet_akademi/domain/content/content_enums.dart';
 import 'package:ehliyet_akademi/domain/content/content_snapshot.dart';
@@ -9,6 +10,8 @@ import 'package:ehliyet_akademi/domain/content/lesson.dart';
 import 'package:ehliyet_akademi/domain/content/traffic_sign.dart';
 import 'package:ehliyet_akademi/domain/content/vehicle_part.dart';
 import 'package:ehliyet_akademi/domain/content/video_content.dart';
+import 'package:ehliyet_akademi/domain/practice/question.dart';
+import 'package:ehliyet_akademi/domain/practice/question_bank.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -172,12 +175,49 @@ ContentSnapshot sampleSnapshot() => ContentSnapshot(
   ],
 );
 
+/// A small question bank that fully covers the exam blueprint (23/12/9/6) with headroom + variety.
+QuestionBank sampleBank() {
+  Question q(String id, Subject s, {Difficulty d = Difficulty.orta, int answer = 0, String topic = 'genel'}) =>
+      Question(
+        id: id,
+        subject: s,
+        topic: topic,
+        difficulty: d,
+        stem: 'Soru $id — yeterince uzun bir soru metni burada.',
+        options: const ['Birinci', 'İkinci', 'Üçüncü', 'Dördüncü'],
+        answerIndex: answer,
+        explanation: '**Doğru** cevabın açıklaması burada yeterince uzun.',
+        whyWrong: const ['Diğer seçenek yanlış çünkü …'],
+      );
+  final questions = <Question>[
+    for (var i = 0; i < 25; i++)
+      q('t$i', Subject.trafik, topic: i.isEven ? 'isaretler' : 'hiz', d: i % 3 == 0 ? Difficulty.zor : Difficulty.kolay),
+    for (var i = 0; i < 14; i++) q('i$i', Subject.ilkyardim, topic: 'kanama'),
+    for (var i = 0; i < 10; i++) q('m$i', Subject.motor, topic: 'motor-temel', d: Difficulty.zor),
+    for (var i = 0; i < 7; i++) q('a$i', Subject.adab, topic: 'empati'),
+    for (var i = 0; i < 4; i++) q('p$i', Subject.pratik, topic: 'direksiyon'),
+  ];
+  return QuestionBank(
+    version: 'bank-test-v1',
+    generatedAt: '2026-07-23T00:00:00.000Z',
+    count: questions.length,
+    blueprint: const ExamBlueprint(
+      totalQuestions: 50,
+      passCorrect: 35,
+      durationMinutes: 45,
+      distribution: {'trafik': 23, 'ilkyardim': 12, 'motor': 9, 'adab': 6},
+    ),
+    questions: questions,
+  );
+}
+
 /// Pump the full app with test-safe overrides (no platform channels / network / native drift).
 Future<void> pumpApp(
   WidgetTester tester, {
   TokenStore? tokens,
   AuthApi? auth,
   ContentSnapshot? content,
+  QuestionBank? bank,
   bool overrideContent = true,
 }) async {
   SharedPreferences.setMockInitialValues({});
@@ -186,9 +226,11 @@ Future<void> pumpApp(
       overrides: [
         tokenStoreProvider.overrideWithValue(tokens ?? MemoryTokenStore()),
         if (auth != null) authApiProvider.overrideWithValue(auth),
-        // Content comes from a fixed snapshot in tests → never touches drift/network.
-        if (overrideContent)
+        // Content + questions come from fixed snapshots in tests → never touch drift/network.
+        if (overrideContent) ...[
           contentSnapshotProvider.overrideWith((ref) async => content ?? sampleSnapshot()),
+          questionBankProvider.overrideWith((ref) async => bank ?? sampleBank()),
+        ],
       ],
       child: const EhliyetAkademiApp(),
     ),

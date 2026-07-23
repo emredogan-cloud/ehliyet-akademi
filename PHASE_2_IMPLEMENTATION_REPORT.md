@@ -98,17 +98,19 @@ backend change is small and 100% backward-compatible with the web cookie flow.
   - **Defensive path:** against the _current_ production build (which does not yet return `token`), the
     client correctly refuses to fake a session and surfaces "Beklenmeyen sunucu yanıtı." rather than
     entering a broken authenticated state. This proves the client validates the server contract.
-- **Authenticated happy-path (device):** requires the backward-compatible `token` change to be live. This
-  push deploys it to production (Vercel); the on-device **login** happy-path (guest → `/auth` → signed-in
-  Profil showing name/email/"Çıkış yap") is validated against that deployment and the confirmed result is
-  recorded in `MOBILE_PROJECT_MEMORY.md` (append-only). The same happy-path is already covered end-to-end
-  by the backend integration tests and the Flutter widget tests above.
+- **Authenticated happy-path (device) — CONFIRMED post-deploy.** After this push went green on all three
+  workflows and Vercel deployed the backward-compatible `token` change, the full lifecycle was validated
+  on-device against **production** with a rebuilt-from-HEAD APK: login → Profil shows name "DeployCheck",
+  email, initials, and "Çıkış yap"; **force-stop + relaunch → still signed in** (secure token restored and
+  re-validated via `/api/auth/me`); "Çıkış yap" → back to guest with the token cleared. Deploy sanity
+  (curl): `register`→201 `{user,token}`, `login`→200 `{user,token}`, Bearer `/me`→200. The same happy-path
+  is also covered by the backend integration tests and the Flutter widget tests above.
 
 ## Known issues / limitations
 
 - The authenticated happy-path could not be device-validated **before** deploying the `token` change
-  (production had to receive the backward-compatible backend update first). Validated post-deploy in the
-  same session; recorded in project memory.
+  (production had to receive the backward-compatible backend update first). It was validated post-deploy
+  in the same session (confirmed above); recorded in project memory.
 - Real state/data sync (`/api/state`) is **not** part of Phase 2 — identity only. Binding real user data
   begins in Phase 3+.
 - No "forgot password" / email-verification flow in the mobile UI yet (backend supports verification;

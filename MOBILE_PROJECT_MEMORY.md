@@ -149,8 +149,16 @@ Profil header bound to auth state; input theming; theme mode now persisted via `
 sync correctness (Phase 3/4); golden/CI flakiness (deferred); two-codebase drift (mitigated by shared
 tokens + shared API contract, now also a shared auth token).
 
-**Post-deploy device validation (bearer happy-path):** _appended below once confirmed against the
-production deployment triggered by the Phase 2 push._
+**Post-deploy device validation (bearer happy-path) — CONFIRMED (2026-07-23):** after the Phase 2 push
+(commit `26a88da`) went green on all three workflows (CI, Mobile CI, CodeQL) and Vercel deployed the
+backward-compatible `token` change, the full auth lifecycle was validated on the real device
+(`AYXSUKIVJVPZ7HPZ`) against **production** `https://www.ehliyetegitim.com`, using a rebuilt-from-HEAD
+debug APK and a throwaway account created via the deploy probe (`deploychk-5589570@ea.dev`):
+(1) guest Profil shows "Misafir" + "Giriş yap / Kayıt ol"; (2) login → Profil shows name "DeployCheck",
+email, initials "DE", and "Çıkış yap"; (3) force-stop + relaunch → **still authenticated** (secure token
+read on boot, re-validated via `/api/auth/me`); (4) "Çıkış yap" → back to guest, token cleared. Deploy
+sanity via curl beforehand: `register`→201 `{user,token}` (64-hex), `login`→200 `{user,token}`, Bearer
+`/me`→200. Phase 2 fully device-validated end-to-end.
 
 **For the next phase (Phase 3 — Content & Learn):** authenticated `dio` client + bearer interceptor are
 ready; auth state is app-wide. Build a content snapshot API + lessons / traffic signs (121 SVG) /

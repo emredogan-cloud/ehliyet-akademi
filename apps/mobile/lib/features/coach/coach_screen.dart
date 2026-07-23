@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../data/practice/progress_repository.dart';
-import '../../design/markdown_text.dart';
+import '../../design/markdown_block.dart';
 import '../../design/primitives.dart';
 import '../../domain/coach/coach_controller.dart';
 import '../../domain/coach/nudge.dart';
@@ -239,10 +239,7 @@ class _MessageBubble extends StatelessWidget {
                 ),
               )
             else
-              MarkdownText(
-                message.text,
-                style: TextStyle(color: p.text, height: 1.5, fontSize: 14.5),
-              ),
+              MarkdownBlock(message.text, baseColor: p.text, baseSize: 14.5),
             if (!isUser && (message.grounded || message.sources.isNotEmpty)) ...[
               const SizedBox(height: AppSpacing.s2),
               Row(

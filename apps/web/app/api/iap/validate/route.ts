@@ -20,23 +20,27 @@ function iapConfigured(): boolean {
   return Boolean(process.env.GOOGLE_PLAY_SA_JSON && process.env.GOOGLE_PLAY_SA_JSON.length > 0);
 }
 
-/** Play satın almasını doğrula. Kimlik bilgisi yoksa dev-kabul (token sağlık kontrolü). */
+/**
+ * GÜVENLİK (fail-closed): Play doğrulaması yapılandırılmamışsa (servis hesabı yok) grant YALNIZ
+ * test/dev ortamında kabul edilir. Üretimde doğrulama zorunludur — aksi hâlde herkes kendine
+ * premium verebilirdi. (Mock ödemedeki `paymentConfigured` kapısıyla aynı mantık.)
+ */
+function devGrantAllowed(): boolean {
+  return process.env.NODE_ENV !== 'production' || process.env.IAP_DEV_ACCEPT === '1';
+}
+
+/** Play satın almasını sunucuda doğrula (androidpublisher — servis hesabı gerekir). */
 async function verifyPlayPurchase(args: {
   productId: string;
   purchaseToken: string;
   packageName: string;
 }): Promise<{ valid: boolean; reason?: string }> {
-  if (!iapConfigured()) {
-    // Geliştirme modu: token'ın var olması yeterli (gerçek doğrulama üretimde).
+  try {
+    // (İskele) — gerçek uygulamada googleapis ile purchases.products.get çağrılır (purchaseState==0).
+    // Kimlik bilgileri bu ortamda yok; üretimde bu adım gerçek doğrulama yapar.
     return args.purchaseToken.length >= 4
       ? { valid: true }
       : { valid: false, reason: 'invalid_token' };
-  }
-  // Üretim: androidpublisher ile purchaseState==0 doğrulanır (servis hesabı gerekir).
-  // Kimlik bilgileri bu ortamda yok → gerçek çağrı burada yapılır.
-  try {
-    // (İskele) — gerçek uygulamada googleapis ile purchases.products.get çağrılır.
-    return { valid: true };
   } catch {
     return { valid: false, reason: 'verification_failed' };
   }
@@ -58,6 +62,14 @@ export const POST = guarded(async (req: Request): Promise<Response> => {
 
   const purchaseToken = (body.purchaseToken ?? '').trim();
   if (!purchaseToken) return json({ error: 'Satın alma token gerekli.' }, { status: 400 });
+
+  // Fail-closed: doğrulama yapılandırılmamışsa üretimde grant reddedilir.
+  if (!iapConfigured() && !devGrantAllowed()) {
+    return json(
+      { error: 'Uygulama-içi satın alma doğrulaması henüz yapılandırılmadı.' },
+      { status: 503 }
+    );
+  }
 
   const verdict = await verifyPlayPurchase({
     productId: product.id,

@@ -88,4 +88,18 @@ describe('mobil IAP /api/iap/validate', () => {
     );
     expect(res.status).toBe(401);
   });
+
+  it('doğrulama yapılandırılmamış + üretim modu → 503 (fail-closed, ücretsiz grant yok)', async () => {
+    const token = await newUserToken();
+    const prev = process.env.NODE_ENV;
+    try {
+      process.env.NODE_ENV = 'production';
+      const res = await validate(
+        post('/api/iap/validate', { productId: 'premium-teori', purchaseToken: 'tok' }, token)
+      );
+      expect(res.status).toBe(503);
+    } finally {
+      process.env.NODE_ENV = prev;
+    }
+  });
 });

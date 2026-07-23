@@ -59,7 +59,7 @@ Home · Öğren hub · Pratik hub · AI Koç intro · Profil (5 tab roots). Deta
 
 ## Build
 
-- **Android debug APK builds** — `app-debug.apk` (~140 MB; this is a *debug* build — full engine,
+- **Android debug APK builds** — `app-debug.apk` (~140 MB; this is a _debug_ build — full engine,
   no tree-shake; a release build tree-shakes to ~15–20 MB, done in Phase 8).
 - **iOS: N/A (no macOS)** on this Linux host; `ios/` config is generated and valid.
 - **Mobile CI** added (`.github/workflows/mobile.yml`): setup Java 17 + Flutter 3.41.9 →
@@ -82,7 +82,7 @@ home < 2 s.
 
 ## Known issues
 
-None. (Blind-tap coordinate confusion during validation was a *validation-script* nuance, not an app
+None. (Blind-tap coordinate confusion during validation was a _validation-script_ nuance, not an app
 issue; the app behaves correctly.)
 
 ## Next phase prerequisites (Phase 2 — Mobile Auth)

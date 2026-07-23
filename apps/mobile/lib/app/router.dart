@@ -20,6 +20,7 @@ import '../domain/practice/historical.dart';
 import '../features/coach/coach_screen.dart';
 import '../features/profile/profile_screen.dart';
 import '../features/profile/notification_settings_screen.dart';
+import '../features/progress/progress_screen.dart';
 import '../features/auth/auth_screen.dart';
 import 'shell.dart';
 
@@ -136,5 +137,6 @@ GoRouter _buildRouter() => GoRouter(
     // Full-screen over the tab shell (login/register).
     GoRoute(path: '/auth', builder: (_, _) => const AuthScreen()),
     GoRoute(path: '/notifications', builder: (_, _) => const NotificationSettingsScreen()),
+    GoRoute(path: '/progress', builder: (_, _) => const ProgressScreen()),
   ],
 );

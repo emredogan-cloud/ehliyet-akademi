@@ -236,9 +236,10 @@ Future<void> pumpApp(
   ContentSnapshot? content,
   QuestionBank? bank,
   CoachApi? coach,
+  Map<String, Object>? prefs,
   bool overrideContent = true,
 }) async {
-  SharedPreferences.setMockInitialValues({});
+  SharedPreferences.setMockInitialValues(prefs ?? {});
   await tester.pumpWidget(
     ProviderScope(
       overrides: [

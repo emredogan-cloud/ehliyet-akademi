@@ -40,9 +40,10 @@ radii, motion curves; light + dark). Guests can use everything; signing in adds 
   `GET /api/mobile/content-snapshot` (ETag/304); `GET /api/mobile/question-bank` (ETag/304);
   `POST /api/ai/ask` gained an optional `context`; `POST /api/iap/validate` (Bearer, catalog integrity,
   idempotent, fail-closed). Reused as-is: `/api/state`, `/api/purchases`, `/api/ai/ask`.
-- **Port the tiny pure logic, cache the data.** The SM-2 SRS, exam builder/scorer, seeded RNG (mulberry32)
-  - FNV-1a hash, readiness, nudge engine, gamification, and the premium capability model were ported to
-    Dart (matching the server's tests) so practice/exams/coach/premium run **offline + deterministic**.
+- **Port the tiny pure logic, cache the data.** The SM-2 SRS, exam builder/scorer, seeded RNG
+  (mulberry32 and FNV-1a hash), readiness, nudge engine, gamification, and the premium capability model
+  were ported to Dart (matching the server's tests) so practice/exams/coach/premium run **offline +
+  deterministic**.
 - **Design system single-sourced.** One token file → `ThemeData`; hand-drawn `CustomPainter`s (readiness
   ring, sign shells+glyphs, radar, heatmap) — no third-party chart/UI dependency.
 - **Ownership derived from the server, never from a synced key** (avoids the web P0 leak); premium

@@ -3,6 +3,14 @@ import 'package:go_router/go_router.dart';
 
 import '../features/home/home_screen.dart';
 import '../features/learn/learn_screen.dart';
+import '../features/learn/lessons_screen.dart';
+import '../features/learn/lesson_detail_screen.dart';
+import '../features/learn/signs_screen.dart';
+import '../features/learn/sign_detail_screen.dart';
+import '../features/learn/vehicle_screen.dart';
+import '../features/learn/vehicle_detail_screen.dart';
+import '../features/learn/videos_screen.dart';
+import '../features/learn/video_detail_screen.dart';
 import '../features/practice/practice_screen.dart';
 import '../features/coach/coach_screen.dart';
 import '../features/profile/profile_screen.dart';
@@ -25,7 +33,54 @@ GoRouter _buildRouter() => GoRouter(
           routes: [GoRoute(path: '/home', builder: (_, _) => const HomeScreen())],
         ),
         StatefulShellBranch(
-          routes: [GoRoute(path: '/learn', builder: (_, _) => const LearnScreen())],
+          routes: [
+            GoRoute(
+              path: '/learn',
+              builder: (_, _) => const LearnScreen(),
+              routes: [
+                GoRoute(
+                  path: 'lessons',
+                  builder: (_, _) => const LessonsScreen(),
+                  routes: [
+                    GoRoute(
+                      path: ':slug',
+                      builder: (_, state) => LessonDetailScreen(slug: state.pathParameters['slug']!),
+                    ),
+                  ],
+                ),
+                GoRoute(
+                  path: 'signs',
+                  builder: (_, _) => const SignsScreen(),
+                  routes: [
+                    GoRoute(
+                      path: ':id',
+                      builder: (_, state) => SignDetailScreen(id: state.pathParameters['id']!),
+                    ),
+                  ],
+                ),
+                GoRoute(
+                  path: 'vehicle',
+                  builder: (_, _) => const VehicleScreen(),
+                  routes: [
+                    GoRoute(
+                      path: ':id',
+                      builder: (_, state) => VehicleDetailScreen(id: state.pathParameters['id']!),
+                    ),
+                  ],
+                ),
+                GoRoute(
+                  path: 'videos',
+                  builder: (_, _) => const VideosScreen(),
+                  routes: [
+                    GoRoute(
+                      path: ':id',
+                      builder: (_, state) => VideoDetailScreen(id: state.pathParameters['id']!),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
         ),
         StatefulShellBranch(
           routes: [GoRoute(path: '/practice', builder: (_, _) => const PracticeScreen())],

@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
+import '../../data/content/content_repository.dart';
 import '../../design/primitives.dart';
 
-/// Öğren hub — the learning areas overview. Detail screens (lessons/signs/vehicle/videos) arrive
-/// in Phase 3; this hub is a complete, real overview.
-class LearnScreen extends StatelessWidget {
+/// Öğren hub — öğrenme alanlarına giriş (dersler, işaretler, araç, videolar). Sayılar içerik
+/// anlık görüntüsünden gelir; navigasyon içerik yüklenmeden de çalışır.
+class LearnScreen extends ConsumerWidget {
   const LearnScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final p = context.palette;
+    final counts = ref.watch(contentSnapshotProvider).value?.counts;
+
+    String? n(int? v) => v == null ? null : '$v';
+
     return Scaffold(
       appBar: AppBar(title: const Text('Öğren')),
       body: SafeArea(
@@ -33,30 +40,36 @@ class LearnScreen extends StatelessWidget {
               icon: Icons.menu_book_rounded,
               title: 'Dersler',
               subtitle: 'Konu anlatımları, örnekler ve tekrar kartları',
+              trailing: n(counts?.lessons),
               iconColor: p.primary,
+              onTap: () => context.push('/learn/lessons'),
             ),
             const SizedBox(height: AppSpacing.s3),
             OverviewTile(
               icon: Icons.traffic_rounded,
               title: 'Trafik İşaretleri',
               subtitle: 'Kategorilere ayrılmış işaret galerisi',
-              trailing: '121',
+              trailing: n(counts?.signs),
               iconColor: p.blue,
+              onTap: () => context.push('/learn/signs'),
             ),
             const SizedBox(height: AppSpacing.s3),
             OverviewTile(
               icon: Icons.directions_car_rounded,
               title: 'Araç Tekniği',
               subtitle: 'Motor, gösterge paneli ve araç bileşenleri',
+              trailing: n(counts?.vehicleParts),
               iconColor: p.accent,
+              onTap: () => context.push('/learn/vehicle'),
             ),
             const SizedBox(height: AppSpacing.s3),
             OverviewTile(
               icon: Icons.play_circle_outline_rounded,
               title: 'Videolar',
               subtitle: 'Kısa, öz anlatım videoları',
-              trailing: '8',
+              trailing: n(counts?.videos),
               iconColor: const Color(0xFF8B5CF6),
+              onTap: () => context.push('/learn/videos'),
             ),
           ],
         ),

@@ -42,20 +42,24 @@ class AppCard extends StatelessWidget {
       ),
       child: accent == null
           ? Padding(padding: padding, child: child)
-          : Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(
-                  width: 4,
-                  decoration: BoxDecoration(
-                    color: accent,
-                    borderRadius: const BorderRadius.horizontal(
-                      left: Radius.circular(AppRadii.base),
+          // IntrinsicHeight so the full-height accent bar works even inside an unbounded-height
+          // scroll view (a bare stretch Row would force infinite height there).
+          : IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    width: 4,
+                    decoration: BoxDecoration(
+                      color: accent,
+                      borderRadius: const BorderRadius.horizontal(
+                        left: Radius.circular(AppRadii.base),
+                      ),
                     ),
                   ),
-                ),
-                Expanded(child: Padding(padding: padding, child: child)),
-              ],
+                  Expanded(child: Padding(padding: padding, child: child)),
+                ],
+              ),
             ),
     );
 

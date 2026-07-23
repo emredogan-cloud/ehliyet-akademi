@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../core/theme/tokens.dart';
 import 'app_card.dart';
+import 'markdown_text.dart';
 
 /// Page header — emoji + title + subtitle (mirrors web `PageHeader`).
 class AppPageHeader extends StatelessWidget {
@@ -88,7 +89,7 @@ class AppCallout extends StatelessWidget {
             Text(title!, style: TextStyle(fontWeight: FontWeight.w700, color: p.text)),
             const SizedBox(height: 2),
           ],
-          Text(text, style: TextStyle(color: p.text2, height: 1.4, fontSize: 13.5)),
+          MarkdownText(text, style: TextStyle(color: p.text2, height: 1.4, fontSize: 13.5)),
         ],
       ),
     );

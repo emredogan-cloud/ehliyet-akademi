@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../design/app_card.dart';
+import '../../design/markdown_text.dart';
 import '../../design/primitives.dart';
 import '../../domain/content/content_queries.dart';
 import '../../domain/content/traffic_sign.dart';
@@ -128,7 +129,7 @@ class _LabeledCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.s2),
-          Text(body, style: TextStyle(color: p.text2, height: 1.5, fontSize: 14)),
+          MarkdownText(body, style: TextStyle(color: p.text2, height: 1.5, fontSize: 14)),
         ],
       ),
     );

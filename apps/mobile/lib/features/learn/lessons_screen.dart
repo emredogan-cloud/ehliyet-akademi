@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../design/app_card.dart';
+import '../../design/markdown_text.dart';
 import '../../design/primitives.dart';
 import '../../domain/content/content_enums.dart';
 import '../../domain/content/content_queries.dart';
@@ -91,7 +92,7 @@ class _LessonCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 3),
-                Text(
+                MarkdownText(
                   lesson.summary,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,

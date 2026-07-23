@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../design/app_card.dart';
+import '../../design/markdown_text.dart';
 import '../../design/primitives.dart' as ui;
 import '../../domain/content/content_enums.dart';
 import '../../domain/content/content_queries.dart';
@@ -64,7 +65,7 @@ class _LessonBody extends StatelessWidget {
         const SizedBox(height: AppSpacing.s3),
         Text(lesson.title, style: Theme.of(context).textTheme.headlineMedium),
         const SizedBox(height: AppSpacing.s2),
-        Text(lesson.summary, style: TextStyle(color: p.text2, height: 1.45, fontSize: 14.5)),
+        MarkdownText(lesson.summary, style: TextStyle(color: p.text2, height: 1.45, fontSize: 14.5)),
 
         // Hedefler
         if (lesson.objectives.isNotEmpty) ...[
@@ -183,7 +184,7 @@ class _SectionView extends StatelessWidget {
           ],
         ),
         const SizedBox(height: AppSpacing.s2),
-        Text(section.body, style: TextStyle(color: p.text2, height: 1.5, fontSize: 14)),
+        MarkdownText(section.body, style: TextStyle(color: p.text2, height: 1.5, fontSize: 14)),
         if (section.callout != null) ...[
           const SizedBox(height: AppSpacing.s3),
           ui.AppCallout(
@@ -249,7 +250,7 @@ class _CompareTableView extends StatelessWidget {
 
   Widget _cell(String text, AppPalette p, {bool bold = false}) => Padding(
     padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s3, vertical: AppSpacing.s2),
-    child: Text(
+    child: MarkdownText(
       text,
       style: TextStyle(
         fontSize: 12.5,
@@ -304,7 +305,7 @@ class _MistakeCard extends StatelessWidget {
               Icon(Icons.error_outline_rounded, size: 16, color: p.red),
               const SizedBox(width: AppSpacing.s2),
               Expanded(
-                child: Text(mistake.text, style: TextStyle(color: p.text2, height: 1.4, fontSize: 13.5)),
+                child: MarkdownText(mistake.text, style: TextStyle(color: p.text2, height: 1.4, fontSize: 13.5)),
               ),
             ],
           ),
@@ -315,7 +316,7 @@ class _MistakeCard extends StatelessWidget {
               Icon(Icons.check_circle_outline_rounded, size: 16, color: p.green),
               const SizedBox(width: AppSpacing.s2),
               Expanded(
-                child: Text(
+                child: MarkdownText(
                   mistake.fix,
                   style: TextStyle(color: p.text, height: 1.4, fontSize: 13.5, fontWeight: FontWeight.w600),
                 ),
@@ -347,7 +348,10 @@ class _ReviewCardTileState extends State<_ReviewCardTile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(widget.card.front, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14.5)),
+          MarkdownText(
+            widget.card.front,
+            style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14.5),
+          ),
           const SizedBox(height: AppSpacing.s2),
           AnimatedCrossFade(
             duration: AppMotion.base,
@@ -369,7 +373,10 @@ class _ReviewCardTileState extends State<_ReviewCardTile> {
                 color: p.primary050,
                 borderRadius: BorderRadius.circular(AppRadii.sm),
               ),
-              child: Text(widget.card.back, style: TextStyle(color: p.text, height: 1.45, fontSize: 13.5)),
+              child: MarkdownText(
+                widget.card.back,
+                style: TextStyle(color: p.text, height: 1.45, fontSize: 13.5),
+              ),
             ),
           ),
         ],
@@ -394,7 +401,7 @@ class _Bullet extends StatelessWidget {
           Icon(icon, size: 16, color: p.primary),
           const SizedBox(width: AppSpacing.s2),
           Expanded(
-            child: Text(text, style: TextStyle(color: p.text2, height: 1.4, fontSize: 13.5)),
+            child: MarkdownText(text, style: TextStyle(color: p.text2, height: 1.4, fontSize: 13.5)),
           ),
         ],
       ),

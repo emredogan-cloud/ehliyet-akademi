@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../design/app_card.dart';
+import '../../design/markdown_text.dart';
 import '../../design/primitives.dart';
 import '../../domain/content/content_queries.dart';
 import '../../domain/content/vehicle_part.dart';
@@ -77,7 +78,7 @@ class _Body extends StatelessWidget {
           ],
         ),
         const SizedBox(height: AppSpacing.s5),
-        Text(part.desc, style: TextStyle(color: p.text2, height: 1.5, fontSize: 14.5)),
+        MarkdownText(part.desc, style: TextStyle(color: p.text2, height: 1.5, fontSize: 14.5)),
         const SizedBox(height: AppSpacing.s4),
         AppCallout(text: part.tip, title: '💡 İpucu', tone: CalloutTone.info),
         if (part.mistake != null) ...[
@@ -111,7 +112,7 @@ class _Body extends StatelessWidget {
                         ),
                         const SizedBox(width: AppSpacing.s3),
                         Expanded(
-                          child: Text(
+                          child: MarkdownText(
                             part.inspection[i],
                             style: TextStyle(color: p.text2, height: 1.4, fontSize: 13.5),
                           ),

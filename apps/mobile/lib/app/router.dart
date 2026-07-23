@@ -22,18 +22,29 @@ import '../features/profile/profile_screen.dart';
 import '../features/profile/notification_settings_screen.dart';
 import '../features/progress/progress_screen.dart';
 import '../features/premium/paywall_screen.dart';
+import '../features/onboarding/onboarding_screen.dart';
 import '../features/auth/auth_screen.dart';
+import '../domain/onboarding/onboarding_controller.dart';
 import 'shell.dart';
 
 /// App routing — a StatefulShellRoute with 5 branches (one per bottom tab), each keeping its own
 /// navigation stack. Deep-link friendly (push targets for notifications land here in later phases).
 /// Exposed as a provider so each ProviderScope (incl. every test) gets an isolated router — no
 /// leaked navigation state between instances.
-final routerProvider = Provider<GoRouter>((ref) => _buildRouter());
+final routerProvider = Provider<GoRouter>((ref) => _buildRouter(ref));
 
-GoRouter _buildRouter() => GoRouter(
+GoRouter _buildRouter(Ref ref) => GoRouter(
   initialLocation: '/home',
+  // İlk açılışta tanıtım; görülmemişse her yol /onboarding'e yönlendirilir.
+  redirect: (context, state) {
+    final seen = ref.read(onboardingSeenProvider);
+    final loc = state.matchedLocation;
+    if (!seen && loc != '/onboarding') return '/onboarding';
+    if (seen && loc == '/onboarding') return '/home';
+    return null;
+  },
   routes: [
+    GoRoute(path: '/onboarding', builder: (_, _) => const OnboardingScreen()),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) => AppShell(navigationShell: navigationShell),
       branches: [

@@ -12,6 +12,7 @@ import 'package:ehliyet_akademi/domain/content/lesson.dart';
 import 'package:ehliyet_akademi/domain/content/traffic_sign.dart';
 import 'package:ehliyet_akademi/domain/content/vehicle_part.dart';
 import 'package:ehliyet_akademi/domain/content/video_content.dart';
+import 'package:ehliyet_akademi/domain/onboarding/onboarding_controller.dart';
 import 'package:ehliyet_akademi/domain/practice/question.dart';
 import 'package:ehliyet_akademi/domain/practice/question_bank.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -268,12 +269,14 @@ Future<void> pumpApp(
   CoachApi? coach,
   List<String>? owned,
   Map<String, Object>? prefs,
+  bool onboardingSeen = true,
   bool overrideContent = true,
 }) async {
   SharedPreferences.setMockInitialValues(prefs ?? {});
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
+        onboardingSeenProvider.overrideWith(() => OnboardingController(onboardingSeen)),
         tokenStoreProvider.overrideWithValue(tokens ?? MemoryTokenStore()),
         if (auth != null) authApiProvider.overrideWithValue(auth),
         coachApiProvider.overrideWithValue(coach ?? FakeCoachApi()),

@@ -150,7 +150,7 @@ class HomeScreen extends ConsumerWidget {
               physics: const NeverScrollableScrollPhysics(),
               mainAxisSpacing: AppSpacing.s3,
               crossAxisSpacing: AppSpacing.s3,
-              childAspectRatio: 0.82,
+              childAspectRatio: 0.72,
               children: [
                 QuickAction(
                   icon: Icons.timer_outlined,

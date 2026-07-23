@@ -2,7 +2,7 @@
  * Mobil IAP doğrulama entegrasyon testi (Mobile Phase 7, PGlite bellek-içi). Bearer oturumu →
  * katalog fiyat-bütünlüğü + idempotent grant + owned listesi. (Play token doğrulaması dev-modda.)
  */
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { POST as register } from '@/app/api/auth/register/route';
 import { POST as validate } from '@/app/api/iap/validate/route';
 
@@ -91,15 +91,14 @@ describe('mobil IAP /api/iap/validate', () => {
 
   it('doğrulama yapılandırılmamış + üretim modu → 503 (fail-closed, ücretsiz grant yok)', async () => {
     const token = await newUserToken();
-    const prev = process.env.NODE_ENV;
+    vi.stubEnv('NODE_ENV', 'production');
     try {
-      process.env.NODE_ENV = 'production';
       const res = await validate(
         post('/api/iap/validate', { productId: 'premium-teori', purchaseToken: 'tok' }, token)
       );
       expect(res.status).toBe(503);
     } finally {
-      process.env.NODE_ENV = prev;
+      vi.unstubAllEnvs();
     }
   });
 });

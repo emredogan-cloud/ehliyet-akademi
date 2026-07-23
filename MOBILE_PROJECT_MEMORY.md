@@ -11,7 +11,7 @@ phase: `MOBILE_ENGINEERING_DISCIPLINE.md` → this file → `MOBILE_APP_IMPLEMEN
 - [x] **Phase 3 — Content & Learn** (2026-07-23) — DONE, CI green, device-validated (offline-first content)
 - [x] **Phase 4 — Practice & Exams** (2026-07-23) — DONE, CI green, device-validated (offline SRS + exams)
 - [x] **Phase 5 — AI Coach & Notifications** (2026-07-23) — DONE, CI green, device-validated (nudges + grounded chat + local notif)
-- [ ] Phase 6 — Progress & Gamification
+- [x] **Phase 6 — Progress & Gamification** (2026-07-23) — DONE, CI green, device-validated (XP/radar/heatmap/badges + bound Home)
 - [ ] Phase 7 — Premium (IAP)
 - [ ] Phase 8 — Onboarding & Launch Prep
 - [ ] Phase 9 — Final Polish & Delight
@@ -366,3 +366,55 @@ lists/bold; notification settings + a local notification fired in the shade.
 `computeReadiness`), XP/levels + a study heatmap (from `ea:answers:v1` timestamps), achievements, and a
 study plan. All data is already local (progress repo). Optional `progress summary API` per roadmap — but
 on-device computation (like nudges) is the offline-first default.
+
+---
+
+## Phase 6 — Progress & Gamification (2026-07-23)
+
+**Completed:** On-device progress + gamification (no backend change). Gamification domain (XP/levels/
+achievements/heatmap), a Progress screen (radar + heatmap + XP + badges), and the Home dashboard rebound
+to REAL local data.
+
+**Architecture decisions:**
+
+- **On-device computation, not a server "progress summary API"** (roadmap marked it optional). All signals
+  are local (Phase 4 progress repo) → progress/gamification is offline + instant + deterministic, matching
+  the coach nudge engine. No deploy this phase.
+- **CustomPainter charts, no chart package**: `ReadinessRadar` (4-axis spider, grid rings, data polygon)
+  and `StudyHeatmap` (7×N-week grid, intensity by daily answer count) are hand-drawn with design tokens
+  (light+dark). Zero new dependencies.
+- **Home is now a ConsumerWidget** bound to `progressRepositoryProvider`: readiness ring/message
+  (`computeReadiness`), streak, answered/accuracy/level, top `computeNudges` card, today's plan
+  (studied-today + due-card count), deep-linked quick actions. Graceful "get started" copy before data.
+
+**Domain (`domain/progress/gamification.dart`):** `xpFromAnswers` (correct=10, wrong=3); `levelForXp`
+(level L starts at `50*L*(L-1)` XP → 0/100/300/600/1000…) with `LevelInfo.progress`/`xpToNext`;
+`computeAchievements` (7 deterministic badges); `answersPerDay` (local day → count).
+
+**Lessons learned / problems solved:**
+
+- **Two-scrollable widget tests**: Home has a nested `GridView` (quick actions) and Progress has the
+  heatmap's inner horizontal `SingleChildScrollView` → `scrollUntilVisible` must pass
+  `scrollable: find.byType(Scrollable).first` (the outer list) to avoid "Too many elements"/ambiguous.
+- `pumpApp` gained a `prefs` param to seed `ea:*` keys (SharedPreferences.setMockInitialValues) for the
+  populated progress-screen test.
+
+**Known limitations / technical debt:**
+
+- Radar axis label can overlap the data dot at sparse (single-subject) data — cosmetic, refine offset in
+  Phase 9. Home quick-actions 5px overflow (Phase 1) still deferred to Phase 9.
+
+**Risk register (rolled forward):** IAP/billing (Phase 7) highest — real store-signed IAP needs Play
+Console products + store connection; expect a documented partial on this host (build the flow + validate
+contract + unit tests, like FCM/iOS). Offline correctness de-risked; golden tests deferred.
+
+**Device-validation summary:** Home real data (readiness %13, streak 1, 1 soru/%100/Lv1, nudge, plan);
+Progress screen (Seviye 1 10XP, radar with İlk Yardım 100%, heatmap today-cell, badges 1/7 İlk Adım).
+
+**For the next phase (Phase 7 — Premium / IAP):** add native `in_app_purchase` (Play Billing), a purchase
+flow (products from `apps/web/lib/products.ts` / capabilities like `sinirsiz-deneme`), an
+`/api/iap/validate` backend endpoint (verify the store receipt server-side → grant entitlement in
+`purchases` table), and entitlement sync to `ea:entitlements:v1`. Gate premium content
+(`Lesson.premium`, free exam/AI quotas — web uses `lib/payments.ts` `FREE_AI_DAILY`/exam quota). App-store
+IAP is REQUIRED for digital goods (LemonSqueezy web checkout can't ship in-app). Real store validation
+needs a signed build + Play Console; document honestly what can't be end-to-end tested on this host.

@@ -10,7 +10,7 @@ phase: `MOBILE_ENGINEERING_DISCIPLINE.md` → this file → `MOBILE_APP_IMPLEMEN
 - [x] **Phase 2 — Mobile Auth** (2026-07-23) — DONE, CI green, device-validated (bearer-token auth)
 - [x] **Phase 3 — Content & Learn** (2026-07-23) — DONE, CI green, device-validated (offline-first content)
 - [x] **Phase 4 — Practice & Exams** (2026-07-23) — DONE, CI green, device-validated (offline SRS + exams)
-- [ ] Phase 5 — AI Coach & Notifications
+- [x] **Phase 5 — AI Coach & Notifications** (2026-07-23) — DONE, CI green, device-validated (nudges + grounded chat + local notif)
 - [ ] Phase 6 — Progress & Gamification
 - [ ] Phase 7 — Premium (IAP)
 - [ ] Phase 8 — Onboarding & Launch Prep
@@ -304,3 +304,65 @@ Anthropic key server-side; AI content stays `review:'draft'`, never auto-publish
 proactive coach cards personalized from local answers/SRS/readiness, and push/local notifications (FCM +
 flutter_local_notifications). Reminder: app-store IAP is Phase 7; notifications need a push token
 registered server-side.
+
+---
+
+## Phase 5 — AI Coach & Notifications (2026-07-23)
+
+**Completed:** Real AI Koç (deterministic offline nudges + grounded chat) + local notifications. Backend:
+`POST /api/ai/ask` extended with optional `context` (backward-compatible; question tokens preserved so
+retrieval/grounding unaffected). Mobile: nudge engine, coach chat, MarkdownBlock, local notifications +
+settings.
+
+**Architecture decisions:**
+
+- **"Deterministic brain, natural voice" (AI_MOBILE_BEHAVIOR).** Nudges are computed ON-DEVICE in Dart
+  (`domain/coach/nudge.dart` `computeNudges` — pure, offline) from local Readiness/streak/due-cards; the
+  LLM only does free-form grounded Q&A. No new nudge server endpoint needed (all signals are local).
+- **Reuse `/api/ai/ask`** (no auth, IP rate-limited, JSON not SSE) directly from the mobile Bearer dio
+  client. Server does the real Anthropic call (`claude-haiku-4-5`) + hallucination gate + mock fallback.
+  In tests, no key → gate/mock (no network) → integration test is provider-independent.
+- **FCM push = documented environment blocker** (like iOS-on-Linux): NO Firebase config
+  (google-services.json/firebase_options.dart), NO server FCM credentials, NO push-token DB table exist.
+  Local notifications are the working lane; server push + `pushSubscriptions` table + registration endpoint
+  are a scoped follow-up. Do NOT claim FCM works.
+- **MarkdownBlock vs MarkdownText**: lesson prose uses only `**bold**` → inline `MarkdownText`. LLM coach
+  answers use full markdown (headings/lists/hr) → new block renderer `design/markdown_block.dart`. (Found
+  on device: inline renderer showed `#`/`---`/`- ` literally.)
+
+**Packages added:** `flutter_local_notifications` (22.x), `timezone`. Android config: POST_NOTIFICATIONS +
+RECEIVE_BOOT_COMPLETED perms, ScheduledNotification(+Boot)Receiver in manifest, **core-library
+desugaring** in `android/app/build.gradle.kts` (`isCoreLibraryDesugaringEnabled` + `desugar_jdk_libs`).
+
+**API decisions:** `/api/ai/ask` body `{ question, context? }` → `{ answer, grounded, sources, model }`.
+Chat persisted locally `ea:chat:v1` (cap 40); notification prefs `ea:notifications:v1` (enabled/hour/minute).
+
+**Lessons learned / problems solved:**
+
+- **flutter_local_notifications 22.x is all named params**: `initialize(settings:)`, `show(id:title:body:
+notificationDetails:)`, `zonedSchedule(id:scheduledDate:notificationDetails:androidScheduleMode:)`,
+  `cancel(id:)`. Timezone hardcoded `Europe/Istanbul` (Turkish app) → no flutter_native_timezone dep.
+  Inexact scheduling (`AndroidScheduleMode.inexactAllowWhileIdle`) → no SCHEDULE_EXACT_ALARM permission.
+- **StreakState moved from `data/practice/progress_repository.dart` → `domain/practice/srs.dart`** so the
+  domain nudge engine can use it without a domain→data import.
+- Device is API 30 (Android 11) → POST_NOTIFICATIONS runtime prompt not required; notifications show by
+  default. On API 33+, `requestNotificationsPermission()` handles it (wired in `setEnabled(true)`).
+
+**Known limitations / technical debt:**
+
+- FCM push N/A on this host (see above). Scheduled reminder validated via immediate "test" + code path,
+  not waited out at wall-clock. Sparse-data weak-subject nudge can read "%100 ustalık" oddly (refine:
+  min answered-per-subject before flagging). Home 5px overflow (Phase 1) still deferred to Phase 9.
+
+**Risk register (rolled forward):** IAP/billing (Phase 7) highest — needs real store accounts +
+`pushSubscriptions`-style infra parallels; FCM/push infra deferred; offline correctness de-risked; golden
+tests deferred.
+
+**Device-validation summary (production):** `/api/ai/ask?context` → real grounded Anthropic answer; AI Koç
+nudges from real practice (Hazırlık %13, weak-subject); chat → grounded answer with markdown headings/
+lists/bold; notification settings + a local notification fired in the shade.
+
+**For the next phase (Phase 6 — Progress & Gamification):** build readiness radar (per-subject from
+`computeReadiness`), XP/levels + a study heatmap (from `ea:answers:v1` timestamps), achievements, and a
+study plan. All data is already local (progress repo). Optional `progress summary API` per roadmap — but
+on-device computation (like nudges) is the offline-first default.

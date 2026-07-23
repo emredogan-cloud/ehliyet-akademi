@@ -9,7 +9,7 @@ phase: `MOBILE_ENGINEERING_DISCIPLINE.md` → this file → `MOBILE_APP_IMPLEMEN
 - [x] **Phase 1 — Flutter Foundation & Design System** (2026-07-23) — DONE, CI green, device-validated
 - [x] **Phase 2 — Mobile Auth** (2026-07-23) — DONE, CI green, device-validated (bearer-token auth)
 - [x] **Phase 3 — Content & Learn** (2026-07-23) — DONE, CI green, device-validated (offline-first content)
-- [ ] Phase 4 — Practice & Exams
+- [x] **Phase 4 — Practice & Exams** (2026-07-23) — DONE, CI green, device-validated (offline SRS + exams)
 - [ ] Phase 5 — AI Coach & Notifications
 - [ ] Phase 6 — Progress & Gamification
 - [ ] Phase 7 — Premium (IAP)
@@ -239,3 +239,68 @@ correctly); videos list (posters from prod) + **video player streaming/playing**
 scheduling, per-question attempts, and exam sessions; add an exam-build API; build SRS practice, a
 50-question exam runner, collections, and historical exams — offline. The question bank (~1562 Qs) is
 separate from the content snapshot; decide bundle-vs-fetch for questions (they are static + large).
+
+---
+
+## Phase 4 — Practice & Exams (2026-07-23)
+
+**Completed:** Offline-first practice + exams end-to-end. Backend: public `GET
+/api/mobile/question-bank` (lean 1562-question projection + `EXAM_BLUEPRINT`, sha256 version + ETag/304).
+Mobile: the learning-science engine PORTED to Dart (runs offline from the cached bank) + SRS study
+runner, 50-Q exam runner, collections, historical screens.
+
+**Architecture decisions:**
+
+- **Port the pure logic, cache the data.** SM-2, `buildExam`/`scoreExam`, mulberry32 `seededRng`, FNV-1a
+  `hash32`/`seedFromDate` are small pure fns with server tests → ported to `domain/practice/{srs,exam,
+collections,historical}.dart` and unit-tested to spec. The question bank is the only new backend
+  surface. Practice/exams are fully deterministic + **offline** (no per-action server calls).
+- **Reuse the Phase-3 drift DB** (`AppDatabase.getDocument/putDocument`) for the question-bank document
+  (key `question-bank`) via a parallel `QuestionLocalStore` (Drift + Memory-fake for tests). NOTE:
+  `appDatabaseProvider` lives in `data/content/content_repository.dart` — question repo imports it from
+  there (don't duplicate).
+- **Progress** (`ProgressRepository`, shared_preferences) mirrors the web `ea:*:v1` shapes exactly
+  (`ea:cards:v1` = questionId→SrsCard, `ea:answers:v1` = AnswerLog[] cap 2000, `ea:streak:v1`,
+  `ea:counters:v1`) + a safe cross-device merge on login. `StateSync` (`/api/state`, Bearer) is
+  best-effort last-write-wins, no-ops offline/guest.
+- **Collections use direct field filters** (subject/difficulty/topic-contains-'isaret') instead of
+  porting the web's analyzed/quality layer — smaller port, correctly themed, deterministic.
+- **Exam runner is one screen** for standard/collection/historical (via an `ExamSource` enum + id);
+  builds the exam ONCE in the data callback (guard flag) to avoid re-shuffle on rebuild. Timer =
+  1 s `Timer.periodic`, cancelled on finish/dispose (no pending-timer error in tests; pumpAndSettle does
+  not advance fake time enough to fire it).
+
+**API decisions:** `GET /api/mobile/question-bank` → `{ version, generatedAt, count, blueprint,
+questions[] }`. Questions have NO images (all text) — confirmed. Bank counts: trafik 380, ilkyardim 303,
+motor 310, adab 272, pratik 297 (pratik excluded from theory exams).
+
+**Lessons learned / problems solved:**
+
+- **JS 32-bit ops in Dart**: ported `Math.imul` (16×16 split) + kept everything masked to `& 0xFFFFFFFF`
+  with `>>>` so mulberry32 / FNV-1a reproduce JS bit-for-bit. (Exact server match isn't required for
+  mobile determinism, but it's free with careful masking.)
+- SM-2 float math matches JS (both IEEE754); use `closeTo` in tests for `ease`.
+- `flutter analyze` flagged an unused import after refactors twice — keep imports tight.
+
+**Known limitations / technical debt:**
+
+- Exam **result screen** validated via widget test (5-Q shortened exam → KALDIN + Başarı), not
+  screenshotted at 50-Q on device (impractical to finish by hand); build/timer/nav were device-validated.
+- State sync = best-effort last-write-wins + safe merge; full conflict-free sync + entitlements later.
+- Collections membership can differ from web (no analyzed layer) — both deterministic + themed.
+- Home quick-actions 5px overflow (Phase 1) still deferred to Phase 9.
+
+**Risk register (rolled forward):** IAP/billing (Phase 7) highest; **offline correctness now largely
+de-risked** (content + questions atomic/versioned; SRS/exam deterministic + unit-tested); golden/CI
+flakiness (deferred); two-codebase drift (mitigated — SRS/exam/scoring ported and tested to spec).
+
+**Device-validation summary (production, rebuilt-from-HEAD APK):** hub (4 areas, no dead nav); SRS study
+(real first-aid Q → correct green ✓ + "Doğru!" + explanation, persisted); Deneme Sınavı (50-Q built,
+timer 44:56, question map, options, nav); Koleksiyonlar (real counts: 50/50/40/40/29/40/40); Geçmiş
+Sınavlar (18 sessions grouped by year).
+
+**For the next phase (Phase 5 — AI Coach & Notifications):** add a coach-nudge API (uses the existing
+Anthropic key server-side; AI content stays `review:'draft'`, never auto-published), a chat screen +
+proactive coach cards personalized from local answers/SRS/readiness, and push/local notifications (FCM +
+flutter_local_notifications). Reminder: app-store IAP is Phase 7; notifications need a push token
+registered server-side.

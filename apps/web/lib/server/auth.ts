@@ -44,9 +44,14 @@ export function sessionClearCookie(): string {
   return `${SESSION_COOKIE}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0`;
 }
 export function readSessionToken(req: Request): string | null {
+  // Web: httpOnly çerez. Mobil (Flutter): `Authorization: Bearer <token>` başlığı — aynı opak
+  // oturum token'ı (sessions tablosunda hash'li, iptal edilebilir). Çerez öncelikli.
   const cookie = req.headers.get('cookie') ?? '';
-  const m = cookie.match(new RegExp(`(?:^|;\\s*)${SESSION_COOKIE}=([a-f0-9]{64})`));
-  return m?.[1] ?? null;
+  const cm = cookie.match(new RegExp(`(?:^|;\\s*)${SESSION_COOKIE}=([a-f0-9]{64})`));
+  if (cm?.[1]) return cm[1];
+  const auth = req.headers.get('authorization') ?? '';
+  const bm = auth.match(/^Bearer\s+([a-f0-9]{64})$/i);
+  return bm?.[1] ?? null;
 }
 
 /* ---------- oturum yaşam döngüsü ---------- */

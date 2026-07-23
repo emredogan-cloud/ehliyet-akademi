@@ -88,8 +88,9 @@ export const POST = guarded(async (req: Request): Promise<Response> => {
     logger.warn('register_email_failed', { err: String(e) });
   }
 
+  // `token`: mobil (Bearer) istemciler için; web çerezi kullanır ve bunu yok sayar.
   return json(
-    { user: { id, email, name, role } },
+    { user: { id, email, name, role }, token },
     { status: 201, setCookie: sessionSetCookie(token) }
   );
 });

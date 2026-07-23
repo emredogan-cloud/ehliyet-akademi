@@ -6,6 +6,7 @@ import '../features/learn/learn_screen.dart';
 import '../features/practice/practice_screen.dart';
 import '../features/coach/coach_screen.dart';
 import '../features/profile/profile_screen.dart';
+import '../features/auth/auth_screen.dart';
 import 'shell.dart';
 
 /// App routing — a StatefulShellRoute with 5 branches (one per bottom tab), each keeping its own
@@ -37,5 +38,7 @@ GoRouter _buildRouter() => GoRouter(
         ),
       ],
     ),
+    // Full-screen over the tab shell (login/register).
+    GoRoute(path: '/auth', builder: (_, _) => const AuthScreen()),
   ],
 );

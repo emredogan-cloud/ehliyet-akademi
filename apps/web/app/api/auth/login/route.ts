@@ -27,8 +27,9 @@ export const POST = guarded(async (req: Request): Promise<Response> => {
   if (!user || !ok) return json({ error: 'E-posta veya parola hatalı.' }, { status: 401 });
 
   const token = await createSession(db, user.id, req.headers.get('user-agent') ?? '');
+  // `token`: mobil (Bearer) istemciler için; web çerezi kullanır ve bunu yok sayar.
   return json(
-    { user: { id: user.id, email: user.email, name: user.name } },
+    { user: { id: user.id, email: user.email, name: user.name }, token },
     { setCookie: sessionSetCookie(token) }
   );
 });

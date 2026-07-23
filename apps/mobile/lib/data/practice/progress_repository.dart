@@ -6,23 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../domain/practice/srs.dart';
 import 'state_sync.dart';
 
-/// Çalışma serisi (persist: `ea:streak:v1`).
-class StreakState {
-  const StreakState({required this.current, required this.best, required this.lastDay});
-  final int current;
-  final int best;
-  final String lastDay;
-
-  static const empty = StreakState(current: 0, best: 0, lastDay: '');
-
-  Map<String, dynamic> toJson() => {'current': current, 'best': best, 'lastDay': lastDay};
-  factory StreakState.fromJson(Map<String, dynamic> j) => StreakState(
-    current: (j['current'] as num?)?.toInt() ?? 0,
-    best: (j['best'] as num?)?.toInt() ?? 0,
-    lastDay: j['lastDay'] as String? ?? '',
-  );
-}
-
 const _kCards = 'ea:cards:v1';
 const _kAnswers = 'ea:answers:v1';
 const _kStreak = 'ea:streak:v1';

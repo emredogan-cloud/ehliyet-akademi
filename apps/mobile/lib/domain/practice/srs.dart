@@ -46,6 +46,23 @@ abstract class AnswerLog with _$AnswerLog {
   factory AnswerLog.fromJson(Map<String, Object?> json) => _$AnswerLogFromJson(json);
 }
 
+/// Çalışma serisi (ardışık gün) durumu (persist: `ea:streak:v1`).
+class StreakState {
+  const StreakState({required this.current, required this.best, required this.lastDay});
+  final int current;
+  final int best;
+  final String lastDay;
+
+  static const empty = StreakState(current: 0, best: 0, lastDay: '');
+
+  Map<String, dynamic> toJson() => {'current': current, 'best': best, 'lastDay': lastDay};
+  factory StreakState.fromJson(Map<String, dynamic> j) => StreakState(
+    current: (j['current'] as num?)?.toInt() ?? 0,
+    best: (j['best'] as num?)?.toInt() ?? 0,
+    lastDay: j['lastDay'] as String? ?? '',
+  );
+}
+
 /// Yeni kart (henüz çalışılmamış soru).
 SrsCard newCard(String questionId, int now) => SrsCard(
   questionId: questionId,

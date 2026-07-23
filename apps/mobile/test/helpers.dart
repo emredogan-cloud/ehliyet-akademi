@@ -1,6 +1,7 @@
 import 'package:ehliyet_akademi/app/app.dart';
 import 'package:ehliyet_akademi/core/storage/token_store.dart';
 import 'package:ehliyet_akademi/data/auth/auth_api.dart';
+import 'package:ehliyet_akademi/data/coach/coach_api.dart';
 import 'package:ehliyet_akademi/data/content/content_repository.dart';
 import 'package:ehliyet_akademi/data/practice/question_repository.dart';
 import 'package:ehliyet_akademi/domain/auth/app_user.dart';
@@ -175,6 +176,22 @@ ContentSnapshot sampleSnapshot() => ContentSnapshot(
   ],
 );
 
+/// A fake CoachApi for tests — no network. Returns a fixed grounded answer.
+class FakeCoachApi implements CoachApi {
+  FakeCoachApi({this.answer = 'Kırmızı ışıkta durulur.', this.grounded = true});
+  final String answer;
+  final bool grounded;
+  int calls = 0;
+  String? lastQuestion;
+
+  @override
+  Future<CoachAnswer> ask(String question, {String? context}) async {
+    calls++;
+    lastQuestion = question;
+    return CoachAnswer(answer: answer, grounded: grounded, sources: const ['trafik'], model: 'mock');
+  }
+}
+
 /// A small question bank that fully covers the exam blueprint (23/12/9/6) with headroom + variety.
 QuestionBank sampleBank() {
   Question q(String id, Subject s, {Difficulty d = Difficulty.orta, int answer = 0, String topic = 'genel'}) =>
@@ -218,6 +235,7 @@ Future<void> pumpApp(
   AuthApi? auth,
   ContentSnapshot? content,
   QuestionBank? bank,
+  CoachApi? coach,
   bool overrideContent = true,
 }) async {
   SharedPreferences.setMockInitialValues({});
@@ -226,6 +244,7 @@ Future<void> pumpApp(
       overrides: [
         tokenStoreProvider.overrideWithValue(tokens ?? MemoryTokenStore()),
         if (auth != null) authApiProvider.overrideWithValue(auth),
+        coachApiProvider.overrideWithValue(coach ?? FakeCoachApi()),
         // Content + questions come from fixed snapshots in tests → never touch drift/network.
         if (overrideContent) ...[
           contentSnapshotProvider.overrideWith((ref) async => content ?? sampleSnapshot()),

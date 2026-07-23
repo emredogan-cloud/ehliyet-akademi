@@ -50,7 +50,11 @@ class ProfileScreen extends ConsumerWidget {
                     contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4),
                   ),
                   Divider(height: 1, color: p.border),
-                  const _SettingRow(icon: Icons.notifications_outlined, title: 'Bildirimler'),
+                  _SettingRow(
+                    icon: Icons.notifications_outlined,
+                    title: 'Bildirimler',
+                    onTap: () => context.push('/notifications'),
+                  ),
                   Divider(height: 1, color: p.border),
                   const _SettingRow(icon: Icons.workspace_premium_outlined, title: 'Premium'),
                   Divider(height: 1, color: p.border),
@@ -134,19 +138,21 @@ class _ProfileHeader extends StatelessWidget {
 }
 
 class _SettingRow extends StatelessWidget {
-  const _SettingRow({required this.icon, required this.title});
+  const _SettingRow({required this.icon, required this.title, this.onTap});
   final IconData icon;
   final String title;
+  final VoidCallback? onTap;
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
     return ListTile(
-      leading: Icon(icon, color: p.text2),
+      leading: Icon(icon, color: onTap != null ? p.text2 : p.text3),
       title: Text(title),
       trailing: Icon(Icons.chevron_right_rounded, color: p.text3),
       contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4),
-      // Detail screens arrive in later phases; disabled to avoid dead navigation.
-      enabled: false,
+      // Rows without a target stay disabled to avoid dead navigation (arrive in later phases).
+      enabled: onTap != null,
+      onTap: onTap,
     );
   }
 }

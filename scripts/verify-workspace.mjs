@@ -55,6 +55,7 @@ const SKIP_DIRS = new Set([
   'coverage',
   'playwright-report',
   'test-results',
+  'mobile', // Flutter uygulaması — JS tooling'a girmez
   'sınav-soruları-pdf', // telif korumalı MEB sınav-arşivi (referans-only) + venv — taranmaz
 ]);
 let scanned = 0;

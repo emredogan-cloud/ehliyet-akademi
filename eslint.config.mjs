@@ -16,6 +16,7 @@ export default tseslint.config(
       '**/next-env.d.ts',
       // Telif korumalı MEB sınav-arşivi (referans-only) + indirme venv'i — asla linte/derlemeye girmez.
       'sınav-soruları-pdf/**',
+      'apps/mobile/**',
     ],
   },
   js.configs.recommended,

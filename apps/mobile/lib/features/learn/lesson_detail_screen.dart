@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
+import '../../data/premium/entitlements_repository.dart';
 import '../../design/app_card.dart';
 import '../../design/markdown_text.dart';
 import '../../design/primitives.dart' as ui;
 import '../../domain/content/content_enums.dart';
 import '../../domain/content/content_queries.dart';
 import '../../domain/content/lesson.dart';
+import '../../domain/premium/products.dart';
 import 'widgets/content_scope.dart';
 
 /// Ders detayı — hedefler, bölümler (rozet + vurgu + karşılaştırma), hafıza teknikleri, sınav
-/// stratejisi, sık hatalar, ipuçları, özet ve tekrar kartları. Web ders yapısıyla birebir.
-class LessonDetailScreen extends StatelessWidget {
+/// stratejisi, sık hatalar, ipuçları, özet ve tekrar kartları. Premium dersler kilitlenir.
+class LessonDetailScreen extends ConsumerWidget {
   const LessonDetailScreen({super.key, required this.slug});
   final String slug;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final owned = ref.watch(entitlementsProvider);
     return ContentBuilder(
       builder: (context, snapshot) {
         final lesson = snapshot.lessonBySlug(slug);
@@ -26,11 +31,58 @@ class LessonDetailScreen extends StatelessWidget {
             body: const ui.AppEmptyState(emoji: '🔍', title: 'Ders bulunamadı'),
           );
         }
+        final locked = !canAccessLesson(slug: lesson.slug, premium: lesson.premium, owned: owned);
         return Scaffold(
           appBar: AppBar(title: Text(lesson.title, overflow: TextOverflow.ellipsis)),
-          body: SafeArea(top: false, child: _LessonBody(lesson: lesson)),
+          body: SafeArea(
+            top: false,
+            child: locked ? _LockedGate(lesson: lesson) : _LessonBody(lesson: lesson),
+          ),
         );
       },
+    );
+  }
+}
+
+/// Kilitli premium ders kapısı (web `PremiumLessonGate` eşleniği).
+class _LockedGate extends StatelessWidget {
+  const _LockedGate({required this.lesson});
+  final Lesson lesson;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.palette;
+    final product = productForLesson(lesson.slug);
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.s6),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('🔒', style: const TextStyle(fontSize: 52)),
+            const SizedBox(height: AppSpacing.s4),
+            Text('Bu ileri ders premium',
+                textAlign: TextAlign.center, style: Theme.of(context).textTheme.headlineMedium),
+            const SizedBox(height: AppSpacing.s2),
+            Text(
+              lesson.summary,
+              textAlign: TextAlign.center,
+              style: TextStyle(color: p.text3, height: 1.4, fontSize: 13.5),
+            ),
+            const SizedBox(height: AppSpacing.s5),
+            FilledButton.icon(
+              onPressed: () => context.push('/premium?product=${product.id}'),
+              icon: const Icon(Icons.lock_open_rounded, size: 18),
+              label: Text('Kilidi aç · ${product.priceTRY} ₺'),
+            ),
+            const SizedBox(height: AppSpacing.s3),
+            TextButton(
+              onPressed: () => context.push('/premium'),
+              child: const Text('Tüm paketler'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

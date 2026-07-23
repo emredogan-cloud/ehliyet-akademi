@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../data/practice/progress_repository.dart';
+import '../../data/premium/entitlements_repository.dart';
+import '../../data/premium/quota_repository.dart';
 import '../../design/markdown_block.dart';
 import '../../design/primitives.dart';
 import '../../domain/coach/coach_controller.dart';
@@ -39,8 +41,15 @@ class _CoachScreenState extends ConsumerState<CoachScreen> {
   void _send(String text) {
     final q = text.trim();
     if (q.length < 3) return;
+    final owned = ref.read(entitlementsProvider);
+    final quota = ref.read(quotaRepositoryProvider).value;
+    if (quota != null && !quota.canAskAi(owned)) {
+      _showQuotaDialog();
+      return;
+    }
     _input.clear();
     ref.read(coachChatProvider.notifier).send(q);
+    quota?.consumeAi(owned);
     FocusScope.of(context).unfocus();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scroll.hasClients) {
@@ -51,6 +60,28 @@ class _CoachScreenState extends ConsumerState<CoachScreen> {
         );
       }
     });
+  }
+
+  void _showQuotaDialog() {
+    showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Günlük AI hakkın doldu'),
+        content: const Text(
+          'Bugünkü ücretsiz AI Koç sorularını kullandın. Sınırsız sormak için Komple B paketine geç.',
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Kapat')),
+          FilledButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              context.push('/premium?product=komple-b');
+            },
+            child: const Text('Premium'),
+          ),
+        ],
+      ),
+    );
   }
 
   List<Nudge> _nudges() {

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
+import '../../data/premium/entitlements_repository.dart';
 import '../../design/app_card.dart';
 import '../../design/markdown_text.dart';
 import '../../design/primitives.dart';
 import '../../domain/content/content_enums.dart';
 import '../../domain/content/content_queries.dart';
 import '../../domain/content/lesson.dart';
+import '../../domain/premium/products.dart';
 import 'widgets/content_scope.dart';
 
 /// Dersler — konuya göre gruplanmış liste. Kartlar detay ekranına götürür.
@@ -48,15 +51,19 @@ class LessonsScreen extends StatelessWidget {
   }
 }
 
-class _LessonCard extends StatelessWidget {
+class _LessonCard extends ConsumerWidget {
   const _LessonCard({required this.lesson});
   final Lesson lesson;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final p = context.palette;
+    final owned = ref.watch(entitlementsProvider);
+    final locked = !canAccessLesson(slug: lesson.slug, premium: lesson.premium, owned: owned);
     return AppCard(
-      onTap: () => context.push('/learn/lessons/${lesson.slug}'),
+      onTap: () => locked
+          ? context.push('/premium?product=${productForLesson(lesson.slug).id}')
+          : context.push('/learn/lessons/${lesson.slug}'),
       child: Row(
         children: [
           Container(
@@ -87,7 +94,11 @@ class _LessonCard extends StatelessWidget {
                     ),
                     if (lesson.premium) ...[
                       const SizedBox(width: AppSpacing.s2),
-                      Icon(Icons.workspace_premium_rounded, size: 16, color: p.accent),
+                      Icon(
+                        locked ? Icons.lock_rounded : Icons.workspace_premium_rounded,
+                        size: 16,
+                        color: p.accent,
+                      ),
                     ],
                   ],
                 ),

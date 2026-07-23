@@ -8,4 +8,7 @@ class AppConfig {
     'API_BASE_URL',
     defaultValue: 'https://www.ehliyetegitim.com',
   );
+
+  /// Android application id — sent to `/api/iap/validate` for Play purchase verification.
+  static const String androidPackage = 'com.ehliyetegitim.ehliyet_akademi';
 }

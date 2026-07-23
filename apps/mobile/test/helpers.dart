@@ -4,6 +4,7 @@ import 'package:ehliyet_akademi/data/auth/auth_api.dart';
 import 'package:ehliyet_akademi/data/coach/coach_api.dart';
 import 'package:ehliyet_akademi/data/content/content_repository.dart';
 import 'package:ehliyet_akademi/data/practice/question_repository.dart';
+import 'package:ehliyet_akademi/data/premium/entitlements_repository.dart';
 import 'package:ehliyet_akademi/domain/auth/app_user.dart';
 import 'package:ehliyet_akademi/domain/content/content_enums.dart';
 import 'package:ehliyet_akademi/domain/content/content_snapshot.dart';
@@ -58,7 +59,7 @@ class FakeAuthApi implements AuthApi {
 ContentSnapshot sampleSnapshot() => ContentSnapshot(
   version: 'test-v1',
   generatedAt: '2026-07-23T00:00:00.000Z',
-  counts: const SnapshotCounts(lessons: 2, signs: 3, vehicleParts: 2, videos: 2),
+  counts: const SnapshotCounts(lessons: 3, signs: 3, vehicleParts: 2, videos: 2),
   lessons: const [
     Lesson(
       id: 'trafik-temel',
@@ -99,6 +100,19 @@ ContentSnapshot sampleSnapshot() => ContentSnapshot(
       minutes: 12,
       objectives: ['ABC sırasını bil'],
       sections: [LessonSection(heading: 'ABC', body: 'Hava yolu, solunum, dolaşım.')],
+    ),
+    // premium + capability-mapped (park-manevra → direksiyon-premium) → lockable in tests
+    Lesson(
+      id: 'park-manevra',
+      slug: 'park-manevra',
+      no: 3,
+      subject: Subject.pratik,
+      title: 'Park Manevrası',
+      summary: 'İleri park teknikleri (premium).',
+      minutes: 15,
+      objectives: ['Paralel parkı uygula'],
+      sections: [LessonSection(heading: 'Giriş', body: 'Adım adım paralel park.')],
+      premium: true,
     ),
   ],
   signs: const [
@@ -192,6 +206,22 @@ class FakeCoachApi implements CoachApi {
   }
 }
 
+/// A fake entitlements API for tests — no network. Returns a fixed owned list.
+class FakeEntitlementsApi implements EntitlementsApi {
+  FakeEntitlementsApi([this.owned = const []]);
+  List<String> owned;
+
+  @override
+  Future<List<String>> fetchOwned() async => owned;
+
+  @override
+  Future<List<String>> validatePurchase({
+    required String productId,
+    required String purchaseToken,
+    required String packageName,
+  }) async => [...owned, productId];
+}
+
 /// A small question bank that fully covers the exam blueprint (23/12/9/6) with headroom + variety.
 QuestionBank sampleBank() {
   Question q(String id, Subject s, {Difficulty d = Difficulty.orta, int answer = 0, String topic = 'genel'}) =>
@@ -236,6 +266,7 @@ Future<void> pumpApp(
   ContentSnapshot? content,
   QuestionBank? bank,
   CoachApi? coach,
+  List<String>? owned,
   Map<String, Object>? prefs,
   bool overrideContent = true,
 }) async {
@@ -246,6 +277,7 @@ Future<void> pumpApp(
         tokenStoreProvider.overrideWithValue(tokens ?? MemoryTokenStore()),
         if (auth != null) authApiProvider.overrideWithValue(auth),
         coachApiProvider.overrideWithValue(coach ?? FakeCoachApi()),
+        entitlementsApiProvider.overrideWithValue(FakeEntitlementsApi(owned ?? const [])),
         // Content + questions come from fixed snapshots in tests → never touch drift/network.
         if (overrideContent) ...[
           contentSnapshotProvider.overrideWith((ref) async => content ?? sampleSnapshot()),

@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../data/practice/progress_repository.dart';
+import '../../data/premium/entitlements_repository.dart';
+import '../../data/premium/quota_repository.dart';
 import '../../design/app_card.dart';
 import '../../design/primitives.dart';
 import '../../domain/practice/srs.dart';
@@ -54,7 +56,16 @@ class PracticeScreen extends ConsumerWidget {
               title: 'Deneme Sınavı',
               subtitle: '50 soru · 45 dk · MEB dağılımı (23/12/9/6)',
               iconColor: p.primary,
-              onTap: () => context.push('/practice/exam'),
+              onTap: () {
+                final owned = ref.read(entitlementsProvider);
+                final quota = ref.read(quotaRepositoryProvider).value;
+                if (quota != null && !quota.canStartExam(owned)) {
+                  context.push('/premium?product=simulator-paketi');
+                  return;
+                }
+                quota?.consumeExam(owned);
+                context.push('/practice/exam');
+              },
             ),
             const SizedBox(height: AppSpacing.s3),
             OverviewTile(

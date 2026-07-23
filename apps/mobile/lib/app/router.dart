@@ -21,6 +21,7 @@ import '../features/coach/coach_screen.dart';
 import '../features/profile/profile_screen.dart';
 import '../features/profile/notification_settings_screen.dart';
 import '../features/progress/progress_screen.dart';
+import '../features/premium/paywall_screen.dart';
 import '../features/auth/auth_screen.dart';
 import 'shell.dart';
 
@@ -138,5 +139,9 @@ GoRouter _buildRouter() => GoRouter(
     GoRoute(path: '/auth', builder: (_, _) => const AuthScreen()),
     GoRoute(path: '/notifications', builder: (_, _) => const NotificationSettingsScreen()),
     GoRoute(path: '/progress', builder: (_, _) => const ProgressScreen()),
+    GoRoute(
+      path: '/premium',
+      builder: (_, state) => PaywallScreen(highlightProductId: state.uri.queryParameters['product']),
+    ),
   ],
 );

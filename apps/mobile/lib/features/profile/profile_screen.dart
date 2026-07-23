@@ -56,7 +56,11 @@ class ProfileScreen extends ConsumerWidget {
                     onTap: () => context.push('/notifications'),
                   ),
                   Divider(height: 1, color: p.border),
-                  const _SettingRow(icon: Icons.workspace_premium_outlined, title: 'Premium'),
+                  _SettingRow(
+                    icon: Icons.workspace_premium_outlined,
+                    title: 'Premium',
+                    onTap: () => context.push('/premium'),
+                  ),
                   Divider(height: 1, color: p.border),
                   const _SettingRow(icon: Icons.info_outline_rounded, title: 'Hakkında'),
                   if (auth.isAuthenticated) ...[

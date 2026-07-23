@@ -8,7 +8,7 @@ phase: `MOBILE_ENGINEERING_DISCIPLINE.md` → this file → `MOBILE_APP_IMPLEMEN
 
 - [x] **Phase 1 — Flutter Foundation & Design System** (2026-07-23) — DONE, CI green, device-validated
 - [x] **Phase 2 — Mobile Auth** (2026-07-23) — DONE, CI green, device-validated (bearer-token auth)
-- [ ] Phase 3 — Content & Learn
+- [x] **Phase 3 — Content & Learn** (2026-07-23) — DONE, CI green, device-validated (offline-first content)
 - [ ] Phase 4 — Practice & Exams
 - [ ] Phase 5 — AI Coach & Notifications
 - [ ] Phase 6 — Progress & Gamification
@@ -164,3 +164,78 @@ sanity via curl beforehand: `register`→201 `{user,token}` (64-hex), `login`→
 ready; auth state is app-wide. Build a content snapshot API + lessons / traffic signs (121 SVG) /
 vehicle / videos screens + offline caching. Reminder: signs are 121 SVGs — plan an asset-bundling +
 offline-cache strategy; do NOT verbatim-import copyrighted MEB/third-party content.
+
+---
+
+## Phase 3 — Content & Learn (2026-07-23)
+
+**Completed:** Offline-first Learn section end-to-end. Backend: `GET /api/mobile/content-snapshot`
+(public, additive) serializes the static content arrays (19 lessons, 121 signs, 70 vehicle parts, 6
+videos) with a deterministic sha256 `version` + ETag/304. Mobile: freezed content models; drift
+(SQLite) offline cache behind a `ContentLocalStore` interface; offline-first `ContentRepository`;
+faithful Dart port of the 121-sign renderer; Lessons/Signs/Vehicle/Videos list+detail screens; nested
+go_router routes; `MarkdownText` for content `**bold**`.
+
+**Architecture decisions:**
+
+- **Content = a single versioned snapshot document**, not per-resource APIs — content is static +
+  non-user-specific, so one cacheable JSON + ETag delta is the correct offline model. (Questions stay
+  separate; they come in Phase 4.)
+- **drift honored as the local DB (rule #10)** but **abstracted behind `ContentLocalStore`** →
+  `flutter test` uses an in-memory fake (no native sqlite on the host/CI); the real drift store is
+  device-validated. Phase 4 extends the SAME `AppDatabase` (`data/local/app_database.dart`) with
+  relational SRS/attempt/exam tables — that is where drift earns its keep.
+- **Signs: reconstruct the exact web SVG string in Dart + flutter_svg**, NOT a hand-rolled CustomPainter
+  — copying the verbatim path `d` data maximizes fidelity and minimizes transcription error. Text
+  (glyphText / `DUR` / `YOL VER`) is overlaid as Flutter widgets because flutter_svg `<text>` is
+  unreliable. Shape foreground: white on disc/rect-blue/rect-green, else dark (matches web `fgFor`).
+- **Codegen files are committed** (freezed/json/drift `*.g.dart`/`*.freezed.dart`) because Mobile CI runs
+  analyze+test+build **without** build_runner. `.gitignore` does not exclude them (verified).
+
+**API decisions:** `GET /api/mobile/content-snapshot` → `{ version, generatedAt, counts, lessons, signs,
+vehicleParts, videos }`; ETag = `"<version>"`; `If-None-Match` match → 304 (empty body). Videos are
+self-hosted under `/videos/*` at the origin; the mobile client resolves relative media paths against
+`AppConfig.apiBaseUrl` (mp4 serves **206** range requests → streaming; posters 200).
+
+**Packages added:** `flutter_svg`, `video_player`, `drift`, `drift_flutter` (+ `sqlite3_flutter_libs`),
+`freezed`/`freezed_annotation`, `json_serializable`/`json_annotation`, dev `build_runner`, `drift_dev`.
+
+**Lessons learned / problems solved:**
+
+- **freezed 3.x syntax**: `@freezed abstract class X with _$X { const factory X({...}) = _X; factory
+X.fromJson(...) => _$XFromJson(...); }`. Enum wire values via `@JsonValue('...')` on constants
+  (Turkish/hyphenated: `'çok yüksek'`, `'inv-triangle'`, `'motor-bolmesi'`).
+- **explicitToJson is OFF by default** → `model.toJson()` leaves nested objects un-serialized until
+  `jsonEncode`. The cache path round-trips via `jsonEncode`/`jsonDecode` (raw network Map), so it is
+  correct; tests must round-trip the same way, not `fromJson(toJson())` directly.
+- **AppCard `accent:` broke inside a scroll view** — a bare `crossAxisAlignment: stretch` Row forces
+  infinite height in an unbounded-height ListView. Fixed by wrapping the accent Row in `IntrinsicHeight`
+  (the standard full-height-accent-bar pattern); only affects the accent path.
+- **Widget-test fold**: off-screen ListView items are disposed → use `scrollUntilVisible` before
+  asserting/tapping below the 800×600 test fold.
+- **Riverpod 3.x**: `AsyncValue.value` (nullable), not `valueOrNull`.
+- **Device validation caught raw `**bold**`** in lesson/sign/vehicle prose (content is markdown-light;
+  the web renders it via `mdBold`). Fixed with a `MarkdownText` primitive applied to all content prose.
+
+**Known limitations / technical debt:**
+
+- Vehicle **photos** not shown on mobile (`photo` is a web asset-manifest id, not a snapshot URL) —
+  detail is text-first (complete). Bundling vehicle photos is a later enhancement.
+- **Scenarios** excluded (Phase 3 scope = lessons/signs/vehicle/videos); available for a later phase.
+- **Pre-existing 5px bottom overflow** on Home "Hızlı işlemler" quick-action cards (Phase 1 screen, not
+  touched here; debug-only banner) → fix in Phase 9 (Final Polish).
+- `hillUp` glyph's embedded `%10` relies on flutter_svg `<text>` (best-effort); the hill shape reads fine.
+
+**Risk register (rolled forward):** IAP/billing (Phase 7) highest; **offline sync correctness now
+partly de-risked** (content snapshot is atomic + versioned; Phase 4 SRS/attempt sync is the harder part);
+golden/CI flakiness (deferred); two-codebase drift (mitigated by shared tokens + shared API contract).
+
+**Device-validation summary (production, rebuilt-from-HEAD APK):** hub counts 19/121/70/6; all sign
+shapes/glyphs/text overlays (incl. `DUR` octagon, `YOL VER` inv-triangle, speed rings, `GÜMRÜK`, Ana Yol
+diamond); search + empty state; sign/lesson/vehicle details (compare table + markdown bold render
+correctly); videos list (posters from prod) + **video player streaming/playing** with seekable chapters.
+
+**For the next phase (Phase 4 — Practice & Exams):** extend `AppDatabase` with drift tables for SRS
+scheduling, per-question attempts, and exam sessions; add an exam-build API; build SRS practice, a
+50-question exam runner, collections, and historical exams — offline. The question bank (~1562 Qs) is
+separate from the content snapshot; decide bundle-vs-fetch for questions (they are static + large).

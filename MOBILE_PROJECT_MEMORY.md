@@ -13,7 +13,7 @@ phase: `MOBILE_ENGINEERING_DISCIPLINE.md` → this file → `MOBILE_APP_IMPLEMEN
 - [x] **Phase 5 — AI Coach & Notifications** (2026-07-23) — DONE, CI green, device-validated (nudges + grounded chat + local notif)
 - [x] **Phase 6 — Progress & Gamification** (2026-07-23) — DONE, CI green, device-validated (XP/radar/heatmap/badges + bound Home)
 - [x] **Phase 7 — Premium (IAP)** (2026-07-24) — DONE, CI green, device-validated (paywall + gating + quotas; real Play purchase store-gated)
-- [ ] Phase 8 — Onboarding & Launch Prep
+- [x] **Phase 8 — Onboarding & Launch Prep** (2026-07-24) — DONE, CI green, device-validated (onboarding + release build + overflow fix)
 - [ ] Phase 9 — Final Polish & Delight
 
 ## Standing facts (environment / repo)
@@ -475,3 +475,48 @@ RELEASE build (`flutter build apk --release` / appbundle). Release signing needs
 (`android/key.properties` + keystore file) — if absent, document as a partial (debug-signed) like IAP/iOS.
 Also: offline hardening pass (verify all screens degrade gracefully offline), and wire the 5px Home
 overflow fix here or defer to Phase 9. App id `com.ehliyetegitim.ehliyet_akademi`.
+
+---
+
+## Phase 8 — Onboarding & Launch Prep (2026-07-24)
+
+**Completed:** First-run onboarding, Home overflow fix, release build validation, store metadata. No
+backend change.
+
+**Architecture decisions:**
+
+- **Onboarding via a go_router `redirect`** gated on `ea:onboardingSeen:v1`. The seen-flag is read
+  SYNCHRONOUSLY in `main()` (`readOnboardingSeen()`) and injected via
+  `onboardingSeenProvider.overrideWith(() => OnboardingController(seen))` → no intro flash for returning
+  users. `_buildRouter(ref)` now takes `ref` for the redirect (uses `ref.read`, not watch, to avoid router
+  rebuilds). `markSeen()` sets state + persists, then `context.go('/home')`. Route `/onboarding`.
+  `pumpApp` gained an `onboardingSeen` param (default true) so existing tests still boot on Home.
+- **Home 5px overflow (Phase 1 debt) FIXED**: quick-actions `GridView childAspectRatio 0.82 → 0.72`.
+
+**Build/launch facts:**
+
+- **Release APK builds**: `flutter build apk --release` → ~66 MB universal (debug-signed; fonts
+  tree-shaken 99%). Debug ~205 MB. Play artifact = `flutter build appbundle` (per-device ~20-25 MB).
+- **Production signing needs a keystore** (`android/key.properties` + `.jks`) — ABSENT here → documented
+  partial (like IAP/iOS). `STORE_LISTING.md` has the Play metadata + go-live checklist (5 managed product
+  ids `premium_teori`/…/`komple_b`, `GOOGLE_PLAY_SA_JSON`, keystore, 512² icon, feature graphic, privacy
+  URL).
+
+**Lessons learned:** installing a release APK over a debug one works only because release uses the debug
+signingConfig (same key). `adb shell pm clear <pkg>` resets `ea:onboardingSeen:v1` → true first-run test.
+
+**Known limitations / technical debt:** store signing/upload untestable here (keystore + Play Console).
+iOS/StoreKit N/A. Radar label-overlap (Phase 6) + micro-polish deferred to Phase 9.
+
+**Device-validation summary (release build, cleared data):** onboarding first slide → Devam×3 → Başla →
+Home; quick-actions render with NO overflow (fix confirmed); fresh Home shows welcome nudge + plan.
+
+**For the FINAL phase (Phase 9 — Final Polish & Delight):** a senior pre-launch review pass, NOT new
+features. Sweep: (1) micro-interactions/animation consistency (AppMotion curves), (2) every empty/error/
+loading state, (3) offline hardening — verify all screens degrade gracefully with no network (content +
+question repos are offline-first; check coach/paywall/entitlements handle offline), (4) accessibility —
+tap-target sizes, contrast in light+dark, Semantics labels for icon-only buttons, (5) fix the radar
+axis-label overlap (`readiness_radar.dart` label offset at sparse data), (6) final consistency check
+across all screens. Then generate a COMPREHENSIVE FINAL implementation report summarizing the entire
+mobile transformation (all 9 phases, architecture, testing, CI/CD, device validation, limitations, launch
+readiness) — the user explicitly requested this at 100%.

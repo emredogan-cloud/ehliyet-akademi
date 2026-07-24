@@ -95,7 +95,8 @@ export const MOBILE_PRODUCTS: Product[] = [
     id: 'komple-ehliyet',
     title: 'Komple Ehliyet Paketi',
     priceTRY: 399,
-    blurb: 'Tüm dersler, sınırsız deneme, sınırsız AI Koç ve premium içerik — tek pakette, ömür boyu.',
+    blurb:
+      'Tüm dersler, sınırsız deneme, sınırsız AI Koç ve premium içerik — tek pakette, ömür boyu.',
     features: [
       'Tüm konulara sınırsız erişim',
       'Sınırsız deneme sınavı',

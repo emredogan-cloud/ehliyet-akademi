@@ -552,3 +552,53 @@ Bearer auth, `/api/mobile/content-snapshot`, `/api/mobile/question-bank`, `/api/
 shared_preferences, flutter_svg, video_player, drift/drift_flutter, freezed/json_serializable,
 flutter_local_notifications, timezone, in_app_purchase. Release APK ~66 MB (debug-signed). To ship:
 keystore + Play Console 5 managed products + `GOOGLE_PLAY_SA_JSON` + store assets (see STORE_LISTING.md).
+
+---
+
+## UI Redesign & Monetization Sprint (2026-07-24) — post-roadmap update
+
+**Completed:** New visual identity + personalization onboarding + single-product premium, on the SAME
+architecture (no new architecture). Device-validated on `AYXSUKIVJVPZ7HPZ`. Report:
+`MOBILE_UI_REDESIGN_REPORT.md`.
+
+- **Icon/splash/theme:** adaptive launcher icon from `apps/assets/app_icon.png` (keyed emblem foreground on
+  navy background layer; `mipmap-anydpi-v26` + legacy + round, all densities); branded navy splash (no
+  white flash); **dark mode is now the default** (`ThemeModeController.build()→dark`, still switchable +
+  persisted). App label "Ehliyet Akademi".
+- **Assets:** the 21 `apps/assets/interface-assets/` PNGs (~40MB) → background-keyed transparent **WebP**
+  (corner flood-fill via ImageMagick `-floodfill`, fuzz ~13-16%, preserves neon glow), 1.6MB total under
+  `apps/mobile/assets/img/`, catalogued in `lib/core/assets.dart` (`AppImages`). Large design refs +
+  PDFs git-ignored.
+- **Onboarding = personalization:** `domain/onboarding/study_profile.dart` (`StudyProfile` +
+  LicenceCategory/ExamExperience/ExamFocus/ExamTimeframe enums; persisted `ea:studyProfile:v1`; read sync
+  in main() + provider override like onboardingSeen). 6-slide flow in
+  `features/onboarding/onboarding_screen.dart` using **PageView.builder** (NOT AnimatedSwitcher —
+  AnimatedSwitcher fed unbounded height to `Expanded` slides; PageView.builder gives tight bounded
+  constraints + is lazy so tests see one page). `profile.sessionSize` (dailyGoal.clamp(10,25)) drives the
+  SRS runner + Home plan text; coach auto-injects a profile context string into `/api/ai/ask`.
+- **Design system:** new `design/brand.dart` (BrandMark steering-wheel painter, GradientPillButton
+  teal+gold, MascotImage, IconBadge, GlowCard, SegmentBar, BrandChip, HubHeader, HubRow); shared
+  `features/practice/widgets/result_view.dart` (SessionResultView); enhanced `question_view.dart`
+  OptionTile (filled badge + trailing radio/check/X). Added `purple` token to AppPalette (light+dark).
+- **Premium:** ONE product `komple-ehliyet` "Komple Ehliyet Paketi" @ **399₺** (all caps) in mobile
+  `domain/premium/products.dart` (+ `isPremium`, `canAccessVideo` first-free). Backend additive:
+  `MOBILE_PRODUCTS` + `anyProductById()` in `apps/web/lib/products.ts`; `/api/iap/validate` uses it — web
+  PRODUCTS/paywall/tests UNCHANGED (new integration test for komple-ehliyet). New
+  `domain/premium/premium_prompt.dart` (pure `shouldPromptPremium`: not-premium + 24h cooldown +
+  lifetime cap 6; cooldown only applies if lastShownMs>0). `features/premium/premium_popups.dart`
+  (incentive gold-lock + success wheel-check dialogs). Redesigned paywall. Triggers wired: first exam
+  (exam runner finish), engagement (SRS done), aiQuota (coach), examQuota (practice hub), video/lesson
+  lock — all via `maybeShowPremiumIncentive(nowMs:)` (capped) or `showPremiumIncentive` (explicit taps).
+- **Screens redesigned:** Home, Learn hub, Practice hub, Collections, Historical, Exam runner, SRS runner,
+  Session result, Coach, Profile, Paywall, Videos (premium lock). All owl-mascot heroes + GlowCards.
+
+**Gotchas learned:** (1) redesigned screens are TALLER (owl heroes) → last hub rows / moved logout row go
+below the 800×600 test fold → tests need `ensureVisible`/`dragUntilVisible` before tapping; lazy ListView
+disposes off-screen children so after scrolling down, scroll back up to assert top widgets. (2) `Row` with
+`crossAxisAlignment.stretch` inside a vertical scroll view = infinite-height children → wrap in
+`IntrinsicHeight`. (3) premium popup auto-fires over exam/SRS result → premium-owned test users avoid it.
+(4) ImageMagick 6: use the `-floodfill` OPERATOR (not `-draw matte`, and no `%[fx:]` inside -draw).
+
+**Tests:** flutter analyze 0 · flutter test **85** · web typecheck 0 · web **336**. Device-validated:
+icon/splash/dark, full onboarding (personalized "20 soru" on Home), all tabs, SRS feedback + result,
+premium incentive popup, paywall (₺399), video premium lock, exam runner.

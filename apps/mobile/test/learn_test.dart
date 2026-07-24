@@ -93,6 +93,8 @@ void main() {
   testWidgets('videos list separates available and planned', (tester) async {
     await pumpApp(tester);
     await _openLearn(tester);
+    await tester.ensureVisible(find.text('Videolar'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Videolar'));
     await tester.pumpAndSettle();
 

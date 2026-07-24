@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../data/practice/progress_repository.dart';
-import '../../design/app_card.dart';
+import '../../design/brand.dart';
 import '../../design/primitives.dart';
 import '../../domain/content/content_enums.dart';
 import '../../domain/practice/collections.dart';
@@ -15,8 +15,11 @@ import '../../domain/practice/historical.dart';
 import '../../domain/practice/question.dart';
 import '../../domain/practice/question_bank.dart';
 import '../../domain/practice/srs.dart';
+import '../../domain/premium/premium_prompt.dart';
+import '../premium/premium_popups.dart';
 import 'widgets/bank_scope.dart';
 import 'widgets/question_view.dart';
+import 'widgets/result_view.dart';
 
 enum ExamSource { standard, collection, historical }
 
@@ -35,8 +38,10 @@ class ExamRunnerScreen extends ConsumerStatefulWidget {
 class _ExamRunnerScreenState extends ConsumerState<ExamRunnerScreen> {
   BuiltExam? _exam;
   late List<int?> _answers;
+  final Set<int> _flagged = {};
   int _current = 0;
   int _secondsLeft = 0;
+  int _elapsed = 0;
   Timer? _timer;
   bool _finished = false;
   ExamResult? _result;
@@ -88,6 +93,7 @@ class _ExamRunnerScreenState extends ConsumerState<ExamRunnerScreen> {
   void _finish() {
     _timer?.cancel();
     final exam = _exam!;
+    _elapsed = exam.durationSeconds - _secondsLeft;
     final result = scoreExam(exam.questions, _answers, exam.passCorrect);
     final progress = ref.read(progressRepositoryProvider).value;
     if (progress != null) {
@@ -109,6 +115,13 @@ class _ExamRunnerScreenState extends ConsumerState<ExamRunnerScreen> {
     setState(() {
       _finished = true;
       _result = result;
+    });
+    // Deneme tamamlandı → bağlamsal premium teşviki (sık-gösterim sınırlı).
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        maybeShowPremiumIncentive(context, ref, PremiumTrigger.firstExam,
+            nowMs: DateTime.now().millisecondsSinceEpoch);
+      }
     });
   }
 
@@ -134,8 +147,22 @@ class _ExamRunnerScreenState extends ConsumerState<ExamRunnerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final p = context.palette;
     return Scaffold(
-      appBar: AppBar(title: Text(widget.titleText ?? 'Deneme Sınavı')),
+      appBar: AppBar(
+        title: Text(widget.titleText ?? 'Deneme Sınavı'),
+        actions: [
+          if (_exam != null && !_finished)
+            Padding(
+              padding: const EdgeInsets.only(right: AppSpacing.s3),
+              child: TextButton.icon(
+                onPressed: _confirmFinish,
+                icon: Icon(Icons.assignment_turned_in_outlined, size: 18, color: p.red),
+                label: Text('Sınavı Bitir', style: TextStyle(color: p.red, fontWeight: FontWeight.w700)),
+              ),
+            ),
+        ],
+      ),
       body: SafeArea(
         top: false,
         child: PracticeContentBuilder(
@@ -145,10 +172,35 @@ class _ExamRunnerScreenState extends ConsumerState<ExamRunnerScreen> {
             if (exam.questions.isEmpty) {
               return const AppEmptyState(emoji: '🗂️', title: 'Bu set için soru bulunamadı');
             }
-            return _finished ? _ResultView(exam: exam, result: _result!) : _running(exam);
+            return _finished ? _resultView(exam, _result!) : _running(exam);
           },
         ),
       ),
+    );
+  }
+
+  Widget _resultView(BuiltExam exam, ExamResult result) {
+    final p = context.palette;
+    final pct = result.total == 0 ? 0 : (result.correct / result.total * 100).round();
+    final passed = result.passed;
+    final color = passed ? p.green : p.red;
+    return SessionResultView(
+      title: passed ? 'Tebrikler, geçtin! 🎉' : 'Bu sefer olmadı',
+      subtitle: passed
+          ? 'Baraj ${exam.passCorrect} doğru — sınav için hazırsın.'
+          : 'Baraj ${exam.passCorrect} doğru. Zayıf konulara odaklan, tekrar dene.',
+      percent: pct,
+      accent: color,
+      stats: [
+        ResultStat(icon: Icons.check_circle_rounded, color: p.green, value: '${result.correct}', label: 'Doğru'),
+        ResultStat(icon: Icons.cancel_rounded, color: p.red, value: '${result.wrong}', label: 'Yanlış'),
+        ResultStat(icon: Icons.schedule_rounded, color: p.purple, value: _fmt(_elapsed), label: 'Süre'),
+      ],
+      extra: _SubjectCard(scores: result.perSubject),
+      actions: [
+        ResultAction(label: 'Bitir', icon: Icons.check_rounded, primary: true, onTap: () => context.pop()),
+        ResultAction(label: 'Ana sayfaya dön', icon: Icons.home_rounded, onTap: () => context.go('/home')),
+      ],
     );
   }
 
@@ -159,37 +211,60 @@ class _ExamRunnerScreenState extends ConsumerState<ExamRunnerScreen> {
     final timeLow = _secondsLeft <= 60;
     return Column(
       children: [
-        // Zamanlayıcı + ilerleme
-        Container(
-          padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s2, AppSpacing.s4, AppSpacing.s2),
-          child: Row(
-            children: [
-              Icon(Icons.timer_outlined, size: 18, color: timeLow ? p.red : p.text2),
-              const SizedBox(width: 6),
-              Text(
-                _fmt(_secondsLeft),
-                style: TextStyle(
-                  fontWeight: FontWeight.w800,
-                  fontSize: 15,
-                  color: timeLow ? p.red : p.text,
-                  fontFeatures: const [FontFeature.tabularFigures()],
+        // Zamanlayıcı + ilerleme kartı
+        Padding(
+          padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s3, AppSpacing.s4, AppSpacing.s2),
+          child: GlowCard(
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4, vertical: AppSpacing.s3),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.timer_outlined, size: 26, color: timeLow ? p.red : p.primary),
+                    const SizedBox(width: AppSpacing.s2),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          _fmt(_secondsLeft),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 20,
+                            color: timeLow ? p.red : p.text,
+                            fontFeatures: const [FontFeature.tabularFigures()],
+                          ),
+                        ),
+                        Text('Kalan süre', style: TextStyle(color: p.text3, fontSize: 11)),
+                      ],
+                    ),
+                    const Spacer(),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text('$answeredCount / ${exam.questions.length}',
+                            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20, color: p.primary)),
+                        Text('yanıtlandı', style: TextStyle(color: p.text3, fontSize: 11)),
+                      ],
+                    ),
+                  ],
                 ),
-              ),
-              const Spacer(),
-              Text('$answeredCount/${exam.questions.length} yanıtlandı',
-                  style: TextStyle(color: p.text3, fontSize: 12.5, fontWeight: FontWeight.w600)),
-            ],
+                const SizedBox(height: AppSpacing.s3),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(AppRadii.pill),
+                  child: LinearProgressIndicator(
+                    value: exam.questions.isEmpty ? 0 : answeredCount / exam.questions.length,
+                    minHeight: 6,
+                    backgroundColor: p.surface3,
+                    color: p.primary,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        LinearProgressIndicator(
-          value: exam.questions.isEmpty ? 0 : answeredCount / exam.questions.length,
-          minHeight: 3,
-          backgroundColor: p.surface3,
-          color: p.primary,
         ),
         // Soru haritası (yatay şerit)
         SizedBox(
-          height: 44,
+          height: 48,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4, vertical: AppSpacing.s2),
@@ -198,6 +273,7 @@ class _ExamRunnerScreenState extends ConsumerState<ExamRunnerScreen> {
               number: i + 1,
               current: i == _current,
               answered: _answers[i] != null,
+              flagged: _flagged.contains(i),
               onTap: () => setState(() => _current = i),
             ),
           ),
@@ -227,24 +303,30 @@ class _ExamRunnerScreenState extends ConsumerState<ExamRunnerScreen> {
           ),
           child: Row(
             children: [
-              OutlinedButton.icon(
-                onPressed: _current > 0 ? () => setState(() => _current -= 1) : null,
-                icon: const Icon(Icons.chevron_left_rounded, size: 20),
-                label: const Text('Önceki'),
-              ),
-              const Spacer(),
-              if (_current < exam.questions.length - 1)
-                FilledButton.icon(
-                  onPressed: () => setState(() => _current += 1),
-                  icon: const Icon(Icons.chevron_right_rounded, size: 20),
-                  label: const Text('Sonraki'),
-                )
-              else
-                FilledButton.icon(
-                  onPressed: _confirmFinish,
-                  icon: const Icon(Icons.flag_rounded, size: 18),
-                  label: const Text('Bitir'),
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: _current > 0 ? () => setState(() => _current -= 1) : null,
+                  icon: const Icon(Icons.chevron_left_rounded, size: 20),
+                  label: const Text('Önceki'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: p.text,
+                    side: BorderSide(color: p.border),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadii.pill)),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                  ),
                 ),
+              ),
+              _FlagButton(
+                flagged: _flagged.contains(_current),
+                onTap: () => setState(() {
+                  _flagged.contains(_current) ? _flagged.remove(_current) : _flagged.add(_current);
+                }),
+              ),
+              Expanded(
+                child: _current < exam.questions.length - 1
+                    ? _NextButton(label: 'Sonraki', icon: Icons.chevron_right_rounded, onTap: () => setState(() => _current += 1))
+                    : _NextButton(label: 'Bitir', icon: Icons.flag_rounded, onTap: _confirmFinish),
+              ),
             ],
           ),
         ),
@@ -259,11 +341,79 @@ class _ExamRunnerScreenState extends ConsumerState<ExamRunnerScreen> {
   }
 }
 
+class _FlagButton extends StatelessWidget {
+  const _FlagButton({required this.flagged, required this.onTap});
+  final bool flagged;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.palette;
+    final c = flagged ? p.accent : p.text3;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s3),
+      child: InkResponse(
+        onTap: onTap,
+        radius: 32,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(flagged ? Icons.bookmark_rounded : Icons.bookmark_border_rounded, color: c, size: 24),
+            Text('İşaretle', style: TextStyle(color: c, fontSize: 10.5, fontWeight: FontWeight.w600)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _NextButton extends StatelessWidget {
+  const _NextButton({required this.label, required this.icon, required this.onTap});
+  final String label;
+  final IconData icon;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.palette;
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(AppRadii.pill),
+        child: Ink(
+          height: 50,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(colors: [p.primary, p.primaryBright]),
+            borderRadius: BorderRadius.circular(AppRadii.pill),
+            boxShadow: [BoxShadow(color: p.primary.withValues(alpha: 0.35), blurRadius: 18, spreadRadius: -4, offset: const Offset(0, 6))],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(label, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 15)),
+              const SizedBox(width: 4),
+              Icon(icon, color: Colors.white, size: 20),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _MapDot extends StatelessWidget {
-  const _MapDot({required this.number, required this.current, required this.answered, required this.onTap});
+  const _MapDot({
+    required this.number,
+    required this.current,
+    required this.answered,
+    required this.flagged,
+    required this.onTap,
+  });
   final int number;
   final bool current;
   final bool answered;
+  final bool flagged;
   final VoidCallback onTap;
 
   @override
@@ -272,125 +422,52 @@ class _MapDot extends StatelessWidget {
     final bg = current
         ? p.primary
         : answered
-        ? p.primary050
+        ? p.primary.withValues(alpha: 0.14)
         : p.surface3;
     final fg = current
         ? Colors.white
         : answered
         ? p.primary
         : p.text3;
+    final borderColor = flagged ? p.accent : (current ? p.primary : p.border);
     return Padding(
-      padding: const EdgeInsets.only(right: 6),
-      child: InkWell(
+      padding: const EdgeInsets.only(right: 8),
+      child: InkResponse(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadii.sm),
+        radius: 24,
         child: Container(
-          width: 30,
+          width: 34,
+          height: 34,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: bg,
-            borderRadius: BorderRadius.circular(AppRadii.sm),
-            border: Border.all(color: current ? p.primary : p.border),
+            shape: BoxShape.circle,
+            border: Border.all(color: borderColor, width: flagged || current ? 2 : 1),
+            boxShadow: current ? [BoxShadow(color: p.primary.withValues(alpha: 0.4), blurRadius: 10, spreadRadius: -2)] : null,
           ),
-          child: Text('$number', style: TextStyle(color: fg, fontWeight: FontWeight.w700, fontSize: 12)),
+          child: Text('$number', style: TextStyle(color: fg, fontWeight: FontWeight.w700, fontSize: 12.5)),
         ),
       ),
     );
   }
 }
 
-class _ResultView extends StatelessWidget {
-  const _ResultView({required this.exam, required this.result});
-  final BuiltExam exam;
-  final ExamResult result;
+class _SubjectCard extends StatelessWidget {
+  const _SubjectCard({required this.scores});
+  final List<SubjectScore> scores;
 
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
-    final passed = result.passed;
-    final pct = result.total == 0 ? 0 : (result.correct / result.total * 100).round();
-    final color = passed ? p.green : p.red;
-    return ListView(
-      padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s5, AppSpacing.s4, AppSpacing.s10),
-      children: [
-        Center(
-          child: Column(
-            children: [
-              Container(
-                width: 88,
-                height: 88,
-                decoration: BoxDecoration(color: color.withValues(alpha: 0.12), shape: BoxShape.circle),
-                child: Icon(passed ? Icons.emoji_events_rounded : Icons.refresh_rounded, color: color, size: 44),
-              ),
-              const SizedBox(height: AppSpacing.s3),
-              Text(passed ? 'GEÇTİN 🎉' : 'KALDIN',
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.w800, color: color)),
-              const SizedBox(height: 4),
-              Text('Baraj ${exam.passCorrect} doğru · ${result.correct}/${result.total} doğru',
-                  style: TextStyle(color: p.text3, fontSize: 13)),
-              if (!exam.fullBlueprint)
-                Padding(
-                  padding: const EdgeInsets.only(top: 6),
-                  child: Text('(kısaltılmış deneme)', style: TextStyle(color: p.text3, fontSize: 11.5)),
-                ),
-            ],
-          ),
-        ),
-        const SizedBox(height: AppSpacing.s5),
-        Row(
-          children: [
-            _Stat(label: 'Başarı', value: '%$pct', color: color),
-            _Stat(label: 'Doğru', value: '${result.correct}', color: p.green),
-            _Stat(label: 'Yanlış', value: '${result.wrong}', color: p.red),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.s4),
-        AppCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Ders bazında', style: TextStyle(fontWeight: FontWeight.w700, color: p.text)),
-              const SizedBox(height: AppSpacing.s3),
-              for (final s in result.perSubject) _SubjectBar(score: s),
-            ],
-          ),
-        ),
-        const SizedBox(height: AppSpacing.s5),
-        FilledButton.icon(
-          onPressed: () => context.pop(),
-          icon: const Icon(Icons.check_rounded, size: 18),
-          label: const Text('Bitir'),
-        ),
-      ],
-    );
-  }
-}
-
-class _Stat extends StatelessWidget {
-  const _Stat({required this.label, required this.value, required this.color});
-  final String label;
-  final String value;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    final p = context.palette;
-    return Expanded(
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 4),
-        padding: const EdgeInsets.symmetric(vertical: AppSpacing.s4),
-        decoration: BoxDecoration(
-          color: p.surface,
-          borderRadius: BorderRadius.circular(AppRadii.base),
-          border: Border.all(color: p.border),
-        ),
-        child: Column(
-          children: [
-            Text(value, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: color)),
-            const SizedBox(height: 2),
-            Text(label, style: TextStyle(fontSize: 12, color: p.text3)),
-          ],
-        ),
+    return GlowCard(
+      padding: const EdgeInsets.all(AppSpacing.s4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Ders bazında', style: TextStyle(fontWeight: FontWeight.w800, color: p.text)),
+          const SizedBox(height: AppSpacing.s3),
+          for (final s in scores) _SubjectBar(score: s),
+        ],
       ),
     );
   }

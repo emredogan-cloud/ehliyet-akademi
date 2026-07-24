@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/config.dart';
 import '../../core/theme/tokens.dart';
+import '../../data/premium/entitlements_repository.dart';
 import '../../design/app_card.dart';
 import '../../design/primitives.dart';
 import '../../domain/content/video_content.dart';
+import '../../domain/premium/premium_prompt.dart';
+import '../../domain/premium/products.dart';
+import '../premium/premium_popups.dart';
 import 'widgets/content_scope.dart';
 
 /// Göreli medya yolunu (ör. `/videos/x.mp4`) API tabanına göre mutlak URL'ye çevirir.
@@ -15,12 +20,14 @@ String absoluteMediaUrl(String path) {
   return '$base$path';
 }
 
-/// Videolar — oynatılabilir (available) ve yakında (planned) ayrımıyla dürüst liste.
-class VideosScreen extends StatelessWidget {
+/// Videolar — oynatılabilir (available) ve yakında (planned) ayrımıyla dürüst liste. İlk video
+/// ücretsiz önizleme; diğer videolar premium (Komple Ehliyet Paketi ile açılır).
+class VideosScreen extends ConsumerWidget {
   const VideosScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final premium = isPremium(ref.watch(entitlementsProvider));
     return Scaffold(
       appBar: AppBar(title: const Text('Videolar')),
       body: SafeArea(
@@ -30,24 +37,22 @@ class VideosScreen extends StatelessWidget {
             final available = snapshot.videos.where((v) => v.isAvailable).toList();
             final planned = snapshot.videos.where((v) => !v.isAvailable).toList();
             return ListView(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.s4,
-                AppSpacing.s2,
-                AppSpacing.s4,
-                AppSpacing.s10,
-              ),
+              padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s2, AppSpacing.s4, AppSpacing.s10),
               children: [
                 if (available.isNotEmpty) ...[
                   const SectionTitle('İzlenebilir'),
-                  for (final v in available) ...[
-                    _VideoCard(video: v),
+                  for (var i = 0; i < available.length; i++) ...[
+                    _VideoCard(
+                      video: available[i],
+                      locked: !canAccessVideo(index: i, owned: premium ? const [kPremiumProductId] : const []),
+                    ),
                     const SizedBox(height: AppSpacing.s3),
                   ],
                 ],
                 if (planned.isNotEmpty) ...[
                   const SectionTitle('Yakında'),
                   for (final v in planned) ...[
-                    _VideoCard(video: v),
+                    _VideoCard(video: v, locked: false),
                     const SizedBox(height: AppSpacing.s3),
                   ],
                 ],
@@ -61,15 +66,20 @@ class VideosScreen extends StatelessWidget {
 }
 
 class _VideoCard extends StatelessWidget {
-  const _VideoCard({required this.video});
+  const _VideoCard({required this.video, required this.locked});
   final VideoContent video;
+  final bool locked;
 
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
     final available = video.isAvailable;
     return AppCard(
-      onTap: available ? () => context.push('/learn/videos/${video.id}') : null,
+      onTap: !available
+          ? null
+          : locked
+              ? () => showPremiumIncentive(context, trigger: PremiumTrigger.videoLocked)
+              : () => context.push('/learn/videos/${video.id}'),
       padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,7 +88,7 @@ class _VideoCard extends StatelessWidget {
             aspectRatio: 16 / 9,
             child: ClipRRect(
               borderRadius: const BorderRadius.vertical(top: Radius.circular(AppRadii.base)),
-              child: _Thumb(video: video, available: available),
+              child: _Thumb(video: video, available: available, locked: locked),
             ),
           ),
           Padding(
@@ -104,13 +114,15 @@ class _VideoCard extends StatelessWidget {
 }
 
 class _Thumb extends StatelessWidget {
-  const _Thumb({required this.video, required this.available});
+  const _Thumb({required this.video, required this.available, required this.locked});
   final VideoContent video;
   final bool available;
+  final bool locked;
 
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
+    const gold = Color(0xFFF5A623);
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -130,6 +142,7 @@ class _Thumb extends StatelessWidget {
               ),
             ),
           ),
+        if (locked) Container(color: Colors.black.withValues(alpha: 0.5)),
         Center(
           child: Container(
             padding: const EdgeInsets.all(AppSpacing.s3),
@@ -138,8 +151,12 @@ class _Thumb extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             child: Icon(
-              available ? Icons.play_arrow_rounded : Icons.lock_clock_rounded,
-              color: Colors.white,
+              !available
+                  ? Icons.lock_clock_rounded
+                  : locked
+                      ? Icons.lock_rounded
+                      : Icons.play_arrow_rounded,
+              color: locked ? gold : Colors.white,
               size: 30,
             ),
           ),
@@ -150,11 +167,11 @@ class _Thumb extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s2, vertical: 3),
             decoration: BoxDecoration(
-              color: (available ? p.green : p.text3).withValues(alpha: 0.9),
+              color: (!available ? p.text3 : locked ? gold : p.green).withValues(alpha: 0.95),
               borderRadius: BorderRadius.circular(AppRadii.sm),
             ),
             child: Text(
-              available ? 'İZLE' : 'YAKINDA',
+              !available ? 'YAKINDA' : locked ? 'PREMIUM' : 'İZLE',
               style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 10),
             ),
           ),

@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/assets.dart';
 import '../../core/theme/theme_controller.dart';
 import '../../core/theme/tokens.dart';
-import '../../design/app_card.dart';
+import '../../data/practice/progress_repository.dart';
+import '../../design/brand.dart';
 import '../../design/primitives.dart';
 import '../../domain/auth/auth_controller.dart';
+import '../../domain/practice/srs.dart';
+import '../../domain/progress/gamification.dart';
 
-/// Profil — profile header (bound to auth) + settings. The theme toggle is a real feature.
+/// Profil — profil başlığı (auth'a bağlı) + istatistikler + ayarlar. Tema geçişi gerçek bir özellik.
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
 
@@ -17,124 +21,256 @@ class ProfileScreen extends ConsumerWidget {
     final p = context.palette;
     final mode = ref.watch(themeModeProvider);
     final auth = ref.watch(authControllerProvider);
+    final progress = ref.watch(progressRepositoryProvider).value;
     final platformDark = MediaQuery.platformBrightnessOf(context) == Brightness.dark;
     final isDark = mode == ThemeMode.dark || (mode == ThemeMode.system && platformDark);
 
+    final answers = progress?.loadAnswers() ?? const [];
+    final streak = progress?.loadStreak() ?? StreakState.empty;
+    final badges = computeAchievements(answers: answers, streak: streak, examsFinished: progress?.examsFinished() ?? 0)
+        .where((a) => a.unlocked)
+        .length;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Profil')),
+      appBar: AppBar(
+        title: const Text('Profil'),
+        actions: [
+          IconButton(
+            onPressed: () => context.push('/notifications'),
+            tooltip: 'Ayarlar',
+            icon: Icon(Icons.settings_outlined, color: p.text2),
+          ),
+        ],
+      ),
       body: SafeArea(
         top: false,
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.s4,
-            AppSpacing.s2,
-            AppSpacing.s4,
-            AppSpacing.s10,
-          ),
+          padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s2, AppSpacing.s4, AppSpacing.s10),
           children: [
-            _ProfileHeader(auth: auth),
+            _ProfileHeader(auth: auth, badges: badges, answered: answers.length, streakDays: streak.current),
             SectionTitle('Ayarlar'),
-            AppCard(
-              padding: EdgeInsets.zero,
+            GlowCard(
+              padding: const EdgeInsets.symmetric(vertical: 4),
               child: Column(
                 children: [
-                  SwitchListTile(
+                  _ToggleRow(
+                    icon: Icons.dark_mode_rounded,
+                    color: p.primary,
+                    title: 'Koyu tema',
+                    subtitle: 'Uygulama temasını değiştir',
                     value: isDark,
-                    onChanged: (_) => ref
-                        .read(themeModeProvider.notifier)
-                        .toggle(MediaQuery.platformBrightnessOf(context)),
-                    secondary: Icon(isDark ? Icons.dark_mode_rounded : Icons.light_mode_rounded,
-                        color: p.primary),
-                    title: const Text('Koyu tema'),
-                    activeThumbColor: p.primary,
-                    contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4),
+                    onChanged: (_) =>
+                        ref.read(themeModeProvider.notifier).toggle(MediaQuery.platformBrightnessOf(context)),
                   ),
-                  Divider(height: 1, color: p.border),
+                  _divider(p),
                   _SettingRow(
-                    icon: Icons.notifications_outlined,
+                    icon: Icons.notifications_rounded,
+                    color: p.purple,
                     title: 'Bildirimler',
+                    subtitle: 'Bildirim tercihlerini yönet',
                     onTap: () => context.push('/notifications'),
                   ),
-                  Divider(height: 1, color: p.border),
+                  _divider(p),
                   _SettingRow(
-                    icon: Icons.workspace_premium_outlined,
+                    icon: Icons.workspace_premium_rounded,
+                    color: p.accent,
                     title: 'Premium',
+                    subtitle: 'Premium özellikleri keşfet',
                     onTap: () => context.push('/premium'),
                   ),
-                  Divider(height: 1, color: p.border),
-                  const _SettingRow(icon: Icons.info_outline_rounded, title: 'Hakkında'),
+                  _divider(p),
+                  _SettingRow(
+                    icon: Icons.info_outline_rounded,
+                    color: p.blue,
+                    title: 'Hakkında',
+                    subtitle: 'Uygulama hakkında bilgi al',
+                    onTap: () => _showAbout(context),
+                  ),
                   if (auth.isAuthenticated) ...[
-                    Divider(height: 1, color: p.border),
-                    ListTile(
-                      leading: Icon(Icons.logout_rounded, color: p.red),
-                      title: Text('Çıkış yap', style: TextStyle(color: p.red)),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4),
+                    _divider(p),
+                    _SettingRow(
+                      icon: Icons.logout_rounded,
+                      color: p.red,
+                      title: 'Çıkış yap',
+                      subtitle: 'Hesabından güvenle çık',
                       onTap: () => ref.read(authControllerProvider.notifier).logout(),
                     ),
                   ],
                 ],
               ),
             ),
-            const SizedBox(height: AppSpacing.s6),
+            const SizedBox(height: AppSpacing.s5),
+            _PromoCard(),
+            const SizedBox(height: AppSpacing.s5),
             Center(
-              child: Text('Ehliyet Akademi · v1.0 (geliştirme)',
-                  style: TextStyle(color: p.text3, fontSize: 12)),
+              child: Text('Ehliyet Akademi · v1.0 (geliştirme)', style: TextStyle(color: p.text3, fontSize: 12)),
             ),
           ],
         ),
       ),
     );
   }
+
+  static Widget _divider(AppPalette p) =>
+      Padding(padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4), child: Divider(height: 1, color: p.border));
+
+  static void _showAbout(BuildContext context) {
+    showAboutDialog(
+      context: context,
+      applicationName: 'Ehliyet Akademi',
+      applicationVersion: 'v1.0 (geliştirme)',
+      applicationLegalese: 'B sınıfı ehliyet sınavına akıllı, kişisel ve çevrimdışı hazırlık.\n'
+          'Kesin ve güncel kural için MEB/MTSK esastır.',
+    );
+  }
 }
 
 class _ProfileHeader extends StatelessWidget {
-  const _ProfileHeader({required this.auth});
+  const _ProfileHeader({required this.auth, required this.badges, required this.answered, required this.streakDays});
   final AuthState auth;
+  final int badges;
+  final int answered;
+  final int streakDays;
 
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
     final user = auth.user;
     final authed = auth.isAuthenticated && user != null;
-    return AppCard(
-      child: Column(
+    return GlowCard(
+      selected: true,
+      padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s4, 0, AppSpacing.s4),
+      child: Row(
         children: [
-          Row(
-            children: [
-              CircleAvatar(
-                radius: 28,
-                backgroundColor: p.primary.withValues(alpha: 0.16),
-                child: Text(authed ? user.initials : 'EA',
-                    style: TextStyle(color: p.primary, fontWeight: FontWeight.w800, fontSize: 18)),
-              ),
-              const SizedBox(width: AppSpacing.s4),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
-                    Text(authed ? user.name : 'Misafir',
-                        style: Theme.of(context).textTheme.titleMedium),
-                    const SizedBox(height: 2),
-                    Text(
-                      authed ? user.email : 'Giriş yaparak ilerlemeni kaydet',
-                      style: TextStyle(color: p.text3, fontSize: 12.5),
-                      overflow: TextOverflow.ellipsis,
+                    Container(
+                      width: 56,
+                      height: 56,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: p.primary.withValues(alpha: 0.16),
+                        border: Border.all(color: p.primary.withValues(alpha: 0.4)),
+                      ),
+                      child: Text(authed ? user.initials : 'EA',
+                          style: TextStyle(color: p.primary, fontWeight: FontWeight.w800, fontSize: 18)),
+                    ),
+                    const SizedBox(width: AppSpacing.s3),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(authed ? user.name : 'Misafir', style: Theme.of(context).textTheme.titleLarge),
+                          const SizedBox(height: 2),
+                          Text(
+                            authed ? user.email : 'Giriş yaparak ilerlemeni kaydet',
+                            style: TextStyle(color: p.text3, fontSize: 12.5),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
-              ),
+                const SizedBox(height: AppSpacing.s4),
+                Row(
+                  children: [
+                    _MiniStat(icon: Icons.emoji_events_rounded, value: '$badges', label: 'Rozet', color: p.accent),
+                    _MiniStat(icon: Icons.trending_up_rounded, value: '$answered', label: 'İlerleme', color: p.primary),
+                    _MiniStat(icon: Icons.local_fire_department_rounded, value: '$streakDays', label: 'Gün', color: p.red),
+                  ],
+                ),
+                if (!authed) ...[
+                  const SizedBox(height: AppSpacing.s4),
+                  Padding(
+                    padding: const EdgeInsets.only(right: AppSpacing.s4),
+                    child: GradientPillButton(
+                      label: 'Giriş yap / Kayıt ol',
+                      height: 50,
+                      leading: const Icon(Icons.login_rounded, color: Colors.white, size: 18),
+                      onPressed: () => context.push('/auth'),
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          MascotImage(AppImages.owlShield, height: 128, semanticLabel: ''),
+        ],
+      ),
+    );
+  }
+}
+
+class _MiniStat extends StatelessWidget {
+  const _MiniStat({required this.icon, required this.value, required this.label, required this.color});
+  final IconData icon;
+  final String value;
+  final String label;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.palette;
+    return Padding(
+      padding: const EdgeInsets.only(right: AppSpacing.s5),
+      child: Row(
+        children: [
+          Icon(icon, color: color, size: 18),
+          const SizedBox(width: 5),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(value, style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: p.text)),
+              Text(label, style: TextStyle(color: p.text3, fontSize: 10.5)),
             ],
           ),
-          if (!authed) ...[
-            const SizedBox(height: AppSpacing.s4),
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton(
-                onPressed: () => context.push('/auth'),
-                child: const Text('Giriş yap / Kayıt ol'),
-              ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ToggleRow extends StatelessWidget {
+  const _ToggleRow({
+    required this.icon,
+    required this.color,
+    required this.title,
+    required this.subtitle,
+    required this.value,
+    required this.onChanged,
+  });
+  final IconData icon;
+  final Color color;
+  final String title;
+  final String subtitle;
+  final bool value;
+  final ValueChanged<bool> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.palette;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4, vertical: AppSpacing.s2),
+      child: Row(
+        children: [
+          IconBadge(icon: icon, color: color, size: 44),
+          const SizedBox(width: AppSpacing.s4),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
+                Text(subtitle, style: TextStyle(color: p.text3, fontSize: 12)),
+              ],
             ),
-          ],
+          ),
+          Switch(value: value, onChanged: onChanged, activeThumbColor: Colors.white, activeTrackColor: p.primary),
         ],
       ),
     );
@@ -142,21 +278,64 @@ class _ProfileHeader extends StatelessWidget {
 }
 
 class _SettingRow extends StatelessWidget {
-  const _SettingRow({required this.icon, required this.title, this.onTap});
+  const _SettingRow({required this.icon, required this.color, required this.title, required this.subtitle, this.onTap});
   final IconData icon;
+  final Color color;
   final String title;
+  final String subtitle;
   final VoidCallback? onTap;
+
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
-    return ListTile(
-      leading: Icon(icon, color: onTap != null ? p.text2 : p.text3),
-      title: Text(title),
-      trailing: Icon(Icons.chevron_right_rounded, color: p.text3),
-      contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4),
-      // Rows without a target stay disabled to avoid dead navigation (arrive in later phases).
-      enabled: onTap != null,
+    return InkWell(
       onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4, vertical: AppSpacing.s3),
+        child: Row(
+          children: [
+            IconBadge(icon: icon, color: color, size: 44),
+            const SizedBox(width: AppSpacing.s4),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
+                  Text(subtitle, style: TextStyle(color: p.text3, fontSize: 12)),
+                ],
+              ),
+            ),
+            Icon(Icons.chevron_right_rounded, color: p.text3),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PromoCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final p = context.palette;
+    return GlowCard(
+      padding: const EdgeInsets.all(AppSpacing.s4),
+      child: Row(
+        children: [
+          const BrandMark(size: 56),
+          const SizedBox(width: AppSpacing.s4),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Ehliyet Akademi', style: Theme.of(context).textTheme.titleMedium),
+                const SizedBox(height: 3),
+                Text('Sürüş bilgini geliştir, sınavlarda bir adım önde ol!',
+                    style: TextStyle(color: p.text2, fontSize: 12.5, height: 1.35)),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

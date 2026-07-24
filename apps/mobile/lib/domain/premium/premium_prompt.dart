@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 enum PremiumTrigger {
   firstExam('İlk deneme sınavını tamamladın! 🎉'),
   aiQuota('Bugünkü ücretsiz AI Koç hakkın doldu.'),
+  examQuota('Günlük ücretsiz deneme hakkın doldu.'),
   achievement('Yeni bir başarı kazandın! 🏆'),
   engagement('Harika gidiyorsun — bir üst seviyeye geç.'),
   lessonLocked('Bu premium içeriğin kilidini aç.'),

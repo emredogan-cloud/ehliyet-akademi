@@ -46,7 +46,7 @@ void main() {
     final appBefore = tester.widget<MaterialApp>(find.byType(MaterialApp));
     expect(appBefore.themeMode, ThemeMode.dark);
 
-    final toggle = find.byType(SwitchListTile);
+    final toggle = find.byType(Switch);
     await tester.ensureVisible(toggle);
     await tester.pumpAndSettle();
     await tester.tap(toggle);

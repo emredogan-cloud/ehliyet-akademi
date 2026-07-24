@@ -331,6 +331,89 @@ class SegmentBar extends StatelessWidget {
   }
 }
 
+/// Hub header — a mascot illustration next to a title + subtitle (Learn / Practice hubs).
+class HubHeader extends StatelessWidget {
+  const HubHeader({super.key, required this.title, required this.subtitle, required this.mascot, this.mascotHeight = 150});
+  final String title;
+  final String subtitle;
+  final String mascot;
+  final double mascotHeight;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.palette;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title, style: Theme.of(context).textTheme.headlineMedium),
+              const SizedBox(height: AppSpacing.s2),
+              Text(subtitle, style: TextStyle(color: p.text2, fontSize: 13.5, height: 1.45)),
+            ],
+          ),
+        ),
+        const SizedBox(width: AppSpacing.s2),
+        MascotImage(mascot, height: mascotHeight, semanticLabel: ''),
+      ],
+    );
+  }
+}
+
+/// Hub row — a large tappable card: colored icon badge + title + subtitle + optional count + chevron.
+class HubRow extends StatelessWidget {
+  const HubRow({
+    super.key,
+    required this.icon,
+    required this.color,
+    required this.title,
+    required this.subtitle,
+    this.count,
+    this.onTap,
+    this.trailing,
+  });
+  final IconData icon;
+  final Color color;
+  final String title;
+  final String subtitle;
+  final String? count;
+  final VoidCallback? onTap;
+  final Widget? trailing;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.palette;
+    return GlowCard(
+      onTap: onTap,
+      padding: const EdgeInsets.all(AppSpacing.s4),
+      child: Row(
+        children: [
+          IconBadge(icon: icon, color: color, size: 54, glow: true),
+          const SizedBox(width: AppSpacing.s4),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16.5)),
+                const SizedBox(height: 3),
+                Text(subtitle, style: TextStyle(color: p.text3, fontSize: 12.5, height: 1.3)),
+              ],
+            ),
+          ),
+          if (count != null) ...[
+            const SizedBox(width: AppSpacing.s2),
+            Text(count!, style: TextStyle(color: p.primary, fontWeight: FontWeight.w900, fontSize: 20)),
+          ],
+          ?trailing,
+          if (onTap != null) Icon(Icons.chevron_right_rounded, color: p.text3),
+        ],
+      ),
+    );
+  }
+}
+
 /// Small pill badge (e.g. "EN POPÜLER", subject tags).
 class BrandChip extends StatelessWidget {
   const BrandChip({super.key, required this.label, this.color, this.icon, this.filled = false});

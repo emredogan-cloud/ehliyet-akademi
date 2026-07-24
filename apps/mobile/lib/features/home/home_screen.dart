@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/assets.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/practice/progress_repository.dart';
-import '../../design/app_card.dart';
-import '../../design/coach_card.dart';
+import '../../design/brand.dart';
 import '../../design/primitives.dart';
 import '../../design/readiness_ring.dart';
 import '../../domain/coach/nudge.dart';
+import '../../domain/onboarding/study_profile.dart';
 import '../../domain/practice/srs.dart';
 import '../../domain/progress/gamification.dart';
 
 /// Home — the app's center, bound to real local progress (readiness, streak, accuracy, a proactive
-/// nudge, today's plan). Falls back to gentle "get started" copy before any practice.
+/// nudge, today's personalized plan). Falls back to gentle "get started" copy before any practice.
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
@@ -21,6 +22,7 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final p = context.palette;
     final progress = ref.watch(progressRepositoryProvider).value;
+    final profile = ref.watch(studyProfileProvider);
     final answers = progress?.loadAnswers() ?? const [];
     final readiness = answers.isNotEmpty ? progress!.readiness() : null;
     final streak = progress?.loadStreak() ?? StreakState.empty;
@@ -45,15 +47,13 @@ class HomeScreen extends ConsumerWidget {
       body: SafeArea(
         bottom: false,
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.s4,
-            AppSpacing.s4,
-            AppSpacing.s4,
-            AppSpacing.s10,
-          ),
+          padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s3, AppSpacing.s4, AppSpacing.s10),
           children: [
+            // Header
             Row(
               children: [
+                const BrandMark(size: 46),
+                const SizedBox(width: AppSpacing.s3),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,28 +64,26 @@ class HomeScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-                if (streak.current > 0) _StreakChip(days: streak.current),
+                _NotificationBell(hasNudge: topNudge != null, onTap: () => context.push('/notifications')),
               ],
             ),
-            const SizedBox(height: AppSpacing.s5),
+            const SizedBox(height: AppSpacing.s4),
 
-            // Readiness + summary → tap for the full progress screen.
-            AppCard(
+            // Readiness summary → full progress screen
+            GlowCard(
               onTap: () => context.push('/progress'),
+              padding: const EdgeInsets.all(AppSpacing.s4),
               child: Row(
                 children: [
                   ReadinessRing(value: (readiness?.overall ?? 0) / 100),
-                  const SizedBox(width: AppSpacing.s5),
+                  const SizedBox(width: AppSpacing.s4),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
-                            Expanded(
-                              child: Text('Sınava hazırlık',
-                                  style: Theme.of(context).textTheme.titleMedium),
-                            ),
+                            Expanded(child: Text('Sınava hazırlık', style: Theme.of(context).textTheme.titleMedium)),
                             Icon(Icons.chevron_right_rounded, color: p.text3),
                           ],
                         ),
@@ -112,80 +110,76 @@ class HomeScreen extends ConsumerWidget {
             ),
             const SizedBox(height: AppSpacing.s4),
 
-            // Proactive nudge (real, deterministic).
-            if (topNudge != null)
-              CoachCard(
-                message: '${topNudge.icon} ${topNudge.body}',
-                actionLabel: topNudge.title,
-                onAction: () => context.go(topNudge.action),
-              ),
+            // AI Koç hero
+            _CoachHero(nudge: topNudge),
+            const SizedBox(height: AppSpacing.s2),
 
             SectionTitle('Bugünkü plan'),
-            AppCard(
+            GlowCard(
+              padding: const EdgeInsets.all(AppSpacing.s4),
               child: Column(
                 children: [
                   _PlanRow(
                     icon: Icons.bolt_rounded,
-                    text: 'Akıllı çalışma oturumu (10 soru)',
+                    color: p.primary,
+                    text: 'Akıllı çalışma oturumu (${profile.sessionSize} soru)',
                     done: streak.lastDay == _todayKey(now),
+                    onTap: () => context.go('/practice/study'),
                   ),
-                  Divider(height: AppSpacing.s6, color: p.border),
+                  Divider(height: AppSpacing.s5, color: p.border),
                   _PlanRow(
                     icon: Icons.refresh_rounded,
-                    text: dueCount > 0
-                        ? 'Tekrar zamanı gelen $dueCount kart'
-                        : 'Vadesi gelen kart yok',
+                    color: p.accent,
+                    text: dueCount > 0 ? 'Tekrar zamanı gelen $dueCount kart' : 'Vadesi gelen kart yok',
                     done: dueCount == 0 && answers.isNotEmpty,
+                    onTap: () => context.go('/practice/study'),
                   ),
-                  Divider(height: AppSpacing.s6, color: p.border),
-                  _PlanRow(icon: Icons.assignment_turned_in_rounded, text: '1 deneme sınavı'),
+                  Divider(height: AppSpacing.s5, color: p.border),
+                  _PlanRow(
+                    icon: Icons.assignment_turned_in_rounded,
+                    color: p.green,
+                    text: '1 deneme sınavı',
+                    onTap: () => context.go('/practice/exam'),
+                  ),
                 ],
               ),
             ),
 
             SectionTitle('Hızlı işlemler'),
-            GridView.count(
-              crossAxisCount: 4,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              mainAxisSpacing: AppSpacing.s3,
-              crossAxisSpacing: AppSpacing.s3,
-              childAspectRatio: 0.72,
+            Row(
               children: [
-                QuickAction(
-                  icon: Icons.timer_outlined,
-                  label: 'Deneme çöz',
-                  color: p.primary,
-                  onTap: () => context.go('/practice/exam'),
-                ),
-                QuickAction(
-                  icon: Icons.bolt_rounded,
-                  label: 'Akıllı çalış',
-                  color: p.accent,
-                  onTap: () => context.go('/practice/study'),
-                ),
-                QuickAction(
-                  icon: Icons.traffic_rounded,
-                  label: 'İşaretler',
-                  color: p.blue,
-                  onTap: () => context.go('/learn/signs'),
-                ),
-                QuickAction(
-                  icon: Icons.auto_awesome_rounded,
-                  label: 'AI Koç',
-                  color: const Color(0xFF8B5CF6),
-                  onTap: () => context.go('/coach'),
-                ),
+                _QuickTile(icon: Icons.timer_outlined, label: 'Deneme\nSınavı', color: p.primary, onTap: () => context.go('/practice/exam')),
+                const SizedBox(width: AppSpacing.s3),
+                _QuickTile(icon: Icons.bolt_rounded, label: 'Akıllı\nÇalışma', color: p.accent, onTap: () => context.go('/practice/study')),
+                const SizedBox(width: AppSpacing.s3),
+                _QuickTile(icon: Icons.traffic_rounded, label: 'İşaretler', color: p.blue, onTap: () => context.go('/learn/signs')),
+                const SizedBox(width: AppSpacing.s3),
+                _QuickTile(icon: Icons.auto_awesome_rounded, label: 'AI Koç', color: p.purple, onTap: () => context.go('/coach')),
               ],
             ),
 
             SectionTitle('İlerleme'),
-            OverviewTile(
-              icon: Icons.insights_rounded,
-              title: 'İstatistiklerim',
-              subtitle: 'Radar, çalışma haritası, rozetler ve seviyeni gör',
-              iconColor: p.primary,
+            GlowCard(
               onTap: () => context.push('/progress'),
+              padding: const EdgeInsets.all(AppSpacing.s4),
+              child: Row(
+                children: [
+                  IconBadge(icon: Icons.insights_rounded, color: p.primary, size: 52, glow: true),
+                  const SizedBox(width: AppSpacing.s4),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('İstatistiklerim', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
+                        const SizedBox(height: 3),
+                        Text('Radar, çalışma haritası, rozetler ve seviyeni gör',
+                            style: TextStyle(color: p.text3, fontSize: 12.5, height: 1.3)),
+                      ],
+                    ),
+                  ),
+                  Icon(Icons.chevron_right_rounded, color: p.text3),
+                ],
+              ),
             ),
           ],
         ),
@@ -200,54 +194,153 @@ class HomeScreen extends ConsumerWidget {
   }
 }
 
-class _StreakChip extends StatelessWidget {
-  const _StreakChip({required this.days});
-  final int days;
+class _NotificationBell extends StatelessWidget {
+  const _NotificationBell({required this.hasNudge, required this.onTap});
+  final bool hasNudge;
+  final VoidCallback onTap;
+
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s3, vertical: AppSpacing.s2),
-      decoration: BoxDecoration(
-        color: p.accent.withValues(alpha: 0.14),
-        borderRadius: BorderRadius.circular(AppRadii.pill),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
+    return IconButton(
+      onPressed: onTap,
+      tooltip: 'Bildirimler',
+      icon: Stack(
+        clipBehavior: Clip.none,
         children: [
-          const Text('🔥', style: TextStyle(fontSize: 15)),
-          const SizedBox(width: 4),
-          Text('$days gün',
-              style: TextStyle(fontWeight: FontWeight.w700, color: p.accent, fontSize: 13)),
+          Icon(Icons.notifications_none_rounded, color: p.text2, size: 26),
+          if (hasNudge)
+            Positioned(
+              right: -1,
+              top: -1,
+              child: Container(
+                width: 9,
+                height: 9,
+                decoration: BoxDecoration(color: p.accent, shape: BoxShape.circle, border: Border.all(color: p.bg, width: 1.5)),
+              ),
+            ),
         ],
       ),
     );
   }
 }
 
-class _PlanRow extends StatelessWidget {
-  const _PlanRow({required this.icon, required this.text, this.done = false});
-  final IconData icon;
-  final String text;
-  final bool done;
+class _CoachHero extends StatelessWidget {
+  const _CoachHero({this.nudge});
+  final Nudge? nudge;
+
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
-    return Row(
-      children: [
-        Icon(done ? Icons.check_circle_rounded : icon, color: done ? p.green : p.text3, size: 22),
-        const SizedBox(width: AppSpacing.s3),
-        Expanded(
-          child: Text(
-            text,
-            style: TextStyle(
-              color: done ? p.text3 : p.text,
-              decoration: done ? TextDecoration.lineThrough : null,
-              fontSize: 14,
+    final body = nudge?.body ?? 'İlk 10 soruyla başlayalım — birkaç dakikada temeli at.';
+    final cta = nudge?.title ?? 'Hoş geldin!';
+    final action = nudge?.action ?? '/practice/study';
+    return GlowCard(
+      accentColor: p.primary,
+      selected: true,
+      padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s4, 0, AppSpacing.s4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    IconBadge(icon: Icons.auto_awesome_rounded, color: p.primary, size: 40),
+                    const SizedBox(width: AppSpacing.s3),
+                    Text('AI Koç', style: TextStyle(color: p.primary, fontWeight: FontWeight.w900, fontSize: 18)),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.s3),
+                Text('👋 $body', style: TextStyle(color: p.text, fontSize: 14, height: 1.4)),
+                const SizedBox(height: AppSpacing.s3),
+                IntrinsicWidth(
+                  child: GradientPillButton(
+                    label: cta,
+                    height: 46,
+                    onPressed: () => GoRouter.of(context).go(action),
+                  ),
+                ),
+              ],
             ),
           ),
+          MascotImage(AppImages.owlWheel, height: 150, semanticLabel: 'AI Koç'),
+        ],
+      ),
+    );
+  }
+}
+
+class _QuickTile extends StatelessWidget {
+  const _QuickTile({required this.icon, required this.label, required this.color, required this.onTap});
+  final IconData icon;
+  final String label;
+  final Color color;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.palette;
+    return Expanded(
+      child: GlowCard(
+        onTap: onTap,
+        padding: const EdgeInsets.symmetric(vertical: AppSpacing.s3, horizontal: 4),
+        child: Column(
+          children: [
+            IconBadge(icon: icon, color: color, size: 46, glow: true),
+            const SizedBox(height: AppSpacing.s2),
+            SizedBox(
+              height: 30,
+              child: Text(
+                label,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700, color: p.text2, height: 1.15),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
+    );
+  }
+}
+
+class _PlanRow extends StatelessWidget {
+  const _PlanRow({required this.icon, required this.text, required this.color, this.done = false, this.onTap});
+  final IconData icon;
+  final String text;
+  final Color color;
+  final bool done;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.palette;
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(AppRadii.sm),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          children: [
+            Icon(done ? Icons.check_circle_rounded : icon, color: done ? p.green : color, size: 22),
+            const SizedBox(width: AppSpacing.s3),
+            Expanded(
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: done ? p.text3 : p.text,
+                  decoration: done ? TextDecoration.lineThrough : null,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+            if (onTap != null) Icon(Icons.chevron_right_rounded, color: p.text3, size: 20),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/assets.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/practice/progress_repository.dart';
 import '../../data/premium/entitlements_repository.dart';
 import '../../data/premium/quota_repository.dart';
+import '../../design/brand.dart';
 import '../../design/markdown_block.dart';
 import '../../design/primitives.dart';
 import '../../domain/coach/coach_controller.dart';
 import '../../domain/coach/nudge.dart';
+import '../../domain/premium/premium_prompt.dart';
+import '../premium/premium_popups.dart';
 import 'widgets/nudge_card.dart';
 
 /// AI Koç — proaktif deterministik dürtme kartları + grounded sohbet (`/api/ai/ask`).
@@ -44,7 +48,8 @@ class _CoachScreenState extends ConsumerState<CoachScreen> {
     final owned = ref.read(entitlementsProvider);
     final quota = ref.read(quotaRepositoryProvider).value;
     if (quota != null && !quota.canAskAi(owned)) {
-      _showQuotaDialog();
+      // Ücretsiz AI kotası doldu → bağlamsal premium teşviki.
+      showPremiumIncentive(context, trigger: PremiumTrigger.aiQuota);
       return;
     }
     _input.clear();
@@ -60,28 +65,6 @@ class _CoachScreenState extends ConsumerState<CoachScreen> {
         );
       }
     });
-  }
-
-  void _showQuotaDialog() {
-    showDialog<void>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Günlük AI hakkın doldu'),
-        content: const Text(
-          'Bugünkü ücretsiz AI Koç sorularını kullandın. Sınırsız sormak için Komple B paketine geç.',
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Kapat')),
-          FilledButton(
-            onPressed: () {
-              Navigator.pop(ctx);
-              context.push('/premium');
-            },
-            child: const Text('Premium'),
-          ),
-        ],
-      ),
-    );
   }
 
   List<Nudge> _nudges() {
@@ -126,12 +109,7 @@ class _CoachScreenState extends ConsumerState<CoachScreen> {
                   ? _intro()
                   : ListView.builder(
                       controller: _scroll,
-                      padding: const EdgeInsets.fromLTRB(
-                        AppSpacing.s4,
-                        AppSpacing.s4,
-                        AppSpacing.s4,
-                        AppSpacing.s4,
-                      ),
+                      padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s4, AppSpacing.s4, AppSpacing.s4),
                       itemCount: chat.messages.length + (chat.sending ? 1 : 0),
                       itemBuilder: (context, i) {
                         if (i >= chat.messages.length) return const _TypingBubble();
@@ -152,15 +130,39 @@ class _CoachScreenState extends ConsumerState<CoachScreen> {
   }
 
   Widget _intro() {
+    final p = context.palette;
     final nudges = _nudges();
     return ListView(
-      padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s2, AppSpacing.s4, AppSpacing.s4),
+      padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s3, AppSpacing.s4, AppSpacing.s4),
       children: [
-        const AppPageHeader(
-          title: 'AI Koç',
-          emoji: '🤖',
-          subtitle:
-              'İlerlemeni izleyen, sana özel öneren proaktif bir koç. Ehliyet ve trafik konularında da soru sorabilirsin.',
+        // AI Koç tanıtım kartı — owl maskotu
+        GlowCard(
+          selected: true,
+          padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s4, 0, AppSpacing.s4),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        IconBadge(icon: Icons.auto_awesome_rounded, color: p.primary, size: 40),
+                        const SizedBox(width: AppSpacing.s3),
+                        Text('AI Koç', style: TextStyle(color: p.primary, fontWeight: FontWeight.w900, fontSize: 18)),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.s3),
+                    Text(
+                      'İlerlemeni izleyen, sana özel öneren proaktif bir koç. Ehliyet ve trafik konularında da soru sorabilirsin.',
+                      style: TextStyle(color: p.text2, height: 1.4, fontSize: 13),
+                    ),
+                  ],
+                ),
+              ),
+              MascotImage(AppImages.owlWave, height: 128, semanticLabel: 'AI Koç'),
+            ],
+          ),
         ),
         if (nudges.isNotEmpty) ...[
           const SectionTitle('Senin için'),
@@ -179,8 +181,7 @@ class _CoachScreenState extends ConsumerState<CoachScreen> {
         const AppCallout(
           tone: CalloutTone.info,
           title: 'Güvenilir bilgi',
-          text:
-              'AI yanıtları platform içeriğine dayanır; kesin ve güncel kural için MEB/MTSK esastır.',
+          text: 'AI yanıtları platform içeriğine dayanır; kesin ve güncel kural için MEB/MTSK esastır.',
         ),
       ],
     );
@@ -209,30 +210,66 @@ class _CoachScreenState extends ConsumerState<CoachScreen> {
             ),
           ),
           const SizedBox(width: AppSpacing.s2),
-          SizedBox(
-            height: 48,
-            width: 48,
-            child: FilledButton(
-              onPressed: sending ? null : () => _send(_input.text),
-              style: FilledButton.styleFrom(
-                padding: EdgeInsets.zero,
-                shape: const CircleBorder(),
-              ),
-              // a11y: icon-only button gets a label
-              child: Semantics(
-                label: 'Gönder',
-                button: true,
-                child: sending
-                  ? const SizedBox(
-                      width: 18,
-                      height: 18,
-                      child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                    )
-                  : const Icon(Icons.arrow_upward_rounded, size: 20),
-              ),
-            ),
-          ),
+          _SendButton(sending: sending, onTap: sending ? null : () => _send(_input.text)),
         ],
+      ),
+    );
+  }
+}
+
+class _SendButton extends StatelessWidget {
+  const _SendButton({required this.sending, required this.onTap});
+  final bool sending;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.palette;
+    return Semantics(
+      label: 'Gönder',
+      button: true,
+      child: InkResponse(
+        onTap: onTap,
+        radius: 30,
+        child: Container(
+          width: 48,
+          height: 48,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            gradient: LinearGradient(colors: [p.primary, p.primaryBright]),
+            boxShadow: [BoxShadow(color: p.primary.withValues(alpha: 0.4), blurRadius: 14, spreadRadius: -2)],
+          ),
+          alignment: Alignment.center,
+          child: sending
+              ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+              : const Icon(Icons.send_rounded, color: Colors.white, size: 20),
+        ),
+      ),
+    );
+  }
+}
+
+class _OwlAvatar extends StatelessWidget {
+  const _OwlAvatar();
+  @override
+  Widget build(BuildContext context) {
+    final p = context.palette;
+    return Container(
+      width: 34,
+      height: 34,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: p.primary.withValues(alpha: 0.14),
+        border: Border.all(color: p.primary.withValues(alpha: 0.35)),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: OverflowBox(
+        maxWidth: 46,
+        maxHeight: 46,
+        child: Align(
+          alignment: const Alignment(0, -0.55),
+          child: MascotImage(AppImages.owlWave, height: 44, semanticLabel: ''),
+        ),
       ),
     );
   }
@@ -246,59 +283,59 @@ class _MessageBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = context.palette;
     final isUser = message.role == 'user';
-    return Align(
-      alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        margin: const EdgeInsets.only(bottom: AppSpacing.s3),
-        constraints: BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width * 0.82),
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4, vertical: AppSpacing.s3),
-        decoration: BoxDecoration(
-          color: isUser ? p.primary : p.surface,
-          borderRadius: BorderRadius.only(
-            topLeft: const Radius.circular(AppRadii.base),
-            topRight: const Radius.circular(AppRadii.base),
-            bottomLeft: Radius.circular(isUser ? AppRadii.base : 4),
-            bottomRight: Radius.circular(isUser ? 4 : AppRadii.base),
-          ),
-          border: isUser ? null : Border.all(color: p.border),
+    final bubble = Container(
+      constraints: BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width * 0.72),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4, vertical: AppSpacing.s3),
+      decoration: BoxDecoration(
+        color: isUser ? p.primary : p.surface,
+        borderRadius: BorderRadius.only(
+          topLeft: const Radius.circular(AppRadii.base),
+          topRight: const Radius.circular(AppRadii.base),
+          bottomLeft: Radius.circular(isUser ? AppRadii.base : 4),
+          bottomRight: Radius.circular(isUser ? 4 : AppRadii.base),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (isUser)
-              Text(
-                message.text,
-                style: TextStyle(
-                  color: p.brightness == Brightness.dark ? const Color(0xFF04211F) : Colors.white,
-                  height: 1.4,
-                  fontSize: 14.5,
-                ),
-              )
-            else
-              MarkdownBlock(message.text, baseColor: p.text, baseSize: 14.5),
-            if (!isUser && (message.grounded || message.sources.isNotEmpty)) ...[
-              const SizedBox(height: AppSpacing.s2),
-              Row(
-                children: [
-                  Icon(
-                    message.grounded ? Icons.verified_rounded : Icons.smart_toy_outlined,
-                    size: 13,
-                    color: message.grounded ? p.green : p.text3,
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    message.grounded ? 'İçeriğe dayalı' : 'AI',
-                    style: TextStyle(
-                      color: message.grounded ? p.green : p.text3,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
+        border: isUser ? null : Border.all(color: p.border),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (isUser)
+            Text(
+              message.text,
+              style: TextStyle(
+                color: p.brightness == Brightness.dark ? const Color(0xFF04211F) : Colors.white,
+                height: 1.4,
+                fontSize: 14.5,
               ),
-            ],
+            )
+          else
+            MarkdownBlock(message.text, baseColor: p.text, baseSize: 14.5),
+          if (!isUser && (message.grounded || message.sources.isNotEmpty)) ...[
+            const SizedBox(height: AppSpacing.s2),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(message.grounded ? Icons.verified_rounded : Icons.smart_toy_outlined,
+                    size: 13, color: message.grounded ? p.green : p.text3),
+                const SizedBox(width: 4),
+                Text(message.grounded ? 'İçeriğe dayalı' : 'AI',
+                    style: TextStyle(color: message.grounded ? p.green : p.text3, fontSize: 11, fontWeight: FontWeight.w600)),
+              ],
+            ),
           ],
-        ),
+        ],
+      ),
+    );
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.s3),
+      child: Row(
+        mainAxisAlignment: isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (!isUser) ...[const _OwlAvatar(), const SizedBox(width: AppSpacing.s2)],
+          Flexible(child: bubble),
+        ],
       ),
     );
   }
@@ -310,28 +347,31 @@ class _TypingBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Container(
-        margin: const EdgeInsets.only(bottom: AppSpacing.s3),
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4, vertical: AppSpacing.s3),
-        decoration: BoxDecoration(
-          color: p.surface,
-          borderRadius: BorderRadius.circular(AppRadii.base),
-          border: Border.all(color: p.border),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              width: 14,
-              height: 14,
-              child: CircularProgressIndicator(strokeWidth: 2, color: p.primary),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.s3),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const _OwlAvatar(),
+          const SizedBox(width: AppSpacing.s2),
+          Container(
+            margin: const EdgeInsets.only(top: 2),
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4, vertical: AppSpacing.s3),
+            decoration: BoxDecoration(
+              color: p.surface,
+              borderRadius: BorderRadius.circular(AppRadii.base),
+              border: Border.all(color: p.border),
             ),
-            const SizedBox(width: AppSpacing.s2),
-            Text('Koç düşünüyor…', style: TextStyle(color: p.text3, fontSize: 13)),
-          ],
-        ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2, color: p.primary)),
+                const SizedBox(width: AppSpacing.s2),
+                Text('Koç düşünüyor…', style: TextStyle(color: p.text3, fontSize: 13)),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

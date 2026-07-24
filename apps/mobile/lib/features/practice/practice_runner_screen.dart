@@ -12,8 +12,11 @@ import '../../domain/onboarding/study_profile.dart';
 import '../../domain/practice/question.dart';
 import '../../domain/practice/question_bank.dart';
 import '../../domain/practice/srs.dart';
+import '../../domain/premium/premium_prompt.dart';
+import '../premium/premium_popups.dart';
 import 'widgets/bank_scope.dart';
 import 'widgets/question_view.dart';
+import 'widgets/result_view.dart';
 
 /// Akıllı çalışma (SRS) — vadesi gelen + zayıf konu ağırlıklı oturum; oturum boyu kullanıcının
 /// kişiselleştirme profilindeki günlük hedeften türetilir (yoğun tempo → daha uzun oturum). Her
@@ -33,6 +36,7 @@ class _PracticeRunnerScreenState extends ConsumerState<PracticeRunnerScreen> {
   int _correct = 0;
   bool _built = false;
   bool _done = false;
+  int _startMs = 0;
   late Map<String, SrsCard> _cards;
   late ProgressRepository _progress;
 
@@ -41,6 +45,7 @@ class _PracticeRunnerScreenState extends ConsumerState<PracticeRunnerScreen> {
     _progress = progress;
     _cards = progress.loadCards();
     final now = DateTime.now().millisecondsSinceEpoch;
+    _startMs = now;
     final stats = statsFromAnswers(progress.loadAnswers());
     final pool = bank.questions.where((q) => q.subject != Subject.pratik).toList();
     final byId = {for (final q in pool) q.id: q};
@@ -79,6 +84,13 @@ class _PracticeRunnerScreenState extends ConsumerState<PracticeRunnerScreen> {
       });
     } else {
       setState(() => _done = true);
+      // Oturum tamamlandı → bağlamsal premium teşviki (sık-gösterim sınırlı).
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          maybeShowPremiumIncentive(context, ref, PremiumTrigger.engagement,
+              nowMs: DateTime.now().millisecondsSinceEpoch);
+        }
+      });
     }
   }
 
@@ -176,38 +188,34 @@ class _PracticeRunnerScreenState extends ConsumerState<PracticeRunnerScreen> {
     final p = context.palette;
     final total = _queue.length;
     final pct = total == 0 ? 0 : (_correct / total * 100).round();
-    return ListView(
-      padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s8, AppSpacing.s4, AppSpacing.s10),
-      children: [
-        Center(
-          child: Column(
-            children: [
-              Text('🎯', style: const TextStyle(fontSize: 52)),
-              const SizedBox(height: AppSpacing.s3),
-              Text('Oturum tamam', style: Theme.of(context).textTheme.headlineMedium),
-              const SizedBox(height: AppSpacing.s2),
-              Text('$_correct / $total doğru · %$pct',
-                  style: TextStyle(color: p.text2, fontSize: 15, fontWeight: FontWeight.w600)),
-            ],
-          ),
+    final wrong = total - _correct;
+    final elapsed = ((DateTime.now().millisecondsSinceEpoch - _startMs) / 1000).round();
+    String fmt(int s) => '${(s ~/ 60).toString().padLeft(2, '0')}:${(s % 60).toString().padLeft(2, '0')}';
+    return SessionResultView(
+      title: 'Oturum tamam!',
+      subtitle: 'Harika! Bugünkü hedefin için büyük bir adım attın.',
+      percent: pct,
+      accent: p.primary,
+      stats: [
+        ResultStat(icon: Icons.check_circle_rounded, color: p.green, value: '$_correct', label: 'Doğru'),
+        ResultStat(icon: Icons.cancel_rounded, color: p.red, value: '$wrong', label: 'Yanlış'),
+        ResultStat(icon: Icons.schedule_rounded, color: p.purple, value: fmt(elapsed), label: 'Süre'),
+      ],
+      actions: [
+        ResultAction(
+          label: 'Yeni oturum',
+          icon: Icons.refresh_rounded,
+          primary: true,
+          onTap: () => setState(() {
+            _built = false;
+            _done = false;
+            _index = 0;
+            _correct = 0;
+            _picked = null;
+            _revealed = false;
+          }),
         ),
-        const SizedBox(height: AppSpacing.s6),
-        FilledButton.icon(
-          onPressed: () {
-            setState(() {
-              _built = false;
-              _done = false;
-              _index = 0;
-              _correct = 0;
-              _picked = null;
-              _revealed = false;
-            });
-          },
-          icon: const Icon(Icons.refresh_rounded, size: 18),
-          label: const Text('Yeni oturum'),
-        ),
-        const SizedBox(height: AppSpacing.s3),
-        OutlinedButton(onPressed: () => context.pop(), child: const Text('Bitir')),
+        ResultAction(label: 'Ana sayfaya dön', icon: Icons.home_rounded, onTap: () => context.go('/home')),
       ],
     );
   }

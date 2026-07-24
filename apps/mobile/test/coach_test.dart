@@ -19,7 +19,9 @@ void main() {
     expect(find.text('İlk yardımda ABC nedir?'), findsOneWidget); // a suggestion chip
     expect(find.text('Hoş geldin!'), findsOneWidget); // welcome nudge (0 answers)
 
-    // tap a suggestion → sends to the (fake) coach
+    // tap a suggestion → sends to the (fake) coach (scroll into view past the owl intro card)
+    await tester.ensureVisible(find.text('Kırmızı ışıkta sağa dönülür mü?'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Kırmızı ışıkta sağa dönülür mü?'));
     await tester.pumpAndSettle();
 

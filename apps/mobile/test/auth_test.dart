@@ -64,7 +64,17 @@ void main() {
 
     await tester.tap(find.text('Profil'));
     await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Çıkış yap'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Çıkış yap'));
+    await tester.pumpAndSettle();
+
+    // scroll back to the top of the (lazy) list to reveal the guest header
+    await tester.dragUntilVisible(
+      find.text('Misafir'),
+      find.byType(Scrollable).first,
+      const Offset(0, 300),
+    );
     await tester.pumpAndSettle();
 
     expect(find.text('Misafir'), findsOneWidget);

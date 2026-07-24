@@ -1,6 +1,7 @@
 import 'package:ehliyet_akademi/domain/content/content_enums.dart';
 import 'package:ehliyet_akademi/domain/practice/question.dart';
 import 'package:ehliyet_akademi/domain/practice/question_bank.dart';
+import 'package:ehliyet_akademi/domain/premium/products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -59,7 +60,8 @@ void main() {
   });
 
   testWidgets('Deneme Sınavı: builds an exam, runs, and scores on finish', (tester) async {
-    await pumpApp(tester, bank: _smallBank());
+    // premium owner → exam quota bypassed + no contextual popup over the result
+    await pumpApp(tester, bank: _smallBank(), owned: const [kPremiumProductId]);
     await _openPractice(tester);
 
     await tester.tap(find.text('Deneme Sınavı'));
@@ -78,8 +80,8 @@ void main() {
     await tester.tap(find.widgetWithText(FilledButton, 'Bitir').last); // confirm
     await tester.pumpAndSettle();
 
-    expect(find.text('KALDIN'), findsOneWidget); // nothing answered → fail
-    expect(find.text('Başarı'), findsOneWidget);
+    expect(find.text('Bu sefer olmadı'), findsOneWidget); // nothing answered → fail
+    expect(find.text('Doğru'), findsOneWidget); // result stat label
   });
 
   testWidgets('Koleksiyonlar lists themed sets and opens one', (tester) async {
@@ -101,6 +103,8 @@ void main() {
     await pumpApp(tester);
     await _openPractice(tester);
 
+    await tester.ensureVisible(find.text('Geçmiş Sınavlar'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Geçmiş Sınavlar'));
     await tester.pumpAndSettle();
 

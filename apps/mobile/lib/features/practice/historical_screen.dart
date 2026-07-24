@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/assets.dart';
 import '../../core/theme/tokens.dart';
-import '../../design/app_card.dart';
+import '../../design/brand.dart';
 import '../../design/primitives.dart';
 import '../../domain/practice/historical.dart';
 
@@ -20,45 +21,50 @@ class HistoricalScreen extends StatelessWidget {
       body: SafeArea(
         top: false,
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.s4,
-            AppSpacing.s3,
-            AppSpacing.s4,
-            AppSpacing.s10,
-          ),
+          padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s2, AppSpacing.s4, AppSpacing.s10),
           children: [
-            AppCallout(text: historicalLabel, title: 'ℹ️ Bilgi', tone: CalloutTone.info),
+            HubHeader(
+              title: 'Geçmiş Sınavlar',
+              subtitle: historicalLabel,
+              mascot: AppImages.illPapers,
+              mascotHeight: 120,
+            ),
+            const SizedBox(height: AppSpacing.s4),
             for (final year in years) ...[
-              SectionTitle('$year'),
+              SectionTitle('$year', trailing: Icon(Icons.calendar_month_rounded, color: p.primary, size: 18)),
               for (final s in byYear[year]!) ...[
-                AppCard(
+                GlowCard(
                   onTap: () => context.push('/practice/historical/${s.id}'),
+                  padding: const EdgeInsets.all(AppSpacing.s4),
                   child: Row(
                     children: [
-                      Container(
-                        width: 46,
-                        height: 46,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: p.primary050,
-                          borderRadius: BorderRadius.circular(AppRadii.sm),
-                        ),
-                        child: Icon(Icons.history_edu_rounded, color: p.primary, size: 22),
-                      ),
+                      IconBadge(icon: Icons.assignment_rounded, color: p.primary, size: 50),
                       const SizedBox(width: AppSpacing.s4),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(s.label,
-                                style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
-                            const SizedBox(height: 2),
-                            Text('50 soru · MEB formatı',
-                                style: TextStyle(color: p.text3, fontSize: 12.5)),
+                            Text(s.label, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
+                            const SizedBox(height: 3),
+                            Row(
+                              children: [
+                                Icon(Icons.description_outlined, size: 13, color: p.text3),
+                                const SizedBox(width: 4),
+                                Text('50 soru · MEB formatı', style: TextStyle(color: p.text3, fontSize: 12.5)),
+                              ],
+                            ),
                           ],
                         ),
                       ),
-                      Icon(Icons.chevron_right_rounded, color: p.text3),
+                      Container(
+                        width: 34,
+                        height: 34,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: p.primary.withValues(alpha: 0.4)),
+                        ),
+                        child: Icon(Icons.chevron_right_rounded, color: p.primary, size: 20),
+                      ),
                     ],
                   ),
                 ),

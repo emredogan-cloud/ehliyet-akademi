@@ -1,7 +1,7 @@
 import { eq } from 'drizzle-orm';
 import { getDb, purchases } from '@ea/db';
 import { getSessionUser, json, newId, guarded } from '@/lib/server/auth';
-import { productById } from '@/lib/products';
+import { anyProductById } from '@/lib/products';
 import { getEmailProvider, purchaseConfirmationEmail } from '@/lib/server/email';
 
 /**
@@ -57,7 +57,7 @@ export const POST = guarded(async (req: Request): Promise<Response> => {
     return json({ error: 'Geçersiz istek gövdesi.' }, { status: 400 });
   }
 
-  const product = productById(body.productId ?? '');
+  const product = anyProductById(body.productId ?? '');
   if (!product) return json({ error: 'Ürün bulunamadı.' }, { status: 404 });
 
   const purchaseToken = (body.purchaseToken ?? '').trim();

@@ -68,6 +68,15 @@ describe('mobil IAP /api/iap/validate', () => {
     expect(((await res.json()) as { owned: string[] }).owned).toContain('komple-b');
   });
 
+  it('komple-ehliyet (mobil TEK ürün, 399₺) → grant edilir', async () => {
+    const token = await newUserToken();
+    const res = await validate(
+      post('/api/iap/validate', { productId: 'komple-ehliyet', purchaseToken: 'tok-mobil' }, token)
+    );
+    expect(res.status).toBe(200);
+    expect(((await res.json()) as { owned: string[] }).owned).toContain('komple-ehliyet');
+  });
+
   it('bilinmeyen ürün → 404', async () => {
     const token = await newUserToken();
     const res = await validate(

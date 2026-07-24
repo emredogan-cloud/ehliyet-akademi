@@ -4,7 +4,13 @@
  */
 
 export type ProductId =
-  'premium-teori' | 'premium-direksiyon' | 'simulator-paketi' | 'premium-soru-bankasi' | 'komple-b';
+  | 'premium-teori'
+  | 'premium-direksiyon'
+  | 'simulator-paketi'
+  | 'premium-soru-bankasi'
+  | 'komple-b'
+  // Mobil uygulamanın TEK premium ürünü (web paywall'da gösterilmez; yalnız mobil IAP doğrulaması).
+  | 'komple-ehliyet';
 
 /** Paketlerin açtığı yetenekler. */
 export type Capability =
@@ -77,6 +83,40 @@ export const PRODUCTS: Product[] = [
 
 export function productById(id: string): Product | undefined {
   return PRODUCTS.find((p) => p.id === id);
+}
+
+/**
+ * Mobil uygulamanın TEK premium ürünü — "Komple Ehliyet Paketi" (399 TL, ömür boyu). Web paywall'da
+ * GÖSTERİLMEZ (PRODUCTS'a eklenmez); yalnız mobil IAP doğrulaması sunucu-taraflı katalogda tanısın
+ * diye ayrı tutulur. Tüm yetenekleri açar.
+ */
+export const MOBILE_PRODUCTS: Product[] = [
+  {
+    id: 'komple-ehliyet',
+    title: 'Komple Ehliyet Paketi',
+    priceTRY: 399,
+    blurb: 'Tüm dersler, sınırsız deneme, sınırsız AI Koç ve premium içerik — tek pakette, ömür boyu.',
+    features: [
+      'Tüm konulara sınırsız erişim',
+      'Sınırsız deneme sınavı',
+      'Sınırsız AI Koç desteği',
+      'Tüm video dersler',
+      'Kişisel çalışma planı',
+    ],
+    capabilities: [
+      'teori-premium',
+      'direksiyon-premium',
+      'sinirsiz-deneme',
+      'soru-bankasi-tam',
+      'ai-sinirsiz',
+    ],
+    highlight: true,
+  },
+];
+
+/** Web + mobil kataloglarında ürün arar (mobil IAP doğrulaması mobil ürünleri de tanımalı). */
+export function anyProductById(id: string): Product | undefined {
+  return productById(id) ?? MOBILE_PRODUCTS.find((p) => p.id === id);
 }
 
 /** Sahip olunan ürünlerden yetenek kümesi türet (saf — test edilebilir). */

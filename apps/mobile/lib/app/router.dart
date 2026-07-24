@@ -150,9 +150,6 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
     GoRoute(path: '/auth', builder: (_, _) => const AuthScreen()),
     GoRoute(path: '/notifications', builder: (_, _) => const NotificationSettingsScreen()),
     GoRoute(path: '/progress', builder: (_, _) => const ProgressScreen()),
-    GoRoute(
-      path: '/premium',
-      builder: (_, state) => PaywallScreen(highlightProductId: state.uri.queryParameters['product']),
-    ),
+    GoRoute(path: '/premium', builder: (_, _) => const PaywallScreen()),
   ],
 );

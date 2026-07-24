@@ -75,7 +75,7 @@ class _CoachScreenState extends ConsumerState<CoachScreen> {
           FilledButton(
             onPressed: () {
               Navigator.pop(ctx);
-              context.push('/premium?product=komple-b');
+              context.push('/premium');
             },
             child: const Text('Premium'),
           ),

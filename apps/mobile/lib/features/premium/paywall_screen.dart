@@ -2,20 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 
+import '../../core/assets.dart';
 import '../../core/config.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/premium/entitlements_repository.dart';
 import '../../data/premium/iap_service.dart';
-import '../../design/app_card.dart';
+import '../../design/brand.dart';
 import '../../design/primitives.dart';
 import '../../domain/premium/products.dart';
+import 'premium_popups.dart';
 
-/// Premium paywall — ürün kataloğu (tek seferlik, ömür boyu), satın al + geri yükle.
-/// Gerçek satın alma Play Store'a bağlıdır (bu ortamda test edilemez — mağaza kullanılamıyorsa
-/// bilgilendirilir; sahiplik/geri yükleme sunucudan çalışır).
+const _kGold = Color(0xFFF5A623);
+
+/// Premium paywall — TEK ürün: "Komple Ehliyet Paketi" (399 ₺, tek seferlik / ömür boyu). Satın al +
+/// geri yükle. Gerçek satın alma Play Store'a bağlıdır (bu ortamda test edilemez — mağaza
+/// kullanılamıyorsa dürüstçe bilgilendirilir; sahiplik/geri yükleme sunucudan çalışır).
 class PaywallScreen extends ConsumerStatefulWidget {
-  const PaywallScreen({super.key, this.highlightProductId});
-  final String? highlightProductId;
+  const PaywallScreen({super.key});
 
   @override
   ConsumerState<PaywallScreen> createState() => _PaywallScreenState();
@@ -26,7 +29,9 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   bool _loading = true;
   bool _storeAvailable = false;
   Map<String, ProductDetails> _details = const {};
-  String? _busyProductId;
+  bool _busy = false;
+
+  Product get _product => premiumProduct;
 
   @override
   void initState() {
@@ -55,38 +60,36 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   Future<void> _onPurchased(PurchaseDetails pd) async {
     try {
       final serverId = productByStoreId(pd.productID)?.id ?? pd.productID.replaceAll('_', '-');
-      final owned = await ref
-          .read(entitlementsApiProvider)
-          .validatePurchase(
+      final owned = await ref.read(entitlementsApiProvider).validatePurchase(
             productId: serverId,
             purchaseToken: pd.verificationData.serverVerificationData,
             packageName: AppConfig.androidPackage,
           );
       await ref.read(entitlementsProvider.notifier).applyOwned(owned);
       if (mounted) {
-        setState(() => _busyProductId = null);
-        _snack('Satın alma başarılı — kilit açıldı 🎉');
+        setState(() => _busy = false);
+        await showPremiumSuccess(context);
       }
     } catch (_) {
       if (mounted) {
-        setState(() => _busyProductId = null);
+        setState(() => _busy = false);
         _snack('Doğrulama başarısız. Daha sonra "Geri yükle" ile tekrar dene.');
       }
     }
   }
 
-  Future<void> _buy(Product product) async {
-    final pd = _details[product.storeProductId];
+  Future<void> _buy() async {
+    final pd = _details[_product.storeProductId];
     if (pd == null) {
       _snack('Mağaza şu an kullanılamıyor. Lütfen daha sonra tekrar dene.');
       return;
     }
-    setState(() => _busyProductId = product.id);
+    setState(() => _busy = true);
     try {
       await _iap.buy(pd);
     } catch (_) {
       if (mounted) {
-        setState(() => _busyProductId = null);
+        setState(() => _busy = false);
         _snack('Satın alma başlatılamadı.');
       }
     }
@@ -98,64 +101,90 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     _snack('Satın almalar geri yüklendi.');
   }
 
-  void _snack(String m) =>
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(m)));
+  void _snack(String m) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(m)));
 
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
     final owned = ref.watch(entitlementsProvider);
+    final hasPremium = isPremium(owned);
+    final priceLabel = _details[_product.storeProductId]?.price ?? '₺${_product.priceTRY}';
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Premium'),
-        actions: [
-          TextButton(onPressed: _restore, child: const Text('Geri yükle')),
-        ],
+        title: const Text("Premium'a Geç"),
+        actions: [TextButton(onPressed: _restore, child: const Text('Geri yükle'))],
       ),
       body: SafeArea(
         top: false,
         child: _loading
             ? const Center(child: CircularProgressIndicator())
             : ListView(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.s4,
-                  AppSpacing.s3,
-                  AppSpacing.s4,
-                  AppSpacing.s10,
-                ),
+                padding: const EdgeInsets.fromLTRB(AppSpacing.s5, AppSpacing.s3, AppSpacing.s5, AppSpacing.s6),
                 children: [
-                  const AppPageHeader(
-                    title: 'Premium',
-                    emoji: '⭐',
-                    subtitle: 'Tek seferlik öde, ömür boyu erişim. Abonelik yok.',
+                  Center(child: MascotImage(AppImages.illLockGold, height: 168, semanticLabel: 'Premium')),
+                  const SizedBox(height: AppSpacing.s2),
+                  Center(
+                    child: BrandChip(
+                      label: hasPremium ? 'PREMIUM AKTİF' : "KOMPLE PAKET",
+                      icon: Icons.workspace_premium_rounded,
+                      color: _kGold,
+                    ),
                   ),
-                  if (!_storeAvailable)
+                  const SizedBox(height: AppSpacing.s3),
+                  Text(
+                    _product.title,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  const SizedBox(height: AppSpacing.s2),
+                  Text(
+                    _product.blurb,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: p.text2, fontSize: 14, height: 1.4),
+                  ),
+                  const SizedBox(height: AppSpacing.s5),
+                  _FeatureCard(product: _product),
+                  const SizedBox(height: AppSpacing.s4),
+                  if (!_storeAvailable && !hasPremium)
                     const Padding(
                       padding: EdgeInsets.only(bottom: AppSpacing.s3),
                       child: AppCallout(
                         tone: CalloutTone.warning,
                         title: 'Mağaza kullanılamıyor',
-                        text:
-                            'Uygulama-içi satın alma yalnız Google Play üzerinden yüklenmiş sürümde çalışır. '
-                            'Sahip olduğun paketleri "Geri yükle" ile getirebilirsin.',
+                        text: 'Uygulama-içi satın alma yalnız Google Play üzerinden yüklenmiş sürümde çalışır. '
+                            'Sahip olduğun paketi "Geri yükle" ile getirebilirsin.',
                       ),
                     ),
-                  for (final product in _sorted()) ...[
-                    _ProductCard(
-                      product: product,
-                      priceLabel: _details[product.storeProductId]?.price ?? '${product.priceTRY} ₺',
-                      owned: owned.contains(product.id),
-                      busy: _busyProductId == product.id,
-                      enabled: _storeAvailable && _busyProductId == null,
-                      highlighted: product.id == widget.highlightProductId,
-                      onBuy: () => _buy(product),
+                  if (hasPremium)
+                    _OwnedBanner()
+                  else ...[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        Text(priceLabel, style: TextStyle(color: p.text, fontWeight: FontWeight.w900, fontSize: 34)),
+                        const SizedBox(width: 6),
+                        Text('· tek seferlik', style: TextStyle(color: p.text3, fontSize: 13)),
+                      ],
                     ),
                     const SizedBox(height: AppSpacing.s3),
+                    GradientPillButton(
+                      label: 'Paketi Satın Al',
+                      gold: true,
+                      loading: _busy,
+                      leading: const Icon(Icons.workspace_premium_rounded, color: Colors.white, size: 20),
+                      onPressed: _storeAvailable ? _buy : null,
+                    ),
+                    const SizedBox(height: AppSpacing.s3),
+                    _TrustRow(),
                   ],
-                  const SizedBox(height: AppSpacing.s2),
+                  const SizedBox(height: AppSpacing.s3),
                   Text(
-                    'Ödeme Google Play üzerinden alınır. Kesin ve güncel kural için MEB/MTSK esastır.',
+                    'Ödeme Google Play üzerinden alınır. Ömür boyu erişim, abonelik yok. '
+                    'Kesin ve güncel kural için MEB/MTSK esastır.',
+                    textAlign: TextAlign.center,
                     style: TextStyle(color: p.text3, fontSize: 11.5, height: 1.4),
                   ),
                 ],
@@ -163,112 +192,85 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
       ),
     );
   }
-
-  List<Product> _sorted() {
-    final list = [...products];
-    list.sort((a, b) {
-      if (a.highlight != b.highlight) return a.highlight ? -1 : 1;
-      return b.priceTRY.compareTo(a.priceTRY);
-    });
-    return list;
-  }
 }
 
-class _ProductCard extends StatelessWidget {
-  const _ProductCard({
-    required this.product,
-    required this.priceLabel,
-    required this.owned,
-    required this.busy,
-    required this.enabled,
-    required this.highlighted,
-    required this.onBuy,
-  });
+class _FeatureCard extends StatelessWidget {
+  const _FeatureCard({required this.product});
   final Product product;
-  final String priceLabel;
-  final bool owned;
-  final bool busy;
-  final bool enabled;
-  final bool highlighted;
-  final VoidCallback onBuy;
 
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
-    return AppCard(
-      accent: highlighted ? p.accent : (owned ? p.green : null),
+    return GlowCard(
+      padding: const EdgeInsets.all(AppSpacing.s5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(product.title, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
-              ),
-              if (product.highlight)
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s2, vertical: 3),
-                  decoration: BoxDecoration(
-                    color: p.accent.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(AppRadii.sm),
-                  ),
-                  child: Text('EN AVANTAJLI',
-                      style: TextStyle(color: p.accent, fontWeight: FontWeight.w800, fontSize: 10)),
-                ),
-            ],
-          ),
-          const SizedBox(height: 4),
-          Text(product.blurb, style: TextStyle(color: p.text3, fontSize: 12.5, height: 1.35)),
-          const SizedBox(height: AppSpacing.s3),
           for (final f in product.features)
             Padding(
-              padding: const EdgeInsets.only(bottom: 4),
+              padding: const EdgeInsets.only(bottom: AppSpacing.s3),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.check_circle_rounded, size: 15, color: p.green),
-                  const SizedBox(width: 6),
-                  Expanded(
-                    child: Text(f, style: TextStyle(color: p.text2, fontSize: 13, height: 1.35)),
+                  Container(
+                    width: 26,
+                    height: 26,
+                    decoration: BoxDecoration(color: p.primary.withValues(alpha: 0.14), shape: BoxShape.circle),
+                    child: Icon(Icons.check_rounded, size: 16, color: p.primary),
                   ),
+                  const SizedBox(width: AppSpacing.s3),
+                  Expanded(child: Text(f, style: const TextStyle(fontSize: 14.5, fontWeight: FontWeight.w600))),
                 ],
               ),
             ),
-          const SizedBox(height: AppSpacing.s3),
-          Row(
-            children: [
-              Text(priceLabel, style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18, color: p.text)),
-              Text('  · tek seferlik', style: TextStyle(color: p.text3, fontSize: 12)),
-              const Spacer(),
-              if (owned)
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s3, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: p.green.withValues(alpha: 0.14),
-                    borderRadius: BorderRadius.circular(AppRadii.pill),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.check_rounded, size: 16, color: p.green),
-                      const SizedBox(width: 4),
-                      Text('Sahipsin',
-                          style: TextStyle(color: p.green, fontWeight: FontWeight.w700, fontSize: 13)),
-                    ],
-                  ),
-                )
-              else
-                FilledButton(
-                  onPressed: enabled ? onBuy : null,
-                  child: busy
-                      ? const SizedBox(
-                          width: 18,
-                          height: 18,
-                          child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                        )
-                      : const Text('Satın al'),
-                ),
-            ],
+        ],
+      ),
+    );
+  }
+}
+
+class _TrustRow extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final p = context.palette;
+    Widget item(IconData i, String t) => Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(i, size: 15, color: p.green),
+            const SizedBox(width: 5),
+            Text(t, style: TextStyle(color: p.text3, fontSize: 11.5)),
+          ],
+        );
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        item(Icons.verified_user_rounded, '7 gün iade'),
+        item(Icons.lock_rounded, '%100 Güvenli'),
+        item(Icons.all_inclusive_rounded, 'Ömür boyu'),
+      ],
+    );
+  }
+}
+
+class _OwnedBanner extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final p = context.palette;
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.s4),
+      decoration: BoxDecoration(
+        color: p.green.withValues(alpha: 0.12),
+        borderRadius: BorderRadius.circular(AppRadii.lg),
+        border: Border.all(color: p.green.withValues(alpha: 0.4)),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.verified_rounded, color: p.green, size: 22),
+          const SizedBox(width: AppSpacing.s3),
+          Expanded(
+            child: Text(
+              'Premium paketine sahipsin — tüm içerik açık. İyi çalışmalar!',
+              style: TextStyle(color: p.text, fontWeight: FontWeight.w600, fontSize: 14),
+            ),
           ),
         ],
       ),

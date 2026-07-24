@@ -60,7 +60,7 @@ class PracticeScreen extends ConsumerWidget {
                 final owned = ref.read(entitlementsProvider);
                 final quota = ref.read(quotaRepositoryProvider).value;
                 if (quota != null && !quota.canStartExam(owned)) {
-                  context.push('/premium?product=simulator-paketi');
+                  context.push('/premium');
                   return;
                 }
                 quota?.consumeExam(owned);

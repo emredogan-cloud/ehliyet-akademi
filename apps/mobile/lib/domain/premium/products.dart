@@ -1,5 +1,5 @@
-// Premium ürün kataloğu + yetenek (capability) modeli — web `lib/products.ts` + `lib/entitlements.ts`
-// birebir Dart limanı. Tek-seferlik satın alma (abonelik YOK); sahiplik = ürün id listesi.
+// Premium ürün kataloğu + yetenek (capability) modeli. TEK premium ürün: "Komple Ehliyet Paketi"
+// (399 TL, tek-seferlik / ömür boyu). Sahiplik = ürün id listesi; tek ürün her şeyi açar.
 // Saf + test edilebilir.
 
 class Product {
@@ -24,61 +24,40 @@ class Product {
   String get storeProductId => id.replaceAll('-', '_');
 }
 
-/// Web `PRODUCTS` kataloğu (fiyatlar TRY, tek seferlik ömür boyu).
+/// TEK premium ürünün kimliği.
+const String kPremiumProductId = 'komple-ehliyet';
+
+/// Premium'un açtığı tüm yetenekler.
+const List<String> kAllCapabilities = [
+  'teori-premium',
+  'direksiyon-premium',
+  'sinirsiz-deneme',
+  'soru-bankasi-tam',
+  'ai-sinirsiz',
+  'video-tam',
+];
+
+/// Ürün kataloğu — TEK ürün (tek seferlik ömür boyu). Fiyat 399 TL.
 const List<Product> products = [
   Product(
-    id: 'premium-teori',
-    title: 'Premium Teori Paketi',
-    priceTRY: 249,
-    blurb: 'Tüm premium dersler + tam soru bankası.',
-    features: ['İleri premium dersler', 'Tam soru bankası erişimi', 'Reklamsız çalışma'],
-    capabilities: ['teori-premium', 'soru-bankasi-tam'],
-  ),
-  Product(
-    id: 'premium-direksiyon',
-    title: 'Premium Direksiyon Paketi',
-    priceTRY: 199,
-    blurb: 'Direksiyon (uygulama) için premium dersler.',
-    features: ['Park & manevra dersleri', 'Kavşak uygulama dersleri'],
-    capabilities: ['direksiyon-premium'],
-  ),
-  Product(
-    id: 'simulator-paketi',
-    title: 'Gelişmiş Simülatör Paketi',
-    priceTRY: 149,
-    blurb: 'Sınırsız deneme sınavı.',
-    features: ['Günlük deneme sınırı yok', 'İstediğin kadar dene'],
-    capabilities: ['sinirsiz-deneme'],
-  ),
-  Product(
-    id: 'premium-soru-bankasi',
-    title: 'Premium Soru Bankası',
-    priceTRY: 129,
-    blurb: 'Tam soru bankası erişimi.',
-    features: ['Tüm soru koleksiyonları', 'Zor sorular + görsel sorular'],
-    capabilities: ['soru-bankasi-tam'],
-  ),
-  Product(
-    id: 'komple-b',
-    title: 'Komple B Ehliyet Paketi',
-    priceTRY: 449,
-    blurb: 'Her şey dahil — en avantajlı paket.',
+    id: kPremiumProductId,
+    title: 'Komple Ehliyet Paketi',
+    priceTRY: 399,
+    blurb: 'Tüm potansiyelini aç — her şey tek pakette, ömür boyu.',
     features: [
-      'Tüm premium dersler',
+      'Tüm konulara sınırsız erişim',
       'Sınırsız deneme sınavı',
-      'Tam soru bankası',
-      'Sınırsız AI Koç',
+      'Sınırsız AI Koç desteği',
+      'Tüm video dersler',
+      'Kişisel çalışma planı',
     ],
-    capabilities: [
-      'teori-premium',
-      'direksiyon-premium',
-      'sinirsiz-deneme',
-      'soru-bankasi-tam',
-      'ai-sinirsiz',
-    ],
+    capabilities: kAllCapabilities,
     highlight: true,
   ),
 ];
+
+/// Premium paket (tek ürün).
+Product get premiumProduct => products.first;
 
 Product? productById(String id) {
   for (final p in products) {
@@ -87,7 +66,7 @@ Product? productById(String id) {
   return null;
 }
 
-/// Play Store ürün kimliğinden ürün (ör. `komple_b` → `komple-b`).
+/// Play Store ürün kimliğinden ürün (ör. `komple_ehliyet` → `komple-ehliyet`).
 Product? productByStoreId(String storeId) {
   for (final p in products) {
     if (p.storeProductId == storeId) return p;
@@ -107,7 +86,11 @@ Set<String> capabilitiesOf(List<String> owned) {
 
 bool hasCapability(List<String> owned, String cap) => capabilitiesOf(owned).contains(cap);
 
-/// Ders → gereken yetenek (web `LESSON_CAPABILITY`). Yalnız bu 3 ders gerçekte kilitli.
+/// Premium sahibi mi — tek ürün modelinde herhangi bir bilinen satın alma tam premium demektir.
+bool isPremium(List<String> owned) => owned.any((id) => productById(id) != null);
+
+/// Ders → gereken premium (web `LESSON_CAPABILITY`). Yalnız bu 3 ders gerçekte kilitli; premium
+/// paketi hepsini açar.
 const Map<String, String> lessonCapability = {
   'park-manevra': 'direksiyon-premium',
   'kavsak-uygulama': 'direksiyon-premium',
@@ -122,19 +105,10 @@ bool canAccessLesson({required String slug, required bool premium, required List
   return hasCapability(owned, cap);
 }
 
-/// Yetenek için en ucuz ürün (yoksa komple paket).
-Product productForCapability(String cap) {
-  Product? cheapest;
-  for (final p in products) {
-    if (p.capabilities.contains(cap)) {
-      if (cheapest == null || p.priceTRY < cheapest.priceTRY) cheapest = p;
-    }
-  }
-  return cheapest ?? productById('komple-b')!;
-}
+/// Video derslere erişim — ilk video ücretsiz önizleme, gerisi premium.
+bool canAccessVideo({required int index, required List<String> owned}) => index == 0 || isPremium(owned);
 
-/// Ders için önerilen ürün (dersin yeteneğini sağlayan en ucuz).
-Product productForLesson(String slug) {
-  final cap = lessonCapability[slug];
-  return cap == null ? productById('komple-b')! : productForCapability(cap);
-}
+/// Herhangi bir yetenek/ders için önerilen ürün (tek ürün modeli → premium paket).
+Product productForCapability(String cap) => premiumProduct;
+
+Product productForLesson(String slug) => premiumProduct;

@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Controls the app theme mode (system / light / dark), mirroring the web's theme toggle.
-/// Persisted across launches via SharedPreferences (Phase 2).
+/// Controls the app theme mode (light / dark). The app launches in **DARK mode by default**
+/// (premium dark-first design); the user can still switch to light and the choice persists
+/// across launches via SharedPreferences.
 class ThemeModeController extends Notifier<ThemeMode> {
   static const _key = 'ea_theme_mode';
 
   @override
   ThemeMode build() {
     Future.microtask(_load);
-    return ThemeMode.system;
+    return ThemeMode.dark; // dark is the default experience
   }
 
   Future<void> _load() async {
@@ -21,11 +22,13 @@ class ThemeModeController extends Notifier<ThemeMode> {
           state = ThemeMode.light;
         case 'dark':
           state = ThemeMode.dark;
+        case 'system':
+          state = ThemeMode.system;
         default:
-          break;
+          break; // no saved preference → keep the dark default
       }
     } catch (_) {
-      // no prefs available (e.g. platform channel absent) → keep system default.
+      // no prefs available (e.g. platform channel absent) → keep the dark default.
     }
   }
 

@@ -26,6 +26,7 @@ class AppPalette {
     required this.yellow,
     required this.green,
     required this.blue,
+    required this.purple,
     required this.brightness,
   });
 
@@ -47,6 +48,7 @@ class AppPalette {
   final Color yellow;
   final Color green;
   final Color blue;
+  final Color purple;
   final Brightness brightness;
 
   /// Light theme (web `:root`).
@@ -69,6 +71,7 @@ class AppPalette {
     yellow: Color(0xFFD97706),
     green: Color(0xFF16A34A),
     blue: Color(0xFF2563EB),
+    purple: Color(0xFF7C3AED),
     brightness: Brightness.light,
   );
 
@@ -92,6 +95,7 @@ class AppPalette {
     yellow: Color(0xFFFBBF24),
     green: Color(0xFF34D399),
     blue: Color(0xFF60A5FA),
+    purple: Color(0xFFA78BFA),
     brightness: Brightness.dark,
   );
 }

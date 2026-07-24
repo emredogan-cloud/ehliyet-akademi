@@ -30,3 +30,8 @@ skills-lock.json
 
 # Copyrighted MEB exam-paper archive — reference only, NEVER commit/republish (QIP 2.0 content-expansion)
 sınav-soruları-pdf/
+
+# Design references for the UI redesign sprint (mockups + source art) — not shipped, large.
+/apps/assets/
+# Loose reference PDFs
+/*.pdf

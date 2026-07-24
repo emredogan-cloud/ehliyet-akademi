@@ -36,14 +36,15 @@ void main() {
     expect(find.text('Koyu tema'), findsOneWidget);
   });
 
-  testWidgets('theme toggle flips off system mode', (tester) async {
+  testWidgets('app defaults to dark; the theme toggle flips it to light', (tester) async {
     await pumpApp(tester);
 
     await tester.tap(find.text('Profil'));
     await tester.pumpAndSettle();
 
+    // Dark is the default experience.
     final appBefore = tester.widget<MaterialApp>(find.byType(MaterialApp));
-    expect(appBefore.themeMode, ThemeMode.system);
+    expect(appBefore.themeMode, ThemeMode.dark);
 
     final toggle = find.byType(SwitchListTile);
     await tester.ensureVisible(toggle);
@@ -51,7 +52,8 @@ void main() {
     await tester.tap(toggle);
     await tester.pumpAndSettle();
 
+    // Toggling from the dark default switches to light.
     final appAfter = tester.widget<MaterialApp>(find.byType(MaterialApp));
-    expect(appAfter.themeMode, isNot(ThemeMode.system));
+    expect(appAfter.themeMode, ThemeMode.light);
   });
 }

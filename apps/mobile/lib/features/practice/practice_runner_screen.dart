@@ -8,16 +8,16 @@ import '../../design/app_card.dart';
 import '../../design/markdown_text.dart';
 import '../../design/primitives.dart';
 import '../../domain/content/content_enums.dart';
+import '../../domain/onboarding/study_profile.dart';
 import '../../domain/practice/question.dart';
 import '../../domain/practice/question_bank.dart';
 import '../../domain/practice/srs.dart';
 import 'widgets/bank_scope.dart';
 import 'widgets/question_view.dart';
 
-const int _sessionSize = 10;
-
-/// Akıllı çalışma (SRS) — vadesi gelen + zayıf konu ağırlıklı 10 soruluk oturum. Her cevaptan sonra
-/// anında geri bildirim + açıklama; SM-2 kartları güncellenir. Tamamen çevrimdışı + kalıcı.
+/// Akıllı çalışma (SRS) — vadesi gelen + zayıf konu ağırlıklı oturum; oturum boyu kullanıcının
+/// kişiselleştirme profilindeki günlük hedeften türetilir (yoğun tempo → daha uzun oturum). Her
+/// cevaptan sonra anında geri bildirim + açıklama; SM-2 kartları güncellenir. Çevrimdışı + kalıcı.
 class PracticeRunnerScreen extends ConsumerStatefulWidget {
   const PracticeRunnerScreen({super.key});
 
@@ -44,7 +44,9 @@ class _PracticeRunnerScreenState extends ConsumerState<PracticeRunnerScreen> {
     final stats = statsFromAnswers(progress.loadAnswers());
     final pool = bank.questions.where((q) => q.subject != Subject.pratik).toList();
     final byId = {for (final q in pool) q.id: q};
-    final ids = selectNext(pool, _cards, stats.topicMastery, now, _sessionSize);
+    // Oturum boyu = kişisel günlük hedef (10..25 sınırlı).
+    final sessionSize = ref.read(studyProfileProvider).sessionSize;
+    final ids = selectNext(pool, _cards, stats.topicMastery, now, sessionSize);
     _queue = ids.map((i) => byId[i]).whereType<Question>().toList();
     _built = true;
   }

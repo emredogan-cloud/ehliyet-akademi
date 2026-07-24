@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/coach/coach_api.dart';
+import '../onboarding/study_profile.dart';
 
 /// Sohbet mesajı (persist: `ea:chat:v1`, son 40 ile web ile aynı).
 class ChatMessage {
@@ -84,6 +85,15 @@ class CoachChatController extends Notifier<CoachChatState> {
     } catch (_) {}
   }
 
+  /// Kişiselleştirme profilinden LLM bağlamı — yanıtlar kullanıcının hedefine göre uyarlanır.
+  String? _profileContext() {
+    final p = ref.read(studyProfileProvider);
+    if (!p.completed) return null;
+    return 'Kullanıcı ${p.category.badge} sınıfı ehliyete hazırlanıyor. '
+        'Odak: ${p.focus.title}. Sınava kalan süre: ${p.timeframe.title}. '
+        'Deneyim: ${p.experience.title}. Yanıtı kısa, net ve bu profile uygun ver.';
+  }
+
   Future<void> send(String question, {String? context}) async {
     final q = question.trim();
     if (q.length < 3 || state.sending) return;
@@ -91,7 +101,7 @@ class CoachChatController extends Notifier<CoachChatState> {
     state = state.copyWith(messages: withUser, sending: true, error: null);
     unawaited(_persist(withUser));
     try {
-      final ans = await ref.read(coachApiProvider).ask(q, context: context);
+      final ans = await ref.read(coachApiProvider).ask(q, context: context ?? _profileContext());
       final withAi = [
         ...withUser,
         ChatMessage(

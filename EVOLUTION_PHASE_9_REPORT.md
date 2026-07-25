@@ -60,28 +60,28 @@ Riverpod + arayüz/uygulama ayrımı · tasarım token'ları · go_router. **Yen
 
 ## Screens & flows
 
-| Yüzey | Durumlar |
-|---|---|
-| Arkadaşlar | gelen/giden istekler, arkadaş listesi, kabul/ret/iptal, arkadaşlıktan çıkarma (onaylı) |
-| Sohbet listesi | son mesaj + okunmadı göstergesi, boş durum |
-| Sohbet | boş durum, giden/gelen balonlar, 500 karakter sınırı, gönderme hatası |
-| Tartışmalar | sınıf süzgeci, `soru` rozeti, ileti sayısı, boş durum, yeni başlık sayfası |
+| Yüzey           | Durumlar                                                                                 |
+| --------------- | ---------------------------------------------------------------------------------------- |
+| Arkadaşlar      | gelen/giden istekler, arkadaş listesi, kabul/ret/iptal, arkadaşlıktan çıkarma (onaylı)   |
+| Sohbet listesi  | son mesaj + okunmadı göstergesi, boş durum                                               |
+| Sohbet          | boş durum, giden/gelen balonlar, 500 karakter sınırı, gönderme hatası                    |
+| Tartışmalar     | sınıf süzgeci, `soru` rozeti, ileti sayısı, boş durum, yeni başlık sayfası               |
 | Tartışma detayı | **paylaşılan soru kartı** (çözülebilen ve çözülemeyen iki hâl), iletiler, ileti şikâyeti |
-| Engellenenler | liste + engel kaldırma, boş durum |
+| Engellenenler   | liste + engel kaldırma, boş durum                                                        |
 
 ## Tests executed
 
-| Kapsam | Sonuç |
-|---|---|
-| `flutter analyze` | **0 sorun** |
-| `flutter test` | **186 geçti** (E9 ile +20) |
-| web `typecheck` | **0 hata** |
-| web `test` | **432 geçti** / 71 dosya (E9 ile +42) |
-| `@ea/db` · `@ea/question-bank` · `@ea/srs-engine` | **4** · **10** · **12** geçti |
-| `pnpm lint` | **0 hata**, 1 uyarı |
-| `pnpm format` | temiz |
-| **Canlı uçtan uca** | **71/71 geçti** (aşağıda) |
-| CI · CodeQL | yeşil |
+| Kapsam                                            | Sonuç                                 |
+| ------------------------------------------------- | ------------------------------------- |
+| `flutter analyze`                                 | **0 sorun**                           |
+| `flutter test`                                    | **186 geçti** (E9 ile +20)            |
+| web `typecheck`                                   | **0 hata**                            |
+| web `test`                                        | **432 geçti** / 71 dosya (E9 ile +42) |
+| `@ea/db` · `@ea/question-bank` · `@ea/srs-engine` | **4** · **10** · **12** geçti         |
+| `pnpm lint`                                       | **0 hata**, 1 uyarı                   |
+| `pnpm format`                                     | temiz                                 |
+| **Canlı uçtan uca**                               | **71/71 geçti** (aşağıda)             |
+| CI · CodeQL                                       | yeşil                                 |
 
 ### Düzeltilen iki gerçek sorun
 
@@ -101,16 +101,16 @@ Riverpod + arayüz/uygulama ayrımı · tasarım token'ları · go_router. **Yen
 Üretim sunucusunda (`www.ehliyetegitim.com`) gerçek hesaplarla, **mobil istemcinin birebir
 sözleşmesiyle** (aynı HTTP fiilleri, aynı gövdeler) 71 kontrol koşuldu — **71 geçti, 0 kaldı**.
 
-| Bölüm | Kapsanan |
-|---|---|
-| 1 · Arkadaşlık | istek gönder (201) · giden/gelen listeler · tekrar isteği 409 · kendine istek 400 · **reddet** · **iptal** · **kabul** · kendi isteğini kabul edememe 409 |
-| 2 · Mesajlaşma | arkadaşa mesaj 201 · iki yönlü okuma · konuşma listesi · **arkadaş olmayana 403** (iki yönde) · boş gövde 400 · 501 karakter 400 |
-| 3 · Tartışma | başlık açma · kısa başlık 400 · **soru metni referans olarak kabul edilmiyor → `null`** · **yanıtta soru metni YOK** · ileti yazma · listede görünme |
-| 4 · Şikâyet | şikâyet 201 · geçersiz sebep 400 · kendini şikâyet 400 |
-| 5 · Engelleme | başlık listeden düşer · başlığa giriş 404 · başlığa yazma 404 · arkadaşlık isteği 404 (**iki yönde**) · mesaj 404 (**iki yönde**) · profil 404 (**iki yönde**) · sıralamadan düşer · engellenenler listesinde görünür |
-| 6 · Engel kaldırma | liste boşalır · başlık geri gelir · başlığa giriş 200 · profil 200 · istek yeniden mümkün · **mesaj yine 403 (404 değil)** — yani engel kalktı ama arkadaşlık kuralı duruyor |
-| 7 · Sıralama | XP'ye göre azalan · kendi satırı · **satırlarda PII yok** · 999 999 999 XP **2000'e kırpıldı** · gizli profil listeden düşer · herkese açığa dönünce geri gelir |
-| 8 · Oturumsuz | arkadaşlar/mesajlar/tartışmalar **401** |
+| Bölüm              | Kapsanan                                                                                                                                                                                                              |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1 · Arkadaşlık     | istek gönder (201) · giden/gelen listeler · tekrar isteği 409 · kendine istek 400 · **reddet** · **iptal** · **kabul** · kendi isteğini kabul edememe 409                                                             |
+| 2 · Mesajlaşma     | arkadaşa mesaj 201 · iki yönlü okuma · konuşma listesi · **arkadaş olmayana 403** (iki yönde) · boş gövde 400 · 501 karakter 400                                                                                      |
+| 3 · Tartışma       | başlık açma · kısa başlık 400 · **soru metni referans olarak kabul edilmiyor → `null`** · **yanıtta soru metni YOK** · ileti yazma · listede görünme                                                                  |
+| 4 · Şikâyet        | şikâyet 201 · geçersiz sebep 400 · kendini şikâyet 400                                                                                                                                                                |
+| 5 · Engelleme      | başlık listeden düşer · başlığa giriş 404 · başlığa yazma 404 · arkadaşlık isteği 404 (**iki yönde**) · mesaj 404 (**iki yönde**) · profil 404 (**iki yönde**) · sıralamadan düşer · engellenenler listesinde görünür |
+| 6 · Engel kaldırma | liste boşalır · başlık geri gelir · başlığa giriş 200 · profil 200 · istek yeniden mümkün · **mesaj yine 403 (404 değil)** — yani engel kalktı ama arkadaşlık kuralı duruyor                                          |
+| 7 · Sıralama       | XP'ye göre azalan · kendi satırı · **satırlarda PII yok** · 999 999 999 XP **2000'e kırpıldı** · gizli profil listeden düşer · herkese açığa dönünce geri gelir                                                       |
+| 8 · Oturumsuz      | arkadaşlar/mesajlar/tartışmalar **401**                                                                                                                                                                               |
 
 **Soru metninin asla kopyalanmadığının kanıtı.** `trafik-101` referansını taşıyan bir başlığın
 sunucudan dönen **tam gövdesi**:
@@ -128,27 +128,27 @@ Sorunun kökü (`Yağışlı, sisli…`) yanıtta **0 kez** geçiyor — buna ra
 **Cihaz:** `AYXSUKIVJVPZ7HPZ` — Redmi M1908C3JGG · Android 11 · 1080×2340 (393×851 dp).
 İki gerçek hesap (`Ayse_Kandemir`, `Burak_Yilmaz`) aynı cihazda oturum değiştirilerek sürüldü.
 
-| # | Doğrulanan | Kanıt |
-|---|---|---|
-| 1 | Giriş hata durumu (`E-posta veya parola hatalı.`) | `e9d_10` |
-| 2 | Topluluk merkezi: sınıf süzgeci + üç sosyal giriş | `e9d_15` |
-| 3 | Sıralama, kendi satırı vurgulu | `e9d_15`, `e9d_36` |
-| 4 | Başka kullanıcı profili — **PII yok** | `e9d_17` |
-| 5 | **Arkadaş ekle** → düğme `İsteği geri al`'a döner | `e9d_17` → `e9d_18` |
-| 6 | Hesap değişimi → **gelen istek** görünür | `e9d_24` |
-| 7 | **Kabul** → arkadaş listesi + bilgilendirme | `e9d_25` |
-| 8 | Sohbet **boş durumu** | `e9d_26` |
-| 9 | Mesaj gönderme → giden balon, alan temizlenir | `e9d_29` |
-| 10 | Tartışma listesi: `soru` rozeti, ileti sayısı | `e9d_30` |
-| 11 | **Çözülemeyen referans** → açıklayıcı metin (sunucudan metin gelmediğinin kanıtı) | `e9d_31` |
-| 12 | **Çözülen referans** → sorunun tamamı **yerel bankadan** | `e9d_35` |
-| 13 | Şikâyet sayfası (5 sebep + "insan incelemesi" beyanı) → gönderildi | `e9d_38`, `e9d_39` |
-| 14 | Engelleme onay penceresi → engellendi | `e9d_40` |
-| 15 | **Engellenen sıralamadan düştü**, sıralar yeniden hesaplandı (7→6 kişi) | `e9d_43` |
-| 16 | Engellenenler ekranı → **engel kaldırma** | `e9d_46` |
-| 17 | **Erişim geri döndü**, sıralar eski hâline döndü | `e9d_48` |
-| 18 | Topluluk ayarları: opt-in beyanı, maskot avatarlar, görünürlük, topluluktan ayrılma | `e9d_44`, `e9d_45` |
-| 19 | **Yatay (landscape) yerleşim** düzgün akıyor | `e9d_20_d2_landscape` (Redmi Note 11 · Android 13) |
+| #   | Doğrulanan                                                                          | Kanıt                                              |
+| --- | ----------------------------------------------------------------------------------- | -------------------------------------------------- |
+| 1   | Giriş hata durumu (`E-posta veya parola hatalı.`)                                   | `e9d_10`                                           |
+| 2   | Topluluk merkezi: sınıf süzgeci + üç sosyal giriş                                   | `e9d_15`                                           |
+| 3   | Sıralama, kendi satırı vurgulu                                                      | `e9d_15`, `e9d_36`                                 |
+| 4   | Başka kullanıcı profili — **PII yok**                                               | `e9d_17`                                           |
+| 5   | **Arkadaş ekle** → düğme `İsteği geri al`'a döner                                   | `e9d_17` → `e9d_18`                                |
+| 6   | Hesap değişimi → **gelen istek** görünür                                            | `e9d_24`                                           |
+| 7   | **Kabul** → arkadaş listesi + bilgilendirme                                         | `e9d_25`                                           |
+| 8   | Sohbet **boş durumu**                                                               | `e9d_26`                                           |
+| 9   | Mesaj gönderme → giden balon, alan temizlenir                                       | `e9d_29`                                           |
+| 10  | Tartışma listesi: `soru` rozeti, ileti sayısı                                       | `e9d_30`                                           |
+| 11  | **Çözülemeyen referans** → açıklayıcı metin (sunucudan metin gelmediğinin kanıtı)   | `e9d_31`                                           |
+| 12  | **Çözülen referans** → sorunun tamamı **yerel bankadan**                            | `e9d_35`                                           |
+| 13  | Şikâyet sayfası (5 sebep + "insan incelemesi" beyanı) → gönderildi                  | `e9d_38`, `e9d_39`                                 |
+| 14  | Engelleme onay penceresi → engellendi                                               | `e9d_40`                                           |
+| 15  | **Engellenen sıralamadan düştü**, sıralar yeniden hesaplandı (7→6 kişi)             | `e9d_43`                                           |
+| 16  | Engellenenler ekranı → **engel kaldırma**                                           | `e9d_46`                                           |
+| 17  | **Erişim geri döndü**, sıralar eski hâline döndü                                    | `e9d_48`                                           |
+| 18  | Topluluk ayarları: opt-in beyanı, maskot avatarlar, görünürlük, topluluktan ayrılma | `e9d_44`, `e9d_45`                                 |
+| 19  | **Yatay (landscape) yerleşim** düzgün akıyor                                        | `e9d_20_d2_landscape` (Redmi Note 11 · Android 13) |
 
 ## Build
 

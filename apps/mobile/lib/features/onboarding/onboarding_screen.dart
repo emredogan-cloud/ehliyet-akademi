@@ -7,6 +7,7 @@ import '../../core/theme/tokens.dart';
 import '../../design/brand.dart';
 import '../../domain/onboarding/onboarding_controller.dart';
 import '../../domain/onboarding/study_profile.dart';
+import 'widgets/coach_insight_card.dart';
 
 /// İlk açılış — premium kişiselleştirme akışı. Karşılama → ehliyet sınıfı → sınav deneyimi →
 /// sınav türü → kalan süre → AI Koç tanıtımı. Yanıtlar bir [StudyProfile]'a kaydedilir ve çalışma
@@ -88,9 +89,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         return _StepScaffold(
           step: 1,
           onSkip: () => _finish(completed: false),
-          title: 'Hangi ehliyet türünü alıyorsun?',
-          subtitle: 'Sana en uygun içerikleri sunmak için lütfen seçimini yap.',
-          footnote: 'Seçimin daha sonra değiştirilebilir.',
+          title: 'Hangi ehliyeti alıyorsun?',
+          subtitle: 'İçerikler ve öneriler seçimine göre önceliklenir.',
           onNext: _next,
           child: _CategoryStep(selected: _category, onSelect: (c) => setState(() => _category = c)),
         );
@@ -100,7 +100,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           onSkip: () => _finish(completed: false),
           hero: AppImages.onbThink,
           title: 'Daha önce sınava girdin mi?',
-          subtitle: 'Sana en uygun çalışma planını belirleyebilmemiz için bilgiye ihtiyacımız var.',
+          subtitle: 'Çalışma planını buna göre kuruyoruz.',
           onNext: _next,
           child: _ExperienceStep(selected: _experience, onSelect: (e) => setState(() => _experience = e)),
         );
@@ -108,8 +108,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         return _StepScaffold(
           step: 3,
           onSkip: () => _finish(completed: false),
-          title: 'e-Sınav mı, Direksiyon Sınavı mı hazırlanıyorsun?',
-          subtitle: 'Sana en uygun içerikleri sunmak için seçimini yap. İkisini birden seçebilirsin.',
+          title: 'Hangi sınava hazırlanıyorsun?',
+          subtitle: 'İkisini birden seçebilirsin.',
           onNext: _next,
           child: _FocusStep(
             direksiyon: _direksiyon,
@@ -124,7 +124,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           onSkip: () => _finish(completed: false),
           hero: AppImages.onbCalendar,
           title: 'Sınavına ne kadar süre kaldı?',
-          subtitle: 'Sana en uygun çalışma planını oluşturabilmemiz için seçimini yap.',
+          subtitle: 'Günlük soru hedefin buna göre belirlenir.',
           onNext: _next,
           child: _TimeframeStep(selected: _timeframe, onSelect: (t) => setState(() => _timeframe = t)),
         );
@@ -138,6 +138,88 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 // Slide 0 — Welcome
 // ─────────────────────────────────────────────────────────────────────────────
 
+/// Dikey bütçe sınıfı — onboarding düzeninin ne kadar sıkıştırılacağını belirler.
+///
+/// Yalnız piksel yüksekliğine değil, YAZI ÖLÇEĞİNE de bakar: 1,3× yazı ölçeğinde aynı piksel
+/// yüksekliği çok daha az satır alır. Böylece "büyük yazı" kullanan kullanıcı da kaydırmasız
+/// bir akış görür.
+enum OnboardingDensity { roomy, tight, dense }
+
+OnboardingDensity densityFor(BuildContext context, double availableHeight) {
+  final scale = MediaQuery.textScalerOf(context).scale(14) / 14;
+  final effective = availableHeight / scale;
+  // Eşikler ÖLÇÜMLE belirlendi (bkz. faz raporu): 360×640 telefonda gövde ≈ 492 px'tir ve
+  // ikincil açıklamalar düşmeden kaydırmasız sığmaz → o ölçü `dense` tarafındadır.
+  if (effective < 520) return OnboardingDensity.dense;
+  if (effective < 700) return OnboardingDensity.tight;
+  return OnboardingDensity.roomy;
+}
+
+/// Adım gövdelerinin (seçenek kartları) yoğunluğu okuyabilmesi için taşıyıcı.
+class OnboardingDensityScope extends InheritedWidget {
+  const OnboardingDensityScope({
+    super.key,
+    required this.density,
+    this.sideBySide = false,
+    required super.child,
+  });
+  final OnboardingDensity density;
+
+  /// Yatay düzen: seçenekler tek sütun yerine İKİ sütuna dizilir. Yatayda dikey bütçe yarıya
+  /// iner ama yatay bütçe iki katına çıkar; 4 seçenekli adım ancak böyle kaydırmasız sığar.
+  final bool sideBySide;
+
+  static OnboardingDensityScope? _of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<OnboardingDensityScope>();
+
+  static OnboardingDensity of(BuildContext context) => _of(context)?.density ?? OnboardingDensity.roomy;
+
+  static bool sideBySideOf(BuildContext context) => _of(context)?.sideBySide ?? false;
+
+  @override
+  bool updateShouldNotify(OnboardingDensityScope old) =>
+      old.density != density || old.sideBySide != sideBySide;
+}
+
+/// Seçenek kartlarını dikey listeye veya (yatay düzende) iki sütuna dizer.
+class _OptionLayout extends StatelessWidget {
+  const _OptionLayout({required this.items, required this.gap});
+  final List<Widget> items;
+  final double gap;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!OnboardingDensityScope.sideBySideOf(context) || items.length < 4) {
+      return Column(
+        children: [
+          for (var i = 0; i < items.length; i++) ...[
+            items[i],
+            if (i != items.length - 1) SizedBox(height: gap),
+          ],
+        ],
+      );
+    }
+    final rows = <Widget>[];
+    for (var i = 0; i < items.length; i += 2) {
+      final second = i + 1 < items.length ? items[i + 1] : null;
+      rows.add(
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(child: items[i]),
+              SizedBox(width: gap),
+              Expanded(child: second ?? const SizedBox.shrink()),
+            ],
+          ),
+        ),
+      );
+      if (i + 2 < items.length) rows.add(SizedBox(height: gap));
+    }
+    return Column(children: rows);
+  }
+}
+
 class _WelcomeSlide extends StatelessWidget {
   const _WelcomeSlide({required this.onNext, required this.onSkip});
   final VoidCallback onNext;
@@ -145,76 +227,142 @@ class _WelcomeSlide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final p = context.palette;
-    final features = [
-      (Icons.track_changes_rounded, p.primary, 'KONU ANLATIMI', 'Ayrıntılı konu anlatımları'),
-      (Icons.psychology_rounded, p.purple, 'AKILLI TESTLER', 'Zeka destekli soru çözümleri'),
-      (Icons.bar_chart_rounded, p.green, 'İLERLEME TAKİBİ', 'Gelişimini anlık izle'),
-      (Icons.star_rounded, p.accent, 'BAŞARI ODAKLI', 'Hedefine odaklan'),
-    ];
     return Column(
       children: [
-        Align(
-          alignment: Alignment.centerRight,
-          child: _SkipButton(onSkip: onSkip),
-        ),
+        Align(alignment: Alignment.centerRight, child: _SkipButton(onSkip: onSkip)),
         Expanded(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s6),
-            child: Column(
-              children: [
-                MascotImage(AppImages.onbWelcome, height: 240, semanticLabel: 'Ehliyet Akademi'),
-                const SizedBox(height: AppSpacing.s3),
-                const BrandChip(label: 'EHLİYET AKADEMİ', icon: Icons.school_rounded),
-                const SizedBox(height: AppSpacing.s4),
-                Text(
-                  'EHLİYET AKADEMİ',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.displayMedium?.copyWith(letterSpacing: 0.5),
-                ),
-                const SizedBox(height: AppSpacing.s3),
-                Text(
-                  'B sınıfı ehliyet sınavına akıllı, kişisel ve çevrimdışı hazırlık.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: p.text2, height: 1.5, fontSize: 15),
-                ),
-                const SizedBox(height: AppSpacing.s4),
-                Text(
-                  'Hadi başlayalım!',
-                  style: TextStyle(color: p.primary, fontSize: 22, fontStyle: FontStyle.italic, fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(height: AppSpacing.s5),
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.s4, horizontal: AppSpacing.s2),
-                  decoration: BoxDecoration(
-                    color: p.surface2,
-                    borderRadius: BorderRadius.circular(AppRadii.lg),
-                    border: Border.all(color: p.border),
-                  ),
-                  child: Row(
-                    children: [
-                      for (final f in features)
-                        Expanded(
-                          child: Column(
-                            children: [
-                              Icon(f.$1, color: f.$2, size: 26),
-                              const SizedBox(height: 6),
-                              Text(f.$3, textAlign: TextAlign.center, style: TextStyle(fontSize: 9.5, fontWeight: FontWeight.w800, color: p.text, letterSpacing: 0.2)),
-                              const SizedBox(height: 2),
-                              Text(f.$4, textAlign: TextAlign.center, style: TextStyle(fontSize: 9, color: p.text3, height: 1.2)),
-                            ],
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+          child: LayoutBuilder(
+            builder: (context, c) => c.maxWidth > c.maxHeight
+                ? _landscape(context, c)
+                : _portrait(context, c),
           ),
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(AppSpacing.s6, AppSpacing.s3, AppSpacing.s6, AppSpacing.s5),
           child: GradientPillButton(label: 'Devam', trailingIcon: Icons.chevron_right_rounded, onPressed: onNext),
+        ),
+      ],
+    );
+  }
+
+  List<(IconData, Color, String, String)> _features(AppPalette p) => [
+    (Icons.track_changes_rounded, p.primary, 'KONU ANLATIMI', 'Ayrıntılı anlatımlar'),
+    (Icons.psychology_rounded, p.purple, 'AKILLI TESTLER', 'Zeka destekli çözüm'),
+    (Icons.bar_chart_rounded, p.green, 'İLERLEME', 'Gelişimini izle'),
+    (Icons.star_rounded, p.accent, 'BAŞARI ODAKLI', 'Hedefine odaklan'),
+  ];
+
+  Widget _titleBlock(BuildContext context, {required OnboardingDensity density}) {
+    final p = context.palette;
+    final theme = Theme.of(context).textTheme;
+    final dense = density == OnboardingDensity.dense;
+    final roomy = density == OnboardingDensity.roomy;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Marka çipi başlığın kendisiyle aynı metni taşıdığı için dar düzende gösterilmez.
+        if (roomy) ...[
+          const BrandChip(label: 'EHLİYET AKADEMİ', icon: Icons.school_rounded),
+          const SizedBox(height: AppSpacing.s3),
+        ],
+        Text(
+          'EHLİYET AKADEMİ',
+          textAlign: TextAlign.center,
+          style: (dense
+                  ? theme.headlineSmall
+                  : (roomy ? theme.displayMedium : theme.headlineMedium))
+              ?.copyWith(letterSpacing: 0.5),
+        ),
+        // Dar bütçede alt başlık düşer: aynı vaadi koç kartı zaten anlatıyor.
+        if (!dense) ...[
+          const SizedBox(height: AppSpacing.s2),
+          Text(
+            'Ehliyet sınavına akıllı, kişisel ve çevrimdışı hazırlık.',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: p.text2, height: 1.4, fontSize: 14),
+          ),
+        ],
+      ],
+    );
+  }
+
+  Widget _featureStrip(BuildContext context, {required bool tight}) {
+    final p = context.palette;
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: tight ? AppSpacing.s2 : AppSpacing.s3, horizontal: AppSpacing.s2),
+      decoration: BoxDecoration(
+        color: p.surface2,
+        borderRadius: BorderRadius.circular(AppRadii.lg),
+        border: Border.all(color: p.border),
+      ),
+      child: Row(
+        children: [
+          for (final f in _features(p))
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(f.$1, color: f.$2, size: tight ? 21 : 24),
+                  const SizedBox(height: 4),
+                  Text(f.$3, textAlign: TextAlign.center, style: TextStyle(fontSize: 9, fontWeight: FontWeight.w800, color: p.text, letterSpacing: 0.2, height: 1.15)),
+                  // Dar düzende ikinci satır düşer — ikon + etiket anlamı zaten taşıyor.
+                  if (!tight) ...[
+                    const SizedBox(height: 2),
+                    Text(f.$4, textAlign: TextAlign.center, style: TextStyle(fontSize: 9, color: p.text3, height: 1.15)),
+                  ],
+                ],
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _portrait(BuildContext context, BoxConstraints c) {
+    final d = densityFor(context, c.maxHeight);
+    final tight = d != OnboardingDensity.roomy;
+    final mascotH = (c.maxHeight * (d == OnboardingDensity.dense ? 0.15 : 0.20)).clamp(56.0, 200.0);
+    return _CenteredScroll(
+      minHeight: c.maxHeight,
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s5, vertical: AppSpacing.s2),
+      children: [
+        IdleMascot(AppImages.onbWelcome, height: mascotH, semanticLabel: 'Ehliyet Akademi'),
+        SizedBox(height: tight ? AppSpacing.s2 : AppSpacing.s4),
+        _titleBlock(context, density: d),
+        SizedBox(height: tight ? AppSpacing.s3 : AppSpacing.s5),
+        _featureStrip(context, tight: tight),
+        SizedBox(height: tight ? AppSpacing.s3 : AppSpacing.s4),
+        const CoachInsightCard(step: 0, compact: true),
+      ],
+    );
+  }
+
+  Widget _landscape(BuildContext context, BoxConstraints c) {
+    final mascotH = (c.maxHeight * 0.36).clamp(64.0, 170.0);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: _CenteredScroll(
+            minHeight: c.maxHeight,
+            padding: const EdgeInsets.fromLTRB(AppSpacing.s5, AppSpacing.s2, AppSpacing.s3, AppSpacing.s2),
+            children: [
+              IdleMascot(AppImages.onbWelcome, height: mascotH, semanticLabel: 'Ehliyet Akademi'),
+              const SizedBox(height: AppSpacing.s3),
+              _titleBlock(context, density: OnboardingDensity.dense),
+            ],
+          ),
+        ),
+        Expanded(
+          child: _CenteredScroll(
+            minHeight: c.maxHeight,
+            padding: const EdgeInsets.fromLTRB(AppSpacing.s3, AppSpacing.s2, AppSpacing.s5, AppSpacing.s2),
+            children: [
+              _featureStrip(context, tight: true),
+              const SizedBox(height: AppSpacing.s3),
+              const CoachInsightCard(step: 0, compact: true),
+            ],
+          ),
         ),
       ],
     );
@@ -234,7 +382,6 @@ class _StepScaffold extends StatelessWidget {
     required this.onNext,
     required this.onSkip,
     this.hero,
-    this.footnote,
   });
   final int step; // 1..4
   final String title;
@@ -243,18 +390,23 @@ class _StepScaffold extends StatelessWidget {
   final VoidCallback onNext;
   final VoidCallback onSkip;
   final String? hero;
-  final String? footnote;
 
   @override
   Widget build(BuildContext context) {
-    final p = context.palette;
+    final size = MediaQuery.sizeOf(context);
+    final landscape = size.width > size.height;
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(AppSpacing.s5, AppSpacing.s2, AppSpacing.s5, AppSpacing.s2),
+          padding: EdgeInsets.fromLTRB(
+            AppSpacing.s5,
+            landscape ? AppSpacing.s1 : AppSpacing.s2,
+            AppSpacing.s5,
+            landscape ? AppSpacing.s1 : AppSpacing.s2,
+          ),
           child: Row(
             children: [
-              const BrandMark(size: 44),
+              BrandMark(size: landscape ? 32 : 44),
               const SizedBox(width: AppSpacing.s4),
               Expanded(child: SegmentBar(total: 4, active: step)),
               const SizedBox(width: AppSpacing.s4),
@@ -263,38 +415,139 @@ class _StepScaffold extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(AppSpacing.s5, AppSpacing.s3, AppSpacing.s5, AppSpacing.s3),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                if (hero != null)
-                  Center(child: MascotImage(hero!, height: 180, semanticLabel: '')),
-                if (hero != null) const SizedBox(height: AppSpacing.s4),
-                Text(title, style: Theme.of(context).textTheme.headlineMedium?.copyWith(height: 1.15)),
-                const SizedBox(height: AppSpacing.s2),
-                Text(subtitle, style: TextStyle(color: p.text2, height: 1.45, fontSize: 14.5)),
-                const SizedBox(height: AppSpacing.s5),
-                child,
-                if (footnote != null) ...[
-                  const SizedBox(height: AppSpacing.s4),
-                  Row(
-                    children: [
-                      Icon(Icons.verified_user_outlined, size: 16, color: p.text3),
-                      const SizedBox(width: AppSpacing.s2),
-                      Expanded(child: Text(footnote!, style: TextStyle(color: p.text3, fontSize: 12.5))),
-                    ],
-                  ),
-                ],
-              ],
-            ),
+          child: LayoutBuilder(
+            builder: (context, c) =>
+                c.maxWidth > c.maxHeight ? _landscape(context, c) : _portrait(context, c),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(AppSpacing.s5, AppSpacing.s2, AppSpacing.s5, AppSpacing.s5),
+          padding: EdgeInsets.fromLTRB(
+            AppSpacing.s5,
+            AppSpacing.s2,
+            AppSpacing.s5,
+            landscape ? AppSpacing.s3 : AppSpacing.s5,
+          ),
           child: GradientPillButton(label: 'Devam Et', trailingIcon: Icons.arrow_forward_rounded, onPressed: onNext),
         ),
       ],
+    );
+  }
+
+  Widget _titleBlock(BuildContext context, {required OnboardingDensity density}) {
+    final p = context.palette;
+    final t = Theme.of(context).textTheme;
+    // Orta kademede de titleLarge kullanılır: soru kısa, başlık yine baskın kalıyor ve
+    // 4 seçenekli adımın seçenek açıklamalarını korumaya yetecek yer açılıyor (ölçüldü).
+    final style = switch (density) {
+      OnboardingDensity.roomy => t.headlineMedium,
+      _ => t.titleLarge,
+    };
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(title, style: style?.copyWith(height: 1.15)),
+        // Dar bütçede alt açıklama düşer: soru zaten net, bağlamı koç kartı veriyor.
+        if (density != OnboardingDensity.dense) ...[
+          const SizedBox(height: AppSpacing.s2),
+          Text(subtitle, style: TextStyle(color: p.text2, height: 1.35, fontSize: 14)),
+        ],
+      ],
+    );
+  }
+
+  /// Dikey düzen — sığıyorsa DİKEY ORTALI, sığmıyorsa kaydırılabilir (kırpma yok).
+  /// Kahraman görsel yüksekliği alana göre küçülür; çok dar ekranda hiç çizilmez.
+  Widget _portrait(BuildContext context, BoxConstraints c) {
+    final h = c.maxHeight;
+    final d = densityFor(context, h);
+    final dense = d == OnboardingDensity.dense;
+    final heroH = (h * 0.17).clamp(72.0, 156.0);
+    // Kahraman görsel yalnız EN geniş kademede çizilir. Orta kademede 4 seçenekli adım
+    // (kalan süre) görselle birlikte kaydırmasız sığmıyor — ölçüldü, bkz. faz raporu.
+    final showHero = hero != null && d == OnboardingDensity.roomy;
+    final gap = dense ? AppSpacing.s2 : (d == OnboardingDensity.tight ? AppSpacing.s3 : AppSpacing.s5);
+    return OnboardingDensityScope(
+      density: d,
+      child: _CenteredScroll(
+        minHeight: h,
+        padding: const EdgeInsets.fromLTRB(AppSpacing.s5, AppSpacing.s2, AppSpacing.s5, AppSpacing.s2),
+        children: [
+          if (showHero) ...[
+            Center(child: IdleMascot(hero!, height: heroH, semanticLabel: '')),
+            const SizedBox(height: AppSpacing.s4),
+          ],
+          _titleBlock(context, density: d),
+          SizedBox(height: gap),
+          child,
+          SizedBox(height: gap),
+          CoachInsightCard(step: step, compact: d != OnboardingDensity.roomy),
+        ],
+      ),
+    );
+  }
+
+  /// Yatay düzen — solda anlatım + koç kartı, sağda seçenekler. Böylece yatayda da
+  /// kaydırma gerekmez ve CTA her zaman görünür kalır.
+  Widget _landscape(BuildContext context, BoxConstraints c) {
+    return OnboardingDensityScope(
+      density: OnboardingDensity.dense,
+      sideBySide: true,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: _CenteredScroll(
+              minHeight: c.maxHeight,
+              padding: const EdgeInsets.fromLTRB(AppSpacing.s5, AppSpacing.s2, AppSpacing.s3, AppSpacing.s2),
+              children: [
+                _titleBlock(context, density: OnboardingDensity.dense),
+                const SizedBox(height: AppSpacing.s3),
+                CoachInsightCard(step: step, compact: true),
+              ],
+            ),
+          ),
+          Expanded(
+            child: _CenteredScroll(
+              minHeight: c.maxHeight,
+              padding: const EdgeInsets.fromLTRB(AppSpacing.s3, AppSpacing.s2, AppSpacing.s5, AppSpacing.s2),
+              children: [child],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Sığdığında DİKEY ORTALAYAN, sığmadığında kaydıran gövde.
+///
+/// Faz E6 şartı "kaydırmasız ve taşmasız"dır. Bu bileşen taşmayı yapısal olarak imkânsız kılar
+/// (kaydırılabilir), ölçütü ise ölçülebilir hâle getirir: içerik sığıyorsa `maxScrollExtent == 0`
+/// olur ve testler tam olarak bunu doğrular. Desteklenen ölçülerin ALTINDA (ör. çok küçük ekran +
+/// çok büyük yazı tipi) düzen kırpmak yerine kaydırmaya geçer — dürüst bozulma.
+class _CenteredScroll extends StatelessWidget {
+  const _CenteredScroll({
+    required this.minHeight,
+    required this.children,
+    required this.padding,
+  });
+  final double minHeight;
+  final List<Widget> children;
+  final EdgeInsets padding;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: padding,
+      child: ConstrainedBox(
+        constraints: BoxConstraints(minHeight: minHeight - padding.vertical),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: children,
+        ),
+      ),
     );
   }
 }
@@ -342,45 +595,75 @@ class _CategoryStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
-    return Column(
-      children: [
-        for (final cat in LicenceCategory.values) ...[
+    final d = OnboardingDensityScope.of(context);
+    final dense = d == OnboardingDensity.dense;
+    final roomy = d == OnboardingDensity.roomy;
+    // ÖLÇÜLDÜ: fotoğrafı esnek (flex 52) vermek metin sütununu 118 px'e düşürüyor ve açıklama
+    // 4 satıra sarıp kartı 196 px yapıyordu. Fotoğraf artık SABİT genişlikte; metin sütunu geniş.
+    final photo = dense ? 36.0 : (roomy ? 68.0 : 50.0);
+    return _OptionLayout(
+      gap: roomy ? AppSpacing.s3 : AppSpacing.s2,
+      items: [
+        for (final cat in LicenceCategory.values)
           GlowCard(
             selected: selected == cat,
             onTap: () => onSelect(cat),
-            padding: const EdgeInsets.all(AppSpacing.s4),
+            padding: roomy
+                ? const EdgeInsets.all(AppSpacing.s4)
+                : EdgeInsets.symmetric(
+                    horizontal: AppSpacing.s3,
+                    vertical: dense ? AppSpacing.s2 : AppSpacing.s3,
+                  ),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(
+                  width: photo * 1.35,
+                  child: MascotImage(_photos[cat]!, height: photo, semanticLabel: cat.title),
+                ),
+                const SizedBox(width: AppSpacing.s3),
                 Expanded(
-                  flex: 48,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      if (cat == LicenceCategory.b)
+                      if (cat == LicenceCategory.b && roomy)
                         const Padding(
-                          padding: EdgeInsets.only(bottom: 4),
+                          padding: EdgeInsets.only(bottom: 3),
                           child: BrandChip(label: 'EN POPÜLER', icon: Icons.star_rounded, color: Color(0xFFF5A623)),
                         ),
-                      Text(cat.badge, style: TextStyle(color: p.primary, fontSize: 28, fontWeight: FontWeight.w900, height: 1.05)),
-                      Text(cat.title, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
-                      Text(cat.blurb, style: TextStyle(color: p.text3, fontSize: 11.5, height: 1.2)),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: TextBaseline.alphabetic,
+                        children: [
+                          Text(
+                            cat.badge,
+                            style: TextStyle(
+                              color: p.primary,
+                              fontSize: dense ? 20 : 26,
+                              fontWeight: FontWeight.w900,
+                              height: 1.05,
+                            ),
+                          ),
+                          const SizedBox(width: AppSpacing.s2),
+                          Expanded(
+                            child: Text(
+                              cat.title,
+                              style: TextStyle(fontWeight: FontWeight.w800, fontSize: dense ? 14 : 15.5),
+                            ),
+                          ),
+                        ],
+                      ),
+                      // Dar bütçede açıklama düşer; sınıf harfi ve adı zaten seçimi anlatıyor.
+                      if (roomy)
+                        Text(cat.blurb, style: TextStyle(color: p.text3, fontSize: 11.5, height: 1.25)),
                     ],
                   ),
-                ),
-                const SizedBox(width: AppSpacing.s2),
-                Expanded(
-                  flex: 52,
-                  child: MascotImage(_photos[cat]!, height: 74, fit: BoxFit.contain, semanticLabel: cat.title),
                 ),
                 const SizedBox(width: AppSpacing.s2),
                 _RadioDot(selected: selected == cat),
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.s3),
-        ],
       ],
     );
   }
@@ -402,9 +685,10 @@ class _ExperienceStep extends StatelessWidget {
       ExamExperience.firstTime: (Icons.person_add_alt_1_rounded, p.primary),
       ExamExperience.retaking: (Icons.autorenew_rounded, p.accent),
     };
-    return Column(
-      children: [
-        for (final e in ExamExperience.values) ...[
+    return _OptionLayout(
+      gap: _rowGap(context),
+      items: [
+        for (final e in ExamExperience.values)
           _OptionRow(
             icon: icons[e]!.$1,
             color: icons[e]!.$2,
@@ -413,8 +697,6 @@ class _ExperienceStep extends StatelessWidget {
             selected: selected == e,
             onTap: () => onSelect(e),
           ),
-          const SizedBox(height: AppSpacing.s3),
-        ],
       ],
     );
   }
@@ -492,11 +774,19 @@ class _FocusCard extends StatelessWidget {
     return GlowCard(
       selected: selected,
       onTap: onTap,
-      padding: const EdgeInsets.all(AppSpacing.s4),
+      padding: EdgeInsets.all(
+        OnboardingDensityScope.of(context) == OnboardingDensity.dense ? AppSpacing.s3 : AppSpacing.s4,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(child: MascotImage(hero, height: 96, semanticLabel: title.replaceAll('\n', ' '))),
+          Center(
+            child: MascotImage(
+              hero,
+              height: OnboardingDensityScope.of(context) == OnboardingDensity.dense ? 56 : 88,
+              semanticLabel: title.replaceAll('\n', ' '),
+            ),
+          ),
           const SizedBox(height: AppSpacing.s3),
           Row(
             children: [
@@ -506,13 +796,24 @@ class _FocusCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.s2),
-          Text(blurb, style: TextStyle(color: p.text3, fontSize: 12, height: 1.35)),
-          const SizedBox(height: AppSpacing.s3),
+          if (OnboardingDensityScope.of(context) != OnboardingDensity.dense) ...[
+            Text(blurb, style: TextStyle(color: p.text3, fontSize: 12, height: 1.35)),
+            const SizedBox(height: AppSpacing.s3),
+          ] else
+            const SizedBox(height: AppSpacing.s2),
           Row(
             children: [
               Icon(selected ? Icons.check_circle_rounded : Icons.circle_outlined, size: 18, color: selected ? p.primary : p.text3),
               const SizedBox(width: 6),
-              Text(selected ? 'Seçildi' : 'Seç', style: TextStyle(color: selected ? p.primary : p.text3, fontWeight: FontWeight.w700, fontSize: 13)),
+              // Büyük yazı ölçeğinde bu satır taşıyordu (ölçüldü) → esnek + tek satır.
+              Flexible(
+                child: Text(
+                  selected ? 'Seçildi' : 'Seç',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: selected ? p.primary : p.text3, fontWeight: FontWeight.w700, fontSize: 13),
+                ),
+              ),
             ],
           ),
         ],
@@ -539,9 +840,10 @@ class _TimeframeStep extends StatelessWidget {
       ExamTimeframe.moreThanMonth: (Icons.event_note_rounded, p.primary),
       ExamTimeframe.notSure: (Icons.help_outline_rounded, p.accent),
     };
-    return Column(
-      children: [
-        for (final t in ExamTimeframe.values) ...[
+    return _OptionLayout(
+      gap: _rowGap(context),
+      items: [
+        for (final t in ExamTimeframe.values)
           _OptionRow(
             icon: icons[t]!.$1,
             color: icons[t]!.$2,
@@ -550,8 +852,6 @@ class _TimeframeStep extends StatelessWidget {
             selected: selected == t,
             onTap: () => onSelect(t),
           ),
-          const SizedBox(height: AppSpacing.s3),
-        ],
       ],
     );
   }
@@ -565,14 +865,89 @@ class _CoachSlide extends StatelessWidget {
   const _CoachSlide({required this.onFinish});
   final VoidCallback onFinish;
 
+  List<(IconData, Color, String, String)> _features(AppPalette p) => [
+    (Icons.trending_up_rounded, p.primary, 'İlerlemeni İzler', 'Performansını analiz eder.'),
+    (Icons.person_pin_rounded, p.purple, 'Sana Özel Önerir', 'Zayıf konularına plan kurar.'),
+    (Icons.chat_bubble_rounded, p.accent, 'Sorularını Yanıtlar', 'Trafik sorularına anında yanıt.'),
+  ];
+
+  Widget _header(BuildContext context, OnboardingDensity d, double owlH) {
+    final p = context.palette;
+    final dense = d == OnboardingDensity.dense;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(text: 'AI ', style: TextStyle(color: p.primary, fontWeight: FontWeight.w900, fontSize: dense ? 26 : 36)),
+                    TextSpan(text: 'Koç', style: TextStyle(color: p.text, fontWeight: FontWeight.w900, fontSize: dense ? 26 : 36)),
+                  ],
+                ),
+              ),
+              if (!dense) ...[
+                const SizedBox(height: AppSpacing.s2),
+                Text(
+                  'İlerlemeni izleyen, sana özel öneren proaktif bir koç.',
+                  style: TextStyle(color: p.text2, height: 1.4, fontSize: 13),
+                ),
+              ],
+            ],
+          ),
+        ),
+        IdleMascot(AppImages.owlWave, height: owlH, semanticLabel: 'AI Koç'),
+      ],
+    );
+  }
+
+  List<Widget> _featureCards(BuildContext context, OnboardingDensity d) {
+    final p = context.palette;
+    final dense = d == OnboardingDensity.dense;
+    return [
+      for (final f in _features(p)) ...[
+        Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: AppSpacing.s3,
+            vertical: dense ? 6 : AppSpacing.s4,
+          ),
+          decoration: BoxDecoration(
+            color: p.surface,
+            borderRadius: BorderRadius.circular(AppRadii.lg),
+            border: Border.all(color: f.$2.withValues(alpha: 0.35)),
+          ),
+          child: Row(
+            children: [
+              IconBadge(icon: f.$1, color: f.$2, size: dense ? 36 : 50, glow: true),
+              const SizedBox(width: AppSpacing.s3),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(f.$3, style: TextStyle(fontWeight: FontWeight.w800, fontSize: dense ? 14 : 15.5)),
+                    if (!dense) ...[
+                      const SizedBox(height: 3),
+                      Text(f.$4, style: TextStyle(color: p.text3, fontSize: 12, height: 1.3)),
+                    ],
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: dense ? 6 : AppSpacing.s3),
+      ],
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
-    final features = [
-      (Icons.trending_up_rounded, p.primary, 'İlerlemeni İzler', 'Performansını analiz eder, gelişimini takip eder.'),
-      (Icons.person_pin_rounded, p.purple, 'Sana Özel Önerir', 'Zayıf konularını tespit eder, sana özel çalışma planı sunar.'),
-      (Icons.chat_bubble_rounded, p.accent, 'Sorularını Yanıtlar', 'Ehliyet ve trafik ile ilgili tüm sorularına anında yanıt verir.'),
-    ];
     return Column(
       children: [
         Align(
@@ -591,68 +966,47 @@ class _CoachSlide extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+          child: LayoutBuilder(
+            builder: (context, c) {
+              final landscape = c.maxWidth > c.maxHeight;
+              final d = landscape ? OnboardingDensity.dense : densityFor(context, c.maxHeight);
+              final owlH = (c.maxHeight * (d == OnboardingDensity.dense ? 0.16 : 0.20)).clamp(56.0, 140.0);
+              if (landscape) {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: _CenteredScroll(
+                        minHeight: c.maxHeight,
+                        padding: const EdgeInsets.fromLTRB(AppSpacing.s5, AppSpacing.s2, AppSpacing.s3, AppSpacing.s2),
                         children: [
-                          RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(text: 'AI ', style: TextStyle(color: p.primary, fontWeight: FontWeight.w900, fontSize: 38)),
-                                TextSpan(text: 'Koç', style: TextStyle(color: p.text, fontWeight: FontWeight.w900, fontSize: 38)),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: AppSpacing.s2),
-                          Text(
-                            'İlerlemeni izleyen, sana özel öneren proaktif bir koç. Ehliyet ve trafik sorularını yanıtlar.',
-                            style: TextStyle(color: p.text2, height: 1.45, fontSize: 13.5),
-                          ),
+                          _header(context, d, owlH),
+                          const SizedBox(height: AppSpacing.s3),
+                          const CoachInsightCard(step: 5, compact: true),
                         ],
                       ),
                     ),
-                    MascotImage(AppImages.owlWave, height: 150, semanticLabel: 'AI Koç'),
+                    Expanded(
+                      child: _CenteredScroll(
+                        minHeight: c.maxHeight,
+                        padding: const EdgeInsets.fromLTRB(AppSpacing.s3, AppSpacing.s2, AppSpacing.s5, AppSpacing.s2),
+                        children: _featureCards(context, d),
+                      ),
+                    ),
                   ],
-                ),
-                const SizedBox(height: AppSpacing.s5),
-                for (final f in features) ...[
-                  Container(
-                    padding: const EdgeInsets.all(AppSpacing.s4),
-                    decoration: BoxDecoration(
-                      color: p.surface,
-                      borderRadius: BorderRadius.circular(AppRadii.lg),
-                      border: Border.all(color: f.$2.withValues(alpha: 0.35)),
-                    ),
-                    child: Row(
-                      children: [
-                        IconBadge(icon: f.$1, color: f.$2, size: 52, glow: true),
-                        const SizedBox(width: AppSpacing.s4),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(f.$3, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
-                              const SizedBox(height: 3),
-                              Text(f.$4, style: TextStyle(color: p.text3, fontSize: 12.5, height: 1.35)),
-                            ],
-                          ),
-                        ),
-                        Icon(Icons.chevron_right_rounded, color: f.$2),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.s3),
+                );
+              }
+              return _CenteredScroll(
+                minHeight: c.maxHeight,
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s5, vertical: AppSpacing.s2),
+                children: [
+                  _header(context, d, owlH),
+                  SizedBox(height: d == OnboardingDensity.roomy ? AppSpacing.s5 : AppSpacing.s3),
+                  ..._featureCards(context, d),
+                  CoachInsightCard(step: 5, compact: d != OnboardingDensity.roomy),
                 ],
-              ],
-            ),
+              );
+            },
           ),
         ),
         Padding(
@@ -671,6 +1025,9 @@ class _CoachSlide extends StatelessWidget {
 // ─────────────────────────────────────────────────────────────────────────────
 // Shared small widgets
 // ─────────────────────────────────────────────────────────────────────────────
+
+double _rowGap(BuildContext context) =>
+    OnboardingDensityScope.of(context) == OnboardingDensity.dense ? AppSpacing.s2 : AppSpacing.s3;
 
 class _OptionRow extends StatelessWidget {
   const _OptionRow({
@@ -691,21 +1048,46 @@ class _OptionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
+    final d = OnboardingDensityScope.of(context);
+    final dense = d == OnboardingDensity.dense;
     return GlowCard(
       selected: selected,
       onTap: onTap,
-      padding: const EdgeInsets.all(AppSpacing.s4),
+      padding: switch (d) {
+        OnboardingDensity.roomy => const EdgeInsets.all(AppSpacing.s4),
+        OnboardingDensity.tight => const EdgeInsets.symmetric(
+          horizontal: AppSpacing.s4,
+          vertical: 10,
+        ),
+        OnboardingDensity.dense => const EdgeInsets.symmetric(
+          horizontal: AppSpacing.s3,
+          vertical: 6,
+        ),
+      },
       child: Row(
         children: [
-          IconBadge(icon: icon, color: color, size: 48, glow: selected),
-          const SizedBox(width: AppSpacing.s4),
+          IconBadge(
+            icon: icon,
+            color: color,
+            size: switch (d) {
+              OnboardingDensity.roomy => 46.0,
+              OnboardingDensity.tight => 40.0,
+              OnboardingDensity.dense => 30.0,
+            },
+            glow: selected,
+          ),
+          SizedBox(width: dense ? AppSpacing.s3 : AppSpacing.s4),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Text(title, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
-                const SizedBox(height: 2),
-                Text(subtitle, style: TextStyle(color: p.text3, fontSize: 12.5, height: 1.3)),
+                Text(title, style: TextStyle(fontWeight: FontWeight.w800, fontSize: dense ? 14.5 : 16)),
+                // Dar bütçede alt açıklama düşer; başlık seçimi tek başına anlatıyor.
+                if (!dense) ...[
+                  const SizedBox(height: 2),
+                  Text(subtitle, style: TextStyle(color: p.text3, fontSize: 12.5, height: 1.3)),
+                ],
               ],
             ),
           ),

@@ -275,7 +275,16 @@ Future<void> pumpApp(
   /// Faz E5 — çalışma profili main()'de senkron okunup enjekte edildiği için (onboardingSeen ile
   /// aynı desen), testte de sağlanır. Verilmezse varsayılan profil (B sınıfı) kullanılır.
   StudyProfile? studyProfile,
+
+  /// Faz E6 — hareket azaltma. VARSAYILAN `true`: onboarding'in dönen koç kartı ve süzülen
+  /// maskotu kapalı kalır, böylece `pumpAndSettle` sonsuz kare kuyruğuna takılmaz. Dönüşü/animasyonu
+  /// test eden testler bunu `false` yapar ve `pump(süre)` ile zamanı elle ilerletir.
+  bool reduceMotion = true,
 }) async {
+  tester.platformDispatcher.accessibilityFeaturesTestValue = FakeAccessibilityFeatures(
+    disableAnimations: reduceMotion,
+  );
+  addTearDown(tester.platformDispatcher.clearAccessibilityFeaturesTestValue);
   SharedPreferences.setMockInitialValues(prefs ?? {});
   await tester.pumpWidget(
     ProviderScope(

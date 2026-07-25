@@ -54,8 +54,8 @@ enum ExamFocus {
 /// Sınava kalan süre → çalışma planı yoğunluğu.
 enum ExamTimeframe {
   lessThanWeek('lt-week', '1 Haftadan Az', 'Sınavın çok yakın, hızlı bir planla ilerleyelim.', 30, 'Yoğun tempo'),
-  weekToMonth('week-month', '1 Hafta – 1 Ay Arası', 'Düzenli çalışmayla yetiştirebilirsin.', 20, 'Düzenli tempo'),
-  moreThanMonth('gt-month', '1 Aydan Daha Fazla', 'Uzun vadeli, sağlam bir plan yapalım.', 12, 'Rahat tempo'),
+  weekToMonth('week-month', '1 Hafta – 1 Ay', 'Düzenli çalışmayla yetiştirebilirsin.', 20, 'Düzenli tempo'),
+  moreThanMonth('gt-month', '1 Aydan Fazla', 'Uzun vadeli, sağlam bir plan yapalım.', 12, 'Rahat tempo'),
   notSure('unsure', 'Emin Değilim', 'Henüz net değil, planı sonra belirlerim.', 10, 'Dengeli tempo');
 
   const ExamTimeframe(this.wire, this.title, this.blurb, this.dailyGoal, this.paceLabel);

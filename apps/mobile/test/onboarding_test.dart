@@ -25,7 +25,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // step 1: licence category
-    expect(find.text('Hangi ehliyet türünü alıyorsun?'), findsOneWidget);
+    expect(find.text('Hangi ehliyeti alıyorsun?'), findsOneWidget);
 
     for (var i = 0; i < 4; i++) {
       await tester.tap(find.text('Devam Et'));

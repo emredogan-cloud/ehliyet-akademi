@@ -865,3 +865,60 @@ zamanlayıcısı enjekte edilip dispose'da iptal edilmeli (sınav zamanlayıcıs
 1,3× metin ölçeğinde kaydırmasız/taşmasız düzen widget testiyle sabitlenmeli. Artık sınıfa bağlı gerçek
 bir içerik havuzu var (ders kapsamı, işaret vurgusu, odak seti) → içgörü kartları uydurma değil gerçek
 içeriğe dayanabilir.
+
+### Evolution Faz E6 — Onboarding Deneyimi: Koç + İçgörü Kartları (2026-07-25) — DONE
+
+**Completed:** Onboarding'in her adımına **AI Koç'un konuştuğu dönen içgörü kartı** (24 içgörü, 6 tür)
+ve **kaydırmasız uyarlanır düzen** (3 yoğunluk kademesi + yatay iki sütun). Backend değişmedi.
+Rapor: `EVOLUTION_PHASE_6_REPORT.md`.
+
+- **Saf katman:** `domain/onboarding/onboarding_insights.dart` — `InsightKind` (ipucu/bilgi/motivasyon/
+  surus/sinav/strateji), adım başına 4 içgörü, `insightAt(step, tick)` deterministik + ardışık tekrarsız.
+- **Bileşen:** `features/onboarding/widgets/coach_insight_card.dart` — `CoachInsightCard` + `IdleMascot`.
+- **Düzen:** `_CenteredScroll` (sığarsa dikey ORTALA, sığmazsa kaydır), `OnboardingDensity`
+  (roomy/tight/dense) + `OnboardingDensityScope` (InheritedWidget) + yatay iki sütun + `_OptionLayout`.
+
+**KARARLAR (kalıcı):**
+
+1. **Maskot ile içgörü kartı TEK bileşen.** Ayrı maskot bloğu her adıma 100+ px eklerdi; fazın diğer
+   şartı kaydırmasızlıktı. Maskot kartın içinde → koç her adımda görünür, boş alan değerlenir.
+2. **"Kaydırmasız" ölçülebilir ölçüte çevrildi:** gövde kaydırılabilir (taşma yapısal olarak imkânsız),
+   test `maxScrollExtent == 0` doğrular. Sığmayan uç ölçülerde KIRPMAK yerine kaydırır.
+3. **Yoğunluk yalnız piksele değil YAZI ÖLÇEĞİNE de bakar** (`densityFor` = yükseklik / metin ölçeği).
+   Eşikler ÖLÇÜMLE: `<520 dense`, `<700 tight`, üstü roomy.
+4. **Kahraman görseller yalnız roomy kademede** — orta kademede 4 seçenekli adım görselle sığmıyor
+   (885/648 px ölçüldü).
+5. **Hareket azaltma (`MediaQuery.disableAnimations`) hem erişilebilirlik hem test sabitleyicisi.**
+
+**Öğrenilenler (kritik):**
+
+1. **`late final AnimationController _c = AnimationController(...)` (TEMBEL) KULLANMA.** Hareket
+   azaltma açıkken denetleyiciye hiç dokunulmaz; ilk erişim `dispose()` içinde olur ve ticker için ata
+   araması yasaktır → "Looking up a deactivated widget's ancestor is unsafe". `initState`'te kur.
+2. **Tekrar eden animasyon/`Timer.periodic` `pumpAndSettle`'ı sonsuza kilitler.** ÇÖZÜM: `pumpApp`'e
+   `reduceMotion` (VARSAYILAN `true`) eklendi →
+   `tester.platformDispatcher.accessibilityFeaturesTestValue = FakeAccessibilityFeatures(disableAnimations: true)`
+   - `addTearDown(clearAccessibilityFeaturesTestValue)`. Dönüşü test edenler `reduceMotion: false` verip
+     `pump(süre)` ile zamanı elle ilerletir.
+3. **`Expanded(flex:)` ile verilen fotoğraf metin sütununu eziyordu:** ehliyet sınıfı kartında metin
+   sütunu 118 px'e düşüp açıklama 4 satıra sarıyor ve kart **196 px** oluyordu. Fotoğraf SABİT genişliğe
+   alınınca kart **71 px**. Ölçmeden düzen ayarlanmaz.
+4. **Kaydırma ölçerken YATAY `PageView` sayılmamalı** (maxScrollExtent 1800 çıkıyor) → yalnız
+   `position.axis == Axis.vertical` olanlar ölçülür. Ayrıca arama alanı/TextField de bir Scrollable'dır.
+5. **GERÇEK CİHAZ ÖLÇÜSÜNÜ teste koy.** 393×780 (Redmi'nin sistem çubukları düşülmüş alanı) testi,
+   roomy eşiğinin 640 olmasının cihazda kaydırma yaratacağını yakaladı (648 alanda 665 px içerik).
+   Yalnız 360×640 + yatay test etmek bunu KAÇIRIRDI.
+6. Yatayda 2 sütun yalnız **4+ seçenekte** kazanç; 3 seçenekte satırlar dengesizleşip daha uzun oluyor.
+7. `ExamTimeframe` başlıkları kısaltıldı ('1 Hafta – 1 Ay', '1 Aydan Fazla') ve adım başlıkları
+   sadeleşti ('Hangi ehliyeti alıyorsun?', 'Hangi sınava hazırlanıyorsun?') — uzun başlık dar ekranda
+   3 satıra sarıp 84–144 px yiyordu.
+
+**Tests:** flutter analyze 0 · flutter test **145** (+14). Web/backend değişmedi.
+**Device:** `pm clear` sonrası ilk açılış; karşılama (kart 14 sn'de 3. içgörüde → dönüş çalışıyor),
+adım 1 (yeni B/A/D kartları), adım 4 (4 seçenek açıklamalarıyla), AI Koç slaydı, bitişte Ana Sayfa'da
+"Akıllı çalışma oturumu (20 soru)" kişiselleşmesi. Hiçbir adımda kaydırma/taşma yok.
+
+**For E7 (Karşılama deneyimi):** `StudyProfile` zaten kaydediliyor ve main()'de senkron okunuyor;
+`pumpApp(studyProfile:)` dikişi hazır; `CoachInsightCard`/`IdleMascot` yeniden kullanılabilir.
+Yönlendirme zinciri (onboarding → welcome → home) `onboardingSeen` redirect deseniyle genişletilmeli,
+sırası birim testiyle sabitlenmeli ve "Atla" yolu welcome'ı da atlamalı (`ea:welcomeSeen`).

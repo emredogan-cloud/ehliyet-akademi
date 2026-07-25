@@ -3,10 +3,12 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../design/app_card.dart';
+import '../../design/mech_image.dart';
 import '../../design/primitives.dart';
 import '../../domain/content/content_enums.dart';
 import '../../domain/content/content_queries.dart';
 import '../../domain/content/vehicle_part.dart';
+import '../../domain/content/vehicle_visuals.dart';
 import 'widgets/content_scope.dart';
 
 IconData vehicleSystemIcon(VehicleSystem s) => switch (s) {
@@ -65,15 +67,22 @@ class _PartCard extends StatelessWidget {
       onTap: () => context.push('/learn/vehicle/${part.id}'),
       child: Row(
         children: [
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              color: p.accent.withValues(alpha: 0.12),
-              borderRadius: BorderRadius.circular(AppRadii.sm),
+          if (kVehiclePartAsset[part.id] != null)
+            MechImage(
+              id: kVehiclePartAsset[part.id]!,
+              size: 52,
+              fallbackIcon: vehicleSystemIcon(part.system),
+            )
+          else
+            Container(
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                color: p.accent.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(AppRadii.sm),
+              ),
+              child: Icon(vehicleSystemIcon(part.system), color: p.accent, size: 22),
             ),
-            child: Icon(vehicleSystemIcon(part.system), color: p.accent, size: 22),
-          ),
           const SizedBox(width: AppSpacing.s4),
           Expanded(
             child: Column(

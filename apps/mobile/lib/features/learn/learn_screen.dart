@@ -6,6 +6,7 @@ import '../../core/assets.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/content/content_repository.dart';
 import '../../design/brand.dart';
+import '../../domain/content/vehicle_visuals.dart';
 
 /// Öğren hub — öğrenme alanlarına giriş (dersler, işaretler, araç, videolar). Sayılar içerik
 /// anlık görüntüsünden gelir; navigasyon içerik yüklenmeden de çalışır.
@@ -57,6 +58,15 @@ class LearnScreen extends ConsumerWidget {
               subtitle: 'Motor, gösterge paneli ve araç bileşenleri',
               count: n(counts?.vehicleParts),
               onTap: () => context.push('/learn/vehicle'),
+            ),
+            const SizedBox(height: AppSpacing.s3),
+            HubRow(
+              icon: Icons.toggle_on_rounded,
+              color: p.blue,
+              title: 'Kabin Kumandaları',
+              subtitle: 'Gerçek düğme, kol ve soket fotoğraflarıyla tanıma',
+              count: '${kCabinControls.length}',
+              onTap: () => context.push('/learn/cabin'),
             ),
             const SizedBox(height: AppSpacing.s3),
             HubRow(

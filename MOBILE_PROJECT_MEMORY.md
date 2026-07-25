@@ -659,3 +659,52 @@ oktagonu, sarı çalışma levhaları, arama, detay; takılma/taşma yok.
 B/A/D). Yöntem: redesign sprintindeki ImageMagick köşe-floodfill anahtarlama → WebP + dilimleme adımı.
 DİKKAT: bazı sayfalarda üçüncü taraf MARKA logoları var (BOSCH/VARTA/EXIDE/Mercedes) ve aynı parçanın
 markasız varyantı da mevcut → markasız olanı seç ve kaydet.
+
+### Evolution Faz E2 — Mekanik Varlık Hattı & Araç Görsel Kütüphanesi (2026-07-25) — DONE
+
+**Completed:** 11 kontakt sayfası → **101 şeffaf WebP** (2.05 MB) + araç kütüphanesi fotoğraflı +
+YENİ "Kabin Kumandaları" ekranı (39 gerçek düğme). Rapor: `EVOLUTION_PHASE_2_REPORT.md`.
+
+- **Araç:** `apps/mobile/tool/extract_mech_assets.py` (yalnız Pillow). Çıktı: `assets/mech/*.webp`,
+  üretilmiş `lib/core/mech_assets.dart`, kayıt `tool/mech_assets_index.json`.
+- **Bağlama (elle):** `lib/domain/content/vehicle_visuals.dart` — 29 araç bileşeni → fotoğraf,
+  39 kabin kumandası (başlık + işlev + grup). **Üretilmiş katalog ile editoryal bağlama AYRI.**
+- **Çizim:** `lib/design/mech_image.dart` (`MechImage`: token'lı plaka + ikon yedeği).
+- **Ekranlar:** Araç Tekniği listesi (satırda fotoğraf) + detay (220 px kahraman görsel);
+  `/learn/cabin` yeni galeri; Öğren hub'a yeni satır.
+
+**Öğrenilenler (kritik):**
+
+1. **Satır/sütun bantlaması bu sayfalarda ÇALIŞMAZ** — yumuşak gölgeler bantları birleştiriyor
+   (bir sayfa tek bloba düştü). ÇÖZÜM: ¼ ölçekte bağlantılı bileşen (union-find) + yakın bileşenleri
+   birleştirme + okuma sırasına dizme. Gerçekten değen 3 çift için oransal `SPLITS`.
+2. **Fuzz'lu flood-fill anahtarlama BU sayfalarda ÇALIŞMAZ** (redesign sprintindekinin aksine):
+   parçaların çoğu koyu lacivert zemin üstünde SİYAH plastik; tolerans yükseltilince nesnenin içi
+   yeniyor. ÇÖZÜM: zemin uzaklık haritası + KENARDAN BFS ile "zemine bağlı" bölge + yumuşak alfa
+   rampası. Nesnenin içindeki koyu pikseller kenara bağlı olmadığı için korunur.
+3. **Manifest sırası = TESPİT sırası** (çizim sırası değil). Yoğun ızgarada uzun bir sağ-sütun kutusu
+   önceki satır bandına katılıp öne geçiyor. İlk geçişte etiketler 1 kaydı; cihaz ekran görüntüsü
+   yakaladı. Kural: manifest yazıldıktan sonra ÜRETİLEN varlıkları tarayıcıda etiketleriyle birlikte
+   gözle doğrula.
+4. Üçüncü taraf MARKA logolu varyantlar atlanır (`None`): 3 akü + 2 motor. Aynı parçanın markasız hâli
+   sayfada mevcut.
+5. Yeni hub satırı eklemek, tembel listede alttaki satırları kurulmamış hâle getiriyor → mevcut
+   testlerde `scrollUntilVisible` gerekiyor (detay ekranına kahraman görsel eklemek de aynı etkiyi
+   yapıyor).
+
+**Tests:** flutter analyze 0 · flutter test **100** (+9: katalog bütünlüğü, ölü varlık yok, boyut
+bütçesi, **WebP alfa kanalı**, içerik eşlemesi, kabin kumandası benzersizlik/metin, MechImage yedeği,
+galeri arama + boş durum). Web bu fazda değişmedi.
+**Device:** Öğren hub (Kabin Kumandaları · 39), galeri (doğru foto↔etiket, arama), Araç Tekniği liste
+
+- Akü detay kahraman görseli. Koyu yüzeyde şeffaflık temiz.
+
+**Kapsam dışı (dürüst):** 33 varlık (`moto-*`, `bus-*`) ÜRETİLDİ ama henüz yüzeye çıkmadı — A/D
+içeriği E4/E5'e ait. 60 ikonluk gösterge sayfası E3'ün konusu. 70 araç bileşeninin 41'i dürüst bir
+foto karşılığı olmadığı için ikon olarak kalıyor.
+
+**For E3 (Gösterge İkaz Işıkları):** girdi `B-sınıfı-gösterge-işaretleri.png` (10×6 = 60 ikon, her
+ikonun ALTINDA İngilizce başlık var → kırpma başlığı DIŞARIDA bırakmalı). İş yükü asıl olarak içerik:
+her ikon için Türkçe anlam + hafıza ipucu + önem derecesi (kırmızı=dur, sarı=dikkat, yeşil/mavi=bilgi)
+
+- galeri/detay + ilgili derse bağ.

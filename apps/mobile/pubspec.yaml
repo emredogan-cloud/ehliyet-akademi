@@ -78,6 +78,7 @@ flutter:
   assets:
     - assets/img/
     - assets/signs/
+    - assets/mech/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

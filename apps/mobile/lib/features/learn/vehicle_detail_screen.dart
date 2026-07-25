@@ -4,9 +4,11 @@ import 'package:go_router/go_router.dart';
 import '../../core/theme/tokens.dart';
 import '../../design/app_card.dart';
 import '../../design/markdown_text.dart';
+import '../../design/mech_image.dart';
 import '../../design/primitives.dart';
 import '../../domain/content/content_queries.dart';
 import '../../domain/content/vehicle_part.dart';
+import '../../domain/content/vehicle_visuals.dart';
 import 'vehicle_screen.dart' show vehicleSystemIcon;
 import 'widgets/content_scope.dart';
 
@@ -53,6 +55,17 @@ class _Body extends StatelessWidget {
         AppSpacing.s10,
       ),
       children: [
+        if (kVehiclePartAsset[part.id] != null) ...[
+          // Gerçek parça fotoğrafı — metin-öncesi tanıma (Evolution Faz E2).
+          Center(
+            child: MechImage(
+              id: kVehiclePartAsset[part.id]!,
+              size: 220,
+              fallbackIcon: vehicleSystemIcon(part.system),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.s4),
+        ],
         Row(
           children: [
             Container(

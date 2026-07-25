@@ -86,6 +86,9 @@ void main() {
     await tester.tap(find.text('Motor Bölmesi'));
     await tester.pumpAndSettle();
 
+    // detay artık parça fotoğrafıyla açılıyor (E2) → kontrol adımları katlamanın altında
+    await tester.scrollUntilVisible(find.text('Kontrol adımları'), 300);
+    await tester.pumpAndSettle();
     expect(find.text('Kontrol adımları'), findsOneWidget);
     expect(find.text('Yağ seviyesi'), findsOneWidget);
   });
@@ -93,7 +96,8 @@ void main() {
   testWidgets('videos list separates available and planned', (tester) async {
     await pumpApp(tester);
     await _openLearn(tester);
-    await tester.ensureVisible(find.text('Videolar'));
+    // hub'a Kabin Kumandaları satırı eklendi (E2) → Videolar satırı tembel listede henüz kurulmamış
+    await tester.scrollUntilVisible(find.text('Videolar'), 300);
     await tester.pumpAndSettle();
     await tester.tap(find.text('Videolar'));
     await tester.pumpAndSettle();

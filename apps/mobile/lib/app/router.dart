@@ -24,11 +24,14 @@ import '../features/practice/historical_screen.dart';
 import '../domain/practice/historical.dart';
 import '../features/coach/coach_screen.dart';
 import '../features/community/blocked_users_screen.dart';
+import '../features/community/challenges_screen.dart';
 import '../features/community/chat_screen.dart';
 import '../features/community/community_screen.dart';
 import '../features/community/discussions_screen.dart';
 import '../features/community/discussion_thread_screen.dart';
 import '../features/community/friends_screen.dart';
+import '../features/community/group_detail_screen.dart';
+import '../features/community/groups_screen.dart';
 import '../features/community/join_community_screen.dart';
 import '../features/community/user_profile_screen.dart';
 import '../features/profile/profile_screen.dart';
@@ -216,6 +219,19 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
                     // Faz E9 — sosyal grafik yüzeyleri.
                     GoRoute(path: 'blocked', builder: (_, _) => const BlockedUsersScreen()),
                     GoRoute(path: 'friends', builder: (_, _) => const FriendsScreen()),
+                    // Faz E10 — çalışma grupları ve meydan okumalar.
+                    GoRoute(
+                      path: 'groups',
+                      builder: (_, _) => const GroupsScreen(),
+                      routes: [
+                        GoRoute(
+                          path: ':groupId',
+                          builder: (_, state) =>
+                              GroupDetailScreen(groupId: state.pathParameters['groupId']!),
+                        ),
+                      ],
+                    ),
+                    GoRoute(path: 'challenges', builder: (_, _) => const ChallengesScreen()),
                     GoRoute(path: 'messages', builder: (_, _) => const ChatListScreen()),
                     GoRoute(
                       path: 'chat/:id',

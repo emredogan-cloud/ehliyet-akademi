@@ -173,34 +173,34 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
             ],
           ),
         ),
-        // Faz E9 — sosyal yüzeylere giriş (katıldıktan sonra).
-        Padding(
-          padding: const EdgeInsets.fromLTRB(AppSpacing.s4, 0, AppSpacing.s4, AppSpacing.s2),
-          child: Row(
+        // Faz E9 + E10 — sosyal yüzeylere giriş (katıldıktan sonra).
+        //
+        // TEK SATIR, YATAY KAYDIRILIR. İki satıra yaymak dikey alanı kalıcı olarak yerdi ve
+        // küçük ekranlarda sıralamayı taşırıyordu (E10'da ölçüldü: 31 px taşma). Yatay kaydırma
+        // hem yüksekliği sabit tutar hem de sonraki fazlar yeni yüzey eklediğinde ölçeklenir.
+        SizedBox(
+          height: 92,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.fromLTRB(AppSpacing.s4, 0, AppSpacing.s4, AppSpacing.s2),
             children: [
-              Expanded(
-                child: _SocialButton(
-                  icon: Icons.people_alt_rounded,
-                  label: 'Arkadaşlar',
-                  onTap: () => context.push('/profile/community/friends'),
+              for (final e in const <(IconData, String, String)>[
+                (Icons.people_alt_rounded, 'Arkadaşlar', 'friends'),
+                (Icons.chat_bubble_rounded, 'Mesajlar', 'messages'),
+                (Icons.forum_rounded, 'Tartışma', 'discussions'),
+                (Icons.groups_rounded, 'Gruplar', 'groups'),
+                (Icons.flag_rounded, 'Meydan okuma', 'challenges'),
+              ]) ...[
+                SizedBox(
+                  width: 108,
+                  child: _SocialButton(
+                    icon: e.$1,
+                    label: e.$2,
+                    onTap: () => context.push('/profile/community/${e.$3}'),
+                  ),
                 ),
-              ),
-              const SizedBox(width: AppSpacing.s2),
-              Expanded(
-                child: _SocialButton(
-                  icon: Icons.chat_bubble_rounded,
-                  label: 'Mesajlar',
-                  onTap: () => context.push('/profile/community/messages'),
-                ),
-              ),
-              const SizedBox(width: AppSpacing.s2),
-              Expanded(
-                child: _SocialButton(
-                  icon: Icons.forum_rounded,
-                  label: 'Tartışma',
-                  onTap: () => context.push('/profile/community/discussions'),
-                ),
-              ),
+                const SizedBox(width: AppSpacing.s2),
+              ],
             ],
           ),
         ),
@@ -319,7 +319,15 @@ class _SocialButton extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 label,
-                style: TextStyle(color: p.text2, fontWeight: FontWeight.w700, fontSize: 12),
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: p.text2,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12,
+                  height: 1.15,
+                ),
               ),
             ],
           ),

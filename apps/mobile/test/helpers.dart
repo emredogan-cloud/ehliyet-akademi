@@ -3,12 +3,14 @@ import 'package:ehliyet_akademi/core/storage/token_store.dart';
 import 'package:ehliyet_akademi/data/auth/auth_api.dart';
 import 'package:ehliyet_akademi/data/coach/coach_api.dart';
 import 'package:ehliyet_akademi/data/community/community_repository.dart';
+import 'package:ehliyet_akademi/data/community/groups_repository.dart';
 import 'package:ehliyet_akademi/data/community/social_repository.dart';
 import 'package:ehliyet_akademi/data/content/content_repository.dart';
 import 'package:ehliyet_akademi/data/practice/question_repository.dart';
 import 'package:ehliyet_akademi/data/premium/entitlements_repository.dart';
 import 'package:ehliyet_akademi/domain/auth/app_user.dart';
 import 'package:ehliyet_akademi/domain/community/community_models.dart';
+import 'package:ehliyet_akademi/domain/community/group_models.dart';
 import 'package:ehliyet_akademi/domain/community/social_models.dart';
 import 'package:ehliyet_akademi/domain/content/content_enums.dart';
 import 'package:ehliyet_akademi/domain/content/content_snapshot.dart';
@@ -517,6 +519,7 @@ Future<void> pumpApp(
   CoachApi? coach,
   CommunityApi? community,
   SocialApi? social,
+  GroupsApi? groups,
   List<String>? owned,
   Map<String, Object>? prefs,
   bool onboardingSeen = true,
@@ -551,6 +554,7 @@ Future<void> pumpApp(
         coachApiProvider.overrideWithValue(coach ?? FakeCoachApi()),
         communityApiProvider.overrideWithValue(community ?? FakeCommunityApi()),
         socialApiProvider.overrideWithValue(social ?? FakeSocialApi()),
+        groupsApiProvider.overrideWithValue(groups ?? FakeGroupsApi()),
         entitlementsApiProvider.overrideWithValue(FakeEntitlementsApi(owned ?? const [])),
         // Content + questions come from fixed snapshots in tests → never touch drift/network.
         if (overrideContent) ...[
@@ -562,4 +566,125 @@ Future<void> pumpApp(
     ),
   );
   await tester.pumpAndSettle();
+}
+
+
+/// Faz E10 — çalışma grupları ve meydan okumalar için sahte API.
+///
+/// Sunucu davranışını TAKLİT ETMEZ, yalnız arayüzün gösterdiği durumları besler. Kural
+/// doğrulaması (tavanlar, üyelik, engel) sunucu entegrasyon testlerinde yapılır.
+class FakeGroupsApi implements GroupsApi {
+  FakeGroupsApi({
+    this.groups = const [],
+    this.detail,
+    this.challenges = const [],
+    this.failGroups = false,
+    this.failChallenges = false,
+    this.joinError,
+    this.groupNotFound = false,
+  });
+
+  List<StudyGroup> groups;
+  GroupDetail? detail;
+  List<Challenge> challenges;
+  final bool failGroups;
+  final bool failChallenges;
+
+  /// Sunucunun döndüreceği hata (ör. "Grup dolu.", "Grup bulunamadı.").
+  final String? joinError;
+  final bool groupNotFound;
+
+  final List<String> joinedChallenges = [];
+  final List<String> leftGroups = [];
+  final List<String> deletedGroups = [];
+  String? lastJoinCode;
+  String? lastCreatedName;
+
+  @override
+  Future<List<StudyGroup>> fetchGroups() async {
+    if (failGroups) throw CommunityException('Gruplar alınamadı.');
+    return groups;
+  }
+
+  @override
+  Future<StudyGroup> createGroup({required String name, required String licence}) async {
+    lastCreatedName = name;
+    final g = StudyGroup(
+      id: 'g-new',
+      name: name,
+      licence: licence,
+      joinCode: 'ABC234',
+      isOwner: true,
+      memberCount: 1,
+      totalXp: 0,
+      totalAnswered: 0,
+    );
+    groups = [...groups, g];
+    return g;
+  }
+
+  @override
+  Future<GroupDetail?> fetchGroup(String groupId) async {
+    if (groupNotFound) return null;
+    return detail;
+  }
+
+  @override
+  Future<StudyGroup> joinByCode(String code) async {
+    lastJoinCode = code;
+    if (joinError != null) throw CommunityException(joinError!);
+    final g = StudyGroup(
+      id: 'g-joined',
+      name: 'Katıldığım Grup',
+      licence: 'b',
+      joinCode: code,
+      isOwner: false,
+      memberCount: 2,
+      totalXp: 0,
+      totalAnswered: 0,
+    );
+    groups = [...groups, g];
+    return g;
+  }
+
+  @override
+  Future<void> leaveGroup(String groupId) async {
+    leftGroups.add(groupId);
+    groups = groups.where((g) => g.id != groupId).toList();
+  }
+
+  @override
+  Future<void> deleteGroup(String groupId) async {
+    deletedGroups.add(groupId);
+    groups = groups.where((g) => g.id != groupId).toList();
+  }
+
+  @override
+  Future<List<Challenge>> fetchChallenges() async {
+    if (failChallenges) throw CommunityException('Meydan okumalar alınamadı.');
+    return challenges;
+  }
+
+  @override
+  Future<void> joinChallenge(String challengeId) async {
+    joinedChallenges.add(challengeId);
+    challenges = challenges
+        .map(
+          (c) => c.id == challengeId
+              ? Challenge(
+                  id: c.id,
+                  title: c.title,
+                  description: c.description,
+                  metric: c.metric,
+                  target: c.target,
+                  joined: true,
+                  value: 0,
+                  percent: 0,
+                  done: false,
+                  endsAt: c.endsAt,
+                )
+              : c,
+        )
+        .toList();
+  }
 }

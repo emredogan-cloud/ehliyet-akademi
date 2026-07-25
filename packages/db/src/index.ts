@@ -227,6 +227,66 @@ CREATE INDEX IF NOT EXISTS discussion_posts_thread_idx ON discussion_posts(threa
 ALTER TABLE community_reports ADD COLUMN IF NOT EXISTS target_type TEXT NOT NULL DEFAULT 'user';
 ALTER TABLE community_reports ADD COLUMN IF NOT EXISTS target_ref TEXT;
 
+-- Faz E10: çalışma grupları ve meydan okumalar.
+CREATE TABLE IF NOT EXISTS study_groups (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  join_code TEXT NOT NULL,
+  licence TEXT NOT NULL DEFAULT 'b',
+  owner_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  member_count INTEGER NOT NULL DEFAULT 1,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE UNIQUE INDEX IF NOT EXISTS study_groups_join_code_uq ON study_groups(join_code);
+
+CREATE TABLE IF NOT EXISTS study_group_members (
+  group_id TEXT NOT NULL REFERENCES study_groups(id) ON DELETE CASCADE,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  role TEXT NOT NULL DEFAULT 'member',
+  joined_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (group_id, user_id)
+);
+CREATE INDEX IF NOT EXISTS study_group_members_user_idx ON study_group_members(user_id);
+
+CREATE TABLE IF NOT EXISTS challenges (
+  id TEXT PRIMARY KEY,
+  slug TEXT NOT NULL,
+  title TEXT NOT NULL,
+  description TEXT NOT NULL DEFAULT '',
+  metric TEXT NOT NULL,
+  target INTEGER NOT NULL,
+  licence TEXT,
+  starts_at TIMESTAMPTZ NOT NULL,
+  ends_at TIMESTAMPTZ NOT NULL
+);
+CREATE UNIQUE INDEX IF NOT EXISTS challenges_slug_uq ON challenges(slug);
+
+CREATE TABLE IF NOT EXISTS challenge_progress (
+  challenge_id TEXT NOT NULL REFERENCES challenges(id) ON DELETE CASCADE,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  baseline INTEGER NOT NULL DEFAULT 0,
+  joined_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  completed_at TIMESTAMPTZ,
+  PRIMARY KEY (challenge_id, user_id)
+);
+
+-- Başlangıç meydan okumaları. Meydan okumalar SUNUCU TANIMLIDIR (istemci oluşturamaz) ve yönetim
+-- arayüzü yoktur; bu yüzden ilk küme bootstrap ile ETKİSİZ-TEKRARLI olarak eklenir.
+-- DÜRÜST SINIR: zamanlayıcı (cron) sağlanmadığı için pencere UZUNDUR ve otomatik dönmez;
+-- yeni dönem yeni satır eklemeyi gerektirir (rapor ve bellekte açıkça belirtildi).
+INSERT INTO challenges (id, slug, title, description, metric, target, licence, starts_at, ends_at)
+VALUES
+  ('ch-soru-200', 'soru-200', '200 soru çöz',
+   'Bu dönemde 200 soru çözerek temeli sağlamlaştır.', 'answered', 200, NULL,
+   now() - interval '1 day', now() + interval '90 days'),
+  ('ch-ders-10', 'ders-10', '10 ders tamamla',
+   'Konu anlatımlarından 10 tanesini bitir.', 'lessons', 10, NULL,
+   now() - interval '1 day', now() + interval '90 days'),
+  ('ch-deneme-5', 'deneme-5', '5 deneme sınavı',
+   'Gerçek sınav temposunu 5 denemeyle yakala.', 'exams', 5, NULL,
+   now() - interval '1 day', now() + interval '90 days')
+ON CONFLICT (id) DO NOTHING;
+
 CREATE TABLE IF NOT EXISTS media_assets (
   id TEXT PRIMARY KEY,
   kind TEXT NOT NULL,

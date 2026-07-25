@@ -279,3 +279,91 @@ export const discussionPosts = pgTable('discussion_posts', {
   questionRef: text('question_ref'),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Çalışma grupları ve meydan okumalar (Evolution Faz E10)
+//
+// BÜYÜME SINIRI: bu tabloların hiçbirinde sınırsız büyüme yolu YOKTUR — grup kurma, gruba katılma
+// ve grup mevcudu tavanları sunucuda uygulanır (`lib/server/groups.ts`).
+// ENGELLEME (E8/E9'dan devam): engel `community_blocks`'ta tek kaynaktır; grup listeleri de
+// `social-guards` üzerinden süzülür. Bu tablolar engeli kendileri saklamaz.
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Çalışma grubu. `joinCode` insan tarafından okunup yazılabilen KISA koddur (karışabilen
+ * karakterler alfabede yoktur) ve benzersizdir → davet bağlantısı/altyapısı gerektirmez.
+ */
+export const studyGroups = pgTable(
+  'study_groups',
+  {
+    id: text('id').primaryKey(),
+    name: text('name').notNull(),
+    joinCode: text('join_code').notNull(),
+    licence: text('licence').notNull().default('b'),
+    ownerId: text('owner_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    /** Denormalize mevcut — mevcut tavanını her katılımda tek sorguda kontrol edebilmek için. */
+    memberCount: integer('member_count').notNull().default(1),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [uniqueIndex('study_groups_join_code_uq').on(t.joinCode)]
+);
+
+/** Grup üyeliği. `role` yalnız `owner` | `member`. */
+export const studyGroupMembers = pgTable(
+  'study_group_members',
+  {
+    groupId: text('group_id')
+      .notNull()
+      .references(() => studyGroups.id, { onDelete: 'cascade' }),
+    userId: text('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    role: text('role').notNull().default('member'),
+    joinedAt: timestamp('joined_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [primaryKey({ columns: [t.groupId, t.userId] })]
+);
+
+/**
+ * Meydan okuma. **Sunucu tanımlıdır** — istemci meydan okuma OLUŞTURAMAZ; yalnız katılır.
+ * İlerleme `community_stats`'tan (yani KIRPILMIŞ istatistiklerden) türetilir → hile yüzeyi yoktur.
+ */
+export const challenges = pgTable(
+  'challenges',
+  {
+    id: text('id').primaryKey(),
+    slug: text('slug').notNull(),
+    title: text('title').notNull(),
+    description: text('description').notNull().default(''),
+    /** Hangi sayaç: xp | answered | lessons | exams */
+    metric: text('metric').notNull(),
+    target: integer('target').notNull(),
+    /** null = bütün sınıflar */
+    licence: text('licence'),
+    startsAt: timestamp('starts_at', { withTimezone: true }).notNull(),
+    endsAt: timestamp('ends_at', { withTimezone: true }).notNull(),
+  },
+  (t) => [uniqueIndex('challenges_slug_uq').on(t.slug)]
+);
+
+/**
+ * Meydan okuma ilerlemesi. `baseline`, kullanıcı katıldığı ANDAKİ sayaç değeridir; ilerleme
+ * `güncel - baseline` olarak hesaplanır → daha önce kazanılmış XP meydan okumayı anında bitiremez.
+ */
+export const challengeProgress = pgTable(
+  'challenge_progress',
+  {
+    challengeId: text('challenge_id')
+      .notNull()
+      .references(() => challenges.id, { onDelete: 'cascade' }),
+    userId: text('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    baseline: integer('baseline').notNull().default(0),
+    joinedAt: timestamp('joined_at', { withTimezone: true }).notNull().defaultNow(),
+    completedAt: timestamp('completed_at', { withTimezone: true }),
+  },
+  (t) => [primaryKey({ columns: [t.challengeId, t.userId] })]
+);

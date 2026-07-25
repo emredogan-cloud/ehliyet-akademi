@@ -31,7 +31,7 @@ export { schema };
 export type Db = NodePgDatabase<typeof schema> | PgliteDatabase<typeof schema>;
 
 /** İdempotent şema — hem PGlite hem Postgres'te güvenle tekrar çalışır. */
-const BOOTSTRAP_DDL = `
+export const BOOTSTRAP_DDL = `
 CREATE TABLE IF NOT EXISTS users (
   id TEXT PRIMARY KEY,
   email TEXT NOT NULL,
@@ -271,8 +271,8 @@ CREATE TABLE IF NOT EXISTS challenge_progress (
 );
 
 -- Başlangıç meydan okumaları. Meydan okumalar SUNUCU TANIMLIDIR (istemci oluşturamaz) ve yönetim
--- arayüzü yoktur; bu yüzden ilk küme bootstrap ile ETKİSİZ-TEKRARLI olarak eklenir.
--- DÜRÜST SINIR: zamanlayıcı (cron) sağlanmadığı için pencere UZUNDUR ve otomatik dönmez;
+-- arayüzü yoktur, bu yüzden ilk küme bootstrap ile ETKİSİZ-TEKRARLI olarak eklenir.
+-- DÜRÜST SINIR: zamanlayıcı (cron) sağlanmadığı için pencere UZUNDUR ve otomatik dönmez —
 -- yeni dönem yeni satır eklemeyi gerektirir (rapor ve bellekte açıkça belirtildi).
 INSERT INTO challenges (id, slug, title, description, metric, target, licence, starts_at, ends_at)
 VALUES
@@ -327,17 +327,34 @@ CREATE INDEX IF NOT EXISTS question_reports_status_idx ON question_reports(statu
 let _db: Db | null = null;
 let _mode: 'postgres' | 'pglite' | null = null;
 
+/**
+ * DDL'i tek tek çalıştırılabilir ifadelere böler.
+ *
+ * NEDEN AYRI FONKSİYON: Postgres sürücüsü çok-ifadeli metni kabul etmediği için bölmek gerekiyor;
+ * ama naif `split(';')` **yorum satırındaki noktalı virgülde de** böler ve ortaya sözdizimi hatası
+ * veren bir parça çıkar. Bu, E10'da ÜRETİMİ DÜŞÜRDÜ: PGlite yolu bütün metni tek seferde
+ * çalıştırdığı (`exec`) için testler yeşil kaldı, hata yalnız Postgres'te ortaya çıktı.
+ * Bu yüzden bölmeden ÖNCE satır yorumları atılır ve iki sürücü aynı ifade kümesini görür.
+ */
+export function splitDdlStatements(ddl: string): string[] {
+  const withoutComments = ddl
+    .split('\n')
+    .filter((line) => !line.trimStart().startsWith('--'))
+    .join('\n');
+  return withoutComments
+    .split(';')
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
+}
+
 async function applyBootstrap(raw: {
   query?: (sql: string) => Promise<unknown>;
   exec?: (sql: string) => Promise<unknown>;
 }) {
   if (raw.exec)
-    await raw.exec(BOOTSTRAP_DDL); // PGlite
+    await raw.exec(BOOTSTRAP_DDL); // PGlite: çok-ifadeli metni tek seferde çalıştırır
   else if (raw.query) {
-    for (const stmt of BOOTSTRAP_DDL.split(';')) {
-      const sql = stmt.trim();
-      if (sql) await raw.query(sql);
-    }
+    for (const sql of splitDdlStatements(BOOTSTRAP_DDL)) await raw.query(sql);
   }
 }
 

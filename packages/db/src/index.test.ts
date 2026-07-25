@@ -1,6 +1,14 @@
 import { describe, it, expect } from 'vitest';
 import { eq, and } from 'drizzle-orm';
-import { freshTestDb, users, sessions, userState, purchases } from './index';
+import {
+  freshTestDb,
+  users,
+  sessions,
+  userState,
+  purchases,
+  splitDdlStatements,
+  BOOTSTRAP_DDL,
+} from './index';
 
 const U = { id: 'u-1', email: 'test@ea.dev', name: 'Test', passwordHash: 'h' };
 
@@ -58,5 +66,33 @@ describe('@ea/db (PGlite üzerinde CRUD)', () => {
     const list = await db.select().from(purchases).where(eq(purchases.userId, 'u-1'));
     expect(list.length).toBe(1);
     expect(list[0]?.provider).toBe('mock');
+  });
+});
+
+/**
+ * E10 REGRESYON: bootstrap DDL'i Postgres yolunda ifadelere bölünür. Naif `split(';')` yorum
+ * satırındaki noktalı virgülde de böldüğü için ortaya sözdizimi hatası veren bir parça çıkmış ve
+ * ÜRETİMDEKİ BÜTÜN uçlar 500 dönmüştü. PGlite bütün metni tek seferde çalıştırdığından (`exec`)
+ * testler yeşil kalmıştı — bu yüzden bölme mantığı artık DOĞRUDAN test edilir.
+ */
+describe('bootstrap DDL bölme', () => {
+  it('yorum satırındaki noktalı virgül ifadeyi BÖLMEZ', () => {
+    const ddl = [
+      '-- açıklama; içinde noktalı virgül var',
+      'CREATE TABLE IF NOT EXISTS t1 (id TEXT PRIMARY KEY);',
+      '-- ikinci açıklama; yine noktalı virgül',
+      'CREATE TABLE IF NOT EXISTS t2 (id TEXT PRIMARY KEY);',
+    ].join('\n');
+
+    const stmts = splitDdlStatements(ddl);
+    expect(stmts).toHaveLength(2);
+    for (const s of stmts) expect(s.startsWith('CREATE TABLE')).toBe(true);
+  });
+
+  it('gerçek bootstrap DDL yalnız çalıştırılabilir ifadeler üretir', () => {
+    for (const s of splitDdlStatements(BOOTSTRAP_DDL)) {
+      // Her parça bir SQL anahtar sözcüğüyle başlamalı; yoksa yarım kalmış bir yorumdur.
+      expect(s).toMatch(/^(CREATE|ALTER|INSERT|UPDATE|DROP|COMMENT)\b/i);
+    }
   });
 });

@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+import '../core/theme/tokens.dart';
 
 import '../features/home/home_screen.dart';
 import '../features/learn/learn_screen.dart';
@@ -25,8 +28,10 @@ import '../features/profile/notification_settings_screen.dart';
 import '../features/progress/progress_screen.dart';
 import '../features/premium/paywall_screen.dart';
 import '../features/onboarding/onboarding_screen.dart';
+import '../features/onboarding/welcome_screen.dart';
 import '../features/auth/auth_screen.dart';
 import '../domain/onboarding/onboarding_controller.dart';
+import '../domain/onboarding/welcome_controller.dart';
 import 'shell.dart';
 
 /// App routing — a StatefulShellRoute with 5 branches (one per bottom tab), each keeping its own
@@ -37,16 +42,41 @@ final routerProvider = Provider<GoRouter>((ref) => _buildRouter(ref));
 
 GoRouter _buildRouter(Ref ref) => GoRouter(
   initialLocation: '/home',
-  // İlk açılışta tanıtım; görülmemişse her yol /onboarding'e yönlendirilir.
+  /// İlk açılış zinciri (Faz E7): **tanıtım → karşılama → ana sayfa**. Sıra tek yerde ve
+  /// yukarıdan aşağıya kuruludur; her adım kendi kalıcı işaretini bekler. Tamamlanmış bir adıma
+  /// geri dönülmek istenirse ileriye taşınır (geri düşme yok).
+  ///
+  /// NOT: kişiselleştirmeyi "Atla" ile geçen kullanıcı karşılamayı da görmez — seçmediği değerleri
+  /// özetleyen bir ekran göstermek yanıltıcı olurdu (`OnboardingScreen._finish` her iki işareti de koyar).
   redirect: (context, state) {
-    final seen = ref.read(onboardingSeenProvider);
+    final onboarded = ref.read(onboardingSeenProvider);
+    final welcomed = ref.read(welcomeSeenProvider);
     final loc = state.matchedLocation;
-    if (!seen && loc != '/onboarding') return '/onboarding';
-    if (seen && loc == '/onboarding') return '/home';
+    if (!onboarded) return loc == '/onboarding' ? null : '/onboarding';
+    if (!welcomed) return loc == '/welcome' ? null : '/welcome';
+    if (loc == '/onboarding' || loc == '/welcome') return '/home';
     return null;
   },
   routes: [
     GoRoute(path: '/onboarding', builder: (_, _) => const OnboardingScreen()),
+    GoRoute(
+      path: '/welcome',
+      // Ana sayfaya geçiş "shared axis" hissi versin: solma + hafif ölçek.
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const WelcomeScreen(),
+        transitionDuration: AppMotion.slow,
+        reverseTransitionDuration: AppMotion.base,
+        transitionsBuilder: (context, animation, secondary, child) {
+          if (MediaQuery.disableAnimationsOf(context)) return child;
+          final curved = CurvedAnimation(parent: animation, curve: AppMotion.easeOut);
+          return FadeTransition(
+            opacity: curved,
+            child: ScaleTransition(scale: Tween(begin: 0.96, end: 1.0).animate(curved), child: child),
+          );
+        },
+      ),
+    ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) => AppShell(navigationShell: navigationShell),
       branches: [

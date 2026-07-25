@@ -7,6 +7,9 @@ import '../../core/theme/tokens.dart';
 import '../../design/brand.dart';
 import '../../domain/onboarding/onboarding_controller.dart';
 import '../../domain/onboarding/study_profile.dart';
+import '../../domain/onboarding/welcome_controller.dart';
+import 'widgets/centered_scroll.dart';
+import 'widgets/onboarding_density.dart';
 import 'widgets/coach_insight_card.dart';
 
 /// İlk açılış — premium kişiselleştirme akışı. Karşılama → ehliyet sınıfı → sınav deneyimi →
@@ -55,6 +58,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     );
     await ref.read(studyProfileProvider.notifier).save(profile);
     await ref.read(onboardingSeenProvider.notifier).markSeen();
+    // "Atla" ile geçildiyse karşılama da atlanır: seçilmemiş değerleri özetlemek yanıltıcı olurdu.
+    if (!completed) await ref.read(welcomeSeenProvider.notifier).markSeen();
     if (mounted) context.go('/home');
   }
 
@@ -137,88 +142,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 // ─────────────────────────────────────────────────────────────────────────────
 // Slide 0 — Welcome
 // ─────────────────────────────────────────────────────────────────────────────
-
-/// Dikey bütçe sınıfı — onboarding düzeninin ne kadar sıkıştırılacağını belirler.
-///
-/// Yalnız piksel yüksekliğine değil, YAZI ÖLÇEĞİNE de bakar: 1,3× yazı ölçeğinde aynı piksel
-/// yüksekliği çok daha az satır alır. Böylece "büyük yazı" kullanan kullanıcı da kaydırmasız
-/// bir akış görür.
-enum OnboardingDensity { roomy, tight, dense }
-
-OnboardingDensity densityFor(BuildContext context, double availableHeight) {
-  final scale = MediaQuery.textScalerOf(context).scale(14) / 14;
-  final effective = availableHeight / scale;
-  // Eşikler ÖLÇÜMLE belirlendi (bkz. faz raporu): 360×640 telefonda gövde ≈ 492 px'tir ve
-  // ikincil açıklamalar düşmeden kaydırmasız sığmaz → o ölçü `dense` tarafındadır.
-  if (effective < 520) return OnboardingDensity.dense;
-  if (effective < 700) return OnboardingDensity.tight;
-  return OnboardingDensity.roomy;
-}
-
-/// Adım gövdelerinin (seçenek kartları) yoğunluğu okuyabilmesi için taşıyıcı.
-class OnboardingDensityScope extends InheritedWidget {
-  const OnboardingDensityScope({
-    super.key,
-    required this.density,
-    this.sideBySide = false,
-    required super.child,
-  });
-  final OnboardingDensity density;
-
-  /// Yatay düzen: seçenekler tek sütun yerine İKİ sütuna dizilir. Yatayda dikey bütçe yarıya
-  /// iner ama yatay bütçe iki katına çıkar; 4 seçenekli adım ancak böyle kaydırmasız sığar.
-  final bool sideBySide;
-
-  static OnboardingDensityScope? _of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<OnboardingDensityScope>();
-
-  static OnboardingDensity of(BuildContext context) => _of(context)?.density ?? OnboardingDensity.roomy;
-
-  static bool sideBySideOf(BuildContext context) => _of(context)?.sideBySide ?? false;
-
-  @override
-  bool updateShouldNotify(OnboardingDensityScope old) =>
-      old.density != density || old.sideBySide != sideBySide;
-}
-
-/// Seçenek kartlarını dikey listeye veya (yatay düzende) iki sütuna dizer.
-class _OptionLayout extends StatelessWidget {
-  const _OptionLayout({required this.items, required this.gap});
-  final List<Widget> items;
-  final double gap;
-
-  @override
-  Widget build(BuildContext context) {
-    if (!OnboardingDensityScope.sideBySideOf(context) || items.length < 4) {
-      return Column(
-        children: [
-          for (var i = 0; i < items.length; i++) ...[
-            items[i],
-            if (i != items.length - 1) SizedBox(height: gap),
-          ],
-        ],
-      );
-    }
-    final rows = <Widget>[];
-    for (var i = 0; i < items.length; i += 2) {
-      final second = i + 1 < items.length ? items[i + 1] : null;
-      rows.add(
-        IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(child: items[i]),
-              SizedBox(width: gap),
-              Expanded(child: second ?? const SizedBox.shrink()),
-            ],
-          ),
-        ),
-      );
-      if (i + 2 < items.length) rows.add(SizedBox(height: gap));
-    }
-    return Column(children: rows);
-  }
-}
 
 class _WelcomeSlide extends StatelessWidget {
   const _WelcomeSlide({required this.onNext, required this.onSkip});
@@ -322,7 +245,7 @@ class _WelcomeSlide extends StatelessWidget {
     final d = densityFor(context, c.maxHeight);
     final tight = d != OnboardingDensity.roomy;
     final mascotH = (c.maxHeight * (d == OnboardingDensity.dense ? 0.15 : 0.20)).clamp(56.0, 200.0);
-    return _CenteredScroll(
+    return CenteredScroll(
       minHeight: c.maxHeight,
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s5, vertical: AppSpacing.s2),
       children: [
@@ -343,7 +266,7 @@ class _WelcomeSlide extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          child: _CenteredScroll(
+          child: CenteredScroll(
             minHeight: c.maxHeight,
             padding: const EdgeInsets.fromLTRB(AppSpacing.s5, AppSpacing.s2, AppSpacing.s3, AppSpacing.s2),
             children: [
@@ -354,7 +277,7 @@ class _WelcomeSlide extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: _CenteredScroll(
+          child: CenteredScroll(
             minHeight: c.maxHeight,
             padding: const EdgeInsets.fromLTRB(AppSpacing.s3, AppSpacing.s2, AppSpacing.s5, AppSpacing.s2),
             children: [
@@ -469,7 +392,7 @@ class _StepScaffold extends StatelessWidget {
     final gap = dense ? AppSpacing.s2 : (d == OnboardingDensity.tight ? AppSpacing.s3 : AppSpacing.s5);
     return OnboardingDensityScope(
       density: d,
-      child: _CenteredScroll(
+      child: CenteredScroll(
         minHeight: h,
         padding: const EdgeInsets.fromLTRB(AppSpacing.s5, AppSpacing.s2, AppSpacing.s5, AppSpacing.s2),
         children: [
@@ -497,7 +420,7 @@ class _StepScaffold extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: _CenteredScroll(
+            child: CenteredScroll(
               minHeight: c.maxHeight,
               padding: const EdgeInsets.fromLTRB(AppSpacing.s5, AppSpacing.s2, AppSpacing.s3, AppSpacing.s2),
               children: [
@@ -508,45 +431,13 @@ class _StepScaffold extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: _CenteredScroll(
+            child: CenteredScroll(
               minHeight: c.maxHeight,
               padding: const EdgeInsets.fromLTRB(AppSpacing.s3, AppSpacing.s2, AppSpacing.s5, AppSpacing.s2),
               children: [child],
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-/// Sığdığında DİKEY ORTALAYAN, sığmadığında kaydıran gövde.
-///
-/// Faz E6 şartı "kaydırmasız ve taşmasız"dır. Bu bileşen taşmayı yapısal olarak imkânsız kılar
-/// (kaydırılabilir), ölçütü ise ölçülebilir hâle getirir: içerik sığıyorsa `maxScrollExtent == 0`
-/// olur ve testler tam olarak bunu doğrular. Desteklenen ölçülerin ALTINDA (ör. çok küçük ekran +
-/// çok büyük yazı tipi) düzen kırpmak yerine kaydırmaya geçer — dürüst bozulma.
-class _CenteredScroll extends StatelessWidget {
-  const _CenteredScroll({
-    required this.minHeight,
-    required this.children,
-    required this.padding,
-  });
-  final double minHeight;
-  final List<Widget> children;
-  final EdgeInsets padding;
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: padding,
-      child: ConstrainedBox(
-        constraints: BoxConstraints(minHeight: minHeight - padding.vertical),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: children,
-        ),
       ),
     );
   }
@@ -601,7 +492,7 @@ class _CategoryStep extends StatelessWidget {
     // ÖLÇÜLDÜ: fotoğrafı esnek (flex 52) vermek metin sütununu 118 px'e düşürüyor ve açıklama
     // 4 satıra sarıp kartı 196 px yapıyordu. Fotoğraf artık SABİT genişlikte; metin sütunu geniş.
     final photo = dense ? 36.0 : (roomy ? 68.0 : 50.0);
-    return _OptionLayout(
+    return OptionLayout(
       gap: roomy ? AppSpacing.s3 : AppSpacing.s2,
       items: [
         for (final cat in LicenceCategory.values)
@@ -685,7 +576,7 @@ class _ExperienceStep extends StatelessWidget {
       ExamExperience.firstTime: (Icons.person_add_alt_1_rounded, p.primary),
       ExamExperience.retaking: (Icons.autorenew_rounded, p.accent),
     };
-    return _OptionLayout(
+    return OptionLayout(
       gap: _rowGap(context),
       items: [
         for (final e in ExamExperience.values)
@@ -840,7 +731,7 @@ class _TimeframeStep extends StatelessWidget {
       ExamTimeframe.moreThanMonth: (Icons.event_note_rounded, p.primary),
       ExamTimeframe.notSure: (Icons.help_outline_rounded, p.accent),
     };
-    return _OptionLayout(
+    return OptionLayout(
       gap: _rowGap(context),
       items: [
         for (final t in ExamTimeframe.values)
@@ -976,7 +867,7 @@ class _CoachSlide extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: _CenteredScroll(
+                      child: CenteredScroll(
                         minHeight: c.maxHeight,
                         padding: const EdgeInsets.fromLTRB(AppSpacing.s5, AppSpacing.s2, AppSpacing.s3, AppSpacing.s2),
                         children: [
@@ -987,7 +878,7 @@ class _CoachSlide extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: _CenteredScroll(
+                      child: CenteredScroll(
                         minHeight: c.maxHeight,
                         padding: const EdgeInsets.fromLTRB(AppSpacing.s3, AppSpacing.s2, AppSpacing.s5, AppSpacing.s2),
                         children: _featureCards(context, d),
@@ -996,7 +887,7 @@ class _CoachSlide extends StatelessWidget {
                   ],
                 );
               }
-              return _CenteredScroll(
+              return CenteredScroll(
                 minHeight: c.maxHeight,
                 padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s5, vertical: AppSpacing.s2),
                 children: [

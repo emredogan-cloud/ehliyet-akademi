@@ -922,3 +922,52 @@ adım 1 (yeni B/A/D kartları), adım 4 (4 seçenek açıklamalarıyla), AI Koç
 `pumpApp(studyProfile:)` dikişi hazır; `CoachInsightCard`/`IdleMascot` yeniden kullanılabilir.
 Yönlendirme zinciri (onboarding → welcome → home) `onboardingSeen` redirect deseniyle genişletilmeli,
 sırası birim testiyle sabitlenmeli ve "Atla" yolu welcome'ı da atlamalı (`ea:welcomeSeen`).
+
+### Evolution Faz E7 — Karşılama Deneyimi (2026-07-25) — DONE
+
+**Completed:** Kişiselleştirme artık doğrudan Ana Sayfa'ya düşmüyor; arada koç eşliğinde **tek
+seferlik karşılama anı** var. Ekran seçilen sınıf/sınav/tempo/günlük hedefi kaydedilmiş
+`StudyProfile`'dan okuyup gösteriyor. Rapor: `EVOLUTION_PHASE_7_REPORT.md`.
+
+- **İşaret:** `domain/onboarding/welcome_controller.dart` — `ea:welcomeSeen:v1`, `onboardingSeen` ile
+  BİREBİR aynı desen (main()'de senkron okuma + provider override → açılışta flaş yok).
+- **Ekran:** `features/onboarding/welcome_screen.dart` — süzülen maskot, "Her şey hazır!", 4 satırlık
+  profil özeti, koç içgörü kartı, sabit CTA + sessiz "Atla".
+- **Zincir:** `app/router.dart` tek `redirect` içinde SIRALI — `tanıtım → karşılama → ana sayfa`;
+  tamamlanmış adıma dönülmek istenirse ileri taşınır.
+- **Geçiş:** `/welcome` için `CustomTransitionPage` (solma + hafif ölçek); `disableAnimations` açıkken
+  geçiş uygulanmaz.
+- **Ayrıştırma:** E6'da onboarding ekranının içinde olan `CenteredScroll` ve
+  `OnboardingDensity`/`OnboardingDensityScope`/`OptionLayout` → `features/onboarding/widgets/`
+  altına taşındı; karşılama ekranı da aynı kaydırmasızlık disiplinini kullanıyor.
+
+**KARARLAR (kalıcı):**
+
+1. **"Atla" karşılamayı DA atlar.** Kişiselleştirmeyi atlayan kullanıcıya seçmediği değerlerin özetini
+   göstermek yanıltıcı olurdu → `_finish(completed: false)` her iki işareti de koyar.
+2. **Özet değerleri yeniden HESAPLANMAZ**, `studyProfileProvider`'dan okunur (`sessionSize`,
+   `paceLabel`, `focus.title`) → "ekranda yazan" ile "uygulamanın kullandığı" ayrışamaz (testle sabit).
+3. **Zincir tek bir redirect'te ve sıralı** — iki ayrı kural birbirini iptal eden döngü üretirdi.
+   Kural: ilk tamamlanmamış adıma gönder; hepsi tamamsa tanıtım/karşılama yollarını /home'a çevir.
+4. `markSeen()` içinde `if (state) return;` — "Başla" ve "Atla" aynı fonksiyonu çağırır, çift yazma yok.
+
+**Öğrenilenler:**
+
+1. `pumpApp`'e **`welcomeSeen` (varsayılan `true`)** eklendi; aksi hâlde kişiselleştirmeyi tamamlayan
+   TÜM mevcut testler karşılamaya düşüp "Bugün de çalışalım" bulamıyordu. Zinciri test edenler `false`
+   verir. (onboardingSeen/studyProfile/reduceMotion ile aynı dikiş ailesi.)
+2. Bir bloğu dosyadan dosyaya taşırken **sınıf sınırını doğrula** — `_CenteredScroll` çıkarılırken
+   arkasındaki `_SkipButton` da gitti ve derleme kırıldı. Taşımadan sonra `flutter analyze` şart.
+3. Test dosyasında `Size`/`Scrollable` kullanılıyorsa `package:flutter/material.dart` import edilmeli
+   (flutter_test tek başına yetmez).
+
+**Tests:** flutter analyze 0 · flutter test **154** (+9: 6 zincir, 2 özet doğruluğu, 1 düzen).
+**Device:** `pm clear` sonrası A sınıfı seçilerek tam akış; karşılama **A · Motosiklet / e-Sınav +
+Direksiyon / Düzenli tempo / 20 soru** gösterdi; "Çalışmaya başla" → Ana Sayfa; **force-stop +
+yeniden açılışta karşılama ÇIKMADI** (tek seferlik işaret kalıcı).
+
+**For E8 (Topluluk temeli):** programın EN BÜYÜK backend fazı. Hazır olanlar: Bearer kimlik doğrulama,
+`@ea/db` Drizzle şeması + idempotent bootstrap DDL deseni, `/api/state`, mobilde XP/rozet hesapları.
+Roadmap şartları: katılım varsayılan KAPALI (opt-in), **foto yükleme YOK**, **rapor + engelle ilk
+fazda**, sunucu tarafında XP artış sınırı (anti-hile), gerçek zamanlılık iddia etmeden ETag/kısa
+yoklama. Her yeni uç nokta için PGlite entegrasyon testi.

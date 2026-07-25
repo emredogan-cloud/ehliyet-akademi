@@ -3,13 +3,20 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../core/official_signs.dart';
 import '../../../domain/content/content_enums.dart';
 import '../../../domain/content/traffic_sign.dart';
 
-/// Trafik işareti görünümü — web `TrafficSign.tsx`'in birebir Dart limanı: şekil KABUĞU (shell) +
-/// SEMBOL (glyph), 100×100 grid. Piktogramlar aynı özgün çizgi diliyle (SVG path verisi birebir
-/// kopyalanır) çizilir → telif-güvenli. Metin (glyphText / DUR / YOL VER) flutter_svg yerine Flutter
-/// widget'ı olarak bindirilir (güvenilir metin oluşturma için).
+/// Trafik işareti görünümü.
+///
+/// **Öncelik: RESMÎ LEVHA VEKTÖRÜ.** Evolution Faz E1'de resmî standart levhalar (KGM 2020 /
+/// İBB posterleri) tek tek vektör olarak çıkarıldı; işaretin resmî karşılığı varsa
+/// `assets/signs/<kod>.svg` çizilir (bkz. `core/official_signs.dart`).
+///
+/// Resmî varlığı olmayan işaretler (sayı-parametrik hız/ağırlık levhaları, resmî karşılığı
+/// bulunmayanlar ve kaynakta temiz vektör olarak çıkarılamayan birkaç levha) eski PARAMETRİK
+/// çizicide kalır: şekil KABUĞU (shell) + SEMBOL (glyph), 100×100 grid; metin (glyphText /
+/// DUR / YOL VER) Flutter widget'ı olarak bindirilir.
 class TrafficSignView extends StatelessWidget {
   const TrafficSignView({super.key, required this.sign, this.size = 84});
 
@@ -30,6 +37,16 @@ class TrafficSignView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final official = officialSignAsset(sign.id);
+    if (official != null) {
+      // Resmî levha: metin de dahil her şey vektörün içinde — üstüne hiçbir şey bindirilmez.
+      return SizedBox(
+        width: size,
+        height: size,
+        child: SvgPicture.asset(official, width: size, height: size),
+      );
+    }
+
     final fg = _fgFor(sign.shape);
     final svg = _svgFor(sign.shape, sign.glyph, fg);
 

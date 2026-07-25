@@ -602,3 +602,60 @@ disposes off-screen children so after scrolling down, scroll back up to assert t
 **Tests:** flutter analyze 0 · flutter test **85** · web typecheck 0 · web **336**. Device-validated:
 icon/splash/dark, full onboarding (personalized "20 soru" on Home), all tabs, SRS feedback + result,
 premium incentive popup, paywall (₺399), video premium lock, exam runner.
+
+---
+
+## EVOLUTION PROGRAM (post-launch) — roadmap: `MOBILE_EVOLUTION_ROADMAP.md` (2026-07-25)
+
+13 faz: E1 resmî levha vektörleri · E2 mekanik varlık hattı · E3 gösterge ikaz ışıkları · E4 çok-sınıflı
+temel (B/A/D) · E5 A&D içerik · E6 onboarding koç+içgörü · E7 karşılama · E8-E10 topluluk · E11 premium
+video oynatıcı · E12 video üretimi · E13 cila + final rapor. Aynı disiplin, aynı DoD.
+
+### Evolution Faz E1 — Resmî Trafik Levhası Vektörleri (2026-07-25) — DONE
+
+**Completed:** Basitleştirilmiş parametrik levha çizimleri, RESMÎ standart levhaların birebir vektör
+karşılıklarıyla değiştirildi. Rapor: `EVOLUTION_PHASE_1_REPORT.md`.
+
+- **Araç:** `apps/mobile/tool/extract_official_signs.py` (poppler + Pillow, deterministik, repoda).
+  Girdi PDF'leri .gitignore'da (yerel referans); üretilen varlıklar repoda.
+- **Çıktı:** `apps/mobile/assets/signs/*.svg` — 81 levha, 520 KB SVG yükü, medyan 2.7 KB, hepsi
+  `viewBox="0 0 100 100"`, saf `<path>` (raster/metin yok). `lib/core/official_signs.dart` üretilmiş
+  bağlama (86/121 işaret). `tool/official_signs_index.json` = kaynak + eleme kaydı.
+- **Render:** `TrafficSignView` resmî varlık varsa onu çizer (üstüne METİN BİNDİRMEZ — DUR/YOL VER
+  zaten vektörün içinde), yoksa eski parametrik kabuk+glif çizicisine düşer.
+
+**Kaynak PDF'leri hakkında öğrenilenler (kritik):**
+
+1. `duseyisaretleme.pdf` (KGM 2020) ve `Pano.pdf` (İBB) GERÇEK vektör; `KARAYOLU-TRAFIK-ISARET-
+LEVHALARI.pdf` tek parça 5787×8149 JPEG → yalnız görsel referans, geometri vermez.
+2. **KGM posterinin bir kısmı kaynakta ŞEFFAFLIK DÜZLEŞTİRMESİ ile parçalanmış** (TT-42a = 3837 ince
+   üçgen). Dönüştürücü hatası DEĞİL — içerik akışının kendisi öyle. Bu yüzden iki kaynaklı seçim şart.
+3. Poster metin katmanı İKİ KEZ çizili (sabit ötelemeli "hayalet" kopya) → veriden tespit edilip atılır.
+4. `pdftocairo -svg` KIRPMA ile kullanılırsa yolları sayfa uzayında DEĞİL, içerik akışının kendi
+   ötelemesiyle yazar; ayrıca kırpılmış yolların tam geometrisini emzeder. ÇÖZÜM: sayfayı kırpmadan BİR
+   KEZ SVG'ye çevir, yolları rasterden ölçülen levha kutularına dağıt (çerçeve/etiket hiçbir kutuya
+   sığmaz → düşer).
+5. **Yol birleştirme TUZAĞI:** düzleştirilmiş levhalarda ardışık üçgenleri tek `d`'de birleştirmek
+   nonzero dolgu kuralında birbirini siler → levha bozulur. Birleştirme yalnız düzleştirilmemiş
+   kaynaklarda yapılır; ağır düzleştirilmişler MAX_PATHS ile elenir.
+6. Resmî posterlerde levhaların BEYAZ zemini yoktur (sayfanın beyazı görünür) ve bazı piktogramlar
+   "knockout" deliktir → dış konturun beyaz kopyası en alta eklenmezse koyu temada levha boş görünür.
+7. Eksiksizlik ölçütü: iç ayrıntısı (küçük yol) olmayan aday = piktogramı raster olan kabuk → KULLANMA.
+
+**Bilinçli kapsam dışı (35/121 parametrik kalır, hepsi index'te gerekçeli):** sayı-parametrik hız/
+ağırlık/mesafe levhaları (15), resmî karşılığı olmayanlar (7), piktogramı iki posterde de raster olanlar
+(4: T-8, T-3b, T-14b, TT-32), iki kaynakta da ağır düzleştirilmişler (5), görsel doğrulamada bozuk
+çıkıp elenenler (4: T-1a, TT-21, TT-33a, TT-35g).
+
+**İçerik düzeltmesi (resmî çizimle tutarlılık için ZORUNLU):** `apps/web/content/signs.ts` — Ağırlık
+16t→7t, Dingil 7t→6t, Genişlik 2m→2,30m (resmî örnek değerler). Web render yolu değişmedi.
+
+**Tests:** flutter analyze 0 · flutter test **91** (+6 yeni: katalog bütünlüğü, normalizasyon, performans
+bütçesi, ölü varlık yok, çizici kaynak seçimi) · web typecheck 0 · web 336 · prettier temiz.
+**Device:** `AYXSUKIVJVPZ7HPZ` — 121 levhalık galeri, tehlike/mecburiyet/geçici/öncelik grupları, DUR
+oktagonu, sarı çalışma levhaları, arama, detay; takılma/taşma yok.
+
+**For E2 (Mekanik Varlık Hattı):** girdi `apps/assets/mekanik assets/` (11 kontakt sayfası, ~20 MB,
+B/A/D). Yöntem: redesign sprintindeki ImageMagick köşe-floodfill anahtarlama → WebP + dilimleme adımı.
+DİKKAT: bazı sayfalarda üçüncü taraf MARKA logoları var (BOSCH/VARTA/EXIDE/Mercedes) ve aynı parçanın
+markasız varyantı da mevcut → markasız olanı seç ve kaydet.

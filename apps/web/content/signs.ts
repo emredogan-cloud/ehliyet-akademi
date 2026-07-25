@@ -969,10 +969,11 @@ export const SIGNS: TrafficSign[] = [
   {
     id: 'agirlik-siniri',
     category: 'yasak',
-    name: 'Ağırlık Sınırlaması (16 t)',
+    name: 'Ağırlık Sınırlaması (7 t)',
     shape: 'ring',
-    glyphText: '16t',
-    meaning: 'Yüklü ağırlığı levhada yazılı değerden (16 ton) fazla olan taşıtlar bu yola giremez.',
+    glyphText: '7t',
+    meaning:
+      'Yüklü ağırlığı levhada yazılı değerden (örnekte 7 ton) fazla olan taşıtlar bu yola giremez.',
     memoryTip: 't harfi ton demek: toplam yüklü ağırlığın tavanı.',
     examImportance: 'orta',
     relatedLessonSlug: 'trafik-isaretleri',
@@ -981,9 +982,9 @@ export const SIGNS: TrafficSign[] = [
   {
     id: 'aks-yuku-siniri',
     category: 'yasak',
-    name: 'Dingil Ağırlığı Sınırlaması (7 t)',
+    name: 'Dingil Ağırlığı Sınırlaması (6 t)',
     shape: 'ring',
-    glyphText: '7t',
+    glyphText: '6t',
     meaning: 'Dingil başına düşen ağırlığı levhada yazılı değerden fazla olan taşıtlar giremez.',
     memoryTip: 'Küçük tonaj tek dingilin taşıdığını anlatır; toplam ağırlıkla karıştırma.',
     examImportance: 'orta',
@@ -994,9 +995,9 @@ export const SIGNS: TrafficSign[] = [
   {
     id: 'genislik-siniri',
     category: 'yasak',
-    name: 'Genişlik Sınırlaması (2 m)',
+    name: 'Genişlik Sınırlaması (2,30 m)',
     shape: 'ring',
-    glyphText: '2m',
+    glyphText: '2.30m',
     meaning: 'Yüküyle birlikte genişliği levhada yazılı değerden fazla olan taşıtlar giremez.',
     memoryTip: 'Değer kapının eni: aracın (yükle) sığması gerekir.',
     examImportance: 'orta',

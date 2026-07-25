@@ -171,6 +171,10 @@ export const leaderboardSnapshots = pgTable(
 /** Kullanıcı şikâyetleri — mağaza politikası gereği UGC'den ÖNCE devrede (E8). */
 export const communityReports = pgTable('community_reports', {
   id: text('id').primaryKey(),
+  /** Faz E9 — şikâyet hedefi: kullanıcı, birebir mesaj veya tartışma iletisi. */
+  targetType: text('target_type').notNull().default('user'), // user | message | post
+  /** Hedef içeriğin kimliği (kullanıcı şikâyetinde null). */
+  targetRef: text('target_ref'),
   reporterId: text('reporter_id')
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
@@ -197,3 +201,81 @@ export const communityBlocks = pgTable(
   },
   (t) => [primaryKey({ columns: [t.blockerId, t.blockedId] })]
 );
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Sosyal grafik ve mesajlaşma (Evolution Faz E9)
+//
+// ENGELLEME İLKESİ (E8'den devam): engel HER okuma ve yazma yolunda SUNUCUDA kontrol edilir.
+// Bu tablolar engeli kendileri saklamaz; `community_blocks` tek kaynaktır.
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Arkadaşlık. Tek satır iki kişiyi temsil eder; yön `requesterId` ile bellidir.
+ * Durum: `pending` → `accepted`. Reddetme/kaldırma satırı SİLER (durum enflasyonu olmaz).
+ */
+export const friendships = pgTable(
+  'friendships',
+  {
+    requesterId: text('requester_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    addresseeId: text('addressee_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    status: text('status').notNull().default('pending'), // pending | accepted
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    respondedAt: timestamp('responded_at', { withTimezone: true }),
+  },
+  (t) => [primaryKey({ columns: [t.requesterId, t.addresseeId] })]
+);
+
+/**
+ * Birebir mesaj. `threadKey` iki kimliğin SIRALI birleşimidir (`min:max`) → aynı konuşma her iki
+ * yönde de aynı anahtarı verir, ayrı bir "konuşma" tablosu gerekmez.
+ */
+export const directMessages = pgTable(
+  'direct_messages',
+  {
+    id: text('id').primaryKey(),
+    threadKey: text('thread_key').notNull(),
+    senderId: text('sender_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    recipientId: text('recipient_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    body: text('body').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    readAt: timestamp('read_at', { withTimezone: true }),
+  },
+  (t) => [uniqueIndex('dm_thread_created_id_uq').on(t.threadKey, t.createdAt, t.id)]
+);
+
+/** Konu başlığı — ehliyet sınıfı topluluklarına göre kapsamlanır. */
+export const discussionThreads = pgTable('discussion_threads', {
+  id: text('id').primaryKey(),
+  licence: text('licence').notNull().default('b'),
+  title: text('title').notNull(),
+  authorId: text('author_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  /** Soru paylaşımı REFERANSLADIR: yalnız bankadaki soru kimliği tutulur, metin KOPYALANMAZ. */
+  questionRef: text('question_ref'),
+  postCount: integer('post_count').notNull().default(0),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  lastActivityAt: timestamp('last_activity_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
+/** Konu altındaki iletiler. */
+export const discussionPosts = pgTable('discussion_posts', {
+  id: text('id').primaryKey(),
+  threadId: text('thread_id')
+    .notNull()
+    .references(() => discussionThreads.id, { onDelete: 'cascade' }),
+  authorId: text('author_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  body: text('body').notNull(),
+  questionRef: text('question_ref'),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+});

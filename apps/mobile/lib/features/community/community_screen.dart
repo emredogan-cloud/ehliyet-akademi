@@ -173,6 +173,37 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
             ],
           ),
         ),
+        // Faz E9 — sosyal yüzeylere giriş (katıldıktan sonra).
+        Padding(
+          padding: const EdgeInsets.fromLTRB(AppSpacing.s4, 0, AppSpacing.s4, AppSpacing.s2),
+          child: Row(
+            children: [
+              Expanded(
+                child: _SocialButton(
+                  icon: Icons.people_alt_rounded,
+                  label: 'Arkadaşlar',
+                  onTap: () => context.push('/profile/community/friends'),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.s2),
+              Expanded(
+                child: _SocialButton(
+                  icon: Icons.chat_bubble_rounded,
+                  label: 'Mesajlar',
+                  onTap: () => context.push('/profile/community/messages'),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.s2),
+              Expanded(
+                child: _SocialButton(
+                  icon: Icons.forum_rounded,
+                  label: 'Tartışma',
+                  onTap: () => context.push('/profile/community/discussions'),
+                ),
+              ),
+            ],
+          ),
+        ),
         if (!(community.profile?.isPublic ?? false))
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4),
@@ -255,6 +286,45 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// Topluluk hub'ındaki sosyal kısayol düğmesi (Faz E9).
+class _SocialButton extends StatelessWidget {
+  const _SocialButton({required this.icon, required this.label, required this.onTap});
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.palette;
+    return Semantics(
+      button: true,
+      label: label,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(AppRadii.base),
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: AppSpacing.s3),
+          decoration: BoxDecoration(
+            color: p.surface2,
+            borderRadius: BorderRadius.circular(AppRadii.base),
+            border: Border.all(color: p.border),
+          ),
+          child: Column(
+            children: [
+              Icon(icon, color: p.primary, size: 20),
+              const SizedBox(height: 4),
+              Text(
+                label,
+                style: TextStyle(color: p.text2, fontWeight: FontWeight.w700, fontSize: 12),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

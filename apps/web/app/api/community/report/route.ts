@@ -1,5 +1,11 @@
 import { eq } from 'drizzle-orm';
-import { getDb, communityProfiles, communityReports } from '@ea/db';
+import {
+  getDb,
+  communityProfiles,
+  communityReports,
+  directMessages,
+  discussionPosts,
+} from '@ea/db';
 import { getSessionUser, json, guarded, newId } from '@/lib/server/auth';
 import { checkRateLimit } from '@/lib/server/rate-limit';
 import { isReportReason } from '@/lib/server/community';
@@ -21,7 +27,14 @@ export const POST = guarded(async (req: Request): Promise<Response> => {
   const user = await getSessionUser(req);
   if (!user) return json({ error: 'Oturum gerekli.' }, { status: 401 });
 
-  let body: { targetUserId?: unknown; reason?: unknown; note?: unknown };
+  let body: {
+    targetUserId?: unknown;
+    reason?: unknown;
+    note?: unknown;
+    /** Faz E9 — kullanıcı yerine bir mesajı/iletiyi bildirmek için. */
+    targetType?: unknown;
+    targetRef?: unknown;
+  };
   try {
     body = (await req.json()) as typeof body;
   } catch {
@@ -43,12 +56,39 @@ export const POST = guarded(async (req: Request): Promise<Response> => {
     .limit(1);
   if (!target) return json({ error: 'Kullanıcı bulunamadı.' }, { status: 404 });
 
+  // Faz E9: hedef bir MESAJ veya İLETİ olabilir; referans GERÇEKTEN var olmalı (uydurma kayıt yok).
+  const targetType =
+    body.targetType === 'message' || body.targetType === 'post' ? body.targetType : 'user';
+  const targetRef = typeof body.targetRef === 'string' ? body.targetRef : null;
+  if (targetType !== 'user') {
+    if (!targetRef) return json({ error: 'Bildirilecek içerik gerekli.' }, { status: 400 });
+    const exists =
+      targetType === 'message'
+        ? (
+            await db
+              .select({ id: directMessages.id })
+              .from(directMessages)
+              .where(eq(directMessages.id, targetRef))
+              .limit(1)
+          ).length > 0
+        : (
+            await db
+              .select({ id: discussionPosts.id })
+              .from(discussionPosts)
+              .where(eq(discussionPosts.id, targetRef))
+              .limit(1)
+          ).length > 0;
+    if (!exists) return json({ error: 'İçerik bulunamadı.' }, { status: 404 });
+  }
+
   const note = typeof body.note === 'string' ? body.note.trim().slice(0, 500) : '';
 
   await db.insert(communityReports).values({
     id: newId(),
     reporterId: user.id,
     targetUserId,
+    targetType,
+    targetRef,
     reason: body.reason,
     note,
     status: 'open',

@@ -34,6 +34,9 @@ abstract class CommunityApi {
   Future<void> report({required String userId, required ReportReason reason, String note});
   Future<void> block(String userId);
   Future<void> unblock(String userId);
+
+  /// Faz E9 — engellenenler listesi (engel kaldırma yüzeyi için).
+  Future<List<BlockedUser>> fetchBlocked();
 }
 
 class DioCommunityApi implements CommunityApi {
@@ -173,6 +176,17 @@ class DioCommunityApi implements CommunityApi {
       queryParameters: {'targetUserId': userId},
       options: _opts,
     );
+  }
+
+  @override
+  Future<List<BlockedUser>> fetchBlocked() async {
+    final res = await _dio.get<Map<String, dynamic>>('/api/community/block', options: _opts);
+    if (res.statusCode != 200) {
+      throw CommunityException((res.data?['error'] ?? 'Liste alınamadı.').toString());
+    }
+    return ((res.data?['blocked'] as List?) ?? const [])
+        .map((e) => BlockedUser.fromJson(Map<String, dynamic>.from(e as Map)))
+        .toList();
   }
 }
 

@@ -209,6 +209,20 @@ class CommunityUser {
   }
 }
 
+/// Engellenen kullanıcı satırı (Faz E9 — engel kaldırma yüzeyi).
+class BlockedUser {
+  const BlockedUser({required this.userId, required this.displayName, required this.avatarId});
+  final String userId;
+  final String displayName;
+  final String avatarId;
+
+  factory BlockedUser.fromJson(Map<String, dynamic> j) => BlockedUser(
+    userId: (j['userId'] ?? '').toString(),
+    displayName: (j['displayName'] ?? '').toString(),
+    avatarId: (j['avatarId'] ?? 'owl-wave').toString(),
+  );
+}
+
 /// Görünen ad kuralları — sunucudaki doğrulamanın aynısı, kullanıcıya ANINDA geri bildirim için.
 /// (Sunucu yine de son sözü söyler; bu yalnız iyi bir kullanıcı deneyimi katmanıdır.)
 const int kDisplayNameMin = 3;

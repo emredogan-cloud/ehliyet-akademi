@@ -23,7 +23,12 @@ import '../features/practice/collections_screen.dart';
 import '../features/practice/historical_screen.dart';
 import '../domain/practice/historical.dart';
 import '../features/coach/coach_screen.dart';
+import '../features/community/blocked_users_screen.dart';
+import '../features/community/chat_screen.dart';
 import '../features/community/community_screen.dart';
+import '../features/community/discussions_screen.dart';
+import '../features/community/discussion_thread_screen.dart';
+import '../features/community/friends_screen.dart';
 import '../features/community/join_community_screen.dart';
 import '../features/community/user_profile_screen.dart';
 import '../features/profile/profile_screen.dart';
@@ -207,6 +212,25 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
                       path: 'user/:id',
                       builder: (_, state) =>
                           CommunityUserScreen(userId: state.pathParameters['id']!),
+                    ),
+                    // Faz E9 — sosyal grafik yüzeyleri.
+                    GoRoute(path: 'blocked', builder: (_, _) => const BlockedUsersScreen()),
+                    GoRoute(path: 'friends', builder: (_, _) => const FriendsScreen()),
+                    GoRoute(path: 'messages', builder: (_, _) => const ChatListScreen()),
+                    GoRoute(
+                      path: 'chat/:id',
+                      builder: (_, state) => ChatScreen(userId: state.pathParameters['id']!),
+                    ),
+                    GoRoute(
+                      path: 'discussions',
+                      builder: (_, _) => const DiscussionsScreen(),
+                      routes: [
+                        GoRoute(
+                          path: ':threadId',
+                          builder: (_, state) =>
+                              DiscussionThreadScreen(threadId: state.pathParameters['threadId']!),
+                        ),
+                      ],
                     ),
                   ],
                 ),

@@ -3,11 +3,13 @@ import 'package:ehliyet_akademi/core/storage/token_store.dart';
 import 'package:ehliyet_akademi/data/auth/auth_api.dart';
 import 'package:ehliyet_akademi/data/coach/coach_api.dart';
 import 'package:ehliyet_akademi/data/community/community_repository.dart';
+import 'package:ehliyet_akademi/data/community/social_repository.dart';
 import 'package:ehliyet_akademi/data/content/content_repository.dart';
 import 'package:ehliyet_akademi/data/practice/question_repository.dart';
 import 'package:ehliyet_akademi/data/premium/entitlements_repository.dart';
 import 'package:ehliyet_akademi/domain/auth/app_user.dart';
 import 'package:ehliyet_akademi/domain/community/community_models.dart';
+import 'package:ehliyet_akademi/domain/community/social_models.dart';
 import 'package:ehliyet_akademi/domain/content/content_enums.dart';
 import 'package:ehliyet_akademi/domain/content/content_snapshot.dart';
 import 'package:ehliyet_akademi/domain/content/lesson.dart';
@@ -380,6 +382,129 @@ class FakeCommunityApi implements CommunityApi {
 
   @override
   Future<void> unblock(String userId) async => blocked.remove(userId);
+
+  @override
+  Future<List<BlockedUser>> fetchBlocked() async => blocked
+      .map((id) => BlockedUser(userId: id, displayName: 'Engelli $id', avatarId: 'owl-wave'))
+      .toList();
+}
+
+/// Faz E9 — sahte sosyal API. Arkadaşlık/mesaj/tartışma akışlarını ağsız çalıştırır ve
+/// hangi çağrıların yapıldığını kaydeder.
+class FakeSocialApi implements SocialApi {
+  FakeSocialApi({
+    this.friends = const [],
+    this.incoming = const [],
+    this.outgoing = const [],
+    this.threads = const [],
+    this.messages = const [],
+    this.discussions = const [],
+    this.detail,
+    this.failFriends = false,
+    this.failConversation = false,
+    this.discussionNotFound = false,
+    this.sendError,
+  });
+
+  List<FriendEntry> friends;
+  List<FriendEntry> incoming;
+  List<FriendEntry> outgoing;
+  List<MessageThread> threads;
+  List<ChatMessage> messages;
+  List<DiscussionSummary> discussions;
+  DiscussionDetail? detail;
+  final bool failFriends;
+  final bool failConversation;
+  final bool discussionNotFound;
+
+  /// Doluysa `sendMessage` bu mesajla CommunityException fırlatır (sunucu reddi taklidi).
+  final String? sendError;
+
+  final List<String> requested = [];
+  final List<String> accepted = [];
+  final List<String> removed = [];
+  final List<String> sent = [];
+  final List<String> posts = [];
+  final List<String> createdThreads = [];
+  final List<String> reports = [];
+
+  @override
+  Future<FriendsPage> fetchFriends() async {
+    if (failFriends) throw CommunityException('ağ yok');
+    return FriendsPage(friends: friends, incoming: incoming, outgoing: outgoing);
+  }
+
+  @override
+  Future<void> sendFriendRequest(String userId) async => requested.add(userId);
+
+  @override
+  Future<void> acceptFriendRequest(String userId) async => accepted.add(userId);
+
+  @override
+  Future<void> removeFriend(String userId) async => removed.add(userId);
+
+  @override
+  Future<List<MessageThread>> fetchThreads() async => threads;
+
+  @override
+  Future<List<ChatMessage>> fetchConversation(String userId) async {
+    if (failConversation) throw CommunityException('Konuşma açılamadı.');
+    return messages;
+  }
+
+  @override
+  Future<ChatMessage> sendMessage({required String userId, required String body}) async {
+    if (sendError != null) throw CommunityException(sendError!);
+    sent.add(body);
+    return ChatMessage(
+      id: 'm-${sent.length}',
+      senderId: 'me',
+      body: body,
+      createdAt: null,
+      mine: true,
+    );
+  }
+
+  @override
+  Future<List<DiscussionSummary>> fetchDiscussions({String? licence}) async => discussions;
+
+  @override
+  Future<DiscussionSummary> createDiscussion({
+    required String title,
+    required String licence,
+    String? questionRef,
+  }) async {
+    createdThreads.add(title);
+    return DiscussionSummary(
+      id: 't-${createdThreads.length}',
+      title: title,
+      licence: licence,
+      questionRef: questionRef,
+      postCount: 0,
+      authorId: 'me',
+      authorName: 'Ben',
+      authorAvatarId: 'owl-wave',
+    );
+  }
+
+  @override
+  Future<DiscussionDetail?> fetchDiscussion(String threadId) async =>
+      discussionNotFound ? null : detail;
+
+  @override
+  Future<void> addPost({
+    required String threadId,
+    required String body,
+    String? questionRef,
+  }) async => posts.add(body);
+
+  @override
+  Future<void> reportContent({
+    required String userId,
+    required ReportReason reason,
+    String? targetType,
+    String? targetRef,
+  }) async => reports.add('${targetType ?? 'user'}:${targetRef ?? userId}:${reason.wire}');
 }
 
 /// Pump the full app with test-safe overrides (no platform channels / network / native drift).
@@ -391,6 +516,7 @@ Future<void> pumpApp(
   QuestionBank? bank,
   CoachApi? coach,
   CommunityApi? community,
+  SocialApi? social,
   List<String>? owned,
   Map<String, Object>? prefs,
   bool onboardingSeen = true,
@@ -424,6 +550,7 @@ Future<void> pumpApp(
         if (auth != null) authApiProvider.overrideWithValue(auth),
         coachApiProvider.overrideWithValue(coach ?? FakeCoachApi()),
         communityApiProvider.overrideWithValue(community ?? FakeCommunityApi()),
+        socialApiProvider.overrideWithValue(social ?? FakeSocialApi()),
         entitlementsApiProvider.overrideWithValue(FakeEntitlementsApi(owned ?? const [])),
         // Content + questions come from fixed snapshots in tests → never touch drift/network.
         if (overrideContent) ...[

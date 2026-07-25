@@ -4,10 +4,13 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../data/community/community_repository.dart';
+import '../../data/community/social_repository.dart';
 import '../../design/brand.dart';
 import '../../design/primitives.dart';
 import '../../domain/community/community_models.dart';
+import '../../domain/community/social_models.dart';
 import '../../domain/progress/gamification.dart';
+import 'report_sheet.dart';
 
 /// Evolution Faz E8 — başka bir kullanıcının topluluk profili.
 ///
@@ -24,6 +27,8 @@ class CommunityUserScreen extends ConsumerStatefulWidget {
 
 class _CommunityUserScreenState extends ConsumerState<CommunityUserScreen> {
   Future<CommunityUser?>? _future;
+  FriendState _friendState = FriendState.none;
+  bool _busy = false;
 
   @override
   void initState() {
@@ -34,9 +39,63 @@ class _CommunityUserScreenState extends ConsumerState<CommunityUserScreen> {
         setState(() {
           _future = future;
         });
+        _loadFriendState();
       }
     });
   }
+
+  /// Arkadaşlık durumu ayrı okunur: profil uçları PII taşımadığı için ilişki bilgisi
+  /// arkadaş listesinden türetilir (sunucu tek doğruluk kaynağıdır).
+  Future<void> _loadFriendState() async {
+    try {
+      final page = await ref.read(socialApiProvider).fetchFriends();
+      if (!mounted) return;
+      FriendState state = FriendState.none;
+      for (final f in [...page.friends, ...page.incoming, ...page.outgoing]) {
+        if (f.userId == widget.userId) state = f.state;
+      }
+      setState(() => _friendState = state);
+    } catch (_) {
+      // sessiz: ilişki bilgisi olmadan da profil gösterilir
+    }
+  }
+
+  Future<void> _friendAction() async {
+    if (_busy) return;
+    setState(() => _busy = true);
+    final api = ref.read(socialApiProvider);
+    try {
+      switch (_friendState) {
+        case FriendState.none:
+          await api.sendFriendRequest(widget.userId);
+        case FriendState.incoming:
+          await api.acceptFriendRequest(widget.userId);
+        case FriendState.outgoing:
+        case FriendState.friends:
+          await api.removeFriend(widget.userId);
+      }
+      await _loadFriendState();
+    } on CommunityException catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message)));
+      }
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('İşlem yapılamadı.')));
+      }
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  ({String label, IconData icon}) get _friendCta => switch (_friendState) {
+    FriendState.none => (label: 'Arkadaş ekle', icon: Icons.person_add_alt_1_rounded),
+    FriendState.outgoing => (label: 'İsteği geri al', icon: Icons.hourglass_top_rounded),
+    FriendState.incoming => (label: 'İsteği kabul et', icon: Icons.check_circle_rounded),
+    FriendState.friends => (label: 'Arkadaşlıktan çıkar', icon: Icons.person_remove_rounded),
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -145,6 +204,28 @@ class _CommunityUserScreenState extends ConsumerState<CommunityUserScreen> {
           ),
 
         if (!user.isSelf) ...[
+          const SectionTitle('Arkadaşlık'),
+          Row(
+            children: [
+              Expanded(
+                child: FilledButton.icon(
+                  onPressed: _busy ? null : _friendAction,
+                  icon: Icon(_friendCta.icon, size: 18),
+                  label: Text(_friendCta.label),
+                ),
+              ),
+              if (_friendState == FriendState.friends) ...[
+                const SizedBox(width: AppSpacing.s3),
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: () => context.push('/profile/community/chat/${user.userId}'),
+                    icon: const Icon(Icons.chat_bubble_outline_rounded, size: 18),
+                    label: const Text('Mesaj'),
+                  ),
+                ),
+              ],
+            ],
+          ),
           const SectionTitle('Güvenlik'),
           Text(
             'Rahatsız edici bir davranış görürsen bu kullanıcıyı engelleyebilir veya bildirebilirsin. '
@@ -209,30 +290,7 @@ class _CommunityUserScreenState extends ConsumerState<CommunityUserScreen> {
   }
 
   Future<void> _report(CommunityUser user) async {
-    final reason = await showModalBottomSheet<ReportReason>(
-      context: context,
-      isScrollControlled: true,
-      builder: (ctx) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(AppSpacing.s4),
-              child: Text(
-                'Bildirme sebebi',
-                style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
-              ),
-            ),
-            for (final r in ReportReason.values)
-              ListTile(
-                title: Text(r.label),
-                onTap: () => Navigator.pop(ctx, r),
-              ),
-            const SizedBox(height: AppSpacing.s2),
-          ],
-        ),
-      ),
-    );
+    final reason = await pickReportReason(context);
     if (reason == null) return;
     try {
       await ref.read(communityApiProvider).report(userId: user.userId, reason: reason);

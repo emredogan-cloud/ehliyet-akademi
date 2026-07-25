@@ -177,6 +177,56 @@ CREATE TABLE IF NOT EXISTS community_blocks (
   PRIMARY KEY (blocker_id, blocked_id)
 );
 
+-- ── Sosyal grafik ve mesajlaşma (Evolution Faz E9) ────────────────────────────
+-- Engel kontrolü bu tablolarda DEĞİL, her uçta community_blocks üzerinden yapılır.
+CREATE TABLE IF NOT EXISTS friendships (
+  requester_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  addressee_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  status TEXT NOT NULL DEFAULT 'pending',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  responded_at TIMESTAMPTZ,
+  PRIMARY KEY (requester_id, addressee_id)
+);
+CREATE INDEX IF NOT EXISTS friendships_addressee_idx ON friendships(addressee_id);
+
+CREATE TABLE IF NOT EXISTS direct_messages (
+  id TEXT PRIMARY KEY,
+  thread_key TEXT NOT NULL,
+  sender_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  recipient_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  body TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  read_at TIMESTAMPTZ
+);
+CREATE INDEX IF NOT EXISTS dm_thread_idx ON direct_messages(thread_key, created_at);
+CREATE INDEX IF NOT EXISTS dm_recipient_idx ON direct_messages(recipient_id);
+
+CREATE TABLE IF NOT EXISTS discussion_threads (
+  id TEXT PRIMARY KEY,
+  licence TEXT NOT NULL DEFAULT 'b',
+  title TEXT NOT NULL,
+  author_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  question_ref TEXT,
+  post_count INTEGER NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  last_activity_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS discussion_threads_licence_idx ON discussion_threads(licence, last_activity_at);
+
+CREATE TABLE IF NOT EXISTS discussion_posts (
+  id TEXT PRIMARY KEY,
+  thread_id TEXT NOT NULL REFERENCES discussion_threads(id) ON DELETE CASCADE,
+  author_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  body TEXT NOT NULL,
+  question_ref TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS discussion_posts_thread_idx ON discussion_posts(thread_id, created_at);
+
+-- Faz E9: şikâyet artık kullanıcıyı DEĞİL, mesaj/iletiyi de hedefleyebilir.
+ALTER TABLE community_reports ADD COLUMN IF NOT EXISTS target_type TEXT NOT NULL DEFAULT 'user';
+ALTER TABLE community_reports ADD COLUMN IF NOT EXISTS target_ref TEXT;
+
 CREATE TABLE IF NOT EXISTS media_assets (
   id TEXT PRIMARY KEY,
   kind TEXT NOT NULL,

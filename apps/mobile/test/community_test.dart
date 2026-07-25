@@ -222,11 +222,19 @@ void main() {
       await tester.tap(find.text('Rakip Kisi'));
       await tester.pumpAndSettle();
 
-      await tester.scrollUntilVisible(find.text('Engelle'), 200, scrollable: topScrollable());
+      // Faz E9'da profile "Arkadaşlık" bölümü eklendi → güvenlik düğmeleri daha aşağıda.
+      // Kaydırdıktan sonra AYRICA ensureVisible: satır ekranın en altında yarı örtülü kalabiliyor.
+      await tester.scrollUntilVisible(
+        find.widgetWithText(OutlinedButton, 'Engelle'),
+        200,
+        scrollable: topScrollable(),
+      );
+      await tester.ensureVisible(find.widgetWithText(OutlinedButton, 'Engelle'));
+      await tester.pumpAndSettle();
       expect(find.text('Engelle'), findsOneWidget);
       expect(find.text('Bildir'), findsOneWidget);
 
-      await tester.tap(find.text('Engelle'));
+      await tester.tap(find.widgetWithText(OutlinedButton, 'Engelle'));
       await tester.pumpAndSettle();
       await tester.tap(find.widgetWithText(FilledButton, 'Engelle'));
       await tester.pumpAndSettle();

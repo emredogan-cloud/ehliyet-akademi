@@ -5,6 +5,7 @@
 import { parseLesson, type Lesson, type LessonInput } from '@ea/content-schema';
 import { THEORY_EXTRA_LESSONS } from './theory-lessons';
 import { DRIVING_LESSONS } from './driving-lessons';
+import { LICENCE_LESSONS } from './lessons-licence';
 
 const raw: LessonInput[] = [
   {
@@ -376,6 +377,17 @@ const raw: LessonInput[] = [
  */
 const ALL_RAW: LessonInput[] = [...raw, ...THEORY_EXTRA_LESSONS, ...DRIVING_LESSONS];
 export const LESSONS: Lesson[] = ALL_RAW.map(parseLesson).sort((a, b) => a.no - b.no);
+
+/**
+ * Mobil içerik anlık görüntüsünün servis ettiği TAM liste: ortak ders kütüphanesi + A/D sınıfına
+ * özgü dersler (Faz E5). Web tarafı `LESSONS`'ı kullanmaya devam eder → web sayfaları, site
+ * haritası ve QIP grafiği birebir korunur (`ALL_VEHICLE_PARTS` deseninin aynısı).
+ *
+ * Ortak dersler `licences` taşımaz; sınıftan bağımsız oldukları için her kategoride görünür.
+ */
+export const ALL_LESSONS: Lesson[] = [...ALL_RAW, ...LICENCE_LESSONS]
+  .map(parseLesson)
+  .sort((a, b) => a.no - b.no);
 
 export function lessonBySlug(slug: string): Lesson | undefined {
   return LESSONS.find((l) => l.slug === slug);

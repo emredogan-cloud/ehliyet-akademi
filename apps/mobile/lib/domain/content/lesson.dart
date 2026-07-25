@@ -78,6 +78,10 @@ abstract class Lesson with _$Lesson {
     @Default([]) List<String> practiceQuestionIds,
     String? figureId,
     @Default(false) bool premium,
+
+    /// Evolution Faz E5 — dersin geçerli olduğu ehliyet sınıfları ('b' | 'a' | 'd').
+    /// BOŞ ise ders sınıftan bağımsızdır (e-Sınav teorisi tüm sınıflarda ORTAKTIR).
+    @Default([]) List<String> licences,
   }) = _Lesson;
   factory Lesson.fromJson(Map<String, Object?> json) => _$LessonFromJson(json);
 }

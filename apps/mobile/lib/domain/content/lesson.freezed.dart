@@ -1420,7 +1420,9 @@ $CompareTableCopyWith<$Res>? get compare {
 /// @nodoc
 mixin _$Lesson {
 
- String get id; String get slug; int get no; Subject get subject; String get title; String get summary; int get minutes; List<String> get objectives; List<LessonSection> get sections; List<LessonMistake> get mistakes; List<String> get tips; List<String> get quizQuestionIds; List<String> get references; List<String> get memoryTips; List<String> get examStrategy; List<String> get keyTakeaways; List<ReviewCard> get reviewCards; List<String> get practiceQuestionIds; String? get figureId; bool get premium;
+ String get id; String get slug; int get no; Subject get subject; String get title; String get summary; int get minutes; List<String> get objectives; List<LessonSection> get sections; List<LessonMistake> get mistakes; List<String> get tips; List<String> get quizQuestionIds; List<String> get references; List<String> get memoryTips; List<String> get examStrategy; List<String> get keyTakeaways; List<ReviewCard> get reviewCards; List<String> get practiceQuestionIds; String? get figureId; bool get premium;/// Evolution Faz E5 — dersin geçerli olduğu ehliyet sınıfları ('b' | 'a' | 'd').
+/// BOŞ ise ders sınıftan bağımsızdır (e-Sınav teorisi tüm sınıflarda ORTAKTIR).
+ List<String> get licences;
 /// Create a copy of Lesson
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1433,16 +1435,16 @@ $LessonCopyWith<Lesson> get copyWith => _$LessonCopyWithImpl<Lesson>(this as Les
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Lesson&&(identical(other.id, id) || other.id == id)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.no, no) || other.no == no)&&(identical(other.subject, subject) || other.subject == subject)&&(identical(other.title, title) || other.title == title)&&(identical(other.summary, summary) || other.summary == summary)&&(identical(other.minutes, minutes) || other.minutes == minutes)&&const DeepCollectionEquality().equals(other.objectives, objectives)&&const DeepCollectionEquality().equals(other.sections, sections)&&const DeepCollectionEquality().equals(other.mistakes, mistakes)&&const DeepCollectionEquality().equals(other.tips, tips)&&const DeepCollectionEquality().equals(other.quizQuestionIds, quizQuestionIds)&&const DeepCollectionEquality().equals(other.references, references)&&const DeepCollectionEquality().equals(other.memoryTips, memoryTips)&&const DeepCollectionEquality().equals(other.examStrategy, examStrategy)&&const DeepCollectionEquality().equals(other.keyTakeaways, keyTakeaways)&&const DeepCollectionEquality().equals(other.reviewCards, reviewCards)&&const DeepCollectionEquality().equals(other.practiceQuestionIds, practiceQuestionIds)&&(identical(other.figureId, figureId) || other.figureId == figureId)&&(identical(other.premium, premium) || other.premium == premium));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Lesson&&(identical(other.id, id) || other.id == id)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.no, no) || other.no == no)&&(identical(other.subject, subject) || other.subject == subject)&&(identical(other.title, title) || other.title == title)&&(identical(other.summary, summary) || other.summary == summary)&&(identical(other.minutes, minutes) || other.minutes == minutes)&&const DeepCollectionEquality().equals(other.objectives, objectives)&&const DeepCollectionEquality().equals(other.sections, sections)&&const DeepCollectionEquality().equals(other.mistakes, mistakes)&&const DeepCollectionEquality().equals(other.tips, tips)&&const DeepCollectionEquality().equals(other.quizQuestionIds, quizQuestionIds)&&const DeepCollectionEquality().equals(other.references, references)&&const DeepCollectionEquality().equals(other.memoryTips, memoryTips)&&const DeepCollectionEquality().equals(other.examStrategy, examStrategy)&&const DeepCollectionEquality().equals(other.keyTakeaways, keyTakeaways)&&const DeepCollectionEquality().equals(other.reviewCards, reviewCards)&&const DeepCollectionEquality().equals(other.practiceQuestionIds, practiceQuestionIds)&&(identical(other.figureId, figureId) || other.figureId == figureId)&&(identical(other.premium, premium) || other.premium == premium)&&const DeepCollectionEquality().equals(other.licences, licences));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,id,slug,no,subject,title,summary,minutes,const DeepCollectionEquality().hash(objectives),const DeepCollectionEquality().hash(sections),const DeepCollectionEquality().hash(mistakes),const DeepCollectionEquality().hash(tips),const DeepCollectionEquality().hash(quizQuestionIds),const DeepCollectionEquality().hash(references),const DeepCollectionEquality().hash(memoryTips),const DeepCollectionEquality().hash(examStrategy),const DeepCollectionEquality().hash(keyTakeaways),const DeepCollectionEquality().hash(reviewCards),const DeepCollectionEquality().hash(practiceQuestionIds),figureId,premium]);
+int get hashCode => Object.hashAll([runtimeType,id,slug,no,subject,title,summary,minutes,const DeepCollectionEquality().hash(objectives),const DeepCollectionEquality().hash(sections),const DeepCollectionEquality().hash(mistakes),const DeepCollectionEquality().hash(tips),const DeepCollectionEquality().hash(quizQuestionIds),const DeepCollectionEquality().hash(references),const DeepCollectionEquality().hash(memoryTips),const DeepCollectionEquality().hash(examStrategy),const DeepCollectionEquality().hash(keyTakeaways),const DeepCollectionEquality().hash(reviewCards),const DeepCollectionEquality().hash(practiceQuestionIds),figureId,premium,const DeepCollectionEquality().hash(licences)]);
 
 @override
 String toString() {
-  return 'Lesson(id: $id, slug: $slug, no: $no, subject: $subject, title: $title, summary: $summary, minutes: $minutes, objectives: $objectives, sections: $sections, mistakes: $mistakes, tips: $tips, quizQuestionIds: $quizQuestionIds, references: $references, memoryTips: $memoryTips, examStrategy: $examStrategy, keyTakeaways: $keyTakeaways, reviewCards: $reviewCards, practiceQuestionIds: $practiceQuestionIds, figureId: $figureId, premium: $premium)';
+  return 'Lesson(id: $id, slug: $slug, no: $no, subject: $subject, title: $title, summary: $summary, minutes: $minutes, objectives: $objectives, sections: $sections, mistakes: $mistakes, tips: $tips, quizQuestionIds: $quizQuestionIds, references: $references, memoryTips: $memoryTips, examStrategy: $examStrategy, keyTakeaways: $keyTakeaways, reviewCards: $reviewCards, practiceQuestionIds: $practiceQuestionIds, figureId: $figureId, premium: $premium, licences: $licences)';
 }
 
 
@@ -1453,7 +1455,7 @@ abstract mixin class $LessonCopyWith<$Res>  {
   factory $LessonCopyWith(Lesson value, $Res Function(Lesson) _then) = _$LessonCopyWithImpl;
 @useResult
 $Res call({
- String id, String slug, int no, Subject subject, String title, String summary, int minutes, List<String> objectives, List<LessonSection> sections, List<LessonMistake> mistakes, List<String> tips, List<String> quizQuestionIds, List<String> references, List<String> memoryTips, List<String> examStrategy, List<String> keyTakeaways, List<ReviewCard> reviewCards, List<String> practiceQuestionIds, String? figureId, bool premium
+ String id, String slug, int no, Subject subject, String title, String summary, int minutes, List<String> objectives, List<LessonSection> sections, List<LessonMistake> mistakes, List<String> tips, List<String> quizQuestionIds, List<String> references, List<String> memoryTips, List<String> examStrategy, List<String> keyTakeaways, List<ReviewCard> reviewCards, List<String> practiceQuestionIds, String? figureId, bool premium, List<String> licences
 });
 
 
@@ -1470,7 +1472,7 @@ class _$LessonCopyWithImpl<$Res>
 
 /// Create a copy of Lesson
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? slug = null,Object? no = null,Object? subject = null,Object? title = null,Object? summary = null,Object? minutes = null,Object? objectives = null,Object? sections = null,Object? mistakes = null,Object? tips = null,Object? quizQuestionIds = null,Object? references = null,Object? memoryTips = null,Object? examStrategy = null,Object? keyTakeaways = null,Object? reviewCards = null,Object? practiceQuestionIds = null,Object? figureId = freezed,Object? premium = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? slug = null,Object? no = null,Object? subject = null,Object? title = null,Object? summary = null,Object? minutes = null,Object? objectives = null,Object? sections = null,Object? mistakes = null,Object? tips = null,Object? quizQuestionIds = null,Object? references = null,Object? memoryTips = null,Object? examStrategy = null,Object? keyTakeaways = null,Object? reviewCards = null,Object? practiceQuestionIds = null,Object? figureId = freezed,Object? premium = null,Object? licences = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,slug: null == slug ? _self.slug : slug // ignore: cast_nullable_to_non_nullable
@@ -1492,7 +1494,8 @@ as List<String>,reviewCards: null == reviewCards ? _self.reviewCards : reviewCar
 as List<ReviewCard>,practiceQuestionIds: null == practiceQuestionIds ? _self.practiceQuestionIds : practiceQuestionIds // ignore: cast_nullable_to_non_nullable
 as List<String>,figureId: freezed == figureId ? _self.figureId : figureId // ignore: cast_nullable_to_non_nullable
 as String?,premium: null == premium ? _self.premium : premium // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,licences: null == licences ? _self.licences : licences // ignore: cast_nullable_to_non_nullable
+as List<String>,
   ));
 }
 
@@ -1577,10 +1580,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String slug,  int no,  Subject subject,  String title,  String summary,  int minutes,  List<String> objectives,  List<LessonSection> sections,  List<LessonMistake> mistakes,  List<String> tips,  List<String> quizQuestionIds,  List<String> references,  List<String> memoryTips,  List<String> examStrategy,  List<String> keyTakeaways,  List<ReviewCard> reviewCards,  List<String> practiceQuestionIds,  String? figureId,  bool premium)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String slug,  int no,  Subject subject,  String title,  String summary,  int minutes,  List<String> objectives,  List<LessonSection> sections,  List<LessonMistake> mistakes,  List<String> tips,  List<String> quizQuestionIds,  List<String> references,  List<String> memoryTips,  List<String> examStrategy,  List<String> keyTakeaways,  List<ReviewCard> reviewCards,  List<String> practiceQuestionIds,  String? figureId,  bool premium,  List<String> licences)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Lesson() when $default != null:
-return $default(_that.id,_that.slug,_that.no,_that.subject,_that.title,_that.summary,_that.minutes,_that.objectives,_that.sections,_that.mistakes,_that.tips,_that.quizQuestionIds,_that.references,_that.memoryTips,_that.examStrategy,_that.keyTakeaways,_that.reviewCards,_that.practiceQuestionIds,_that.figureId,_that.premium);case _:
+return $default(_that.id,_that.slug,_that.no,_that.subject,_that.title,_that.summary,_that.minutes,_that.objectives,_that.sections,_that.mistakes,_that.tips,_that.quizQuestionIds,_that.references,_that.memoryTips,_that.examStrategy,_that.keyTakeaways,_that.reviewCards,_that.practiceQuestionIds,_that.figureId,_that.premium,_that.licences);case _:
   return orElse();
 
 }
@@ -1598,10 +1601,10 @@ return $default(_that.id,_that.slug,_that.no,_that.subject,_that.title,_that.sum
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String slug,  int no,  Subject subject,  String title,  String summary,  int minutes,  List<String> objectives,  List<LessonSection> sections,  List<LessonMistake> mistakes,  List<String> tips,  List<String> quizQuestionIds,  List<String> references,  List<String> memoryTips,  List<String> examStrategy,  List<String> keyTakeaways,  List<ReviewCard> reviewCards,  List<String> practiceQuestionIds,  String? figureId,  bool premium)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String slug,  int no,  Subject subject,  String title,  String summary,  int minutes,  List<String> objectives,  List<LessonSection> sections,  List<LessonMistake> mistakes,  List<String> tips,  List<String> quizQuestionIds,  List<String> references,  List<String> memoryTips,  List<String> examStrategy,  List<String> keyTakeaways,  List<ReviewCard> reviewCards,  List<String> practiceQuestionIds,  String? figureId,  bool premium,  List<String> licences)  $default,) {final _that = this;
 switch (_that) {
 case _Lesson():
-return $default(_that.id,_that.slug,_that.no,_that.subject,_that.title,_that.summary,_that.minutes,_that.objectives,_that.sections,_that.mistakes,_that.tips,_that.quizQuestionIds,_that.references,_that.memoryTips,_that.examStrategy,_that.keyTakeaways,_that.reviewCards,_that.practiceQuestionIds,_that.figureId,_that.premium);case _:
+return $default(_that.id,_that.slug,_that.no,_that.subject,_that.title,_that.summary,_that.minutes,_that.objectives,_that.sections,_that.mistakes,_that.tips,_that.quizQuestionIds,_that.references,_that.memoryTips,_that.examStrategy,_that.keyTakeaways,_that.reviewCards,_that.practiceQuestionIds,_that.figureId,_that.premium,_that.licences);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -1618,10 +1621,10 @@ return $default(_that.id,_that.slug,_that.no,_that.subject,_that.title,_that.sum
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String slug,  int no,  Subject subject,  String title,  String summary,  int minutes,  List<String> objectives,  List<LessonSection> sections,  List<LessonMistake> mistakes,  List<String> tips,  List<String> quizQuestionIds,  List<String> references,  List<String> memoryTips,  List<String> examStrategy,  List<String> keyTakeaways,  List<ReviewCard> reviewCards,  List<String> practiceQuestionIds,  String? figureId,  bool premium)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String slug,  int no,  Subject subject,  String title,  String summary,  int minutes,  List<String> objectives,  List<LessonSection> sections,  List<LessonMistake> mistakes,  List<String> tips,  List<String> quizQuestionIds,  List<String> references,  List<String> memoryTips,  List<String> examStrategy,  List<String> keyTakeaways,  List<ReviewCard> reviewCards,  List<String> practiceQuestionIds,  String? figureId,  bool premium,  List<String> licences)?  $default,) {final _that = this;
 switch (_that) {
 case _Lesson() when $default != null:
-return $default(_that.id,_that.slug,_that.no,_that.subject,_that.title,_that.summary,_that.minutes,_that.objectives,_that.sections,_that.mistakes,_that.tips,_that.quizQuestionIds,_that.references,_that.memoryTips,_that.examStrategy,_that.keyTakeaways,_that.reviewCards,_that.practiceQuestionIds,_that.figureId,_that.premium);case _:
+return $default(_that.id,_that.slug,_that.no,_that.subject,_that.title,_that.summary,_that.minutes,_that.objectives,_that.sections,_that.mistakes,_that.tips,_that.quizQuestionIds,_that.references,_that.memoryTips,_that.examStrategy,_that.keyTakeaways,_that.reviewCards,_that.practiceQuestionIds,_that.figureId,_that.premium,_that.licences);case _:
   return null;
 
 }
@@ -1633,7 +1636,7 @@ return $default(_that.id,_that.slug,_that.no,_that.subject,_that.title,_that.sum
 @JsonSerializable()
 
 class _Lesson implements Lesson {
-  const _Lesson({required this.id, required this.slug, required this.no, required this.subject, required this.title, required this.summary, required this.minutes, required final  List<String> objectives, required final  List<LessonSection> sections, final  List<LessonMistake> mistakes = const [], final  List<String> tips = const [], final  List<String> quizQuestionIds = const [], final  List<String> references = const [], final  List<String> memoryTips = const [], final  List<String> examStrategy = const [], final  List<String> keyTakeaways = const [], final  List<ReviewCard> reviewCards = const [], final  List<String> practiceQuestionIds = const [], this.figureId, this.premium = false}): _objectives = objectives,_sections = sections,_mistakes = mistakes,_tips = tips,_quizQuestionIds = quizQuestionIds,_references = references,_memoryTips = memoryTips,_examStrategy = examStrategy,_keyTakeaways = keyTakeaways,_reviewCards = reviewCards,_practiceQuestionIds = practiceQuestionIds;
+  const _Lesson({required this.id, required this.slug, required this.no, required this.subject, required this.title, required this.summary, required this.minutes, required final  List<String> objectives, required final  List<LessonSection> sections, final  List<LessonMistake> mistakes = const [], final  List<String> tips = const [], final  List<String> quizQuestionIds = const [], final  List<String> references = const [], final  List<String> memoryTips = const [], final  List<String> examStrategy = const [], final  List<String> keyTakeaways = const [], final  List<ReviewCard> reviewCards = const [], final  List<String> practiceQuestionIds = const [], this.figureId, this.premium = false, final  List<String> licences = const []}): _objectives = objectives,_sections = sections,_mistakes = mistakes,_tips = tips,_quizQuestionIds = quizQuestionIds,_references = references,_memoryTips = memoryTips,_examStrategy = examStrategy,_keyTakeaways = keyTakeaways,_reviewCards = reviewCards,_practiceQuestionIds = practiceQuestionIds,_licences = licences;
   factory _Lesson.fromJson(Map<String, dynamic> json) => _$LessonFromJson(json);
 
 @override final  String id;
@@ -1722,6 +1725,17 @@ class _Lesson implements Lesson {
 
 @override final  String? figureId;
 @override@JsonKey() final  bool premium;
+/// Evolution Faz E5 — dersin geçerli olduğu ehliyet sınıfları ('b' | 'a' | 'd').
+/// BOŞ ise ders sınıftan bağımsızdır (e-Sınav teorisi tüm sınıflarda ORTAKTIR).
+ final  List<String> _licences;
+/// Evolution Faz E5 — dersin geçerli olduğu ehliyet sınıfları ('b' | 'a' | 'd').
+/// BOŞ ise ders sınıftan bağımsızdır (e-Sınav teorisi tüm sınıflarda ORTAKTIR).
+@override@JsonKey() List<String> get licences {
+  if (_licences is EqualUnmodifiableListView) return _licences;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_licences);
+}
+
 
 /// Create a copy of Lesson
 /// with the given fields replaced by the non-null parameter values.
@@ -1736,16 +1750,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Lesson&&(identical(other.id, id) || other.id == id)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.no, no) || other.no == no)&&(identical(other.subject, subject) || other.subject == subject)&&(identical(other.title, title) || other.title == title)&&(identical(other.summary, summary) || other.summary == summary)&&(identical(other.minutes, minutes) || other.minutes == minutes)&&const DeepCollectionEquality().equals(other._objectives, _objectives)&&const DeepCollectionEquality().equals(other._sections, _sections)&&const DeepCollectionEquality().equals(other._mistakes, _mistakes)&&const DeepCollectionEquality().equals(other._tips, _tips)&&const DeepCollectionEquality().equals(other._quizQuestionIds, _quizQuestionIds)&&const DeepCollectionEquality().equals(other._references, _references)&&const DeepCollectionEquality().equals(other._memoryTips, _memoryTips)&&const DeepCollectionEquality().equals(other._examStrategy, _examStrategy)&&const DeepCollectionEquality().equals(other._keyTakeaways, _keyTakeaways)&&const DeepCollectionEquality().equals(other._reviewCards, _reviewCards)&&const DeepCollectionEquality().equals(other._practiceQuestionIds, _practiceQuestionIds)&&(identical(other.figureId, figureId) || other.figureId == figureId)&&(identical(other.premium, premium) || other.premium == premium));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Lesson&&(identical(other.id, id) || other.id == id)&&(identical(other.slug, slug) || other.slug == slug)&&(identical(other.no, no) || other.no == no)&&(identical(other.subject, subject) || other.subject == subject)&&(identical(other.title, title) || other.title == title)&&(identical(other.summary, summary) || other.summary == summary)&&(identical(other.minutes, minutes) || other.minutes == minutes)&&const DeepCollectionEquality().equals(other._objectives, _objectives)&&const DeepCollectionEquality().equals(other._sections, _sections)&&const DeepCollectionEquality().equals(other._mistakes, _mistakes)&&const DeepCollectionEquality().equals(other._tips, _tips)&&const DeepCollectionEquality().equals(other._quizQuestionIds, _quizQuestionIds)&&const DeepCollectionEquality().equals(other._references, _references)&&const DeepCollectionEquality().equals(other._memoryTips, _memoryTips)&&const DeepCollectionEquality().equals(other._examStrategy, _examStrategy)&&const DeepCollectionEquality().equals(other._keyTakeaways, _keyTakeaways)&&const DeepCollectionEquality().equals(other._reviewCards, _reviewCards)&&const DeepCollectionEquality().equals(other._practiceQuestionIds, _practiceQuestionIds)&&(identical(other.figureId, figureId) || other.figureId == figureId)&&(identical(other.premium, premium) || other.premium == premium)&&const DeepCollectionEquality().equals(other._licences, _licences));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,id,slug,no,subject,title,summary,minutes,const DeepCollectionEquality().hash(_objectives),const DeepCollectionEquality().hash(_sections),const DeepCollectionEquality().hash(_mistakes),const DeepCollectionEquality().hash(_tips),const DeepCollectionEquality().hash(_quizQuestionIds),const DeepCollectionEquality().hash(_references),const DeepCollectionEquality().hash(_memoryTips),const DeepCollectionEquality().hash(_examStrategy),const DeepCollectionEquality().hash(_keyTakeaways),const DeepCollectionEquality().hash(_reviewCards),const DeepCollectionEquality().hash(_practiceQuestionIds),figureId,premium]);
+int get hashCode => Object.hashAll([runtimeType,id,slug,no,subject,title,summary,minutes,const DeepCollectionEquality().hash(_objectives),const DeepCollectionEquality().hash(_sections),const DeepCollectionEquality().hash(_mistakes),const DeepCollectionEquality().hash(_tips),const DeepCollectionEquality().hash(_quizQuestionIds),const DeepCollectionEquality().hash(_references),const DeepCollectionEquality().hash(_memoryTips),const DeepCollectionEquality().hash(_examStrategy),const DeepCollectionEquality().hash(_keyTakeaways),const DeepCollectionEquality().hash(_reviewCards),const DeepCollectionEquality().hash(_practiceQuestionIds),figureId,premium,const DeepCollectionEquality().hash(_licences)]);
 
 @override
 String toString() {
-  return 'Lesson(id: $id, slug: $slug, no: $no, subject: $subject, title: $title, summary: $summary, minutes: $minutes, objectives: $objectives, sections: $sections, mistakes: $mistakes, tips: $tips, quizQuestionIds: $quizQuestionIds, references: $references, memoryTips: $memoryTips, examStrategy: $examStrategy, keyTakeaways: $keyTakeaways, reviewCards: $reviewCards, practiceQuestionIds: $practiceQuestionIds, figureId: $figureId, premium: $premium)';
+  return 'Lesson(id: $id, slug: $slug, no: $no, subject: $subject, title: $title, summary: $summary, minutes: $minutes, objectives: $objectives, sections: $sections, mistakes: $mistakes, tips: $tips, quizQuestionIds: $quizQuestionIds, references: $references, memoryTips: $memoryTips, examStrategy: $examStrategy, keyTakeaways: $keyTakeaways, reviewCards: $reviewCards, practiceQuestionIds: $practiceQuestionIds, figureId: $figureId, premium: $premium, licences: $licences)';
 }
 
 
@@ -1756,7 +1770,7 @@ abstract mixin class _$LessonCopyWith<$Res> implements $LessonCopyWith<$Res> {
   factory _$LessonCopyWith(_Lesson value, $Res Function(_Lesson) _then) = __$LessonCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String slug, int no, Subject subject, String title, String summary, int minutes, List<String> objectives, List<LessonSection> sections, List<LessonMistake> mistakes, List<String> tips, List<String> quizQuestionIds, List<String> references, List<String> memoryTips, List<String> examStrategy, List<String> keyTakeaways, List<ReviewCard> reviewCards, List<String> practiceQuestionIds, String? figureId, bool premium
+ String id, String slug, int no, Subject subject, String title, String summary, int minutes, List<String> objectives, List<LessonSection> sections, List<LessonMistake> mistakes, List<String> tips, List<String> quizQuestionIds, List<String> references, List<String> memoryTips, List<String> examStrategy, List<String> keyTakeaways, List<ReviewCard> reviewCards, List<String> practiceQuestionIds, String? figureId, bool premium, List<String> licences
 });
 
 
@@ -1773,7 +1787,7 @@ class __$LessonCopyWithImpl<$Res>
 
 /// Create a copy of Lesson
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? slug = null,Object? no = null,Object? subject = null,Object? title = null,Object? summary = null,Object? minutes = null,Object? objectives = null,Object? sections = null,Object? mistakes = null,Object? tips = null,Object? quizQuestionIds = null,Object? references = null,Object? memoryTips = null,Object? examStrategy = null,Object? keyTakeaways = null,Object? reviewCards = null,Object? practiceQuestionIds = null,Object? figureId = freezed,Object? premium = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? slug = null,Object? no = null,Object? subject = null,Object? title = null,Object? summary = null,Object? minutes = null,Object? objectives = null,Object? sections = null,Object? mistakes = null,Object? tips = null,Object? quizQuestionIds = null,Object? references = null,Object? memoryTips = null,Object? examStrategy = null,Object? keyTakeaways = null,Object? reviewCards = null,Object? practiceQuestionIds = null,Object? figureId = freezed,Object? premium = null,Object? licences = null,}) {
   return _then(_Lesson(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,slug: null == slug ? _self.slug : slug // ignore: cast_nullable_to_non_nullable
@@ -1795,7 +1809,8 @@ as List<String>,reviewCards: null == reviewCards ? _self._reviewCards : reviewCa
 as List<ReviewCard>,practiceQuestionIds: null == practiceQuestionIds ? _self._practiceQuestionIds : practiceQuestionIds // ignore: cast_nullable_to_non_nullable
 as List<String>,figureId: freezed == figureId ? _self.figureId : figureId // ignore: cast_nullable_to_non_nullable
 as String?,premium: null == premium ? _self.premium : premium // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,licences: null == licences ? _self._licences : licences // ignore: cast_nullable_to_non_nullable
+as List<String>,
   ));
 }
 

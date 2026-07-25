@@ -144,6 +144,9 @@ _Lesson _$LessonFromJson(Map<String, dynamic> json) => _Lesson(
       const [],
   figureId: json['figureId'] as String?,
   premium: json['premium'] as bool? ?? false,
+  licences:
+      (json['licences'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+      const [],
 );
 
 Map<String, dynamic> _$LessonToJson(_Lesson instance) => <String, dynamic>{
@@ -167,6 +170,7 @@ Map<String, dynamic> _$LessonToJson(_Lesson instance) => <String, dynamic>{
   'practiceQuestionIds': instance.practiceQuestionIds,
   'figureId': instance.figureId,
   'premium': instance.premium,
+  'licences': instance.licences,
 };
 
 const _$SubjectEnumMap = {

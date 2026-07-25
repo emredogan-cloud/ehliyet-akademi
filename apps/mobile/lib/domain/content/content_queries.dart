@@ -37,13 +37,32 @@ extension ContentQueries on ContentSnapshot {
     return null;
   }
 
-  /// Dersler → konuya göre (kaynak sırası korunur).
-  Map<Subject, List<Lesson>> lessonsBySubject() {
+  /// Dersler → konuya göre (kaynak sırası korunur). `licence` verilirse o sınıfta geçerli
+  /// dersler kalır (Evolution Faz E5); etiketsiz ortak teori dersleri her sınıfta görünür.
+  Map<Subject, List<Lesson>> lessonsBySubject({LicenceCategory? licence}) {
+    final source = licence == null ? lessons : lessons.forLicence(licence);
     final map = <Subject, List<Lesson>>{};
-    for (final l in lessons) {
+    for (final l in source) {
       (map[l.subject] ??= []).add(l);
     }
     return map;
+  }
+
+  /// Bu sınıfa ÖZGÜ dersler (ortak teori hariç) — "Sınıfına özel" bölümü.
+  List<Lesson> licenceLessons(LicenceCategory licence) => lessons.specificFor(licence);
+
+  /// Bu sınıfta görünen ders sayısı (hub sayacı).
+  int lessonCountFor(LicenceCategory licence) => lessons.forLicence(licence).length;
+
+  /// Bu sınıf için öne çıkan işaretler — yalnız anlık görüntüde GERÇEKTEN bulunan işaretler döner
+  /// (ölü bağ üretmez). Ağırlıklandırmadır: galeri kısılmaz.
+  List<({TrafficSign sign, String why})> focusSignsFor(LicenceCategory licence) {
+    final out = <({TrafficSign sign, String why})>[];
+    for (final f in signFocusFor(licence)) {
+      final s = signById(f.signId);
+      if (s != null) out.add((sign: s, why: f.why));
+    }
+    return out;
   }
 
   /// İşaretler → kategoriye göre.

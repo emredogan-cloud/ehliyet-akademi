@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
@@ -8,19 +9,23 @@ import '../../domain/content/content_enums.dart';
 import '../../domain/content/content_queries.dart';
 import '../../domain/content/content_snapshot.dart';
 import '../../domain/content/traffic_sign.dart';
+import '../../domain/onboarding/study_profile.dart';
 import 'widgets/content_scope.dart';
 import 'widgets/traffic_sign_view.dart';
 
-/// Trafik işaretleri galerisi — kategoriye göre gruplanmış, aranabilir. Her işaret parametrik
-/// olarak çizilir (TrafficSignView).
-class SignsScreen extends StatefulWidget {
+/// Trafik işaretleri galerisi — kategoriye göre gruplanmış, aranabilir.
+///
+/// Faz E5: seçilen ehliyet sınıfı için ÖNE ÇIKAN işaretler en üstte ayrı bir bölümde toplanır.
+/// Bu bir AĞIRLIKLANDIRMADIR, filtre değildir — e-Sınavda her sınıfa aynı işaret sorulabildiği
+/// için 121 işaretlik galeri hiçbir sınıfta kısılmaz.
+class SignsScreen extends ConsumerStatefulWidget {
   const SignsScreen({super.key});
 
   @override
-  State<SignsScreen> createState() => _SignsScreenState();
+  ConsumerState<SignsScreen> createState() => _SignsScreenState();
 }
 
-class _SignsScreenState extends State<SignsScreen> {
+class _SignsScreenState extends ConsumerState<SignsScreen> {
   String _query = '';
 
   bool _matches(TrafficSign s) {
@@ -34,6 +39,7 @@ class _SignsScreenState extends State<SignsScreen> {
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
+    final licence = ref.watch(studyProfileProvider).category;
     return Scaffold(
       appBar: AppBar(title: const Text('Trafik İşaretleri')),
       body: SafeArea(
@@ -64,7 +70,7 @@ class _SignsScreenState extends State<SignsScreen> {
                     ),
                   ),
                 ),
-                Expanded(child: _grid(context, snapshot, p)),
+                Expanded(child: _grid(context, snapshot, p, licence)),
               ],
             );
           },
@@ -73,11 +79,29 @@ class _SignsScreenState extends State<SignsScreen> {
     );
   }
 
-  Widget _grid(BuildContext context, ContentSnapshot snapshot, AppPalette p) {
+  Widget _grid(
+    BuildContext context,
+    ContentSnapshot snapshot,
+    AppPalette p,
+    LicenceCategory licence,
+  ) {
     final grouped = snapshot.signsByCategory();
     final categories = SignCategory.values.where((c) => grouped.containsKey(c)).toList();
 
     final sections = <Widget>[];
+
+    // Sınıfa göre öne çıkanlar (varsa) — galeri kısılmaz, yalnız en üste bir vurgu bölümü eklenir.
+    final focus = snapshot.focusSignsFor(licence).map((e) => e.sign).where(_matches).toList();
+    if (focus.isNotEmpty) {
+      sections.add(SectionTitle('${licence.badge} sınıfı için öne çıkanlar  ·  ${focus.length}'));
+      sections.add(
+        Wrap(
+          spacing: AppSpacing.s3,
+          runSpacing: AppSpacing.s3,
+          children: [for (final s in focus) _SignTile(sign: s)],
+        ),
+      );
+    }
     for (final cat in categories) {
       final signs = grouped[cat]!.where(_matches).toList();
       if (signs.isEmpty) continue;

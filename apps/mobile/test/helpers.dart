@@ -13,6 +13,7 @@ import 'package:ehliyet_akademi/domain/content/traffic_sign.dart';
 import 'package:ehliyet_akademi/domain/content/vehicle_part.dart';
 import 'package:ehliyet_akademi/domain/content/video_content.dart';
 import 'package:ehliyet_akademi/domain/onboarding/onboarding_controller.dart';
+import 'package:ehliyet_akademi/domain/onboarding/study_profile.dart';
 import 'package:ehliyet_akademi/domain/practice/question.dart';
 import 'package:ehliyet_akademi/domain/practice/question_bank.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -271,12 +272,17 @@ Future<void> pumpApp(
   Map<String, Object>? prefs,
   bool onboardingSeen = true,
   bool overrideContent = true,
+  /// Faz E5 — çalışma profili main()'de senkron okunup enjekte edildiği için (onboardingSeen ile
+  /// aynı desen), testte de sağlanır. Verilmezse varsayılan profil (B sınıfı) kullanılır.
+  StudyProfile? studyProfile,
 }) async {
   SharedPreferences.setMockInitialValues(prefs ?? {});
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
         onboardingSeenProvider.overrideWith(() => OnboardingController(onboardingSeen)),
+        if (studyProfile != null)
+          studyProfileProvider.overrideWith(() => StudyProfileController(studyProfile)),
         tokenStoreProvider.overrideWithValue(tokens ?? MemoryTokenStore()),
         if (auth != null) authApiProvider.overrideWithValue(auth),
         coachApiProvider.overrideWithValue(coach ?? FakeCoachApi()),

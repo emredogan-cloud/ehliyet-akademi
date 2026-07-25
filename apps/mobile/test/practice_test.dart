@@ -88,6 +88,13 @@ void main() {
     await pumpApp(tester);
     await _openPractice(tester);
 
+    // Faz E5: hub'a "teori ortaktır" bilgilendirmesi eklendi → alttaki satırlar tembel listede
+    // kurulmamış olabiliyor (belgelenmiş 800×600 test katlanması).
+    await tester.scrollUntilVisible(
+      find.text('Koleksiyonlar'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.tap(find.text('Koleksiyonlar'));
     await tester.pumpAndSettle();
 
@@ -103,7 +110,11 @@ void main() {
     await pumpApp(tester);
     await _openPractice(tester);
 
-    await tester.ensureVisible(find.text('Geçmiş Sınavlar'));
+    await tester.scrollUntilVisible(
+      find.text('Geçmiş Sınavlar'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.pumpAndSettle();
     await tester.tap(find.text('Geçmiş Sınavlar'));
     await tester.pumpAndSettle();

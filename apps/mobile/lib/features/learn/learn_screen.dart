@@ -42,8 +42,10 @@ class LearnScreen extends ConsumerWidget {
               icon: Icons.menu_book_rounded,
               color: p.primary,
               title: 'Dersler',
-              subtitle: 'Konu anlatımları, örnekler ve tekrar kartları',
-              count: n(counts?.lessons),
+              subtitle: snapshot != null && snapshot.licenceLessons(licence).isNotEmpty
+                  ? 'Ortak teori + ${licence.badge} sınıfına özel dersler'
+                  : 'Konu anlatımları, örnekler ve tekrar kartları',
+              count: snapshot == null ? n(counts?.lessons) : '${snapshot.lessonCountFor(licence)}',
               onTap: () => context.push('/learn/lessons'),
             ),
             const SizedBox(height: AppSpacing.s3),

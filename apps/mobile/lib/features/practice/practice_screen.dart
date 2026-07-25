@@ -4,9 +4,13 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/assets.dart';
 import '../../core/theme/tokens.dart';
+import '../../data/practice/question_repository.dart';
 import '../../data/premium/entitlements_repository.dart';
 import '../../data/premium/quota_repository.dart';
 import '../../design/brand.dart';
+import '../../design/primitives.dart';
+import '../../domain/onboarding/study_profile.dart';
+import '../../domain/practice/collections.dart';
 import '../../domain/premium/premium_prompt.dart';
 import '../premium/premium_popups.dart';
 
@@ -17,6 +21,17 @@ class PracticeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final p = context.palette;
+    final licence = ref.watch(studyProfileProvider).category;
+    final bank = ref.watch(questionBankProvider).value;
+    // Sınıfa özgü odak seti — sorular bankadan gelir, uydurma soru yoktur (Faz E5).
+    final focus = bank == null
+        ? const []
+        : licenceFocusQuestions(bank.questions, licence);
+    final focusId = switch (licence) {
+      LicenceCategory.a => 'motosiklet-odakli',
+      LicenceCategory.d => 'otobus-odakli',
+      LicenceCategory.b => null,
+    };
 
     return Scaffold(
       appBar: AppBar(title: const Text('Pratik')),
@@ -30,7 +45,29 @@ class PracticeScreen extends ConsumerWidget {
               subtitle: 'Akıllı çalışma, gerçek MEB formatında denemeler ve koleksiyonlarla pekiştir.',
               mascot: AppImages.owlTeacher,
             ),
+            const SizedBox(height: AppSpacing.s4),
+            // Dürüst bilgilendirme (Faz E5): teori sınavı sınıftan bağımsızdır — ayrı bir sınav
+            // uydurulmaz. Sınıfa özgü fark içerikte ve araç tekniğindedir.
+            const AppCallout(
+              tone: CalloutTone.info,
+              title: 'Teori sınavı tüm sınıflarda ortaktır',
+              text:
+                  'e-Sınav **B, A ve D için aynıdır**: 50 soru · 45 dakika · aynı konu dağılımı. Sınıfına özgü olan araç tekniği, mekanik ve mevzuat farkıdır — onları **Öğren > Dersler**\'deki "Sınıfına özel" bölümünde bulursun.',
+            ),
             const SizedBox(height: AppSpacing.s5),
+            if (focusId != null && focus.isNotEmpty) ...[
+              HubRow(
+                icon: licence == LicenceCategory.a
+                    ? Icons.two_wheeler_rounded
+                    : Icons.directions_bus_rounded,
+                color: p.green,
+                title: '${licence.badge} Sınıfı Odak Seti',
+                subtitle: 'Bankadaki ${licence.title.toLowerCase()} konulu gerçek sorular',
+                count: '${focus.length}',
+                onTap: () => context.push('/practice/collection/$focusId'),
+              ),
+              const SizedBox(height: AppSpacing.s3),
+            ],
             HubRow(
               icon: Icons.bolt_rounded,
               color: p.accent,

@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/assets.dart';
 import '../../core/theme/tokens.dart';
 import '../../design/brand.dart';
+import '../../domain/onboarding/study_profile.dart';
 import '../../domain/practice/collections.dart';
 import '../../domain/practice/exam.dart';
 import 'widgets/bank_scope.dart';
 
 /// Sınav koleksiyonları — her gün yenilenen, temalı otomatik setler.
-class CollectionsScreen extends StatelessWidget {
+class CollectionsScreen extends ConsumerWidget {
   const CollectionsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final p = context.palette;
+    final licence = ref.watch(studyProfileProvider).category;
     final palette = [p.primary, p.primary, p.green, p.accent, p.red, p.purple, p.blue];
     return Scaffold(
       appBar: AppBar(title: const Text('Koleksiyonlar')),
@@ -26,7 +29,12 @@ class CollectionsScreen extends StatelessWidget {
             String p2(int n) => n.toString().padLeft(2, '0');
             final daySeed = seedFromDate('${now.year}-${p2(now.month)}-${p2(now.day)}');
             final weekSeed = seedFromDate('week:${now.year}-${p2(now.month)}');
-            final collections = examCollections(bank.questions, daySeed: daySeed, weekSeed: weekSeed);
+            final collections = examCollections(
+              bank.questions,
+              daySeed: daySeed,
+              weekSeed: weekSeed,
+              licence: licence,
+            );
             return ListView(
               padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s2, AppSpacing.s4, AppSpacing.s10),
               children: [

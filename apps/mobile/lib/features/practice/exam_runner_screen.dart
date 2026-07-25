@@ -9,6 +9,7 @@ import '../../data/practice/progress_repository.dart';
 import '../../design/brand.dart';
 import '../../design/primitives.dart';
 import '../../domain/content/content_enums.dart';
+import '../../domain/onboarding/study_profile.dart';
 import '../../domain/practice/collections.dart';
 import '../../domain/practice/exam.dart';
 import '../../domain/practice/historical.dart';
@@ -77,7 +78,13 @@ class _ExamRunnerScreenState extends ConsumerState<ExamRunnerScreen> {
     final daySeed = seedFromDate('${now.year}-${p(now.month)}-${p(now.day)}');
     final weekSeed = seedFromDate('week:${now.year}-${p(now.month)}');
     final byId = {for (final q in bank.questions) q.id: q};
-    final col = collectionById(bank.questions, widget.id!, daySeed: daySeed, weekSeed: weekSeed);
+    final col = collectionById(
+      bank.questions,
+      widget.id!,
+      daySeed: daySeed,
+      weekSeed: weekSeed,
+      licence: ref.read(studyProfileProvider).category,
+    );
     final qs = (col?.questionIds ?? const <String>[])
         .map((i) => byId[i])
         .whereType<Question>()

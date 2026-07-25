@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import {
   Question,
+  parseLesson,
   validateBank,
   EXAM_BLUEPRINT,
   BADGE_LABEL,
@@ -179,5 +180,32 @@ describe('Sprint 2 — CMS sözleşmeleri', () => {
       }).ok
     ).toBe(true);
     expect(validatePayload('yok', {}).ok).toBe(false);
+  });
+});
+
+describe('Lesson.licences (Evolution Faz E5)', () => {
+  const baseLesson = {
+    id: 'ornek-ders',
+    slug: 'ornek-ders',
+    no: 1,
+    subject: 'trafik',
+    title: 'Örnek Ders Başlığı',
+    summary: 'Bu ders şema doğrulaması için kullanılan örnek bir derstir.',
+    minutes: 8,
+    objectives: ['Şemanın varsayılanlarını doğrulamak'],
+    sections: [{ heading: 'Giriş', body: 'Örnek bölüm gövdesi.' }],
+  };
+
+  it('alan verilmezse boş dizi ile dolar (etiketsiz = her sınıfta geçerli)', () => {
+    expect(parseLesson(baseLesson).licences).toEqual([]);
+  });
+
+  it('geçerli sınıf listesini kabul eder', () => {
+    expect(parseLesson({ ...baseLesson, licences: ['a'] }).licences).toEqual(['a']);
+    expect(parseLesson({ ...baseLesson, licences: ['b', 'd'] }).licences).toEqual(['b', 'd']);
+  });
+
+  it('tanımsız sınıf kodunu reddeder', () => {
+    expect(() => parseLesson({ ...baseLesson, licences: ['c'] })).toThrow();
   });
 });

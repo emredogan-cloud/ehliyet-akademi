@@ -279,6 +279,12 @@ export const Lesson = z.object({
   figureId: z.string().optional(),
   /** Sprint 4 — premium içerik kapısı. true ise ilgili paket olmadan içeriği kilitlidir. */
   premium: z.boolean().default(false),
+  /**
+   * Evolution Faz E5 — dersin geçerli olduğu ehliyet sınıfları ('b' | 'a' | 'd').
+   * BOŞ ise ders sınıftan bağımsızdır (e-Sınav teorisi Türkiye'de tüm sınıflar için ORTAKTIR;
+   * sınıfa özgü olan araç kullanma tekniği, mekanik ve mevzuat farklarıdır).
+   */
+  licences: z.array(z.enum(['b', 'a', 'd'])).default([]),
 });
 export type Lesson = z.infer<typeof Lesson>;
 /** Yazım tipi: Sprint 3 zenginleştirme alanları girişte opsiyoneldir. */

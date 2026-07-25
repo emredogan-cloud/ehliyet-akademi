@@ -7,24 +7,29 @@ import '../../data/premium/entitlements_repository.dart';
 import '../../design/app_card.dart';
 import '../../design/markdown_text.dart';
 import '../../design/primitives.dart';
-import '../../domain/content/content_enums.dart';
+// `CalloutTone` hem içerik enum'unda hem tasarım primitifinde var → yalnız gerekeni al.
+import '../../domain/content/content_enums.dart' show Subject;
 import '../../domain/content/content_queries.dart';
 import '../../domain/content/lesson.dart';
+import '../../domain/onboarding/study_profile.dart';
 import '../../domain/premium/products.dart';
 import 'widgets/content_scope.dart';
 
-/// Dersler — konuya göre gruplanmış liste. Kartlar detay ekranına götürür.
-class LessonsScreen extends StatelessWidget {
+/// Dersler — seçilen ehliyet sınıfına göre kapsamlanmış liste (Faz E5).
+/// Sınıfa ÖZGÜ dersler en üstte kendi bölümünde, ortak teori dersleri altında konuya göre gruplanır.
+class LessonsScreen extends ConsumerWidget {
   const LessonsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final licence = ref.watch(studyProfileProvider).category;
     return Scaffold(
-      appBar: AppBar(title: const Text('Dersler')),
+      appBar: AppBar(title: Text('Dersler · ${licence.badge}')),
       body: SafeArea(
         top: false,
         child: ContentBuilder(
           builder: (context, snapshot) {
+            final specific = snapshot.licenceLessons(licence);
             final grouped = snapshot.lessonsBySubject();
             final subjects = Subject.values.where((s) => grouped.containsKey(s)).toList();
             return ListView(
@@ -35,9 +40,22 @@ class LessonsScreen extends StatelessWidget {
                 AppSpacing.s10,
               ),
               children: [
+                if (specific.isNotEmpty) ...[
+                  SectionTitle('Sınıfına özel · ${licence.badge} ${licence.title}'),
+                  const AppCallout(
+                    tone: CalloutTone.info,
+                    text:
+                        'Teori sınavı tüm sınıflarda **ortaktır**. Bu dersler ortak teoriye **ek** olarak, sınıfının araç kullanma tekniğini, mekaniğini ve mevzuat farkını anlatır.',
+                  ),
+                  const SizedBox(height: AppSpacing.s3),
+                  for (final lesson in specific) ...[
+                    _LessonCard(lesson: lesson, licenceBadge: licence.badge),
+                    const SizedBox(height: AppSpacing.s3),
+                  ],
+                ],
                 for (final subject in subjects) ...[
                   SectionTitle(subject.label),
-                  for (final lesson in grouped[subject]!) ...[
+                  for (final lesson in grouped[subject]!.where((l) => l.licences.isEmpty)) ...[
                     _LessonCard(lesson: lesson),
                     const SizedBox(height: AppSpacing.s3),
                   ],
@@ -52,8 +70,11 @@ class LessonsScreen extends StatelessWidget {
 }
 
 class _LessonCard extends ConsumerWidget {
-  const _LessonCard({required this.lesson});
+  const _LessonCard({required this.lesson, this.licenceBadge});
   final Lesson lesson;
+
+  /// Doluysa kartta sınıf rozeti gösterilir ("Sınıfına özel" bölümündeki dersler).
+  final String? licenceBadge;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -92,6 +113,25 @@ class _LessonCard extends ConsumerWidget {
                         style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
                       ),
                     ),
+                    if (licenceBadge != null) ...[
+                      const SizedBox(width: AppSpacing.s2),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: p.green.withValues(alpha: 0.14),
+                          borderRadius: BorderRadius.circular(AppRadii.sm),
+                          border: Border.all(color: p.green.withValues(alpha: 0.35)),
+                        ),
+                        child: Text(
+                          licenceBadge!,
+                          style: TextStyle(
+                            color: p.green,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 11,
+                          ),
+                        ),
+                      ),
+                    ],
                     if (lesson.premium) ...[
                       const SizedBox(width: AppSpacing.s2),
                       Icon(

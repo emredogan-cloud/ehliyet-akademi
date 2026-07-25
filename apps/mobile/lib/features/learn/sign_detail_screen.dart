@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
@@ -6,17 +7,20 @@ import '../../design/app_card.dart';
 import '../../design/markdown_text.dart';
 import '../../design/primitives.dart';
 import '../../domain/content/content_queries.dart';
+import '../../domain/content/licence_scope.dart';
 import '../../domain/content/traffic_sign.dart';
+import '../../domain/onboarding/study_profile.dart';
 import 'widgets/content_scope.dart';
 import 'widgets/traffic_sign_view.dart';
 
 /// Trafik işareti detayı — büyük çizim + anlam + hafıza tekniği + sık hata + ilgili ders.
-class SignDetailScreen extends StatelessWidget {
+class SignDetailScreen extends ConsumerWidget {
   const SignDetailScreen({super.key, required this.id});
   final String id;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final licence = ref.watch(studyProfileProvider).category;
     return ContentBuilder(
       builder: (context, snapshot) {
         final sign = snapshot.signById(id);
@@ -27,9 +31,19 @@ class SignDetailScreen extends StatelessWidget {
           );
         }
         final hasLesson = sign.relatedLessonSlug != null && snapshot.lessonBySlug(sign.relatedLessonSlug!) != null;
+        // Faz E5 — bu işaret seçilen sınıf için öne çıkarılmışsa gerekçesi burada gösterilir.
+        final focus = signFocusFor(licence).where((f) => f.signId == sign.id).firstOrNull;
         return Scaffold(
           appBar: AppBar(title: Text(sign.name, overflow: TextOverflow.ellipsis)),
-          body: SafeArea(top: false, child: _Body(sign: sign, hasLesson: hasLesson)),
+          body: SafeArea(
+            top: false,
+            child: _Body(
+              sign: sign,
+              hasLesson: hasLesson,
+              licenceFocusWhy: focus?.why,
+              licenceBadge: licence.badge,
+            ),
+          ),
         );
       },
     );
@@ -37,9 +51,18 @@ class SignDetailScreen extends StatelessWidget {
 }
 
 class _Body extends StatelessWidget {
-  const _Body({required this.sign, required this.hasLesson});
+  const _Body({
+    required this.sign,
+    required this.hasLesson,
+    required this.licenceFocusWhy,
+    required this.licenceBadge,
+  });
   final TrafficSign sign;
   final bool hasLesson;
+
+  /// Doluysa: bu işaret kullanıcının sınıfı için öne çıkarılmıştır; metin gerekçedir.
+  final String? licenceFocusWhy;
+  final String licenceBadge;
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +95,14 @@ class _Body extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.s5),
         _LabeledCard(icon: Icons.info_outline_rounded, label: 'Anlamı', color: p.primary, body: sign.meaning),
+        if (licenceFocusWhy != null) ...[
+          const SizedBox(height: AppSpacing.s3),
+          AppCallout(
+            text: licenceFocusWhy!,
+            title: '🎯 $licenceBadge sınıfı için neden kritik?',
+            tone: CalloutTone.warning,
+          ),
+        ],
         const SizedBox(height: AppSpacing.s3),
         AppCallout(text: sign.memoryTip, title: '🧠 Hafıza tekniği', tone: CalloutTone.success),
         if (sign.commonMistake != null) ...[

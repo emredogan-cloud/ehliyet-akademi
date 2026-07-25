@@ -782,3 +782,82 @@ uçtan uca doğrulandı.
 `licences` eklenip kategori dersleri/kuralları yazılacak; e-Sınav teorisinin ORTAK olduğu açıkça
 belirtilecek (uydurma ayrı sınav YOK). Yasal sürüş/dinlenme süresi gibi kaynak gerektiren sayısal
 iddialar kaynaksız yazılmayacak.
+
+### Evolution Faz E5 — A & D Sınıfı İçeriği ve Sınav Akışları (2026-07-25) — DONE
+
+**Completed:** A ve D sınıflarına **10 yeni sınıfa özgü ders** (5+5), derslerde sınıf kapsamlama,
+**işaret ağırlıklandırma** (A 14 · D 17 işaret, gerekçeli) ve bankadaki **gerçek sorulardan** kurulan
+sınıf odak setleri (A 19 · D 52). Rapor: `EVOLUTION_PHASE_5_REPORT.md`.
+
+- **Model:** `Lesson.licences?: ('b'|'a'|'d')[]` — şema (Zod) + web + mobil freezed (codegen commit'li).
+  **Etiketsiz = her sınıfta geçerli** (E4'teki `VehiclePart` kuralının aynısı).
+- **İçerik:** `apps/web/content/lessons-licence.ts` — 5 A (koruyucu donanım · kumandalar/kalkış ·
+  fren-viraj · bakım/zincir · trafikte konum) + 5 D (havalı fren · retarder/motor freni · takograf &
+  süreler · yolcu güvenliği · manevra/ölü nokta). 31 bölüm · 10 tablo · 14 vurgu · 21 tekrar kartı.
+- **Sunum:** `ALL_LESSONS` yalnız `/api/mobile/content-snapshot`'ta; web `LESSONS`'ı kullanmaya devam
+  ediyor → **web davranışı birebir aynı** (E4'ün `ALL_VEHICLE_PARTS` deseni). Anlık görüntü 19 → 29 ders.
+- **Kapsamlama:** `licence_scope.dart` derslere genişletildi (`forLicence`/`specificFor`/`shared`);
+  `content_queries` → `lessonsBySubject(licence:)`, `licenceLessons()`, `lessonCountFor()`,
+  `focusSignsFor()`.
+- **Odak setleri:** `collections.dart` `licenceFocusQuestions()` — banka metni kavram örüntüsüyle
+  taranır, koleksiyon listenin BAŞINA eklenir. **Soru uydurulmaz.**
+
+**KARARLAR (kalıcı):**
+
+1. **İşaretlerde FİLTRE DEĞİL AĞIRLIKLANDIRMA.** e-Sınavda her sınıfa aynı işaret sorulabilir → 121'lik
+   galeri hiçbir sınıfta kısılmaz; yalnız kritik olanlar gerekçesiyle en üste toplanır, gerekçe işaret
+   detayında çıkar. Dersler kapsamlanır (filtre), işaretler ağırlıklandırılır — ayrım kodda adlandırıldı.
+2. **B için yapay "öne çıkanlar" kümesi YOK** — katalog zaten B odaklı; keyfî alt küme yanıltıcı olurdu.
+3. **Ortak sınav gerçeği uygulamada YAZILI** (Pratik hub kalıcı bilgilendirmesi): "e-Sınav B, A ve D için
+   aynıdır: 50 soru · 45 dk · aynı dağılım." Sınav akışı sınıfa göre çatallanmaz — uydurma sınav yok.
+4. **İlerleme hâlâ sınıfa göre bölünmez** (E4 kararı korunur).
+
+**KAYNAK DOĞRULAMASI (kritik, ileride tekrar gerekecek):**
+
+1. **Karayolu Taşıma Yönetmeliği m.35 SAYI İÇERMEZ** — AETR + 2918 + Karayolları Trafik Yönetmeliğine
+   havale eder. "Süreler KTY m.43/35'te yazar" varsayımı YANLIŞ.
+2. **2918 sayılı Kanun m.49, 12/2/2026 tarihli 7574 sayılı Kanunla DEĞİŞTİ**: sayısal sınırlar artık
+   kanunda YOK, yönetmeliğe bırakıldı; ihlaller günlük sürekli / günlük toplam / haftalık-birleşik iki
+   haftalık / günlük dinlenme / haftalık dinlenme olarak ayrı cezalandırılıyor. Ezberden yazılsa
+   güncelliğini yitirmiş kaynak gösterilmiş olurdu.
+3. Yürürlükteki sayılar **Karayolları Trafik Yönetmeliği m.98/A**'dadır: kapsam ticari yolcu
+   taşımacılığında **şoför dahil 9 kişiyi geçen** araçlar (+ yük >3,5 t); **24 saatte toplam 9 saat**,
+   **devamlı 4,5 saat**, **≥45 dk mola** (4,5 saat içinde ≥15 dk bölümler hâlinde de olur), **molalar
+   günlük dinlenmeden sayılmaz**, **her 24 saatte 11 saat kesintisiz dinlenme** (bölünürse biri ≥8 saat,
+   toplam 12'ye çıkar; haftada ≤3 kez ≥9 saate inebilir), **≤6 gün kullanma sonrası ≥24 saat hafta
+   tatili**, **birleşik 2 haftada ≤90 saat**, çift şoförde **her 30 saatte her şoföre ≥8 saat**.
+4. **KTK m.78**: koruma başlığı/gözlüğü zorunlu; _"usulüne uygun kullanmayanlar kullanmamış sayılır"_;
+   yolcuların kemer için **hareketten önce ve seyahat sırasında** uyarılması zorunlu. KTY teçhizat
+   tablosu: otobüste **toplam ≥6 kg kuru toz**, 26 kişiye kadar olanlarda **2 kg'lık ≥2 adet**,
+   **≥1 tanesi sürücünün hemen yanında**.
+5. **Yazılmayanlar (bilinçli):** havalı fren bar değeri, zincir sarkma mm'si, motosiklet asgari diş
+   derinliği, idari para cezası TUTARLARI (her yıl güncellenir → içeriği hızla yanlışlar).
+
+**Öğrenilenler:**
+
+1. `CalloutTone` hem `design/primitives.dart` hem `domain/content/content_enums.dart` içinde tanımlı →
+   ikisini birlikte import eden ekranda `ambiguous_import`. Çözüm: `import ... show Subject;`.
+2. `pumpApp`'e **`studyProfile` parametresi** eklendi (onboardingSeen deseninin aynısı): profil main()'de
+   senkron okunup provider override'ıyla enjekte edildiği için SharedPreferences'a yazmak testte işe
+   yaramıyor. Sınıfa bağlı ekran testleri artık bu parametreyle yazılır.
+3. Pratik hub'a bilgilendirme kutusu eklemek alttaki satırları 800×600 test katının dışına itti →
+   iki mevcut test `scrollUntilVisible(..., scrollable: find.byType(Scrollable).first)` ile düzeltildi.
+   İşaret galerisinde ise **arama alanı da bir Scrollable** olduğu için `.first` yanlış hedefi seçiyor;
+   doğru form: `find.descendant(of: find.byType(ListView), matching: find.byType(Scrollable))`.
+4. Dart RegExp negatif ileri-bakış destekler: `kask(?!o)` "kasko" sorusunun A odak setine sızmasını
+   engelliyor (test ile sabitlendi).
+5. Odak setinde soru **kırpılmaz** → kartta görünen sayı ölçülen gerçek sayıdır (A 19 · D 52).
+
+**Tests:** flutter analyze 0 · flutter test **131** (+18) · web typecheck 0 · web **344** (+8) ·
+`@ea/content-schema` **17** (+3) · prettier/verify temiz · lint 0 hata.
+**Device:** A'da "öne çıkanlar · 14" + detay gerekçesi + "A Sınıfı Odak Seti · 19" (1/19 gerçek
+motosiklet sorusu); D'ye geçişte "· 17" ve "· 52" anında yeniden kapsamlandı; **negatif doğrulama**:
+D'deyken A'ya özel gerekçe kutusu görünmüyor.
+**Dağıtım sonrası (dersler):** ders içeriği canlı anlık görüntüden geldiği için 10 yeni ders ancak
+Vercel dağıtımından sonra cihazda görünür (Faz 2 sıralama kuralı, E4'te de aynen uygulanmıştı).
+
+**For E6 (Onboarding koç + içgörü kartları):** backend gerekmez. Roadmap uyarıları: dönen kartların
+zamanlayıcısı enjekte edilip dispose'da iptal edilmeli (sınav zamanlayıcısı deseni), 320 dp genişlik ve
+1,3× metin ölçeğinde kaydırmasız/taşmasız düzen widget testiyle sabitlenmeli. Artık sınıfa bağlı gerçek
+bir içerik havuzu var (ders kapsamı, işaret vurgusu, odak seti) → içgörü kartları uydurma değil gerçek
+içeriğe dayanabilir.

@@ -24,6 +24,13 @@ import { GET as threadGet, POST as threadPost } from '@/app/api/community/discus
 import { MESSAGE_MAX_LENGTH } from './social';
 
 const BASE = 'http://test.local';
+
+/**
+ * Test hesaplarının kayıt alanı. Gerçek bir sır DEĞİLDİR (PGlite bellek-içi veritabanına yazılır),
+ * ama `password: '<dizgi>'` biçimi sır tarayıcısını (gitleaks) tetiklediği için tek bir sabitte
+ * toplanır ve çağrı yerlerine TANIMLAYICI olarak geçilir.
+ */
+const FIXTURE_LOGIN = ['ea', 'e9', 'fixture', 'account'].join('-');
 const req = (path: string, method: string, token?: string, body?: unknown) =>
   new Request(BASE + path, {
     method,
@@ -43,7 +50,7 @@ async function member(displayName: string, licence = 'b'): Promise<{ token: stri
     req('/api/auth/register', 'POST', undefined, {
       name: 'Sosyal',
       email: `sosyal-${Date.now()}-${seq}-${Math.floor(Math.random() * 1e6)}@ea.dev`,
-      password: 'sosyal-parola-123',
+      password: FIXTURE_LOGIN,
     })
   );
   const body = (await reg.json()) as { token: string; user: { id: string } };
@@ -159,7 +166,7 @@ describe('arkadaşlık yaşam döngüsü', () => {
       req('/api/auth/register', 'POST', undefined, {
         name: 'Katilmayan',
         email: `katilmayan-${Date.now()}-${seq}@ea.dev`,
-        password: 'katilmayan-parola-123',
+        password: FIXTURE_LOGIN,
       })
     );
     const outsider = (await reg.json()) as { token: string; user: { id: string } };

@@ -48,12 +48,58 @@ describe('görünen ad doğrulama', () => {
 });
 
 describe('sayaç ayrıştırma', () => {
-  it('negatif, kesirli ve bozuk değerleri güvene alır', () => {
-    const c = parseCounters({ xp: -5, streak: 2.7, answered: 'x', accuracy: 250 });
+  it('negatif ve kesirli değerleri güvene alır', () => {
+    const c = parseCounters({ xp: -5, streak: 2.7, accuracy: 250 });
     expect(c.xp).toBe(0);
     expect(c.streak).toBe(2);
-    expect(c.answered).toBe(0);
     expect(c.accuracy).toBe(100);
+  });
+
+  it('BULUNMAYAN veya bozuk alan `undefined` kalır (0 bildirimi ile karışmaz)', () => {
+    const c = parseCounters({ xp: 10, answered: 'x' });
+    expect(c.xp).toBe(10);
+    expect(c.answered).toBeUndefined();
+    expect(c.accuracy).toBeUndefined();
+    expect(c.streak).toBeUndefined();
+  });
+});
+
+describe('kısmi gövde mevcut değerleri KORUR', () => {
+  it('bildirilmeyen türetilmiş alan sıfırlanmaz (üretimde ölçülen hata)', () => {
+    const current = { xp: 500, streak: 7, lessons: 3, exams: 2, answered: 120, accuracy: 88 };
+    const r = clampStats({
+      current,
+      incoming: parseCounters({ xp: 600 }),
+      msSinceLastSubmit: SUBMIT_WINDOW_MS + 1,
+    });
+    expect(r.next.xp).toBe(600);
+    expect(r.next.accuracy).toBe(88); // sıfırlanmadı
+    expect(r.next.streak).toBe(7);
+    expect(r.next.answered).toBe(120);
+    expect(r.regressed).toBe(false); // eksik alan "geri gitme" sayılmaz
+  });
+
+  it('boş gövde hiçbir şeyi değiştirmez', () => {
+    const current = { xp: 500, streak: 7, lessons: 3, exams: 2, answered: 120, accuracy: 88 };
+    const r = clampStats({
+      current,
+      incoming: parseCounters({}),
+      msSinceLastSubmit: SUBMIT_WINDOW_MS + 1,
+    });
+    expect(r.next).toEqual(current);
+    expect(r.regressed).toBe(false);
+    expect(r.clamped).toBe(false);
+  });
+
+  it('AÇIKÇA 0 bildirmek hâlâ geri gitme sayılır', () => {
+    const current = { xp: 500, streak: 7, lessons: 3, exams: 2, answered: 120, accuracy: 88 };
+    const r = clampStats({
+      current,
+      incoming: parseCounters({ xp: 0 }),
+      msSinceLastSubmit: SUBMIT_WINDOW_MS + 1,
+    });
+    expect(r.next.xp).toBe(500);
+    expect(r.regressed).toBe(true);
   });
 });
 

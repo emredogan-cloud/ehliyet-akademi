@@ -185,6 +185,30 @@ describe('istatistik bildirimi (anti-hile)', () => {
     expect(body.regressed).toBe(true);
   });
 
+  it('kısmi gövde türetilmiş alanları SIFIRLAMAZ', async () => {
+    const u = await joinedUser({ displayName: 'Kismi Govde' });
+    const first = await statsPost(
+      req('/api/community/stats', 'POST', u.token, {
+        xp: 300,
+        streak: 5,
+        answered: 40,
+        accuracy: 77,
+      })
+    );
+    expect(((await first.json()) as { stats: { accuracy: number } }).stats.accuracy).toBe(77);
+
+    // Yalnız XP bildiren kısmi gövde (uç herkese açıktır; istemci hep tam gövde gönderir).
+    const partial = await statsPost(req('/api/community/stats', 'POST', u.token, { xp: 350 }));
+    const body = (await partial.json()) as {
+      stats: { accuracy: number; streak: number; answered: number };
+      regressed: boolean;
+    };
+    expect(body.stats.accuracy).toBe(77);
+    expect(body.stats.streak).toBe(5);
+    expect(body.stats.answered).toBe(40);
+    expect(body.regressed).toBe(false);
+  });
+
   it('rozetler eklenir ve tekrar gönderim çoğaltmaz', async () => {
     const u = await joinedUser({ displayName: 'Rozetli', xp: 60 });
     await statsPost(

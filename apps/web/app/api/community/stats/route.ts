@@ -66,12 +66,12 @@ export const POST = guarded(async (req: Request): Promise<Response> => {
     .values({
       userId: user.id,
       ...result.next,
-      submittedXp: incoming.xp,
+      submittedXp: incoming.xp ?? 0,
       updatedAt: now,
     })
     .onConflictDoUpdate({
       target: communityStats.userId,
-      set: { ...result.next, submittedXp: incoming.xp, updatedAt: now },
+      set: { ...result.next, submittedXp: incoming.xp ?? 0, updatedAt: now },
     });
 
   // Rozetler: yalnız EKLENİR (geri alınmaz); bilinmeyen/aşırı uzun kimlikler yok sayılır.

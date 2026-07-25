@@ -102,21 +102,31 @@ export type ClampResult = {
   regressed: boolean;
 };
 
-function intOr(value: unknown, fallback = 0): number {
-  const n = typeof value === 'number' && Number.isFinite(value) ? Math.floor(value) : fallback;
+function intOrUndefined(value: unknown): number | undefined {
+  if (typeof value !== 'number' || !Number.isFinite(value)) return undefined;
+  const n = Math.floor(value);
   return n < 0 ? 0 : n;
 }
 
-/** Gövdeden gelen ham sayaçları güvenli tam sayılara çevirir. */
-export function parseCounters(body: unknown): StatCounters {
+/**
+ * Gövdede BULUNMAYAN alan `undefined` kalır — "0 bildirildi" ile "hiç bildirilmedi" ayrılır.
+ *
+ * NEDEN: kısmi bir gövde (`{xp: 100}`) doğruluk/seri gibi TÜRETİLMİŞ alanları sıfırlamamalıdır.
+ * Üretimde ölçüldü: alan atlandığında değer 0'a düşüyordu. Mobil istemci her zaman tam gövde
+ * gönderir ama uç herkese açıktır; eksik alan artık mevcut değeri korur.
+ */
+export type IncomingCounters = { [K in keyof StatCounters]?: number };
+
+export function parseCounters(body: unknown): IncomingCounters {
   const b = (body ?? {}) as Record<string, unknown>;
+  const accuracy = intOrUndefined(b.accuracy);
   return {
-    xp: intOr(b.xp),
-    streak: intOr(b.streak),
-    lessons: intOr(b.lessons),
-    exams: intOr(b.exams),
-    answered: intOr(b.answered),
-    accuracy: Math.min(100, intOr(b.accuracy)),
+    xp: intOrUndefined(b.xp),
+    streak: intOrUndefined(b.streak),
+    lessons: intOrUndefined(b.lessons),
+    exams: intOrUndefined(b.exams),
+    answered: intOrUndefined(b.answered),
+    accuracy: accuracy === undefined ? undefined : Math.min(100, accuracy),
   };
 }
 
@@ -134,10 +144,27 @@ export function parseCounters(body: unknown): StatCounters {
  */
 export function clampStats(args: {
   current: StatCounters | null;
-  incoming: StatCounters;
+  incoming: IncomingCounters;
   msSinceLastSubmit: number | null;
 }): ClampResult {
-  const { incoming, current } = args;
+  const { current } = args;
+  // Bildirilmeyen alan mevcut değerini (yoksa 0) korur.
+  const base: StatCounters = current ?? {
+    xp: 0,
+    streak: 0,
+    lessons: 0,
+    exams: 0,
+    answered: 0,
+    accuracy: 0,
+  };
+  const incoming: StatCounters = {
+    xp: args.incoming.xp ?? base.xp,
+    streak: args.incoming.streak ?? base.streak,
+    lessons: args.incoming.lessons ?? base.lessons,
+    exams: args.incoming.exams ?? base.exams,
+    answered: args.incoming.answered ?? base.answered,
+    accuracy: args.incoming.accuracy ?? base.accuracy,
+  };
 
   if (!current) {
     // İlk bildirimde de tavanlar geçerlidir: sıfırdan devasa değerle başlanamaz.

@@ -1047,3 +1047,57 @@ sıralama göründü. **Cihaz/canlı doğrulama İKİ GERÇEK HATA yakaladı ve 
 Ders: uç noktayı yalnız istemcinin gönderdiği tam gövdeyle test etmek yetmiyor — **herkese açık bir
 API kısmi gövdeye de doğru davranmalı**; ve liste + "senin sıran" birlikte çizilen her ekranda
 ÇAKIŞMA kontrolü gerekiyor.
+
+---
+
+## E9 — Sosyal katman (arkadaşlar · mesajlar · tartışmalar) — TAMAMLANDI (2026-07-25)
+
+**Yapıldı:** 4 tablo (`friendships`, `direct_messages`, `discussion_threads`, `discussion_posts`) +
+`community_reports`'a `target_type`/`target_ref`; saf mantık `lib/server/social.ts`; **engelleme
+korumaları tek modülde** `lib/server/social-guards.ts`; 3 uç ailesi; 6 mobil ekran.
+`flutter analyze` 0 · `flutter test` **186** · web **432** · `@ea/db` 4 · lint 0 hata · APK 69,4 MiB.
+
+**Kalıcı kararlar (sonraki fazlarda korunacak):**
+
+1. **Mesajlaşma yalnız arkadaşlar arasında (403).** Rastgele kullanıcıya mesaj yüzeyi hiç yok — taciz
+   sınıfını tasarımla kapatan tek en etkili karar. E10 gruplarında da "grup üyeliği ≠ mesaj hakkı".
+2. **Engel varlığı sızdırılmaz:** engelli / yok / gizli → **aynı 404**. Çift yönlü uygulanır.
+3. **Engel kontrolü tek modülde toplanır** (`social-guards.ts`). Dağıtılmış kontrol denetlenemez;
+   E10'da grup listeleri de bu modülden geçmeli.
+4. **Soru paylaşımı REFERANSLADIR.** `questionRef` yalnız kimlik (`^[a-z]+-\d{1,4}$`); soru metni
+   sunucuya asla yazılmaz, istemci YEREL bankadan çözer. Geçersiz referans sessizce `null`'a düşer.
+   Kanıtlandı: `trafik-101` taşıyan başlığın tam sunucu gövdesinde soru kökü **0 kez** geçiyor.
+5. **Kendine istek 400, durum çakışması 409.** Karıştırılmamalı.
+6. **`ref.watch` vs `ref.read` tuzağı:** `FutureProvider`'ı `read` ile okumak **her zaman null**
+   döndürür (abonelik kurulmaz). Soru bankası gibi türetilmiş veriler `build` içinde `watch`
+   edilmeli — bu hata tartışma ekranında yakalandı.
+
+**Canlı uçtan uca doğrulama (iki gerçek hesap, üretim): 71/71 geçti.** Arkadaşlık yaşam döngüsünün
+tamamı (gönder/reddet/iptal/kabul), arkadaş-olmayana mesaj 403, engelin **her yolda** 404'ü,
+engel kaldırınca erişimin geri gelmesi, sıralama kırpması (999.999.999 → 2000), gizli profilin
+listeden düşmesi, oturumsuz 401.
+
+**Cihaz doğrulaması iki gerçek hesapla yapıldı** (`AYXSUKIVJVPZ7HPZ`, oturum değiştirerek):
+istek gönder → kabul et → mesajlaş → şikâyet → engelle → **engellenen sıralamadan düştü ve sıralar
+yeniden hesaplandı** → engeli kaldır → **erişim geri geldi**. Çözülemeyen referans açıklayıcı metin
+gösterdi; çözülen referans sorunun tamamını **yerel bankadan** çizdi.
+
+**İki gerçek sorun düzeltildi:**
+
+1. **gitleaks CI'ı kırdı** — `password: '<dizgi>'` biçimi `generic-api-key` kuralını tetikliyor
+   (entropi 3.65). Kapı gevşetilmedi; test parolası sabite alınıp **tanımlayıcı** olarak geçirildi.
+   **Kural: test dosyalarında `password:` sonrasına dizgi literali YAZMA.** (`295970f`)
+2. **`@ea/db` testleri eşzamanlı yükte kararsızdı** — her test PGlite açıp bootstrap DDL koşuyor;
+   tek başına 0,9 sn, turbo tüm paketleri paralel koştururken **10,9 sn** → vitest'in 5 sn varsayılanı
+   aşılıyordu. `apps/web` bunu zaten `testTimeout: 20000` ile çözmüş; aynı desen `packages/db`'ye
+   uygulandı. **Ders: PGlite açan her paketin kendi vitest config'i ve gerçekçi timeout'u olmalı.**
+
+**Bilinen kısıtlar (dürüstçe açık):** gerçek zamanlı değil (WebSocket yok, kısa yoklama) · "okudu"
+göstergesi yok · push bildirimi yok · moderasyon reaktif (otomatik filtre yok) · liste sorguları
+`limit`'ten SONRA engelli yazarları eliyor (sayfa doluluğu değişken, veri kaybı yok).
+
+**E10 (Çalışma grupları & meydan okumalar) için hazır:** `leaderboard_snapshots` tablosu E8'de
+açıldı, **henüz kullanılmıyor** · `weekStartIstanbul` saf ve testli · `social-guards` yeniden
+kullanılabilir · şikâyet altyapısı `target_type` ile genişletilebilir.
+**ÖN KOŞUL:** üretim veritabanındaki doğrulama artıkları (`AyseE9`, `BurakE9`, `CemE9`,
+`E8 Dogrulama` hesapları ve başlıkları) temizlenmeli — şu anda sıralamada ve tartışmalarda görünüyor.

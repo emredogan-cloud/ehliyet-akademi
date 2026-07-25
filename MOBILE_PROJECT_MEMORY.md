@@ -1032,3 +1032,18 @@ kuyruğu, hız sınırlama kapısı ve PGlite test iskeleti hazır. Dikkat: her 
 kontrolü, mesaj uzunluk/sıklık sınırı, sayfalama + saklama politikası, soru paylaşımının REFERANSLA
 (banka kopyası değil) yapılması, moderasyon kuyruğuna yönetici yüzeyi. **Sızıntısız 404 kuralı** mesaj
 ve arkadaşlık uçlarında da korunmalı.
+
+**E8 dağıtım sonrası doğrulama — ONAYLANDI (2026-07-25):** canlı sunucuda katılım, anti-hile tavanı
+(9.999.999 XP → 2000, `clamped`), pencere kuralı (ikinci bildirimde artış yok) ve sıralama
+(`rank 1`, `weekStart 2026-07-20`, PII yok) doğrulandı; cihazda giriş → Profil > Topluluk → canlı
+sıralama göründü. **Cihaz/canlı doğrulama İKİ GERÇEK HATA yakaladı ve ikisi de düzeltildi:**
+
+1. **Kısmi gövde türetilmiş alanları sıfırlıyordu** (`{xp:350}` → `accuracy: 0`). `parseCounters`
+   artık eksik alanı `undefined` bırakır; `clampStats` mevcut değeri korur. AÇIKÇA 0 bildirmek hâlâ
+   geri gitmedir. (+5 test, commit `acd6e15`.)
+2. **Kendi satırın sıralamada İKİ KEZ çiziliyordu** (sabitlenmiş "senin sıran" kartı + listedeki
+   satır). Sabitlenmiş kart artık yalnız kullanıcı **görünen sayfanın DIŞINDAYSA** çizilir. (+1 test.)
+
+Ders: uç noktayı yalnız istemcinin gönderdiği tam gövdeyle test etmek yetmiyor — **herkese açık bir
+API kısmi gövdeye de doğru davranmalı**; ve liste + "senin sıran" birlikte çizilen her ekranda
+ÇAKIŞMA kontrolü gerekiyor.

@@ -112,9 +112,34 @@ açıldığında **opt-in daveti** dört gizlilik güvencesiyle çizildi — "Va
 "Katılmak için hesabınla giriş yapmış olman gerekir" notu. Katılmamış kullanıcıya **sıralama
 gösterilmedi ve hiçbir istek yapılmadı** (tasarım gereği).
 
-**Dağıtım sonrası doğrulama:** topluluk uçları CANLI backend'e bağlıdır; katılma → sıralama →
-engelle/bildir akışı ancak Vercel dağıtımından sonra cihazda çalışır (Faz 2'de konan sıralama kuralı,
-E4/E5'te de uygulanmıştı). CI yeşile döndükten ve dağıtım tamamlandıktan sonra bu bölüme eklenmiştir.
+**Dağıtım sonrası doğrulama — ONAYLANDI (2026-07-25).** CI yeşile döndükten ve Vercel dağıtımından
+sonra, önce CANLI sunucu doğrudan sınandı, sonra cihazda uçtan uca yürütüldü:
+
+_Canlı sunucu (gerçek hesap, `curl`):_
+
+- `POST /api/auth/register` → hesap; `PUT /api/community/profile` → **katılım başarılı**
+  (tablolar idempotent bootstrap DDL ile üretimde kendiliğinden oluştu).
+- `POST /api/community/stats` `{xp: 9.999.999, answered: 50.000}` → **`xp: 2000`, `answered: 300`,
+  `clamped: true`** — tavan üretimde çalışıyor.
+- Hemen ardından ikinci bildirim → **`xp` artmadı** (`clamped: true`), pencere kuralı doğrulandı.
+- `GET /api/community/leaderboard?licence=a` → tek satır, `rank: 1`, `weekStart: 2026-07-20`
+  (İstanbul pazartesi), `me` dolu ve yanıtta **e-posta/gerçek ad yok**.
+
+_Cihaz (`AYXSUKIVJVPZ7HPZ`):_ hesapla giriş yapıldı → Profil > **Topluluk** → sıralama ekranı canlı
+veriyle geldi: **E8 Dogrulama · A sınıfı · 9 gün seri · 2000 XP · 1.** Sınıf çipleri (Tümü/B/A/D),
+yenileme ve "Hafta başlangıcı: 2026-07-20 · 1 kişi" alt bilgisi çalışıyor; avatar doğru çiziliyor.
+
+**Cihaz doğrulamasında YAKALANAN VE DÜZELTİLEN iki gerçek hata:**
+
+1. **Kısmi istatistik gövdesi türetilmiş alanları sıfırlıyordu.** Canlı `curl` denemesinde
+   `{xp: 350}` gönderilince `accuracy` 0'a düştü — çünkü eksik alan "0 bildirildi" sayılıyordu.
+   `parseCounters` artık bulunmayan alanı `undefined` bırakır ve `clampStats` mevcut değeri korur;
+   **açıkça 0 bildirmek** hâlâ geri gitme sayılır. (+5 test, ayrı commit `acd6e15`.)
+2. **Kullanıcının kendi satırı sıralamada İKİ KEZ çiziliyordu** — hem üstte sabitlenmiş "senin
+   sıran" kartı hem listede. Artık sabitlenmiş kart yalnız kullanıcı **görünen sayfanın dışındaysa**
+   çizilir; sayfadaysa listede vurgulu tek satır görünür. (+1 test; iki durum da sabitlendi.)
+
+Her iki düzeltme de yeniden derlenip cihazda doğrulandı.
 
 ## Honest limitations
 

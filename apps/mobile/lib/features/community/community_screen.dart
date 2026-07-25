@@ -207,6 +207,8 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
                 );
               }
               final page = snap.data ?? LeaderboardPage.empty;
+              final meOutsidePage =
+                  page.me != null && !page.rows.any((r) => r.userId == page.me!.userId);
               if (page.rows.isEmpty) {
                 return const Padding(
                   padding: EdgeInsets.all(AppSpacing.s4),
@@ -225,7 +227,10 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
                   AppSpacing.s10,
                 ),
                 children: [
-                  if (page.me != null) ...[
+                  // Kendi sıran YALNIZ görünen sayfanın DIŞINDAYSAN üstte sabitlenir. Sayfadaysan
+                  // zaten listede vurgulu görünüyorsun — ikisini birden çizmek aynı satırı
+                  // iki kez gösteriyordu (cihaz doğrulamasında yakalandı).
+                  if (meOutsidePage) ...[
                     _RankRow(entry: page.me!, highlight: true, onTap: null),
                     const SizedBox(height: AppSpacing.s3),
                     Divider(color: p.border),

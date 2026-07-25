@@ -112,8 +112,27 @@ void main() {
       await openCommunity(tester);
 
       expect(find.text('Rakip Kisi'), findsOneWidget);
-      expect(find.text('Ben'), findsWidgets); // hem "sen" satırı hem listede
+      // Kendi satırın sayfadaysa YALNIZ BİR KEZ çizilir (üstte sabitlenmiş kopya yok).
+      expect(find.text('Ben'), findsOneWidget);
       expect(find.text('Varsayılan olarak KAPALI'), findsNothing);
+    });
+
+    testWidgets('kendi sıran sayfa DIŞINDAYSA üstte sabitlenir', (tester) async {
+      final api = FakeCommunityApi(
+        profile: const CommunityProfile(
+          displayName: 'Ben',
+          avatarId: 'owl-wave',
+          licence: 'b',
+          visibility: 'public',
+        ),
+        meOutsidePage: true,
+      );
+      await pumpApp(tester, community: api);
+      await openCommunity(tester);
+
+      // Sayfada olmadığın hâlde sıran görünür (aramak zorunda kalmazsın).
+      expect(find.text('Ben'), findsOneWidget);
+      expect(find.text('Rakip Kisi'), findsOneWidget);
     });
 
     testWidgets('gizli profilde "listede görünmezsin" uyarısı çıkar', (tester) async {

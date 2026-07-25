@@ -267,11 +267,19 @@ QuestionBank sampleBank() {
 /// Faz E8 — sahte topluluk API'si. Ağ/oturum olmadan opt-in, sıralama ve moderasyon akışlarını
 /// çalıştırır; hangi çağrıların yapıldığını kaydeder.
 class FakeCommunityApi implements CommunityApi {
-  FakeCommunityApi({this.profile, this.failLeaderboard = false, this.userNotFound = false});
+  FakeCommunityApi({
+    this.profile,
+    this.failLeaderboard = false,
+    this.userNotFound = false,
+    this.meOutsidePage = false,
+  });
 
   CommunityProfile? profile;
   final bool failLeaderboard;
   final bool userNotFound;
+
+  /// true → kullanıcı görünen sayfanın dışındadır (sıran üstte sabitlenmeli).
+  final bool meOutsidePage;
 
   final List<String> saved = [];
   final List<String> blocked = [];
@@ -328,22 +336,20 @@ class FakeCommunityApi implements CommunityApi {
       streak: 3,
       rank: 2,
     );
-    return const LeaderboardPage(
+    const rival = LeaderboardEntry(
+      userId: 'u2',
+      displayName: 'Rakip Kisi',
+      avatarId: 'owl-teacher',
+      licence: 'b',
+      xp: 300,
+      streak: 5,
+      rank: 1,
+    );
+    return LeaderboardPage(
       weekStart: '2026-07-20',
       licence: 'all',
       total: 2,
-      rows: [
-        LeaderboardEntry(
-          userId: 'u2',
-          displayName: 'Rakip Kisi',
-          avatarId: 'owl-teacher',
-          licence: 'b',
-          xp: 300,
-          streak: 5,
-          rank: 1,
-        ),
-        me,
-      ],
+      rows: meOutsidePage ? const [rival] : const [rival, me],
       me: me,
     );
   }

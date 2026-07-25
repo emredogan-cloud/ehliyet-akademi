@@ -1101,3 +1101,60 @@ açıldı, **henüz kullanılmıyor** · `weekStartIstanbul` saf ve testli · `s
 kullanılabilir · şikâyet altyapısı `target_type` ile genişletilebilir.
 **ÖN KOŞUL:** üretim veritabanındaki doğrulama artıkları (`AyseE9`, `BurakE9`, `CemE9`,
 `E8 Dogrulama` hesapları ve başlıkları) temizlenmeli — şu anda sıralamada ve tartışmalarda görünüyor.
+
+---
+
+## E10 — Çalışma grupları & meydan okumalar — TAMAMLANDI (2026-07-25)
+
+**Yapıldı:** 4 tablo (`study_groups`, `study_group_members`, `challenges`, `challenge_progress`);
+saf mantık `lib/server/groups.ts`; 3 uç ailesi; 3 mobil ekran; bootstrap ile 3 meydan okuma tohumu.
+`flutter analyze` 0 · `flutter test` **204** · web **471** · `@ea/db` **6** · APK 69,5 MiB.
+
+**Kalıcı kararlar:**
+
+1. **Sınırsız büyüme yolu YOK.** 3 grup kurma / 10 gruba katılma / 50 üye tavanı sunucuda.
+   Sonraki her topluluk özelliğinde aynı soru sorulmalı: "bunun tavanı ne?"
+2. **Meydan okuma ilerlemesi TÜRETİLİR, bildirilmez.** `community_stats`'tan okunur → E8'in kırpma
+   ve **60 sn pencere** kuralları otomatik olarak geçerli olur. İstemcide ilerlemeye dokunan hiçbir
+   denetim yok (widget testi düğme düzeyinde doğruluyor).
+3. **`baseline` deseni:** katılım anındaki sayaç saklanır, ilerleme `güncel − taban`. Geçmiş ilerleme
+   meydan okumayı anında bitiremez. Canlıda kanıtlandı (220 çözülmüş soru → 200'lük meydan okuma %0).
+4. **Katılım kodunda karışan karakter yok** (0/O, 1/I/L). Yazım hatası SESSİZCE eşlenmemeli —
+   ilk taslakta `0→O→Q` eşlemesi vardı; kullanıcıyı BAŞKA bir gruba sokabilirdi, kaldırıldı.
+5. **Sahipsiz grup kalmaz:** sahibi ayrılırsa en eski üyeye devir, son üye ayrılırsa grup silinir.
+6. **Üye olmayan grubu göremez** (aynı 404, ad sızmaz). Engellenen üye listede görünmez ama
+   `memberCount` GERÇEĞİ söyler.
+
+### ⚠️ ÜRETİM OLAYI — bootstrap DDL yorumundaki noktalı virgül (~65 dk kesinti)
+
+**Kök neden:** Postgres yolu bootstrap DDL'ini `split(';')` ile bölüyordu. E10 ile eklenen iki
+**SQL yorum satırında noktalı virgül** vardı → bölme yorumun ortasından kesti → sözdizimi hatası →
+`getDb()` her soğuk açılışta patladı → **E8/E9/E10 demeden bütün veritabanı uçları 500**.
+
+**Neden yakalanmadı:** testler PGlite kullanıyor ve PGlite bütün metni tek seferde çalıştırıyor
+(`exec`); bölme mantığı hiç çalışmıyordu. 204 mobil + 471 web testi, lint, format, CI, CodeQL —
+hepsi YEŞİLDİ. Klasik yalancı-yeşil.
+
+**Düzeltme:** yorumlardaki noktalı virgüller kaldırıldı + `splitDdlStatements()` bölmeden ÖNCE satır
+yorumlarını atıyor + 2 regresyon testi.
+
+**KURAL (bundan sonra):**
+
+- **Bootstrap DDL yorumlarına noktalı virgül YAZMA.**
+- **Çift sürücülü kodda sürücüye özgü her yol DOĞRUDAN test edilmeli.** PGlite ile Postgres
+  arasındaki davranış farkı bütün paketi yalancı-yeşil yapabiliyor. Bir mantık yalnız tek sürücüde
+  çalışıyorsa, o mantığı saf bir fonksiyona çıkar ve ayrıca test et.
+- Şemaya dokunan her yayından sonra **canlı bir uç gerçekten çağrılmalı** — CI yeşil olması
+  üretimin ayakta olduğu anlamına GELMİYOR.
+
+**Bilinen kısıtlar (dürüstçe açık):** meydan okumalar otomatik dönmez (cron yok, 90 günlük pencere,
+yönetici arayüzü yok) · **haftalık anlık görüntü devri BAĞLANMADI** — `leaderboard_snapshots` tablosu
+ve belirlenimci sıralama mantığı hazır/testli ama tetikleyen uç yok (E10'un tamamlanmayan tek kalemi)
+· sınıfa özel topluluk açılış sayfaları yapılmadı (mevcut sınıf süzgeci işlevi karşılıyor) ·
+grup içi sohbet yok (ayrı moderasyon yüzeyi açacağı için kapsam dışı).
+
+**Devreden iş:** (a) haftalık anlık görüntü devrinin bağlanması, (b) üretim veritabanındaki
+doğrulama artıklarının temizlenmesi (`AyseE9`, `BurakE9`, `CemE9`, `E8 Dogrulama`,
+`Cihaz Dogrulama Ekibi`).
+
+**E11 (Premium Video Player)** E1–E10'dan bağımsızdır; ön koşulu yoktur.

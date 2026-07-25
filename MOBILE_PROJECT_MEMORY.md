@@ -772,6 +772,11 @@ sınıf değiştiren kullanıcının gerçek ilerlemesini atar ve riskli bir gö
 **Tests:** flutter analyze 0 · flutter test **113** (+6) · web typecheck 0 · web **336** (snapshot testi
 artık A/D parçalarını ve web listesinin küçük kaldığını doğruluyor).
 **Device:** Profil > Ehliyet sınıfı > A seçimi kalıcı; araç kütüphanesi başlığı "Araç Tekniği · A".
+**Dağıtım sonrası doğrulama — ONAYLANDI:** CI yeşil + Vercel dağıtımından sonra canlı uç nokta
+`counts.vehicleParts: 112` döndü; uygulama yeniden açılışta anlık görüntüyü indirdi ve A kapsamında
+**Motor Bölmesi · 17** (B'de 15) göründü — motosiklete özgü **Yağ Seviye Camı** ve **Akü (12V)** listenin
+BAŞINDA, fotoğrafları kimlik kuralıyla çözülmüş hâlde. Kapsamlama + önceliklendirme + varlık çözümü
+uçtan uca doğrulandı.
 
 **For E5 (A & D içerik + sınav akışları):** kapsamlama katmanı ve etiketleme deseni hazır. `Lesson`'a da
 `licences` eklenip kategori dersleri/kuralları yazılacak; e-Sınav teorisinin ORTAK olduğu açıkça

@@ -75,11 +75,14 @@ web `typecheck` 0 · web **336**.
 Profil → **Ehliyet sınıfı · B · Otomobil** → bottom sheet lists B/A/D with the current one checked →
 picking **A · Motosiklet** persists and the vehicle library title becomes **"Araç Tekniği · A"**.
 
-**Post-deploy validation is required for the new A/D components**: the app reads content from the live
-`/api/mobile/content-snapshot`, so the 42 new parts only appear on device after this commit deploys to
-Vercel. This is the sequencing rule already recorded in project memory from Phase 2 ("deploy the backend
-change, then device-validate the happy path"). The scoping mechanism itself is validated above with the
-currently-cached content.
+**Post-deploy validation — CONFIRMED.** The app reads content from the live
+`/api/mobile/content-snapshot`, so the 42 new parts could only appear after this commit deployed (the
+Phase-2 sequencing rule: deploy the backend change, then device-validate the happy path). After CI went
+green and Vercel deployed, the live endpoint returned **`counts.vehicleParts: 112`**, the app
+re-downloaded the snapshot on relaunch, and the A-scoped library showed **Motor Bölmesi · 17** (15 for B)
+with the two motorcycle-specific parts — **Yağ Seviye Camı** and **Akü (12V)** — listed **first**, each
+with its real photo resolved by the id-identity rule, followed by the shared engine-bay content.
+Prioritization, scoping, asset resolution and the persisted switcher are all validated end-to-end.
 
 ## Honest limitations
 

@@ -9,6 +9,7 @@ import {
   weekStartIstanbul,
   type LeaderboardRow,
 } from '@/lib/server/community';
+import { rolloverIfNeeded } from '@/lib/server/leaderboard-rollover';
 
 /**
  * Sıralama (Evolution Faz E8).
@@ -76,8 +77,22 @@ export const GET = guarded(async (req: Request): Promise<Response> => {
   // Kullanıcının kendi sırası — sayfada olmasa bile döner (kendini aramak zorunda kalmasın).
   const me = ranked.find((r) => r.userId === user.id) ?? null;
 
+  const currentWeek = weekStartIstanbul(Date.now());
+  // Faz E10 — haftalık devir. Zamanlayıcı yok; hafta döndükten sonraki ilk okumada, ETKİSİZ-TEKRARLI
+  // olarak bir önceki haftanın sıralaması dondurulur. Başarısız olursa okuma yine de döner.
+  await rolloverIfNeeded({
+    licence: licence ?? 'all',
+    currentWeekStart: currentWeek,
+    rows: ranked.map((r) => ({
+      userId: r.userId,
+      displayName: r.displayName,
+      avatarId: r.avatarId,
+      xp: r.xp,
+    })),
+  });
+
   return json({
-    weekStart: weekStartIstanbul(Date.now()),
+    weekStart: currentWeek,
     licence: licence ?? 'all',
     total: ranked.length,
     offset,

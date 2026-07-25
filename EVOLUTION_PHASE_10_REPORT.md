@@ -11,7 +11,7 @@ E8'in kimliği ve E9'un sosyal grafiği üzerine grup çalışması ve meydan ok
 hile yüzeyi açılmaz).
 
 4 yeni tablo · 3 yeni uç ailesi · `flutter analyze` **0** · `flutter test` **204** (+18) ·
-web **471** (+39) · `@ea/db` **6** (+2) · lint **0 hata** · format temiz · APK **69,5 MiB**.
+web **479** (+47) · `@ea/db` **6** (+2) · lint **0 hata** · format temiz · APK **69,5 MiB**.
 
 ## Completed work
 
@@ -25,7 +25,7 @@ web **471** (+39) · `@ea/db` **6** (+2) · lint **0 hata** · format temiz · A
    `GET /api/community/groups/[id]` · `GET/POST /api/community/challenges`.
 4. **Mobil** — `group_models.dart`, `GroupsApi`/`DioGroupsApi`, Gruplar ekranı (kur + kodla katıl),
    Grup ayrıntısı (kod, toplu istatistik, üye sıralaması, ayrıl/sil), Meydan okumalar ekranı.
-5. **Testler** — `groups.test.ts` (20 saf) + `groups.integration.test.ts` (19 PGlite) = **39**;
+5. **Testler** — `groups.test.ts` (25 saf) + `groups.integration.test.ts` (22 PGlite) = **47**;
    `groups_test.dart` (**18** mobil).
 
 ## Architecture & decisions
@@ -51,6 +51,13 @@ Riverpod + arayüz/uygulama ayrımı · tasarım token'ları · `social-guards` 
 - **Üye olmayan grubu göremez** — grup adı bile sızmaz (aynı 404). Engel E9 ilkesiyle sürüyor:
   engellediğin kişinin grubuna katılamazsın, engellenen üye listede görünmez; ancak `memberCount`
   **gerçeği söyler** (yoksa engelleyen kişi grubu eksik sanardı).
+- **Haftalık devir BELİRLENİMCİDİR ve tektir.** İki katman: (1) `orderSnapshotRows` XP azalan,
+  eşitlikte `userId` artan sıralar → veritabanı dönüş sırasına bağlı değildir; (2) kimlik
+  `hafta:sınıf` + benzersiz dizin + `onConflictDoNothing` → aynı hafta için ikinci görüntü **asla**
+  yazılmaz, eşzamanlı iki istek yarışsa bile sonuç tektir. İçinde bulunulan hafta **hiç
+  dondurulmaz**; boş hafta da dondurulmaz. Devir başarısız olursa sıralama okuması **engellenmez**
+  (bir sonraki okumada yeniden denenir). Geçmiş haftalar `GET /api/community/leaderboard/history`
+  ile okunur.
 - **Topluluk merkezi tek satır, yatay kaydırma.** İki satıra yaymak küçük ekranlarda ölçülen
   **31 px taşma** yaptı ve dikey alanı kalıcı olarak yiyordu; yatay kaydırma yüksekliği sabit tutar
   ve sonraki fazlar yeni yüzey eklediğinde ölçeklenir.
@@ -88,7 +95,7 @@ saf ve test edilebilir olduğu için bu mümkün.
 | `flutter analyze`           | **0 sorun**                 |
 | `flutter test`              | **204 geçti** (E10 ile +18) |
 | web `typecheck`             | **0 hata**                  |
-| web `test`                  | **471 geçti** (E10 ile +39) |
+| web `test`                  | **479 geçti** (E10 ile +47) |
 | `@ea/db`                    | **6 geçti** (+2 regresyon)  |
 | `pnpm lint` · `pnpm format` | 0 hata · temiz              |
 | CI · Mobile CI · CodeQL     | yeşil                       |
@@ -131,10 +138,11 @@ saf ve test edilebilir olduğu için bu mümkün.
 1. **Meydan okumalar otomatik dönmez.** Zamanlayıcı (cron) sağlanmadığı için tohumlanan üç meydan
    okumanın penceresi uzundur (90 gün) ve **kendiliğinden yenilenmez**; yeni dönem yeni satır
    eklemeyi gerektirir. Yönetici arayüzü yoktur.
-2. **Haftalık anlık görüntü ALINMIYOR.** `leaderboard_snapshots` tablosu ve belirlenimci sıralama
-   mantığı hazır ve test edilmiş durumda (`orderSnapshotRows`, `shouldSnapshot`, `snapshotId`), ama
-   devri tetikleyecek bir uç/zamanlayıcı **henüz bağlanmadı** — bu, E10 kapsamında tamamlanmayan
-   tek kalemdir ve dürüstçe açık bırakılıyor.
+2. **Haftalık devir TEMBELDİR (zamanlayıcı yok).** Devir bağlandı ve çalışıyor, ama Vercel'de bu
+   proje için cron sağlanmadığı üzere tetikleyici bir zamanlayıcı yoktur: anlık görüntü, hafta
+   döndükten **sonraki ilk sıralama okumasında** alınır. Sonucu şudur — görüntü "hafta bittiği an"
+   değil, **ilk okuma anındaki** duruma karşılık gelir; kimse okumazsa görüntü de alınmaz.
+   Belirlenimcilik ve tekillik ayrıca güvence altındadır (aşağıya bakınız).
 3. **Sınıfa özel topluluk açılış sayfaları yapılmadı.** Roadmap'te E10 kapsamında sayılıyordu;
    mevcut sınıf süzgeci (Tümü/B/A/D) işlevi karşılıyor, ayrı açılış sayfası eklenmedi.
 4. **Grup içi sohbet/akış yok.** Grup şu an ortak istatistik ve sıralama yüzeyidir; grup mesajlaşması

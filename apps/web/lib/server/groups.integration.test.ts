@@ -7,7 +7,7 @@
  */
 import { describe, it, expect } from 'vitest';
 import { eq } from 'drizzle-orm';
-import { getDb, challenges, communityStats, studyGroups } from '@ea/db';
+import { getDb, challenges, communityStats, leaderboardSnapshots, studyGroups } from '@ea/db';
 import { POST as register } from '@/app/api/auth/register/route';
 import { PUT as profilePut } from '@/app/api/community/profile/route';
 import { POST as statsPost } from '@/app/api/community/stats/route';
@@ -22,6 +22,7 @@ import { GET as groupGet } from '@/app/api/community/groups/[id]/route';
 import { GET as challengesGet, POST as challengesPost } from '@/app/api/community/challenges/route';
 import { MAX_GROUPS_OWNED } from './groups';
 import { SUBMIT_WINDOW_MS } from './community';
+import { rolloverIfNeeded } from './leaderboard-rollover';
 
 const BASE = 'http://test.local';
 
@@ -375,5 +376,60 @@ describe('oturum gerekliliği', () => {
   it('gruplar ve meydan okumalar oturumsuz 401', async () => {
     expect((await groupsGet(get('/api/community/groups'))).status).toBe(401);
     expect((await challengesGet(get('/api/community/challenges'))).status).toBe(401);
+  });
+});
+
+describe('haftalık devir (E10 DoD: belirlenimci rollover)', () => {
+  it('geçmiş hafta dondurulur, İKİNCİ kez yazılmaz ve sıralama belirlenimcidir', async () => {
+    const a = await member('DevirBir');
+    const b = await member('DevirIki');
+
+    const rows = [
+      { userId: b.id, displayName: 'DevirIki', avatarId: 'owl-wave', xp: 400 },
+      { userId: a.id, displayName: 'DevirBir', avatarId: 'owl-wave', xp: 900 },
+    ];
+
+    const first = await rolloverIfNeeded({ licence: 'all', currentWeekStart: '2026-07-20', rows });
+    expect(first).toEqual({ taken: true, weekStart: '2026-07-13' });
+
+    // ETKİSİZ-TEKRARLI: aynı hafta ikinci kez yazılmaz.
+    const second = await rolloverIfNeeded({
+      licence: 'all',
+      currentWeekStart: '2026-07-20',
+      rows: [...rows].reverse(),
+    });
+    expect(second.taken).toBe(false);
+
+    const db = await getDb();
+    const saved = await db
+      .select()
+      .from(leaderboardSnapshots)
+      .where(eq(leaderboardSnapshots.id, '2026-07-13:all'));
+    expect(saved).toHaveLength(1);
+    // XP azalan sırada dondurulmuş olmalı — girdi sırası ters verilmişti.
+    const stored = saved[0]!.rows as { userId: string; xp: number }[];
+    expect(stored.map((r) => r.xp)).toEqual([900, 400]);
+  });
+
+  it('İÇİNDE BULUNULAN hafta ASLA dondurulmaz', async () => {
+    const u = await member('AyniHafta');
+    const res = await rolloverIfNeeded({
+      licence: 'b',
+      currentWeekStart: '2026-07-20',
+      rows: [{ userId: u.id, displayName: 'AyniHafta', avatarId: 'owl-wave', xp: 10 }],
+    });
+    expect(res.weekStart).not.toBe('2026-07-20');
+
+    const db = await getDb();
+    const current = await db
+      .select()
+      .from(leaderboardSnapshots)
+      .where(eq(leaderboardSnapshots.id, '2026-07-20:b'));
+    expect(current).toHaveLength(0);
+  });
+
+  it('boş hafta dondurulmaz — anlamsız satır bırakmaz', async () => {
+    const res = await rolloverIfNeeded({ licence: 'd', currentWeekStart: '2026-06-15', rows: [] });
+    expect(res.taken).toBe(false);
   });
 });

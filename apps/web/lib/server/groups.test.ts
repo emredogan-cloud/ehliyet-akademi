@@ -17,6 +17,7 @@ import {
   snapshotId,
   validateGroupName,
 } from './groups';
+import { previousWeekStart } from './community';
 
 /** Belirlenimci sözde-rastgele üreteç — kod üretimini test edilebilir kılar. */
 function seeded(seed: number): () => number {
@@ -174,5 +175,29 @@ describe('haftalık anlık görüntü — BELİRLENİMCİ', () => {
     expect(shouldSnapshot('2026-07-13', '2026-07-20', true)).toBe(false);
     // İçinde bulunulan hafta dondurulmaz.
     expect(shouldSnapshot('2026-07-20', '2026-07-20', false)).toBe(false);
+  });
+});
+
+describe('önceki hafta başlangıcı (E10 devri)', () => {
+  it('normal hafta', () => {
+    expect(previousWeekStart('2026-07-20')).toBe('2026-07-13');
+  });
+
+  it('AY sınırını doğru geçer', () => {
+    expect(previousWeekStart('2026-07-06')).toBe('2026-06-29');
+    expect(previousWeekStart('2026-03-02')).toBe('2026-02-23');
+  });
+
+  it('YIL sınırını doğru geçer', () => {
+    expect(previousWeekStart('2026-01-05')).toBe('2025-12-29');
+  });
+
+  it('artık yıl şubatını doğru geçer', () => {
+    // 2028 artık yıl: 29 Şubat var.
+    expect(previousWeekStart('2028-03-06')).toBe('2028-02-28');
+  });
+
+  it('sonuç her zaman geçerli bir hafta başlangıcı biçimindedir', () => {
+    expect(previousWeekStart('2026-07-20')).toMatch(/^\d{4}-\d{2}-\d{2}$/);
   });
 });

@@ -239,6 +239,22 @@ export function weekStartIstanbul(nowMs: number): string {
   return `${y}-${m}-${d}`;
 }
 
+/**
+ * Bir hafta başlangıcının (YYYY-MM-DD, pazartesi) bir ÖNCEKİ haftası (Evolution Faz E10).
+ *
+ * Gün sayısıyla değil, tarih aritmetiğiyle hesaplanır → ay/yıl sınırlarında ve artık yıllarda da
+ * doğrudur. Girdi zaten bir pazartesi olduğu için 7 gün geri gitmek yeterlidir.
+ */
+export function previousWeekStart(weekStart: string): string {
+  const [y, m, d] = weekStart.split('-').map(Number);
+  const monday = new Date(Date.UTC(y ?? 1970, (m ?? 1) - 1, d ?? 1));
+  const prev = new Date(monday.getTime() - 7 * 24 * 60 * 60 * 1000);
+  const py = prev.getUTCFullYear();
+  const pm = String(prev.getUTCMonth() + 1).padStart(2, '0');
+  const pd = String(prev.getUTCDate()).padStart(2, '0');
+  return `${py}-${pm}-${pd}`;
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Sıralama
 // ─────────────────────────────────────────────────────────────────────────────

@@ -1148,12 +1148,13 @@ yorumlarını atıyor + 2 regresyon testi.
   üretimin ayakta olduğu anlamına GELMİYOR.
 
 **Bilinen kısıtlar (dürüstçe açık):** meydan okumalar otomatik dönmez (cron yok, 90 günlük pencere,
-yönetici arayüzü yok) · **haftalık anlık görüntü devri BAĞLANMADI** — `leaderboard_snapshots` tablosu
-ve belirlenimci sıralama mantığı hazır/testli ama tetikleyen uç yok (E10'un tamamlanmayan tek kalemi)
+yönetici arayüzü yok) · haftalık devir BAĞLANDI ama TEMBELDİR: cron olmadığı için görüntü, hafta döndükten sonraki ilk
+sıralama okumasında alınır (kimse okumazsa alınmaz). Belirlenimcilik `orderSnapshotRows` + tekillik
+`hafta:sınıf` benzersiz dizini ile güvence altında
 · sınıfa özel topluluk açılış sayfaları yapılmadı (mevcut sınıf süzgeci işlevi karşılıyor) ·
 grup içi sohbet yok (ayrı moderasyon yüzeyi açacağı için kapsam dışı).
 
-**Devreden iş:** (a) haftalık anlık görüntü devrinin bağlanması, (b) üretim veritabanındaki
+**Devreden iş:** üretim veritabanındaki
 doğrulama artıklarının temizlenmesi (`AyseE9`, `BurakE9`, `CemE9`, `E8 Dogrulama`,
 `Cihaz Dogrulama Ekibi`).
 

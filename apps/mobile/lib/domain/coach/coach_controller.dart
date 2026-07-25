@@ -88,9 +88,13 @@ class CoachChatController extends Notifier<CoachChatState> {
   /// Kişiselleştirme profilinden LLM bağlamı — yanıtlar kullanıcının hedefine göre uyarlanır.
   String? _profileContext() {
     final p = ref.read(studyProfileProvider);
-    if (!p.completed) return null;
-    return 'Kullanıcı ${p.category.badge} sınıfı ehliyete hazırlanıyor. '
-        'Odak: ${p.focus.title}. Sınava kalan süre: ${p.timeframe.title}. '
+    // Ehliyet sınıfı Profil'den de değiştirilebilir (Faz E4) → onboarding tamamlanmamış olsa
+    // bile sınıf bilgisi verilir; ayrıntılı profil yalnız tamamlandıysa eklenir.
+    final licence = 'Kullanıcı ${p.category.badge} sınıfı (${p.category.title}) ehliyete hazırlanıyor.';
+    if (!p.completed) {
+      return '$licence Yanıtı bu sınıfa uygun, kısa ve net ver.';
+    }
+    return '$licence Odak: ${p.focus.title}. Sınava kalan süre: ${p.timeframe.title}. '
         'Deneyim: ${p.experience.title}. Yanıtı kısa, net ve bu profile uygun ver.';
   }
 

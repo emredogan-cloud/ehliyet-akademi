@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import '../../core/assets.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/content/content_repository.dart';
+import '../../domain/content/content_queries.dart';
+import '../../domain/onboarding/study_profile.dart';
 import '../../design/brand.dart';
 import '../../domain/content/dash_lights.dart';
 import '../../domain/content/vehicle_visuals.dart';
@@ -17,7 +19,9 @@ class LearnScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final p = context.palette;
-    final counts = ref.watch(contentSnapshotProvider).value?.counts;
+    final snapshot = ref.watch(contentSnapshotProvider).value;
+    final counts = snapshot?.counts;
+    final licence = ref.watch(studyProfileProvider).category;
 
     String? n(int? v) => v == null ? null : '$v';
 
@@ -57,7 +61,7 @@ class LearnScreen extends ConsumerWidget {
               color: p.accent,
               title: 'Araç Tekniği',
               subtitle: 'Motor, gösterge paneli ve araç bileşenleri',
-              count: n(counts?.vehicleParts),
+              count: snapshot == null ? '—' : '${snapshot.partCountFor(licence)}',
               onTap: () => context.push('/learn/vehicle'),
             ),
             const SizedBox(height: AppSpacing.s3),

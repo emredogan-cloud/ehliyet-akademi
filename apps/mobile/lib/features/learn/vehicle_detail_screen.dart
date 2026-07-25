@@ -55,11 +55,11 @@ class _Body extends StatelessWidget {
         AppSpacing.s10,
       ),
       children: [
-        if (kVehiclePartAsset[part.id] != null) ...[
-          // Gerçek parça fotoğrafı — metin-öncesi tanıma (Evolution Faz E2).
+        if (vehiclePartAsset(part.id) != null) ...[
+          // Gerçek parça fotoğrafı — metin-öncesi tanıma (Evolution Faz E2/E4).
           Center(
             child: MechImage(
-              id: kVehiclePartAsset[part.id]!,
+              id: kVehiclePartAsset[part.id] ?? part.id,
               size: 220,
               fallbackIcon: vehicleSystemIcon(part.system),
             ),

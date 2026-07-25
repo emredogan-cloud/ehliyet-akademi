@@ -1,4 +1,6 @@
+import '../onboarding/study_profile.dart';
 import 'content_enums.dart';
+import 'licence_scope.dart';
 import 'content_snapshot.dart';
 import 'lesson.dart';
 import 'traffic_sign.dart';
@@ -53,12 +55,17 @@ extension ContentQueries on ContentSnapshot {
     return map;
   }
 
-  /// Araç parçaları → sisteme göre.
-  Map<VehicleSystem, List<VehiclePart>> partsBySystem() {
+  /// Araç parçaları → sisteme göre. `licence` verilirse o sınıfta geçerli olanlar kalır ve
+  /// sınıfa ÖZGÜ parçalar öne alınır (Evolution Faz E4).
+  Map<VehicleSystem, List<VehiclePart>> partsBySystem({LicenceCategory? licence}) {
+    final source = licence == null ? vehicleParts : vehicleParts.prioritizedFor(licence);
     final map = <VehicleSystem, List<VehiclePart>>{};
-    for (final p in vehicleParts) {
+    for (final p in source) {
       (map[p.system] ??= []).add(p);
     }
     return map;
   }
+
+  /// Bu sınıfta görünen parça sayısı (hub sayacı).
+  int partCountFor(LicenceCategory licence) => vehicleParts.forLicence(licence).length;
 }

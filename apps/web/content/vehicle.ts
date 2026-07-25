@@ -3,7 +3,12 @@
  * Direksiyon + araç tekniği için: her bileşenin görevi, ipucu, ilgili ders.
  */
 
+import { LICENCE_PARTS } from './vehicle-licence';
+
 export type VehicleSystem = 'motor-bolmesi' | 'kabin' | 'dis' | 'muayene';
+
+/** Ehliyet sınıfı (Evolution Faz E4). Alan yoksa parça HER sınıf için geçerlidir. */
+export type LicenceCategory = 'b' | 'a' | 'd';
 
 export const SYSTEM_LABEL: Record<VehicleSystem, string> = {
   'motor-bolmesi': 'Motor Bölmesi',
@@ -25,6 +30,11 @@ export interface VehiclePart {
   inspection?: string[];
   /** Sık yapılan hata/yanlış bilgi. */
   mistake?: string;
+  /**
+   * Evolution Faz E4 — bu parçanın geçerli olduğu ehliyet sınıfları.
+   * Alan YOKSA parça sınıftan bağımsızdır (motor, sıvılar, lastik, acil ekipman gibi).
+   */
+  licences?: LicenceCategory[];
 }
 
 const BASE_PARTS: VehiclePart[] = [
@@ -89,6 +99,7 @@ const BASE_PARTS: VehiclePart[] = [
   // Kabin
   {
     id: 'dashboard',
+    licences: ['b', 'd'],
     name: 'Gösterge Paneli',
     system: 'kabin',
     desc: 'Hız, devir ve ikaz lambalarını gösterir.',
@@ -97,6 +108,7 @@ const BASE_PARTS: VehiclePart[] = [
   },
   {
     id: 'steering',
+    licences: ['b', 'd'],
     name: 'Direksiyon',
     system: 'kabin',
     desc: 'Aracın yönünü kontrol eder.',
@@ -105,6 +117,7 @@ const BASE_PARTS: VehiclePart[] = [
   },
   {
     id: 'pedals',
+    licences: ['b', 'd'],
     name: 'Pedallar (Debriyaj-Fren-Gaz)',
     system: 'kabin',
     desc: 'Manuelde soldan sağa: debriyaj, fren, gaz.',
@@ -113,6 +126,7 @@ const BASE_PARTS: VehiclePart[] = [
   },
   {
     id: 'gearbox',
+    licences: ['b', 'd'],
     name: 'Vites Kolu (Şanzıman)',
     system: 'kabin',
     desc: 'Motor gücünü tekerleğe uygun oranda aktarır.',
@@ -121,6 +135,7 @@ const BASE_PARTS: VehiclePart[] = [
   },
   {
     id: 'handbrake',
+    licences: ['b', 'd'],
     name: 'El Freni',
     system: 'kabin',
     desc: 'Aracı park hâlinde sabit tutar; rampada kalkışa yardımcı olur.',
@@ -129,6 +144,7 @@ const BASE_PARTS: VehiclePart[] = [
   },
   {
     id: 'seat',
+    licences: ['b', 'd'],
     name: 'Koltuk Ayarı',
     system: 'kabin',
     desc: 'Sürüş pozisyonunu ayarlar.',
@@ -137,6 +153,7 @@ const BASE_PARTS: VehiclePart[] = [
   },
   {
     id: 'mirrors',
+    licences: ['b', 'd'],
     name: 'Aynalar',
     system: 'kabin',
     desc: 'İç + sağ/sol dış aynalar çevre görüşü sağlar.',
@@ -145,6 +162,7 @@ const BASE_PARTS: VehiclePart[] = [
   },
   {
     id: 'lights',
+    licences: ['b', 'd'],
     name: 'Aydınlatma Kumandaları',
     system: 'kabin',
     desc: 'Kısa/uzun far, sinyal, sis ve dörtlü flaşör.',
@@ -163,6 +181,7 @@ const BASE_PARTS: VehiclePart[] = [
   },
   {
     id: 'spare-wheel',
+    licences: ['b', 'd'],
     name: 'Stepne',
     system: 'dis',
     desc: 'Yedek lastik.',
@@ -171,6 +190,7 @@ const BASE_PARTS: VehiclePart[] = [
   },
   {
     id: 'jack',
+    licences: ['b', 'd'],
     name: 'Kriko',
     system: 'dis',
     desc: 'Lastik değişimi için aracı kaldırır.',
@@ -179,6 +199,7 @@ const BASE_PARTS: VehiclePart[] = [
   },
   {
     id: 'wrench',
+    licences: ['b', 'd'],
     name: 'Bijon Anahtarı',
     system: 'dis',
     desc: 'Tekerlek bijonlarını söker/takar.',
@@ -197,6 +218,7 @@ const BASE_PARTS: VehiclePart[] = [
   },
   {
     id: 'parking-reference',
+    licences: ['b'],
     name: 'Park Referans Noktaları',
     system: 'muayene',
     desc: 'Park manevrasında hizalama için referanslar.',
@@ -211,6 +233,7 @@ const BASE_PARTS: VehiclePart[] = [
 const EXTRA_PARTS: VehiclePart[] = [
   {
     id: 'warning-lights',
+    licences: ['b', 'd'],
     name: 'İkaz Lambaları',
     system: 'kabin',
     desc: 'Gösterge panelindeki renkli uyarı lambaları; sistem durumunu bildirir.',
@@ -220,6 +243,7 @@ const EXTRA_PARTS: VehiclePart[] = [
   },
   {
     id: 'dashboard-buttons',
+    licences: ['b', 'd'],
     name: 'Konsol Düğmeleri',
     system: 'kabin',
     desc: 'Dörtlü flaşör, cam rezistansı gibi merkezî kumanda düğmeleri.',
@@ -229,6 +253,7 @@ const EXTRA_PARTS: VehiclePart[] = [
   },
   {
     id: 'steering-controls',
+    licences: ['b', 'd'],
     name: 'Direksiyon Kumandaları',
     system: 'kabin',
     desc: 'Direksiyon üzerindeki tuşlar ve arkasındaki kumanda kolları.',
@@ -238,6 +263,7 @@ const EXTRA_PARTS: VehiclePart[] = [
   },
   {
     id: 'turn-signal-stalk',
+    licences: ['b', 'd'],
     name: 'Sinyal Kolu',
     system: 'kabin',
     desc: 'Sol taraftaki kol; sinyaller ve far seçimi.',
@@ -247,6 +273,7 @@ const EXTRA_PARTS: VehiclePart[] = [
   },
   {
     id: 'wiper-controls',
+    licences: ['b', 'd'],
     name: 'Silecek Kumandası',
     system: 'kabin',
     desc: 'Sağ taraftaki kol; silecek hızı ve cam suyu püskürtme.',
@@ -256,6 +283,7 @@ const EXTRA_PARTS: VehiclePart[] = [
   },
   {
     id: 'mirror-adjust',
+    licences: ['b', 'd'],
     name: 'Ayna Ayarı',
     system: 'kabin',
     desc: 'Elektrikli ayna ayar kumandası (kapı kolçağında).',
@@ -265,6 +293,7 @@ const EXTRA_PARTS: VehiclePart[] = [
   },
   {
     id: 'seat-controls',
+    licences: ['b', 'd'],
     name: 'Koltuk Ayarları',
     system: 'kabin',
     desc: 'Koltuk ileri-geri kızağı, yükseklik pompası ve sırt açısı ayarı.',
@@ -274,6 +303,7 @@ const EXTRA_PARTS: VehiclePart[] = [
   },
   {
     id: 'seat-belt',
+    licences: ['b', 'd'],
     name: 'Emniyet Kemeri',
     system: 'kabin',
     desc: 'Çarpışmada tutunmayı sağlayan üç noktalı kemer sistemi.',
@@ -283,6 +313,7 @@ const EXTRA_PARTS: VehiclePart[] = [
   },
   {
     id: 'automatic-gearbox',
+    licences: ['b'],
     name: 'Otomatik Vites',
     system: 'kabin',
     desc: 'P-R-N-D konumlu otomatik şanzıman seçici.',
@@ -292,6 +323,7 @@ const EXTRA_PARTS: VehiclePart[] = [
   },
   {
     id: 'headlights',
+    licences: ['b', 'd'],
     name: 'Farlar',
     system: 'dis',
     desc: 'Kısa ve uzun huzmeli ön aydınlatma.',
@@ -301,6 +333,7 @@ const EXTRA_PARTS: VehiclePart[] = [
   },
   {
     id: 'fog-lights',
+    licences: ['b', 'd'],
     name: 'Sis Farları',
     system: 'dis',
     desc: 'Tampon altına yerleştirilmiş, sis/yoğun yağışta kullanılan lambalar.',
@@ -310,6 +343,7 @@ const EXTRA_PARTS: VehiclePart[] = [
   },
   {
     id: 'boot',
+    licences: ['b'],
     name: 'Bagaj',
     system: 'dis',
     desc: 'Yük alanı; stepne, kriko ve zorunlu ekipman burada taşınır.',
@@ -334,6 +368,7 @@ const EXTRA_PARTS: VehiclePart[] = [
 const PHASE7_PARTS: VehiclePart[] = [
   {
     id: 'wiper-blade',
+    licences: ['b', 'd'],
     name: 'Silecek Lastiği',
     system: 'dis',
     desc: 'Cam yüzeyindeki suyu ve kiri sıyırarak yağışta net görüş sağlar.',
@@ -349,6 +384,7 @@ const PHASE7_PARTS: VehiclePart[] = [
   },
   {
     id: 'isofix',
+    licences: ['b'],
     name: 'ISOFIX Bağlantısı',
     system: 'kabin',
     desc: 'Çocuk koltuğunu araç gövdesine standart metal kancalarla sabitleyen bağlantı sistemidir.',
@@ -365,6 +401,7 @@ const PHASE7_PARTS: VehiclePart[] = [
   },
   {
     id: 'climate-controls',
+    licences: ['b', 'd'],
     name: 'Klima Kumandası',
     system: 'kabin',
     desc: 'Kabin sıcaklığını, fan hızını ve hava yönlendirmesini ayarlar.',
@@ -381,6 +418,7 @@ const PHASE7_PARTS: VehiclePart[] = [
   },
   {
     id: 'window-switches',
+    licences: ['b', 'd'],
     name: 'Cam Kumandaları',
     system: 'kabin',
     desc: 'Elektrikli camları açıp kapatır; sürücü kapısından tüm camlar yönetilebilir.',
@@ -540,6 +578,7 @@ const PHASE7_PARTS: VehiclePart[] = [
   },
   {
     id: 'cabin-filter',
+    licences: ['b', 'd'],
     name: 'Polen Filtresi',
     system: 'kabin',
     desc: 'Kabine giren havadaki toz ve polenleri tutarak iç hava kalitesini korur.',
@@ -604,6 +643,7 @@ const PHASE7_PARTS: VehiclePart[] = [
   },
   {
     id: 'car-key',
+    licences: ['b', 'd'],
     name: 'Anahtar & İmmobilizer',
     system: 'kabin',
     desc: 'Aracı açıp çalıştırır; içindeki immobilizer çipi tanınmayan anahtarla motorun çalışmasını engeller.',
@@ -620,6 +660,7 @@ const PHASE7_PARTS: VehiclePart[] = [
   },
   {
     id: 'obd-port',
+    licences: ['b', 'd'],
     name: 'OBD Arıza Soketi',
     system: 'kabin',
     desc: 'Arıza tespit cihazının bağlandığı, motor ve sistem hata kodlarının okunduğu standart sokettir.',
@@ -765,6 +806,7 @@ const PHASE7_PARTS: VehiclePart[] = [
   },
   {
     id: 'park-sensor',
+    licences: ['b', 'd'],
     name: 'Park Sensörü',
     system: 'dis',
     desc: 'Tamponlardaki ultrasonik sensörlerle engel mesafesini ölçüp sesli ve görsel uyarı verir.',
@@ -781,6 +823,7 @@ const PHASE7_PARTS: VehiclePart[] = [
   },
   {
     id: 'rear-camera',
+    licences: ['b', 'd'],
     name: 'Geri Görüş Kamerası',
     system: 'dis',
     desc: 'Geri viteste aracın arkasını ekrana yansıtarak görüşü destekler.',
@@ -797,6 +840,7 @@ const PHASE7_PARTS: VehiclePart[] = [
   },
   {
     id: 'windshield-chip',
+    licences: ['b', 'd'],
     name: 'Cam Çatlağı',
     system: 'dis',
     desc: 'Ön cama taş çarpmasıyla oluşan, büyümeden onarılması gereken görüş ve dayanım hasarıdır.',
@@ -829,6 +873,7 @@ const PHASE7_PARTS: VehiclePart[] = [
   },
   {
     id: 'temp-gauge',
+    licences: ['b', 'd'],
     name: 'Hararet Göstergesi',
     system: 'kabin',
     desc: 'Motor soğutma suyu sıcaklığını gösterir; normalde ibre orta bölgede seyreder.',
@@ -893,6 +938,7 @@ const PHASE7_PARTS: VehiclePart[] = [
   },
   {
     id: 'child-lock',
+    licences: ['b'],
     name: 'Çocuk Kilidi',
     system: 'kabin',
     desc: 'Arka kapıların içeriden açılmasını engelleyen mekanik kilittir; kapı yalnızca dışarıdan açılabilir.',
@@ -919,6 +965,12 @@ export const VEHICLE_PARTS: VehiclePart[] = [
   ...EXTRA_PARTS,
   ...PHASE7_PARTS,
 ];
+
+/**
+ * Mobil içerik anlık görüntüsünün servis ettiği TAM liste: web kütüphanesi + A/D sınıfı parçalar.
+ * Web tarafı `VEHICLE_PARTS`'ı kullanmaya devam eder → web davranışı birebir korunur (Faz E4).
+ */
+export const ALL_VEHICLE_PARTS: VehiclePart[] = [...VEHICLE_PARTS, ...LICENCE_PARTS];
 
 export function partsBySystem(): Record<VehicleSystem, VehiclePart[]> {
   const out = {

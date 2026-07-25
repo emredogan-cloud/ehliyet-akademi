@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
@@ -9,6 +10,7 @@ import '../../domain/content/content_enums.dart';
 import '../../domain/content/content_queries.dart';
 import '../../domain/content/vehicle_part.dart';
 import '../../domain/content/vehicle_visuals.dart';
+import '../../domain/onboarding/study_profile.dart';
 import 'widgets/content_scope.dart';
 
 IconData vehicleSystemIcon(VehicleSystem s) => switch (s) {
@@ -19,18 +21,19 @@ IconData vehicleSystemIcon(VehicleSystem s) => switch (s) {
 };
 
 /// Araç tekniği — sisteme göre gruplanmış bileşen listesi.
-class VehicleScreen extends StatelessWidget {
+class VehicleScreen extends ConsumerWidget {
   const VehicleScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final licence = ref.watch(studyProfileProvider).category;
     return Scaffold(
-      appBar: AppBar(title: const Text('Araç Tekniği')),
+      appBar: AppBar(title: Text('Araç Tekniği · ${licence.badge}')),
       body: SafeArea(
         top: false,
         child: ContentBuilder(
           builder: (context, snapshot) {
-            final grouped = snapshot.partsBySystem();
+            final grouped = snapshot.partsBySystem(licence: licence);
             final systems = VehicleSystem.values.where((s) => grouped.containsKey(s)).toList();
             return ListView(
               padding: const EdgeInsets.fromLTRB(
@@ -67,9 +70,9 @@ class _PartCard extends StatelessWidget {
       onTap: () => context.push('/learn/vehicle/${part.id}'),
       child: Row(
         children: [
-          if (kVehiclePartAsset[part.id] != null)
+          if (vehiclePartAsset(part.id) != null)
             MechImage(
-              id: kVehiclePartAsset[part.id]!,
+              id: kVehiclePartAsset[part.id] ?? part.id,
               size: 52,
               fallbackIcon: vehicleSystemIcon(part.system),
             )

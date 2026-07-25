@@ -15,7 +15,9 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$VehiclePart {
 
- String get id; String get name; VehicleSystem get system; String get desc; String get tip; String? get relatedLessonSlug; String? get photo; List<String> get inspection; String? get mistake;
+ String get id; String get name; VehicleSystem get system; String get desc; String get tip; String? get relatedLessonSlug; String? get photo; List<String> get inspection; String? get mistake;/// Evolution Faz E4 — parçanın geçerli olduğu ehliyet sınıfları ('b' | 'a' | 'd').
+/// BOŞ ise parça sınıftan bağımsızdır (motor, sıvılar, lastik, acil ekipman gibi).
+ List<String> get licences;
 /// Create a copy of VehiclePart
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +30,16 @@ $VehiclePartCopyWith<VehiclePart> get copyWith => _$VehiclePartCopyWithImpl<Vehi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is VehiclePart&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.system, system) || other.system == system)&&(identical(other.desc, desc) || other.desc == desc)&&(identical(other.tip, tip) || other.tip == tip)&&(identical(other.relatedLessonSlug, relatedLessonSlug) || other.relatedLessonSlug == relatedLessonSlug)&&(identical(other.photo, photo) || other.photo == photo)&&const DeepCollectionEquality().equals(other.inspection, inspection)&&(identical(other.mistake, mistake) || other.mistake == mistake));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is VehiclePart&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.system, system) || other.system == system)&&(identical(other.desc, desc) || other.desc == desc)&&(identical(other.tip, tip) || other.tip == tip)&&(identical(other.relatedLessonSlug, relatedLessonSlug) || other.relatedLessonSlug == relatedLessonSlug)&&(identical(other.photo, photo) || other.photo == photo)&&const DeepCollectionEquality().equals(other.inspection, inspection)&&(identical(other.mistake, mistake) || other.mistake == mistake)&&const DeepCollectionEquality().equals(other.licences, licences));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,system,desc,tip,relatedLessonSlug,photo,const DeepCollectionEquality().hash(inspection),mistake);
+int get hashCode => Object.hash(runtimeType,id,name,system,desc,tip,relatedLessonSlug,photo,const DeepCollectionEquality().hash(inspection),mistake,const DeepCollectionEquality().hash(licences));
 
 @override
 String toString() {
-  return 'VehiclePart(id: $id, name: $name, system: $system, desc: $desc, tip: $tip, relatedLessonSlug: $relatedLessonSlug, photo: $photo, inspection: $inspection, mistake: $mistake)';
+  return 'VehiclePart(id: $id, name: $name, system: $system, desc: $desc, tip: $tip, relatedLessonSlug: $relatedLessonSlug, photo: $photo, inspection: $inspection, mistake: $mistake, licences: $licences)';
 }
 
 
@@ -48,7 +50,7 @@ abstract mixin class $VehiclePartCopyWith<$Res>  {
   factory $VehiclePartCopyWith(VehiclePart value, $Res Function(VehiclePart) _then) = _$VehiclePartCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, VehicleSystem system, String desc, String tip, String? relatedLessonSlug, String? photo, List<String> inspection, String? mistake
+ String id, String name, VehicleSystem system, String desc, String tip, String? relatedLessonSlug, String? photo, List<String> inspection, String? mistake, List<String> licences
 });
 
 
@@ -65,7 +67,7 @@ class _$VehiclePartCopyWithImpl<$Res>
 
 /// Create a copy of VehiclePart
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? system = null,Object? desc = null,Object? tip = null,Object? relatedLessonSlug = freezed,Object? photo = freezed,Object? inspection = null,Object? mistake = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? system = null,Object? desc = null,Object? tip = null,Object? relatedLessonSlug = freezed,Object? photo = freezed,Object? inspection = null,Object? mistake = freezed,Object? licences = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -76,7 +78,8 @@ as String,relatedLessonSlug: freezed == relatedLessonSlug ? _self.relatedLessonS
 as String?,photo: freezed == photo ? _self.photo : photo // ignore: cast_nullable_to_non_nullable
 as String?,inspection: null == inspection ? _self.inspection : inspection // ignore: cast_nullable_to_non_nullable
 as List<String>,mistake: freezed == mistake ? _self.mistake : mistake // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,licences: null == licences ? _self.licences : licences // ignore: cast_nullable_to_non_nullable
+as List<String>,
   ));
 }
 
@@ -161,10 +164,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  VehicleSystem system,  String desc,  String tip,  String? relatedLessonSlug,  String? photo,  List<String> inspection,  String? mistake)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  VehicleSystem system,  String desc,  String tip,  String? relatedLessonSlug,  String? photo,  List<String> inspection,  String? mistake,  List<String> licences)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _VehiclePart() when $default != null:
-return $default(_that.id,_that.name,_that.system,_that.desc,_that.tip,_that.relatedLessonSlug,_that.photo,_that.inspection,_that.mistake);case _:
+return $default(_that.id,_that.name,_that.system,_that.desc,_that.tip,_that.relatedLessonSlug,_that.photo,_that.inspection,_that.mistake,_that.licences);case _:
   return orElse();
 
 }
@@ -182,10 +185,10 @@ return $default(_that.id,_that.name,_that.system,_that.desc,_that.tip,_that.rela
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  VehicleSystem system,  String desc,  String tip,  String? relatedLessonSlug,  String? photo,  List<String> inspection,  String? mistake)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  VehicleSystem system,  String desc,  String tip,  String? relatedLessonSlug,  String? photo,  List<String> inspection,  String? mistake,  List<String> licences)  $default,) {final _that = this;
 switch (_that) {
 case _VehiclePart():
-return $default(_that.id,_that.name,_that.system,_that.desc,_that.tip,_that.relatedLessonSlug,_that.photo,_that.inspection,_that.mistake);case _:
+return $default(_that.id,_that.name,_that.system,_that.desc,_that.tip,_that.relatedLessonSlug,_that.photo,_that.inspection,_that.mistake,_that.licences);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -202,10 +205,10 @@ return $default(_that.id,_that.name,_that.system,_that.desc,_that.tip,_that.rela
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  VehicleSystem system,  String desc,  String tip,  String? relatedLessonSlug,  String? photo,  List<String> inspection,  String? mistake)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  VehicleSystem system,  String desc,  String tip,  String? relatedLessonSlug,  String? photo,  List<String> inspection,  String? mistake,  List<String> licences)?  $default,) {final _that = this;
 switch (_that) {
 case _VehiclePart() when $default != null:
-return $default(_that.id,_that.name,_that.system,_that.desc,_that.tip,_that.relatedLessonSlug,_that.photo,_that.inspection,_that.mistake);case _:
+return $default(_that.id,_that.name,_that.system,_that.desc,_that.tip,_that.relatedLessonSlug,_that.photo,_that.inspection,_that.mistake,_that.licences);case _:
   return null;
 
 }
@@ -217,7 +220,7 @@ return $default(_that.id,_that.name,_that.system,_that.desc,_that.tip,_that.rela
 @JsonSerializable()
 
 class _VehiclePart implements VehiclePart {
-  const _VehiclePart({required this.id, required this.name, required this.system, required this.desc, required this.tip, this.relatedLessonSlug, this.photo, final  List<String> inspection = const [], this.mistake}): _inspection = inspection;
+  const _VehiclePart({required this.id, required this.name, required this.system, required this.desc, required this.tip, this.relatedLessonSlug, this.photo, final  List<String> inspection = const [], this.mistake, final  List<String> licences = const []}): _inspection = inspection,_licences = licences;
   factory _VehiclePart.fromJson(Map<String, dynamic> json) => _$VehiclePartFromJson(json);
 
 @override final  String id;
@@ -235,6 +238,17 @@ class _VehiclePart implements VehiclePart {
 }
 
 @override final  String? mistake;
+/// Evolution Faz E4 — parçanın geçerli olduğu ehliyet sınıfları ('b' | 'a' | 'd').
+/// BOŞ ise parça sınıftan bağımsızdır (motor, sıvılar, lastik, acil ekipman gibi).
+ final  List<String> _licences;
+/// Evolution Faz E4 — parçanın geçerli olduğu ehliyet sınıfları ('b' | 'a' | 'd').
+/// BOŞ ise parça sınıftan bağımsızdır (motor, sıvılar, lastik, acil ekipman gibi).
+@override@JsonKey() List<String> get licences {
+  if (_licences is EqualUnmodifiableListView) return _licences;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_licences);
+}
+
 
 /// Create a copy of VehiclePart
 /// with the given fields replaced by the non-null parameter values.
@@ -249,16 +263,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _VehiclePart&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.system, system) || other.system == system)&&(identical(other.desc, desc) || other.desc == desc)&&(identical(other.tip, tip) || other.tip == tip)&&(identical(other.relatedLessonSlug, relatedLessonSlug) || other.relatedLessonSlug == relatedLessonSlug)&&(identical(other.photo, photo) || other.photo == photo)&&const DeepCollectionEquality().equals(other._inspection, _inspection)&&(identical(other.mistake, mistake) || other.mistake == mistake));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _VehiclePart&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.system, system) || other.system == system)&&(identical(other.desc, desc) || other.desc == desc)&&(identical(other.tip, tip) || other.tip == tip)&&(identical(other.relatedLessonSlug, relatedLessonSlug) || other.relatedLessonSlug == relatedLessonSlug)&&(identical(other.photo, photo) || other.photo == photo)&&const DeepCollectionEquality().equals(other._inspection, _inspection)&&(identical(other.mistake, mistake) || other.mistake == mistake)&&const DeepCollectionEquality().equals(other._licences, _licences));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,system,desc,tip,relatedLessonSlug,photo,const DeepCollectionEquality().hash(_inspection),mistake);
+int get hashCode => Object.hash(runtimeType,id,name,system,desc,tip,relatedLessonSlug,photo,const DeepCollectionEquality().hash(_inspection),mistake,const DeepCollectionEquality().hash(_licences));
 
 @override
 String toString() {
-  return 'VehiclePart(id: $id, name: $name, system: $system, desc: $desc, tip: $tip, relatedLessonSlug: $relatedLessonSlug, photo: $photo, inspection: $inspection, mistake: $mistake)';
+  return 'VehiclePart(id: $id, name: $name, system: $system, desc: $desc, tip: $tip, relatedLessonSlug: $relatedLessonSlug, photo: $photo, inspection: $inspection, mistake: $mistake, licences: $licences)';
 }
 
 
@@ -269,7 +283,7 @@ abstract mixin class _$VehiclePartCopyWith<$Res> implements $VehiclePartCopyWith
   factory _$VehiclePartCopyWith(_VehiclePart value, $Res Function(_VehiclePart) _then) = __$VehiclePartCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, VehicleSystem system, String desc, String tip, String? relatedLessonSlug, String? photo, List<String> inspection, String? mistake
+ String id, String name, VehicleSystem system, String desc, String tip, String? relatedLessonSlug, String? photo, List<String> inspection, String? mistake, List<String> licences
 });
 
 
@@ -286,7 +300,7 @@ class __$VehiclePartCopyWithImpl<$Res>
 
 /// Create a copy of VehiclePart
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? system = null,Object? desc = null,Object? tip = null,Object? relatedLessonSlug = freezed,Object? photo = freezed,Object? inspection = null,Object? mistake = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? system = null,Object? desc = null,Object? tip = null,Object? relatedLessonSlug = freezed,Object? photo = freezed,Object? inspection = null,Object? mistake = freezed,Object? licences = null,}) {
   return _then(_VehiclePart(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -297,7 +311,8 @@ as String,relatedLessonSlug: freezed == relatedLessonSlug ? _self.relatedLessonS
 as String?,photo: freezed == photo ? _self.photo : photo // ignore: cast_nullable_to_non_nullable
 as String?,inspection: null == inspection ? _self._inspection : inspection // ignore: cast_nullable_to_non_nullable
 as List<String>,mistake: freezed == mistake ? _self.mistake : mistake // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,licences: null == licences ? _self._licences : licences // ignore: cast_nullable_to_non_nullable
+as List<String>,
   ));
 }
 

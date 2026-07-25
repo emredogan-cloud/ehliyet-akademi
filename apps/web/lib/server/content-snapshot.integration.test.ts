@@ -6,7 +6,7 @@ import { describe, it, expect } from 'vitest';
 import { GET as snapshot } from '@/app/api/mobile/content-snapshot/route';
 import { LESSONS } from '@/content/lessons';
 import { SIGNS } from '@/content/signs';
-import { VEHICLE_PARTS } from '@/content/vehicle';
+import { ALL_VEHICLE_PARTS, VEHICLE_PARTS } from '@/content/vehicle';
 import { VIDEOS } from '@/content/videos';
 import { GLYPH_IDS } from '@/components/signs/TrafficSign';
 
@@ -20,7 +20,7 @@ type Snapshot = {
   counts: { lessons: number; signs: number; vehicleParts: number; videos: number };
   lessons: typeof LESSONS;
   signs: typeof SIGNS;
-  vehicleParts: typeof VEHICLE_PARTS;
+  vehicleParts: typeof ALL_VEHICLE_PARTS;
   videos: typeof VIDEOS;
 };
 
@@ -33,12 +33,16 @@ describe('mobil içerik anlık görüntüsü', () => {
 
     expect(body.counts.lessons).toBe(LESSONS.length);
     expect(body.counts.signs).toBe(SIGNS.length);
-    expect(body.counts.vehicleParts).toBe(VEHICLE_PARTS.length);
+    expect(body.counts.vehicleParts).toBe(ALL_VEHICLE_PARTS.length);
     expect(body.counts.videos).toBe(VIDEOS.length);
 
     expect(body.lessons).toHaveLength(LESSONS.length);
     expect(body.signs).toHaveLength(SIGNS.length);
-    expect(body.vehicleParts).toHaveLength(VEHICLE_PARTS.length);
+    expect(body.vehicleParts).toHaveLength(ALL_VEHICLE_PARTS.length);
+    // Faz E4: anlık görüntü A/D sınıfı parçaları da taşır; web listesi (VEHICLE_PARTS) değişmez.
+    expect(ALL_VEHICLE_PARTS.length).toBeGreaterThan(VEHICLE_PARTS.length);
+    expect(body.vehicleParts.some((p) => p.licences?.includes('a'))).toBe(true);
+    expect(body.vehicleParts.some((p) => p.licences?.includes('d'))).toBe(true);
     expect(body.videos).toHaveLength(VIDEOS.length);
   });
 

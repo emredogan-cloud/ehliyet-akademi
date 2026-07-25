@@ -45,10 +45,11 @@ const Map<String, String> kVehiclePartAsset = {
 };
 
 /// Bir araç bileşeninin fotoğrafı (varsa).
-String? vehiclePartAsset(String partId) {
-  final id = kVehiclePartAsset[partId];
-  return id == null ? null : mechAsset(id);
-}
+///
+/// Faz E4'te eklenen A/D parçalarının `id`'si mekanik varlık kimliğiyle AYNIDIR
+/// (`moto-chain`, `bus-tachograph`…), bu yüzden ayrı bir tablo gerekmez: önce elle kurulan
+/// eşleme, sonra doğrudan kimlik denenir.
+String? vehiclePartAsset(String partId) => mechAsset(kVehiclePartAsset[partId] ?? partId);
 
 /// Kabin kumandası kartı — gerçek düğme fotoğrafı + ne işe yaradığı.
 class CabinControl {

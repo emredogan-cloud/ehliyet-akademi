@@ -9,6 +9,7 @@ import '../../data/practice/progress_repository.dart';
 import '../../design/brand.dart';
 import '../../design/primitives.dart';
 import '../../domain/auth/auth_controller.dart';
+import '../../domain/onboarding/study_profile.dart';
 import '../../domain/practice/srs.dart';
 import '../../domain/progress/gamification.dart';
 
@@ -22,14 +23,17 @@ class ProfileScreen extends ConsumerWidget {
     final mode = ref.watch(themeModeProvider);
     final auth = ref.watch(authControllerProvider);
     final progress = ref.watch(progressRepositoryProvider).value;
+    final profile = ref.watch(studyProfileProvider);
     final platformDark = MediaQuery.platformBrightnessOf(context) == Brightness.dark;
     final isDark = mode == ThemeMode.dark || (mode == ThemeMode.system && platformDark);
 
     final answers = progress?.loadAnswers() ?? const [];
     final streak = progress?.loadStreak() ?? StreakState.empty;
-    final badges = computeAchievements(answers: answers, streak: streak, examsFinished: progress?.examsFinished() ?? 0)
-        .where((a) => a.unlocked)
-        .length;
+    final badges = computeAchievements(
+      answers: answers,
+      streak: streak,
+      examsFinished: progress?.examsFinished() ?? 0,
+    ).where((a) => a.unlocked).length;
 
     return Scaffold(
       appBar: AppBar(
@@ -45,9 +49,19 @@ class ProfileScreen extends ConsumerWidget {
       body: SafeArea(
         top: false,
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s2, AppSpacing.s4, AppSpacing.s10),
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.s4,
+            AppSpacing.s2,
+            AppSpacing.s4,
+            AppSpacing.s10,
+          ),
           children: [
-            _ProfileHeader(auth: auth, badges: badges, answered: answers.length, streakDays: streak.current),
+            _ProfileHeader(
+              auth: auth,
+              badges: badges,
+              answered: answers.length,
+              streakDays: streak.current,
+            ),
             SectionTitle('Ayarlar'),
             GlowCard(
               padding: const EdgeInsets.symmetric(vertical: 4),
@@ -59,8 +73,17 @@ class ProfileScreen extends ConsumerWidget {
                     title: 'Koyu tema',
                     subtitle: 'Uygulama temasını değiştir',
                     value: isDark,
-                    onChanged: (_) =>
-                        ref.read(themeModeProvider.notifier).toggle(MediaQuery.platformBrightnessOf(context)),
+                    onChanged: (_) => ref
+                        .read(themeModeProvider.notifier)
+                        .toggle(MediaQuery.platformBrightnessOf(context)),
+                  ),
+                  _divider(p),
+                  _SettingRow(
+                    icon: Icons.badge_rounded,
+                    color: p.blue,
+                    title: 'Ehliyet sınıfı',
+                    subtitle: '${profile.category.badge} · ${profile.category.title}',
+                    onTap: () => _showLicencePicker(context, ref),
                   ),
                   _divider(p),
                   _SettingRow(
@@ -103,7 +126,10 @@ class ProfileScreen extends ConsumerWidget {
             _PromoCard(),
             const SizedBox(height: AppSpacing.s5),
             Center(
-              child: Text('Ehliyet Akademi · v1.0 (geliştirme)', style: TextStyle(color: p.text3, fontSize: 12)),
+              child: Text(
+                'Ehliyet Akademi · v1.0 (geliştirme)',
+                style: TextStyle(color: p.text3, fontSize: 12),
+              ),
             ),
           ],
         ),
@@ -111,22 +137,30 @@ class ProfileScreen extends ConsumerWidget {
     );
   }
 
-  static Widget _divider(AppPalette p) =>
-      Padding(padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4), child: Divider(height: 1, color: p.border));
+  static Widget _divider(AppPalette p) => Padding(
+    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4),
+    child: Divider(height: 1, color: p.border),
+  );
 
   static void _showAbout(BuildContext context) {
     showAboutDialog(
       context: context,
       applicationName: 'Ehliyet Akademi',
       applicationVersion: 'v1.0 (geliştirme)',
-      applicationLegalese: 'B sınıfı ehliyet sınavına akıllı, kişisel ve çevrimdışı hazırlık.\n'
+      applicationLegalese:
+          'B sınıfı ehliyet sınavına akıllı, kişisel ve çevrimdışı hazırlık.\n'
           'Kesin ve güncel kural için MEB/MTSK esastır.',
     );
   }
 }
 
 class _ProfileHeader extends StatelessWidget {
-  const _ProfileHeader({required this.auth, required this.badges, required this.answered, required this.streakDays});
+  const _ProfileHeader({
+    required this.auth,
+    required this.badges,
+    required this.answered,
+    required this.streakDays,
+  });
   final AuthState auth;
   final int badges;
   final int answered;
@@ -157,15 +191,24 @@ class _ProfileHeader extends StatelessWidget {
                         color: p.primary.withValues(alpha: 0.16),
                         border: Border.all(color: p.primary.withValues(alpha: 0.4)),
                       ),
-                      child: Text(authed ? user.initials : 'EA',
-                          style: TextStyle(color: p.primary, fontWeight: FontWeight.w800, fontSize: 18)),
+                      child: Text(
+                        authed ? user.initials : 'EA',
+                        style: TextStyle(
+                          color: p.primary,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 18,
+                        ),
+                      ),
                     ),
                     const SizedBox(width: AppSpacing.s3),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(authed ? user.name : 'Misafir', style: Theme.of(context).textTheme.titleLarge),
+                          Text(
+                            authed ? user.name : 'Misafir',
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
                           const SizedBox(height: 2),
                           Text(
                             authed ? user.email : 'Giriş yaparak ilerlemeni kaydet',
@@ -180,9 +223,24 @@ class _ProfileHeader extends StatelessWidget {
                 const SizedBox(height: AppSpacing.s4),
                 Row(
                   children: [
-                    _MiniStat(icon: Icons.emoji_events_rounded, value: '$badges', label: 'Rozet', color: p.accent),
-                    _MiniStat(icon: Icons.trending_up_rounded, value: '$answered', label: 'İlerleme', color: p.primary),
-                    _MiniStat(icon: Icons.local_fire_department_rounded, value: '$streakDays', label: 'Gün', color: p.red),
+                    _MiniStat(
+                      icon: Icons.emoji_events_rounded,
+                      value: '$badges',
+                      label: 'Rozet',
+                      color: p.accent,
+                    ),
+                    _MiniStat(
+                      icon: Icons.trending_up_rounded,
+                      value: '$answered',
+                      label: 'İlerleme',
+                      color: p.primary,
+                    ),
+                    _MiniStat(
+                      icon: Icons.local_fire_department_rounded,
+                      value: '$streakDays',
+                      label: 'Gün',
+                      color: p.red,
+                    ),
                   ],
                 ),
                 if (!authed) ...[
@@ -208,7 +266,12 @@ class _ProfileHeader extends StatelessWidget {
 }
 
 class _MiniStat extends StatelessWidget {
-  const _MiniStat({required this.icon, required this.value, required this.label, required this.color});
+  const _MiniStat({
+    required this.icon,
+    required this.value,
+    required this.label,
+    required this.color,
+  });
   final IconData icon;
   final String value;
   final String label;
@@ -226,7 +289,10 @@ class _MiniStat extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(value, style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: p.text)),
+              Text(
+                value,
+                style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: p.text),
+              ),
               Text(label, style: TextStyle(color: p.text3, fontSize: 10.5)),
             ],
           ),
@@ -270,7 +336,12 @@ class _ToggleRow extends StatelessWidget {
               ],
             ),
           ),
-          Switch(value: value, onChanged: onChanged, activeThumbColor: Colors.white, activeTrackColor: p.primary),
+          Switch(
+            value: value,
+            onChanged: onChanged,
+            activeThumbColor: Colors.white,
+            activeTrackColor: p.primary,
+          ),
         ],
       ),
     );
@@ -278,7 +349,13 @@ class _ToggleRow extends StatelessWidget {
 }
 
 class _SettingRow extends StatelessWidget {
-  const _SettingRow({required this.icon, required this.color, required this.title, required this.subtitle, this.onTap});
+  const _SettingRow({
+    required this.icon,
+    required this.color,
+    required this.title,
+    required this.subtitle,
+    this.onTap,
+  });
   final IconData icon;
   final Color color;
   final String title;
@@ -329,13 +406,75 @@ class _PromoCard extends StatelessWidget {
               children: [
                 Text('Ehliyet Akademi', style: Theme.of(context).textTheme.titleMedium),
                 const SizedBox(height: 3),
-                Text('Sürüş bilgini geliştir, sınavlarda bir adım önde ol!',
-                    style: TextStyle(color: p.text2, fontSize: 12.5, height: 1.35)),
+                Text(
+                  'Sürüş bilgini geliştir, sınavlarda bir adım önde ol!',
+                  style: TextStyle(color: p.text2, fontSize: 12.5, height: 1.35),
+                ),
               ],
             ),
           ),
         ],
       ),
     );
+  }
+}
+
+/// Ehliyet sınıfı seçici — seçim anında tüm uygulamanın kapsamını değiştirir ve kalıcıdır
+/// (Evolution Faz E4). Teori ilerlemesi sınıfa göre BÖLÜNMEZ; e-Sınav soru bankası ortaktır.
+Future<void> _showLicencePicker(BuildContext context, WidgetRef ref) async {
+  final p = context.palette;
+  final current = ref.read(studyProfileProvider).category;
+  final picked = await showModalBottomSheet<LicenceCategory>(
+    context: context,
+    backgroundColor: p.surface2,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadii.lg)),
+    ),
+    isScrollControlled: true,
+    // küçük ekranlarda taşmasın diye kaydırılabilir (ve en fazla ekranın %85'i)
+    constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.85),
+    builder: (context) => SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: AppSpacing.s4),
+            Text('Ehliyet sınıfı', style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: AppSpacing.s2),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s6),
+              child: Text(
+                'Dersler, araç bilgisi ve öneriler seçtiğin sınıfa göre önceliklenir. '
+                'Teori ilerlemen korunur.',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: p.text3, fontSize: 12.5, height: 1.4),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.s3),
+            for (final c in LicenceCategory.values)
+              ListTile(
+                leading: IconBadge(
+                  icon: switch (c) {
+                    LicenceCategory.b => Icons.directions_car_rounded,
+                    LicenceCategory.a => Icons.two_wheeler_rounded,
+                    LicenceCategory.d => Icons.directions_bus_rounded,
+                  },
+                  color: c == current ? p.primary : p.text3,
+                  size: 42,
+                ),
+                title: Text('${c.badge} · ${c.title}'),
+                subtitle: Text(c.blurb, style: TextStyle(color: p.text3, fontSize: 12)),
+                trailing: c == current ? Icon(Icons.check_circle_rounded, color: p.primary) : null,
+                onTap: () => Navigator.of(context).pop(c),
+              ),
+            const SizedBox(height: AppSpacing.s4),
+          ],
+        ),
+      ),
+    ),
+  );
+  if (picked != null && picked != current) {
+    final profile = ref.read(studyProfileProvider);
+    await ref.read(studyProfileProvider.notifier).save(profile.copyWith(category: picked));
   }
 }

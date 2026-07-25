@@ -736,3 +736,44 @@ bağlanacak granülerlikte bölüm yok; E5'te A/D mekanik içeriği yazılırken
 **For E4 (Çok-sınıflı temel B/A/D):** A ve D mekanik varlıkları (33 adet `moto-*`, `bus-*`) E2'de
 üretilip paketlendi, katalogda hazır → E4 içeriği sınıfa göre kapsamlandırıp bunları hemen yüzeye
 çıkarabilir. Onboarding zaten kategoriyi topluyor; E4 bu seçimi uygulamanın tamamına işletir.
+
+### Evolution Faz E4 — Çok-Sınıflı Temel (B · A · D) (2026-07-25) — DONE
+
+**Completed:** Ehliyet sınıfı içerik modelinin ve arayüzün birinci sınıf boyutu oldu. 42 yeni A/D araç
+bileşeni, sınıfa göre kapsamlama + önceliklendirme, Profil'de sınıf değiştirici.
+Rapor: `EVOLUTION_PHASE_4_REPORT.md`.
+
+- **Model:** `VehiclePart.licences?: ('b'|'a'|'d')[]` — **alan YOKSA içerik her sınıfta geçerlidir.**
+  Web + mobil (freezed, codegen commit'li).
+- **İçerik:** `apps/web/content/vehicle-licence.ts` — 22 A (motosiklet) + 20 D (otobüs) bileşeni.
+  Mevcut 36 parça `['b']`/`['b','d']` olarak etiketlendi.
+- **Sunum:** `ALL_VEHICLE_PARTS` yalnız `/api/mobile/content-snapshot`'ta; web `VEHICLE_PARTS`'ı
+  kullanmaya devam ediyor → **web davranışı birebir aynı** (products.ts'teki MOBILE_PRODUCTS deseni).
+- **Kapsamlama:** `lib/domain/content/licence_scope.dart` (saf) + `partsBySystem(licence:)` +
+  `partCountFor()`. Sınıfa ÖZGÜ içerik öne alınır, ortak içerik hemen ardından gelir.
+- **Değiştirici:** Profil > Ehliyet sınıfı (alt sayfa) → `StudyProfile.category` kalıcı.
+
+**KARAR (bilinçli, roadmap taslağından sapma):** **İlerleme sınıfa göre BÖLÜNMEZ.** Türkiye'de e-Sınav
+teori soru bankası tüm sınıflar için ORTAKTIR; SRS/cevap geçmişini sınıfa bölmek ortak bilgiyi parçalar,
+sınıf değiştiren kullanıcının gerçek ilerlemesini atar ve riskli bir göç gerektirir — karşılığında
+öğrenme faydası yok. Sınıfa özgü olan İÇERİK KAPSAMI ve önceliklendirmedir. Gerekçe kodun yanında
+(`licence_scope.dart`) yazılı.
+
+**Öğrenilenler:**
+
+1. Yeni A/D parça `id`'leri mekanik varlık kimlikleriyle AYNI seçildi → `vehiclePartAsset()` doğrudan
+   çözüyor, ikinci bir eşleme tablosu gerekmedi.
+2. "Etiketsiz = evrensel" kuralı sayesinde hiçbir sınıf boş kalamaz — bu bir testle sabitlendi.
+3. Alt sayfa (bottom sheet) 800×600'de 44 px taştı → `isScrollControlled` + `SingleChildScrollView` +
+   `maxHeight %85`. Küçük ekran için gerçek düzeltme, test kaçamağı değil.
+4. **Cihaz doğrulaması sıralaması (Faz 2 kuralı yine geçerli):** içerik anlık görüntüsü CANLI backend'den
+   geliyor → yeni A/D parçaları cihazda ancak Vercel dağıtımından SONRA görünür.
+
+**Tests:** flutter analyze 0 · flutter test **113** (+6) · web typecheck 0 · web **336** (snapshot testi
+artık A/D parçalarını ve web listesinin küçük kaldığını doğruluyor).
+**Device:** Profil > Ehliyet sınıfı > A seçimi kalıcı; araç kütüphanesi başlığı "Araç Tekniği · A".
+
+**For E5 (A & D içerik + sınav akışları):** kapsamlama katmanı ve etiketleme deseni hazır. `Lesson`'a da
+`licences` eklenip kategori dersleri/kuralları yazılacak; e-Sınav teorisinin ORTAK olduğu açıkça
+belirtilecek (uydurma ayrı sınav YOK). Yasal sürüş/dinlenme süresi gibi kaynak gerektiren sayısal
+iddialar kaynaksız yazılmayacak.

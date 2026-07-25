@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import { json } from '@/lib/server/auth';
 import { LESSONS } from '@/content/lessons';
 import { SIGNS } from '@/content/signs';
-import { VEHICLE_PARTS } from '@/content/vehicle';
+import { ALL_VEHICLE_PARTS } from '@/content/vehicle';
 import { VIDEOS } from '@/content/videos';
 
 /**
@@ -21,7 +21,7 @@ type Snapshot = {
   counts: { lessons: number; signs: number; vehicleParts: number; videos: number };
   lessons: typeof LESSONS;
   signs: typeof SIGNS;
-  vehicleParts: typeof VEHICLE_PARTS;
+  vehicleParts: typeof ALL_VEHICLE_PARTS;
   videos: typeof VIDEOS;
 };
 
@@ -30,7 +30,7 @@ function contentVersion(): string {
   const payload = JSON.stringify({
     lessons: LESSONS,
     signs: SIGNS,
-    vehicleParts: VEHICLE_PARTS,
+    vehicleParts: ALL_VEHICLE_PARTS,
     videos: VIDEOS,
   });
   return createHash('sha256').update(payload).digest('hex').slice(0, 16);
@@ -58,12 +58,12 @@ export function GET(req: Request): Response {
     counts: {
       lessons: LESSONS.length,
       signs: SIGNS.length,
-      vehicleParts: VEHICLE_PARTS.length,
+      vehicleParts: ALL_VEHICLE_PARTS.length,
       videos: VIDEOS.length,
     },
     lessons: LESSONS,
     signs: SIGNS,
-    vehicleParts: VEHICLE_PARTS,
+    vehicleParts: ALL_VEHICLE_PARTS,
     videos: VIDEOS,
   };
 

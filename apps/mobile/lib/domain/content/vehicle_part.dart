@@ -18,6 +18,9 @@ abstract class VehiclePart with _$VehiclePart {
     String? photo,
     @Default([]) List<String> inspection,
     String? mistake,
+    /// Evolution Faz E4 — parçanın geçerli olduğu ehliyet sınıfları ('b' | 'a' | 'd').
+    /// BOŞ ise parça sınıftan bağımsızdır (motor, sıvılar, lastik, acil ekipman gibi).
+    @Default([]) List<String> licences,
   }) = _VehiclePart;
   factory VehiclePart.fromJson(Map<String, Object?> json) => _$VehiclePartFromJson(json);
 }

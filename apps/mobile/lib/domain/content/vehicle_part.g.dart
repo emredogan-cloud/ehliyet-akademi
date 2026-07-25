@@ -20,6 +20,9 @@ _VehiclePart _$VehiclePartFromJson(Map<String, dynamic> json) => _VehiclePart(
           .toList() ??
       const [],
   mistake: json['mistake'] as String?,
+  licences:
+      (json['licences'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+      const [],
 );
 
 Map<String, dynamic> _$VehiclePartToJson(_VehiclePart instance) =>
@@ -33,6 +36,7 @@ Map<String, dynamic> _$VehiclePartToJson(_VehiclePart instance) =>
       'photo': instance.photo,
       'inspection': instance.inspection,
       'mistake': instance.mistake,
+      'licences': instance.licences,
     };
 
 const _$VehicleSystemEnumMap = {

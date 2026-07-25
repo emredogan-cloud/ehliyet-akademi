@@ -708,3 +708,31 @@ ikonun ALTINDA İngilizce başlık var → kırpma başlığı DIŞARIDA bırakm
 her ikon için Türkçe anlam + hafıza ipucu + önem derecesi (kırmızı=dur, sarı=dikkat, yeşil/mavi=bilgi)
 
 - galeri/detay + ilgili derse bağ.
+
+### Evolution Faz E3 — Gösterge İkaz Işıkları Kütüphanesi (2026-07-25) — DONE
+
+**Completed:** 60 ikaz ışığı ikonu (şeffaf WebP, 130 KB) + her biri için Türkçe anlam/hafıza tekniği/
+eylem düzeyi + arama ve önem filtreli galeri + detay ekranı. Rapor: `EVOLUTION_PHASE_3_REPORT.md`.
+
+- **Araç:** `apps/mobile/tool/extract_dash_icons.py` — E2'nin anahtarlama fonksiyonunu yeniden kullanır.
+  **İÇERİĞİN TEK KAYNAĞI bu betiktir**: hem `lib/core/dash_assets.dart` hem
+  `lib/domain/content/dash_lights.dart` buradan ÜRETİLİR (varlık hattı ile içeriğin ayrışması sorunu yok).
+- **Ekranlar:** `/learn/lights` galeri (3'lü ızgara, önem çipleri, arama) + `/learn/lights/:id` detay;
+  Öğren hub'a yeni satır.
+
+**Öğrenilenler:**
+
+1. Sayfa ikon/altyazı bantları hâlinde DÖNÜŞÜMLÜ; bandı yüksekliğe göre ayırmak yetmez (iki satırlık
+   altyazı bandı ikon kadar kalın olabiliyor) → ÇİFT İNDİSLİ bantlar ikon satırıdır + kalınlık kontrolü.
+2. `DashSeverity` = **eylem düzeyi** (ne yapmalıyım?), ikonun rengi değil. Beyaz "servis zamanı"
+   anahtarı `sari`dır. Filtre çipleri eylem etiketlerini gösterir → ayrım kullanıcıya görünür.
+3. İçerik uzunluğu testi (anlam > 25, ipucu > 10 karakter) 10 fazla kısa girdiyi yakaladı — içerik
+   testleri "dolu mu" değil "yeterli mi" diye sormalı.
+
+**Tests:** flutter analyze 0 · flutter test **107** (+7). **Device:** galeri + filtre + arama + detay.
+**Kapsam dışı (dürüst):** ders derin-bağlantısı YAPILMADI — mevcut ders korpusunda tek bir ikaz ışığına
+bağlanacak granülerlikte bölüm yok; E5'te A/D mekanik içeriği yazılırken gerçek çapa oluşacak.
+
+**For E4 (Çok-sınıflı temel B/A/D):** A ve D mekanik varlıkları (33 adet `moto-*`, `bus-*`) E2'de
+üretilip paketlendi, katalogda hazır → E4 içeriği sınıfa göre kapsamlandırıp bunları hemen yüzeye
+çıkarabilir. Onboarding zaten kategoriyi topluyor; E4 bu seçimi uygulamanın tamamına işletir.

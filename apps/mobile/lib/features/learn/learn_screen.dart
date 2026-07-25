@@ -6,6 +6,7 @@ import '../../core/assets.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/content/content_repository.dart';
 import '../../design/brand.dart';
+import '../../domain/content/dash_lights.dart';
 import '../../domain/content/vehicle_visuals.dart';
 
 /// Öğren hub — öğrenme alanlarına giriş (dersler, işaretler, araç, videolar). Sayılar içerik
@@ -58,6 +59,15 @@ class LearnScreen extends ConsumerWidget {
               subtitle: 'Motor, gösterge paneli ve araç bileşenleri',
               count: n(counts?.vehicleParts),
               onTap: () => context.push('/learn/vehicle'),
+            ),
+            const SizedBox(height: AppSpacing.s3),
+            HubRow(
+              icon: Icons.warning_amber_rounded,
+              color: p.red,
+              title: 'İkaz Işıkları',
+              subtitle: 'Gösterge panelindeki uyarılar ve ne yapman gerektiği',
+              count: '${kDashLights.length}',
+              onTap: () => context.push('/learn/lights'),
             ),
             const SizedBox(height: AppSpacing.s3),
             HubRow(

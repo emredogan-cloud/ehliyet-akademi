@@ -6,6 +6,7 @@ import '../features/learn/learn_screen.dart';
 import '../features/learn/lessons_screen.dart';
 import '../features/learn/lesson_detail_screen.dart';
 import '../features/learn/cabin_controls_screen.dart';
+import '../features/learn/dash_lights_screen.dart';
 import '../features/learn/signs_screen.dart';
 import '../features/learn/sign_detail_screen.dart';
 import '../features/learn/vehicle_screen.dart';
@@ -81,6 +82,16 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
                 GoRoute(
                   path: 'cabin',
                   builder: (_, _) => const CabinControlsScreen(),
+                ),
+                GoRoute(
+                  path: 'lights',
+                  builder: (_, _) => const DashLightsScreen(),
+                  routes: [
+                    GoRoute(
+                      path: ':id',
+                      builder: (_, state) => DashLightDetailScreen(id: state.pathParameters['id']!),
+                    ),
+                  ],
                 ),
                 GoRoute(
                   path: 'vehicle',

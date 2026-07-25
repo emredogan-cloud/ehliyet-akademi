@@ -99,8 +99,8 @@ void main() {
       await pumpApp(tester);
       await tester.tap(find.text('Öğren'));
       await tester.pumpAndSettle();
-      // hub satırı 800×600 test görüş alanının altında kalıyor
-      await tester.ensureVisible(find.text('Kabin Kumandaları'));
+      // hub satırı 800×600 test görüş alanının altında ve tembel listede henüz kurulmamış
+      await tester.scrollUntilVisible(find.text('Kabin Kumandaları'), 300);
       await tester.pumpAndSettle();
       await tester.tap(find.text('Kabin Kumandaları'));
       await tester.pumpAndSettle();

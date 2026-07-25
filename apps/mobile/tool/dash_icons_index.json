@@ -1,0 +1,8 @@
+{
+  "count": 60,
+  "severity": {
+    "kirmizi": "Kırmızı — dur ve kontrol et",
+    "sari": "Sarı — dikkat, en kısa sürede kontrol",
+    "bilgi": "Bilgi — sistem aktif"
+  }
+}

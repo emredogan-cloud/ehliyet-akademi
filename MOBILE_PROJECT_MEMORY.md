@@ -853,8 +853,12 @@ sınıf odak setleri (A 19 · D 52). Rapor: `EVOLUTION_PHASE_5_REPORT.md`.
 **Device:** A'da "öne çıkanlar · 14" + detay gerekçesi + "A Sınıfı Odak Seti · 19" (1/19 gerçek
 motosiklet sorusu); D'ye geçişte "· 17" ve "· 52" anında yeniden kapsamlandı; **negatif doğrulama**:
 D'deyken A'ya özel gerekçe kutusu görünmüyor.
-**Dağıtım sonrası (dersler):** ders içeriği canlı anlık görüntüden geldiği için 10 yeni ders ancak
-Vercel dağıtımından sonra cihazda görünür (Faz 2 sıralama kuralı, E4'te de aynen uygulanmıştı).
+**Dağıtım sonrası doğrulama — ONAYLANDI:** CI (CI · Mobile CI · CodeQL üçü de yeşil, `105fbf9`) ve
+Vercel dağıtımından sonra canlı uç nokta `counts.lessons: 29` döndü; uygulama yeniden açılışta anlık
+görüntüyü indirdi ve D kapsamında **Dersler · 24** ("Ortak teori + D sınıfına özel dersler"),
+**"Sınıfına özel · D Otobüs"** bölümü ve D rozetli 5 ders göründü. Ders 27 (Takograf ve Süreler)
+detayında süre tablosu + günlük dinlenme + takograf bölümleri "Resmî Kural" rozetiyle doğru render
+edildi. (Faz 2 sıralama kuralı yine geçerliydi: içerik canlı anlık görüntüden gelir.)
 
 **For E6 (Onboarding koç + içgörü kartları):** backend gerekmez. Roadmap uyarıları: dönen kartların
 zamanlayıcısı enjekte edilip dispose'da iptal edilmeli (sınav zamanlayıcısı deseni), 320 dp genişlik ve

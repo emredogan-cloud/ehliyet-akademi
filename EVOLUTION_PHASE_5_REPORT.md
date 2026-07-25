@@ -159,10 +159,24 @@ Yeniden derlenmiş APK kuruldu, koyu temada doğrulandı (kanıt: `e5_01`–`e5_
 
 Taşma, boş kutu, takılma veya ölü navigasyon gözlenmedi.
 
-**Dağıtım sonrası doğrulama (dersler):** ders içeriği CANLI `/api/mobile/content-snapshot`'tan gelir;
-bu yüzden 10 yeni ders cihazda ancak Vercel dağıtımından sonra görünür (Faz 2'de konan sıralama kuralı,
-E4'te de aynen uygulanmıştı). Bu bölüm CI yeşile döndükten ve dağıtım tamamlandıktan sonra bu rapora
-eklenmiştir — aşağıya bakınız.
+**Dağıtım sonrası doğrulama — ONAYLANDI (2026-07-25).** Ders içeriği CANLI
+`/api/mobile/content-snapshot`'tan geldiği için 10 yeni ders ancak Vercel dağıtımından sonra cihazda
+görünür (Faz 2'de konan sıralama kuralı, E4'te de aynen uygulanmıştı). CI yeşile döndükten ve dağıtım
+tamamlandıktan sonra:
+
+- Canlı uç nokta **`counts.lessons: 29`** döndü (yeni sürüm `f0e5962ee0fabaa9`).
+- Uygulama zorla kapatılıp yeniden açıldı → anlık görüntüyü ETag farkıyla yeniden indirdi.
+- Öğren hub: **"Dersler · 24"**, alt yazı **"Ortak teori + D sınıfına özel dersler"** (19 ortak + 5 D).
+- Dersler ekranı: başlık **"Dersler · D"**, **"Sınıfına özel · D Otobüs"** bölümü, teorinin ortak
+  olduğunu söyleyen kutu ve **D rozetli** 5 ders (25 Havalı Fren · 26 Retarder · 27 Takograf ve Süreler
+  · 28 Yolcu Güvenliği · 29 Manevra), ardından ortak teori konu başlıkları altında.
+- **Ders 27 detayı** açıldı: süre sınırları tablosu (hafta tatili **en az 24 saat**, birleşik 2 hafta
+  **en çok 90 saat**), "Günlük dinlenme ve çift şoför" bölümü (**11 saat kesintisiz**, bölünürse
+  **12 saate** çıkar, haftada **3 defadan fazla olmamak üzere** 9 saate inebilir, çift şoförde
+  **30 saatte 8 saat**) ve takograf bölümü — hepsi **Resmî Kural** rozetiyle, markdown kalınlaştırma
+  doğru işlenmiş hâlde. Kapsamlama, rozetleme ve mevzuat içeriği uçtan uca doğrulandı.
+
+**CI:** `CI` · `Mobile CI` · `CodeQL` — commit `105fbf9` için üçü de **yeşil**.
 
 ## Honest limitations
 

@@ -87,6 +87,14 @@ class ProfileScreen extends ConsumerWidget {
                   ),
                   _divider(p),
                   _SettingRow(
+                    icon: Icons.groups_rounded,
+                    color: p.green,
+                    title: 'Topluluk',
+                    subtitle: 'Sıralama ve topluluk profilin (isteğe bağlı)',
+                    onTap: () => context.push('/profile/community'),
+                  ),
+                  _divider(p),
+                  _SettingRow(
                     icon: Icons.notifications_rounded,
                     color: p.purple,
                     title: 'Bildirimler',

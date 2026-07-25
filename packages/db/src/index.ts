@@ -117,6 +117,66 @@ CREATE TABLE IF NOT EXISTS content_versions (
 );
 CREATE INDEX IF NOT EXISTS content_versions_content_idx ON content_versions(content_id);
 
+-- ── Topluluk (Evolution Faz E8) ────────────────────────────────────────────────
+-- Katılım OPT-IN: visibility varsayılanı 'private'. Topluluk yüzeyleri e-posta/gerçek ad döndürmez.
+CREATE TABLE IF NOT EXISTS community_profiles (
+  user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+  display_name TEXT NOT NULL,
+  avatar_id TEXT NOT NULL DEFAULT 'owl-wave',
+  licence TEXT NOT NULL DEFAULT 'b',
+  visibility TEXT NOT NULL DEFAULT 'private',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS community_profiles_licence_idx ON community_profiles(licence);
+
+CREATE TABLE IF NOT EXISTS community_stats (
+  user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+  xp INTEGER NOT NULL DEFAULT 0,
+  streak INTEGER NOT NULL DEFAULT 0,
+  lessons INTEGER NOT NULL DEFAULT 0,
+  exams INTEGER NOT NULL DEFAULT 0,
+  answered INTEGER NOT NULL DEFAULT 0,
+  accuracy INTEGER NOT NULL DEFAULT 0,
+  submitted_xp INTEGER NOT NULL DEFAULT 0,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS community_stats_xp_idx ON community_stats(xp);
+
+CREATE TABLE IF NOT EXISTS community_achievements (
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  achievement_id TEXT NOT NULL,
+  earned_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (user_id, achievement_id)
+);
+
+CREATE TABLE IF NOT EXISTS leaderboard_snapshots (
+  id TEXT PRIMARY KEY,
+  week_start TEXT NOT NULL,
+  licence TEXT NOT NULL,
+  rows JSONB NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE UNIQUE INDEX IF NOT EXISTS leaderboard_week_licence_uq ON leaderboard_snapshots(week_start, licence);
+
+CREATE TABLE IF NOT EXISTS community_reports (
+  id TEXT PRIMARY KEY,
+  reporter_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  target_user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  reason TEXT NOT NULL,
+  note TEXT NOT NULL DEFAULT '',
+  status TEXT NOT NULL DEFAULT 'open',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS community_reports_status_idx ON community_reports(status);
+
+CREATE TABLE IF NOT EXISTS community_blocks (
+  blocker_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  blocked_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (blocker_id, blocked_id)
+);
+
 CREATE TABLE IF NOT EXISTS media_assets (
   id TEXT PRIMARY KEY,
   kind TEXT NOT NULL,

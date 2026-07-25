@@ -96,3 +96,104 @@ export const questionReports = pgTable('question_reports', {
   status: text('status').notNull().default('open'), // open | resolved | dismissed
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Topluluk (Evolution Faz E8) — kimlik, istatistik, sıralama, moderasyon.
+//
+// GİZLİLİK İLKESİ: katılım OPT-IN'dir (`visibility` varsayılan 'private') ve topluluk yüzeyleri
+// ASLA e-posta, gerçek ad veya konum döndürmez. Görünen tek kimlik, kullanıcının seçtiği
+// `displayName` ile paketlenmiş varlıklardan seçilen `avatarId`'dir — kullanıcı fotoğrafı YÜKLENMEZ
+// (bu, bütün bir moderasyon/PII sınıfını baştan ortadan kaldırır).
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Topluluk kimliği. Satırın VARLIĞI katılım anlamına gelmez; görünürlük `visibility` ile belirlenir. */
+export const communityProfiles = pgTable('community_profiles', {
+  userId: text('user_id')
+    .primaryKey()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  displayName: text('display_name').notNull(),
+  avatarId: text('avatar_id').notNull().default('owl-wave'),
+  licence: text('licence').notNull().default('b'), // b | a | d
+  visibility: text('visibility').notNull().default('private'), // private | public
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
+/**
+ * Sunucunun sahip olduğu istatistikler. İstemci ham sayaç bildirir; sunucu artışları
+ * pencere başına SINIRLAR ve geri gidişi reddeder (anti-hile). `submittedXp` denetim için saklanır.
+ */
+export const communityStats = pgTable('community_stats', {
+  userId: text('user_id')
+    .primaryKey()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  xp: integer('xp').notNull().default(0),
+  streak: integer('streak').notNull().default(0),
+  lessons: integer('lessons').notNull().default(0),
+  exams: integer('exams').notNull().default(0),
+  answered: integer('answered').notNull().default(0),
+  accuracy: integer('accuracy').notNull().default(0), // 0..100 (tam sayı yüzde)
+  /** İstemcinin son bildirdiği ham XP — kabul edilen değerle karşılaştırmak için (denetim). */
+  submittedXp: integer('submitted_xp').notNull().default(0),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
+/** Kazanılan rozetler (mobil `computeAchievements` ile aynı kimlikler). */
+export const communityAchievements = pgTable(
+  'community_achievements',
+  {
+    userId: text('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    achievementId: text('achievement_id').notNull(),
+    earnedAt: timestamp('earned_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.achievementId] })]
+);
+
+/**
+ * Haftalık sıralama anlık görüntüsü (sınıf başına). Hafta sınırı Europe/Istanbul'dur — bildirimlerde
+ * de kullanılan tek saat dilimi kararı. Anlık görüntü ALINDIĞI ANDA dondurulur; böylece geçmiş hafta
+ * sonradan değişmez.
+ */
+export const leaderboardSnapshots = pgTable(
+  'leaderboard_snapshots',
+  {
+    id: text('id').primaryKey(), // `${weekStart}:${licence}`
+    weekStart: text('week_start').notNull(), // YYYY-MM-DD (Europe/Istanbul pazartesi)
+    licence: text('licence').notNull(),
+    rows: jsonb('rows').notNull(), // [{userId, displayName, avatarId, xp}]
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [uniqueIndex('leaderboard_week_licence_uq').on(t.weekStart, t.licence)]
+);
+
+/** Kullanıcı şikâyetleri — mağaza politikası gereği UGC'den ÖNCE devrede (E8). */
+export const communityReports = pgTable('community_reports', {
+  id: text('id').primaryKey(),
+  reporterId: text('reporter_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  targetUserId: text('target_user_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  reason: text('reason').notNull(), // isim | avatar | taciz | spam | diger
+  note: text('note').notNull().default(''),
+  status: text('status').notNull().default('open'), // open | reviewed | dismissed
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+});
+
+/** Engelleme — her okuma/yazma yolunda SUNUCUDA uygulanır (istemci filtresine güvenilmez). */
+export const communityBlocks = pgTable(
+  'community_blocks',
+  {
+    blockerId: text('blocker_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    blockedId: text('blocked_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [primaryKey({ columns: [t.blockerId, t.blockedId] })]
+);

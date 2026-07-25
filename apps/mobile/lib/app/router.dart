@@ -23,6 +23,9 @@ import '../features/practice/collections_screen.dart';
 import '../features/practice/historical_screen.dart';
 import '../domain/practice/historical.dart';
 import '../features/coach/coach_screen.dart';
+import '../features/community/community_screen.dart';
+import '../features/community/join_community_screen.dart';
+import '../features/community/user_profile_screen.dart';
 import '../features/profile/profile_screen.dart';
 import '../features/profile/notification_settings_screen.dart';
 import '../features/progress/progress_screen.dart';
@@ -188,7 +191,28 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
           routes: [GoRoute(path: '/coach', builder: (_, _) => const CoachScreen())],
         ),
         StatefulShellBranch(
-          routes: [GoRoute(path: '/profile', builder: (_, _) => const ProfileScreen())],
+          routes: [
+            GoRoute(
+              path: '/profile',
+              builder: (_, _) => const ProfileScreen(),
+              routes: [
+                // Topluluk, Profil dalının altındadır: kimlik ve sosyal ayarlar oraya aittir.
+                // (Alt gezinme çubuğuna 6. sekme EKLENMEDİ — beş sekme zaten dar ekranlarda sınırda.)
+                GoRoute(
+                  path: 'community',
+                  builder: (_, _) => const CommunityScreen(),
+                  routes: [
+                    GoRoute(path: 'join', builder: (_, _) => const JoinCommunityScreen()),
+                    GoRoute(
+                      path: 'user/:id',
+                      builder: (_, state) =>
+                          CommunityUserScreen(userId: state.pathParameters['id']!),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
         ),
       ],
     ),

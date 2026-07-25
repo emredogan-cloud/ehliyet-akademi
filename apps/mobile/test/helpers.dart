@@ -2,10 +2,12 @@ import 'package:ehliyet_akademi/app/app.dart';
 import 'package:ehliyet_akademi/core/storage/token_store.dart';
 import 'package:ehliyet_akademi/data/auth/auth_api.dart';
 import 'package:ehliyet_akademi/data/coach/coach_api.dart';
+import 'package:ehliyet_akademi/data/community/community_repository.dart';
 import 'package:ehliyet_akademi/data/content/content_repository.dart';
 import 'package:ehliyet_akademi/data/practice/question_repository.dart';
 import 'package:ehliyet_akademi/data/premium/entitlements_repository.dart';
 import 'package:ehliyet_akademi/domain/auth/app_user.dart';
+import 'package:ehliyet_akademi/domain/community/community_models.dart';
 import 'package:ehliyet_akademi/domain/content/content_enums.dart';
 import 'package:ehliyet_akademi/domain/content/content_snapshot.dart';
 import 'package:ehliyet_akademi/domain/content/lesson.dart';
@@ -261,6 +263,119 @@ QuestionBank sampleBank() {
   );
 }
 
+
+/// Faz E8 — sahte topluluk API'si. Ağ/oturum olmadan opt-in, sıralama ve moderasyon akışlarını
+/// çalıştırır; hangi çağrıların yapıldığını kaydeder.
+class FakeCommunityApi implements CommunityApi {
+  FakeCommunityApi({this.profile, this.failLeaderboard = false, this.userNotFound = false});
+
+  CommunityProfile? profile;
+  final bool failLeaderboard;
+  final bool userNotFound;
+
+  final List<String> saved = [];
+  final List<String> blocked = [];
+  final List<String> reported = [];
+  bool left = false;
+
+  @override
+  Future<({CommunityProfile? profile, CommunityStats? stats})> fetchMe() async =>
+      (profile: profile, stats: profile == null ? null : CommunityStats.empty);
+
+  @override
+  Future<CommunityProfile> saveProfile({
+    required String displayName,
+    required String avatarId,
+    required String licence,
+    required bool public,
+  }) async {
+    saved.add(displayName);
+    profile = CommunityProfile(
+      displayName: displayName,
+      avatarId: avatarId,
+      licence: licence,
+      visibility: public ? 'public' : 'private',
+    );
+    return profile!;
+  }
+
+  @override
+  Future<void> leave() async {
+    left = true;
+    profile = null;
+  }
+
+  @override
+  Future<CommunityStats> submitStats({
+    required int xp,
+    required int streak,
+    required int lessons,
+    required int exams,
+    required int answered,
+    required int accuracy,
+    required List<String> achievements,
+  }) async => CommunityStats.empty;
+
+  @override
+  Future<LeaderboardPage> fetchLeaderboard({String? licence, int limit = 25, int offset = 0}) async {
+    if (failLeaderboard) throw CommunityException('ağ yok');
+    const me = LeaderboardEntry(
+      userId: 'u1',
+      displayName: 'Ben',
+      avatarId: 'owl-wave',
+      licence: 'b',
+      xp: 120,
+      streak: 3,
+      rank: 2,
+    );
+    return const LeaderboardPage(
+      weekStart: '2026-07-20',
+      licence: 'all',
+      total: 2,
+      rows: [
+        LeaderboardEntry(
+          userId: 'u2',
+          displayName: 'Rakip Kisi',
+          avatarId: 'owl-teacher',
+          licence: 'b',
+          xp: 300,
+          streak: 5,
+          rank: 1,
+        ),
+        me,
+      ],
+      me: me,
+    );
+  }
+
+  @override
+  Future<CommunityUser?> fetchUser(String userId) async {
+    if (userNotFound) return null;
+    return CommunityUser(
+      userId: userId,
+      displayName: 'Rakip Kisi',
+      avatarId: 'owl-teacher',
+      licence: 'b',
+      stats: CommunityStats.empty,
+      achievements: const ['first-steps'],
+      isSelf: false,
+    );
+  }
+
+  @override
+  Future<void> report({
+    required String userId,
+    required ReportReason reason,
+    String note = '',
+  }) async => reported.add('$userId:${reason.wire}');
+
+  @override
+  Future<void> block(String userId) async => blocked.add(userId);
+
+  @override
+  Future<void> unblock(String userId) async => blocked.remove(userId);
+}
+
 /// Pump the full app with test-safe overrides (no platform channels / network / native drift).
 Future<void> pumpApp(
   WidgetTester tester, {
@@ -269,6 +384,7 @@ Future<void> pumpApp(
   ContentSnapshot? content,
   QuestionBank? bank,
   CoachApi? coach,
+  CommunityApi? community,
   List<String>? owned,
   Map<String, Object>? prefs,
   bool onboardingSeen = true,
@@ -301,6 +417,7 @@ Future<void> pumpApp(
         tokenStoreProvider.overrideWithValue(tokens ?? MemoryTokenStore()),
         if (auth != null) authApiProvider.overrideWithValue(auth),
         coachApiProvider.overrideWithValue(coach ?? FakeCoachApi()),
+        communityApiProvider.overrideWithValue(community ?? FakeCommunityApi()),
         entitlementsApiProvider.overrideWithValue(FakeEntitlementsApi(owned ?? const [])),
         // Content + questions come from fixed snapshots in tests → never touch drift/network.
         if (overrideContent) ...[

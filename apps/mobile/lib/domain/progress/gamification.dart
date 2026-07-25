@@ -141,3 +141,19 @@ Map<String, int> answersPerDay(List<AnswerLog> answers) {
   }
   return map;
 }
+
+/// Rozet KATALOĞU (hepsi kilitli) — kimlikten başlık/ikona çözmek için.
+///
+/// Faz E8 (topluluk): başka bir kullanıcının profilinde yalnız rozet KİMLİKLERİ gelir; başlık ve
+/// ikon burada çözülür. Katalog ayrıca tanımlanmaz — tek kaynak yine `computeAchievements`'tır,
+/// böylece rozet eklendiğinde iki yerde güncelleme gerekmez.
+List<Achievement> achievementCatalog() =>
+    computeAchievements(answers: const [], streak: StreakState.empty, examsFinished: 0);
+
+/// Kimliğe göre rozet (bilinmeyen kimlik → null).
+Achievement? achievementById(String id) {
+  for (final a in achievementCatalog()) {
+    if (a.id == id) return a;
+  }
+  return null;
+}

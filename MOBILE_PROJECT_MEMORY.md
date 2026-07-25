@@ -971,3 +971,64 @@ yeniden açılışta karşılama ÇIKMADI** (tek seferlik işaret kalıcı).
 Roadmap şartları: katılım varsayılan KAPALI (opt-in), **foto yükleme YOK**, **rapor + engelle ilk
 fazda**, sunucu tarafında XP artış sınırı (anti-hile), gerçek zamanlılık iddia etmeden ETag/kısa
 yoklama. Her yeni uç nokta için PGlite entegrasyon testi.
+
+### Evolution Faz E8 — Topluluk Temeli: Profiller · XP · Sıralama (2026-07-25) — DONE
+
+**Completed:** Topluluk platformunun omurgası — 6 tablo, 6 uç nokta, mobil opt-in/sıralama/profil
+yüzeyleri. Gizlilik ve moderasyon **ilk satırdan** içeride. Rapor: `EVOLUTION_PHASE_8_REPORT.md`.
+
+- **Şema:** `community_profiles` · `community_stats` · `community_achievements` ·
+  `leaderboard_snapshots` · `community_reports` · `community_blocks` (Drizzle + idempotent bootstrap DDL).
+- **Saf mantık:** `apps/web/lib/server/community.ts` — `clampStats` (anti-hile), `weekStartIstanbul`,
+  `rankRows`, `validateDisplayName`. **DB içermez** → doğrudan test edilir.
+- **Uçlar:** profile (GET/PUT/DELETE) · stats (POST) · leaderboard (GET) · user/[id] (GET) ·
+  report (POST) · block (GET/POST/DELETE).
+- **Mobil:** `domain/community/community_models.dart`, `data/community/community_repository.dart`,
+  `features/community/{community,join_community,user_profile}_screen.dart`; Profil'e satır.
+
+**KARARLAR (kalıcı):**
+
+1. **Katılım varsayılan KAPALI ve bu YAPISAL:** `visibility` sütunu `private` başlar; istemci açıkça
+   göndermezse gizli kalır. Sıralama sorgusu yalnız `public` seçer → katılmayan listelenemez.
+2. **PII yapısal olarak yok:** uçlar e-posta/gerçek ad döndürmez, mobil modelde bu alanlar HİÇ TANIMLI
+   DEĞİL. İki entegrasyon testi yanıt gövdesinde `@ea.dev` ve kayıt adının geçmediğini doğrular.
+3. **Fotoğraf yükleme YOK** — avatar 6 sabit maskottan. Bütün bir moderasyon/PII/depolama sınıfı elenir.
+4. **Anti-hile 3 kural** (`clampStats`): geri gitme yok · pencere başına tavan (XP ≤2000, cevap ≤300,
+   ders ≤30, sınav ≤20) · son yazmadan 60 sn geçmeden artış yok. Ham beyan `submitted_xp`'de saklanır
+   (denetim izi); yanıt `clamped`/`regressed` döndürür — sessizce farklı veri saklanmaz.
+5. **Engelleme SUNUCUDA ve ÇİFT YÖNLÜ**; istemci filtresine güvenilmez.
+6. **Sızıntısız 404:** yok / gizli / engellenmiş → AYNI yanıt. "Gizli mi engelli mi" çıkarılamaz.
+7. **Şikâyet + engelleme, kullanıcı metni doğuran E9'DAN ÖNCE** (mağaza politikası).
+8. **6. alt sekme EKLENMEDİ** (roadmap "community tab entry" diyor): 5 sekme dar ekranda zaten sınırda
+   → topluluk **Profil dalının altında** (`/profile/community`). Giriş noktası korunur, düzen bozulmaz.
+9. **`apps/web/lib/community.ts` DEĞİŞMEDİ** (web'in tek-oyunculu XP kademeleri). Yeni sunucu mantığı
+   `lib/server/community.ts`'e yazıldı → web davranışı birebir korundu.
+
+**Öğrenilenler (kritik):**
+
+1. **`guarded()` yalnız `req`'i iletir** — Next'in ikinci `ctx` argümanını GEÇİRMEZ. `[id]` uçlarında
+   `params` KULLANILAMAZ; kimlik `new URL(req.url).pathname` üzerinden okunur (mevcut desen).
+   TypeScript bunu yakalamaz (ctx opsiyonel yazılırsa) → sessiz 404 olurdu.
+2. **`setState(() => x = future)` HATA VERİR**: kısa gövde atamanın DEĞERİNİ döndürür, Flutter bunu
+   "async callback" sanar. Blok gövde `setState(() { x = future; })` kullan.
+3. **FutureBuilder bağlanmadan hata gelirse "yakalanmamış hata"** olur (özellikle future, widget
+   ağaçta yokken oluşturulduysa). Çözüm: oluştururken `unawaited(future.catchError(...))` ile hatayı
+   işaretle — FutureBuilder yine kendi dinleyicisinde görür.
+4. **Widget testinde kaydırıcı hedefi HER ZAMAN açık verilmeli**: kabuk (IndexedStack) diğer
+   sekmelerin Scrollable'larını ağaçta tutar. Ayrıca **TextField listenin İÇİNDEYSE** onun Scrollable'ı
+   da `find.descendant(of: ListView, matching: Scrollable)` sonucuna düşer → **`.first`** (listenin
+   kendi kaydırıcısı ağaçta önce gelir); `.last` metin alanınınkini seçer ve sürükleme hiçbir şey yapmaz.
+5. Bir dosyayı düzenlerken vitest çalışıyorsa yarım okuma nedeniyle **geçici** başarısızlık görülebilir;
+   düzenleme bitince iki ardışık koşuyla doğrula (390/390 alındı).
+
+**Tests:** flutter analyze 0 · flutter test **166** (+12) · web typecheck 0 · web **390** (+46: 23 saf
+
+- 23 PGlite entegrasyon) · verify/format temiz · lint 0 hata.
+  **Device (dağıtım öncesi):** Profil > Topluluk satırı; opt-in daveti dört gizlilik güvencesiyle;
+  katılmamış kullanıcıya sıralama gösterilmedi ve **istek yapılmadı**.
+
+**For E9 (Sosyal grafik & mesajlaşma):** engelleme tablosu + çift yönlü uygulama deseni, şikâyet
+kuyruğu, hız sınırlama kapısı ve PGlite test iskeleti hazır. Dikkat: her okuma/yazma yolunda engel
+kontrolü, mesaj uzunluk/sıklık sınırı, sayfalama + saklama politikası, soru paylaşımının REFERANSLA
+(banka kopyası değil) yapılması, moderasyon kuyruğuna yönetici yüzeyi. **Sızıntısız 404 kuralı** mesaj
+ve arkadaşlık uçlarında da korunmalı.

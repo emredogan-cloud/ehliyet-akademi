@@ -62,6 +62,10 @@ const dashes = (xs, y, w = 30, h = 4) =>
 /**
  * Adım etiketi. Bölümle AYNI zamanlarda görünür/kaybolur — böylece izleyici o anda hangi adımda
  * olduğunu videonun İÇİNDE de görür (roadmap: "labelled steps").
+ *
+ * ALT ŞERİTTE durur (üstte değil): poster karesi mobil listede kullanılıyor ve oradaki
+ * "İZLE"/"PREMIUM" rozeti sol ÜST köşede — etiket üstteyken rozetin altında kalıyordu
+ * (cihazda görüldü). Alt şerit hem çakışmayı bitiriyor hem de altyazı benzeri doğal bir yer.
  */
 const stepLabel = (i, text, from, to, duration) => {
   const pct = (s) => ((s / duration) * 100).toFixed(3);
@@ -70,7 +74,7 @@ const stepLabel = (i, text, from, to, duration) => {
   const c = pct(Math.max(to - 0.25, from + 0.3));
   const d = pct(to);
   return {
-    svg: `<g class="step step-${i}" transform="translate(24 40)">
+    svg: `<g class="step step-${i}" transform="translate(24 298)">
       <rect x="0" y="-21" width="${Math.min(560, 17 + text.length * 10.2)}" height="30" rx="8" fill="${T.labelBg}"/>
       <text x="13" y="0" font-family="Inter,Segoe UI,sans-serif" font-size="16" font-weight="700" fill="${T.label}">${text}</text>
     </g>`,

@@ -144,10 +144,23 @@ bilinçli olarak değiştirilmedi (o dosyaya yalnız kural eklenir). Sapma burad
 
 Adımlar:
 
-1. **ÖNCE ÖLÇ:** backend (`/api/ai/ask` veya mobil karşılığı) akış (SSE/chunked) destekliyor mu?
-   Sonuç **rapora yazılır** — DoD bunu şart koşuyor.
-2. Destekliyorsa **gerçek akış**; desteklemiyorsa **aşamalı parça çizimi** ve SSE'ye geçişe uygun
-   mimari.
+1. **ÖLÇÜM ZATEN YAPILDI** (Faz 8 sonunda, 2026-07-26) — tekrarlamaya gerek yok, ama **rapora
+   yazılmalı** (DoD şart koşuyor):
+
+   | Ölçüt                             | Sonuç                                                          |
+   | --------------------------------- | -------------------------------------------------------------- |
+   | `/api/ai/ask` akış desteği        | **YOK** — düz JSON POST → `{answer, grounded, sources, model}` |
+   | `stream` / SSE / `ReadableStream` | Kod tabanında **hiç yok**                                      |
+   | Anthropic çağrısı                 | `apps/web/lib/server/ai.ts:90` — **ham `fetch`**, SDK yok      |
+
+   **Sonuç:** gerçek akış **kurulabilir**. Anthropic `/v1/messages` `stream: true` + SSE
+   destekliyor ve çağrı ham `fetch` olduğu için araya girmek kolay; Vercel Fluid Compute
+   Node.js çalışma zamanında akışı **ek yapılandırma olmadan** destekler.
+
+2. **Gerçek akış yolu** (önerilen): sunucuda `stream: true` ile Anthropic SSE'si okunur ve
+   `text/event-stream` olarak yeniden yayılır; mobilde `dio` `ResponseType.stream` ile tüketilir.
+   Mevcut `/api/ai/ask` **BOZULMAZ** — akış ayrı bir uç ya da `?stream=1` ile eklenir
+   (Faz 3'teki "mevcut yol sökülmez" kalıbı).
 3. **Anlık yanıt ASLA sahte akış gibi gösterilmez** — kullanıcıya "yazıyor" hissi vermek için
    gecikme uydurulmaz. Bu, dürüstlük disiplininin doğrudan konusudur.
 4. `BETA_PHASE_9_REPORT.md` + bellek **ekleme** + commit + push + **CI yeşil bekle**.

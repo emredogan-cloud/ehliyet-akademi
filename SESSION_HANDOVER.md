@@ -229,7 +229,22 @@ Ayrıca **RevenueCat'in APK boyutuna tek başına katkısı ölçülmedi** (kar�
 `BETA_PHASE_0/1_REPORT.md` yazılmadı (bilinçli) · sunucu tarafı RevenueCat webhook'u yazılmadı
 (secret key + genel URL yok).
 
-## 11. Faz 5 için hazır olan zemin
+## 11. Faz 9 için ÖLÇÜLMÜŞ zemin
+
+**DoD'nin istediği ölçüm Faz 8 sonunda yapıldı** (tekrarlamaya gerek yok):
+
+| Ölçüt                            | Sonuç                                            |
+| -------------------------------- | ------------------------------------------------ |
+| `/api/ai/ask` akış desteği       | **YOK** — düz JSON POST                          |
+| SSE / `ReadableStream` / `chunk` | Kod tabanında **hiç yok**                        |
+| Anthropic çağrısı                | `lib/server/ai.ts:90` — **ham `fetch`**, SDK yok |
+
+Gerçek akış kurulabilir (Anthropic SSE destekliyor, araya girmek kolay). **Mevcut uç
+bozulmamalı** — Faz 3'teki "mevcut yol sökülmez" kalıbı izlenmeli.
+
+⚠️ **Anlık yanıt ASLA sahte akış gibi gösterilmez** — gecikme uydurulmaz (dürüstlük disiplini).
+
+## 11b. Faz 5 için hazır olan zemin
 
 Faz 5 = **giriş ekranı yeniden tasarımı**. Girdiler `ASSET_GENERATION_LIBRARY.md` §4.2'de hazır:
 

@@ -1618,3 +1618,170 @@ lisans test hesabıyla dene.
 - `assets/vehicle` (11 MB web) yeniden sıkıştırılmadı — ortamda `cwebp` yok, ImageMagick webp
   kalite bayrağını yok sayıyor.
 - Evrensel APK 69,9 MB; küçülme yalnız split-APK/AAB dağıtımıyla geliyor.
+
+---
+
+# ⛳ BETA FAZ 3 — RevenueCat (2026-07-26)
+
+Bu bölüm **eklemedir**; yukarıdaki hiçbir kayıt değiştirilmedi.
+
+## A. En önemli keşif — RevenueCat mevcut sunucu ucunu YENİDEN KULLANAMAZ
+
+`purchases_flutter` 10.4.3'ün `StoreTransaction` modeli yalnız
+`transactionIdentifier · productIdentifier · purchaseDate` taşır. **Ham Play `purchaseToken`
+YOKTUR.** (Yerel Android SDK'sında `orderId` ve `purchaseToken` ayrı alanlardır; Flutter köprüsü
+ikisini tek kimliğe indirger.) Mevcut `POST /api/iap/validate` ucu ise `androidpublisher`
+doğrulaması için gerçek `purchaseToken` bekliyor.
+
+**Sonuç:** RevenueCat'te doğru sunucu köprüsü **webhook**'tur, istemci makbuzu değil.
+
+Bu, kod yazılmadan **önce** doğrulandı ve mimariye açıkça kodlandı:
+
+```dart
+enum BillingServerBridge { clientReceipt, revenueCatWebhook }
+```
+
+> Keşfedilmeseydi: kullanıcı öder → RevenueCat yetkiyi açar → **bizim sunucumuz haberdar olmaz**
+> → AI/içerik kapıları kapalı kalır. Sessiz ve pahalı bir hata.
+
+**KURAL:** bir SDK'nın hangi alanları sunduğu **varsayılmaz, okunur**. Paket kaynağı
+`~/.pub-cache/hosted/pub.dev/<paket>/lib/` altında ve doğrudan okunabilir.
+
+## B. Dosyalar
+
+| Katman       | Dosya                                    | Not                                         |
+| ------------ | ---------------------------------------- | ------------------------------------------- |
+| Saf kural    | `domain/premium/entitlement_status.dart` | **Eklenti bağımlılığı YOK** — doğrudan test |
+| Arayüz       | `data/premium/billing_gateway.dart`      | Yansız modeller + `billingGatewayProvider`  |
+| Uygulama (A) | `data/premium/play_billing_gateway.dart` | `IapService`'i sarar                        |
+| Uygulama (B) | `data/premium/revenuecat_gateway.dart`   | `purchases_flutter` 10.4.3                  |
+| Yüzey        | `features/premium/paywall_screen.dart`   | Somut eklenti **tanımıyor**                 |
+| Yapılandırma | `core/config.dart`                       | `revenueCatEntitlement`                     |
+| Şablon       | `apps/mobile/.env.example`               | **YENİ** — beş RevenueCat değişkeni         |
+| Test         | `test/billing_test.dart`                 | **36 test**                                 |
+
+**`iap_service.dart` dosyasına TEK SATIR DOKUNULMADI.** "SÖKÜLMEZ" kısıtı böyle sağlandı.
+
+## C. Kalıcı kararlar
+
+1. **Yansız modeller zorunlu.** Arayüz `ProductDetails`/`StoreProduct` sızdırsaydı ödeme ekranı
+   hangi altyapının etkin olduğunu bilmek zorunda kalır, widget testleri platform kanalı olmadan
+   çalışamazdı. İkisi de `BillingProduct`'a indirgenir.
+2. **Ağ geçidi hangi sunucu köprüsünü kullandığını BİLDİRİR.** "Satın alma başarılı ama sunucu
+   yetkiyi görmedi" hatası mimari olarak imkânsız.
+3. **Ürün modeli kararı kodu bloke etmiyor.** Uygulama "hangi ürün" diye sormaz, `premium`
+   yetkisi var mı diye sorar. Aylık/yıllık ürün kimlikleri **boş kalabilir**.
+4. **Yaşam döngüsünde ödeme sorunu iptalden ÖNCE değerlendirilir** — ikisi aynı anda doğru
+   olabilir, en acil mesaj ödeme sorunudur.
+5. **Ömür boyu üründe iptal/grace/hold YOKTUR** (`expiresAt == null` bu dalları hiç açmaz).
+6. **`in_app_purchase` yolu yaşam döngüsü BİLDİRMEZ** → boş liste, uydurma durum üretilmez.
+7. **Geri yükleme koşulsuz görünür** (Play politikası) — mağaza kapalı/yapılandırma yok/premium
+   değil, hepsinde.
+8. **Vazgeçme HATA DEĞİLDİR** — Faz 2'deki Google girişi kalıbının aynısı.
+
+## D. Düzeltilen dürüstlük hatası (mevcut koddaydı)
+
+Eski `_restore()` koşulsuz _"Satın almalar geri yüklendi."_ diyordu — **hiçbir şey geri
+yüklenmemiş olsa bile**. Artık sonuca göre konuşuyor. Cihazda doğrulandı (`b3_06`).
+
+## E. `.env.example` DEPOYA HİÇ GİRMEMİŞ (Faz 2 açığı)
+
+`apps/web/.env.example` Faz 2 çıktısı olarak raporlanmıştı ama **Git'te izlenmiyordu**: kök
+`.gitignore` satır 18'deki `.env*`, satır 10'daki `!.env.example` istisnasını geçersiz kılıyordu
+(**son eşleşen kalıp kazanır**). `apps/web/.gitignore`'da da aynı tuzak vardı.
+
+Düzeltildi: her iki dosyaya gerekçeli `!.env.example` eklendi; iki şablon da depoya girdi.
+
+**KURAL: "belgede yazıyor" ≠ "depoda var".** Teslim demeden önce `git ls-files | grep <dosya>`
+ile izlendiği doğrulanmalıdır. (E13'teki "`git rm` başarısız olunca `.gitignore`'da olduğu
+görüldü" dersinin aynısı — bu kez ters yönde.)
+
+## F. Test dersleri
+
+1. **`implements` gövde miras ALMAZ.** Soyut sınıfta gövdeli `entitlements()` yazmak yetmedi;
+   `implements` kullanan her sınıfta ayrıca uygulanması gerekti.
+2. **`FakeIapService implements IapService`** — Dart'ın örtük arayüzü sayesinde `iap_service.dart`
+   dosyasına dokunmadan mevcut yol test edilebildi. İlk denemede gerçek `IapService`
+   örneklenmişti ve test **gerçek bir Play Billing bağlantısı** açıp
+   `PlatformException(channel-error, ... startConnection)` almıştı.
+3. **`scrollUntilVisible`, öğe ağaçta ama ekran dışındaysa KAYDIRMAZ** → `ensureVisible` kullan.
+4. **Test yüzeyi ölçüsü:** ödeme ekranı testleri 800×**1400**'de koşuyor. Varsayılan 800×600'de
+   `ListView` alt yarıyı hiç inşa etmiyor. **Genişlik 800'de bırakıldı**: testlerin Ahem yazı
+   tipi gerçeğinden geniştir ve 400 dp'de ana ekranda **gerçek olmayan** taşmalar üretiyor —
+   cihazda 393 dp'de taşma yok. **Test taşması ≠ cihaz taşması.**
+
+## G. CİHAZ DEĞİŞTİ — kalıcı not
+
+**`AYXSUKIVJVPZ7HPZ` (Redmi M1908C3JGG, Android 11) artık BAĞLI DEĞİL.** Yeniden başlatma
+sonrası takılı cihaz:
+
+| Alan    | Değer                                |
+| ------- | ------------------------------------ |
+| Kimlik  | **`jfzxugsgnnvsrsg6`**               |
+| Model   | Xiaomi **22095RA98C**                |
+| Android | **13 (SDK 33)** — eskisi 11'di       |
+| Ekran   | **1080×2408 · 440 dpi** (393×876 dp) |
+| ABI     | arm64-v8a                            |
+
+Sonraki fazlar bu kimliği kullanmalı. `MOBILE_ENGINEERING_DISCIPLINE.md` kural 6'daki kimlik
+artık geçersizdir; disiplin dosyası **değiştirilmedi** (yalnız kural eklenir), sapma burada ve
+`SESSION_HANDOVER.md`'de kayıtlıdır.
+
+## H. Cihaz doğrulaması — iki derleme (Faz 2 deseni)
+
+| Derleme                                    | Sonuç                                 | Kanıt   |
+| ------------------------------------------ | ------------------------------------- | ------- |
+| `--dart-define` **YOK**                    | Mevcut yol · dürüst durum · çökme yok | `b3_04` |
+| `REVENUECAT_PUBLIC_KEY` **VAR** (geçersiz) | RevenueCat seçildi · **yine çökmedi** | `b3_08` |
+
+Derleme 2'nin kanıtı **ekran görüntüsü değil `logcat`**:
+
+```
+W dex2oat64: Compilation of ... PurchasesFactory.createPurchases(...)
+E [Purchases] - ERROR: The specified API Key is not recognized.
+E [Purchases] - ERROR: Error fetching offerings - PurchasesError(code=InvalidCredentialsError, ...)
+```
+
+→ SDK gerçekten başlatıldı (**ağ geçidi seçimi çalıştı**), anahtar reddedildi,
+`logcat -b crash` **boş**, `FATAL` yok.
+
+**DERS:** "hangi kod yolu çalıştı" sorusunun kanıtı ekran görüntüsü olmayabilir; **logcat**
+doğrudan kanıttır. Görsel olarak aynı görünen iki durum böyle ayrılır.
+
+## I. Ölçülen değerler (2026-07-26)
+
+```
+flutter analyze  → 0
+flutter test     → 311  (+36)
+@ea/web          → 516 · @ea/db 6 · content-schema 17 · question-bank 10 · srs-engine 12
+pnpm lint (0 hata, 1 eski uyarı) · format · verify · typecheck temiz
+arm64-v8a APK 31.312.050 B (29,8 MiB) · armeabi-v7a 29.163.404 B · x86_64 32.780.099 B
+```
+
+**Boyut deltası hakkında dürüstlük:** önceki arm64 artefaktı 29.305.991 B → fark **+1,91 MiB**,
+ama o artefakt **Faz 2 commit'inden önce** üretilmiştir; fark `purchases_flutter` **ve**
+`google_sign_in`'i birlikte kapsar. **Yalnız RevenueCat'in payı ölçülmedi ve tahmin edilmedi.**
+
+## J. Dürüst sınırlar (Faz 3)
+
+1. **Gerçek satın alma TEST EDİLMEDİ** — Play Billing yalnız Play'den yüklenmiş imzalı yapıda
+   çalışır. (Değişmedi; `REVENUECAT_SETUP.md` §6.2'de de yazılı.)
+2. **Gerçek RevenueCat anahtarıyla uçtan uca akış denenmedi** — hesap/ürün/servis hesabı elle.
+3. **Sunucu tarafı RevenueCat webhook'u YAZILMADI** — secret key + genel URL gerekiyor, ikisi de
+   yok. Köprü ayrımı kodda hazır. **Bugünkü etkin yol bundan etkilenmiyor.**
+4. **`transactionIdentifier`'ın Android karşılığı doğrulanamadı** — eşleme
+   `purchases-hybrid-common` Maven artefaktında. Ondan **hiçbir güvenlik varsayımı türetilmedi**.
+5. **Abonelik yaşam döngüsü gerçek Play olaylarıyla görülmedi** — Faz 13'te lisans test hesabıyla.
+
+## K. Yayın engelleri — Faz 3 sonrası
+
+| #      | Engel                                           | Durum                                                       |
+| ------ | ----------------------------------------------- | ----------------------------------------------------------- |
+| **B1** | Release derlemesi debug anahtarıyla imzalanıyor | ⛔ AÇIK — Faz 4                                             |
+| **B2** | `build.gradle.kts` şablon notları               | ⛔ AÇIK — Faz 4                                             |
+| **B3** | Google Sign-In yok                              | ✅ KAPANDI (Faz 2)                                          |
+| **B4** | RevenueCat yok                                  | ✅ **KAPANDI (Faz 3)** — istemci tarafı; pano kurulumu elle |
+| **B5** | Üretim veritabanı test artıkları                | ⛔ AÇIK — **onay bekliyor**                                 |
+| **B6** | Play Console kaydı/beyanları                    | ⛔ AÇIK (elle) — Faz 4                                      |
+
+**Faz 3'te B1/B2'ye DOKUNULMADI** — `android/app/build.gradle.kts` olduğu gibi duruyor.

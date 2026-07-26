@@ -108,11 +108,17 @@ Ayrıca `google-services.json` bir **dosya**dır, ortam değişkeni değil:
 
 ## 3. Oluşturulacak şablon dosyaları
 
-| Dosya                                         | Ne zaman | İçerik                                       |
-| --------------------------------------------- | -------- | -------------------------------------------- |
-| `apps/web/.env.example`                       | Faz 2    | Yukarıdaki sunucu değişkenleri, **değersiz** |
-| `apps/mobile/.env.example`                    | Faz 3    | Mobil derleme değişkenleri, **değersiz**     |
-| `android/release-keystore.properties.example` | Faz 4    | İmzalama şablonu                             |
+| Dosya                                         | Ne zaman | Durum                                                |
+| --------------------------------------------- | -------- | ---------------------------------------------------- |
+| `apps/web/.env.example`                       | Faz 2    | ✅ **depoda** (Faz 3'te `.gitignore` düzeltildi)     |
+| `apps/mobile/.env.example`                    | Faz 3    | ✅ **depoda** — mobil derleme değişkenleri, değersiz |
+| `android/release-keystore.properties.example` | Faz 4    | ⬜ İmzalama şablonu                                  |
+
+> ⚠️ **`.gitignore` tuzağı (Faz 3'te bulundu):** kök `.gitignore` ve `apps/web/.gitignore`
+> içindeki `.env*` kalıbı, daha önceki `!.env.example` istisnasını **geçersiz kılıyordu** (son
+> eşleşen kalıp kazanır). Bu yüzden Faz 2'nin `.env.example`'ı depoya **hiç girmemişti**.
+> Düzeltildi. **Yeni şablon dosyası eklerken `git check-ignore -v <dosya>` ile doğrula** —
+> "dosyayı yazdım" ile "dosya depoda" aynı şey değildir.
 
 Şablon biçimi — **örnek değer bile yazılmaz**, yalnız açıklama:
 

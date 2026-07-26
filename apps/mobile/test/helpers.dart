@@ -8,6 +8,7 @@ import 'package:ehliyet_akademi/data/community/groups_repository.dart';
 import 'package:ehliyet_akademi/data/community/social_repository.dart';
 import 'package:ehliyet_akademi/data/content/content_repository.dart';
 import 'package:ehliyet_akademi/data/practice/question_repository.dart';
+import 'package:ehliyet_akademi/data/premium/billing_gateway.dart';
 import 'package:ehliyet_akademi/data/premium/entitlements_repository.dart';
 import 'package:ehliyet_akademi/domain/auth/app_user.dart';
 import 'package:ehliyet_akademi/domain/community/community_models.dart';
@@ -547,6 +548,10 @@ Future<void> pumpApp(
   SocialApi? social,
   GroupsApi? groups,
   GoogleAuthService? google,
+
+  /// Beta Faz 3 — ödeme ağ geçidi. VARSAYILAN: mağazası KAPALI sahte ağ geçidi (test ortamında
+  /// Play Store yoktur; dürüst varsayılan budur). Ödeme akışını test edenler kendi ağ geçidini verir.
+  BillingGateway? billing,
   List<String>? owned,
   Map<String, Object>? prefs,
   bool onboardingSeen = true,
@@ -583,6 +588,7 @@ Future<void> pumpApp(
         socialApiProvider.overrideWithValue(social ?? FakeSocialApi()),
         groupsApiProvider.overrideWithValue(groups ?? FakeGroupsApi()),
         googleAuthServiceProvider.overrideWithValue(google ?? FakeGoogleAuthService()),
+        billingGatewayProvider.overrideWithValue(billing ?? FakeBillingGateway()),
         entitlementsApiProvider.overrideWithValue(FakeEntitlementsApi(owned ?? const [])),
         // Content + questions come from fixed snapshots in tests → never touch drift/network.
         if (overrideContent) ...[
@@ -717,6 +723,104 @@ class FakeGroupsApi implements GroupsApi {
   }
 }
 
+
+/// Beta Faz 3 — sahte ödeme ağ geçidi. Platform kanalı / Play Store gerekmez.
+///
+/// Ödeme ekranının bütün koşulları (mağaza kapalı · ürün yok · satın alma · vazgeçme · hata ·
+/// geri yükleme · yaşam döngüsü) bununla, gerçek bir mağazaya dokunmadan sınanır.
+class FakeBillingGateway implements BillingGateway {
+  FakeBillingGateway({
+    this.configured = true,
+    this.storeAvailable = false,
+    this.catalog = const [],
+    this.purchaseResult,
+    this.restoreResult,
+    this.facts = const [],
+    this.bridge = BillingServerBridge.clientReceipt,
+  });
+
+  /// Mağazası açık, tek ömür boyu ürünü olan hazır bir ağ geçidi.
+  factory FakeBillingGateway.withStore({
+    String priceLabel = '₺399,00',
+    BillingResult? purchaseResult,
+    BillingResult? restoreResult,
+    List<EntitlementFacts> facts = const [],
+    BillingServerBridge bridge = BillingServerBridge.clientReceipt,
+  }) => FakeBillingGateway(
+    storeAvailable: true,
+    catalog: [
+      BillingProduct(
+        storeProductId: 'komple_ehliyet',
+        priceLabel: priceLabel,
+        title: 'Komple Ehliyet Paketi',
+        period: BillingPeriod.lifetime,
+      ),
+    ],
+    purchaseResult: purchaseResult,
+    restoreResult: restoreResult,
+    facts: facts,
+    bridge: bridge,
+  );
+
+  final bool configured;
+  final bool storeAvailable;
+  final List<BillingProduct> catalog;
+  final BillingResult? purchaseResult;
+  final BillingResult? restoreResult;
+  final List<EntitlementFacts> facts;
+  final BillingServerBridge bridge;
+
+  int purchaseCalls = 0;
+  int restoreCalls = 0;
+  int disposeCalls = 0;
+  Future<void> Function(BillingPurchase)? onPurchase;
+
+  @override
+  String get name => 'fake';
+
+  @override
+  bool get isConfigured => configured;
+
+  @override
+  BillingServerBridge get serverBridge => bridge;
+
+  @override
+  Future<bool> available() async => storeAvailable;
+
+  @override
+  Future<List<BillingProduct>> products() async => storeAvailable ? catalog : const [];
+
+  @override
+  Future<BillingResult> purchase(BillingProduct product) async {
+    purchaseCalls++;
+    return purchaseResult ??
+        BillingSuccess([
+          BillingPurchase(storeProductId: product.storeProductId, purchaseToken: 'fake-token'),
+        ]);
+  }
+
+  @override
+  Future<BillingResult> restore() async {
+    restoreCalls++;
+    return restoreResult ?? const BillingSuccess([]);
+  }
+
+  @override
+  Future<List<EntitlementFacts>> entitlementFacts() async => facts;
+
+  @override
+  Future<Set<String>> entitlements() async => {
+    for (final f in facts)
+      if (f.isActive) f.identifier,
+  };
+
+  @override
+  void listen(Future<void> Function(BillingPurchase) onPurchase) =>
+      this.onPurchase = onPurchase;
+
+  @override
+  void dispose() => disposeCalls++;
+}
 
 /// Beta Faz 2 — sahte Google servisi. Platform kanalı gerekmez.
 class FakeGoogleAuthService implements GoogleAuthService {

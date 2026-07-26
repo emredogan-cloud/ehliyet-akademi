@@ -1,2 +1,4 @@
 .vercel
 .env*
+# Şablonlar depoya girer — gizli değer içermezler (bkz. kök .gitignore ve ENV_TEMPLATE.md §3).
+!.env.example

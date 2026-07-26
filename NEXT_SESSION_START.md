@@ -7,20 +7,21 @@
 
 ## 1. Önce şu dosyaları oku — BU SIRAYLA
 
-| #   | Dosya                                                                    | Neden                                         | Süre |
-| --- | ------------------------------------------------------------------------ | --------------------------------------------- | ---- |
-| 1   | `MOBILE_ENGINEERING_DISCIPLINE.md`                                       | Değişmez kurallar. **Her fazdan önce okunur** | 2 dk |
-| 2   | `SESSION_HANDOVER.md`                                                    | Mevcut durum, git, testler, engeller, ortam   | 4 dk |
-| 3   | `BETA_READINESS_ROADMAP.md`                                              | 13 faz + ilerleme işaretleri                  | 4 dk |
-| 4   | `MOBILE_PROJECT_MEMORY.md` → **son bölüm** ("⛳ BAĞLAM KONTROL NOKTASI") | Beta 0–2'de öğrenilen her şey                 | 6 dk |
-| 5   | `REVENUECAT_SETUP.md`                                                    | **Aktif fazın kaynak belgesi**                | 6 dk |
+| #   | Dosya                                                           | Neden                                         | Süre |
+| --- | --------------------------------------------------------------- | --------------------------------------------- | ---- |
+| 1   | `MOBILE_ENGINEERING_DISCIPLINE.md`                              | Değişmez kurallar. **Her fazdan önce okunur** | 2 dk |
+| 2   | `SESSION_HANDOVER.md`                                           | Mevcut durum, git, testler, engeller, ortam   | 4 dk |
+| 3   | `BETA_READINESS_ROADMAP.md`                                     | 13 faz + ilerleme işaretleri                  | 4 dk |
+| 4   | `MOBILE_PROJECT_MEMORY.md` → **son iki bölüm** (BAĞLAM + FAZ 3) | Beta 0–3'te öğrenilen her şey                 | 8 dk |
+| 5   | `PLAY_CONSOLE_SETUP.md`                                         | **Aktif fazın kaynak belgesi**                | 6 dk |
 
-Gerekince bakılacaklar: `RELEASE_CHECKLIST.md` · `PLAY_CONSOLE_SETUP.md` ·
-`GOOGLE_AUTH_SETUP.md` · `ENV_TEMPLATE.md` · `ASSET_GENERATION_LIBRARY.md` ·
-`RELEASE_AUDIT_PLAN.md` · `BETA_PHASE_2_REPORT.md`.
+Gerekince bakılacaklar: `RELEASE_CHECKLIST.md` · `GOOGLE_AUTH_SETUP.md` · `REVENUECAT_SETUP.md` ·
+`ENV_TEMPLATE.md` · `ASSET_GENERATION_LIBRARY.md` · `RELEASE_AUDIT_PLAN.md` ·
+`BETA_PHASE_2_REPORT.md` · `BETA_PHASE_3_REPORT.md`.
 
-**`MOBILE_PROJECT_MEMORY.md` çok uzun** — baştan sona okuma; **sondaki kontrol noktası bölümü**
-Beta programı için yeterlidir. Evolution ayrıntısı gerekirse `MOBILE_EVOLUTION_FINAL_REPORT.md`.
+**`MOBILE_PROJECT_MEMORY.md` çok uzun** — baştan sona okuma; **sondaki iki bölüm** (⛳ BAĞLAM
+KONTROL NOKTASI ve ⛳ BETA FAZ 3) Beta programı için yeterlidir. Evolution ayrıntısı gerekirse
+`MOBILE_EVOLUTION_FINAL_REPORT.md`.
 
 ## 2. Tamamlanan fazlar
 
@@ -30,19 +31,20 @@ Beta programı için yeterlidir. Evolution ayrıntısı gerekirse `MOBILE_EVOLUT
 | **Beta Faz 0**       | ✅ Yayın hazırlığı belgeleri (9 dosya)                             |
 | **Beta Faz 1**       | ✅ Tam varlık denetimi                                             |
 | **Beta Faz 2**       | ✅ Google Sign-In (sunucu doğrulamalı)                             |
+| **Beta Faz 3**       | ✅ RevenueCat (`BillingGateway` soyutlaması)                       |
 
 ## 3. Aktif faz
 
-# 🔵 Beta Faz 3 — RevenueCat
+# 🔵 Beta Faz 4 — Google Play yayın hazırlığı
 
-Kaynak belge: **`REVENUECAT_SETUP.md`** · Roadmap bölümü: `BETA_READINESS_ROADMAP.md` → "Faz 3".
+Kaynak belge: **`PLAY_CONSOLE_SETUP.md`** · Roadmap bölümü: `BETA_READINESS_ROADMAP.md` → "Faz 4".
+Bu faz **B1 + B2**'yi kapatır (release imzalama + şablon notları) ve **B6**'yı belgeler.
 
 ## 4. Kalan yol haritası
 
-`3` (aktif) → `4` Play yayın hazırlığı → `5` Giriş ekranı → `6` Onboarding cilası →
-`7` Profil avatarları → `8` Karşılama deneyimi → `9` Akan AI → `10` Kabin kumandaları →
-`11` Ders yeniden tasarımı → `12` Video hattı araştırması → `13` Nihai denetim →
-`BETA_READINESS_FINAL_REPORT.md`.
+`4` (aktif) → `5` Giriş ekranı → `6` Onboarding cilası → `7` Profil avatarları →
+`8` Karşılama deneyimi → `9` Akan AI → `10` Kabin kumandaları → `11` Ders yeniden tasarımı →
+`12` Video hattı araştırması → `13` Nihai denetim → `BETA_READINESS_FINAL_REPORT.md`.
 
 ## 5. Değişmez mühendislik kuralları
 
@@ -51,18 +53,23 @@ Kaynak belge: **`REVENUECAT_SETUP.md`** · Roadmap bölümü: `BETA_READINESS_RO
 3. **Yer tutucu / yapılacak-notu / ölü gezinme / eksik ekran YASAK.** (`pnpm verify` bunu tarar.)
 4. **Test atlanmaz.** `flutter analyze` 0 · `flutter test` tam · yeni uç → entegrasyon testi.
 5. **CI atlanmaz.** CI + Mobile CI + CodeQL **yeşil** olana kadar beklenir. Kırmızıda devam edilmez.
-6. **Gerçek cihazda doğrulama** (`AYXSUKIVJVPZ7HPZ`) + ekran görüntüsü kanıtı.
+6. **Gerçek cihazda doğrulama** + ekran görüntüsü kanıtı. **CİHAZ DEĞİŞTİ → §9.**
 7. **iOS derlemesi N/A** (macOS yok) — sahte iOS derlemesi yapılmaz.
 8. **Tasarım token'ları dışında sabit renk yok** (`design_tokens_test.dart` zorluyor).
 9. **Bellek EKLENEREK güncellenir**, asla üzerine yazılmaz.
 10. **Ölçülmeyen şey ölçülmüş gibi yazılmaz.** Uydurma sayı yok.
 11. **Yeni `.md`/`.ts` yazdıktan sonra** `npx prettier --write <dosya>` → sonra `pnpm format`.
 12. **Gizli değer depoya girmez** — yalnız `.example` şablonları, örnek değer bile yazılmadan.
+13. **"Belgede yazıyor" ≠ "depoda var"** — teslim demeden önce `git ls-files` ile doğrula
+    (Faz 3'te `.env.example`'ın hiç commit'lenmemiş olduğu böyle bulundu).
 
 ## 6. DEĞİŞTİRİLMEMESİ GEREKENLER
 
 - ❌ **Evolution E1–E13'ün hiçbir çıktısı** — tamamlandı, geçersiz kılınmaz.
-- ❌ **Mevcut `in_app_purchase` yolu SÖKÜLMEZ** — Faz 3'te RevenueCat **yanına** eklenir.
+- ❌ **`iap_service.dart`** — Faz 3'te tek satır dokunulmadı, öyle kalmalı. RevenueCat onun
+  **yanında** duruyor (`BillingGateway`'in iki uygulaması).
+- ❌ **`BillingServerBridge` ayrımı** — RevenueCat ham Play token'ı sunmaz; bu ayrım kaldırılırsa
+  "satın alma başarılı ama sunucu görmedi" sessiz hatası geri gelir.
 - ❌ **E-posta/parola ve misafir giriş yolları** — Google girişi onların yerine geçmez.
 - ❌ **Bearer oturum mimarisi** — yeni oturum sistemi getirilmez.
 - ❌ **Arayüz + sahte uygulama deseni** — platforma bağlı her şey böyle yazılır.
@@ -76,19 +83,20 @@ Kaynak belge: **`REVENUECAT_SETUP.md`** · Roadmap bölümü: `BETA_READINESS_RO
 
 | #      | Engel                                                                          | Faz           |
 | ------ | ------------------------------------------------------------------------------ | ------------- |
-| **B1** | Release derlemesi **DEBUG anahtarıyla** imzalanıyor → Play kabul etmez         | 4             |
-| **B2** | `android/app/build.gradle.kts` şablon notları                                  | 4             |
-| **B4** | RevenueCat yok                                                                 | **3 — AKTİF** |
+| **B1** | Release derlemesi **DEBUG anahtarıyla** imzalanıyor → Play kabul etmez         | **4 — AKTİF** |
+| **B2** | `android/app/build.gradle.kts` şablon notları                                  | **4 — AKTİF** |
 | **B5** | Üretim veritabanı test artıkları — **kullanıcı onayı bekliyor, izinsiz silme** | 13            |
-| **B6** | Play Console kaydı/beyanları (elle)                                            | 4             |
+| **B6** | Play Console kaydı/beyanları (elle)                                            | **4 — AKTİF** |
 
-## 8. Test gereksinimleri — mevcut taban
+**Kapananlar:** B3 (Faz 2) · B4 (Faz 3 — istemci tarafı; RevenueCat panosu kurulumu elle).
+
+## 8. Test gereksinimleri — mevcut taban (ÖLÇÜLDÜ 2026-07-26)
 
 Bir faz bitmeden bu sayıların **altına düşülmemeli**:
 
 ```
 flutter analyze  → 0
-flutter test     → 275
+flutter test     → 311
 @ea/web          → 516
 @ea/db           → 6
 @ea/content-schema → 17 · @ea/question-bank → 10 · @ea/srs-engine → 12
@@ -100,43 +108,63 @@ Komutlar:
 ```bash
 export PATH="$PATH:/home/emre/dev/flutter/bin"
 cd apps/mobile && flutter analyze && flutter test
-cd <repo>      && pnpm test && pnpm lint && pnpm format && pnpm verify
+cd <repo>      && pnpm test && pnpm lint && pnpm format && pnpm verify && pnpm typecheck
 cd apps/web    && npx playwright test          # içerik/metin değiştiyse ŞART
 ```
 
-## 9. Faz 3'ün ilk görevi — TAM OLARAK BU
+## 9. ⚠️ CİHAZ DEĞİŞTİ
 
-> **Görev:** `REVENUECAT_SETUP.md`'yi oku, sonra **`BillingGateway` soyutlamasını** kur.
+Belgelerde geçen `AYXSUKIVJVPZ7HPZ` (Redmi M1908C3JGG, Android 11) **artık bağlı değil.**
+Yeniden başlatma sonrası takılı cihaz:
+
+| Alan    | Değer                                |
+| ------- | ------------------------------------ |
+| Kimlik  | **`jfzxugsgnnvsrsg6`**               |
+| Model   | Xiaomi **22095RA98C**                |
+| Android | **13 (SDK 33)**                      |
+| Ekran   | **1080×2408 · 440 dpi** (393×876 dp) |
+| ABI     | arm64-v8a                            |
+
+`MOBILE_ENGINEERING_DISCIPLINE.md` kural 6'daki kimlik **geçersizdir**; disiplin dosyası
+bilinçli olarak değiştirilmedi (o dosyaya yalnız kural eklenir). Sapma burada,
+`SESSION_HANDOVER.md`'de ve `MOBILE_PROJECT_MEMORY.md` §G'de kayıtlıdır.
+
+**Cihazı her fazın başında doğrula:** `adb devices -l`.
+
+## 10. Faz 4'ün ilk görevi — TAM OLARAK BU
+
+> **Görev:** `PLAY_CONSOLE_SETUP.md` §2'yi oku, sonra **release imzalamasını gerçek anahtara
+> bağla** (B1) ve **şablon notlarını temizle** (B2).
 
 Adımlar:
 
-1. `apps/mobile/lib/domain/premium/products.dart` ve `lib/data/premium/iap_service.dart` +
-   `entitlements_repository.dart` dosyalarını oku — mevcut ödeme yolunu **anla, değiştirme**.
-2. `lib/data/premium/billing_gateway.dart` (**yeni**) — arayüz:
-   `products()` · `purchase()` · `restore()` · `entitlements()` · `isConfigured`.
-3. Mevcut `IapService`'i bu arayüzün **bir uygulaması** hâline getir (sarmalayıcı; iç mantık
-   değişmez).
-4. `lib/data/premium/revenuecat_gateway.dart` (**yeni**) — `purchases_flutter` uygulaması.
-   `REVENUECAT_PUBLIC_KEY` **yoksa** `isConfigured == false`.
-5. `billingGatewayProvider` — anahtar varsa RevenueCat, yoksa mevcut yol. **Çökme yok.**
-6. `apps/mobile/.env.example` (**yeni**) — beş RevenueCat değişkeni, **boş şablon**.
-7. Testler: anahtarsız derlemede ödeme ekranı **dürüst "mağaza kullanılamıyor"** gösteriyor ·
-   geri yükleme düğmesi **her koşulda var** (Play politikası) · sahte ağ geçidiyle satın alma akışı.
-8. Cihaz: ödeme ekranı anahtarsız derlemede **çökmüyor** ve dürüst durum gösteriyor.
-9. `BETA_PHASE_3_REPORT.md` + `MOBILE_PROJECT_MEMORY.md`'ye **ekleme** + commit + push +
+1. `apps/mobile/android/app/build.gradle.kts` dosyasını oku. Şu an: `release` bloğu
+   `signingConfigs.getByName("debug")` kullanıyor ve `defaultConfig` ile `release` içinde Flutter
+   şablonundan kalan yapılacak-notları duruyor.
+2. `android/release-keystore.properties.example` (**yeni**) — imzalama şablonu, **değer yazılmadan**.
+3. `android/key.properties` **`.gitignore`'a eklenir** (kök `.gitignore`'daki `!.env.example`
+   deseninin aynısı gerekebilir — **`git check-ignore -v` ile doğrula**).
+4. `build.gradle.kts` release bloğu `key.properties`'i okuyacak biçimde güncellenir.
+   **Dosya yoksa derleme anlaşılır bir hata vermeli**, sessizce debug anahtarına düşmemeli.
+5. Şablon yapılacak-notları temizlenir (B2). **Dikkat:** `pnpm verify` yasaklı kalıp tarıyor —
+   belgede bu notları **birebir alıntılama** (Faz 0'da CI tam bu yüzden kırıldı).
+6. Testler: `key.properties` yokken derlemenin dürüst hata verdiği doğrulanır.
+7. **DoD:** gerçek upload key ile imzalanmış AAB üretilir ve
+   `apksigner verify --print-certs` çıktısında **`androiddebugkey` GEÇMEZ**.
+   ⚠️ Upload key üretimi **elle** bir adımdır (`keytool -genkey`); anahtar üretilemiyorsa bu
+   **dürüstçe** rapora yazılır, sahte "imzalandı" denmez.
+8. `BETA_PHASE_4_REPORT.md` + `MOBILE_PROJECT_MEMORY.md`'ye **ekleme** + commit + push +
    **CI yeşil bekle**.
 
-**Faz 3'te dikkat:** gerçek satın alma bu Linux ortamında **test edilemez** (Play Billing yalnız
-Play'den yüklenmiş imzalı yapıda çalışır). Bunu rapora **dürüstçe** yaz; sahte "test edildi" deme.
-
-## 10. İlk 60 saniyede çalıştırılacak doğrulama
+## 11. İlk 60 saniyede çalıştırılacak doğrulama
 
 ```bash
 cd /home/emre/Downloads/OTHER-RESEARCH/other_report/ehliyet-akademi
-git log --oneline -3          # 21fac08 görmelisin
+git log --oneline -3          # en üstte Faz 3 commit'i olmalı
 git status --short            # boş olmalı
 gh run list --limit 3         # son çalışmalar yeşil olmalı
+adb devices -l                # jfzxugsgnnvsrsg6 görmelisin (§9)
 ```
 
-Beklenen: son commit **`21fac08`**, çalışma ağacı temiz, CI yeşil.
-Farklıysa önce `SESSION_HANDOVER.md` §2 ile karşılaştır.
+Farklıysa önce `SESSION_HANDOVER.md` §2 ile karşılaştır. **Depo belgeden üstündür** — fark varsa
+depoya güven, belgeyi güncelle, devam et.

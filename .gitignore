@@ -16,6 +16,10 @@ test-results/
 .DS_Store
 .vercel
 .env*
+# DİKKAT: yukarıdaki `.env*`, satır 10'daki `!.env.example` istisnasını geçersiz kılıyordu (son
+# eşleşen kalıp kazanır) — bu yüzden `.env.example` ŞABLONLARI depoya hiç girmemişti. Şablonlarda
+# gizli değer yoktur ve depoda bulunmaları GEREKİR (ENV_TEMPLATE.md §3).
+!.env.example
 
 # Yerel ajan/araç yapılandırması (repoya girmez)
 .claude/

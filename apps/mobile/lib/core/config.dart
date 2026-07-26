@@ -11,4 +11,14 @@ class AppConfig {
 
   /// Android application id — sent to `/api/iap/validate` for Play purchase verification.
   static const String androidPackage = 'com.ehliyetegitim.ehliyet_akademi';
+
+  /// Beta Faz 3 — uygulamanın sorduğu TEK RevenueCat yetkisi (entitlement).
+  ///
+  /// Ömür boyu paket de, aylık/yıllık abonelik de **aynı** yetkiyi açar; böylece ürün modeli
+  /// değişse bile uygulama kodu değişmez (`REVENUECAT_SETUP.md` §0 ve §3.1). RevenueCat
+  /// yapılandırılmamışsa bu değer hiç kullanılmaz.
+  static const String revenueCatEntitlement = String.fromEnvironment(
+    'REVENUECAT_ENTITLEMENT',
+    defaultValue: 'premium',
+  );
 }

@@ -2,13 +2,13 @@
 
 **Program başlangıcı:** 2026-07-26 · **Önceki program:** Evolution (E1–E13) — TAMAMLANDI, dokunulmaz.
 
-> ## 📍 İLERLEME — son güncelleme 2026-07-26, commit `21fac08`
+> ## 📍 İLERLEME — son güncelleme 2026-07-26, commit `3471378` sonrası
 >
-> | Durum             | Fazlar                                                                          |
-> | ----------------- | ------------------------------------------------------------------------------- |
-> | ✅ **TAMAMLANDI** | **Faz 0** (belgeler) · **Faz 1** (varlık denetimi) · **Faz 2** (Google Sign-In) |
-> | 🔵 **SIRADAKİ**   | **Faz 3 — RevenueCat**                                                          |
-> | ⬜ Kalan          | Faz 4 · 5 · 6 · 7 · 8 · 9 · 10 · 11 · 12 · 13 + kapanış raporu                  |
+> | Durum             | Fazlar                                                                                                   |
+> | ----------------- | -------------------------------------------------------------------------------------------------------- |
+> | ✅ **TAMAMLANDI** | **Faz 0** (belgeler) · **Faz 1** (varlık denetimi) · **Faz 2** (Google Sign-In) · **Faz 3** (RevenueCat) |
+> | 🔵 **SIRADAKİ**   | **Faz 4 — Play yayın hazırlığı** (B1 + B2 + B6)                                                          |
+> | ⬜ Kalan          | Faz 5 · 6 · 7 · 8 · 9 · 10 · 11 · 12 · 13 + kapanış raporu                                               |
 >
 > Ayrıntılı devir bilgisi: **`SESSION_HANDOVER.md`** · Hızlı başlangıç: **`NEXT_SESSION_START.md`**
 > **Hedef:** Üretimdeki uygulamayı **Google Play Kapalı Test**'e hazır bir sürüm adayına dönüştürmek.
@@ -45,8 +45,8 @@ Bu yol haritası varsayımla değil, depodan okunan değerlerle yazıldı.
 | --- | ------------------------------------------------------- | ------------- |
 | B1  | Release derlemesi **debug anahtarıyla** imzalanıyor     | Faz 4         |
 | B2  | `android/app/build.gradle.kts` içinde şablon `TODO`ları | Faz 4         |
-| B3  | Google Sign-In yok                                      | Faz 2         |
-| B4  | RevenueCat yok (Play ürün/abonelik yaşam döngüsü eksik) | Faz 3         |
+| B3  | Google Sign-In yok — ✅ **KAPANDI** (Faz 2)             | Faz 2         |
+| B4  | RevenueCat yok — ✅ **KAPANDI** (Faz 3, istemci tarafı) | Faz 3         |
 | B5  | Üretim veritabanında Evolution doğrulama artıkları      | Faz 13        |
 | B6  | Play Console kaydı/beyanları yok                        | Faz 4         |
 
@@ -64,7 +64,9 @@ bitmeden sonraki başlamaz.
 3. Backend etkilendiyse: `pnpm test` + entegrasyon testleri geçer
 4. `pnpm lint` 0 hata · `pnpm format` temiz
 5. CI + Mobile CI + CodeQL **yeşil**
-6. **Gerçek cihazda doğrulama** (`AYXSUKIVJVPZ7HPZ`) + ekran görüntüsü kanıtı
+6. **Gerçek cihazda doğrulama** + ekran görüntüsü kanıtı. ⚠️ **Cihaz Faz 3'te değişti:**
+   `jfzxugsgnnvsrsg6` (Xiaomi 22095RA98C · Android 13). Eski `AYXSUKIVJVPZ7HPZ` bağlı değil —
+   her fazın başında `adb devices -l` ile doğrula (`SESSION_HANDOVER.md` §6)
 7. `EVOLUTION`-tarzı faz raporu: `BETA_PHASE_<N>_REPORT.md`
 8. `MOBILE_PROJECT_MEMORY.md`'ye **ekleme** (asla üzerine yazma)
 9. Commit + push + bütün akışlar yeşil olana kadar bekle
@@ -137,7 +139,7 @@ Sunucu doğrulaması 21 saf + 11 entegrasyon testiyle kanıtlandı; mobil 8 widg
 bir adımdır (bkz. `GOOGLE_AUTH_SETUP.md` §10). Doğrulanan: arayüzün her iki koşulu cihazda,
 sunucunun reddetmesi gereken bütün durumlar testle.
 
-### 🔵 Faz 3 — RevenueCat — SIRADAKİ FAZ
+### ✅ Faz 3 — RevenueCat — TAMAMLANDI
 
 Üretim RevenueCat entegrasyonu; **gizli anahtarlar hariç her şey**. `.env.example`'a
 `REVENUECAT_PUBLIC_KEY`, `REVENUECAT_PROJECT_ID`, `REVENUECAT_ENTITLEMENT`,
@@ -151,8 +153,16 @@ yanına, arayüz+uygulama deseniyle eklenir ve anahtar yoksa mevcut yola düşer
 
 **DoD:** Temel DoD + anahtarsız ortamda uygulama **çökmez** ve dürüst bir "mağaza yapılandırılmadı"
 durumu gösterir.
+**SONUÇ:** ✅ `BETA_PHASE_3_REPORT.md` · `flutter test` 311 (+36) · CI/Mobile CI/CodeQL yeşil.
+`BillingGateway` soyutlaması kuruldu; `iap_service.dart`'a **tek satır dokunulmadı**.
+**Kritik keşif:** `purchases_flutter` ham Play `purchaseToken`'ı sunmuyor → RevenueCat mevcut
+`/api/iap/validate` ucunu yeniden kullanamaz; doğru köprü **webhook**'tur. Bu, `BillingServerBridge`
+ile mimariye açıkça kodlandı. Cihazda **iki derleme** doğrulandı: anahtarsız (mevcut yol) ve
+**geçersiz anahtarlı** (RevenueCat seçildi, yine çökmedi — kanıt `logcat`).
+**Yan düzeltme:** `.env.example` şablonları `.gitignore` yüzünden depoya hiç girmemişti (Faz 2
+açığı) — düzeltildi.
 
-### Faz 4 — Google Play yayın hazırlığı
+### 🔵 Faz 4 — Google Play yayın hazırlığı — SIRADAKİ FAZ
 
 `release-keystore.properties.example` üretilir; **upload key oluşturulur**; parolalar Git dışında
 tutulur. `build.gradle.kts` release imzalaması gerçek anahtara bağlanır ve şablon `TODO`ları

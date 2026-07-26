@@ -17,10 +17,10 @@
 
 Gerekince bakılacaklar: `RELEASE_CHECKLIST.md` · `GOOGLE_AUTH_SETUP.md` · `REVENUECAT_SETUP.md` ·
 `ENV_TEMPLATE.md` · `ASSET_GENERATION_LIBRARY.md` · `RELEASE_AUDIT_PLAN.md` ·
-`BETA_PHASE_2_REPORT.md` · `BETA_PHASE_3_REPORT.md` · `BETA_PHASE_4_REPORT.md` · `BETA_PHASE_5_REPORT.md` · `BETA_PHASE_6_REPORT.md` · `BETA_PHASE_7_REPORT.md` · `PLAY_CONSOLE_SETUP.md`.
+`BETA_PHASE_2_REPORT.md` · `BETA_PHASE_3_REPORT.md` · `BETA_PHASE_4_REPORT.md` · `BETA_PHASE_5_REPORT.md` · `BETA_PHASE_6_REPORT.md` · `BETA_PHASE_7_REPORT.md` · `BETA_PHASE_8_REPORT.md`.
 
 **`MOBILE_PROJECT_MEMORY.md` çok uzun** — baştan sona okuma; **sondaki üç bölüm** (⛳ BAĞLAM
-KONTROL NOKTASI · ⛳ BETA FAZ 3 … 7) Beta programı için yeterlidir. Evolution ayrıntısı gerekirse
+KONTROL NOKTASI · ⛳ BETA FAZ 3 … 8) Beta programı için yeterlidir. Evolution ayrıntısı gerekirse
 `MOBILE_EVOLUTION_FINAL_REPORT.md`.
 
 ## 2. Tamamlanan fazlar
@@ -36,16 +36,17 @@ KONTROL NOKTASI · ⛳ BETA FAZ 3 … 7) Beta programı için yeterlidir. Evolut
 | **Beta Faz 5**       | ✅ Giriş ekranı yeniden tasarımı (hero + güven şeridi + sıfırlama) |
 | **Beta Faz 6**       | ✅ Onboarding cilası — görsel %37 → %89,8 genişlik                 |
 | **Beta Faz 7**       | ✅ Profil avatarları (isteğe bağlı; maskot yedeği yapısal)         |
+| **Beta Faz 8**       | ✅ Karşılama deneyimi (AI tanıtımı → özet)                         |
 
 ## 3. Aktif faz
 
-# 🔵 Beta Faz 8 — Karşılama deneyimi
+# 🔵 Beta Faz 9 — Akan (streaming) AI
 
-Kaynak belge: **`BETA_READINESS_ROADMAP.md` → "Faz 8"**.
+Kaynak belge: **`BETA_READINESS_ROADMAP.md` → "Faz 9"**.
 
 ## 4. Kalan yol haritası
 
-`8` (aktif) → `9` Akan AI → `10` Kabin kumandaları → `11` Ders yeniden tasarımı →
+`9` (aktif) → `10` Kabin kumandaları → `11` Ders yeniden tasarımı →
 `12` Video hattı araştırması → `13` Nihai denetim → `BETA_READINESS_FINAL_REPORT.md`.
 
 ## 5. Değişmez mühendislik kuralları
@@ -102,7 +103,7 @@ Bir faz bitmeden bu sayıların **altına düşülmemeli**:
 
 ```
 flutter analyze  → 0
-flutter test     → 353
+flutter test     → 355
 @ea/web          → 541
 @ea/db           → 6
 @ea/content-schema → 17 · @ea/question-bank → 10 · @ea/srs-engine → 12
@@ -137,30 +138,28 @@ bilinçli olarak değiştirilmedi (o dosyaya yalnız kural eklenir). Sapma burad
 
 **Cihazı her fazın başında doğrula:** `adb devices -l`.
 
-## 10. Faz 8'in ilk görevi — TAM OLARAK BU
+## 10. Faz 9'un ilk görevi — TAM OLARAK BU
 
-> **Görev:** onboarding'den **hemen sonra**, Ana Sayfa'dan **önce** premium bir AI karşılama
-> diyaloğu. Uygulama, öğrenme sistemi, topluluk, AI Koç ve Premium tanıtılır.
+> **Görev:** AI Koç yanıtları **akarak** gelsin. Anlık yanıt çizimi kaldırılır.
 
 Adımlar:
 
-1. `lib/features/onboarding/welcome_screen.dart` ve `domain/onboarding/welcome_controller.dart`
-   okunur — **E7'deki tek-seferlik karşılama zinciri KORUNUR**, üstüne inşa edilir.
-2. Zincir: **tanıtım → karşılama → ana sayfa**. Tek seferlik olduğu **testle sabitlenir**
-   (`welcome_test.dart` zaten bu zinciri doğruluyor — bozulmamalı).
-3. Tasarım token'ları dışında sabit renk yok; açık **ve** koyu temada doğrulanır.
-4. `BETA_PHASE_8_REPORT.md` + bellek **ekleme** + commit + push + **CI yeşil bekle**.
+1. **ÖNCE ÖLÇ:** backend (`/api/ai/ask` veya mobil karşılığı) akış (SSE/chunked) destekliyor mu?
+   Sonuç **rapora yazılır** — DoD bunu şart koşuyor.
+2. Destekliyorsa **gerçek akış**; desteklemiyorsa **aşamalı parça çizimi** ve SSE'ye geçişe uygun
+   mimari.
+3. **Anlık yanıt ASLA sahte akış gibi gösterilmez** — kullanıcıya "yazıyor" hissi vermek için
+   gecikme uydurulmaz. Bu, dürüstlük disiplininin doğrudan konusudur.
+4. `BETA_PHASE_9_REPORT.md` + bellek **ekleme** + commit + push + **CI yeşil bekle**.
 
-**Faz 7'den devreden iki ders:**
-
-- Yeni/uzayan ekran eklerken widget testinde `useTallSurface()` gerekebilir (üçüncü kez yaşandı).
-- Bir yetenek eklerken, o yeteneğin **yokluğunu vaat eden metinleri** `grep` ile ara.
+**Faz 8'den devreden AÇIK BULGU:** 360×640 @1.3× bileşiminde karşılamanın özet adımında 24 px
+yatay taşma var; kaynağı izole edilemedi, Faz 13 denetimine devredildi.
 
 ## 11. İlk 60 saniyede çalıştırılacak doğrulama
 
 ```bash
 cd /home/emre/Downloads/OTHER-RESEARCH/other_report/ehliyet-akademi
-git log --oneline -3          # en üstte Faz 7 commit'i olmalı
+git log --oneline -3          # en üstte Faz 8 commit'i olmalı
 git status --short            # boş olmalı
 gh run list --limit 3         # son çalışmalar yeşil olmalı
 adb devices -l                # SABİT KİMLİK YOK — §9

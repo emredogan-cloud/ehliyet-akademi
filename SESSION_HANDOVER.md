@@ -16,17 +16,17 @@
 | Üretim                | https://www.ehliyetegitim.com (Vercel, canlı)                                                                                   |
 | **Önceki program**    | **Evolution E1–E13 — TAMAMLANDI.** Dokunulmaz, yeniden başlatılmaz                                                              |
 | **Aktif program**     | **Beta Readiness** — Google Play Kapalı Test (12 test kullanıcısı)                                                              |
-| **Tamamlanan fazlar** | **0, 1, 2, 3, 4, 5, 6, 7**                                                                                                      |
-| **Sıradaki faz**      | **8 — Karşılama deneyimi**                                                                                                      |
+| **Tamamlanan fazlar** | **0, 1, 2, 3, 4, 5, 6, 7, 8**                                                                                                   |
+| **Sıradaki faz**      | **9 — Akan (streaming) AI**                                                                                                     |
 
 ## 2. Git durumu
 
-| Alan          | Değer                                                         |
-| ------------- | ------------------------------------------------------------- |
-| Dal           | `main`                                                        |
-| Son commit    | **Beta Faz 7 — Profil avatarları** (bu belgeyi içeren commit) |
-| Çalışma ağacı | temiz                                                         |
-| CI            | CI ✅ · Mobile CI ✅ · CodeQL ✅                              |
+| Alan          | Değer                                                          |
+| ------------- | -------------------------------------------------------------- |
+| Dal           | `main`                                                         |
+| Son commit    | **Beta Faz 8 — Karşılama deneyimi** (bu belgeyi içeren commit) |
+| Çalışma ağacı | temiz                                                          |
+| CI            | CI ✅ · Mobile CI ✅ · CodeQL ✅                               |
 
 > `Mobile CI` yalnız `apps/mobile/**` değiştiğinde çalışır. Yalnız belge değiştiren commit'lerde
 > tetiklenmemesi **beklenen** davranıştır, hata değildir.
@@ -47,7 +47,7 @@ c2e4887 feat(mobile): Evolution E13 — cila, varlık optimizasyonu ve PROGRAM K
 | Paket                         | Sonuç                                                   |
 | ----------------------------- | ------------------------------------------------------- |
 | `flutter analyze`             | **0 sorun**                                             |
-| `flutter test`                | **353 geçti** (Faz 7'de +19)                            |
+| `flutter test`                | **355 geçti**                                           |
 | `@ea/web`                     | **541 geçti** (Faz 7'de +25)                            |
 | `@ea/db`                      | **6 geçti**                                             |
 | `@ea/content-schema`          | **17 geçti**                                            |

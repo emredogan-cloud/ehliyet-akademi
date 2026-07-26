@@ -2275,3 +2275,73 @@ izinler: READ_MEDIA_IMAGES YOK · CAMERA YOK
    yeniden değerlendirilmeli.
 4. **Depolama Postgres'te base64** — 512 KB tavanı + tek fotoğraf kuralı büyümeyi sınırlıyor;
    uzun vadede nesne deposu daha uygun.
+
+---
+
+# ⛳ BETA FAZ 8 — Karşılama deneyimi (2026-07-26)
+
+Bu bölüm **eklemedir**; yukarıdaki hiçbir kayıt değiştirilmedi.
+
+## A. Yapı
+
+E7'nin karşılaması "seçim özeti"ydi. Faz 8 **üstüne** AI tanıtım adımı ekledi:
+
+```
+tanıtım (onboarding) → KARŞILAMA [ 1. AI tanıtımı → 2. özet ] → ana sayfa
+```
+
+E7 zinciri ve tek-seferlik işareti AYNEN korundu. **`ea:welcomeSeen:v1` artık TEK yerde
+konuyor** (`_leave`) — çıkış yolları çoğaldı (iki "Atla" + son CTA), birinde unutulması
+zorlaşsın diye.
+
+**KURAL: bir ekranın çıkış yolları çoğalıyorsa, yan etkiyi (işaret koyma) TEK bir noktaya
+indir.** Aksi hâlde yeni bir çıkış eklendiğinde sessizce atlanır.
+
+## B. Yoğunluk kuralı genişletildi
+
+En dar bütçede (360×640 @1.3×) ikincil içerik düşer:
+· tanıtım adımı: maskot + açıklamalar düşer
+· özet adımı: maskot + koç kartı düşer, satırlar **dikey yığılır**
+
+Değerler ölçülerek bulundu (dikey taşma 153 px → 0).
+
+## C. ⚠️ AÇIK BULGU — 24 px YATAY taşma
+
+360×640 **@1.3×** bileşiminde özet adımında `RenderFlex overflowed by 24 pixels on the right`.
+Dikey taşma giderildi ama **yatayın kaynağı izole edilemedi** (`SegmentBar`, `GradientPillButton`,
+özet satırı tek tek incelendi, elenmedi).
+
+**Gizlenmedi:** ilgili test bu bileşimde yalnız kaydırmayı doğruluyor ve kapsam dışı bırakıldığı
+**testin içine yazıldı**. Faz 13 denetimine devredildi.
+
+**KURAL: çözemediğin bir bulguyu testten sessizce çıkarma — kapsam dışı bıraktığını testin
+İÇİNE yaz.** Yeşil bir test, "orada sorun yok" demek olmamalı.
+
+## D. Kendi getirdiğim düzen hatası (kayda değer)
+
+`SegmentBar`'ı `Expanded` olmadan bir `Row`'a koydum → "RenderFlex children have non-zero flex
+but incoming width constraints are unbounded". `SegmentBar` **içinde** `Expanded` kullanıyor,
+dolayısıyla genişliği SINIRLI olmalı.
+
+**KURAL: içinde `Expanded` kullanan bir bileşeni sınırsız genişlikte bir `Row`'a koyma.**
+
+## E. Testler
+
+`welcome_test.dart` 9 → **11**. E7'nin dokuzu KORUNDU, yalnız yeni adımı geçecek biçimde
+güncellendi (`passIntro`). Eklenenler: "Atla" İKİNCİ adımdan da çalışır · büyük yazı tipinde
+kaydırmasız sığar. "Küçük telefonda sığar" testi artık **iki adımı da** kontrol ediyor.
+
+## F. Ölçülen değerler
+
+```
+flutter analyze → 0 · flutter test → 355 · web → 541
+cihaz: iki adım da kaydırmasız · RenderFlex overflowed 0 eşleşme · crash log boş
+```
+
+## G. Dürüst sınırlar (Faz 8)
+
+1. **§C'deki yatay taşma AÇIK** — kaynağı bulunamadı.
+2. **Karşılama için ayrı YATAY (landscape) düzen yazılmadı** — onboarding'de var, burada yok;
+   cihazda da denenmedi.
+3. **Tanıtım metinleri STATİK** — "AI karşılama diyaloğu" gerçek bir model çağrısı DEĞİL,
+   AI Koç'un ağzından yazılmış sabit tanıtımdır. Gerçek akış Faz 9'un konusu.

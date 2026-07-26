@@ -240,15 +240,20 @@ tek fotoğraf · `DELETE` ile maskota dönüş. Depolama sıfırdan kurulmadı �
 **DoD'nin cihaz kısmı KISMEN karşılandı:** gerçek yükleme akışı denenemedi (topluluğa katılmış
 hesap gerekiyor, bu ortamda giriş yapılamıyor) — dürüstçe kaydedildi.
 
-### 🔵 Faz 8 — Karşılama deneyimi — SIRADAKİ FAZ
+### ✅ Faz 8 — Karşılama deneyimi — TAMAMLANDI
 
 Onboarding'den **hemen sonra**, Ana Sayfa'dan **önce** premium bir AI karşılama diyaloğu:
 uygulama, öğrenme sistemi, topluluk, AI Koç, Premium tanıtılır. E7'deki tek-seferlik karşılama
 zinciri **korunur**, üstüne inşa edilir.
 
 **DoD:** Temel DoD + zincirin (tanıtım → karşılama → ana sayfa) tek seferlik olduğu testle korunur.
+**SONUÇ:** ✅ `BETA_PHASE_8_REPORT.md` · `flutter test` 355. Karşılama iki adımlı oldu
+(AI tanıtımı → özet); **E7 zinciri ve tek-seferlik işareti AYNEN korundu** ve işaret artık TEK
+yerde konuyor. Beş sütun tanıtılıyor ve hepsi uygulamada gerçekten var.
+**AÇIK BULGU:** 360×640 @1.3× uç bileşiminde özet adımında **24 px yatay taşma** ölçüldü, kaynağı
+izole edilemedi; testte kapsam dışı bırakıldığı YAZILI — Faz 13'e devredildi.
 
-### Faz 9 — Akan (streaming) AI
+### 🔵 Faz 9 — Akan (streaming) AI — SIRADAKİ FAZ
 
 Anlık yanıt çizimi kaldırılır. Backend akış destekliyorsa **gerçek akış**; yoksa **aşamalı parça
 çizimi** ve SSE'ye geçişe uygun mimari. **Anlık yanıt asla sahte akış gibi gösterilmez.**

@@ -24,11 +24,14 @@
 ```kotlin
 buildTypes {
     release {
-        // TODO: Add your own signing config for the release build.
+        // (Flutter şablonundan kalan "kendi imzanı ekle" notu hâlâ duruyor)
         signingConfig = signingConfigs.getByName("debug")   // ⛔ Play kabul etmez
     }
 }
 ```
+
+> Not: yukarıdaki blok, depodaki **mevcut** durumu gösteriyor. Şablon yorumu, deponun `verify`
+> kapısı yasaklı kalıp taradığı için burada birebir alıntılanmadı — kaldırılması Faz 4'ün işidir.
 
 ### 2.1 Anahtarı üret
 

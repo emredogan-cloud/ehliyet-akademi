@@ -273,12 +273,17 @@ görsel, zoom, açıklama, ipuçları, öğrenme kartları.
 "sık yapılan hata" yazıldı. Zoom: `InteractiveViewer` + çift dokunuş (2,5×). Bölüm sırası mekanik
 kütüphanesiyle hizalı. Ayrıntı: `BETA_PHASE_10_REPORT.md`.
 
-### 🔵 Faz 11 — Ders sayfası yeniden tasarımı — SIRADAKİ FAZ
+### ✅ Faz 11 — Ders sayfası yeniden tasarımı — TAMAMLANDI
 
 Editoryal düzen: hero, illüstrasyon, ilerleme, tahmini süre, zorluk, öğrenme hedefleri, gelişmiş
 hiyerarşi, modern kartlar, hareket. Tasarım token'ları korunur (E13'teki token testi bunu zorlar).
 
-### Faz 12 — Yeni nesil video hattı araştırması (üretim YOK)
+**Sonuç:** hero kartı (konu → başlık → künye → illüstrasyon), okuma ilerlemesi çubuğu ve
+**türetilmiş** zorluk kademesi eklendi. Zorluk veriye elle yazılmadı: `dakika/5 + bölüm + hata`
+puanından hesaplanır (saf kural + monotonluk testi). Hareket, "animasyonları azalt" açıkken hiç
+kurulmaz. Ayrıntı: `BETA_PHASE_11_REPORT.md`.
+
+### 🔵 Faz 12 — Yeni nesil video hattı araştırması (üretim YOK) — SIRADAKİ FAZ
 
 Rive · Lottie · Spline · Blender NPR · Three.js · SVG Motion · Cavalry · After Effects/Bodymovin
 ve uygun diğer çözümler karşılaştırılır: kalite · sürdürülebilirlik · maliyet · üretim hızı ·

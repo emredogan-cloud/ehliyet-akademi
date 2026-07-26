@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
+import '../../design/brand.dart';
 import '../../data/premium/entitlements_repository.dart';
 import '../../design/app_card.dart';
 import '../../design/markdown_text.dart';
@@ -10,6 +11,7 @@ import '../../design/primitives.dart' as ui;
 import '../../domain/content/content_enums.dart';
 import '../../domain/content/content_queries.dart';
 import '../../domain/content/lesson.dart';
+import '../../domain/content/lesson_meta.dart';
 import '../../domain/premium/products.dart';
 import 'widgets/content_scope.dart';
 
@@ -87,14 +89,60 @@ class _LockedGate extends StatelessWidget {
   }
 }
 
-class _LessonBody extends StatelessWidget {
+class _LessonBody extends StatefulWidget {
   const _LessonBody({required this.lesson});
   final Lesson lesson;
 
   @override
+  State<_LessonBody> createState() => _LessonBodyState();
+}
+
+class _LessonBodyState extends State<_LessonBody> {
+  final _scroll = ScrollController();
+  double _progress = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _scroll.addListener(_onScroll);
+    // İlk kare: içerik ekrana sığıyorsa ilerleme 1 olmalı (kural saf katmanda).
+    WidgetsBinding.instance.addPostFrameCallback((_) => _onScroll());
+  }
+
+  void _onScroll() {
+    if (!_scroll.hasClients) return;
+    final v = lessonReadingProgress(
+      offset: _scroll.offset,
+      maxExtent: _scroll.position.maxScrollExtent,
+    );
+    if ((v - _progress).abs() < 0.005) return;
+    setState(() => _progress = v);
+  }
+
+  @override
+  void dispose() {
+    _scroll.removeListener(_onScroll);
+    _scroll.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final lesson = widget.lesson;
     final p = context.palette;
+    return Column(
+      children: [
+        // Beta Faz 11 — OKUMA İLERLEMESİ. Dersin ne kadarının geride kaldığını gösterir;
+        // uydurma bir "tamamlandı" durumu değil, kaydırmadan TÜRETİLEN gerçek bir orandır.
+        _ReadingBar(value: _progress),
+        Expanded(child: _content(context, lesson, p)),
+      ],
+    );
+  }
+
+  Widget _content(BuildContext context, Lesson lesson, AppPalette p) {
     return ListView(
+      controller: _scroll,
       padding: const EdgeInsets.fromLTRB(
         AppSpacing.s4,
         AppSpacing.s2,
@@ -102,21 +150,8 @@ class _LessonBody extends StatelessWidget {
         AppSpacing.s10,
       ),
       children: [
-        // Başlık bloğu
-        Row(
-          children: [
-            _Chip(text: lesson.subject.label, color: p.primary),
-            const SizedBox(width: AppSpacing.s2),
-            _Chip(text: '${lesson.minutes} dk', color: p.text3, icon: Icons.schedule_rounded),
-            if (lesson.premium) ...[
-              const SizedBox(width: AppSpacing.s2),
-              _Chip(text: 'Premium', color: p.accent, icon: Icons.workspace_premium_rounded),
-            ],
-          ],
-        ),
-        const SizedBox(height: AppSpacing.s3),
-        Text(lesson.title, style: Theme.of(context).textTheme.headlineMedium),
-        const SizedBox(height: AppSpacing.s2),
+        _LessonHero(lesson: lesson),
+        const SizedBox(height: AppSpacing.s4),
         MarkdownText(lesson.summary, style: TextStyle(color: p.text2, height: 1.45, fontSize: 14.5)),
 
         // Hedefler
@@ -485,6 +520,132 @@ class _Chip extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Beta Faz 11 — okuma ilerlemesi çubuğu.
+///
+/// Neden "tamamlandı" rozeti değil: ders okuma durumu hiçbir yerde saklanmıyor. Olmayan bir
+/// veriyi varmış gibi göstermek yerine, GERÇEKTEN ölçülebilen şey gösterilir — sayfanın ne
+/// kadarının geride kaldığı.
+class _ReadingBar extends StatelessWidget {
+  const _ReadingBar({required this.value});
+  final double value;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.palette;
+    return SizedBox(
+      height: 3,
+      child: Stack(
+        children: [
+          Positioned.fill(child: ColoredBox(color: p.border.withValues(alpha: 0.5))),
+          FractionallySizedBox(
+            alignment: Alignment.centerLeft,
+            widthFactor: value.clamp(0.0, 1.0),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [p.primary, p.primary700]),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Ders hero'su — illüstrasyon, başlık ve ölçülebilir künye (konu · süre · zorluk).
+///
+/// Hiyerarşi bilinçli: göz önce **görsele**, sonra konuya, sonra başlığa iner. Eski düzende
+/// sayfa doğrudan küçük çiplerle başlıyordu ve hiçbir görsel giriş noktası yoktu.
+class _LessonHero extends StatelessWidget {
+  const _LessonHero({required this.lesson});
+  final Lesson lesson;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.palette;
+    final difficulty = lessonDifficulty(lesson);
+    final tone = switch (difficulty) {
+      LessonDifficulty.kolay => p.green,
+      LessonDifficulty.orta => p.accent,
+      LessonDifficulty.zor => p.red,
+    };
+    // Hareket, sistem "animasyonları azalt" diyorsa KAPANIR (E13 erişilebilirlik kuralı).
+    final reduce = MediaQuery.disableAnimationsOf(context);
+
+    final card = Container(
+      padding: const EdgeInsets.all(AppSpacing.s4),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppRadii.lg),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [p.primary.withValues(alpha: 0.16), p.surface2],
+        ),
+        border: Border.all(color: p.primary.withValues(alpha: 0.25)),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  lesson.subject.label,
+                  style: TextStyle(
+                    color: p.primary,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 0.3,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  lesson.title,
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(height: 1.15),
+                ),
+                const SizedBox(height: AppSpacing.s3),
+                Wrap(
+                  spacing: AppSpacing.s2,
+                  runSpacing: 6,
+                  children: [
+                    _Chip(text: '${lesson.minutes} dk', color: p.text3, icon: Icons.schedule_rounded),
+                    _Chip(text: difficulty.label, color: tone, icon: Icons.speed_rounded),
+                    if (lesson.premium)
+                      _Chip(
+                        text: 'Premium',
+                        color: p.accent,
+                        icon: Icons.workspace_premium_rounded,
+                      ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: AppSpacing.s3),
+          MascotImage(
+            lessonHeroAsset(lesson.subject),
+            height: 96,
+            semanticLabel: '',
+          ),
+        ],
+      ),
+    );
+
+    if (reduce) return card;
+    return TweenAnimationBuilder<double>(
+      duration: const Duration(milliseconds: 420),
+      curve: Curves.easeOutCubic,
+      tween: Tween(begin: 0, end: 1),
+      builder: (_, t, child) => Opacity(
+        opacity: t,
+        child: Transform.translate(offset: Offset(0, (1 - t) * 14), child: child),
+      ),
+      child: card,
     );
   }
 }

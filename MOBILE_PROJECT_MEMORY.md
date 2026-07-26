@@ -2590,3 +2590,34 @@ doğrulanır.
 39 kumandanın tamamına ipucu + ≥2 adım · 19'una gerçek "sık yapılan hata"
 analyze 0 · test 383 (+11) · cihazda liste→detay açıldı · taşma 0
 ```
+
+---
+
+# Beta Faz 11 — Ders sayfası yeniden tasarımı
+
+## A. Kalıcı kural: türetilebilen veriyi ELLE YAZMA
+
+Zorluk, 19 derse elle etiket yazmak yerine dersin **ölçülebilir özelliklerinden** türetilir:
+`dakika/5 + bölüm sayısı + hata sayısı`; <6 kolay, <10 orta, üstü zor. Elle yazsaydık kaynağı
+olmayan bir iddia üretmiş ve ilk içerik güncellemesinde bayatlatmış olurduk.
+
+Kural saf katmanda (`lesson_meta.dart`) ve testte **deterministik + monoton** olarak sabitlenmiştir.
+
+## B. Olmayan veriyi uydurma
+
+Ders "okundu" durumu hiçbir yerde saklanmıyor. Bu yüzden sayfada "tamamlandı" rozeti değil,
+gerçekten ölçülebilen **okuma ilerlemesi** (kaydırma oranı) gösterilir.
+
+Sınır durumu önemlidir: `maxScrollExtent == 0` iken ilerleme **1**'dir. `0` dönmek kısa derste
+çubuğu hep boş bırakır ve yanlış bir "hiç okumadın" sinyali verirdi.
+
+## C. Hareket kuralı
+
+`MediaQuery.disableAnimationsOf(context)` true ise animasyon **hiç kurulmaz** —
+`TweenAnimationBuilder` ağaca bile girmez. Test bunu `findsNothing` ile ölçüyor.
+
+## D. Ölçülen
+
+```
+analyze 0 · test 395 (+12) · cihazda hero + "8 dk" + "Orta" göründü · taşma 0
+```

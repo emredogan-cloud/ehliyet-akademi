@@ -142,13 +142,14 @@ test('video öğrenme: oynatıcı + bölümler + yer imi + transkript (Program 2
   // Bölüm çipleri
   expect(await player.getByTestId('video-chapter').count()).toBeGreaterThanOrEqual(4);
   // Transkript + özet
-  await expect(player.getByTestId('video-transcript')).toContainText('direksiyonu sağa kır');
+  await expect(player.getByTestId('video-transcript')).toContainText('direksiyonu tam sağa kır');
   await expect(player.getByTestId('video-summary')).toBeVisible();
   // Yer imi ekle → kalıcı liste görünür
   await player.getByTestId('video-bookmark').click();
   await expect(player.getByTestId('video-bookmarks')).toBeVisible();
-  // Planlanan müfredat dürüst rozetli
-  expect(await page.getByTestId('video-planned').count()).toBeGreaterThanOrEqual(3);
+  // Planlanan müfredat dürüst rozetli. E12'de dört "planlanan" başlıktan ikisi (yokuşta kalkış,
+  // sık yapılan hatalar) animasyona çevrildi; geriye GERÇEKTEN çekim gerektiren iki başlık kaldı.
+  expect(await page.getByTestId('video-planned').count()).toBeGreaterThanOrEqual(2);
   await expect(page.getByTestId('planned-badge').first()).toHaveText('Çekim planlanıyor');
 });
 

@@ -2654,3 +2654,38 @@ Rive/Lottie/Spline/Three.js bu garantiyi kaybettirir (zaman damgaları elle eşl
 Faz 7'de Lottie **avatar yüklemede** yasaklanmıştı (kullanıcı JSON'unu çizim motorunda çalıştırmak
 saldırı yüzeyi). Burada dosya BİZİM ürettiğimiz, depoya giren, incelenmiş bir varlıktır. İki karar
 farklı güven sınırlarına aittir.
+
+---
+
+# Beta Faz 13 — Nihai yayın denetimi + program kapanışı
+
+## A. Üretim veritabanı temizliğinde çıkan KURAL
+
+Temizlik adayı 115 test hesabının **24'ü silinemez**: üretim içeriğinin tamamı
+(`content_items` 16 · `content_versions` 43 · `media_assets` 8) ve tüm denetim kayıtları
+(`audit_logs` 51) o hesaplara bağlı ve bu dört yabancı anahtar **`NO ACTION`**.
+
+**Kural:** bir hesabı silmeden önce yalnız e-posta desenine değil, **ona bağlı `NO ACTION`
+referanslarına** bakılır. Desen "test" dese bile hesap üretim içeriği üretmiş olabilir.
+
+## B. Ortam denetiminden çıkanlar
+
+1. **RevenueCat webhook ucu hiç yoktu** (üretimde 404). Faz 3 "sunucu köprüsü webhook'tur"
+   demişti ama uç yazılmamıştı. Faz 13'te yazıldı: **fail-closed** (sır yoksa 503), düz sır ve
+   `sha256=` HMAC kabul eder, sabit zamanlı karşılaştırma, idempotent.
+2. **`.env` biçim tuzağı:** `AD =değer` (eşittirden önce boşluk). `dotenv` tolere eder, kabuk
+   `source .env` **etmez**. Sessiz "değişken tanımsız" hatası üretir.
+3. `google-services.json` içindeki boş `oauth_client` **sorun değildir** — Google Services Gradle
+   eklentisi uygulanmıyor; kimlik yalnız `--dart-define`'dan okunur.
+
+## C. AAB doğrulama kuralı (tekrar)
+
+`apksigner` bir AAB'yi **doğrulayamaz**; AAB için `jarsigner -verify` kullanılır. PKIX uyarısı
+beklenen durumdur (yükleme anahtarı kendinden imzalı).
+
+## D. Program sonucu
+
+```
+14 faz + 3 düzeltme fazı · mobil 395 test · web 559 test
+AAB 64,4 MB imzalı · yayın engelleyici bulgu YOK
+```

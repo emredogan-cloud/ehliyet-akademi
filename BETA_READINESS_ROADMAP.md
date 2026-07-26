@@ -218,7 +218,7 @@ farklıdır — metrik düzeltildi, yanlış metrikle "ulaşıldı" denmedi.
 **Dürüst sınır:** 360×640'ta hedef banda **ulaşılamıyor** (%46,3) ve varlıklar **1080 px'e yeniden
 üretilmedi** (%29 açık) — ikisi de testle/raporla kayıtlı.
 
-### 🔵 Faz 7 — Profil avatarları — SIRADAKİ FAZ
+### ✅ Faz 7 — Profil avatarları — TAMAMLANDI
 
 Galeri + kamera + kırpma + sıkıştırma + **depolama soyutlaması**. Topluluk, sıralama ve profilde
 görünür. Gelecekteki moderasyonla uyumlu.
@@ -228,8 +228,19 @@ o kararı **değiştiriyor**; dolayısıyla moderasyon yüzeyi (şikâyet hedefi
 varsayılan maskota dönüş) aynı fazda ele alınmak zorundadır.
 
 **DoD:** Temel DoD + yükleme/kırpma/sıkıştırma cihazda doğrulanır + avatar şikâyet edilebilir.
+**SONUÇ:** ✅ `BETA_PHASE_7_REPORT.md` · **+44 test** (mobil 353, web 541). Yükleme **isteğe
+bağlı**; maskot yedeği yapısal (`avatarMediaId` null → maskot; ağ hatasında da maskot).
+Sunucu savunmaları tek yerde: oturum · katılım şartı · **SVG reddi** · 512 KB · hız sınırı ·
+tek fotoğraf · `DELETE` ile maskota dönüş. Depolama sıfırdan kurulmadı — mevcut sertleştirilmiş
+`media_assets` yeniden kullanıldı.
+**İZİN ÖLÇÜLDÜ:** `READ_MEDIA_IMAGES` ve `CAMERA` derlenmiş APK'da **YOK**.
+**Veri Güvenliği "Fotoğraflar" satırı GÜNCELLENDİ** (§5.6) — kod ve beyan aynı commit'te hizalı.
+**Cihazda dürüstlük hatası bulundu:** tanıtım ekranı hâlâ "Fotoğraf yüklenmez" vaat ediyordu →
+"Fotoğraf isteğe bağlı" yapıldı, eski metnin geri gelmemesi testle sabitlendi.
+**DoD'nin cihaz kısmı KISMEN karşılandı:** gerçek yükleme akışı denenemedi (topluluğa katılmış
+hesap gerekiyor, bu ortamda giriş yapılamıyor) — dürüstçe kaydedildi.
 
-### Faz 8 — Karşılama deneyimi
+### 🔵 Faz 8 — Karşılama deneyimi — SIRADAKİ FAZ
 
 Onboarding'den **hemen sonra**, Ana Sayfa'dan **önce** premium bir AI karşılama diyaloğu:
 uygulama, öğrenme sistemi, topluluk, AI Koç, Premium tanıtılır. E7'deki tek-seferlik karşılama

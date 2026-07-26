@@ -203,6 +203,9 @@ describe('sıralama', () => {
     userId: id,
     displayName: name,
     avatarId: 'owl-wave',
+    // Beta Faz 7: sıralama satırları artık yüklenmiş fotoğrafı da taşıyor. Sıralama mantığı
+    // fotoğrafa BAKMAZ; burada yalnız tip bütünlüğü için null verilir.
+    avatarUrl: null,
     licence: 'b',
     xp,
     streak,

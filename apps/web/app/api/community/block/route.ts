@@ -2,6 +2,7 @@ import { and, eq } from 'drizzle-orm';
 import { getDb, communityBlocks, communityProfiles } from '@ea/db';
 import { getSessionUser, json, guarded } from '@/lib/server/auth';
 import { checkRateLimit } from '@/lib/server/rate-limit';
+import { avatarUrlFor } from '@/lib/server/community';
 
 /**
  * Engelleme (Evolution Faz E8).
@@ -26,12 +27,18 @@ export const GET = guarded(async (req: Request): Promise<Response> => {
       userId: communityBlocks.blockedId,
       displayName: communityProfiles.displayName,
       avatarId: communityProfiles.avatarId,
+      avatarMediaId: communityProfiles.avatarMediaId,
     })
     .from(communityBlocks)
     .leftJoin(communityProfiles, eq(communityProfiles.userId, communityBlocks.blockedId))
     .where(eq(communityBlocks.blockerId, user.id));
 
-  return json({ blocked: rows });
+  return json({
+    blocked: rows.map(({ avatarMediaId, ...rest }) => ({
+      ...rest,
+      avatarUrl: avatarUrlFor(avatarMediaId),
+    })),
+  });
 });
 
 export const POST = guarded(async (req: Request): Promise<Response> => {

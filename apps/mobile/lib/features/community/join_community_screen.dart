@@ -7,6 +7,8 @@ import '../../data/community/community_repository.dart';
 import '../../design/brand.dart';
 import '../../design/primitives.dart';
 import '../../domain/community/community_models.dart';
+import 'avatar_editor_screen.dart';
+import 'widgets/community_avatar_view.dart';
 import '../../domain/onboarding/study_profile.dart';
 
 /// Evolution Faz E8 — topluluğa katılma / profili düzenleme.
@@ -27,6 +29,8 @@ class JoinCommunityScreen extends ConsumerStatefulWidget {
 class _JoinCommunityScreenState extends ConsumerState<JoinCommunityScreen> {
   final _name = TextEditingController();
   CommunityAvatar _avatar = CommunityAvatar.owlWave;
+  /// Beta Faz 7 — yüklenmiş fotoğrafın URL'si. null → maskot kullanılır.
+  String? _avatarUrl;
   bool _public = true;
   bool _seeded = false;
   String? _nameError;
@@ -35,6 +39,19 @@ class _JoinCommunityScreenState extends ConsumerState<JoinCommunityScreen> {
   void dispose() {
     _name.dispose();
     super.dispose();
+  }
+
+  /// Beta Faz 7 — fotoğraf düzenleyiciyi aç.
+  ///
+  /// Dönüş: yeni URL (yüklendi) · `''` (kaldırıldı → maskota dönüldü) · `null` (vazgeçildi).
+  Future<void> _editPhoto() async {
+    final result = await Navigator.of(context).push<String>(
+      MaterialPageRoute(
+        builder: (_) => AvatarEditorScreen(hasPhoto: _avatarUrl != null),
+      ),
+    );
+    if (!mounted || result == null) return; // vazgeçme hata değildir
+    setState(() => _avatarUrl = result.isEmpty ? null : result);
   }
 
   @override
@@ -48,6 +65,8 @@ class _JoinCommunityScreenState extends ConsumerState<JoinCommunityScreen> {
       _seeded = true;
       _name.text = community.profile!.displayName;
       _avatar = community.profile!.avatar;
+      // Beta Faz 7 — yüklenmiş fotoğraf varsa önizlemede o gösterilir.
+      _avatarUrl = community.profile!.avatarUrl;
       _public = community.profile!.isPublic;
     }
 
@@ -93,7 +112,35 @@ class _JoinCommunityScreenState extends ConsumerState<JoinCommunityScreen> {
 
             const SectionTitle('Avatar'),
             Text(
-              'Fotoğraf yüklenmez — avatarını uygulamanın maskotlarından seçersin.',
+              'İstersen fotoğraf yükle, istersen maskotlardan birini seç. Fotoğraf yüklemek '
+              'zorunlu değildir.',
+              style: TextStyle(color: p.text3, fontSize: 12.5),
+            ),
+            const SizedBox(height: AppSpacing.s3),
+            // Beta Faz 7 — fotoğraf yükleme. Fotoğraf varsa önizlemesi, yoksa seçili maskot.
+            Row(
+              children: [
+                CommunityAvatarView(
+                  avatarId: _avatar.id,
+                  avatarUrl: _avatarUrl,
+                  size: 64,
+                  showRing: true,
+                ),
+                const SizedBox(width: AppSpacing.s4),
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: _editPhoto,
+                    icon: const Icon(Icons.photo_camera_outlined, size: 18),
+                    label: Text(_avatarUrl == null ? 'Fotoğraf yükle' : 'Fotoğrafı değiştir'),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.s4),
+            Text(
+              _avatarUrl == null
+                  ? 'Maskotunu seç:'
+                  : 'Fotoğrafını kaldırırsan aşağıdaki maskota dönülür:',
               style: TextStyle(color: p.text3, fontSize: 12.5),
             ),
             const SizedBox(height: AppSpacing.s3),

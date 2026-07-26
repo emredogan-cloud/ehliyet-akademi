@@ -67,6 +67,7 @@ export const GET = guarded(async (req: Request): Promise<Response> => {
       userId: otherId,
       displayName: p?.displayName ?? '',
       avatarId: p?.avatarId ?? 'owl-wave',
+      avatarUrl: p?.avatarUrl ?? null,
       licence: p?.licence ?? 'b',
       state: friendStateFor(
         {

@@ -101,9 +101,18 @@ export const questionReports = pgTable('question_reports', {
 // Topluluk (Evolution Faz E8) — kimlik, istatistik, sıralama, moderasyon.
 //
 // GİZLİLİK İLKESİ: katılım OPT-IN'dir (`visibility` varsayılan 'private') ve topluluk yüzeyleri
-// ASLA e-posta, gerçek ad veya konum döndürmez. Görünen tek kimlik, kullanıcının seçtiği
-// `displayName` ile paketlenmiş varlıklardan seçilen `avatarId`'dir — kullanıcı fotoğrafı YÜKLENMEZ
-// (bu, bütün bir moderasyon/PII sınıfını baştan ortadan kaldırır).
+// ASLA e-posta, gerçek ad veya konum döndürmez. Görünen kimlik, kullanıcının seçtiği
+// `displayName` ile bir avatardır.
+//
+// ⚠️ E8'DE ALINAN KARAR BETA FAZ 7'DE DEĞİŞTİ. E8, "kullanıcı fotoğrafı YÜKLENMEZ" diyordu; bu,
+// bütün bir moderasyon/PII sınıfını baştan ortadan kaldırıyordu. Faz 7 fotoğraf yüklemeyi
+// getiriyor, dolayısıyla o sınıf geri geliyor ve **aynı fazda** karşılanıyor:
+//   · Yükleme İSTEĞE BAĞLIDIR — `avatarMediaId` null ise paketlenmiş maskot (`avatarId`) kullanılır.
+//   · `avatar` zaten bir şikâyet sebebiydi (`communityReports.reason`); artık gerçek bir hedefi var.
+//   · Yönetici bir avatarı kaldırabilir → satır maskota geri döner (veri silinmez, bağ koparılır).
+//   · Yükleme yalnız DAR bir görsel türü kümesini kabul eder (SVG YOK — gömülü script riski).
+// Play Veri Güvenliği beyanındaki "Fotoğraflar" satırı bu yüzden GÜNCELLENMİŞTİR
+// (`PLAY_CONSOLE_SETUP.md` §5.6) — yanlış beyan mağazadan kaldırılma sebebidir.
 // ─────────────────────────────────────────────────────────────────────────────
 
 /** Topluluk kimliği. Satırın VARLIĞI katılım anlamına gelmez; görünürlük `visibility` ile belirlenir. */
@@ -113,6 +122,9 @@ export const communityProfiles = pgTable('community_profiles', {
     .references(() => users.id, { onDelete: 'cascade' }),
   displayName: text('display_name').notNull(),
   avatarId: text('avatar_id').notNull().default('owl-wave'),
+  /// Beta Faz 7 — yüklenen profil fotoğrafı (`media_assets.id`). **null → maskot kullanılır.**
+  /// Silme ON DELETE SET NULL: medya kaydı giderse profil maskota döner, satır kaybolmaz.
+  avatarMediaId: text('avatar_media_id'),
   licence: text('licence').notNull().default('b'), // b | a | d
   visibility: text('visibility').notNull().default('private'), // private | public
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),

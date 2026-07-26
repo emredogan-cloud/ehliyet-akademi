@@ -70,6 +70,7 @@ export const GET = guarded(async (req: Request): Promise<Response> => {
       userId: m.userId,
       displayName: profiles.get(m.userId)?.displayName ?? '',
       avatarId: profiles.get(m.userId)?.avatarId ?? 'owl-wave',
+      avatarUrl: profiles.get(m.userId)?.avatarUrl ?? null,
       role: m.role,
       xp: m.xp ?? 0,
       streak: m.streak ?? 0,

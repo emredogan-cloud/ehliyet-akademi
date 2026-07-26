@@ -42,12 +42,16 @@ class CommunityProfile {
   const CommunityProfile({
     required this.displayName,
     required this.avatarId,
+    this.avatarUrl,
     required this.licence,
     required this.visibility,
   });
 
   final String displayName;
   final String avatarId;
+
+  /// Beta Faz 7 — yüklenmiş profil fotoğrafı. **null ise maskot (`avatarId`) gösterilir.**
+  final String? avatarUrl;
   final String licence;
   final String visibility; // private | public
 
@@ -57,6 +61,7 @@ class CommunityProfile {
   factory CommunityProfile.fromJson(Map<String, dynamic> json) => CommunityProfile(
     displayName: (json['displayName'] ?? '').toString(),
     avatarId: (json['avatarId'] ?? 'owl-wave').toString(),
+    avatarUrl: json['avatarUrl']?.toString(),
     licence: (json['licence'] ?? 'b').toString(),
     visibility: (json['visibility'] ?? 'private').toString(),
   );
@@ -105,6 +110,7 @@ class LeaderboardEntry {
     required this.userId,
     required this.displayName,
     required this.avatarId,
+    this.avatarUrl,
     required this.licence,
     required this.xp,
     required this.streak,
@@ -114,6 +120,9 @@ class LeaderboardEntry {
   final String userId;
   final String displayName;
   final String avatarId;
+
+  /// Beta Faz 7 — yüklenmiş profil fotoğrafı. **null ise maskot (`avatarId`) gösterilir.**
+  final String? avatarUrl;
   final String licence;
   final int xp;
   final int streak;
@@ -125,6 +134,7 @@ class LeaderboardEntry {
     userId: (json['userId'] ?? '').toString(),
     displayName: (json['displayName'] ?? '').toString(),
     avatarId: (json['avatarId'] ?? 'owl-wave').toString(),
+    avatarUrl: json['avatarUrl']?.toString(),
     licence: (json['licence'] ?? 'b').toString(),
     xp: _int(json['xp']),
     streak: _int(json['streak']),
@@ -175,6 +185,7 @@ class CommunityUser {
     required this.userId,
     required this.displayName,
     required this.avatarId,
+    this.avatarUrl,
     required this.licence,
     required this.stats,
     required this.achievements,
@@ -184,6 +195,9 @@ class CommunityUser {
   final String userId;
   final String displayName;
   final String avatarId;
+
+  /// Beta Faz 7 — yüklenmiş profil fotoğrafı. **null ise maskot (`avatarId`) gösterilir.**
+  final String? avatarUrl;
   final String licence;
   final CommunityStats stats;
   final List<String> achievements;
@@ -197,6 +211,7 @@ class CommunityUser {
       userId: (p['userId'] ?? '').toString(),
       displayName: (p['displayName'] ?? '').toString(),
       avatarId: (p['avatarId'] ?? 'owl-wave').toString(),
+      avatarUrl: p['avatarUrl']?.toString(),
       licence: (p['licence'] ?? 'b').toString(),
       stats: json['stats'] == null
           ? CommunityStats.empty
@@ -211,15 +226,24 @@ class CommunityUser {
 
 /// Engellenen kullanıcı satırı (Faz E9 — engel kaldırma yüzeyi).
 class BlockedUser {
-  const BlockedUser({required this.userId, required this.displayName, required this.avatarId});
+  const BlockedUser({
+    required this.userId,
+    required this.displayName,
+    required this.avatarId,
+    this.avatarUrl,
+  });
   final String userId;
   final String displayName;
   final String avatarId;
+
+  /// Beta Faz 7 — yüklenmiş profil fotoğrafı. **null ise maskot (`avatarId`) gösterilir.**
+  final String? avatarUrl;
 
   factory BlockedUser.fromJson(Map<String, dynamic> j) => BlockedUser(
     userId: (j['userId'] ?? '').toString(),
     displayName: (j['displayName'] ?? '').toString(),
     avatarId: (j['avatarId'] ?? 'owl-wave').toString(),
+    avatarUrl: j['avatarUrl']?.toString(),
   );
 }
 

@@ -3,6 +3,7 @@ import { getDb, communityProfiles, communityStats } from '@ea/db';
 import { getSessionUser, json, guarded } from '@/lib/server/auth';
 import { checkRateLimit } from '@/lib/server/rate-limit';
 import {
+  avatarUrlFor,
   isAvatarId,
   isLicence,
   isVisibility,
@@ -47,6 +48,7 @@ export const GET = guarded(async (req: Request): Promise<Response> => {
       ? {
           displayName: profile.displayName,
           avatarId: profile.avatarId,
+          avatarUrl: avatarUrlFor(profile.avatarMediaId),
           licence: profile.licence,
           visibility: profile.visibility,
         }

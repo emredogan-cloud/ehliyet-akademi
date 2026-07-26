@@ -28,6 +28,7 @@ class FriendEntry {
     required this.userId,
     required this.displayName,
     required this.avatarId,
+    this.avatarUrl,
     required this.licence,
     required this.state,
   });
@@ -35,6 +36,9 @@ class FriendEntry {
   final String userId;
   final String displayName;
   final String avatarId;
+
+  /// Beta Faz 7 — yüklenmiş profil fotoğrafı. **null ise maskot (`avatarId`) gösterilir.**
+  final String? avatarUrl;
   final String licence;
   final FriendState state;
 
@@ -44,6 +48,7 @@ class FriendEntry {
     userId: (j['userId'] ?? '').toString(),
     displayName: (j['displayName'] ?? '').toString(),
     avatarId: (j['avatarId'] ?? 'owl-wave').toString(),
+    avatarUrl: j['avatarUrl']?.toString(),
     licence: (j['licence'] ?? 'b').toString(),
     state: FriendState.fromWire(j['state']?.toString()),
   );
@@ -78,6 +83,7 @@ class MessageThread {
     required this.userId,
     required this.displayName,
     required this.avatarId,
+    this.avatarUrl,
     required this.lastMessage,
     required this.lastAt,
     required this.unread,
@@ -86,6 +92,9 @@ class MessageThread {
   final String userId;
   final String displayName;
   final String avatarId;
+
+  /// Beta Faz 7 — yüklenmiş profil fotoğrafı. **null ise maskot (`avatarId`) gösterilir.**
+  final String? avatarUrl;
   final String lastMessage;
   final DateTime? lastAt;
   final bool unread;
@@ -96,6 +105,7 @@ class MessageThread {
     userId: (j['userId'] ?? '').toString(),
     displayName: (j['displayName'] ?? '').toString(),
     avatarId: (j['avatarId'] ?? 'owl-wave').toString(),
+    avatarUrl: j['avatarUrl']?.toString(),
     lastMessage: (j['lastMessage'] ?? '').toString(),
     lastAt: DateTime.tryParse('${j['lastAt'] ?? ''}'),
     unread: j['unread'] == true,

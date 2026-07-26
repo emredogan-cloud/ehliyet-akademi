@@ -1,5 +1,6 @@
 import { and, eq, or } from 'drizzle-orm';
 import { getDb, communityBlocks, communityProfiles } from '@ea/db';
+import { avatarUrlFor } from './community';
 
 /**
  * Sosyal uçların ORTAK kapıları (Evolution Faz E9).
@@ -43,6 +44,8 @@ export type PublicProfile = {
   userId: string;
   displayName: string;
   avatarId: string;
+  /// Beta Faz 7 — yüklenmiş profil fotoğrafının URL'si; **null ise maskot (`avatarId`) kullanılır**.
+  avatarUrl: string | null;
   licence: string;
 };
 
@@ -56,11 +59,16 @@ export async function profilesByIds(ids: string[]): Promise<Map<string, PublicPr
       userId: communityProfiles.userId,
       displayName: communityProfiles.displayName,
       avatarId: communityProfiles.avatarId,
+      avatarMediaId: communityProfiles.avatarMediaId,
       licence: communityProfiles.licence,
     })
     .from(communityProfiles);
   const wanted = new Set(ids);
-  for (const r of rows) if (wanted.has(r.userId)) map.set(r.userId, r);
+  for (const r of rows) {
+    if (!wanted.has(r.userId)) continue;
+    const { avatarMediaId, ...rest } = r;
+    map.set(r.userId, { ...rest, avatarUrl: avatarUrlFor(avatarMediaId) });
+  }
   return map;
 }
 

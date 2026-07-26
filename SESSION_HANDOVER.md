@@ -16,15 +16,15 @@
 | Üretim                | https://www.ehliyetegitim.com (Vercel, canlı)                                                                                   |
 | **Önceki program**    | **Evolution E1–E13 — TAMAMLANDI.** Dokunulmaz, yeniden başlatılmaz                                                              |
 | **Aktif program**     | **Beta Readiness** — Google Play Kapalı Test (12 test kullanıcısı)                                                              |
-| **Tamamlanan fazlar** | **0, 1, 2, 3, 4, 5, 6**                                                                                                         |
-| **Sıradaki faz**      | **7 — Profil avatarları**                                                                                                       |
+| **Tamamlanan fazlar** | **0, 1, 2, 3, 4, 5, 6, 7**                                                                                                      |
+| **Sıradaki faz**      | **8 — Karşılama deneyimi**                                                                                                      |
 
 ## 2. Git durumu
 
 | Alan          | Değer                                                         |
 | ------------- | ------------------------------------------------------------- |
 | Dal           | `main`                                                        |
-| Son commit    | **Beta Faz 6 — Onboarding cilası** (bu belgeyi içeren commit) |
+| Son commit    | **Beta Faz 7 — Profil avatarları** (bu belgeyi içeren commit) |
 | Çalışma ağacı | temiz                                                         |
 | CI            | CI ✅ · Mobile CI ✅ · CodeQL ✅                              |
 
@@ -47,8 +47,8 @@ c2e4887 feat(mobile): Evolution E13 — cila, varlık optimizasyonu ve PROGRAM K
 | Paket                         | Sonuç                                                   |
 | ----------------------------- | ------------------------------------------------------- |
 | `flutter analyze`             | **0 sorun**                                             |
-| `flutter test`                | **334 geçti** (Faz 6'da +8)                             |
-| `@ea/web`                     | **516 geçti**                                           |
+| `flutter test`                | **353 geçti** (Faz 7'de +19)                            |
+| `@ea/web`                     | **541 geçti** (Faz 7'de +25)                            |
 | `@ea/db`                      | **6 geçti**                                             |
 | `@ea/content-schema`          | **17 geçti**                                            |
 | `@ea/question-bank`           | **10 geçti**                                            |

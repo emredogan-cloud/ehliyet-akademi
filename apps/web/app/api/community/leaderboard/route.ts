@@ -3,6 +3,7 @@ import { getDb, communityProfiles, communityStats, communityBlocks } from '@ea/d
 import { getSessionUser, json, guarded } from '@/lib/server/auth';
 import { checkRateLimit } from '@/lib/server/rate-limit';
 import {
+  avatarUrlFor,
   isLicence,
   parsePageSize,
   rankRows,
@@ -58,6 +59,7 @@ export const GET = guarded(async (req: Request): Promise<Response> => {
       userId: communityProfiles.userId,
       displayName: communityProfiles.displayName,
       avatarId: communityProfiles.avatarId,
+      avatarMediaId: communityProfiles.avatarMediaId,
       licence: communityProfiles.licence,
       xp: communityStats.xp,
       streak: communityStats.streak,
@@ -70,7 +72,9 @@ export const GET = guarded(async (req: Request): Promise<Response> => {
         : eq(communityProfiles.visibility, 'public')
     );
 
-  const visible: LeaderboardRow[] = joined.filter((r) => !hidden.has(r.userId));
+  const visible: LeaderboardRow[] = joined
+    .filter((r) => !hidden.has(r.userId))
+    .map(({ avatarMediaId, ...rest }) => ({ ...rest, avatarUrl: avatarUrlFor(avatarMediaId) }));
   const ranked = rankRows(visible);
   const page = ranked.slice(offset, offset + limit);
 

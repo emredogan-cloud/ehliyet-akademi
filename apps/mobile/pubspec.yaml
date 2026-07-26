@@ -50,6 +50,8 @@ dependencies:
   in_app_purchase: ^3.3.0
   google_sign_in: ^7.2.0
   purchases_flutter: ^10.4.3
+  image_picker: ^1.2.0
+  image: ^4.5.4
 
 dev_dependencies:
   flutter_test:

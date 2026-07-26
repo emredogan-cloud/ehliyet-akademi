@@ -61,6 +61,7 @@ export const GET = guarded(async (req: Request): Promise<Response> => {
         userId: t.authorId,
         displayName: profiles.get(t.authorId)?.displayName ?? '',
         avatarId: profiles.get(t.authorId)?.avatarId ?? 'owl-wave',
+        avatarUrl: profiles.get(t.authorId)?.avatarUrl ?? null,
       },
     })),
     nextCursor: rows.length === limit ? rows[rows.length - 1]!.lastActivityAt : null,

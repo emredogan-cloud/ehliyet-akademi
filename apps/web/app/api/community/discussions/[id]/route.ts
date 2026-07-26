@@ -72,6 +72,7 @@ export const GET = guarded(async (req: Request): Promise<Response> => {
         userId: thread.authorId,
         displayName: profiles.get(thread.authorId)?.displayName ?? '',
         avatarId: profiles.get(thread.authorId)?.avatarId ?? 'owl-wave',
+        avatarUrl: profiles.get(thread.authorId)?.avatarUrl ?? null,
       },
     },
     posts: visible.map((p) => ({
@@ -83,6 +84,7 @@ export const GET = guarded(async (req: Request): Promise<Response> => {
         userId: p.authorId,
         displayName: profiles.get(p.authorId)?.displayName ?? '',
         avatarId: profiles.get(p.authorId)?.avatarId ?? 'owl-wave',
+        avatarUrl: profiles.get(p.authorId)?.avatarUrl ?? null,
       },
       mine: p.authorId === user.id,
     })),

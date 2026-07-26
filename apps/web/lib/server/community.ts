@@ -263,6 +263,8 @@ export type LeaderboardRow = {
   userId: string;
   displayName: string;
   avatarId: string;
+  /// Beta Faz 7 — yüklenmiş fotoğraf; null ise maskot (`avatarId`) kullanılır.
+  avatarUrl: string | null;
   licence: string;
   xp: number;
   streak: number;
@@ -298,4 +300,84 @@ export function parsePageSize(raw: string | null): number {
   const n = Number(raw);
   if (!Number.isFinite(n) || n <= 0) return PAGE_SIZE_DEFAULT;
   return Math.min(Math.floor(n), PAGE_SIZE_MAX);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Beta Faz 7 — profil fotoğrafı (avatar) yükleme kuralları
+//
+// Bu blok SAF'tır: ağ, veritabanı ve istek nesnesi görmez → doğrudan test edilir.
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Avatar için kabul edilen görsel türleri.
+ *
+ * ⚠️ CMS'in genel `ALLOWED_MIME` listesinden **BİLİNÇLİ OLARAK DARDIR**. Orada bulunan
+ * `image/svg+xml` ve `application/json` (Lottie) burada **YOKTUR**:
+ * · SVG gömülü script taşıyabilir; medya servisindeki sandbox CSP iyi bir savunmadır ama
+ *   kullanıcı-üretimi içerikte tek savunma hattına yaslanılmaz (derinlemesine savunma).
+ * · Lottie bir avatar değildir; kabul edilmesi yüzeyi gereksiz genişletir.
+ */
+export const AVATAR_MIMES = ['image/jpeg', 'image/png', 'image/webp'] as const;
+export type AvatarMime = (typeof AVATAR_MIMES)[number];
+
+export function isAvatarMime(v: unknown): v is AvatarMime {
+  return typeof v === 'string' && (AVATAR_MIMES as readonly string[]).includes(v);
+}
+
+/**
+ * Avatar boyut tavanı. CMS'in 2 MB genel sınırından **çok daha sıkıdır**: istemci fotoğrafı
+ * yüklemeden önce kırpar ve sıkıştırır, dolayısıyla makul bir avatar bunun çok altındadır.
+ * Sıkı sınır hem depolama (base64, Postgres) hem de kötüye kullanım yüzeyi içindir.
+ */
+export const AVATAR_MAX_BYTES = 512 * 1024;
+
+/** base64 dizgisinin çözülünce kaç bayt edeceği (padding'i sayarak). */
+export function base64Bytes(dataBase64: string): number {
+  const len = dataBase64.length;
+  if (len === 0) return 0;
+  let padding = 0;
+  if (dataBase64.endsWith('==')) padding = 2;
+  else if (dataBase64.endsWith('=')) padding = 1;
+  return Math.floor((len * 3) / 4) - padding;
+}
+
+export type AvatarUploadInput = { mime?: unknown; dataBase64?: unknown };
+
+/**
+ * Avatar yükleme isteğini doğrula.
+ *
+ * Dönüş: `ok` ise güvenli değerler; değilse kullanıcıya gösterilecek TEK bir mesaj.
+ * Mesajlar hangi kontrolün düştüğünü ayrıntılandırmaz — yalnız kullanıcının düzeltebileceği
+ * kadarını söyler.
+ */
+export function validateAvatarUpload(
+  input: AvatarUploadInput
+):
+  { ok: true; mime: AvatarMime; dataBase64: string; bytes: number } | { ok: false; error: string } {
+  if (!isAvatarMime(input.mime)) {
+    return { ok: false, error: 'Yalnız JPEG, PNG veya WebP yükleyebilirsin.' };
+  }
+  if (typeof input.dataBase64 !== 'string' || input.dataBase64.length === 0) {
+    return { ok: false, error: 'Görsel verisi eksik.' };
+  }
+  // Boşluk/satır sonu içeren gövdeler base64 uzunluk hesabını bozar ve depoyu kirletir.
+  if (!/^[A-Za-z0-9+/]+={0,2}$/.test(input.dataBase64)) {
+    return { ok: false, error: 'Görsel verisi okunamadı.' };
+  }
+  const bytes = base64Bytes(input.dataBase64);
+  if (bytes <= 0) return { ok: false, error: 'Görsel verisi okunamadı.' };
+  if (bytes > AVATAR_MAX_BYTES) {
+    return { ok: false, error: 'Fotoğraf çok büyük. Lütfen daha küçük bir görsel seç.' };
+  }
+  return { ok: true, mime: input.mime, dataBase64: input.dataBase64, bytes };
+}
+
+/**
+ * Bir profilin görünen avatarı: yüklenmiş fotoğraf varsa onun URL'si, yoksa **null**
+ * (istemci paketlenmiş maskota düşer).
+ *
+ * Maskot kimliği HER ZAMAN korunur; fotoğraf kaldırıldığında geri dönülecek yer odur.
+ */
+export function avatarUrlFor(avatarMediaId: string | null | undefined): string | null {
+  return avatarMediaId ? `/api/media/${avatarMediaId}` : null;
 }

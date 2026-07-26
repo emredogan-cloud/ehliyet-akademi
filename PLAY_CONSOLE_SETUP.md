@@ -157,21 +157,30 @@ politikası yükümlülüklerini kaldırır.
 
 Bu formu **kodun gerçekten yaptığına göre** doldurun. Mevcut durum:
 
-| Veri türü           | Toplanıyor?              | Paylaşılıyor? | Amaç              | Zorunlu mu | Not                                              |
-| ------------------- | ------------------------ | ------------- | ----------------- | ---------- | ------------------------------------------------ |
-| E-posta adresi      | Evet                     | Hayır         | Hesap yönetimi    | Hesap için | Topluluk yüzeylerinde **asla gösterilmez**       |
-| Ad (görünen ad)     | Evet                     | Hayır         | Topluluk          | Hayır      | Kullanıcının seçtiği takma ad; gerçek ad değil   |
-| Uygulama etkileşimi | Evet                     | Hayır         | Analitik/ilerleme | Hayır      | XP, seri, çözülen soru                           |
-| Satın alma geçmişi  | Evet                     | Hayır         | Yetkilendirme     | Evet       | Premium erişimi                                  |
-| Fotoğraflar         | **Faz 7'den sonra Evet** | Hayır         | Profil avatarı    | Hayır      | Faz 7 tamamlanınca bu satır **güncellenmelidir** |
-| Konum               | **Hayır**                | —             | —                 | —          | Toplanmıyor                                      |
-| Kişiler / Rehber    | **Hayır**                | —             | —                 | —          | Toplanmıyor                                      |
+| Veri türü           | Toplanıyor?      | Paylaşılıyor? | Amaç              | Zorunlu mu | Not                                            |
+| ------------------- | ---------------- | ------------- | ----------------- | ---------- | ---------------------------------------------- |
+| E-posta adresi      | Evet             | Hayır         | Hesap yönetimi    | Hesap için | Topluluk yüzeylerinde **asla gösterilmez**     |
+| Ad (görünen ad)     | Evet             | Hayır         | Topluluk          | Hayır      | Kullanıcının seçtiği takma ad; gerçek ad değil |
+| Uygulama etkileşimi | Evet             | Hayır         | Analitik/ilerleme | Hayır      | XP, seri, çözülen soru                         |
+| Satın alma geçmişi  | Evet             | Hayır         | Yetkilendirme     | Evet       | Premium erişimi                                |
+| Fotoğraflar         | **EVET** (Faz 7) | Hayır         | Profil avatarı    | **Hayır**  | İsteğe bağlı; yüklenmezse maskot kullanılır    |
+| Konum               | **Hayır**        | —             | —                 | —          | Toplanmıyor                                    |
+| Kişiler / Rehber    | **Hayır**        | —             | —                 | —          | Toplanmıyor                                    |
 
 Ek beyanlar: veri **aktarımda şifrelenir** (HTTPS) ✅ · kullanıcı **silme talep edebilir**
 (Topluluktan ayrılma verisini siler) ✅.
 
-> **Faz 7 (avatar) tamamlandığında bu tablo güncellenmeden yayın yapılmamalıdır.** Yanlış Veri
-> Güvenliği beyanı, uygulamanın mağazadan kaldırılma sebebidir.
+> ✅ **Faz 7 tamamlandı ve bu tablo güncellendi.** Beyan edilmesi gerekenler:
+>
+> - **Toplanıyor:** Evet — kullanıcı isterse profil fotoğrafı yükler.
+> - **Paylaşılıyor:** Hayır — üçüncü tarafa aktarılmaz; kendi sunucumuzda saklanır.
+> - **Zorunlu mu:** **Hayır** — yükleme tamamen isteğe bağlıdır; yüklenmezse paketlenmiş maskot
+>   kullanılır ve kullanıcı fotoğrafını her zaman kaldırıp maskota dönebilir.
+> - **Amaç:** yalnız profil avatarı (topluluk yüzeylerinde görünür). Analitik/reklam amacı yok.
+> - **Silme:** kullanıcı uygulama içinden kaldırabilir (kayıt sunucudan silinir); topluluktan
+>   ayrılma da profili siler.
+>
+> Yanlış Veri Güvenliği beyanı, uygulamanın mağazadan kaldırılma sebebidir.
 
 ### 5.7 Yapay zekâ beyanları
 
@@ -192,8 +201,32 @@ Yalnız ikisi bildirilir ve gerekçelendirilir:
 | `RECEIVE_BOOT_COMPLETED` | Cihaz yeniden başlayınca hatırlatmayı yeniden kurma |
 
 **Hassas izin yok** → `QUERY_ALL_PACKAGES`, konum, rehber, SMS, arama kaydı **istenmiyor**.
-Faz 7 kamera/galeri eklerse: modern Android'de `image_picker` **izin gerektirmeyen** sistem
-seçicisini kullanır; `READ_MEDIA_IMAGES` **eklenmemelidir** (eklenirse gerekçe formu açılır).
+
+### Derlenmiş APK'daki TAM liste — ölçüldü (Faz 7)
+
+Yukarıdaki iki izin bizim manifestimizde açıkça yazılıdır; kalanlar bağımlılıkların manifest
+birleştirmesiyle gelir. `aapt2 dump permissions` çıktısı:
+
+| İzin                                | Nereden gelir                 | Sınıf          | Play beyanı |
+| ----------------------------------- | ----------------------------- | -------------- | ----------- |
+| `POST_NOTIFICATIONS`                | bizim manifest                | çalışma-zamanı | Evet (§5.8) |
+| `RECEIVE_BOOT_COMPLETED`            | bizim manifest                | normal         | Evet (§5.8) |
+| `INTERNET`                          | Flutter/dio                   | normal         | gerekmez    |
+| `ACCESS_NETWORK_STATE`              | ağ katmanı                    | normal         | gerekmez    |
+| `VIBRATE` · `WAKE_LOCK`             | `flutter_local_notifications` | normal         | gerekmez    |
+| `USE_BIOMETRIC` · `USE_FINGERPRINT` | `flutter_secure_storage`      | normal         | gerekmez    |
+| `com.android.vending.BILLING`       | `in_app_purchase`             | normal         | gerekmez    |
+
+**Hiçbiri "tehlikeli" sınıfta değildir**; yalnız `POST_NOTIFICATIONS` çalışma zamanında sorulur.
+
+> ⚠️ Bu belge daha önce "yalnız ikisi" diyordu; bu, **bizim yazdığımız** izinler için doğruydu ama
+> derlenmiş APK'yı tarif etmiyordu. Faz 7'de ölçülerek düzeltildi.
+
+### Faz 7 — kamera/galeri izni EKLENMEDİ (ölçüldü)
+
+`image_picker` modern Android'de **izin gerektirmeyen** sistem foto seçicisini kullanır.
+Derlenmiş APK'da **`READ_MEDIA_IMAGES` de `CAMERA` da YOKTUR** (`aapt2 dump permissions` ile
+doğrulandı). Bu izinler eklenirse Play'de ayrı bir gerekçe formu açılır — **eklenmemelidir**.
 
 ## 6. Mağaza listesi
 

@@ -90,7 +90,9 @@ void main() {
 
       expect(find.text('Varsayılan olarak KAPALI'), findsOneWidget);
       expect(find.text('Gerçek adın görünmez'), findsOneWidget);
-      expect(find.text('Fotoğraf yüklenmez'), findsOneWidget);
+      // Faz 7: fotoğraf yükleme eklendi; vaat "yüklenmez" değil "isteğe bağlı"dır.
+      expect(find.text('Fotoğraf isteğe bağlı'), findsOneWidget);
+      expect(find.text('Fotoğraf yüklenmez'), findsNothing);
       await tester.scrollUntilVisible(
         find.text('Topluluğa katıl'),
         200,
@@ -169,6 +171,9 @@ void main() {
 
     testWidgets('katılma ekranı geçersiz adı reddeder, geçerli adla katılır', (tester) async {
       final api = FakeCommunityApi();
+      // Faz 7: katılma ekranına fotoğraf yükleme satırı eklendi; 800×600'de hata metni ile CTA
+      // aynı anda inşa edilmiyordu (tembel liste). Uzun yüzeyde ikisi de görünür.
+      await useTallSurface(tester);
       await pumpApp(tester, community: api);
       await openCommunity(tester);
       await tester.scrollUntilVisible(

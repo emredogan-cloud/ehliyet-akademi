@@ -8,6 +8,7 @@ import {
 } from '@ea/db';
 import { getSessionUser, json, guarded } from '@/lib/server/auth';
 import { checkRateLimit } from '@/lib/server/rate-limit';
+import { avatarUrlFor } from '@/lib/server/community';
 
 /**
  * Başka bir kullanıcının topluluk profili (Evolution Faz E8).
@@ -74,6 +75,7 @@ export const GET = guarded(async (req: Request): Promise<Response> => {
       userId: profile.userId,
       displayName: profile.displayName,
       avatarId: profile.avatarId,
+      avatarUrl: avatarUrlFor(profile.avatarMediaId),
       licence: profile.licence,
     },
     stats: stats

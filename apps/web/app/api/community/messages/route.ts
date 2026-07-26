@@ -115,6 +115,7 @@ export const GET = guarded(async (req: Request): Promise<Response> => {
       userId,
       displayName: profiles.get(userId)?.displayName ?? '',
       avatarId: profiles.get(userId)?.avatarId ?? 'owl-wave',
+      avatarUrl: profiles.get(userId)?.avatarUrl ?? null,
       lastMessage: v.body,
       lastAt: v.createdAt,
       unread: v.unread,

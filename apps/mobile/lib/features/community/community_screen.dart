@@ -94,7 +94,13 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
         const SizedBox(height: AppSpacing.s4),
         for (final row in const [
           (Icons.visibility_off_rounded, 'Gerçek adın görünmez', 'Kendi seçtiğin görünen adı kullanırsın.'),
-          (Icons.photo_camera_outlined, 'Fotoğraf yüklenmez', 'Avatarını uygulamanın maskotlarından seçersin.'),
+          // Beta Faz 7: fotoğraf yükleme geldi. Eski metin ("Fotoğraf yüklenmez") artık YANLIŞ
+          // bir vaatti — cihazda görüldü ve düzeltildi. Vurgu "isteğe bağlı"lıktadır.
+          (
+            Icons.photo_camera_outlined,
+            'Fotoğraf isteğe bağlı',
+            'İstersen fotoğraf yükle, istersen maskotla devam et.',
+          ),
           (Icons.shield_outlined, 'Engelle ve bildir', 'Rahatsız eden birini her ekrandan engelleyebilirsin.'),
           (Icons.delete_outline_rounded, 'İstediğin an ayrıl', 'Ayrıldığında topluluk verin sunucudan silinir.'),
         ]) ...[

@@ -74,6 +74,7 @@ class GroupMember {
     required this.userId,
     required this.displayName,
     required this.avatarId,
+    this.avatarUrl,
     required this.role,
     required this.xp,
     required this.streak,
@@ -84,6 +85,9 @@ class GroupMember {
   final String userId;
   final String displayName;
   final String avatarId;
+
+  /// Beta Faz 7 — yüklenmiş profil fotoğrafı. **null ise maskot (`avatarId`) gösterilir.**
+  final String? avatarUrl;
   final String role; // owner | member
   final int xp;
   final int streak;
@@ -97,6 +101,7 @@ class GroupMember {
     userId: (j['userId'] ?? '').toString(),
     displayName: (j['displayName'] ?? '').toString(),
     avatarId: (j['avatarId'] ?? 'owl-wave').toString(),
+    avatarUrl: j['avatarUrl']?.toString(),
     role: (j['role'] ?? 'member').toString(),
     xp: _int(j['xp']),
     streak: _int(j['streak']),

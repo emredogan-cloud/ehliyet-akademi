@@ -129,6 +129,10 @@ CREATE TABLE IF NOT EXISTS community_profiles (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS community_profiles_licence_idx ON community_profiles(licence);
+-- Beta Faz 7 — yüklenen profil fotoğrafı. Var olan kurulumlarda da eklenir (ADD COLUMN IF NOT
+-- EXISTS): null ise paketlenmiş maskot kullanılır, yani mevcut satırlar olduğu gibi çalışmaya
+-- devam eder. Medya silinirse profil maskota döner (SET NULL) — satır kaybolmaz.
+ALTER TABLE community_profiles ADD COLUMN IF NOT EXISTS avatar_media_id TEXT;
 
 CREATE TABLE IF NOT EXISTS community_stats (
   user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,

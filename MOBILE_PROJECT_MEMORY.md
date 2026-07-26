@@ -2169,3 +2169,109 @@ RenderFlex overflowed / EXCEPTION CAUGHT: 0 · logcat -b crash: boş
 2. **Varlıklar 1080 px'e yeniden üretilmedi** — §E; %29 çözünürlük açığı duruyor.
 3. **Yatay düzen cihazda denenmedi** — testte 740×360 yeşil, cihaz döndürülmedi.
 4. **Adım 4'ün `roomy` görseli cihazda görülmedi** — bu cihaz o kademeye çıkmıyor.
+
+---
+
+# ⛳ BETA FAZ 7 — Profil avatarları (2026-07-26)
+
+Bu bölüm **eklemedir**; yukarıdaki hiçbir kayıt değiştirilmedi.
+
+## A. E8 KARARI DEĞİŞTİ — ve gerekçesi şemaya yazıldı
+
+E8: "kullanıcı fotoğrafı YÜKLENMEZ (bütün bir moderasyon/PII sınıfını baştan kaldırır)" —
+şemada bile yazılıydı. Faz 7 o sınıfı geri getiriyor.
+
+**Temel ilke:** yükleme **isteğe bağlı**. `avatarMediaId` null → maskot (`avatarId`).
+**Maskot kimliği HİÇ SİLİNMEZ** — geri dönülecek yer odur; "avatarsız" durum oluşamaz.
+
+`packages/db/src/schema.ts` yorumu, kararın DEĞİŞTİĞİNİ ve nasıl karşılandığını anlatacak biçimde
+güncellendi. **Kural: bir kararı tersine çeviriyorsan, o kararın yazılı olduğu yeri de güncelle.**
+
+## B. Sunucu savunmaları (tek yerde, `/api/community/avatar`)
+
+oturum · **katılım şartı (409)** · dar tür listesi · 512 KB · hız sınırı 6/dk · tek fotoğraf
+(yeni yükleme eskisini SİLER) · `DELETE` ile maskota dönüş (etkisiz-tekrarlı).
+
+**SVG REDDEDİLDİ.** CMS'in genel `ALLOWED_MIME`'ında `image/svg+xml` var (editör içeriği için
+makul) ama kullanıcı yüklemesinde SVG gömülü script taşıyabilir. Medya servisindeki sandbox CSP
+iyi bir savunmadır, **tek hat değildir**.
+
+**KURAL: paylaşılan bir allowlist'i kullanıcı-üretimi içerikte OLDUĞU GİBİ kullanma.**
+Kullanıcı yüzeyi kendi DAR listesini tanımlamalı.
+
+**Depolama sıfırdan kurulmadı:** `media_assets` + sertleştirilmiş `GET /api/media/[id]`
+(sandbox CSP + nosniff) zaten vardı, yeniden kullanıldı.
+
+## C. ⚠️ İZİN — ölçüldü, EKLENMEDİ
+
+```
+aapt2 dump permissions app-release.apk
+→ POST_NOTIFICATIONS · RECEIVE_BOOT_COMPLETED · INTERNET · VIBRATE
+  ACCESS_NETWORK_STATE · WAKE_LOCK · USE_BIOMETRIC · USE_FINGERPRINT · com.android.vending.BILLING
+→ READ_MEDIA_IMAGES YOK · CAMERA YOK
+```
+
+Cihazdaki `dumpsys package` ile bağımsız teyit edildi. `image_picker` izin gerektirmeyen sistem
+seçicisini kullanıyor.
+
+**BELGEDE ÖNCEDEN VAR OLAN HATA:** `PLAY_CONSOLE_SETUP.md` §5.8 "yalnız ikisi" diyordu — bu
+**bizim yazdığımız** izinler için doğru, **derlenmiş APK** için yanlıştı (9 izin). Hiçbiri
+tehlikeli sınıfta değil. Ölçülen tam listeyle düzeltildi.
+
+**KURAL: "uygulamanın izinleri" iddiası manifest'ten değil, DERLENMİŞ APK'dan doğrulanır.**
+Bağımlılıklar manifest birleştirmesiyle izin ekler.
+
+## D. Cihazda bulunan DÜRÜSTLÜK HATASI
+
+Topluluk tanıtım ekranı hâlâ **"Fotoğraf yüklenmez"** vaat ediyordu — Faz 7'den sonra YANLIŞ.
+"Fotoğraf isteğe bağlı" yapıldı; testi de eski metnin geri gelmemesini `findsNothing` ile
+sabitliyor.
+
+**KURAL: bir yeteneği eklerken, o yeteneğin YOKLUĞUNU vaat eden metinleri ara.**
+`grep` ile ürün metinleri taranmalı — kod derlenir, yanlış vaat derlenmez.
+
+## E. Mobil katmanlar
+
+| Katman | Dosya                                                     |
+| ------ | --------------------------------------------------------- |
+| Saf    | `domain/community/avatar_image.dart` (eklenti YOK)        |
+| Veri   | `data/community/avatar_service.dart` (Picker/Encoder/Api) |
+| Yüzey  | `features/community/avatar_editor_screen.dart`            |
+| Yüzey  | `features/community/widgets/community_avatar_view.dart`   |
+
+**Kırpma etkileşimli:** `InteractiveViewer` matrisinden `cropFromViewport` ile kaynağa geri
+eşleme. Model: pencere noktası `(x,y)` → çocuk `((x-tx)/s, (y-ty)/s)`; çocuk uzayı `[0,V]²`
+oradan merkez karesine doğrusal. **İlk yazdığım parametreleştirme uygulamayla örtüşmüyordu ve
+atıldı** — saf fonksiyon, gerçek widget modeline göre yeniden yazıldı.
+
+**`CommunityAvatarView` maskota dönüşü YAPISAL kılar:** URL yoksa **veya ağdan gelmezse**
+(`errorBuilder`) maskot çizilir → kırık avatar oluşamaz.
+
+## F. Testler +44
+
+sunucu saf 12 · sunucu entegrasyon 13 · mobil 19. Kodlayıcı testi **gerçek görsel** üretip
+kırpıyor ve doğru bölgenin alındığını **piksel okuyarak** doğruluyor.
+
+**Tekrarlayan artefakt:** ekran uzayınca 800×600 test yüzeyinde öğeler inşa edilmiyor →
+`useTallSurface()` (Faz 5'te eklendi) `community_test.dart`'a da uygulandı. **Üçüncü kez
+karşılaşıldı; yeni ekran/uzayan ekran eklerken ilk akla gelmesi gereken şey budur.**
+
+## G. Ölçülen değerler
+
+```
+flutter analyze → 0 · flutter test → 353 (+19) · web → 541 (+25)
+arm64 APK 36,2 MB (Faz 6'da 35,0 MB — image_picker + image paketleri)
+izinler: READ_MEDIA_IMAGES YOK · CAMERA YOK
+```
+
+## H. Dürüst sınırlar (Faz 7)
+
+1. **Gerçek yükleme akışı CİHAZDA DENENMEDİ** — düzenleyiciye ulaşmak topluluğa katılmış hesap
+   ister; bu ortamda giriş yapılamadı (Google girişi Firebase eksikliğinden çalışmıyor).
+   Cihazda doğrulanan: **izin listesi**, düzeltilen metin, çökmeden çalışma.
+2. **Mobil liste yüzeyleri hâlâ maskot gösteriyor** — sunucu her yerde `avatarUrl` döndürüyor ve
+   model alanı her yerde var; yalnız gösterim bağlanması kaldı (mekanik iş).
+3. **Görsel moderasyon otomatik DEĞİL** — reaktif (şikâyet → inceleme → kaldırma). Faz 13'te
+   yeniden değerlendirilmeli.
+4. **Depolama Postgres'te base64** — 512 KB tavanı + tek fotoğraf kuralı büyümeyi sınırlıyor;
+   uzun vadede nesne deposu daha uygun.

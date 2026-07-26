@@ -283,7 +283,7 @@ hiyerarşi, modern kartlar, hareket. Tasarım token'ları korunur (E13'teki toke
 puanından hesaplanır (saf kural + monotonluk testi). Hareket, "animasyonları azalt" açıkken hiç
 kurulmaz. Ayrıntı: `BETA_PHASE_11_REPORT.md`.
 
-### 🔵 Faz 12 — Yeni nesil video hattı araştırması (üretim YOK) — SIRADAKİ FAZ
+### ✅ Faz 12 — Yeni nesil video hattı araştırması (üretim YOK) — TAMAMLANDI
 
 Rive · Lottie · Spline · Blender NPR · Three.js · SVG Motion · Cavalry · After Effects/Bodymovin
 ve uygun diğer çözümler karşılaştırılır: kalite · sürdürülebilirlik · maliyet · üretim hızı ·
@@ -291,7 +291,13 @@ ve uygun diğer çözümler karşılaştırılır: kalite · sürdürülebilirli
 
 **Çıktı:** `VIDEO_PIPELINE_RESEARCH.md` + uzun vadeli öneri.
 
-### Faz 13 — Nihai yayın denetimi
+**Sonuç:** yedi çözüm yedi ölçütte karşılaştırıldı. Karar: **Kapalı Test için hat DEĞİŞMİYOR** —
+darboğaz video kalitesi değil. En büyük ölçülmüş eksik erişim (videolar yalnız ağdan oynuyor);
+sıradaki iş çevrimdışı indirme. Orta vade Rive (yalnız etkileşimli mikro adımlar, **sapma testi**
+şartıyla), uzun vade Blender NPR (birkaç amiral gemisi sahne). Spline/Three.js/SVG Motion
+gerekçeleriyle reddedildi. **Video üretilmedi.**
+
+### 🔵 Faz 13 — Nihai yayın denetimi — SIRADAKİ FAZ
 
 Beş şapka takılarak denetim: Play İnceleyicisi · QA · Güvenlik · Erişilebilirlik · Flutter Başarım.
 Kapsam: kimlik doğrulama, Google girişi, RevenueCat, satın alma, geri yükleme, çevrimdışı,

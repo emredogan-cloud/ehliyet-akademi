@@ -2621,3 +2621,36 @@ Sınır durumu önemlidir: `maxScrollExtent == 0` iken ilerleme **1**'dir. `0` d
 ```
 analyze 0 · test 395 (+12) · cihazda hero + "8 dk" + "Orta" göründü · taşma 0
 ```
+
+---
+
+# Beta Faz 12 — Video hattı araştırması (üretim YOK)
+
+## A. Karar
+
+**Kapalı Test için hat DEĞİŞMİYOR.** Darboğaz video kalitesi değil; 12 test kullanıcısının
+göreceği eksikler dağıtım, giriş, satın alma ve içerik doğruluğudur.
+
+## B. Değerlendirmenin belirleyici ölçütü: SAPMA RİSKİ
+
+Bugünkü hattın en değerli özelliği kalite değil, **yapısal bir garanti**: bölüm ve transkript
+verisi videoyu çizen sahneyle AYNI nesneden üretilir (`videos.generated.ts`), bu yüzden video ile
+katalog arasında sapma **imkânsızdır**.
+
+Rive/Lottie/Spline/Three.js bu garantiyi kaybettirir (zaman damgaları elle eşlenir). Bu yüzden
+"daha güzel" olan çözüm otomatik olarak daha iyi değildir.
+
+## C. Sıralama
+
+1. **Sıradaki iş:** çevrimdışı video indirme — en büyük ölçülmüş eksik hattın kalitesi değil,
+   **erişimi** (videolar yalnız ağdan oynuyor). Mevcut hatla çözülür, yeni bağımlılık gerekmez.
+2. **Orta vade:** Rive — yalnız etkileşimli mikro adımlar; **sapmayı doğrulayan test** yazılmadan
+   girilmez.
+3. **Uzun vade:** Blender NPR — yalnız birkaç sahne; çıktı yine video olduğu için Flutter tarafı
+   değişmez.
+
+## D. Görünür çelişki, gerçek çelişki değil
+
+Faz 7'de Lottie **avatar yüklemede** yasaklanmıştı (kullanıcı JSON'unu çizim motorunda çalıştırmak
+saldırı yüzeyi). Burada dosya BİZİM ürettiğimiz, depoya giren, incelenmiş bir varlıktır. İki karar
+farklı güven sınırlarına aittir.

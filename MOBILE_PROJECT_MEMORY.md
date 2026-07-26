@@ -2408,3 +2408,50 @@ RenderFlex overflowed 0 · crash log boş
 
 E7'nin özet ekranı **korundu** (dokunulmazlar listesinde). Akış: onboarding → özet → Ana Sayfa →
 popup. Özetin de kaldırılması istenirse **ayrı bir karar** gerekir.
+
+---
+
+# Beta Faz R2 — Onboarding adım sayfalarının doluluğu
+
+## A. Neden gerekti
+
+Faz 6'nın kapıları (`maxScrollExtent == 0` + karşılama görselinin genişliği) **yarı boş bir
+sayfayı geçirir**. Doluluk hiçbir yerde ölçülmüyordu; bu yüzden adım sayfalarında ekranın yarısı
+boş kalmasına rağmen tüm testler yeşildi.
+
+**Ders:** bir kalite şartı ölçülmüyorsa, yoktur. "Kaydırma yok" ≠ "sayfa dolu".
+
+## B. Kalıcı kurallar
+
+1. **`tightHeroFactor` (oran), `heroFitsTight` (boolean) değil.** Tek anahtar, gövdesi biraz dolu
+   olan adımda görseli tamamen düşürüyordu. Oran, her adıma kalan boşluğu kadar görsel verir.
+2. **`dense` kademede görsel kararı PİKSELE değil, yazıya göre düzeltilmiş yüksekliğe bakar:**
+   `h / textScale`. Aynı 640 px, 1,0×'te görseli kaldırır, 1,3×'te kaldırmaz. Eşik 450 (ölçüldü).
+3. **ADIM düzeninde `roomy` yalnız ≥1000 px gövdede (tablet).** Telefon boylarında roomy
+   tipografisi + kompakt olmayan koç kartı, görsele yer bırakmıyor → 393×851'de **234 px taşıyordu**.
+4. **`CenteredScroll.distribute`** artan boşluğu dağıtır (`spaceBetween`); içeriği ESNETMEZ.
+   Sığmadığında `spaceBetween` = `start` → kaydırma sözleşmesi bozulmaz.
+
+## C. Ölçüm tuzakları (ikisi de bu fazda ısırdı)
+
+1. **PageView komşu sayfaları ağaçta TUTAR.** Widget ölçerken ekran dışındaki sayfanın kutusu
+   hesaba karışır ve sonuç **sessizce yanlış** çıkar (negatif boşluklar). Ölçüm, kutunun yatay
+   merkezi ekran içinde olanlarla sınırlanmalı.
+2. **Bir bloğu metniyle ölçmek ≠ bloğu ölçmek.** Adım 3'ün seçenek bloğunu kart _başlıklarıyla_
+   sınırlayınca "%32 boşluk" çıktı; kartların kendisiyle (`GlowCard`) ölçülünce gerçek değer
+   %12,4'tü. Yanlış ölçüm, olmayan bir kusuru kovalatıyordu.
+
+## D. Ölçülen
+
+```
+yayılım      %94,1 – %95,6  (şart: %85–95)
+en büyük boşluk  ≤ %15,6    (kapı: %17)
+360×640 adım 2:  %23,0 → %8,2
+flutter analyze 0 · flutter test 366 · cihazda taşma 0
+```
+
+## E. Dürüst sınır
+
+Adım 3'te orta kademede görsel çizilmez: gövde 648 px, içerik 570 px, kalan 78 px görselin taban
+ölçüsüne (72 px + ara) yetmiyor → 42 px taşırıyor. O adımın **kartları zaten illüstrasyon
+taşıdığı** için sayfa dolu görünüyor. Bu bir eksik değil, ölçülmüş bir sınırdır.

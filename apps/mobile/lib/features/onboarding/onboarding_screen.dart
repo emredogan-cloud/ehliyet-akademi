@@ -94,6 +94,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         return _StepScaffold(
           step: 1,
           onSkip: () => _finish(completed: false),
+          hero: AppImages.onbWheel,
+          tightHeroFactor: 0.25, // 3 seçenek — ölçüldü
           title: 'Hangi ehliyeti alıyorsun?',
           subtitle: 'İçerikler ve öneriler seçimine göre önceliklenir.',
           onNext: _next,
@@ -104,7 +106,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           step: 2,
           onSkip: () => _finish(completed: false),
           hero: AppImages.onbThink,
-          heroFitsTight: true, // 2 seçenekli — ölçüldü, tight kademede de sığıyor
+          tightHeroFactor: 0.25, // 2 seçenekli — ölçüldü
           title: 'Daha önce sınava girdin mi?',
           subtitle: 'Çalışma planını buna göre kuruyoruz.',
           onNext: _next,
@@ -114,6 +116,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         return _StepScaffold(
           step: 3,
           onSkip: () => _finish(completed: false),
+          hero: AppImages.onbTablet,
+          // ÖLÇÜLDÜ (Beta R2): bu adımın iki GÖRSELLİ kartı dikey bütçenin çoğunu yiyor.
+          // 393×780'de gövde 648 px, içerik 570 px → yalnız 78 px boşluk kalıyor; 0.16 oranlı
+          // görsel (104 px + 16 px ara) düzeni 42 px TAŞIRIYOR. Görselin taban ölçüsü 72 px
+          // olduğundan daha küçüğü de anlamlı yer kazandırmaz. Bu yüzden burada görsel yalnız
+          // `roomy` (tablet) kademede çizilir; kalan boşluk `distribute` ile dağıtılır ve
+          // kartların KENDİSİ illüstrasyon taşıdığı için sayfa yine dolu görünür (cihazda ~%94).
+          tightHeroFactor: 0,
           title: 'Hangi sınava hazırlanıyorsun?',
           subtitle: 'İkisini birden seçebilirsin.',
           onNext: _next,
@@ -316,7 +326,7 @@ class _StepScaffold extends StatelessWidget {
     required this.onNext,
     required this.onSkip,
     this.hero,
-    this.heroFitsTight = false,
+    this.tightHeroFactor = 0,
   });
   final int step; // 1..4
   final String title;
@@ -326,12 +336,16 @@ class _StepScaffold extends StatelessWidget {
   final VoidCallback onSkip;
   final String? hero;
 
-  /// Bu adımın gövdesi ORTA (`tight`) kademede görselle birlikte kaydırmasız sığıyor mu?
+  /// ORTA (`tight`) kademede görselin alabileceği yükseklik oranı — `0` ise çizilmez.
   ///
-  /// ÖLÇÜLDÜ (`onboarding_experience_test.dart`, 393×780): 2 seçenekli adım sığıyor;
-  /// 4 seçenekli "kalan süre" adımı **158 px taşıyor** → orada görsel yalnız `roomy`
-  /// kademede çizilir. Bu, tahmin değil ölçüm sonucudur; değiştirilirse test kırılır.
-  final bool heroFitsTight;
+  /// NEDEN ORAN, NEDEN BOOLEAN DEĞİL (Beta R2): adımların gövde yükseklikleri farklı. Tek bir
+  /// "sığar/sığmaz" anahtarı, gövdesi biraz dolu olan adımda görseli TAMAMEN düşürüyordu ve
+  /// geriye ekranın üçte biri kadar boşluk kalıyordu (cihazda görüldü). Oran, her adıma kalan
+  /// boşluğu kadar görsel vermeyi mümkün kılar.
+  ///
+  /// Değerler ÖLÇÜLEREK bulundu (`onboarding_experience_test.dart` + `onboarding_fill_test.dart`):
+  /// kaydırmasızlık kapısı kırılmadan çıkılabilen en yüksek oranlar. Artırılırsa test kırılır.
+  final double tightHeroFactor;
 
   @override
   Widget build(BuildContext context) {
@@ -402,25 +416,44 @@ class _StepScaffold extends StatelessWidget {
   /// Kahraman görsel yüksekliği alana göre küçülür; çok dar ekranda hiç çizilmez.
   Widget _portrait(BuildContext context, BoxConstraints c) {
     final h = c.maxHeight;
-    final d = densityFor(context, h);
+    // ADIM gövdesi için `roomy` eşiği DAHA YÜKSEKTİR — ölçüm sonucu, tahmin değil.
+    //
+    // ÖLÇÜM (393×851, jest gezinme): gövde 719 px → `densityFor` bunu `roomy` sayıyor. Ama roomy
+    // tipografisi (headlineMedium başlık) + kompakt OLMAYAN koç kartı tek başına ≈641 px tutuyor;
+    // kalan 78 px, görselin taban ölçüsüne (72 px + ara) yetmiyor ve düzen 234 px TAŞIYORDU.
+    // Yani bu boyda "ferah" kademe, ferah olmak için yeterince yer bırakmıyor.
+    //
+    // Telefon boylarında adımlar bu yüzden `tight` kademesinde kalır: kompakt tipografi + 0.25
+    // oranlı görsel, cihazda ölçülen en dolu ve kaydırmasız sonucu veriyor. `roomy` gerçekten
+    // geniş gövdeler (tablet) içindir. Eşik düşürülürse 393×851 kapısı kırılır.
+    final raw = densityFor(context, h);
+    final d = raw == OnboardingDensity.roomy && h < 1000 ? OnboardingDensity.tight : raw;
     final dense = d == OnboardingDensity.dense;
     // Faz 6: adım görseli de GENİŞLİĞE göre ölçekleniyor; yükseklik yalnız üst sınır.
     // Bu ekranlar form ağırlıklı olduğu için bütçe karşılama adımından dardır — oran
     // ÖLÇÜLEREK belirlendi (bkz. faz raporu).
-    final heroH = (h * (d == OnboardingDensity.roomy ? 0.30 : 0.22)).clamp(72.0, 210.0);
+    final heroH = (h * (d == OnboardingDensity.roomy ? 0.40 : tightHeroFactor)).clamp(72.0, 300.0);
     final heroW = c.maxWidth - AppSpacing.s5 * 2;
-    // Faz 6 DÜZELTMESİ: görsel eskiden YALNIZ `roomy` kademede çiziliyordu. Gerçek cihazda
-    // gövde 700 dp eşiğinin hemen ALTINA düşüyor (≈699) → adım `tight` sayılıyor, görsel hiç
-    // çizilmiyor ve ekranda ~500 dp boşluk kalıyordu (cihazda görüldü, `b6_03`). Artık
-    // `dense` dışındaki her kademede çizilir; `dense` kademede yer gerçekten yoktur.
+    // YOĞUN kademede görsel: küçük telefonda (360×640) adımların altında 180–270 px boşluk
+    // kalıyordu (ölçüldü). Ama aynı kademe 640 px @1,3× yazı ölçeğini de kapsıyor ve orada yer
+    // YOK (görselle 73 px taşıyor). Ayrım piksel değil, YAZIYA GÖRE DÜZELTİLMİŞ yükseklik:
+    // 640 @1,0× → 492 (yeter) · 640 @1,3× → 391 (yetmez). Eşik ölçümle 450'ye kondu.
+    final effective = h / (MediaQuery.textScalerOf(context).scale(14) / 14);
+    // Faz 6 DÜZELTMESİ: görsel eskiden yalnız `roomy` kademede çiziliyordu. Gerçek cihazda gövde
+    // 700 px eşiğinin ALTINA düşüyor → adım `tight` sayılıyor, görsel hiç çizilmiyor ve ekranda
+    // yüzlerce piksel boşluk kalıyordu.
     final showHero = hero != null &&
         (d == OnboardingDensity.roomy ||
-            (d == OnboardingDensity.tight && heroFitsTight));
+            (d == OnboardingDensity.tight && tightHeroFactor > 0) ||
+            (d == OnboardingDensity.dense && tightHeroFactor > 0 && effective >= 450));
     final gap = dense ? AppSpacing.s2 : (d == OnboardingDensity.tight ? AppSpacing.s3 : AppSpacing.s5);
     return OnboardingDensityScope(
       density: d,
       child: CenteredScroll(
         minHeight: h,
+        // Beta R2: artan boşluk çocukların ARASINA dağıtılır → sayfa dolu görünür, içerik
+        // esnetilmez. Ortalama, adımlarda ekranın yarısını boş bırakıyordu.
+        distribute: true,
         padding: const EdgeInsets.fromLTRB(AppSpacing.s5, AppSpacing.s2, AppSpacing.s5, AppSpacing.s2),
         children: [
           if (showHero) ...[

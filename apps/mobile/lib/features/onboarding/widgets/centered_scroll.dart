@@ -12,10 +12,21 @@ class CenteredScroll extends StatelessWidget {
     required this.minHeight,
     required this.children,
     required this.padding,
+    this.distribute = false,
   });
   final double minHeight;
   final List<Widget> children;
   final EdgeInsets padding;
+
+  /// Beta R2 — artan dikey boşluğu çocukların ARASINA dağıt (`spaceBetween`).
+  ///
+  /// NEDEN: varsayılan ortalama, içerik kısa olduğunda üstte ve altta büyük boşluk bırakıyor;
+  /// yol haritası ise her onboarding sayfasının güvenli alanın **%85–95'ini** kaplamasını
+  /// istiyor. Dağıtım, içeriği ESNETMEDEN (kartlar/tipografi büyümez) sayfayı doldurur.
+  ///
+  /// İçerik sığmadığında `spaceBetween` zaten `start` gibi davranır → kaydırma davranışı
+  /// değişmez ve `maxScrollExtent == 0` kapısı korunur.
+  final bool distribute;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +35,7 @@ class CenteredScroll extends StatelessWidget {
       child: ConstrainedBox(
         constraints: BoxConstraints(minHeight: minHeight - padding.vertical),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: distribute ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: children,
         ),

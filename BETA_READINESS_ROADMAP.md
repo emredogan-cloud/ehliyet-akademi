@@ -311,7 +311,7 @@ sistemi · kişiselleştirilmiş öneriler · topluluk · premium. Doğal biçim
 **DoD:** Temel DoD + popup'ın Ana Sayfa göründükten SONRA açıldığı ve kapatıldıktan sonra
 **bir daha açılmadığı** testle sabitlenir.
 
-### 🔴 R2 — Onboarding 2–5. sayfalar (Faz 6'yı tamamlar)
+### ✅ R2 — Onboarding 2–5. sayfalar (Faz 6'yı tamamlar)
 
 Faz 6 yalnız **karşılama (0.) sayfasını** çözdü. Kişiselleştirme adımlarında ekranın yaklaşık
 **yarısı hâlâ boş**.
@@ -321,6 +321,11 @@ yok · **esnetilmiş düzen yok** · kaydırma yok · duyarlılık korunur. Heps
 ulaşmalı.
 
 **DoD:** Temel DoD + her sayfa için doluluk **ölçülür** ve testle sabitlenir.
+
+**Sonuç:** yayılım %94,1–95,6 · en büyük boşluk ≤%15,6 (kapı %17) · 360×640 adım 2'de
+%23,0 → %8,2. Yeni kapı: `test/onboarding_fill_test.dart`. Ek olarak 393×851 (jest gezinme)
+kaydırmasızlık ölçüsü eklendi ve orada saklanan 234 px'lik gerileme düzeltildi.
+Ayrıntı: `BETA_PHASE_R2_REPORT.md`.
 
 ### 🔴 R3 — Giriş ekranı YENİDEN (Faz 5'in yerine geçer)
 

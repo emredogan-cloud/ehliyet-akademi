@@ -175,6 +175,15 @@ void main() {
       await runFlow(tester, 'gerçek cihaz');
     });
 
+    // Jest tabanlı gezinmede aynı cihazın kullanılabilir alanı ≈393×851'e ÇIKAR (gezinme çubuğu
+    // yok). Beta R2'de görsel büyütülürken bu ölçü ölçülmemişti; eklendi ve orada saklanan
+    // 234 px'lik taşma yakalandı.
+    testWidgets('jest gezinme ölçüsü (393×851)', (tester) async {
+      await tester.binding.setSurfaceSize(const Size(393, 851));
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+      await runFlow(tester, 'jest gezinme');
+    });
+
     testWidgets('yatay (740×360)', (tester) async {
       await tester.binding.setSurfaceSize(const Size(740, 360));
       addTearDown(() => tester.binding.setSurfaceSize(null));

@@ -1294,3 +1294,41 @@ gerekli; (b) mockup'taki **"Apple ile giriş"** düğmesi iOS olmadığı için 
 konmayacak; (c) "MEB müfredatına uygun" iddiası kaynak gösterilemezse kullanılmayacak.
 
 **Üretilecek toplam: 19 görsel** (14 boş durum + 5 onboarding) ≈ 1,1 MB.
+
+---
+
+## BETA Faz 2 — Google ile giriş — TAMAMLANDI (2026-07-26)
+
+**Yapıldı:** sunucu doğrulamalı Google girişi. `flutter test` **275** (+8) · web **516** (+32).
+
+**Kalıcı kararlar:**
+
+1. **Google girişi yeni oturum sistemi GETİRMEZ.** Mevcut Bearer oturumuna bir giriş kapısı ekler;
+   e-posta/parola ve misafir yolları dokunulmadan durur. Sonraki kimlik sağlayıcıları da aynı
+   deseni izlemeli.
+2. **Kimlik iddiası SUNUCUDA doğrulanır.** `lib/server/google-verify.ts` saf ve 21 testli;
+   uç yalnız JWKS getirip imzayı doğruluyor. İstemciden gelen e-postaya asla güvenilmez.
+3. **Hata mesajları durum SIZDIRMAZ:** imza/aud/issuer/biçim hepsi aynı mesaj. Yalnız kullanıcının
+   düzeltebileceği iki durum (doğrulanmamış e-posta, süre dolması) ayrı mesaj alır.
+4. **HESAP BİRLEŞTİRME:** aynı e-postayla parolayla kaydolmuş kullanıcı Google ile girince AYNI
+   hesaba bağlanır. İkinci hesap açmak ilerlemeyi ikiye bölerdi.
+5. **Yapılandırılmamışsa düğme HİÇ gösterilmez.** Çalışmayan düğme ölü gezinmedir (kural 3).
+   Bu kalıp Faz 3'te RevenueCat için de kullanılacak.
+6. **Vazgeçme hata DEĞİLDİR.** Hesap seçiciyi kapatan kullanıcıya mesaj gösterilmez —
+   `GoogleSignInCancelled` ayrı bir sonuç türü.
+
+**google_sign_in v7 tuzağı:** `serverClientId` olarak **WEB** istemci kimliği verilir, Android
+istemci DEĞİL. Yanlış verilirse `idToken` **null** döner ve giriş **sessizce** başarısız olur.
+Kod bu durumu ayrı bir hata mesajıyla yakalıyor.
+
+**E13 token muhafızı işe yaradı:** Google'ın dört marka rengini yakaladı. Marka kılavuzu bu
+renklerin değişmesini yasakladığı için GEREKÇESİYLE izin listesine eklendi — muhafız gevşetilmedi.
+Bu, muhafızın tasarlandığı gibi çalıştığının kanıtı.
+
+**Cihazda doğrulandı (iki derleme):** yapılandırılmamış → düğme yok; `--dart-define` ile
+yapılandırılmış → ayırıcı + düğme + dört renkli G işareti.
+
+**Dürüstçe yapılmayan:** gerçek Google hesabıyla uçtan uca giriş **denenmedi** — Firebase projesi,
+`google-services.json` ve SHA parmak izleri elle kurulacak adımlar. **Play App Signing SHA'sı
+kapalı teste ilk yüklemeden sonra Firebase'e eklenmezse Play'den kurulan yapıda giriş çalışmaz.**
+Apple ile giriş konmadı (iOS yok → ölü gezinme olurdu).

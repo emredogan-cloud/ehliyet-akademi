@@ -8,18 +8,43 @@ import '../../data/practice/progress_repository.dart';
 import '../../design/brand.dart';
 import '../../design/primitives.dart';
 import '../../design/readiness_ring.dart';
+import 'widgets/ai_welcome_dialog.dart';
 import '../../domain/coach/nudge.dart';
+import '../../domain/onboarding/ai_welcome_controller.dart';
 import '../../domain/onboarding/study_profile.dart';
 import '../../domain/practice/srs.dart';
 import '../../domain/progress/gamification.dart';
 
 /// Home — the app's center, bound to real local progress (readiness, streak, accuracy, a proactive
 /// nudge, today's personalized plan). Falls back to gentle "get started" copy before any practice.
-class HomeScreen extends ConsumerWidget {
+///
+/// Beta R1: Ana Sayfa GÖRÜNDÜKTEN SONRA, ilk kare çizildiğinde bir kez AI karşılama popup'ı
+/// açılır. Onboarding'e sayfa EKLENMEZ — kullanıcı önce ürünü görür, tanıtım sonra gelir.
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // İLK KARE ÇİZİLDİKTEN SONRA: kullanıcı Ana Sayfa'yı görür, popup onun üstüne gelir.
+    // `build` içinde açmak, ekran daha çizilmeden diyalog göstermek olurdu.
+    WidgetsBinding.instance.addPostFrameCallback((_) => _maybeShowAiWelcome());
+  }
+
+  Future<void> _maybeShowAiWelcome() async {
+    if (!mounted || ref.read(aiWelcomeSeenProvider)) return;
+    await AiWelcomeDialog.show(context);
+    // HANGİ YOLLA kapanırsa kapansın (CTA · zemin · geri tuşu) işaret buraya gelir.
+    await ref.read(aiWelcomeSeenProvider.notifier).markSeen();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final p = context.palette;
     final progress = ref.watch(progressRepositoryProvider).value;
     final profile = ref.watch(studyProfileProvider);

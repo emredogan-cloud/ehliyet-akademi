@@ -2345,3 +2345,66 @@ cihaz: iki adım da kaydırmasız · RenderFlex overflowed 0 eşleşme · crash 
    cihazda da denenmedi.
 3. **Tanıtım metinleri STATİK** — "AI karşılama diyaloğu" gerçek bir model çağrısı DEĞİL,
    AI Koç'un ağzından yazılmış sabit tanıtımdır. Gerçek akış Faz 9'un konusu.
+
+---
+
+# ⛳ BETA R1 — Karşılama YENİDEN (2026-07-26)
+
+**Ürün sahibi geri bildirimi: Faz 8 gereksinimi YANLIŞ ANLADI.** Bu bölüm eklemedir.
+
+## A. Yanlış anlama ve düzeltmesi
+
+Faz 8 karşılama **ekranına sayfa ekledi** (akışı uzattı). İstenen: onboarding biter → **Ana
+Sayfa'ya inilir** → Ana Sayfa **göründükten sonra** ortalanmış premium **popup** açılır.
+
+**DERS:** "karşılama deneyimi" istendiğinde varsayılan olarak akışa adım eklemek yanlış olabilir.
+Tanıtımın **nerede** durduğu, ne söylediği kadar önemlidir: akış içinde = engel, ürünün üstünde
+= karşılama.
+
+Faz 8 değişiklikleri `git checkout ffdd46e~1 -- <dosyalar>` ile geri alındı. E7'nin özet ekranı
+korundu (Evolution çıktısı).
+
+## B. Yapı
+
+| Katman | Dosya                                                                  |
+| ------ | ---------------------------------------------------------------------- |
+| Durum  | `domain/onboarding/ai_welcome_controller.dart` (`ea:aiWelcomeSeen:v1`) |
+| Yüzey  | `features/home/widgets/ai_welcome_dialog.dart`                         |
+| Tetik  | `home_screen.dart` → `addPostFrameCallback`                            |
+
+**AYRI İŞARET:** `welcomeSeen` (E7) özet ekranına aittir; popup başka bir an. Tek bayrağa
+bindirilseydi özeti atlayan kullanıcı popup'ı hiç görmezdi.
+
+**`addPostFrameCallback` ZORUNLU:** `build` içinde diyalog açmak, ekran çizilmeden göstermek
+olurdu. "Ana Sayfa göründükten SONRA" şartının koddaki karşılığı budur.
+
+**İşaret TEK yerde:** CTA · zemin · geri tuşu — hepsi aynı `markSeen()`'e gider.
+
+## C. Test tuzakları (kaydedilmeye değer)
+
+1. **`pumpApp`'e varsayılan `aiWelcomeSeen: true` eklenmeli** — yoksa popup 350+ testin önünü
+   kapatır. Yeni bir "ilk açılış" yüzeyi eklerken bu ilk akla gelmeli.
+2. **Başlık çakışması:** "Hoş geldin!" Ana Sayfa'daki koç kartında da geçiyor → `find.text`
+   iki sonuç döndü. Arama `find.descendant(of: dialog)` ile daraltıldı.
+3. **360 px genişlikte ARKADAKİ Ana Sayfa taşıyor** (Ahem yazı tipi artefaktı, Faz 6'da ölçüldü;
+   cihazda 393 dp'de taşma yok). Diyaloğun gerçek riski DİKEY bütçe olduğu için düzen testleri
+   800×640'ta koşuyor.
+
+## D. Referans kullanımı
+
+`FormAI-FitnessKoçu/premium_welcome_sheet.dart` — **konsept alındı, kod alınmadı**: karartılmış
+zemin · parlayan amblem · ikon-kutulu satırlar · tam genişlik CTA · tek-seferlik kapının
+**çağıranda** olması. Referans bottom sheet; istenen ORTALANMIŞ olduğu için `Dialog` kullanıldı.
+
+## E. Ölçülen
+
+```
+flutter analyze → 0 · flutter test → 362 (+9)
+cihaz: popup Ana Sayfa üstünde açıldı · kapandı · YENİDEN AÇILMADI
+RenderFlex overflowed 0 · crash log boş
+```
+
+## F. Dürüst sınır
+
+E7'nin özet ekranı **korundu** (dokunulmazlar listesinde). Akış: onboarding → özet → Ana Sayfa →
+popup. Özetin de kaldırılması istenirse **ayrı bir karar** gerekir.

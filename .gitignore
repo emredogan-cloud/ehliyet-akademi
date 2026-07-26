@@ -42,3 +42,4 @@ sınav-soruları-pdf/
 /apps/ASO_IMAGE/
 # Loose reference PDFs
 /*.pdf
+google-services.json

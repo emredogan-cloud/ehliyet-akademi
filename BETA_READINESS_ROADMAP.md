@@ -289,6 +289,54 @@ izinler, hedef SDK, mağaza hazırlığı, yayın hazırlığı. **B5** (üretim
 
 ---
 
+## 2R. DÜZELTME FAZLARI — ürün sahibi geri bildirimi (2026-07-26)
+
+Bu üç iş **tamamlanmış sayılmaz**; ilgili fazların DoD'si karşılanana kadar açık kalır.
+
+### 🔴 R1 — Karşılama deneyimi YENİDEN (Faz 8'in yerine geçer)
+
+**Yanlış anlaşılan:** Faz 8, karşılama ekranına bir tanıtım **sayfası** ekledi. İstenen bu değildi.
+
+**Doğrusu:** kullanıcı onboarding'i bitirir → **Ana Sayfa'ya iner** → Ana Sayfa **göründükten
+sonra** ortalanmış, premium bir **AI Karşılama popup'ı** açılır. Tanıtacakları: AI Koç · öğrenme
+sistemi · kişiselleştirilmiş öneriler · topluluk · premium. Doğal biçimde kapanır ve
+**bir daha asla görünmez**.
+
+**Referans (konsept, kod DEĞİL):** `/home/emre/Downloads/FormAI-FitnessKoçu` →
+`premium_welcome_sheet.dart`.
+
+**Yapılacak:** Faz 8'de eklenen tanıtım sayfası **geri alınır**; E7'nin özet ekranı korunur
+(Evolution çıktısı, dokunulmaz).
+
+**DoD:** Temel DoD + popup'ın Ana Sayfa göründükten SONRA açıldığı ve kapatıldıktan sonra
+**bir daha açılmadığı** testle sabitlenir.
+
+### 🔴 R2 — Onboarding 2–5. sayfalar (Faz 6'yı tamamlar)
+
+Faz 6 yalnız **karşılama (0.) sayfasını** çözdü. Kişiselleştirme adımlarında ekranın yaklaşık
+**yarısı hâlâ boş**.
+
+**Şart:** HER onboarding sayfası güvenli görüntü alanının **%85–95'ini** kaplamalı · garip boşluk
+yok · **esnetilmiş düzen yok** · kaydırma yok · duyarlılık korunur. Hepsi 1. sayfanın kalitesine
+ulaşmalı.
+
+**DoD:** Temel DoD + her sayfa için doluluk **ölçülür** ve testle sabitlenir.
+
+### 🔴 R3 — Giriş ekranı YENİDEN (Faz 5'in yerine geçer)
+
+Mevcut tasarım referansı yakalamıyor: esnetilmiş, düz, sönük duruyor ve verilen görseli yanlış
+kullanıyor.
+
+**Hedef doğruluk: %99.** Kaynaklar: `apps/assets/login-page/` · `022/023/024-assets.png`.
+
+Hero'yu esnetmek YETMEZ; kompozisyon, görsel hiyerarşi, boşluk, ışık, derinlik, kaplama, cam
+(glass) etkileri, CTA konumu, illüstrasyon ölçeği, arka plan harmanı ve premium his **yeniden
+kurulur**. Sonuç ilk bakışta amiral gemisi bir ticari uygulama gibi hissettirmeli.
+
+**DoD:** Temel DoD + referansla yan yana karşılaştırma + açık/koyu temada cihaz doğrulaması.
+
+---
+
 ## 3. Program genelinde riskler
 
 | Risk                                                           | Etki   | Azaltma                                                                         |

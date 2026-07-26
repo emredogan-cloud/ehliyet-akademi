@@ -1209,3 +1209,43 @@ hareketleri (go_router geri hareketiyle çakışma riski; açık düğmeler terc
 
 **E12 için hazır:** oynatıcı içerikten bağımsız; yeni video eklemek ek kod GEREKTİRMEZ — yalnız
 içerik + VTT + bölüm verisi. E12'de yeniden değerlendirilecek: wakelock ve çevrimdışı indirme.
+
+---
+
+## E12 — Video içerik üretimi — TAMAMLANDI (2026-07-26)
+
+**Yapıldı:** üretim hattı premium standarda çıkarıldı (1120×640 @30fps, token renkleri, araç
+ayrıntısı, videoya gömülü adım etiketleri). Manevra seti tamamlandı: paralel park · L park ·
+U dönüşü · 25 m geri gidiş. Ayrıca yokuşta kalkış ve 3 manevra hatası animasyona çevrildi.
+Oynatılabilir video **2 → 7**. web **484** (+5) · `flutter test` **265** (+2) · varlıklar 2,2 MB.
+
+**Kalıcı kararlar:**
+
+1. **TEK KAYNAK.** `scripts/video-scenes.mjs` görüntüyü, bölümleri ve altyazıyı BİRLİKTE taşır;
+   hat mp4/webm/poster/VTT **ve** `content/videos.generated.ts` üretir. Video–katalog–altyazı
+   sapması artık testle değil, KURGUYLA imkânsız. Roadmap'in E12 riski buydu.
+   **Kural: içerik türetilen bir varlıksa, türeten kaynak tek olmalı; elle ikinci kopya tutma.**
+2. **Dürüstlük etiketi testle zorunlu.** Her oynatılabilir video başlığında `(Animasyon)`; hiçbir
+   animasyon `Gerçek Çekim` diye sunulamaz; her `planned` başlıkta `planlanıyor`, açıklamasında
+   `gerçek` geçmek zorunda. Bu, ileride birinin sessizce "gerçek çekim" iddiası eklemesini engeller.
+3. **Vaadi değiştirdiysen BAŞLIĞI da değiştir.** `hill-start` ve `common-mistakes` "(Gerçek Çekim)"
+   vaat ediyordu (pedal kamerası / 10 hata). Animasyon aynısı değil → başlık ve açıklama gerçekte
+   ne gösterdiklerini söyleyecek biçimde yeniden yazıldı ("Sık Yapılan **3** Manevra Hatası").
+
+**Yakalanan kusurlar:** `(a + b ?? c)` öncelik hatası poster damgasını NaN yapıyordu · L park
+sahnesinde park cepleri çizilmemişti (araçlar çimende duruyordu) · videoya gömülü adım etiketi
+mobil listedeki "İZLE/PREMIUM" rozetiyle çakışıyordu → **alt şeride** alındı.
+
+**CI iki kez yakaladı:** (a) E2E testi eski içeriği kodluyordu (transkript ifadesi + `planned`
+sayısı 4→2); (b) üretilmiş `videos.generated.ts` prettier kapısına takıldı.
+**Kural: üretilmiş dosyaları yazan her hattan sonra `npx prettier --write` çalıştır; ayrıca
+içerik değiştiren her fazda E2E'yi YERELDE koş — CI'a bırakma.**
+
+**Cihaz:** yeni katalog, oynatma, gömülü adım etiketi, bölüm eşleşmesi, CC, premium kapısı
+doğrulandı. Premium kilidi nedeniyle kalan 6 video `ffprobe` ile yayından çözümlenerek doğrulandı
+(hepsi 1120×640/30fps, kare sayısı ve süre sahne tanımıyla birebir).
+
+**Dürüstçe eksik:** ses/seslendirme yok (anlatım altyazı + adım etiketiyle) · kuş bakışı şematik
+anlatım sürücü gözü/ayna hissi veremez · süreler 10–14 sn (adımları gösterir, gerçek zamanlı
+manevra değil) · iki başlık (sınav yürüyüşü, araç kontrolü) gerçek çekim gerektirdiği için
+`planned` kaldı.

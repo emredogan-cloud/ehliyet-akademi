@@ -4,11 +4,11 @@
 
 > ## 📍 İLERLEME — son güncelleme 2026-07-26, commit `3471378` sonrası
 >
-> | Durum             | Fazlar                                                                                                   |
-> | ----------------- | -------------------------------------------------------------------------------------------------------- |
-> | ✅ **TAMAMLANDI** | **Faz 0** (belgeler) · **Faz 1** (varlık denetimi) · **Faz 2** (Google Sign-In) · **Faz 3** (RevenueCat) |
-> | 🔵 **SIRADAKİ**   | **Faz 4 — Play yayın hazırlığı** (B1 + B2 + B6)                                                          |
-> | ⬜ Kalan          | Faz 5 · 6 · 7 · 8 · 9 · 10 · 11 · 12 · 13 + kapanış raporu                                               |
+> | Durum             | Fazlar                                                                                                                                  |
+> | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+> | ✅ **TAMAMLANDI** | **0** (belgeler) · **1** (varlık denetimi) · **2** (Google Sign-In) · **3** (RevenueCat) · **4** (Play yayın hazırlığı — B1+B2 kapandı) |
+> | 🔵 **SIRADAKİ**   | **Faz 5 — Giriş ekranı yeniden tasarımı**                                                                                               |
+> | ⬜ Kalan          | Faz 6 · 7 · 8 · 9 · 10 · 11 · 12 · 13 + kapanış raporu                                                                                  |
 >
 > Ayrıntılı devir bilgisi: **`SESSION_HANDOVER.md`** · Hızlı başlangıç: **`NEXT_SESSION_START.md`**
 > **Hedef:** Üretimdeki uygulamayı **Google Play Kapalı Test**'e hazır bir sürüm adayına dönüştürmek.
@@ -43,8 +43,8 @@ Bu yol haritası varsayımla değil, depodan okunan değerlerle yazıldı.
 
 | #   | Engel                                                   | Çözüldüğü faz |
 | --- | ------------------------------------------------------- | ------------- |
-| B1  | Release derlemesi **debug anahtarıyla** imzalanıyor     | Faz 4         |
-| B2  | `android/app/build.gradle.kts` içinde şablon `TODO`ları | Faz 4         |
+| B1  | Release imzalama — ✅ **KAPANDI** (Faz 4, upload key)   | Faz 4         |
+| B2  | Gradle şablon yer-tutucuları — ✅ **KAPANDI** (Faz 4)   | Faz 4         |
 | B3  | Google Sign-In yok — ✅ **KAPANDI** (Faz 2)             | Faz 2         |
 | B4  | RevenueCat yok — ✅ **KAPANDI** (Faz 3, istemci tarafı) | Faz 3         |
 | B5  | Üretim veritabanında Evolution doğrulama artıkları      | Faz 13        |
@@ -173,10 +173,18 @@ kullanıcısı akışı · zorunlu beyanlar (Veri Güvenliği, Gizlilik, Hedef S
 Uygulama Erişimi, **AI beyanları**, izinler) · ekran görüntüleri · Öne Çıkan Grafik · mağaza
 listesi · imzalama · AAB yükleme · inceleme · geri alma.
 
-**DoD:** Temel DoD + **gerçek upload key ile imzalanmış AAB** üretilir ve imza doğrulanır
-(`apksigner verify --print-certs`).
+**DoD:** Temel DoD + **gerçek upload key ile imzalanmış AAB** üretilir ve imza doğrulanır.
+**SONUÇ:** ✅ `BETA_PHASE_4_REPORT.md` · **B1 + B2 KAPANDI.** AAB (62,5 MB) ve arm64 APK gerçek
+upload key ile imzalandı; sertifika SHA-1/SHA-256 `keytool` çıktısıyla **birebir aynı**,
+`androiddebugkey` **0 eşleşme**. Anahtar yokken release derlemesi **dürüst hatayla durur**,
+debug derlemesi (ve CI) etkilenmez — her iki dal ölçüldü.
+**Belge düzeltmesi:** `apksigner` AAB'yi doğrulayamıyor (`Missing AndroidManifest.xml`); doğru
+araç `jarsigner`. İki belgedeki hatalı talimat düzeltildi.
+**Ek bulgular:** `apps/ASO_IMAGE/` (12 MB) ve `google-services.json` ignore değildi → düzeltildi ·
+**`oauth_client` boş → Google girişi henüz çalışmaz** (`GOOGLE_AUTH_SETUP.md` §9.5).
+**B6 elle kalıyor** — Play Console'a yükleme kod işi değildir.
 
-### Faz 5 — Giriş ekranı yeniden tasarımı
+### 🔵 Faz 5 — Giriş ekranı yeniden tasarımı — SIRADAKİ FAZ
 
 Referanslar: `apps/assets/login-page.png` ve `apps/assets/interface-assets/{022,023,024}-assets.png`
 (mevcut; ölçüldü: 1536×1024 · 1024×1536 · 1994×789). Varlıklar **birebir** uygulanır, yaklaşık

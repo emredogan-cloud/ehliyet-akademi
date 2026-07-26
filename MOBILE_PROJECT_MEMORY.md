@@ -1785,3 +1785,144 @@ ama o artefakt **Faz 2 commit'inden önce** üretilmiştir; fark `purchases_flut
 | **B6** | Play Console kaydı/beyanları                    | ⛔ AÇIK (elle) — Faz 4                                      |
 
 **Faz 3'te B1/B2'ye DOKUNULMADI** — `android/app/build.gradle.kts` olduğu gibi duruyor.
+
+---
+
+# ⛳ BETA FAZ 4 — Play yayın hazırlığı (2026-07-26)
+
+Bu bölüm **eklemedir**; yukarıdaki hiçbir kayıt değiştirilmedi.
+
+## A. B1 kapandı — release imzalama gerçek upload key ile
+
+`android/app/build.gradle.kts` artık `android/key.properties`'ten okuyor. Kritik karar:
+
+```kotlin
+signingConfig = if (hasReleaseSigning) signingConfigs.getByName("release") else null
+```
+
+**Debug anahtarına DÜŞÜLMEZ.** Sessiz geri düşüş, hatanın ancak Play'e yükleme anında fark
+edilmesine yol açardı.
+
+### CI'ı kırmadan kurmanın yolu — kaydedilmeye değer
+
+Gradle imzalama yapılandırması **her derlemede** değerlendirilir. Naif bağlama
+(`props["keyAlias"] as String`) `key.properties` yokken **yapılandırma aşamasında** patlar ve
+`flutter build apk --debug`'ı da kırar → **Mobile CI kırmızıya döner** (CI yalnız debug derliyor).
+
+Çözüm: yapılandırma anahtarsız da başarılı olur; hata `gradle.taskGraph.whenReady` içinde,
+yalnız `assemble*Release` / `bundle*Release` / `package*Release` istendiğinde fırlatılır.
+
+**Her iki dal ölçüldü** (`key.properties` geçici taşınarak): debug ✅ derlendi, release ✅ dürüst
+hata verdi.
+
+## B. `apksigner` AAB'yi DOĞRULAYAMAZ — belge hatası düzeltildi
+
+`RELEASE_CHECKLIST.md` §C ve `PLAY_CONSOLE_SETUP.md` §2.3 AAB'ye `apksigner` uygulamayı
+söylüyordu. Ölçüldü:
+
+```
+com.android.apksig.apk.ApkFormatException: Missing AndroidManifest.xml
+```
+
+AAB bir APK değildir. **Araç çöktüğü için çıktısında `androiddebugkey` geçmemesi kanıt DEĞİL,
+yanlış bir negatiftir.** İlk denemede bu tuzağa düşüldü, sonuç kanıt sayılmadı, iki belge
+düzeltildi.
+
+**Doğru araçlar:** AAB → `jarsigner -verify -certs` · APK → `apksigner verify --print-certs`.
+
+**GENEL DERS:** bir doğrulama komutu **hata verdiğinde**, "aradığım dizgi çıktıda yok" sonucu
+geçersizdir. Önce komutun **başarıyla çalıştığı** doğrulanmalı.
+
+## C. İmza kanıtı (ölçüldü)
+
+| Ölçüt   | keystore (`keytool -list`)                                    | artefakt (`apksigner`) |
+| ------- | ------------------------------------------------------------- | ---------------------- |
+| SHA-1   | `7E:1F:EA:D9:20:BE:E1:E6:62:A1:40:AC:FF:D7:8D:C0:B6:76:73:57` | `7e1fead9…b6767357` ✅ |
+| SHA-256 | `46:B2:DF:CE:…:06:07:D3`                                      | `46b2dfce…6f0607d3` ✅ |
+
+`jar verified.` · `CN=Emre Dogan, O=Ehliyet Akademi - Sınav 2026` · SHA384withRSA 4096-bit ·
+`androiddebugkey` **0 eşleşme**.
+
+**Parmak izleri GİZLİ DEĞİLDİR** — Firebase/Play Console'a girilmek üzere üretilirler. Gizli olan
+anahtar deposu ve parolalardır (`key.properties`, Git dışı).
+
+**Bağımsız üçüncü kanıt:** debug imzalı kurulumun üzerine release imzalı APK kurulamadı →
+`INSTALL_FAILED_UPDATE_INCOMPATIBLE: signatures do not match`.
+
+## D. Depoda bulunan üç sorun (Faz 4'te düzeltildi)
+
+1. **`apps/ASO_IMAGE/` ignore değildi** — 12 MB ham PNG bir sonraki `git add -A` ile depoya
+   girecekti. `/apps/assets/` kuralıyla tutarlı biçimde `.gitignore`'a eklendi.
+2. **`google-services.json` ignore değildi** — içinde `api_key.current_key` var; commit edilseydi
+   **CI'daki gitleaks yapıyı kırabilirdi**. Projenin kendi kararı zaten bunu söylüyordu
+   (`GOOGLE_AUTH_SETUP.md` §8). `apps/mobile/android/.gitignore`'a eklendi.
+3. **Google girişi mevcut Firebase durumuyla ÇALIŞMAZ** — §E.
+
+**KURAL (Faz 3'ün dersinin devamı):** `git status` yalnız "benim değiştirdiklerim" değildir.
+Commit öncesi **izlenmeyen dosyalar da** gözden geçirilmeli: hangisi depoya girmeli, hangisi
+ignore olmalı, hangisi başkasının yarım işi.
+
+## E. ⚠️ Google girişi ÇALIŞMAZ — `oauth_client` boş
+
+`apps/mobile/android/app/google-services.json` eklenmiş, paket adı doğru
+(`com.ehliyetegitim.ehliyet_akademi`), **ama:**
+
+```
+oauth_client sayısı: 0
+```
+
+| Eksik                       | Sonuç                                                                         |
+| --------------------------- | ----------------------------------------------------------------------------- |
+| Android OAuth istemcisi yok | Firebase'e **SHA-1 eklenmemiş** → hesap seçici açılır, **hemen kapanır**      |
+| Web OAuth istemcisi yok     | **`GOOGLE_SERVER_CLIENT_ID` henüz YOK** → sunucu doğrulaması yapılandırılamaz |
+
+Adımlar `GOOGLE_AUTH_SETUP.md` **§9.5**'e yazıldı; gereken SHA'lar §3.2'de hazır.
+**Uygulama çökmez** — düğmeyi hiç göstermez (Faz 2 kalıbı, testle sabit).
+
+**TEŞHİS YÖNTEMİ (tekrar kullanılabilir):** `google-services.json`'ın `oauth_client` dizisi
+**boşsa** Firebase'e hiç SHA eklenmemiştir. Bu, "giriş sessizce başarısız" şikâyetinin en hızlı
+teşhisidir — cihazda denemeye gerek yok.
+
+## F. Ölçülen artefaktlar
+
+```
+AAB (release)  62,5 MB  — Play'e yüklenecek olan
+arm64 APK      35,0 MB  — imza doğrulaması ve cihaz testi için
+```
+
+AAB boyutu, Play'in kullanıcıya dağıttığı APK boyutu **değildir** (Play bölmeyi kendi yapar).
+
+## G. Mağaza varlıkları — ölçüldü (`apps/ASO_IMAGE/`, depoda DEĞİL)
+
+| Dosya                           | Ölçü         | Play şartı | Sonuç                |
+| ------------------------------- | ------------ | ---------- | -------------------- |
+| `PlayStore-APP-ICON.png`        | **512×512**  | 512×512    | ✅ tam uyuyor        |
+| `PlayStore-özellik-grafiği.png` | **1024×500** | 1024×500   | ✅ tam uyuyor        |
+| `001/002/003.png`               | 941×1672     | ≥320 px    | ✅ 3 adet (asgari 2) |
+
+## H. Cihaz doğrulaması
+
+Release **imzalı** APK gerçek cihaza kuruldu (`jfzxugsgnnvsrsg6`): soğuk açılış ✅ ·
+`logcat -b crash` **boş** ✅ · `versionName=1.0.0 versionCode=1 minSdk=24 targetSdk=36` ✅.
+
+## I. Yayın engelleri — Faz 4 sonrası
+
+| #      | Engel                                 | Durum                                |
+| ------ | ------------------------------------- | ------------------------------------ |
+| **B1** | Release debug anahtarıyla imzalanıyor | ✅ **KAPANDI (Faz 4)**               |
+| **B2** | `build.gradle.kts` şablon notları     | ✅ **KAPANDI (Faz 4)**               |
+| **B3** | Google Sign-In yok                    | ✅ KAPANDI (Faz 2) — **ama bkz. §E** |
+| **B4** | RevenueCat yok                        | ✅ KAPANDI (Faz 3, istemci tarafı)   |
+| **B5** | Üretim veritabanı test artıkları      | ⛔ AÇIK — **onay bekliyor**, Faz 13  |
+| **B6** | Play Console kaydı/beyanları          | ⛔ AÇIK — **elle**, belgeler hazır   |
+
+## J. Dürüst sınırlar (Faz 4)
+
+1. **Play Console'a hiçbir şey yüklenmedi** — B6 elle yapılacak.
+2. **Play App Signing sertifikası yok** — ilk yüklemeden sonra görünür; Firebase'e eklenmezse
+   Play'den kurulan yapıda Google girişi çalışmaz.
+3. **Google girişi uçtan uca denenmedi** — §E'deki üç adım tamamlanmadan mümkün değil.
+4. **AAB Play'de sınanmadı** — imza doğrulandı, kabul yalnız gerçek yüklemede kesinleşir.
+5. **versionCode hâlâ 1** — ilk yükleme için doğru, sonrakilerde artırılmalı.
+6. **`key.properties` bu makineye özgü** — CI release derlemiyor; derlemesi istenirse anahtar
+   deposu base64 secret olarak verilmeli.

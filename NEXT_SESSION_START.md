@@ -17,10 +17,10 @@
 
 Gerekince bakılacaklar: `RELEASE_CHECKLIST.md` · `GOOGLE_AUTH_SETUP.md` · `REVENUECAT_SETUP.md` ·
 `ENV_TEMPLATE.md` · `ASSET_GENERATION_LIBRARY.md` · `RELEASE_AUDIT_PLAN.md` ·
-`BETA_PHASE_2_REPORT.md` · `BETA_PHASE_3_REPORT.md`.
+`BETA_PHASE_2_REPORT.md` · `BETA_PHASE_3_REPORT.md` · `BETA_PHASE_4_REPORT.md` · `PLAY_CONSOLE_SETUP.md`.
 
-**`MOBILE_PROJECT_MEMORY.md` çok uzun** — baştan sona okuma; **sondaki iki bölüm** (⛳ BAĞLAM
-KONTROL NOKTASI ve ⛳ BETA FAZ 3) Beta programı için yeterlidir. Evolution ayrıntısı gerekirse
+**`MOBILE_PROJECT_MEMORY.md` çok uzun** — baştan sona okuma; **sondaki üç bölüm** (⛳ BAĞLAM
+KONTROL NOKTASI · ⛳ BETA FAZ 3 · ⛳ BETA FAZ 4) Beta programı için yeterlidir. Evolution ayrıntısı gerekirse
 `MOBILE_EVOLUTION_FINAL_REPORT.md`.
 
 ## 2. Tamamlanan fazlar
@@ -32,18 +32,18 @@ KONTROL NOKTASI ve ⛳ BETA FAZ 3) Beta programı için yeterlidir. Evolution ay
 | **Beta Faz 1**       | ✅ Tam varlık denetimi                                             |
 | **Beta Faz 2**       | ✅ Google Sign-In (sunucu doğrulamalı)                             |
 | **Beta Faz 3**       | ✅ RevenueCat (`BillingGateway` soyutlaması)                       |
+| **Beta Faz 4**       | ✅ Play yayın hazırlığı — **B1 + B2 kapandı** (gerçek upload key)  |
 
 ## 3. Aktif faz
 
-# 🔵 Beta Faz 4 — Google Play yayın hazırlığı
+# 🔵 Beta Faz 5 — Giriş ekranı yeniden tasarımı
 
-Kaynak belge: **`PLAY_CONSOLE_SETUP.md`** · Roadmap bölümü: `BETA_READINESS_ROADMAP.md` → "Faz 4".
-Bu faz **B1 + B2**'yi kapatır (release imzalama + şablon notları) ve **B6**'yı belgeler.
+Kaynak belge: **`ASSET_GENERATION_LIBRARY.md` §4.2** · Roadmap: `BETA_READINESS_ROADMAP.md` → "Faz 5".
 
 ## 4. Kalan yol haritası
 
-`4` (aktif) → `5` Giriş ekranı → `6` Onboarding cilası → `7` Profil avatarları →
-`8` Karşılama deneyimi → `9` Akan AI → `10` Kabin kumandaları → `11` Ders yeniden tasarımı →
+`5` (aktif) → `6` Onboarding cilası → `7` Profil avatarları → `8` Karşılama deneyimi →
+`9` Akan AI → `10` Kabin kumandaları → `11` Ders yeniden tasarımı →
 `12` Video hattı araştırması → `13` Nihai denetim → `BETA_READINESS_FINAL_REPORT.md`.
 
 ## 5. Değişmez mühendislik kuralları
@@ -81,14 +81,18 @@ Bu faz **B1 + B2**'yi kapatır (release imzalama + şablon notları) ve **B6**'y
 
 ## 7. Açık yayın engelleri
 
-| #      | Engel                                                                          | Faz           |
-| ------ | ------------------------------------------------------------------------------ | ------------- |
-| **B1** | Release derlemesi **DEBUG anahtarıyla** imzalanıyor → Play kabul etmez         | **4 — AKTİF** |
-| **B2** | `android/app/build.gradle.kts` şablon notları                                  | **4 — AKTİF** |
-| **B5** | Üretim veritabanı test artıkları — **kullanıcı onayı bekliyor, izinsiz silme** | 13            |
-| **B6** | Play Console kaydı/beyanları (elle)                                            | **4 — AKTİF** |
+| #      | Engel                                                                          | Durum                        |
+| ------ | ------------------------------------------------------------------------------ | ---------------------------- |
+| **B5** | Üretim veritabanı test artıkları — **kullanıcı onayı bekliyor, izinsiz silme** | ⛔ Faz 13                    |
+| **B6** | Play Console kaydı/beyanları                                                   | ⛔ **ELLE** — belgeler hazır |
 
-**Kapananlar:** B3 (Faz 2) · B4 (Faz 3 — istemci tarafı; RevenueCat panosu kurulumu elle).
+**Kapananlar:** B1 + B2 (Faz 4 — gerçek upload key) · B3 (Faz 2) · B4 (Faz 3, istemci tarafı).
+
+### ⚠️ Kod dışı ama yayını bloke eden: Google girişi henüz ÇALIŞMIYOR
+
+`google-services.json` eklendi ama `oauth_client` dizisi **boş** → Firebase'e SHA eklenmemiş ve
+Web istemcisi (`GOOGLE_SERVER_CLIENT_ID`) yok. Adımlar: **`GOOGLE_AUTH_SETUP.md` §9.5**.
+Gereken SHA-1/SHA-256 §3.2'de ölçülmüş hâlde duruyor. Uygulama çökmez — düğmeyi göstermez.
 
 ## 8. Test gereksinimleri — mevcut taban (ÖLÇÜLDÜ 2026-07-26)
 
@@ -131,36 +135,34 @@ bilinçli olarak değiştirilmedi (o dosyaya yalnız kural eklenir). Sapma burad
 
 **Cihazı her fazın başında doğrula:** `adb devices -l`.
 
-## 10. Faz 4'ün ilk görevi — TAM OLARAK BU
+## 10. Faz 5'in ilk görevi — TAM OLARAK BU
 
-> **Görev:** `PLAY_CONSOLE_SETUP.md` §2'yi oku, sonra **release imzalamasını gerçek anahtara
-> bağla** (B1) ve **şablon notlarını temizle** (B2).
+> **Görev:** `ASSET_GENERATION_LIBRARY.md` §4.2'yi oku, sonra **giriş ekranını yeniden tasarla**.
 
 Adımlar:
 
-1. `apps/mobile/android/app/build.gradle.kts` dosyasını oku. Şu an: `release` bloğu
-   `signingConfigs.getByName("debug")` kullanıyor ve `defaultConfig` ile `release` içinde Flutter
-   şablonundan kalan yapılacak-notları duruyor.
-2. `android/release-keystore.properties.example` (**yeni**) — imzalama şablonu, **değer yazılmadan**.
-3. `android/key.properties` **`.gitignore`'a eklenir** (kök `.gitignore`'daki `!.env.example`
-   deseninin aynısı gerekebilir — **`git check-ignore -v` ile doğrula**).
-4. `build.gradle.kts` release bloğu `key.properties`'i okuyacak biçimde güncellenir.
-   **Dosya yoksa derleme anlaşılır bir hata vermeli**, sessizce debug anahtarına düşmemeli.
-5. Şablon yapılacak-notları temizlenir (B2). **Dikkat:** `pnpm verify` yasaklı kalıp tarıyor —
-   belgede bu notları **birebir alıntılama** (Faz 0'da CI tam bu yüzden kırıldı).
-6. Testler: `key.properties` yokken derlemenin dürüst hata verdiği doğrulanır.
-7. **DoD:** gerçek upload key ile imzalanmış AAB üretilir ve
-   `apksigner verify --print-certs` çıktısında **`androiddebugkey` GEÇMEZ**.
-   ⚠️ Upload key üretimi **elle** bir adımdır (`keytool -genkey`); anahtar üretilemiyorsa bu
-   **dürüstçe** rapora yazılır, sahte "imzalandı" denmez.
-8. `BETA_PHASE_4_REPORT.md` + `MOBILE_PROJECT_MEMORY.md`'ye **ekleme** + commit + push +
-   **CI yeşil bekle**.
+1. `apps/mobile/lib/features/auth/auth_screen.dart` dosyasını oku — Faz 2'de Google düğmesi
+   eklendi, **bozulmayacak**.
+2. `apps/assets/interface-assets/022-assets.png` (1536×1024) → **hero olarak sevk edilir**,
+   1080×720 WebP → `apps/mobile/assets/img/auth_hero.webp`.
+   ⚠️ **Renault logosu okunuyor** — rötuşlanmalı veya markasız varyant üretilmeli, karar rapora yazılmalı.
+3. `023-assets.png` / `024-assets.png` **arayüz mockup'ıdır** → **raster sevk EDİLMEZ**, widget
+   olarak uygulanır (gömülü metin temaya uymaz, yazı tipi ölçeğiyle büyümez, çevrilemez).
+4. **"Apple ile giriş" KONMAZ** — iOS yok, çalışmayan düğme ölü gezinmedir (disiplin kural 3).
+5. **"MEB müfredatına uygun"** ifadesi doğrulanabilir bir iddiadır; kaynak gösterilemiyorsa
+   **kullanılmaz**.
+6. Sabit renk yok — `context.palette` (`design_tokens_test.dart` bunu zorluyor). Açık **ve** koyu
+   temada doğrulanır.
+7. Görüntü alanı dolar, garip boşluk kalmaz; e-posta/parola/misafir/Google yolları **korunur**.
+8. Testler: mevcut giriş testleri geçmeye devam eder + yeni yüzey için test eklenir.
+9. Cihaz: açık ve koyu temada doğrulama + ekran görüntüsü.
+10. `BETA_PHASE_5_REPORT.md` + bellek **ekleme** + commit + push + **CI yeşil bekle**.
 
 ## 11. İlk 60 saniyede çalıştırılacak doğrulama
 
 ```bash
 cd /home/emre/Downloads/OTHER-RESEARCH/other_report/ehliyet-akademi
-git log --oneline -3          # en üstte Faz 3 commit'i olmalı
+git log --oneline -3          # en üstte Faz 4 commit'i olmalı
 git status --short            # boş olmalı
 gh run list --limit 3         # son çalışmalar yeşil olmalı
 adb devices -l                # jfzxugsgnnvsrsg6 görmelisin (§9)

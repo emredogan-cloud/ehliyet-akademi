@@ -75,13 +75,21 @@ keytool -list -v \
   -storepass android -keypass android
 ```
 
-### 3.2 Upload key (bizim imzaladığımız AAB)
-
-`PLAY_CONSOLE_SETUP.md` §2'de oluşturulur.
+### 3.2 Upload key (bizim imzaladığımız AAB) — ✅ ÜRETİLDİ
 
 ```bash
-keytool -list -v -keystore <yol>/upload-keystore.jks -alias upload
+keytool -list -v -keystore ~/keys/ehliyet-akademi-upload.jks -alias upload
 ```
+
+**Bu projede ölçülen değerler (Faz 4, alias `upload`, 4096-bit RSA):**
+
+```
+SHA-1:   7E:1F:EA:D9:20:BE:E1:E6:62:A1:40:AC:FF:D7:8D:C0:B6:76:73:57
+SHA-256: 46:B2:DF:CE:2F:78:BD:A0:EB:C6:A0:19:FE:4F:14:98:C0:52:37:42:19:94:68:C5:47:D0:4F:68:6F:06:07:D3
+```
+
+> Parmak izleri **gizli değildir** — Firebase'e ve Play Console'a girilmek üzere üretilirler.
+> Gizli olan, anahtar deposunun kendisi ve parolalarıdır (`key.properties`, Git dışı).
 
 ### 3.3 Play App Signing (Play'in kullanıcıya dağıtırken kullandığı imza)
 
@@ -170,6 +178,35 @@ eklendiğinde uyum sağlanır. Ek bir kod gerekmez.
 | Sunucu 401 "geçersiz token"                      | `aud` uyuşmuyor — sunucudaki `GOOGLE_SERVER_CLIENT_ID` yanlış         |
 | `ApiException: 10` (DEVELOPER_ERROR)             | Paket adı/SHA/istemci üçlüsünden biri uyuşmuyor                       |
 | Emülatörde çalışıyor, gerçek cihazda çalışmıyor  | Cihazda Google Play Hizmetleri güncel değil                           |
+
+## 9.5 ⚠️ MEVCUT DURUM — Faz 4'te ölçüldü, GİRİŞ HENÜZ ÇALIŞMAZ
+
+`apps/mobile/android/app/google-services.json` dosyası projeye eklendi (paket adı
+`com.ehliyetegitim.ehliyet_akademi` ✅ doğru), **ancak içindeki `oauth_client` dizisi BOŞ.**
+
+```
+oauth_client sayısı: 0
+```
+
+Bunun anlamı ve sonuçları:
+
+| Eksik                           | Sonuç                                                                                  |
+| ------------------------------- | -------------------------------------------------------------------------------------- |
+| **Android OAuth istemcisi yok** | Firebase'e **SHA-1 eklenmemiş** → hesap seçici açılır ve **hemen kapanır** (§9)        |
+| **Web OAuth istemcisi yok**     | `GOOGLE_SERVER_CLIENT_ID` **henüz mevcut değil** → sunucu doğrulaması yapılandırılamaz |
+
+**Yapılacaklar (sırayla):**
+
+1. Firebase → Proje ayarları → Android uygulaması → **Parmak izi ekle**:
+   - **debug** (`~/.android/debug.keystore`, alias `androiddebugkey`, parola `android`) — §3.1
+   - **upload** — §3.2'deki SHA-1 **ve** SHA-256 (yukarıda hazır)
+   - **Play App Signing** — kapalı teste ilk yüklemeden **sonra** görünür (§3.3)
+2. `google-services.json`'ı **yeniden indir** ve aynı konuma koy. `oauth_client` artık dolu olmalı.
+3. Google Cloud Console → Kimlik bilgileri → **Web istemci kimliğini** kopyala →
+   `GOOGLE_SERVER_CLIENT_ID` olarak hem Vercel ortam değişkenlerine hem mobil `--dart-define`'a gir.
+
+Bu üç adım tamamlanana kadar Google girişi **hiçbir yapıda çalışmaz**. Uygulama bu durumda
+çökmez — düğmeyi hiç göstermez (Faz 2'de testle sabitlendi).
 
 ## 10. Elle yapılacaklar özeti (kod bunu yapamaz)
 

@@ -27,14 +27,31 @@ yükleme yapılmaz.
 - [ ] Sürüm notları Türkçe ve somut yazıldı
 - [ ] `git tag v1.0.0+N` atıldı (hızlı düzeltme sürümü üretebilmek için)
 
-## C. İmzalama (yayın engeli B1)
+## C. İmzalama (yayın engeli B1 — Faz 4'te kapandı)
 
-- [ ] `android/key.properties` mevcut ve **Git'te değil**
+- [ ] `android/key.properties` mevcut ve **Git'te değil** (`git check-ignore -v` ile doğrula)
 - [ ] Anahtar deposu Git dışında (`~/keys/…`), yedeklenmiş
 - [ ] `build.gradle.kts` release bloğunda **debug anahtarı YOK**
 - [ ] `flutter build appbundle --release` başarılı
-- [ ] `apksigner verify --print-certs` çıktısında **`androiddebugkey` GEÇMİYOR**
+- [ ] **AAB imzası** doğrulandı → `jar verified.` ve DN'de `CN=Android Debug` **yok**
+- [ ] **APK imzası** doğrulandı → `androiddebugkey` / `CN=Android Debug` **GEÇMİYOR**
 - [ ] Sertifika SHA-1'i `keytool -list` çıktısıyla **aynı**
+
+> ⚠️ **`apksigner` AAB'yi DOĞRULAYAMAZ** (Faz 4'te ölçüldü): AAB bir APK değildir, kök
+> `AndroidManifest.xml` taşımaz ve araç `ApkFormatException: Missing AndroidManifest.xml` ile
+> çöker. **Çöktüğü için çıktısında `androiddebugkey` geçmemesi kanıt DEĞİLDİR.** Doğru araçlar:
+
+```bash
+# AAB → jarsigner (AAB'ler v1/JAR imzalıdır)
+jarsigner -verify -verbose:summary -certs build/app/outputs/bundle/release/app-release.aab
+
+# APK → apksigner (v2/v3 imza şeması)
+flutter build apk --release --target-platform android-arm64
+apksigner verify --print-certs build/app/outputs/flutter-apk/app-release.apk
+
+# Karşılaştırma tabanı
+keytool -list -v -keystore <yol>/upload-keystore.jks -alias upload
+```
 
 ## D. Ortam değişkenleri
 

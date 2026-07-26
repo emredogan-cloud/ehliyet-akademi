@@ -12,3 +12,9 @@ GeneratedPluginRegistrant.java
 key.properties
 **/*.keystore
 **/*.jks
+
+# Firebase yapılandırması — projeye özgü; API anahtarı ve istemci kimlikleri taşır.
+# Projenin kararı (GOOGLE_AUTH_SETUP.md §8): depoda düz metin TUTULMAZ, CI'a base64 secret
+# (GOOGLE_SERVICES_JSON) olarak verilir ve derleme öncesi dosyaya yazılır.
+# Depoya alınsaydı CI'daki gitleaks taraması api_key.current_key'i sır sanıp yapıyı kırabilirdi.
+**/google-services.json

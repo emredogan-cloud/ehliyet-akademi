@@ -15,23 +15,22 @@
 | Kuruluş mu birey mi            | Birey seçilirse adresiniz mağazada görünür; kuruluş için D-U-N-S gerekir |
 | Uygulama kimliği               | `com.ehliyetegitim.ehliyet_akademi` — **yayından sonra DEĞİŞTİRİLEMEZ**  |
 | targetSdk                      | **36** ✅ (Play'in asgarisinin üstünde)                                  |
-| İmzalama                       | ⛔ şu an **debug anahtarı** — §2'de düzeltilir                           |
+| İmzalama                       | ✅ **upload key** (4096-bit RSA, alias `upload`, 2053'e kadar) — §2      |
 
-## 2. Upload key oluşturma (yayın engeli B1)
+## 2. Upload key oluşturma (yayın engeli B1) — ✅ FAZ 4'TE KAPANDI
 
-Şu anki durum — `android/app/build.gradle.kts`:
+**Güncel durum:** `android/app/build.gradle.kts` release bloğu artık `android/key.properties`
+dosyasından gerçek upload key'i okuyor. Flutter şablonundan kalan yer-tutucu notlar temizlendi
+(B2). Anahtar **yoksa** derleme sessizce debug anahtarına düşmez; release artefaktı istendiğinde
+**anlaşılır bir hatayla durur** (debug derlemeleri ve CI etkilenmez).
 
 ```kotlin
-buildTypes {
-    release {
-        // (Flutter şablonundan kalan "kendi imzanı ekle" notu hâlâ duruyor)
-        signingConfig = signingConfigs.getByName("debug")   // ⛔ Play kabul etmez
-    }
-}
+signingConfig = if (hasReleaseSigning) signingConfigs.getByName("release") else null
 ```
 
-> Not: yukarıdaki blok, depodaki **mevcut** durumu gösteriyor. Şablon yorumu, deponun `verify`
-> kapısı yasaklı kalıp taradığı için burada birebir alıntılanmadı — kaldırılması Faz 4'ün işidir.
+Geçmiş durum (kaydı için): release bloğu `signingConfigs.getByName("debug")` kullanıyordu ve Play
+bunu kabul etmezdi. Şablon yorumları, deponun `verify` kapısı yasaklı kalıp taradığı için burada
+birebir alıntılanmıyor.
 
 ### 2.1 Anahtarı üret
 
@@ -66,13 +65,31 @@ anlaşılır bir hata verir**, sessizce debug anahtarına düşmez.
 
 ### 2.3 Doğrula
 
+> ⚠️ **`apksigner` AAB'yi doğrulayamaz** — AAB bir APK değildir, kök `AndroidManifest.xml`
+> taşımaz ve araç `ApkFormatException: Missing AndroidManifest.xml` ile çöker. Çöktüğü için
+> çıktısında `androiddebugkey` geçmemesi **kanıt değildir** (Faz 4'te ölçüldü).
+
 ```bash
+# 1) AAB → jarsigner (AAB'ler v1/JAR imzalıdır)
 flutter build appbundle --release
-apksigner verify --print-certs build/app/outputs/bundle/release/app-release.aab
+jarsigner -verify -verbose:summary -certs build/app/outputs/bundle/release/app-release.aab
+#   Beklenen: "jar verified." + DN'de CN=Android Debug YOK
+
+# 2) APK → apksigner (v2/v3 imza şeması, parmak izi karşılaştırması için)
+flutter build apk --release --target-platform android-arm64
+apksigner verify --print-certs build/app/outputs/flutter-apk/app-release.apk
+
+# 3) Karşılaştırma tabanı
+keytool -list -v -keystore ~/keys/ehliyet-akademi-upload.jks -alias upload
 ```
 
-Çıktıdaki SHA-1/SHA-256, `keytool -list` ile aldığınız değerlerle **aynı** olmalı; `androiddebugkey`
+APK çıktısındaki SHA-1/SHA-256, `keytool -list` değerleriyle **aynı** olmalı (iki nokta üst üste
+ayraçları düşer, büyük/küçük harf farkı olabilir); `androiddebugkey` ya da `CN=Android Debug`
 görünüyorsa imzalama hâlâ yanlıştır.
+
+**Bu projede ölçülen (Faz 4):** SHA-1 `7E:1F:EA:D9:20:BE:E1:E6:62:A1:40:AC:FF:D7:8D:C0:B6:76:73:57` ·
+SHA-256 `46:B2:DF:CE:2F:78:BD:A0:EB:C6:A0:19:FE:4F:14:98:C0:52:37:42:19:94:68:C5:47:D0:4F:68:6F:06:07:D3`.
+**Bu iki değer gizli değildir** — Firebase'e (`GOOGLE_AUTH_SETUP.md` §3.2) girilmek üzere üretilir.
 
 ## 3. Play Console'da uygulama oluşturma
 
@@ -193,6 +210,23 @@ seçicisini kullanır; `READ_MEDIA_IMAGES` **eklenmemelidir** (eklenirse gerekç
 
 Ekran görüntüsü önerisi (mevcut ekranlardan): Ana Sayfa · Pratik/soru · Trafik işaretleri ·
 Video dersi · Topluluk sıralaması · AI Koç · Premium.
+
+### Hazırlanmış varlıklar — `apps/ASO_IMAGE/` (ölçüldü, Faz 4)
+
+| Dosya                             | Ölçü         | Play şartı         | Durum                     |
+| --------------------------------- | ------------ | ------------------ | ------------------------- |
+| `PlayStore-APP-ICON.png`          | **512×512**  | 512×512            | ✅ tam uyuyor             |
+| `PlayStore-özellik-grafiği.png`   | **1024×500** | 1024×500           | ✅ tam uyuyor             |
+| `001.png` · `002.png` · `003.png` | **941×1672** | ≥320 px, 16:9–9:16 | ✅ 3 adet (asgari 2)      |
+| `özellik-grafiği(OLD).png`        | 1794×876     | —                  | eski sürüm, yüklenmeyecek |
+
+Bu dosyalar **depoya alınmadı** (12 MB ham tasarım çıktısı). Faz 4'te `apps/ASO_IMAGE/` de
+`.gitignore`'a eklendi — deponun mevcut `/apps/assets/` kuralıyla tutarlı: ham/kaynak görseller
+depoda tutulmaz, yalnız uygulamada servis edilen optimize sürümler izlenir. Yükleme Play
+Console'da elle yapılır.
+
+> Versiyonlanmaları isteniyorsa `.gitignore` satırı kaldırılabilir; o durumda depo boyutu ~12 MB
+> artar ve her düzenleme yeni bir ikili sürüm yaratır.
 
 ## 7. AAB yükleme ve kapalı test
 

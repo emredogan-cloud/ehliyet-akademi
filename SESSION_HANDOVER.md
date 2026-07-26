@@ -16,17 +16,17 @@
 | Üretim                | https://www.ehliyetegitim.com (Vercel, canlı)                                                                                   |
 | **Önceki program**    | **Evolution E1–E13 — TAMAMLANDI.** Dokunulmaz, yeniden başlatılmaz                                                              |
 | **Aktif program**     | **Beta Readiness** — Google Play Kapalı Test (12 test kullanıcısı)                                                              |
-| **Tamamlanan fazlar** | **0, 1, 2, 3**                                                                                                                  |
-| **Sıradaki faz**      | **4 — Play yayın hazırlığı** (B1 + B2 + B6)                                                                                     |
+| **Tamamlanan fazlar** | **0, 1, 2, 3, 4**                                                                                                               |
+| **Sıradaki faz**      | **5 — Giriş ekranı yeniden tasarımı**                                                                                           |
 
 ## 2. Git durumu
 
-| Alan          | Değer                                                  |
-| ------------- | ------------------------------------------------------ |
-| Dal           | `main`                                                 |
-| Son commit    | **Beta Faz 3 — RevenueCat** (bu belgeyi içeren commit) |
-| Çalışma ağacı | temiz                                                  |
-| CI            | CI ✅ · Mobile CI ✅ · CodeQL ✅                       |
+| Alan          | Değer                                                            |
+| ------------- | ---------------------------------------------------------------- |
+| Dal           | `main`                                                           |
+| Son commit    | **Beta Faz 4 — Play yayın hazırlığı** (bu belgeyi içeren commit) |
+| Çalışma ağacı | temiz                                                            |
+| CI            | CI ✅ · Mobile CI ✅ · CodeQL ✅                                 |
 
 > `Mobile CI` yalnız `apps/mobile/**` değiştiğinde çalışır. Yalnız belge değiştiren commit'lerde
 > tetiklenmemesi **beklenen** davranıştır, hata değildir.
@@ -97,20 +97,22 @@ billingGatewayProvider: REVENUECAT_PUBLIC_KEY varsa RevenueCat, yoksa mevcut yol
 
 ## 5. Yayın durumu ve ENGELLER
 
-| #      | Engel                                                                      | Durum                                  | Faz              |
-| ------ | -------------------------------------------------------------------------- | -------------------------------------- | ---------------- |
-| **B1** | Release derlemesi **DEBUG ANAHTARIYLA** imzalanıyor → **Play kabul etmez** | ⛔ **AÇIK**                            | **4 (sıradaki)** |
-| **B2** | `android/app/build.gradle.kts` içinde Flutter şablon notları               | ⛔ AÇIK                                | **4 (sıradaki)** |
-| **B3** | Google Sign-In yok                                                         | ✅ **KAPANDI**                         | 2                |
-| **B4** | RevenueCat yok                                                             | ✅ **KAPANDI** (istemci tarafı)        | 3                |
-| **B5** | Üretim veritabanında Evolution doğrulama artıkları                         | ⛔ AÇIK — **kullanıcı onayı bekliyor** | 13               |
-| **B6** | Play Console kaydı/beyanları yok                                           | ⛔ AÇIK (elle)                         | **4 (sıradaki)** |
+| #      | Engel                                              | Durum                                  | Faz      |
+| ------ | -------------------------------------------------- | -------------------------------------- | -------- |
+| **B1** | Release imzalama                                   | ✅ **KAPANDI** (upload key)            | 4        |
+| **B2** | Gradle şablon yer-tutucuları                       | ✅ **KAPANDI**                         | 4        |
+| **B3** | Google Sign-In yok                                 | ✅ **KAPANDI**                         | 2        |
+| **B4** | RevenueCat yok                                     | ✅ **KAPANDI** (istemci tarafı)        | 3        |
+| **B5** | Üretim veritabanında Evolution doğrulama artıkları | ⛔ AÇIK — **kullanıcı onayı bekliyor** | 13       |
+| **B6** | Play Console kaydı/beyanları yok                   | ⛔ AÇIK — **elle**, belgeler hazır     | 4 → elle |
 
-**B1'in tam yeri:**
+**B1 nasıl kapandı:** `build.gradle.kts` release bloğu `android/key.properties`'ten gerçek upload
+key'i okuyor. Anahtar yoksa **debug'a düşmez**, release derlemesi dürüst hatayla durur (debug
+derlemesi ve CI etkilenmez). Sertifika SHA-1/SHA-256 `keytool` çıktısıyla birebir aynı.
 
-```
-apps/mobile/android/app/build.gradle.kts → buildTypes { release { signingConfig = ...("debug") } }
-```
+**⚠️ Google girişi HENÜZ ÇALIŞMAZ:** `google-services.json` eklendi ama `oauth_client` dizisi
+**boş** → Firebase'e SHA eklenmemiş ve Web istemcisi (`GOOGLE_SERVER_CLIENT_ID`) yok.
+Adımlar: `GOOGLE_AUTH_SETUP.md` §9.5. Gereken SHA'lar §3.2'de ölçülü hâlde duruyor.
 
 **B4 notu:** istemci tarafı tamam. RevenueCat **panosu** kurulumu (hesap, ürünler, servis hesabı,
 Pub/Sub, entitlement, offering) elle yapılacaktır — `REVENUECAT_SETUP.md` §7. Ayrıca **sunucu
@@ -220,15 +222,25 @@ Ayrıca **RevenueCat'in APK boyutuna tek başına katkısı ölçülmedi** (kar�
 `BETA_PHASE_0/1_REPORT.md` yazılmadı (bilinçli) · sunucu tarafı RevenueCat webhook'u yazılmadı
 (secret key + genel URL yok).
 
-## 11. Faz 4 için hazır olan zemin
+## 11. Faz 5 için hazır olan zemin
 
-- `apps/mobile/.env.example` **depoda** ve `--dart-define` listesi eksiksiz → imzalı AAB
-  derlenirken hangi değerlerin verileceği belli.
-- `PLAY_CONSOLE_SETUP.md` §2 upload key üretimini ve gradle bağlantısını adım adım anlatıyor.
-- **Uyarı (Faz 0 dersi):** `pnpm verify` yasaklı kalıp tarıyor. B2'yi kapatırken şablon notlarını
-  belgede **birebir alıntılama** — CI tam bu yüzden bir kez kırıldı.
-- **Uyarı (Faz 3 dersi):** yeni `.gitignore`'lu dosya eklerken (`key.properties` gibi)
-  `git check-ignore -v` ile gerçekten istenen sonucu doğrula.
+Faz 5 = **giriş ekranı yeniden tasarımı**. Girdiler `ASSET_GENERATION_LIBRARY.md` §4.2'de hazır:
+
+- `apps/assets/interface-assets/022-assets.png` (1536×1024) **hero olarak sevk edilir** →
+  1080×720 WebP. ⚠️ **Renault logosu okunuyor** — rötuşlanmalı veya markasız varyant üretilmeli.
+- `023-assets.png` ve `024-assets.png` **arayüz mockup'ıdır**, raster sevk **EDİLMEZ** →
+  widget olarak uygulanır (gömülü metin temaya uymaz, yazı tipi ölçeğiyle büyümez, çevrilemez).
+- **"Apple ile giriş" KONMAZ** — iOS yok, çalışmayan düğme ölü gezinmedir (disiplin kural 3).
+- **"MEB müfredatına uygun"** ifadesi doğrulanabilir bir iddiadır; kaynak gösterilemiyorsa
+  kullanılmaz.
+- Mevcut tasarım sistemi korunur; `design_tokens_test.dart` sabit renk kullanımını engelliyor.
+
+**Faz 4'ten devreden uyarılar:**
+
+- `pnpm verify` `.md` dosyalarında yasaklı kalıp tarıyor — kanıt alıntılarken dikkat (Faz 0 dersi).
+- Yeni dosya eklerken `git check-ignore -v` ile gerçekten istenen sonucu doğrula (Faz 3/4 dersi).
+- Commit öncesi **izlenmeyen dosyaları** da gözden geçir: `git status` yalnız senin
+  değiştirdiklerin değildir (Faz 4'te 12 MB varlık ve `google-services.json` böyle yakalandı).
 
 ## 12. Belge haritası
 

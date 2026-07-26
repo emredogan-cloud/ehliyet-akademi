@@ -37,5 +37,8 @@ sınav-soruları-pdf/
 
 # Design references for the UI redesign sprint (mockups + source art) — not shipped, large.
 /apps/assets/
+# Play Store mağaza varlıkları (simge 512², öne çıkan grafik 1024×500, ekran görüntüleri).
+# Play Console'a ELLE yüklenir; ~12 MB ham çıktı, uygulamada servis edilmez. Bkz. PLAY_CONSOLE_SETUP.md §6.
+/apps/ASO_IMAGE/
 # Loose reference PDFs
 /*.pdf

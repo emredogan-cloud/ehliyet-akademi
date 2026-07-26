@@ -1249,3 +1249,48 @@ doğrulandı. Premium kilidi nedeniyle kalan 6 video `ffprobe` ile yayından ç�
 anlatım sürücü gözü/ayna hissi veremez · süreler 10–14 sn (adımları gösterir, gerçek zamanlı
 manevra değil) · iki başlık (sınav yürüyüşü, araç kontrolü) gerçek çekim gerektirdiği için
 `planned` kaldı.
+
+---
+
+## BETA Faz 0–1 — Yayın hazırlığı + varlık denetimi (2026-07-26)
+
+**Yeni program:** Beta Readiness (Google Play kapalı test, 12 test kullanıcısı). Evolution
+(E1–E13) programına **dokunulmadı**.
+
+**Faz 0:** dokuz belge üretildi (roadmap, checklist, Google auth, Play Console, RevenueCat,
+kapalı test, env, varlık kütüphanesi, denetim planı). Belgeler **depodan okunan** değerlerle
+yazıldı: Flutter 3.41.9 · compileSdk/targetSdk 36 · izinler yalnız POST_NOTIFICATIONS +
+RECEIVE_BOOT_COMPLETED · in_app_purchase 3.3.0 · Firebase/Google Sign-In/RevenueCat YOK.
+
+**Bulunan yayın engelleri:** B1 release derlemesi **DEBUG anahtarıyla** imzalanıyor (Play kabul
+etmez) · B2 gradle'da şablon yapılacak-notları (disiplin kural 3 ihlali) · B3 Google Sign-In yok ·
+B4 RevenueCat yok · B5 üretim veri artıkları · B6 Play kaydı yok.
+
+**Kaydedilen model çakışması:** uygulama bugün TEK SEFERLİK ömür boyu paket satıyor, program ise
+aylık/yıllık ürün istiyor. Bu bir **ürün kararı**, mühendislik kararı değil. Entegrasyon
+`entitlement` kavramı üzerinden tasarlandı: her iki model de aynı `premium` yetkisini açar,
+uygulama kodu hangisi olduğunu bilmez.
+
+**CI dersi (yine):** `pnpm verify` kapısı yasaklı kalıp tarıyor; Play belgesinde gradle'daki
+mevcut şablon notunu KANIT olarak birebir alıntılamak kapıyı kırdı. Kapı gevşetilmedi, alıntı
+yeniden yazıldı. **Kural: kanıt alıntılarken deponun kendi yasaklı kalıplarına dikkat et.**
+
+**Faz 1 denetimi — ölçülmüş:**
+
+- Mobil varlık: 263 dosya · 4,7 MB · **yetim varlık 0** (hepsi kodda referanslı)
+- **38 emoji boş/hata durumu** → tekrar ettikleri için **14 illüstrasyon** hepsini kapatıyor
+- **Giriş ekranında hiç görsel yok** — Faz 5'in gerçek gerekçesi bu
+- Onboarding görselleri **695–820 px**, 3× cihazda 1080 px gerekiyor → Faz 6 yalnız yerleşim
+  değil, **varlık çözünürlüğü** işi de
+- `CustomPainter` × 4 yer tutucu DEĞİL (veri görselleştirme) — üretilmeyecekler listesine yazıldı
+
+**Referans varlıkların gerçek niteliği (önemli):** `022-assets.png` gerçek bir hero görseli;
+ama **`023` ve `024` arayüz mockup'ı** — içlerinde gömülü Türkçe metin var. Raster olarak sevk
+edilirlerse tema, yazı tipi ölçeği ve çeviri kırılır. **Karar: 023/024 widget olarak birebir
+uygulanacak, raster sevk edilmeyecek.**
+
+**İki uyarı Faz 5'e taşındı:** (a) 022'de **Renault logosu** okunuyor → rötuş/markasız varyant
+gerekli; (b) mockup'taki **"Apple ile giriş"** düğmesi iOS olmadığı için ölü gezinme olurdu →
+konmayacak; (c) "MEB müfredatına uygun" iddiası kaynak gösterilemezse kullanılmayacak.
+
+**Üretilecek toplam: 19 görsel** (14 boş durum + 5 onboarding) ≈ 1,1 MB.

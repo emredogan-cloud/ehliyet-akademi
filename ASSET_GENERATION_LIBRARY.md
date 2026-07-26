@@ -1,6 +1,6 @@
 # Varlık Üretim Kütüphanesi
 
-**Durum:** Faz 0'da **iskelet** oluşturuldu · **Faz 1'de doldurulacak.**
+**Durum:** Faz 1 tamamlandı — envanter **gerçek taramadan** çıkarıldı, uydurma kayıt yoktur.
 
 Bu belge, projede kalan **her yer tutucu görselin** kaydını ve onu üretmek için kullanılacak
 **üretime hazır GPT Image promptunu** tutar. Amaç: görsel üretecek kişinin bu dosyadan başka
@@ -8,178 +8,342 @@ hiçbir şeye ihtiyaç duymaması.
 
 ---
 
-## 1. Kayıt şeması — her giriş bunları taşımak ZORUNDA
+## 0. Faz 1 denetim özeti — ölçülmüş
 
-Faz 1'de bulunan her yer tutucu aşağıdaki on bir alanla kaydedilir. Eksik alanlı kayıt kabul
-edilmez.
+| Bulgu                                            | Sonuç                                                               |
+| ------------------------------------------------ | ------------------------------------------------------------------- |
+| Mobil varlık envanteri                           | 263 dosya · 4,7 MB · `dash` 60 · `img` 21 · `mech` 101 · `signs` 81 |
+| **Yetim (kodda referanssız) varlık**             | **0** — hepsi kullanılıyor                                          |
+| **Emoji ile idare edilen boş/hata durumu**       | **38 çağrı yeri**                                                   |
+| Bunların kapsandığı **ayrı illüstrasyon** sayısı | **14** (emoji'ler tekrar ediyor)                                    |
+| Giriş ekranında görsel                           | **HİÇ YOK** — Faz 5'in gerekçesi                                    |
+| Onboarding görselleri                            | 695–820 px → 3× cihaz için **1080 px gerekiyor**                    |
+| Yordamsal çizim (`CustomPainter`)                | 4 adet — **yer tutucu DEĞİL**, veri görselleştirme                  |
 
-| Alan                     | Açıklama                                                                                 |
-| ------------------------ | ---------------------------------------------------------------------------------------- |
-| **Ekran**                | Kullanıcının gördüğü ekran adı (ör. "Onboarding 1. adım")                                |
-| **Widget**               | `dosya.dart:satır` — görselin çizildiği yer                                              |
-| **Mevcut varlık**        | Şu an ne kullanılıyor (dosya yolu veya "yordamsal çizim / yok")                          |
-| **Değiştirme gerekçesi** | Neden yetersiz — somut olarak (düşük çözünürlük, marka dışı, jenerik…)                   |
-| **GPT Image promptu**    | Kopyala-yapıştır çalışacak, tam prompt (§3 standardına uygun)                            |
-| **Görsel stil**          | Hangi stil ailesine ait (§2)                                                             |
-| **Dosya adı**            | `snake_case`, uzantısız                                                                  |
-| **Uzantı**               | `.webp` (varsayılan) · `.svg` (vektör gerekiyorsa) · `.png` (şeffaflık + WebP olmuyorsa) |
-| **Hedef çözünürlük**     | Piksel (3× cihaz için hesaplanmış)                                                       |
-| **Kayıt dizini**         | Tam yol (`apps/mobile/assets/...` veya `apps/web/public/assets/...`)                     |
-| **Kullanım yeri**        | Nerede, hangi boyutta gösterilecek                                                       |
+### Yer tutucu olmayanlar (bilerek dışarıda bırakıldı)
+
+- **`CustomPainter` × 4** (`readiness_radar`, `result_view` halkası, `brand` direksiyon,
+  `readiness_ring`): bunlar veriyi çizen bileşenler; raster görselle değiştirilemez, değiştirilmemeli.
+- **Trafik işaretleri (81) ve ikaz ışıkları (60):** E1/E3'te resmî vektörlerle değiştirildi.
+  **Mevzuata bağlı**, üretilmez.
+- **Mekanik fotoğraflar (101):** E2'de gerçek fotoğraflarla dolduruldu.
+
+---
+
+## 1. Kayıt şeması
+
+Her giriş on bir alan taşır: **Ekran · Widget · Mevcut varlık · Değiştirme gerekçesi ·
+GPT Image promptu · Görsel stil · Dosya adı · Uzantı · Hedef çözünürlük · Kayıt dizini ·
+Kullanım yeri.**
 
 ### Çözünürlük kuralı
 
-Mobil hedef cihaz 1080×2340 (3× yoğunluk). Gösterim genişliği `W` dp ise üretim genişliği
-**`W × 3`** olmalıdır; üstüne çıkmak boşuna bayt, altına inmek bulanıklıktır.
+Hedef cihaz 1080×2340 (3×). Gösterim genişliği `W` dp ise üretim genişliği **`W × 3`** olmalıdır.
 
-| Kullanım                       | Gösterim (dp) | Üretim (px)   |
-| ------------------------------ | ------------- | ------------- |
-| Tam genişlik hero/illüstrasyon | 360           | **1080**      |
-| Yarım genişlik kart görseli    | 170           | 512           |
-| Liste öğesi küçük görsel       | 80            | 240           |
-| Simge/rozet                    | 40            | 120           |
-| Onboarding ana illüstrasyon    | 360 × ~600    | **1080×1800** |
+| Kullanım                    | Gösterim (dp) | Üretim (px)   |
+| --------------------------- | ------------- | ------------- |
+| Tam genişlik hero           | 360           | **1080**      |
+| Boş durum illüstrasyonu     | 160           | **480×480**   |
+| Onboarding ana illüstrasyon | 300–340       | **1080×1080** |
+| Liste öğesi küçük görsel    | 80            | 240           |
 
-## 2. Stil aileleri — proje zaten bunları kullanıyor
+## 2. Stil aileleri
 
-Yeni bir görsel dil **getirilmez**. Üretilen her varlık aşağıdaki ailelerden birine ait olmalıdır.
-
-| Aile                       | Nerede kullanılır                | Nitelikler                                                     |
-| -------------------------- | -------------------------------- | -------------------------------------------------------------- |
-| **Maskot (baykuş)**        | Onboarding, boş durumlar, AI Koç | 3B render, teal/turkuaz tüy, gözlük, sıcak ve öğretici         |
-| **Şematik animasyon**      | Manevra videoları, diyagramlar   | Kuş bakışı, düz renk, tasarım token renkleri, etiketli adımlar |
-| **Gerçek fotoğraf**        | Araç tekniği, kabin kumandaları  | Gerçek parça fotoğrafı, nötr arka plan, markasız               |
-| **Resmî vektör**           | Trafik işaretleri, ikaz ışıkları | Mevzuata birebir uygun; **stil serbestisi YOK**                |
-| **Editoryal illüstrasyon** | Ders hero'ları, premium yüzeyler | Düz/yarı-düz, marka paleti, insan figürü soyut                 |
-
-### Marka paleti (promptlarda kullanılacak)
+Yeni görsel dil **getirilmez**. Marka paleti:
 
 ```
-primary  #14b8a6 (teal)      primary-700 #0b7268
-accent   #F59E0B (amber)     danger #ef4444    success #22c55e
-koyu zemin #050b16 / #0b1523        açık zemin #f4f6fb / #ffffff
+primary  #14b8a6   primary-700 #0b7268   accent #F59E0B
+danger   #ef4444   success #22c55e
+koyu zemin #050b16 / #0b1523      açık zemin #f4f6fb / #ffffff
 ```
 
-## 3. Prompt yazım standardı
+| Aile                  | Nerede                        | Nitelik                                      |
+| --------------------- | ----------------------------- | -------------------------------------------- |
+| **Maskot (baykuş)**   | Onboarding, boş durum, AI Koç | Yumuşak 3B, teal tüy, gözlük, sıcak/öğretici |
+| **Şematik animasyon** | Manevra videoları             | Kuş bakışı, düz renk, token renkleri         |
+| **Gerçek fotoğraf**   | Araç tekniği, kabin           | Gerçek parça, nötr zemin, **markasız**       |
+| **Resmî vektör**      | İşaretler, ikaz ışıkları      | Mevzuata birebir — **stil serbestisi yok**   |
+| **Editoryal**         | Ders hero, premium            | Düz/yarı-düz, marka paleti                   |
 
-Bir prompt "üretime hazır" sayılabilmesi için şunları **açıkça** içermelidir:
+## 3. Prompt standardı
 
-1. **Konu** — ne çizilecek, tek cümle
-2. **Stil ailesi** (§2) ve somut stil sözcükleri
-3. **Kompozisyon** — çerçeveleme, bakış açısı, öğelerin yerleşimi
-4. **Renk** — marka paletinden **hex** değerlerle
-5. **Arka plan** — şeffaf mı, düz mü, hangi renk
-6. **En-boy oranı ve çözünürlük**
-7. **Negatifler** — istenmeyenler (metin, filigran, marka, insan yüzü ayrıntısı …)
-
-### Şablon
+Şablon:
 
 ```
 [KONU]. [STİL AİLESİ] tarzında: [stil sözcükleri].
 Kompozisyon: [çerçeveleme ve yerleşim].
-Renk paleti: [hex değerler].
+Renk paleti: [hex].
 Arka plan: [şeffaf / düz #hex].
 En-boy: [oran] · Çözünürlük: [WxH].
 Negatif: metin yok, filigran yok, marka/logo yok, [duruma özel].
 ```
 
-### Örnek — dolu bir prompt nasıl görünür
+**Kural:** üretilecek hiçbir görselde **metin bulunmaz.** Metin widget'la çizilir — yoksa
+temaya uymaz, yazı tipi ölçeğiyle büyümez ve çevrilemez.
 
-> **Boş durum: henüz arkadaş yok**
->
-> Teal renkli bilge bir baykuş maskotu, elinde boş bir arkadaş listesi tutuyor ve izleyiciye
-> cesaret verici biçimde bakıyor. Maskot ailesi tarzında: yumuşak 3B render, hafif alt aydınlatma,
-> yuvarlak hatlar, gözlüklü, sıcak ve öğretici ifade.
-> Kompozisyon: ortalanmış, tam gövde, alt tarafta hafif gölge, çevresinde nefes alacak boşluk.
-> Renk paleti: tüyler #14b8a6 ve #0b7268, gaga/ayak #F59E0B, vurgu #22c55e.
+---
+
+## 4. ENVANTER
+
+### 4.1 Boş ve hata durumları — 14 illüstrasyon, 38 çağrı yerini kapatır
+
+Şu an hepsi `AppEmptyState(emoji: …)` ile emoji gösteriyor. Emoji bir illüstrasyon değildir:
+cihaz yazı tipine göre değişir, marka dili taşımaz, ölçeklenince bulanıklaşmaz ama kaba durur.
+
+`AppEmptyState` widget'ı Faz 1 kapsamında **değiştirilmez**; `illustration` parametresi eklemek
+ve emoji'yi geriye dönük uyumlu bırakmak ilgili fazın işidir.
+
+---
+
+#### EM-01 · Bağlantı yok / veri alınamadı ← **9 çağrı yeri**
+
+| Alan              | Değer                                                                                                                                                                                                                                                                                    |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Ekran**         | Topluluk · Arkadaşlar · Sohbet · Tartışma · Gruplar · Meydan okuma · Engellenenler · İçerik kapsamı · Soru bankası                                                                                                                                                                       |
+| **Widget**        | `community_screen.dart:228` · `friends_screen.dart:96` · `chat_screen.dart:67` · `discussions_screen.dart:108` · `groups_screen.dart:101` · `challenges_screen.dart:95` · `blocked_users_screen.dart:81` · `learn/widgets/content_scope.dart:36` · `practice/widgets/bank_scope.dart:36` |
+| **Mevcut varlık** | Emoji `📡`                                                                                                                                                                                                                                                                               |
+| **Gerekçe**       | Dokuz ayrı ekranda tekrarlanan en görünür hata durumu; emoji marka dili taşımıyor ve "sorun geçici, tekrar dene" duygusunu vermiyor                                                                                                                                                      |
+| **Görsel stil**   | Maskot                                                                                                                                                                                                                                                                                   |
+| **Dosya adı**     | `empty_offline`                                                                                                                                                                                                                                                                          |
+| **Uzantı**        | `.webp`                                                                                                                                                                                                                                                                                  |
+| **Çözünürlük**    | 480×480                                                                                                                                                                                                                                                                                  |
+| **Dizin**         | `apps/mobile/assets/img/`                                                                                                                                                                                                                                                                |
+| **Kullanım**      | `AppEmptyState` üstünde ~160 dp                                                                                                                                                                                                                                                          |
+
+**Prompt:**
+
+> Teal renkli bilge bir baykuş maskotu, kopmuş bir bağlantı kablosunun iki ucunu tutmuş,
+> sakin ve güven verici biçimde izleyiciye bakıyor; panik yok, "birazdan düzelir" hissi.
+> Maskot ailesi tarzında: yumuşak 3B render, yuvarlak hatlar, gözlüklü, hafif alt aydınlatma.
+> Kompozisyon: ortalanmış, tam gövde, altta yumuşak gölge, çevresinde nefes payı.
+> Renk paleti: tüyler #14b8a6 ve #0b7268, gaga/ayak #F59E0B, kablo ucunda #ef4444 kıvılcım.
 > Arka plan: şeffaf.
-> En-boy: 1:1 · Çözünürlük: 512×512.
-> Negatif: metin yok, filigran yok, marka/logo yok, gerçekçi kuş anatomisi yok, karanlık/kasvetli
-> ton yok.
+> En-boy: 1:1 · Çözünürlük: 480×480.
+> Negatif: metin yok, filigran yok, marka/logo yok, gerçekçi kuş anatomisi yok, kasvetli ton yok,
+> hata/ünlem simgesi yok.
 
-## 4. Faz 1'de taranacak alanlar (kontrol listesi)
+---
 
-Faz 1, projenin **tamamını** tarar. En az şu kategoriler tek tek gözden geçirilir:
+#### EM-02 · Arama sonucu yok ← **7 çağrı yeri**
 
-- [ ] Yordamsal/geçici SVG çizimler
-- [ ] Üretilmiş (procedural) illüstrasyonlar
-- [ ] Yer tutucu fotoğraflar
-- [ ] Eksik illüstrasyonlar (olması gereken ama olmayan)
-- [ ] **Boş durum** görselleri
-- [ ] Geçici ikonlar
-- [ ] Geçici diyagramlar
-- [ ] Düz (flat) vektörler — marka dışı kalmışlar
-- [ ] Sahte/mock varlıklar
-- [ ] Eski onboarding görselleri
-- [ ] Eski giriş ekranı görselleri
-- [ ] Topluluk yer tutucuları
-- [ ] Mekanik yer tutucuları
-- [ ] Araç yer tutucuları
-- [ ] İkaz ışığı yer tutucuları
-- [ ] Gösterge paneli yer tutucuları
-- [ ] Ders yer tutucuları
-- [ ] Sosyal yer tutucuları
-- [ ] Video yer tutucuları
+| Alan              | Değer                                                                                                                                                                                          |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Ekran**         | İşaretler · İşaret detayı · İkaz ışıkları (×2) · Kabin kumandaları · Araç bileşeni · Ders detayı                                                                                               |
+| **Widget**        | `signs_screen.dart:119` · `sign_detail_screen.dart:30` · `dash_lights_screen.dart:78,193` · `cabin_controls_screen.dart:57` · `vehicle_detail_screen.dart:28` · `lesson_detail_screen.dart:31` |
+| **Mevcut varlık** | Emoji `🔍`                                                                                                                                                                                     |
+| **Gerekçe**       | Öğrenme bölümünün her galerisinde çıkıyor; arama deneyiminin parçası                                                                                                                           |
+| **Görsel stil**   | Maskot                                                                                                                                                                                         |
+| **Dosya adı**     | `empty_search`                                                                                                                                                                                 |
+| **Uzantı**        | `.webp` · **Çözünürlük** 480×480 · **Dizin** `apps/mobile/assets/img/`                                                                                                                         |
 
-### Tarama yöntemi (Faz 1'de uygulanacak)
+**Prompt:**
 
-1. `apps/mobile/assets` ve `apps/web/public/assets` **tam envanteri** çıkarılır.
-2. Her varlık **kodda nerede kullanılıyor** eşlenir; kullanılmayanlar işaretlenir.
-3. Kodda **varlık beklenip bulunmayan** yerler taranır (yordamsal çizim, `Icon` ile idare edilen
-   yerler, boş `Container` ile geçilen görsel alanlar).
-4. Her ekran cihazda açılıp **gözle** kontrol edilir — envanterin göremediği "jenerik duruyor"
-   durumları ancak böyle çıkar.
-5. Bulunan her şey §1 şemasıyla bu dosyaya yazılır.
+> Teal renkli bilge bir baykuş maskotu, büyüteçle boş bir rafa bakıyor; meraklı ve yardımsever
+> ifade, hayal kırıklığı değil. Maskot ailesi tarzında: yumuşak 3B render, yuvarlak hatlar,
+> gözlüklü.
+> Kompozisyon: ortalanmış, tam gövde, büyüteç hafif öne çıkmış, altta yumuşak gölge.
+> Renk paleti: tüyler #14b8a6 ve #0b7268, büyüteç çerçevesi #F59E0B, raf #0b1523.
+> Arka plan: şeffaf.
+> En-boy: 1:1 · Çözünürlük: 480×480.
+> Negatif: metin yok, filigran yok, marka/logo yok, üzgün/ağlayan ifade yok.
 
-## 5. Envanter — Faz 1'de doldurulacak
+---
 
-> Aşağıdaki bölümler Faz 1'de gerçek bulgularla doldurulacaktır. **Uydurma kayıt yazılmaz**;
-> her giriş gerçek bir dosyaya ve gerçek bir ekrana bağlıdır.
+#### EM-03 · Erişim yok / kilitli ← **4 çağrı yeri**
 
-### 5.1 Onboarding
+| Alan              | Değer                                                                                                                                    |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| **Ekran**         | Sohbet (engelli) · Tartışma başlığı · Grup ayrıntısı · Kullanıcı profili                                                                 |
+| **Widget**        | `chat_screen.dart:253` · `discussion_thread_screen.dart:122` · `group_detail_screen.dart:73` · `user_profile_screen.dart:118`            |
+| **Mevcut varlık** | Emoji `🔒`                                                                                                                               |
+| **Gerekçe**       | Engelleme/gizlilik sonucunda görülen durum; **suçlayıcı olmamalı** — E8/E9'un sızıntısız 404 ilkesiyle uyumlu, nötr bir görsel gerekiyor |
+| **Görsel stil**   | Maskot                                                                                                                                   |
+| **Dosya adı**     | `empty_locked`                                                                                                                           |
+| **Uzantı**        | `.webp` · **Çözünürlük** 480×480 · **Dizin** `apps/mobile/assets/img/`                                                                   |
 
-_(Faz 1)_
+**Prompt:**
 
-### 5.2 Giriş / kimlik
+> Teal renkli baykuş maskotu, kapalı ama sade bir kapının önünde nazikçe duruyor; elinde kalkan
+> benzeri yuvarlak bir levha. İfade nötr ve saygılı — kimseyi suçlamıyor.
+> Maskot ailesi tarzında: yumuşak 3B render, yuvarlak hatlar, gözlüklü.
+> Kompozisyon: ortalanmış, tam gövde, kapı arkada hafif bulanık.
+> Renk paleti: tüyler #14b8a6 ve #0b7268, kalkan #0b7268, kapı #14243a.
+> Arka plan: şeffaf.
+> En-boy: 1:1 · Çözünürlük: 480×480.
+> Negatif: metin yok, filigran yok, marka/logo yok, asma kilit simgesi yok, tehdit edici/karanlık
+> ton yok, kırmızı yasak işareti yok.
 
-_(Faz 1)_
+---
 
-### 5.3 Boş durumlar
+#### EM-04 · Henüz mesaj/ileti yok ← **3 çağrı yeri**
 
-_(Faz 1)_
+| Alan              | Değer                                                                               |
+| ----------------- | ----------------------------------------------------------------------------------- |
+| **Ekran**         | Sohbet listesi · Sohbet · Tartışma başlığı                                          |
+| **Widget**        | `chat_screen.dart:83,270` · `discussion_thread_screen.dart:156`                     |
+| **Mevcut varlık** | Emoji `💬`                                                                          |
+| **Gerekçe**       | "İlk mesajı sen yaz" davetini görselle desteklemek                                  |
+| **Görsel stil**   | Maskot · **Dosya adı** `empty_chat` · `.webp` · 480×480 · `apps/mobile/assets/img/` |
 
-### 5.4 Topluluk
+**Prompt:**
 
-_(Faz 1)_
+> Teal renkli baykuş maskotu, boş bir konuşma balonunu kanadıyla tutmuş, izleyiciyi konuşmaya
+> davet eder gibi hafifçe öne eğilmiş; sıcak ve cesaretlendirici.
+> Maskot ailesi tarzında: yumuşak 3B render, yuvarlak hatlar, gözlüklü.
+> Kompozisyon: ortalanmış, tam gövde, balon sağ üstte.
+> Renk paleti: tüyler #14b8a6 ve #0b7268, balon #0f1c2e kenarlık #14b8a6.
+> Arka plan: şeffaf.
+> En-boy: 1:1 · Çözünürlük: 480×480.
+> Negatif: metin yok, balon içinde yazı yok, filigran yok, marka/logo yok.
 
-### 5.5 Ders ve öğrenme
+---
 
-_(Faz 1)_
+#### EM-05 … EM-14 · Tekil durumlar
 
-### 5.6 Araç tekniği / kabin kumandaları
+| Kod       | Emoji          | Ekran / Widget                                                                                                                                  | Dosya adı           | Prompt konusu (aynı maskot şablonu, 480×480, şeffaf)                       |
+| --------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- | -------------------------------------------------------------------------- |
+| **EM-05** | `👋`           | Arkadaşlar boş · `friends_screen.dart:112`                                                                                                      | `empty_friends`     | Baykuş el sallıyor, yanında iki boş avatar halkası — "ilk arkadaşını ekle" |
+| **EM-06** | `👥`           | Grup yok · `groups_screen.dart:125`                                                                                                             | `empty_groups`      | Üç baykuş silueti bir masa etrafında, ortadaki yer boş — "gruba katıl"     |
+| **EM-07** | `🎯`           | Meydan okuma yok · `challenges_screen.dart:111`                                                                                                 | `empty_challenge`   | Baykuş hedef tahtasına bakıyor, ok henüz atılmamış                         |
+| **EM-08** | `🏁`           | Sıralama boş · `community_screen.dart:247`                                                                                                      | `empty_leaderboard` | Boş podyum, baykuş ilk basamağa çıkmaya hazırlanıyor                       |
+| **EM-09** | `🛡️`           | Engellenen yok · `blocked_users_screen.dart:97`                                                                                                 | `empty_blocked`     | Baykuş kalkanı indirmiş, rahat duruyor — "kimseyi engellemedin"            |
+| **EM-10** | `💡`           | İpucu/öneri · `discussions_screen.dart:124` · `lesson_detail_screen.dart:172`                                                                   | `hint_bulb`         | Baykuş, üstünde yumuşak ışık halesi olan bir ampule bakıyor                |
+| **EM-11** | `📊`           | İlerleme yok · `progress_screen.dart:42`                                                                                                        | `empty_progress`    | Baykuş boş bir çubuk grafiğin önünde, ilk çubuğu koymaya hazırlanıyor      |
+| **EM-12** | `🎉`           | Oturum bitti · `practice_runner_screen.dart:113`                                                                                                | `state_celebrate`   | Baykuş konfeti arasında, başarı kutlaması — abartısız                      |
+| **EM-13** | `⚠️`           | İlerleme yüklenemedi · `progress_screen.dart:37` · `practice_runner_screen.dart:107`                                                            | `state_warning`     | Baykuş elinde eğik bir tabela, özür diler gibi; **kırmızı ünlem yok**      |
+| **EM-14** | `🗂️`/`🎬`/`🧠` | Set boş · Video yok · Ders zihin haritası · `exam_runner_screen.dart:180` · `video_detail_screen.dart:37` · `lesson_detail_screen.dart:145,154` | `empty_content`     | Baykuş boş bir dosya/film şeridi tutuyor — genel "içerik yok" durumu       |
 
-_(Faz 1)_
+> **Not:** EM-14 üç emoji'yi tek görselle kapatır; üçü de "beklenen içerik yok" anlamına geliyor
+> ve ayrı görsel üretmek gereksiz bakım yükü olurdu.
 
-### 5.7 İkaz ışıkları / gösterge paneli
+---
 
-_(Faz 1)_
+### 4.2 Giriş ekranı — Faz 5
 
-### 5.8 Video
+#### LG-01 · Giriş hero görseli
 
-_(Faz 1)_
+| Alan              | Değer                                                                                                                                                                       |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Ekran**         | Giriş / Kayıt (`auth_screen.dart`)                                                                                                                                          |
+| **Widget**        | Ekranda **hiç görsel yok** — form doğrudan boş zeminde                                                                                                                      |
+| **Mevcut varlık** | **YOK**                                                                                                                                                                     |
+| **Gerekçe**       | Uygulamanın en çok görülen ikinci ekranı tamamen çıplak; premium hissi yok                                                                                                  |
+| **Kaynak**        | **`apps/assets/interface-assets/022-assets.png` MEVCUT** (1536×1024) — gece Istanbul silueti, sürücü kursu aracı, koniler, trafik ışığı; sol taraf içerik için bilinçli boş |
+| **Yapılacak**     | Üretilmesine **gerek yok**; mevcut referans 1080×720'ye ölçeklenip WebP'ye çevrilir                                                                                         |
+| **Dosya adı**     | `auth_hero` · `.webp` · 1080×720 · `apps/mobile/assets/img/`                                                                                                                |
 
-### 5.9 Diğer
+> ⚠️ **Marka uyarısı:** 022 görselinde **Renault logosu** okunabiliyor. Evolution roadmap'inde
+> "üçüncü taraf markalar → markasız varyant tercih edilir, seçim belgelenir" kuralı var.
+> **Faz 5'te logo rötuşlanmalı** veya markasız bir varyant üretilmelidir. Aksi hâlde mağaza
+> listesinde ve uygulamada üçüncü taraf marka izinsiz kullanılmış olur.
 
-_(Faz 1)_
+#### LG-02 / LG-03 · **Varlık DEĞİL — tasarım şartnamesi**
+
+`023-assets.png` (giriş formu) ve `024-assets.png` (güven şeridi) **birer arayüz mockup'ıdır**,
+içlerinde **gömülü Türkçe metin** vardır.
+
+**Bunlar raster olarak sevk EDİLMEZ.** Nedeni mühendislik:
+
+1. Gömülü metin **temaya uymaz** (ikisi de yalnız koyu tema).
+2. Kullanıcının **yazı tipi ölçeğiyle büyümez** — erişilebilirlik ihlali.
+3. **Çevrilemez**.
+4. Form alanları zaten **etkileşimli** olmak zorunda.
+
+→ Faz 5'te **widget olarak** birebir uygulanır: aynı yerleşim, aynı tipografi hiyerarşisi, aynı
+teal vurgu; ama metin `Text`, alanlar `TextField`, renkler `context.palette`.
+
+**Faz 5 için iki uyarı daha:**
+
+- Mockup'ta **"Apple ile giriş yap"** düğmesi var. iOS derlemesi **yok** (macOS yok) ve Android'de
+  Apple girişi standart değil. Çalışmayan bir düğme koymak **ölü gezinme** olur (disiplin kural 3)
+  → **konmayacak**, gerekçesi rapora yazılacak.
+- **"MEB müfredatına uygun"** ifadesi (024) **doğrulanabilir bir iddiadır**. Kaynak gösterilemiyorsa
+  bu metin kullanılmamalı — dürüstlük disiplini.
+
+---
+
+### 4.3 Onboarding — Faz 6
+
+#### OB-01 … OB-05 · Mevcut görsellerin yüksek çözünürlüklü sürümleri
+
+| Dosya               | Mevcut  | Gereken   | Durum              |
+| ------------------- | ------- | --------- | ------------------ |
+| `onb_welcome.webp`  | 820×721 | 1080×1080 | Yeniden üretilecek |
+| `onb_wheel.webp`    | 760×722 | 1080×1080 | Yeniden üretilecek |
+| `onb_think.webp`    | 695×820 | 1080×1080 | Yeniden üretilecek |
+| `onb_tablet.webp`   | 820×641 | 1080×1080 | Yeniden üretilecek |
+| `onb_calendar.webp` | 820×623 | 1080×1080 | Yeniden üretilecek |
+
+**Gerekçe:** Faz 6, görselin güvenli alanın **%85–95'ini** kaplamasını istiyor. 360 dp genişlikte
+3× cihazda bu **1080 px** demek. Mevcut 695–820 px kaynaklar büyütüldüğünde **yumuşama/bulanıklık**
+oluşur. Yani Faz 6 yalnız bir yerleşim işi değil; **varlık çözünürlüğü de yetersiz**.
+
+**Prompt şablonu (her biri için konu değişir):**
+
+> [KONU — aşağıdaki tabloya bakınız]. Maskot ailesi tarzında: yumuşak 3B render, teal tüyler,
+> gözlüklü bilge baykuş, sıcak ve öğretici ifade, hafif alt aydınlatma, yuvarlak hatlar.
+> Kompozisyon: **kare çerçeve içinde ortalanmış, tam gövde**, çevrede %8 nefes payı; görsel
+> çerçeveyi dolduracak biçimde büyük.
+> Renk paleti: tüyler #14b8a6 ve #0b7268, vurgu #F59E0B.
+> Arka plan: **şeffaf**.
+> En-boy: 1:1 · Çözünürlük: **1080×1080**.
+> Negatif: metin yok, filigran yok, marka/logo yok, gerçekçi kuş anatomisi yok, kalabalık sahne yok.
+
+| Dosya          | Konu                                                                                          |
+| -------------- | --------------------------------------------------------------------------------------------- |
+| `onb_welcome`  | Baykuş el sallayarak karşılıyor, arkasında yumuşak teal hale                                  |
+| `onb_wheel`    | Baykuş direksiyon başında, kendinden emin                                                     |
+| `onb_think`    | Baykuş çenesine kanadını dayamış düşünüyor, üstünde soru işareti silueti (metin değil, şekil) |
+| `onb_tablet`   | Baykuş tablet tutuyor, ekranda soyut grafik şekilleri                                         |
+| `onb_calendar` | Baykuş takvim yanında, bir günü işaretlemiş                                                   |
+
+---
+
+### 4.4 Profil avatarı — Faz 7
+
+#### AV-01 · Varsayılan avatar (fotoğraf yüklenmediğinde)
+
+| Alan              | Değer                                                                                                  |
+| ----------------- | ------------------------------------------------------------------------------------------------------ |
+| **Ekran**         | Profil · Topluluk · Sıralama                                                                           |
+| **Mevcut varlık** | 6 maskot avatarı (`owl_wave` vb.) — **yeterli, üretim gerekmiyor**                                     |
+| **Gerekçe**       | Faz 7 fotoğraf yüklemeyi getiriyor; yüklemeyen kullanıcı için mevcut maskotlar varsayılan kalır        |
+| **Yapılacak**     | **Yeni varlık YOK.** Faz 7 yalnız yükleme/kırpma akışını ekler ve maskotu geri dönüş yolu olarak korur |
+
+---
+
+### 4.5 Üretim GEREKMEYENLER — kayıt için
+
+| Kapsam                    | Neden üretilmiyor                                       |
+| ------------------------- | ------------------------------------------------------- |
+| Trafik işaretleri (81)    | Resmî vektör (E1) — mevzuata bağlı, stil serbestisi yok |
+| İkaz ışıkları (60)        | Resmî vektör (E3)                                       |
+| Mekanik fotoğraflar (101) | Gerçek fotoğraf (E2)                                    |
+| Araç görselleri (3)       | E4/E5'te eklendi, çözünürlük yeterli                    |
+| Video posterleri (7)      | E12 hattı üretiyor — elle üretilmez                     |
+| `CustomPainter` × 4       | Veri görselleştirme; raster olamaz                      |
+| Uygulama ikonu            | `design-sources/new_icon.png` (1254²) mevcut            |
+
+---
+
+## 5. Üretim özeti
+
+| Kategori                       |         Üretilecek görsel |
+| ------------------------------ | ------------------------: |
+| Boş/hata durumları (EM-01…14)  |                    **14** |
+| Onboarding yeniden üretim (OB) |                     **5** |
+| Giriş hero (LG-01)             | 0 (mevcut, rötuş gerekli) |
+| **TOPLAM**                     |                    **19** |
+
+**Tahmini bütçe:** 19 × ~60 KB (WebP, 480–1080 px) ≈ **1,1 MB** → mobil varlıklar 4,7 MB → ~5,8 MB.
+APK'ya etkisi ihmal edilebilir (E13: varlıklar APK'nın yalnız %6'sı).
 
 ## 6. Üretim sonrası akış
 
-Görsel üretildikten sonra:
-
-1. Hedef çözünürlüğe getir, **WebP**'ye çevir (şeffaflık korunacaksa `-lossless` veya yüksek
-   kalite; fotoğrafta kayıplı yeterli).
-2. `ASSET_GENERATION_LIBRARY.md`'deki **kayıt dizini ve dosya adına** birebir kaydet.
-3. `apps/mobile/pubspec.yaml` varlık listesine ekle (mobil tarafıysa).
-4. Kodda yer tutucuyu değiştir.
-5. **Cihazda** doğrula — ekran görüntüsü al.
-6. Boyut bütçesini kontrol et (mobil varlıklarda tekil dosya için makul üst sınır ~150 KB).
+1. Hedef çözünürlüğe getir, **WebP**'ye çevir (şeffaflık korunacak → `-lossless` veya yüksek kalite).
+2. Tablodaki **dizin ve dosya adına** birebir kaydet.
+3. `apps/mobile/pubspec.yaml` varlık listesine ekle (dizin zaten kayıtlıysa gerekmez).
+4. `lib/core/assets.dart` içine sabit ekle.
+5. Kodda emoji yerine illüstrasyonu bağla.
+6. **Cihazda** doğrula, ekran görüntüsü al.
+7. Tekil dosya bütçesi: **≤ 150 KB**.

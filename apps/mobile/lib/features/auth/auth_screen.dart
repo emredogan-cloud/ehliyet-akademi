@@ -123,6 +123,9 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                         labelText: 'Parola',
                         prefixIcon: const Icon(Icons.lock_outline_rounded),
                         suffixIcon: IconButton(
+                          // Faz E13 erişilebilirlik: ipucu yoksa ekran okuyucu bu düğmeyi
+                          // anlamlı biçimde seslendiremiyordu.
+                          tooltip: _obscure ? 'Parolayı göster' : 'Parolayı gizle',
                           icon: Icon(_obscure
                               ? Icons.visibility_off_outlined
                               : Icons.visibility_outlined),

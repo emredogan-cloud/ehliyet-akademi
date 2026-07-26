@@ -518,9 +518,13 @@ class _CategoryStep extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       if (cat == LicenceCategory.b && roomy)
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 3),
-                          child: BrandChip(label: 'EN POPÜLER', icon: Icons.star_rounded, color: Color(0xFFF5A623)),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 3),
+                          child: BrandChip(
+                            label: 'EN POPÜLER',
+                            icon: Icons.star_rounded,
+                            color: context.palette.accent,
+                          ),
                         ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.baseline,

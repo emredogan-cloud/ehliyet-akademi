@@ -83,6 +83,8 @@ class TrafficSignView extends StatelessWidget {
             'YOL VER',
             px: 13,
             weight: FontWeight.w700,
+            // TEMA TOKEN'I DEĞİL, BİLEREK: bu levhanın mevzuattaki kırmızısı. Tabela rengi
+            // temaya göre değişemez — açık temada da aynı kırmızı olmalı.
             color: const Color(0xFFD92D20),
           ),
         ),

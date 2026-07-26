@@ -9,7 +9,6 @@ import '../../design/brand.dart';
 import '../../domain/premium/premium_prompt.dart';
 import '../../domain/premium/products.dart';
 
-const _kGold = Color(0xFFF5A623);
 
 /// Bağlamsal premium teşviki — sık-gösterim sınırlarına uyar. Gösterilmesi gerekiyorsa pencereyi açar
 /// ve gösterimi kaydeder. `nowMs` çağıran taraftan verilir (test edilebilirlik + saf çekirdek).
@@ -64,7 +63,7 @@ class _PremiumIncentiveDialog extends StatelessWidget {
         children: [
           MascotImage(AppImages.illLockGold, height: 150, semanticLabel: 'Premium'),
           const SizedBox(height: AppSpacing.s2),
-          const BrandChip(label: "PREMIUM'A GEÇ", icon: Icons.workspace_premium_rounded, color: _kGold),
+          BrandChip(label: "PREMIUM'A GEÇ", icon: Icons.workspace_premium_rounded, color: context.palette.accent),
           const SizedBox(height: AppSpacing.s3),
           RichText(
             textAlign: TextAlign.center,
@@ -72,7 +71,7 @@ class _PremiumIncentiveDialog extends StatelessWidget {
               style: TextStyle(color: p.text, fontWeight: FontWeight.w900, fontSize: 24, height: 1.15),
               children: [
                 const TextSpan(text: 'Tüm Potansiyelini\n'),
-                TextSpan(text: 'Kilidi Aç!', style: const TextStyle(color: _kGold)),
+                TextSpan(text: 'Kilidi Aç!', style: TextStyle(color: context.palette.accent)),
               ],
             ),
           ),
@@ -98,7 +97,7 @@ class _PremiumIncentiveDialog extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: AppSpacing.s2),
-                Icon(Icons.lock_rounded, color: _kGold, size: 18),
+                Icon(Icons.lock_rounded, color: context.palette.accent, size: 18),
               ],
             ),
             if (f != features.last)
@@ -140,7 +139,7 @@ class _PremiumSuccessDialog extends StatelessWidget {
     final p = context.palette;
     final features = [
       (Icons.menu_book_rounded, p.primary, 'Tüm Konular', 'Sınırsız erişim'),
-      (Icons.track_changes_rounded, _kGold, 'Akıllı Denemeler', 'Detaylı analiz'),
+      (Icons.track_changes_rounded, p.accent, 'Akıllı Denemeler', 'Detaylı analiz'),
       (Icons.bar_chart_rounded, p.primary, 'Kişisel Plan', 'Size özel çalışma'),
       (Icons.smart_toy_rounded, p.primary, 'Sınırsız AI Koç', 'Her zaman yanında'),
     ];

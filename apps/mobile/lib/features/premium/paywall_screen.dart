@@ -12,7 +12,6 @@ import '../../design/primitives.dart';
 import '../../domain/premium/products.dart';
 import 'premium_popups.dart';
 
-const _kGold = Color(0xFFF5A623);
 
 /// Premium paywall — TEK ürün: "Komple Ehliyet Paketi" (399 ₺, tek seferlik / ömür boyu). Satın al +
 /// geri yükle. Gerçek satın alma Play Store'a bağlıdır (bu ortamda test edilemez — mağaza
@@ -128,7 +127,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                     child: BrandChip(
                       label: hasPremium ? 'PREMIUM AKTİF' : "KOMPLE PAKET",
                       icon: Icons.workspace_premium_rounded,
-                      color: _kGold,
+                      color: context.palette.accent,
                     ),
                   ),
                   const SizedBox(height: AppSpacing.s3),

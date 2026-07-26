@@ -119,9 +119,10 @@ class GradientPillButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = context.palette;
     final enabled = onPressed != null && !loading;
-    final base = gold ? const Color(0xFFF59E0B) : p.primary;
+    // Faz E13: altın ton tema token'ından (p.accent) gelir; sabit değer açık temada yanlıştı.
+    final base = gold ? p.accent : p.primary;
     final gradientColors = gold
-        ? const [Color(0xFFF59E0B), Color(0xFFFFD24A)]
+        ? [p.accent, p.yellow]
         : [p.primary, p.primaryBright];
     return Semantics(
       button: true,

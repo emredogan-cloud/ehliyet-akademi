@@ -122,7 +122,8 @@ class _Thumb extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
-    const gold = Color(0xFFF5A623);
+    // Faz E13: premium altını artık token'dan gelir → açık temada da doğru ton.
+    final gold = p.accent;
     return Stack(
       fit: StackFit.expand,
       children: [

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$VideoChapter {
 
- int get t; String get title;
+ double get t; String get title;
 /// Create a copy of VideoChapter
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $VideoChapterCopyWith<$Res>  {
   factory $VideoChapterCopyWith(VideoChapter value, $Res Function(VideoChapter) _then) = _$VideoChapterCopyWithImpl;
 @useResult
 $Res call({
- int t, String title
+ double t, String title
 });
 
 
@@ -68,7 +68,7 @@ class _$VideoChapterCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? t = null,Object? title = null,}) {
   return _then(_self.copyWith(
 t: null == t ? _self.t : t // ignore: cast_nullable_to_non_nullable
-as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as double,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -154,7 +154,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int t,  String title)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double t,  String title)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _VideoChapter() when $default != null:
 return $default(_that.t,_that.title);case _:
@@ -175,7 +175,7 @@ return $default(_that.t,_that.title);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int t,  String title)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double t,  String title)  $default,) {final _that = this;
 switch (_that) {
 case _VideoChapter():
 return $default(_that.t,_that.title);case _:
@@ -195,7 +195,7 @@ return $default(_that.t,_that.title);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int t,  String title)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double t,  String title)?  $default,) {final _that = this;
 switch (_that) {
 case _VideoChapter() when $default != null:
 return $default(_that.t,_that.title);case _:
@@ -213,7 +213,7 @@ class _VideoChapter implements VideoChapter {
   const _VideoChapter({required this.t, required this.title});
   factory _VideoChapter.fromJson(Map<String, dynamic> json) => _$VideoChapterFromJson(json);
 
-@override final  int t;
+@override final  double t;
 @override final  String title;
 
 /// Create a copy of VideoChapter
@@ -249,7 +249,7 @@ abstract mixin class _$VideoChapterCopyWith<$Res> implements $VideoChapterCopyWi
   factory _$VideoChapterCopyWith(_VideoChapter value, $Res Function(_VideoChapter) _then) = __$VideoChapterCopyWithImpl;
 @override @useResult
 $Res call({
- int t, String title
+ double t, String title
 });
 
 
@@ -269,7 +269,7 @@ class __$VideoChapterCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? t = null,Object? title = null,}) {
   return _then(_VideoChapter(
 t: null == t ? _self.t : t // ignore: cast_nullable_to_non_nullable
-as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
+as double,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -281,7 +281,7 @@ as String,
 /// @nodoc
 mixin _$TranscriptCue {
 
- int get t; String get text;
+ double get t; String get text;
 /// Create a copy of TranscriptCue
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -314,7 +314,7 @@ abstract mixin class $TranscriptCueCopyWith<$Res>  {
   factory $TranscriptCueCopyWith(TranscriptCue value, $Res Function(TranscriptCue) _then) = _$TranscriptCueCopyWithImpl;
 @useResult
 $Res call({
- int t, String text
+ double t, String text
 });
 
 
@@ -334,7 +334,7 @@ class _$TranscriptCueCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? t = null,Object? text = null,}) {
   return _then(_self.copyWith(
 t: null == t ? _self.t : t // ignore: cast_nullable_to_non_nullable
-as int,text: null == text ? _self.text : text // ignore: cast_nullable_to_non_nullable
+as double,text: null == text ? _self.text : text // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -420,7 +420,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int t,  String text)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double t,  String text)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TranscriptCue() when $default != null:
 return $default(_that.t,_that.text);case _:
@@ -441,7 +441,7 @@ return $default(_that.t,_that.text);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int t,  String text)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double t,  String text)  $default,) {final _that = this;
 switch (_that) {
 case _TranscriptCue():
 return $default(_that.t,_that.text);case _:
@@ -461,7 +461,7 @@ return $default(_that.t,_that.text);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int t,  String text)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double t,  String text)?  $default,) {final _that = this;
 switch (_that) {
 case _TranscriptCue() when $default != null:
 return $default(_that.t,_that.text);case _:
@@ -479,7 +479,7 @@ class _TranscriptCue implements TranscriptCue {
   const _TranscriptCue({required this.t, required this.text});
   factory _TranscriptCue.fromJson(Map<String, dynamic> json) => _$TranscriptCueFromJson(json);
 
-@override final  int t;
+@override final  double t;
 @override final  String text;
 
 /// Create a copy of TranscriptCue
@@ -515,7 +515,7 @@ abstract mixin class _$TranscriptCueCopyWith<$Res> implements $TranscriptCueCopy
   factory _$TranscriptCueCopyWith(_TranscriptCue value, $Res Function(_TranscriptCue) _then) = __$TranscriptCueCopyWithImpl;
 @override @useResult
 $Res call({
- int t, String text
+ double t, String text
 });
 
 
@@ -535,7 +535,7 @@ class __$TranscriptCueCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? t = null,Object? text = null,}) {
   return _then(_TranscriptCue(
 t: null == t ? _self.t : t // ignore: cast_nullable_to_non_nullable
-as int,text: null == text ? _self.text : text // ignore: cast_nullable_to_non_nullable
+as double,text: null == text ? _self.text : text // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

@@ -1159,3 +1159,53 @@ doğrulama artıklarının temizlenmesi (`AyseE9`, `BurakE9`, `CemE9`, `E8 Dogru
 `Cihaz Dogrulama Ekibi`).
 
 **E11 (Premium Video Player)** E1–E10'dan bağımsızdır; ön koşulu yoktur.
+
+---
+
+## E11 — Premium video oynatıcı — TAMAMLANDI (2026-07-26)
+
+**Yapıldı:** `video_player` korundu, denetim katmanı ELLE yazıldı. Saf mantık `domain/video/`
+(WebVTT çözümleyici, devam/izlendi kuralları, bölüm eşleme, yer imi), `PlaybackController`
+soyutlaması, özel denetimler, tam ekran, cihazda kalıcı ilerleme/yer imi.
+`flutter analyze` 0 · `flutter test` **263** (+59) · APK 69,9 MiB.
+
+**Kütüphane kararı (pub.dev verisiyle, varsayımla değil):** chewie kendi görsel dilini getiriyor +
+belgelenmiş arabellek hatası var; `better_player_plus` istediğimiz önbellek/PiP'i veriyor ama 168
+beğeni ve "sürümler arası kırıcı değişiklik" uyarısı taşıyor; `media_kit` libmpv gömüyor (APK
+büyür) ve istemediğimiz depolama izinlerini istiyor. **Karar: video_player + kendi katmanımız.**
+
+**Kalıcı kararlar:**
+
+1. **Platforma bağlı her denetleyicinin ARAYÜZÜ olmalı.** `PlaybackController` sayesinde bütün
+   oynatıcı denetimleri sahte oynatıcıyla test edilebiliyor — platform kanalı gerekmiyor. Bu desen
+   (arayüz + uygulama) artık ağ katmanında da oynatıcıda da aynı.
+2. **Kural mantığı ekrandan AYRI ve saf tutulur.** Devam etme, izlendi eşiği, bölüm eşleme,
+   biçimlendirme — hepsi `domain/video/` içinde ve 38 birim testiyle doğrulanıyor.
+3. **İzleme konumu SUNUCUYA gitmez.** Kişisel ve düşük değerli veri; E8'in gizlilik yükünü
+   büyütmemek için cihazda kalır.
+
+**Yol boyunca yakalanan üç gerçek kusur:**
+
+1. **Kesirli zaman damgası sessizce kırpılıyordu.** İçerik `t: 2.7` taşıyor, model `int` ilan
+   etmişti → `toInt()` 2.7'yi 2 yapıyordu (9 sn'lik videoda ~%8 hata). Model `double` yapıldı.
+   **DERS: içerik şemasıyla mobil model arasındaki sayı TÜRÜ birebir doğrulanmalı; json_serializable
+   sessizce kırpar, hata vermez.**
+2. Altyazı kutusu satır içi (16:9, ~210 px) oynatıcıda ortadaki düğmelerin üstüne biniyordu →
+   satır içinde altyazı denetimler görünürken gizleniyor, tam ekranda birlikte gösteriliyor.
+3. **"Tam ekran" tam ekran değildi:** iç içe (shell) gezgine itildiği için alt sekme çubuğu
+   kalıyordu. `Navigator.of(context, rootNavigator: true)` ile düzeltildi.
+   **DERS: StatefulShellRoute altında tam ekran/modal her zaman KÖK gezginle itilmeli.**
+
+**Cihaz doğrulaması (15 madde):** oynat/duraklat, zaman çizgisi + bölüm işaretleri, altyazı (VTT
+ağdan çekildi ve zamanında göründü), bölüm listesi + etkin vurgu, hız 1x→1.5x, yer imi (çip +
+çubukta sarı işaret), tam ekran (yatay, konum ve hız KORUNUYOR, sekme çubuğu yok), çıkışta dikey
+dönüş, "kaldığın yerden devam" başlığı, "izlendi" ✓ — ikisi de uygulama yeniden açılınca duruyor.
+
+**Dürüstçe yapılmayanlar:** PiP (Flutter'da bütün görünümü küçültür, istenen deneyim değil; yerel
+oynatıcı yüzeyi veya elenen bağımlılık gerekir) · çevrimdışı indirme (mimarinin bugün desteklediği
+şey: ağdan akıtma + platformun geçici önbelleği; kalıcı indirme yönetimi yok) · parlaklık/ses
+hareketleri (go_router geri hareketiyle çakışma riski; açık düğmeler tercih edildi) ·
+`wakelock_plus` (içerik 8–9 sn olduğu için gereksiz).
+
+**E12 için hazır:** oynatıcı içerikten bağımsız; yeni video eklemek ek kod GEREKTİRMEZ — yalnız
+içerik + VTT + bölüm verisi. E12'de yeniden değerlendirilecek: wakelock ve çevrimdışı indirme.

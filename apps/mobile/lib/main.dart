@@ -5,6 +5,7 @@ import 'app/app.dart';
 import 'domain/onboarding/onboarding_controller.dart';
 import 'domain/onboarding/study_profile.dart';
 import 'domain/onboarding/welcome_controller.dart';
+import 'domain/video/video_progress.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,12 +14,15 @@ Future<void> main() async {
   final onboardingSeen = await readOnboardingSeen();
   final welcomeSeen = await readWelcomeSeen();
   final studyProfile = await readStudyProfile();
+  // Faz E11 — video ilerlemesi/yer imleri açılışta senkron yüklenir (diğer tercihlerle aynı desen).
+  final videoStates = await readVideoStates();
   runApp(
     ProviderScope(
       overrides: [
         onboardingSeenProvider.overrideWith(() => OnboardingController(onboardingSeen)),
         welcomeSeenProvider.overrideWith(() => WelcomeController(welcomeSeen)),
         studyProfileProvider.overrideWith(() => StudyProfileController(studyProfile)),
+        videoProgressProvider.overrideWith(() => VideoProgressController(videoStates)),
       ],
       child: const EhliyetAkademiApp(),
     ),

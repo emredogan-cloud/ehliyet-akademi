@@ -8,7 +8,7 @@ part of 'video_content.dart';
 
 _VideoChapter _$VideoChapterFromJson(Map<String, dynamic> json) =>
     _VideoChapter(
-      t: (json['t'] as num).toInt(),
+      t: (json['t'] as num).toDouble(),
       title: json['title'] as String,
     );
 
@@ -16,7 +16,10 @@ Map<String, dynamic> _$VideoChapterToJson(_VideoChapter instance) =>
     <String, dynamic>{'t': instance.t, 'title': instance.title};
 
 _TranscriptCue _$TranscriptCueFromJson(Map<String, dynamic> json) =>
-    _TranscriptCue(t: (json['t'] as num).toInt(), text: json['text'] as String);
+    _TranscriptCue(
+      t: (json['t'] as num).toDouble(),
+      text: json['text'] as String,
+    );
 
 Map<String, dynamic> _$TranscriptCueToJson(_TranscriptCue instance) =>
     <String, dynamic>{'t': instance.t, 'text': instance.text};

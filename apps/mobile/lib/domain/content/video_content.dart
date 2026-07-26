@@ -6,14 +6,16 @@ part 'video_content.g.dart';
 /// Video bölümü (zaman damgalı içindekiler) (web `VideoChapter`).
 @freezed
 abstract class VideoChapter with _$VideoChapter {
-  const factory VideoChapter({required int t, required String title}) = _VideoChapter;
+  /// Saniye — KESİRLİ olabilir (içerik `2.7` gibi değerler taşıyor).
+  const factory VideoChapter({required double t, required String title}) = _VideoChapter;
   factory VideoChapter.fromJson(Map<String, Object?> json) => _$VideoChapterFromJson(json);
 }
 
 /// Transkript satırı (web `TranscriptCue`).
 @freezed
 abstract class TranscriptCue with _$TranscriptCue {
-  const factory TranscriptCue({required int t, required String text}) = _TranscriptCue;
+  /// Saniye — KESİRLİ olabilir.
+  const factory TranscriptCue({required double t, required String text}) = _TranscriptCue;
   factory TranscriptCue.fromJson(Map<String, Object?> json) => _$TranscriptCueFromJson(json);
 }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../design/app_card.dart';
@@ -88,6 +89,8 @@ class _ControlCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = context.palette;
     return AppCard(
+      // Beta Faz 10: kart artık detay sayfasını açar. Öncesinde hiçbir yere gitmiyordu.
+      onTap: () => context.push('/learn/cabin/${control.asset}'),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -109,6 +112,7 @@ class _ControlCard extends StatelessWidget {
               ],
             ),
           ),
+          Icon(Icons.chevron_right_rounded, color: p.text3),
         ],
       ),
     );

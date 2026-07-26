@@ -2550,3 +2550,43 @@ Cihazda kademeli çizimin KENDİSİ ekran görüntüsüyle gösterilemedi: ilk p
 kaydırılıyor ve görünür alan tek örneklemede doluyor. Kademeli çizim denetleyici testinde ara
 metinler gözlenerek doğrulandı. "Gözle görülen yazma efekti" iddiası kanıtlanmadı, öyle de
 sunulmuyor.
+
+---
+
+# Beta Faz 10 — Kabin kumandaları detay sayfaları
+
+## A. Kural: "aynı kalite" = aynı BÖLÜM SIRASI
+
+Yeni detay sayfası, mekanik kütüphanesinin (`vehicle_detail_screen.dart`) bölüm sırasını ve
+bileşenlerini birebir izler: görsel → başlık + grup → açıklama → `AppCallout` ipucu →
+`AppCallout` hata → numaralı adım kartı. İki kütüphane arasında gezen kullanıcı yeni bir düzen
+öğrenmek zorunda kalmaz.
+
+## B. İçerik kuralları
+
+1. **İpucu, açıklamanın kopyası olamaz** — test bunu doğrudan ölçüyor. Aksi hâlde detay sayfası
+   listedeki kartı tekrar etmiş olur, yeni bilgi vermez.
+2. **`mistake` isteğe bağlıdır.** Her kumandaya zorla bir "hata" uydurmak uyarıyı değersizleştirir;
+   39 kumandanın 19'unda gerçek bir hata vardı, yalnız onlara eklendi.
+3. **Her adım tam cümledir ve ≥16 karakterdir** (test kapısı). "Isınınca kapat." gibi çok kısa
+   adımlar kapıya takıldı ve zayıflatmak yerine **içerik iyileştirildi**.
+
+## C. Tuzak — jest arenası
+
+`InteractiveViewer` kendi jest tanıyıcısını kurar. Üstüne konan `GestureDetector` arenayı
+kaybedip çift dokunuş **sessizce çalışmayabilir**. Bu yüzden çift dokunuş davranışı widget
+testiyle sabitlendi (yakınlaş → durum yazısı değişir → tekrar çift dokunuşta sıfırlanır).
+
+## D. Araç sınırı — adb çift dokunuş üretemez
+
+`adb shell input tap` her çağrıda cihazda **ayrı bir süreç** başlatır; iki dokunuş arasındaki
+gerçek aralık Flutter'ın çift dokunuş penceresini (~300 ms) aşar. Üç deneme de görselde 0 piksel
+değişiklik üretti. Çift dokunuşlu davranışlar cihazda ekran görüntüsüyle değil, **testle**
+doğrulanır.
+
+## E. Ölçülen
+
+```
+39 kumandanın tamamına ipucu + ≥2 adım · 19'una gerçek "sık yapılan hata"
+analyze 0 · test 383 (+11) · cihazda liste→detay açıldı · taşma 0
+```

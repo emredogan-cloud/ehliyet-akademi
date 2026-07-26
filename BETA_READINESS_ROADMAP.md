@@ -264,12 +264,16 @@ Anlık yanıt çizimi kaldırılır. Backend akış destekliyorsa **gerçek akı
 ilk parça 0,64 s · tam yanıt 4,94 s. `streamed` bayrağı sözleşmenin parçası — tek parça yanıt
 asla akıyormuş gibi gösterilmez. `/api/ai/ask` bozulmadı. Ayrıntı: `BETA_PHASE_9_REPORT.md`.
 
-### 🔵 Faz 10 — Kabin kumandaları detay sayfaları — SIRADAKİ FAZ
+### ✅ Faz 10 — Kabin kumandaları detay sayfaları — TAMAMLANDI
 
 Şu an detay sayfası açılmıyor. Mekanik kütüphanesiyle **aynı kalitede** detay sayfası: büyük
 görsel, zoom, açıklama, ipuçları, öğrenme kartları.
 
-### Faz 11 — Ders sayfası yeniden tasarımı
+**Sonuç:** `/learn/cabin/:asset` eklendi. 39 kumandanın tamamına ipucu ve ≥2 adım, 19'una gerçek
+"sık yapılan hata" yazıldı. Zoom: `InteractiveViewer` + çift dokunuş (2,5×). Bölüm sırası mekanik
+kütüphanesiyle hizalı. Ayrıntı: `BETA_PHASE_10_REPORT.md`.
+
+### 🔵 Faz 11 — Ders sayfası yeniden tasarımı — SIRADAKİ FAZ
 
 Editoryal düzen: hero, illüstrasyon, ilerleme, tahmini süre, zorluk, öğrenme hedefleri, gelişmiş
 hiyerarşi, modern kartlar, hareket. Tasarım token'ları korunur (E13'teki token testi bunu zorlar).

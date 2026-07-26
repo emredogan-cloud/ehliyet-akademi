@@ -16,8 +16,8 @@
 | Üretim                | https://www.ehliyetegitim.com (Vercel, canlı)                                                                                   |
 | **Önceki program**    | **Evolution E1–E13 — TAMAMLANDI.** Dokunulmaz, yeniden başlatılmaz                                                              |
 | **Aktif program**     | **Beta Readiness** — Google Play Kapalı Test (12 test kullanıcısı)                                                              |
-| **Tamamlanan fazlar** | **0, 1, 2, 3, 4, 5, 6, 7, 8, 9 · düzeltme fazları R1, R2, R3**                                                                  |
-| **Sıradaki faz**      | **10 — Kabin kumandaları detay sayfaları**                                                                                      |
+| **Tamamlanan fazlar** | **0–10 · düzeltme fazları R1, R2, R3**                                                                                          |
+| **Sıradaki faz**      | **11 — Ders sayfası yeniden tasarımı**                                                                                          |
 
 ## 2. Git durumu
 

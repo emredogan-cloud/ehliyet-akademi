@@ -8,6 +8,7 @@ import '../features/home/home_screen.dart';
 import '../features/learn/learn_screen.dart';
 import '../features/learn/lessons_screen.dart';
 import '../features/learn/lesson_detail_screen.dart';
+import '../features/learn/cabin_control_detail_screen.dart';
 import '../features/learn/cabin_controls_screen.dart';
 import '../features/learn/dash_lights_screen.dart';
 import '../features/learn/signs_screen.dart';
@@ -123,6 +124,13 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
                 GoRoute(
                   path: 'cabin',
                   builder: (_, _) => const CabinControlsScreen(),
+                  routes: [
+                    GoRoute(
+                      path: ':asset',
+                      builder: (_, st) =>
+                          CabinControlDetailScreen(asset: st.pathParameters['asset']!),
+                    ),
+                  ],
                 ),
                 GoRoute(
                   path: 'lights',

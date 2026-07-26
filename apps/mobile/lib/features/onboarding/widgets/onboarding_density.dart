@@ -17,6 +17,38 @@ OnboardingDensity densityFor(BuildContext context, double availableHeight) {
   return OnboardingDensity.roomy;
 }
 
+/// Beta Faz 6 — onboarding illüstrasyonunun kaplayacağı kutu.
+///
+/// SORUN: E6'da görsel yalnız YÜKSEKLİĞE bağlıydı (`maxHeight × 0.20`, 200 dp tavan). 393 dp
+/// genişlikte bu, görselin genişliğin ancak ~%37'sini kaplaması demekti — "illüstrasyon düzene
+/// hâkim" ölçütünün çok altında.
+///
+/// ÇÖZÜM: görsele **içerik genişliğinin tamamı** verilir (yanlardaki pay zaten sayfa
+/// padding'inden gelir) ve yükseklik yalnız bir **ÜST SINIR** olur. `BoxFit.contain` ikisinden
+/// hangisi küçükse onu uygular:
+/// · dikey bütçe elverdiğinde görsel **genişliğe dayanır** ve düzene hâkim olur,
+/// · bütçe daraldığında kendiliğinden küçülür → **kaydırma oluşmaz**.
+///
+/// Oranlar TAHMİN DEĞİL, ÖLÇÜLDÜ. `onboarding_experience_test.dart` dört ölçüde
+/// (360×640 · 360×640 @1.3× · 393×780 · yatay 740×360) `maxScrollExtent == 0` doğruluyor;
+/// `onboarding_hero_test.dart` ise **çizilen** genişliğin hedef bandını doğruluyor.
+/// Bu değerler değişirse iki test de yeniden koşturulmalıdır.
+({double width, double height}) onboardingHeroBox(
+  OnboardingDensity density, {
+  required double availableWidth,
+  required double availableHeight,
+}) {
+  final hFactor = switch (density) {
+    OnboardingDensity.roomy => 0.50,
+    OnboardingDensity.tight => 0.52,
+    OnboardingDensity.dense => 0.30,
+  };
+  return (
+    width: availableWidth,
+    height: (availableHeight * hFactor).clamp(56.0, 360.0),
+  );
+}
+
 /// Adım gövdelerinin (seçenek kartları) yoğunluğu okuyabilmesi için taşıyıcı.
 class OnboardingDensityScope extends InheritedWidget {
   const OnboardingDensityScope({

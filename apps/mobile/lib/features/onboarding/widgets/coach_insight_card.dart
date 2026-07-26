@@ -159,6 +159,7 @@ class IdleMascot extends StatefulWidget {
     this.asset, {
     super.key,
     required this.height,
+    this.width,
     this.semanticLabel,
     this.amplitude = 3.5,
     this.period = const Duration(milliseconds: 2600),
@@ -166,6 +167,15 @@ class IdleMascot extends StatefulWidget {
 
   final String asset;
   final double height;
+
+  /// Beta Faz 6 — isteğe bağlı genişlik sınırı.
+  ///
+  /// `BoxFit.contain` ile birlikte verildiğinde görsel, en-boy oranını koruyarak
+  /// `width × height` kutusuna sığar. Böylece illüstrasyon **yalnız yüksekliğe** değil,
+  /// kullanılabilir **genişliğe** de göre ölçeklenebilir (onboarding'de görselin düzene
+  /// hâkim olması için gerekli). Verilmezse davranış eskisiyle aynıdır.
+  final double? width;
+
   final String? semanticLabel;
 
   /// Dikey süzülme genliği (px).
@@ -214,6 +224,7 @@ class _IdleMascotState extends State<IdleMascot> with SingleTickerProviderStateM
     final image = MascotImage(
       widget.asset,
       height: widget.height,
+      width: widget.width,
       fit: BoxFit.contain,
       semanticLabel: widget.semanticLabel,
     );

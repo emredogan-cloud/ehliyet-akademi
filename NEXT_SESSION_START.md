@@ -17,10 +17,10 @@
 
 Gerekince bakılacaklar: `RELEASE_CHECKLIST.md` · `GOOGLE_AUTH_SETUP.md` · `REVENUECAT_SETUP.md` ·
 `ENV_TEMPLATE.md` · `ASSET_GENERATION_LIBRARY.md` · `RELEASE_AUDIT_PLAN.md` ·
-`BETA_PHASE_2_REPORT.md` · `BETA_PHASE_3_REPORT.md` · `BETA_PHASE_4_REPORT.md` · `BETA_PHASE_5_REPORT.md` · `PLAY_CONSOLE_SETUP.md`.
+`BETA_PHASE_2_REPORT.md` · `BETA_PHASE_3_REPORT.md` · `BETA_PHASE_4_REPORT.md` · `BETA_PHASE_5_REPORT.md` · `BETA_PHASE_6_REPORT.md` · `PLAY_CONSOLE_SETUP.md`.
 
 **`MOBILE_PROJECT_MEMORY.md` çok uzun** — baştan sona okuma; **sondaki üç bölüm** (⛳ BAĞLAM
-KONTROL NOKTASI · ⛳ BETA FAZ 3 · 4 · 5) Beta programı için yeterlidir. Evolution ayrıntısı gerekirse
+KONTROL NOKTASI · ⛳ BETA FAZ 3 · 4 · 5 · 6) Beta programı için yeterlidir. Evolution ayrıntısı gerekirse
 `MOBILE_EVOLUTION_FINAL_REPORT.md`.
 
 ## 2. Tamamlanan fazlar
@@ -34,18 +34,20 @@ KONTROL NOKTASI · ⛳ BETA FAZ 3 · 4 · 5) Beta programı için yeterlidir. Ev
 | **Beta Faz 3**       | ✅ RevenueCat (`BillingGateway` soyutlaması)                       |
 | **Beta Faz 4**       | ✅ Play yayın hazırlığı — **B1 + B2 kapandı** (gerçek upload key)  |
 | **Beta Faz 5**       | ✅ Giriş ekranı yeniden tasarımı (hero + güven şeridi + sıfırlama) |
+| **Beta Faz 6**       | ✅ Onboarding cilası — görsel %37 → %89,8 genişlik                 |
 
 ## 3. Aktif faz
 
-# 🔵 Beta Faz 6 — Onboarding cilası
+# 🔵 Beta Faz 7 — Profil avatarları
 
-Kaynak belge: **`ASSET_GENERATION_LIBRARY.md` §4.3** · Roadmap: `BETA_READINESS_ROADMAP.md` → "Faz 6".
+Kaynak belgeler: **`BETA_READINESS_ROADMAP.md` → "Faz 7"** · `ASSET_GENERATION_LIBRARY.md` §4.4 ·
+`PLAY_CONSOLE_SETUP.md` §5.6 (**Veri Güvenliği**).
 
 ## 4. Kalan yol haritası
 
-`6` (aktif) → `7` Profil avatarları → `8` Karşılama deneyimi → `9` Akan AI →
-`10` Kabin kumandaları → `11` Ders yeniden tasarımı → `12` Video hattı araştırması →
-`13` Nihai denetim → `BETA_READINESS_FINAL_REPORT.md`.
+`7` (aktif) → `8` Karşılama deneyimi → `9` Akan AI → `10` Kabin kumandaları →
+`11` Ders yeniden tasarımı → `12` Video hattı araştırması → `13` Nihai denetim →
+`BETA_READINESS_FINAL_REPORT.md`.
 
 ## 5. Değişmez mühendislik kuralları
 
@@ -101,7 +103,7 @@ Bir faz bitmeden bu sayıların **altına düşülmemeli**:
 
 ```
 flutter analyze  → 0
-flutter test     → 326
+flutter test     → 334
 @ea/web          → 516
 @ea/db           → 6
 @ea/content-schema → 17 · @ea/question-bank → 10 · @ea/srs-engine → 12
@@ -136,29 +138,37 @@ bilinçli olarak değiştirilmedi (o dosyaya yalnız kural eklenir). Sapma burad
 
 **Cihazı her fazın başında doğrula:** `adb devices -l`.
 
-## 10. Faz 6'nın ilk görevi — TAM OLARAK BU
+## 10. Faz 7'nin ilk görevi — TAM OLARAK BU
 
-> **Görev:** `ASSET_GENERATION_LIBRARY.md` §4.3'ü oku; onboarding görselleri **hem yerleşim hem
-> çözünürlük** işidir.
+> **Görev:** profil avatarı yükleme — **ama moderasyon ve Veri Güvenliği beyanı AYNI FAZDA.**
+
+⚠️ **En kritik bağlam:** E8'de "fotoğraf yükleme YOK" **bilinçli bir moderasyon kararıydı**.
+Bu faz o kararı değiştiriyor; dolayısıyla üç şey birlikte yapılmak zorundadır.
 
 Adımlar:
 
-1. Beş görsel **695–820 px**; 3× cihazda tam genişlik için **1080×1080** gerekiyor
-   (`onb_welcome` · `onb_wheel` · `onb_think` · `onb_tablet` · `onb_calendar`).
-   Mevcutları büyütmek **yumuşama** yaratır — bu bir varlık üretim işidir.
-2. Görsel, güvenli alanın **%85–95'ini** kaplamalı · **kaydırma YOK** · aşırı boşluk yok.
-3. **E6'daki `OnboardingDensity` mimarisi KORUNUR** — değiştirilmez.
-4. **En az iki ekran ölçüsünde** kaydırmasız doğrulama (393×851 dp ve daha dar bir ölçü).
-5. `BETA_PHASE_6_REPORT.md` + bellek **ekleme** + commit + push + **CI yeşil bekle**.
+1. Galeri + kamera + **kırpma** + **sıkıştırma** + **depolama soyutlaması**
+   (platforma bağlı her şey **arayüz + sahte uygulama** — yerleşik desen).
+2. **Modern Android'de `image_picker` izin GEREKTİRMEYEN sistem seçicisini kullanır;
+   `READ_MEDIA_IMAGES` EKLENMEMELİDİR** (`PLAY_CONSOLE_SETUP.md` §5.8) — eklenirse Play'de
+   gerekçe formu açılır ve izin listesi bozulur.
+3. **Moderasyon aynı fazda:** avatar şikâyet edilebilir olmalı, engelleme çalışmalı, varsayılan
+   maskota dönüş yolu bulunmalı. E8'in sızıntısız-404 ve opt-in ilkeleri **bozulmaz**.
+4. **`PLAY_CONSOLE_SETUP.md` §5.6 Veri Güvenliği tablosundaki "Fotoğraflar" satırı
+   GÜNCELLENMELİDİR** — yanlış beyan mağazadan kaldırılma sebebidir.
+5. Avatar topluluk, sıralama ve profilde görünür; mevcut 6 maskot **varsayılan olarak korunur**
+   (`ASSET_GENERATION_LIBRARY.md` §4.4: yeni varlık üretimi GEREKMİYOR).
+6. Cihaz: yükleme/kırpma/sıkıştırma **gerçek cihazda** doğrulanır + avatar şikâyet edilebilir.
+7. `BETA_PHASE_7_REPORT.md` + bellek **ekleme** + commit + push + **CI yeşil bekle**.
 
-**Faz 5'ten devreden ders:** ortamda inpainting aracı yok ve ImageMagick WebP `-quality`
-bayrağını yok sayıyor; varlık üretimi gerekiyorsa bunu **dürüstçe** raporla, kötü çıktı sevk etme.
+**Faz 6'dan devreden yararlı teknik:** ikinci ekran ölçüsünü gerçek cihazda doğrulamak için
+`adb shell wm size 720x1280 && adb shell wm density 320` (sonra **`reset`** — unutma).
 
 ## 11. İlk 60 saniyede çalıştırılacak doğrulama
 
 ```bash
 cd /home/emre/Downloads/OTHER-RESEARCH/other_report/ehliyet-akademi
-git log --oneline -3          # en üstte Faz 5 commit'i olmalı
+git log --oneline -3          # en üstte Faz 6 commit'i olmalı
 git status --short            # boş olmalı
 gh run list --limit 3         # son çalışmalar yeşil olmalı
 adb devices -l                # SABİT KİMLİK YOK — §9

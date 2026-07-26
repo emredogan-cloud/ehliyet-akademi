@@ -2052,3 +2052,120 @@ cihaz: logcat -b crash BOŞ · RenderFlex overflowed YOK · açık + koyu tema d
 3. **Gerçek hesapla giriş bu fazda denenmedi** (Faz 2'de kapsanmıştı).
 4. **E-posta teslimi doğrulanmadı** — var olmayan adres kullanıldı; teslim `RESEND_API_KEY`'e bağlı.
 5. **Yatay güven şeridi (≥420 dp) cihazda görülmedi** — cihaz 393 dp, dikey dal çalıştı.
+
+---
+
+# ⛳ BETA FAZ 6 — Onboarding cilası (2026-07-26)
+
+Bu bölüm **eklemedir**; yukarıdaki hiçbir kayıt değiştirilmedi.
+
+## A. Kök sorun ve çözüm
+
+E6'da görsel yalnız YÜKSEKLİĞE bağlıydı (`maxHeight × 0.20`, 200 dp tavan) → 393 dp genişlikte
+ekranın ancak **%37**'si.
+
+**Yeni kural (`onboardingHeroBox`, saf):** görsele **içerik genişliğinin tamamı** verilir; yükseklik
+yalnız **ÜST SINIR**'dır. `BoxFit.contain` küçüğünü uygular → bütçe varsa görsel genişliğe dayanır,
+yoksa kendiliğinden küçülür ve **kaydırma oluşmaz**.
+
+`IdleMascot`'a isteğe bağlı `width` eklendi (eklemeli). `MascotImage` zaten destekliyordu, yalnız
+iletilmiyordu.
+
+## B. Oranlar ÖLÇÜLDÜ (tahmin değil)
+
+E6'nın kaydırmasızlık kapısına karşı ampirik tarama:
+
+| Kademe  | Değer    | Bulgu                                                   |
+| ------- | -------- | ------------------------------------------------------- |
+| `roomy` | **0.50** | yeşil                                                   |
+| `tight` | **0.52** | 0.38→%69 · 0.44→%80 · 0.48→%87 · 0.52→%90 (hepsi yeşil) |
+| `dense` | **0.30** | **0.36'da kapı KIRILIYOR** (360×640'ta sığmıyor)        |
+
+Adım görseli: `roomy` 0.30 · `tight` 0.22 · tavan 156 → **210 dp**.
+
+## C. ⚠️ ÖLÇÜM TUZAĞI — kalıcı ders
+
+**`tester.getSize()` widget KUTUSUNU verir, çizilen görseli DEĞİL.** `BoxFit.contain` ile görsel
+kutunun içine en-boy koruyarak yerleşir; kutu geniş ama alçaksa çizilen görsel kutudan **dardır**.
+
+İlk ölçümüm 393×780 için "%89,8" diyordu; **çizilen** genişlik ise **%69,1**'di.
+
+**Doğru metrik:** `min(kutuGenişliği, kutuYüksekliği × enBoy)`.
+
+**KURAL:** bir görselin "ne kadar yer kapladığı" ölçülürken `BoxFit` mutlaka hesaba katılmalı.
+Yanlış metrikle "hedefe ulaşıldı" denmemelidir.
+
+## D. Cihazda bulunan kusur — hero HİÇ ÇİZİLMİYORDU
+
+Adım 2'nin görseli çizilmiyor, ekranda ~500 dp boşluk kalıyordu. Neden: görsel yalnız `roomy`
+kademede çiziliyordu; **gerçek cihazda gövde 700 dp eşiğinin hemen ALTINA düşüyor** (≈699) →
+adım `tight` sayılıyor.
+
+**Düzeltme yoğunluğa değil İÇERİĞE bağlandı** — `heroFitsTight` bayrağı:
+
+| Adım | Seçenek | `tight`'ta görsel | Ölçüm              |
+| ---- | ------- | ----------------- | ------------------ |
+| 2    | 2       | ✅                | sığıyor            |
+| 4    | 4       | ❌                | **158 px taşıyor** |
+
+**KURAL:** eşik değerlerine dayanan görünürlük kararları, eşiğin **hemen altındaki** gerçek
+cihazlarda sessizce "hiç göstermeme"ye dönüşebilir. Eşik yerine **içeriğin gerçekten sığıp
+sığmadığı** ölçülmelidir.
+
+## E. Yapılmayan ve NEDEN — varlık yeniden üretimi
+
+`ASSET_GENERATION_LIBRARY.md` §4.3 beş görselin **1080×1080** üretilmesini istiyor. Mevcut:
+
+```
+onb_welcome 820×721 (1,32× açık) · onb_wheel 760×722 (1,42×) · onb_think 695×820 (1,55×)
+onb_tablet  820×641 (1,32×)      · onb_calendar 820×623 (1,32×)
+```
+
+**Yapılmadı:** ortamda görsel üretim aracı yok; hedef **kare** kompozisyonlar mevcut kaynaklardan
+kırpılarak elde edilemez (hepsi farklı en-boy).
+
+**Upscale bilinçle YAPILMADI:** dosyayı büyütür, detay eklemez; Flutter zaten çizim anında
+ölçekliyor. Şu an 393 dp'de ~353 dp çiziliyor → 3× cihazda **1059 px** kaynak ister, **820 px**
+var → **%29 eksik**. Yeniden üretimle kapanır.
+
+## F. Cihaz doğrulaması — İKİ ÖLÇÜ, gerçek donanımda
+
+DoD'nin "iki ekran ölçüsü" şartı, cihazın çözünürlüğü **gerçekten değiştirilerek** karşılandı:
+
+```bash
+adb shell wm size 720x1280 && adb shell wm density 320   # → 360×640 dp
+# ... doğrula ...
+adb shell wm size reset && adb shell wm density reset     # GERİ ALMAYI UNUTMA
+```
+
+**Bu, emülatör olmadan ikinci ekran ölçüsü doğrulamanın pratik yoludur** — sonraki fazlarda da
+kullanılabilir.
+
+| Ölçü    | Karşılama         | Adım 2             | Adım 4               | Kaydırma |
+| ------- | ----------------- | ------------------ | -------------------- | -------- |
+| 393×851 | görsel hâkim ✅   | görsel çizildi ✅  | hero yok (ölçüm) ✅  | yok      |
+| 360×640 | görsel küçüldü ✅ | `dense` bozulma ✅ | açıklamalar düştü ✅ | yok      |
+
+## G. Yanlış alarm — kaydedilmeye değer
+
+360×640'ta ilk karede koç kartında **iki metin üst üste** göründü. Ardışık kareler alınınca
+geçici olduğu anlaşıldı: dönen içgörünün **çapraz geçiş karesi** (E6 özelliği), kusur değil.
+
+**KURAL:** animasyonlu yüzeylerde tek kare yanıltır; şüphede **ardışık kare** al.
+
+## H. Ölçülen değerler
+
+```
+flutter analyze → 0 · flutter test → 334 (+8)
+çizilen görsel genişliği: 393×780 → %89,8 · 393×851 → %89,8 · 360×640 → %46,3
+E6 öncesi: ~%37
+RenderFlex overflowed / EXCEPTION CAUGHT: 0 · logcat -b crash: boş
+```
+
+## I. Dürüst sınırlar (Faz 6)
+
+1. **360×640'ta hedef banda ULAŞILAMIYOR** (%46,3) — dikey bütçe yetmiyor; testle kayıtlı
+   (`lessThan(0.85)`), sessizce geçiştirilmedi.
+2. **Varlıklar 1080 px'e yeniden üretilmedi** — §E; %29 çözünürlük açığı duruyor.
+3. **Yatay düzen cihazda denenmedi** — testte 740×360 yeşil, cihaz döndürülmedi.
+4. **Adım 4'ün `roomy` görseli cihazda görülmedi** — bu cihaz o kademeye çıkmıyor.

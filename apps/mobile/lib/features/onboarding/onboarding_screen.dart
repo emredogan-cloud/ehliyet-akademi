@@ -104,6 +104,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           step: 2,
           onSkip: () => _finish(completed: false),
           hero: AppImages.onbThink,
+          heroFitsTight: true, // 2 seçenekli — ölçüldü, tight kademede de sığıyor
           title: 'Daha önce sınava girdin mi?',
           subtitle: 'Çalışma planını buna göre kuruyoruz.',
           onNext: _next,
@@ -244,12 +245,22 @@ class _WelcomeSlide extends StatelessWidget {
   Widget _portrait(BuildContext context, BoxConstraints c) {
     final d = densityFor(context, c.maxHeight);
     final tight = d != OnboardingDensity.roomy;
-    final mascotH = (c.maxHeight * (d == OnboardingDensity.dense ? 0.15 : 0.20)).clamp(56.0, 200.0);
+    // Faz 6: görsel artık GENİŞLİĞE göre ölçekleniyor; yükseklik yalnız üst sınır.
+    final box = onboardingHeroBox(
+      d,
+      availableWidth: c.maxWidth - AppSpacing.s5 * 2,
+      availableHeight: c.maxHeight,
+    );
     return CenteredScroll(
       minHeight: c.maxHeight,
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s5, vertical: AppSpacing.s2),
       children: [
-        IdleMascot(AppImages.onbWelcome, height: mascotH, semanticLabel: 'Ehliyet Akademi'),
+        IdleMascot(
+          AppImages.onbWelcome,
+          height: box.height,
+          width: box.width,
+          semanticLabel: 'Ehliyet Akademi',
+        ),
         SizedBox(height: tight ? AppSpacing.s2 : AppSpacing.s4),
         _titleBlock(context, density: d),
         SizedBox(height: tight ? AppSpacing.s3 : AppSpacing.s5),
@@ -305,6 +316,7 @@ class _StepScaffold extends StatelessWidget {
     required this.onNext,
     required this.onSkip,
     this.hero,
+    this.heroFitsTight = false,
   });
   final int step; // 1..4
   final String title;
@@ -313,6 +325,13 @@ class _StepScaffold extends StatelessWidget {
   final VoidCallback onNext;
   final VoidCallback onSkip;
   final String? hero;
+
+  /// Bu adımın gövdesi ORTA (`tight`) kademede görselle birlikte kaydırmasız sığıyor mu?
+  ///
+  /// ÖLÇÜLDÜ (`onboarding_experience_test.dart`, 393×780): 2 seçenekli adım sığıyor;
+  /// 4 seçenekli "kalan süre" adımı **158 px taşıyor** → orada görsel yalnız `roomy`
+  /// kademede çizilir. Bu, tahmin değil ölçüm sonucudur; değiştirilirse test kırılır.
+  final bool heroFitsTight;
 
   @override
   Widget build(BuildContext context) {
@@ -385,10 +404,18 @@ class _StepScaffold extends StatelessWidget {
     final h = c.maxHeight;
     final d = densityFor(context, h);
     final dense = d == OnboardingDensity.dense;
-    final heroH = (h * 0.17).clamp(72.0, 156.0);
-    // Kahraman görsel yalnız EN geniş kademede çizilir. Orta kademede 4 seçenekli adım
-    // (kalan süre) görselle birlikte kaydırmasız sığmıyor — ölçüldü, bkz. faz raporu.
-    final showHero = hero != null && d == OnboardingDensity.roomy;
+    // Faz 6: adım görseli de GENİŞLİĞE göre ölçekleniyor; yükseklik yalnız üst sınır.
+    // Bu ekranlar form ağırlıklı olduğu için bütçe karşılama adımından dardır — oran
+    // ÖLÇÜLEREK belirlendi (bkz. faz raporu).
+    final heroH = (h * (d == OnboardingDensity.roomy ? 0.30 : 0.22)).clamp(72.0, 210.0);
+    final heroW = c.maxWidth - AppSpacing.s5 * 2;
+    // Faz 6 DÜZELTMESİ: görsel eskiden YALNIZ `roomy` kademede çiziliyordu. Gerçek cihazda
+    // gövde 700 dp eşiğinin hemen ALTINA düşüyor (≈699) → adım `tight` sayılıyor, görsel hiç
+    // çizilmiyor ve ekranda ~500 dp boşluk kalıyordu (cihazda görüldü, `b6_03`). Artık
+    // `dense` dışındaki her kademede çizilir; `dense` kademede yer gerçekten yoktur.
+    final showHero = hero != null &&
+        (d == OnboardingDensity.roomy ||
+            (d == OnboardingDensity.tight && heroFitsTight));
     final gap = dense ? AppSpacing.s2 : (d == OnboardingDensity.tight ? AppSpacing.s3 : AppSpacing.s5);
     return OnboardingDensityScope(
       density: d,
@@ -397,7 +424,7 @@ class _StepScaffold extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(AppSpacing.s5, AppSpacing.s2, AppSpacing.s5, AppSpacing.s2),
         children: [
           if (showHero) ...[
-            Center(child: IdleMascot(hero!, height: heroH, semanticLabel: '')),
+            Center(child: IdleMascot(hero!, height: heroH, width: heroW, semanticLabel: '')),
             const SizedBox(height: AppSpacing.s4),
           ],
           _titleBlock(context, density: d),

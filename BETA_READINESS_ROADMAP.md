@@ -4,11 +4,11 @@
 
 > ## 📍 İLERLEME — son güncelleme 2026-07-26, commit `3471378` sonrası
 >
-> | Durum             | Fazlar                                                                                                                      |
-> | ----------------- | --------------------------------------------------------------------------------------------------------------------------- |
-> | ✅ **TAMAMLANDI** | **0** · **1** · **2** (Google Sign-In) · **3** (RevenueCat) · **4** (Play hazırlığı — B1+B2 kapandı) · **5** (Giriş ekranı) |
-> | 🔵 **SIRADAKİ**   | **Faz 6 — Onboarding cilası**                                                                                               |
-> | ⬜ Kalan          | Faz 7 · 8 · 9 · 10 · 11 · 12 · 13 + kapanış raporu                                                                          |
+> | Durum             | Fazlar                                                                                                                         |
+> | ----------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+> | ✅ **TAMAMLANDI** | **0** · **1** · **2** (Google Sign-In) · **3** (RevenueCat) · **4** (Play — B1+B2) · **5** (Giriş ekranı) · **6** (Onboarding) |
+> | 🔵 **SIRADAKİ**   | **Faz 7 — Profil avatarları** (⚠️ moderasyon + Veri Güvenliği aynı fazda)                                                      |
+> | ⬜ Kalan          | Faz 8 · 9 · 10 · 11 · 12 · 13 + kapanış raporu                                                                                 |
 >
 > Ayrıntılı devir bilgisi: **`SESSION_HANDOVER.md`** · Hızlı başlangıç: **`NEXT_SESSION_START.md`**
 > **Hedef:** Üretimdeki uygulamayı **Google Play Kapalı Test**'e hazır bir sürüm adayına dönüştürmek.
@@ -201,15 +201,24 @@ kaynağın üst %58'i kırpılarak amblem **kareye hiç sokulmadı** (1080×422,
 (kaydırmada marka işaretiyle çakışıyordu — cihazda görüldü).
 **"MEB müfredatına uygun":** ürünün **zaten yayında olan** ifadesi kullanıldı (web giriş sayfası).
 
-### 🔵 Faz 6 — Onboarding cilası — SIRADAKİ FAZ
+### ✅ Faz 6 — Onboarding cilası — TAMAMLANDI
 
 Mevcut illüstrasyonlar küçük. Görsel **güvenli alanın ~%85–95'ini** kaplamalı; kaydırma yok;
 aşırı boşluk yok; illüstrasyon düzene hâkim; referans kompozisyon izlenir; duyarlılık korunur
 (E6'daki `OnboardingDensity` mimarisi **korunur**, değiştirilmez).
 
 **DoD:** Temel DoD + en az iki ekran ölçüsünde (393×851 dp ve dar bir ölçü) kaydırmasız doğrulama.
+**SONUÇ:** ✅ `BETA_PHASE_6_REPORT.md` · `flutter test` 334 (+8). Görsel artık **genişliğe** göre
+ölçekleniyor (yükseklik yalnız üst sınır) → çizilen genişlik **%37 → %89,8** (393×780 ve 393×851).
+Oranlar tahmin değil, kaydırmasızlık kapısına karşı **ampirik** bulundu (`dense` 0.36'da kırılıyor).
+**Cihazda kusur bulundu:** adım 2'nin görseli hiç çizilmiyordu (eşiğin hemen altı → `tight`);
+karar yoğunluğa değil **içeriğe** bağlandı (`heroFitsTight`).
+**Ölçüm tuzağı:** `getSize()` widget kutusunu verir; `BoxFit.contain` ile **çizilen** genişlik
+farklıdır — metrik düzeltildi, yanlış metrikle "ulaşıldı" denmedi.
+**Dürüst sınır:** 360×640'ta hedef banda **ulaşılamıyor** (%46,3) ve varlıklar **1080 px'e yeniden
+üretilmedi** (%29 açık) — ikisi de testle/raporla kayıtlı.
 
-### Faz 7 — Profil avatarları
+### 🔵 Faz 7 — Profil avatarları — SIRADAKİ FAZ
 
 Galeri + kamera + kırpma + sıkıştırma + **depolama soyutlaması**. Topluluk, sıralama ve profilde
 görünür. Gelecekteki moderasyonla uyumlu.

@@ -1,4 +1,5 @@
 import 'package:ehliyet_akademi/data/auth/google_auth_service.dart';
+import 'package:ehliyet_akademi/design/brand.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -18,6 +19,7 @@ void main() {
   group('yapılandırma', () {
     testWidgets('YAPILANDIRILMAMIŞSA Google düğmesi hiç GÖSTERİLMEZ', (tester) async {
       // Çalışmayan düğme ölü gezinmedir (disiplin kural 3).
+      await useTallSurface(tester);
       await pumpApp(tester, google: FakeGoogleAuthService(configured: false));
       await openAuth(tester);
 
@@ -26,6 +28,7 @@ void main() {
     });
 
     testWidgets('yapılandırılmışsa düğme ve ayırıcı görünür', (tester) async {
+      await useTallSurface(tester);
       await pumpApp(tester, google: FakeGoogleAuthService());
       await openAuth(tester);
 
@@ -37,6 +40,7 @@ void main() {
   group('giriş akışı', () {
     testWidgets('başarılı girişte ID token SUNUCUYA gönderilir', (tester) async {
       final auth = FakeAuthApi();
+      await useTallSurface(tester);
       await pumpApp(
         tester,
         auth: auth,
@@ -52,6 +56,7 @@ void main() {
     });
 
     testWidgets('VAZGEÇME hata sayılmaz — mesaj gösterilmez', (tester) async {
+      await useTallSurface(tester);
       await pumpApp(
         tester,
         google: FakeGoogleAuthService(outcome: const GoogleSignInCancelled()),
@@ -67,6 +72,7 @@ void main() {
     });
 
     testWidgets('gerçek hata kullanıcıya gösterilir', (tester) async {
+      await useTallSurface(tester);
       await pumpApp(
         tester,
         google: FakeGoogleAuthService(
@@ -82,6 +88,7 @@ void main() {
     });
 
     testWidgets('sunucu reddederse hata gösterilir', (tester) async {
+      await useTallSurface(tester);
       await pumpApp(
         tester,
         auth: FakeAuthApi(failMessage: 'Google ile giriş doğrulanamadı.'),
@@ -98,21 +105,23 @@ void main() {
 
   group('mevcut giriş yolları KORUNUR', () {
     testWidgets('e-posta + parola alanları ve düğmesi hâlâ var', (tester) async {
+      await useTallSurface(tester);
       await pumpApp(tester, google: FakeGoogleAuthService());
       await openAuth(tester);
 
       expect(find.widgetWithText(TextFormField, 'E-posta'), findsOneWidget);
       expect(find.widgetWithText(TextFormField, 'Parola'), findsOneWidget);
-      expect(find.widgetWithText(FilledButton, 'Giriş yap'), findsOneWidget);
+      expect(find.widgetWithText(GradientPillButton, 'Giriş yap'), findsOneWidget);
     });
 
     testWidgets('kayıt moduna geçiş çalışmaya devam eder', (tester) async {
+      await useTallSurface(tester);
       await pumpApp(tester, google: FakeGoogleAuthService());
       await openAuth(tester);
 
       await tester.tap(find.text('Hesabın yok mu? Kayıt ol'));
       await tester.pumpAndSettle();
-      expect(find.widgetWithText(FilledButton, 'Kayıt ol'), findsOneWidget);
+      expect(find.widgetWithText(GradientPillButton, 'Kayıt ol'), findsOneWidget);
     });
   });
 }

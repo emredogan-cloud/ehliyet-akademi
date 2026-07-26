@@ -16,17 +16,17 @@
 | Üretim                | https://www.ehliyetegitim.com (Vercel, canlı)                                                                                   |
 | **Önceki program**    | **Evolution E1–E13 — TAMAMLANDI.** Dokunulmaz, yeniden başlatılmaz                                                              |
 | **Aktif program**     | **Beta Readiness** — Google Play Kapalı Test (12 test kullanıcısı)                                                              |
-| **Tamamlanan fazlar** | **0, 1, 2, 3, 4**                                                                                                               |
-| **Sıradaki faz**      | **5 — Giriş ekranı yeniden tasarımı**                                                                                           |
+| **Tamamlanan fazlar** | **0, 1, 2, 3, 4, 5**                                                                                                            |
+| **Sıradaki faz**      | **6 — Onboarding cilası**                                                                                                       |
 
 ## 2. Git durumu
 
-| Alan          | Değer                                                            |
-| ------------- | ---------------------------------------------------------------- |
-| Dal           | `main`                                                           |
-| Son commit    | **Beta Faz 4 — Play yayın hazırlığı** (bu belgeyi içeren commit) |
-| Çalışma ağacı | temiz                                                            |
-| CI            | CI ✅ · Mobile CI ✅ · CodeQL ✅                                 |
+| Alan          | Değer                                                    |
+| ------------- | -------------------------------------------------------- |
+| Dal           | `main`                                                   |
+| Son commit    | **Beta Faz 5 — Giriş ekranı** (bu belgeyi içeren commit) |
+| Çalışma ağacı | temiz                                                    |
+| CI            | CI ✅ · Mobile CI ✅ · CodeQL ✅                         |
 
 > `Mobile CI` yalnız `apps/mobile/**` değiştiğinde çalışır. Yalnız belge değiştiren commit'lerde
 > tetiklenmemesi **beklenen** davranıştır, hata değildir.
@@ -47,7 +47,7 @@ c2e4887 feat(mobile): Evolution E13 — cila, varlık optimizasyonu ve PROGRAM K
 | Paket                         | Sonuç                                                   |
 | ----------------------------- | ------------------------------------------------------- |
 | `flutter analyze`             | **0 sorun**                                             |
-| `flutter test`                | **311 geçti** (Faz 3'te +36)                            |
+| `flutter test`                | **326 geçti** (Faz 5'te +15)                            |
 | `@ea/web`                     | **516 geçti**                                           |
 | `@ea/db`                      | **6 geçti**                                             |
 | `@ea/content-schema`          | **17 geçti**                                            |
@@ -131,24 +131,31 @@ export PATH="$PATH:/home/emre/dev/flutter/bin"   # Flutter 3.41.9 · Dart 3.11.5
 # cwebp YOK — webp yeniden sıkıştırma yapılamıyor (bilinen kısıt)
 ```
 
-### ⚠️ CİHAZ DEĞİŞTİ
+### ⚠️ CİHAZ SABİT DEĞİL — İKİ TELEFON DÖNÜŞÜMLÜ
 
-Belgelerde geçen `AYXSUKIVJVPZ7HPZ` (Redmi M1908C3JGG, Android 11) **artık bağlı değil.**
+Bu oturumda **iki farklı cihaz** dönüşümlü takıldı. **Sabit kimlik varsaymayın.**
 
-| Alan    | Değer                                |
-| ------- | ------------------------------------ |
-| Kimlik  | **`jfzxugsgnnvsrsg6`**               |
-| Model   | Xiaomi **22095RA98C**                |
-| Android | **13 (SDK 33)**                      |
-| Ekran   | **1080×2408 · 440 dpi** (393×876 dp) |
-| ABI     | arm64-v8a                            |
+| Kimlik             | Model             | Android | Ekran               | Kullanıldığı faz |
+| ------------------ | ----------------- | ------- | ------------------- | ---------------- |
+| `AYXSUKIVJVPZ7HPZ` | Redmi M1908C3JGG  | **11**  | 1080×2340 · 440 dpi | Evolution, **5** |
+| `jfzxugsgnnvsrsg6` | Xiaomi 22095RA98C | **13**  | 1080×2408 · 440 dpi | **3, 4**         |
 
-`MOBILE_ENGINEERING_DISCIPLINE.md` kural 6'daki kimlik geçersizdir; o dosya bilinçli olarak
-değiştirilmedi (ona yalnız kural eklenir). **Her fazın başında `adb devices -l` ile doğrula.**
+İkisi de arm64-v8a · ~393 dp genişlik. Birlikte **Android 11 + 13** kapsamı veriyorlar.
 
-Yardımcı betikler scratchpad'dedir ve **yeniden başlatmada silinir**; gerekirse yeniden yazılır
-(`adb -s $D1 exec-out screencap -p > x.png`, `input tap`, `input swipe`).
-**Ekran kapalıysa** `screencap` siyah kare döndürür → önce `input keyevent KEYCODE_WAKEUP`.
+**Her fazın başında `adb devices -l` ile doğrula.** Yardımcı betikte cihazı otomatik algıla:
+
+```bash
+D1=$(adb devices | grep -w device | head -1 | cut -f1)
+```
+
+`MOBILE_ENGINEERING_DISCIPLINE.md` kural 6'daki tek sabit kimlik artık geçerli değildir; o dosya
+bilinçli olarak değiştirilmedi (ona yalnız kural eklenir).
+
+**Cihaz dersleri:** ekran kapalıysa `screencap` siyah kare döndürür → önce
+`input keyevent KEYCODE_WAKEUP`. Uzun derleme/kurulum sırasında cihaz **kilitlenebilir**;
+uyandırmak yetmez, ayrıca `input swipe 540 1900 540 600` ile kilit açılmalı.
+
+Yardımcı betikler scratchpad'dedir ve **yeniden başlatmada silinir**; gerekirse yeniden yazılır.
 
 ## 7. `.env` gereksinimleri
 

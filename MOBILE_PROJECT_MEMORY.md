@@ -1926,3 +1926,129 @@ Release **imzalı** APK gerçek cihaza kuruldu (`jfzxugsgnnvsrsg6`): soğuk aç�
 5. **versionCode hâlâ 1** — ilk yükleme için doğru, sonrakilerde artırılmalı.
 6. **`key.properties` bu makineye özgü** — CI release derlemiyor; derlemesi istenirse anahtar
    deposu base64 secret olarak verilmeli.
+
+---
+
+# ⛳ BETA FAZ 5 — Giriş ekranı yeniden tasarımı (2026-07-26)
+
+Bu bölüm **eklemedir**; yukarıdaki hiçbir kayıt değiştirilmedi.
+
+## A. Marka sorununda alınan karar: RÖTUŞ DEĞİL, YENİDEN ÇERÇEVELEME
+
+`022-assets.png`'de üçüncü taraf araç amblemi okunuyordu (~x 773–829, y 615–692 / 1536×1024).
+**Üç rötuş denemesi de reddedildi** (her biri ekran görüntüsüyle incelendi):
+
+| Deneme | Yöntem                          | Neden reddedildi                              |
+| ------ | ------------------------------- | --------------------------------------------- |
+| v1     | Izgaradan yama klonlama         | Dikdörtgen dikiş izleri görünüyor             |
+| v2     | Yumuşak maskeli bulanıklaştırma | Amblem şekli hâlâ seçiliyor                   |
+| v3     | Izgara tonuyla doldurma         | Beyaz kaputa taşan siyah leke (sansür etkisi) |
+
+**Çözüm:** üst %58 kırpıldı (`1536x600+0+0` → `1080x422`) → amblem **kareye hiç girmiyor**,
+kaynağın bilinçli boş sol bölgesi korunuyor. Çıktı **21.194 B WebP**.
+
+**KURAL:** ortamda içerik-farkındalıklı dolgu (inpainting) aracı YOK. Kötü bir rötuş sevk etmek
+sorunu çözmek değil yerini değiştirmektir. **Kompozisyonu değiştirmek meşru ve daha iyi bir
+mühendislik kararıdır** — ama gerekçesi yazılmalıdır.
+
+**Ortam kısıtı (yeniden doğrulandı):** ImageMagick `-quality` bayrağını WebP'de yok sayıyor
+(q=70..92 hepsi aynı 21.194 B). `cwebp` yok. Bellek §P'deki kayıt geçerli.
+
+## B. Mockup'tan bilinçli SAPMALAR (üçü de testle sabit)
+
+1. **"Apple ile giriş" KONMADI** — iOS yok, ölü gezinme olurdu.
+2. **"Şifremi unuttum?" SÜS DEĞİL** — `POST /api/auth/forgot` çağırıyor. **Yeni uç yazılmadı**;
+   sunucu tarafı zaten vardı (hız sınırlı, hesap varlığını sızdırmıyor, üretimde token dönmüyor).
+   Mobilde ayrı sıfırlama ekranı YOK — token'ı elle girmek gerekirdi; sıfırlama web'de tamamlanır.
+   **Sunucunun sızdırmama davranışı arayüze taşındı:** yanıt ne olursa olsun aynı mesaj.
+   Arayüz sunucudan fazlasını İDDİA ETMEZ.
+3. **AppBar KALDIRILDI** — cihazda görüldü: saydam AppBar'ın geri oku kaydırmada hero'daki marka
+   işaretinin üstüne biniyordu. Üst alan hero'ya devredildi.
+
+## C. "MEB müfredatına uygun" — Faz 1 uyarısı ÇÖZÜLDÜ
+
+Depo tarandı: bu iddia **hâlihazırda üretimde yayında**:
+
+```
+apps/web/app/(app)/giris/page.tsx:15  → 'MEB/MTSK müfredatına uygun, güncel ve güvenilir …'
+apps/web/app/(marketing)/page.tsx:95  → 'Resmî MEB müfredatından, kendi ifademizle.'
+```
+
+Üstelik **aynı yüzeyde** (web giriş sayfası). Dolayısıyla mobilde yeni/kaynaksız iddia
+üretilmiyor; var olan ifadeyle birebir tutarlı kalınıyor.
+
+**KURAL:** "bu iddia edilebilir mi?" sorusunun cevabı **depoda aranır**. Ürün zaten söylüyorsa
+tutarlı kalmak doğru; söylemiyorsa yeni iddia üretilmez.
+
+## D. Düzeltilen bir TEST ZAYIFLIĞI (yeni hata değil)
+
+`auth_test.dart` giriş akışı testi `find.text('Giriş yap').last` ile **AppBar başlığına**
+dokunuyordu → giriş hiç olmuyordu. Test yine de geçebiliyordu çünkü `find.text('user@ea.dev')`
+**forma yazılan metni** buluyordu — **yanlış-pozitif**.
+
+**KURAL:** `find.text(...)` bir metin alanının İÇERİĞİNİ de bulur. Giriş/kayıt akışlarında
+"veri göründü" iddiası, o verinin forma yazılmış hâliyle karışabilir. Ekranın gerçekten
+kapandığı ayrıca doğrulanmalı.
+
+## E. Test yüzeyi — paylaşılan yardımcı
+
+`useTallSurface()` (helpers.dart, 800×**1400**) eklendi ve ödeme testleri de buna taşındı.
+Varsayılan 800×600'de uzun ekranlarda düğmeler görünüm dışında kalıyor, `tap()` ıskalıyor.
+**Genişlik 800'de BIRAKILIR** — Ahem yazı tipi gerçeğinden geniş, daha darı cihazda BULUNMAYAN
+taşmalar üretir.
+
+`dart:ui show Size` ile alındı: `material` import'u helpers'ta **Badge çakışması** yaratıyor
+(`content_enums`'un Badge'i kullanılıyor).
+
+## F. Yeni/değişen dosyalar
+
+| Dosya                              | Değişiklik                                                              |
+| ---------------------------------- | ----------------------------------------------------------------------- |
+| `assets/img/auth_hero.webp`        | **YENİ** — 1080×422, 20,7 KB                                            |
+| `core/assets.dart`                 | `authHero` + kırpma gerekçesi                                           |
+| `features/auth/auth_screen.dart`   | Yeniden tasarım · `_AuthHero` · `_TrustStrip` · `_ForgotPasswordDialog` |
+| `data/auth/auth_api.dart`          | `requestPasswordReset(email)`                                           |
+| `domain/auth/auth_controller.dart` | `requestPasswordReset` (oturumu DEĞİŞTİRMEZ)                            |
+| `test/auth_redesign_test.dart`     | **YENİ** — 15 test                                                      |
+| `test/helpers.dart`                | `useTallSurface` · `FakeAuthApi.requestPasswordReset`                   |
+
+## G. Cihaz — İKİ TELEFON DÖNÜŞÜMLÜ
+
+| Faz   | Cihaz              | Android |
+| ----- | ------------------ | ------- |
+| 3, 4  | `jfzxugsgnnvsrsg6` | 13      |
+| **5** | `AYXSUKIVJVPZ7HPZ` | **11**  |
+
+Yardımcı betik artık **otomatik algılıyor**:
+`D1=$(adb devices | grep -w device | head -1 | cut -f1)`. **Sabit cihaz kimliği varsaymayın.**
+
+**Ek ders:** uzun derleme/kurulum sırasında cihaz **kilitlenebilir**; `KEYCODE_WAKEUP` yetmez,
+ayrıca kaydırarak kilit açılmalı (`input swipe 540 1900 540 600`).
+
+## H. Uçtan uca doğrulama (kaydedilmeye değer)
+
+Parola sıfırlama **gerçek üretim ucuna** karşı denendi: var olmayan bir adresle
+`POST /api/auth/forgot` → sunucu hesabı bulamadığı için e-posta göndermez (**yan etki yok**) →
+arayüz dürüst, sızdırmayan mesajı gösterdi.
+
+**Bu güvenli bir uçtan uca doğrulama kalıbıdır:** hesap varlığını sızdırmayan uçlar, var olmayan
+bir kimlikle yan etkisiz biçimde sınanabilir.
+
+## I. Ölçülen değerler
+
+```
+flutter analyze  → 0
+flutter test     → 326  (+15)
+@ea/web 516 · @ea/db 6 · content-schema 17 · question-bank 10 · srs-engine 12
+lint/format/verify/typecheck temiz
+arm64 APK 35,0 MB · auth_hero.webp 21.194 B · assets/img toplam 1,6 MB
+cihaz: logcat -b crash BOŞ · RenderFlex overflowed YOK · açık + koyu tema doğrulandı
+```
+
+## J. Dürüst sınırlar (Faz 5)
+
+1. **Amblem silinmedi, çerçeve dışında bırakıldı** — kaynak PNG değişmedi.
+2. **Google düğmesi cihazda görünmedi** — anahtar verilmeden derlendi (doğru davranış).
+3. **Gerçek hesapla giriş bu fazda denenmedi** (Faz 2'de kapsanmıştı).
+4. **E-posta teslimi doğrulanmadı** — var olmayan adres kullanıldı; teslim `RESEND_API_KEY`'e bağlı.
+5. **Yatay güven şeridi (≥420 dp) cihazda görülmedi** — cihaz 393 dp, dikey dal çalıştı.

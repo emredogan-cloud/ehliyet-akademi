@@ -28,6 +28,16 @@ abstract class AuthApi {
   /// Beta Faz 2 — Google ID token'ını sunucuda doğrulatıp Bearer oturumuna çevirir.
   /// Token SUNUCUDA doğrulanır; istemcinin kimlik iddiasına güvenilmez.
   Future<AuthResult> loginWithGoogle(String idToken);
+
+  /// Beta Faz 5 — parola sıfırlama talebi (`POST /api/auth/forgot`).
+  ///
+  /// Sunucu **hesabın var olup olmadığını SIZDIRMAZ**: hesap bulunmasa da başarı döner. Sıfırlama
+  /// bağlantısı e-postayla gönderilir ve web'deki `/sifirla` sayfasında tamamlanır — bu yüzden
+  /// mobilde ayrı bir sıfırlama ekranı YOKTUR (olsaydı token'ı elle girmek gerekirdi).
+  ///
+  /// Dönüş: `null` başarı, aksi hâlde kullanıcıya gösterilecek hata metni.
+  Future<String?> requestPasswordReset(String email);
+
   Future<AppUser?> me();
   Future<void> logout();
 }
@@ -71,6 +81,24 @@ class DioAuthApi implements AuthApi {
       return AuthFailure(msg);
     } on DioException catch (_) {
       return const AuthFailure('Bağlantı hatası. İnternetini kontrol et.');
+    }
+  }
+
+  @override
+  Future<String?> requestPasswordReset(String email) async {
+    try {
+      final res = await _dio.post(
+        '/api/auth/forgot',
+        data: {'email': email},
+        options: Options(validateStatus: (s) => s != null && s < 500),
+      );
+      if (res.statusCode == 200) return null;
+      final data = res.data;
+      return (data is Map && data['error'] is String)
+          ? data['error'] as String
+          : 'İstek gönderilemedi (${res.statusCode}).';
+    } on DioException catch (_) {
+      return 'Bağlantı hatası. İnternetini kontrol et.';
     }
   }
 

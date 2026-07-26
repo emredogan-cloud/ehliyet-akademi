@@ -79,6 +79,14 @@ class AuthController extends Notifier<AuthState> {
     }
   }
 
+  /// Beta Faz 5 — parola sıfırlama talebi.
+  ///
+  /// Oturum durumunu DEĞİŞTİRMEZ; yalnız sunucuya talebi iletir. Sunucu hesabın varlığını
+  /// sızdırmadığı için başarı yanıtı "e-posta gönderildi" anlamına gelmez — arayüz bunu
+  /// dürüstçe ifade eder.
+  Future<String?> requestPasswordReset(String email) =>
+      _api.requestPasswordReset(email);
+
   Future<String?> _apply(AuthResult r) async {
     switch (r) {
       case AuthSuccess(:final user, :final token):

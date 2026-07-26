@@ -17,10 +17,10 @@
 
 Gerekince bakılacaklar: `RELEASE_CHECKLIST.md` · `GOOGLE_AUTH_SETUP.md` · `REVENUECAT_SETUP.md` ·
 `ENV_TEMPLATE.md` · `ASSET_GENERATION_LIBRARY.md` · `RELEASE_AUDIT_PLAN.md` ·
-`BETA_PHASE_2_REPORT.md` · `BETA_PHASE_3_REPORT.md` · `BETA_PHASE_4_REPORT.md` · `PLAY_CONSOLE_SETUP.md`.
+`BETA_PHASE_2_REPORT.md` · `BETA_PHASE_3_REPORT.md` · `BETA_PHASE_4_REPORT.md` · `BETA_PHASE_5_REPORT.md` · `PLAY_CONSOLE_SETUP.md`.
 
 **`MOBILE_PROJECT_MEMORY.md` çok uzun** — baştan sona okuma; **sondaki üç bölüm** (⛳ BAĞLAM
-KONTROL NOKTASI · ⛳ BETA FAZ 3 · ⛳ BETA FAZ 4) Beta programı için yeterlidir. Evolution ayrıntısı gerekirse
+KONTROL NOKTASI · ⛳ BETA FAZ 3 · 4 · 5) Beta programı için yeterlidir. Evolution ayrıntısı gerekirse
 `MOBILE_EVOLUTION_FINAL_REPORT.md`.
 
 ## 2. Tamamlanan fazlar
@@ -33,18 +33,19 @@ KONTROL NOKTASI · ⛳ BETA FAZ 3 · ⛳ BETA FAZ 4) Beta programı için yeterl
 | **Beta Faz 2**       | ✅ Google Sign-In (sunucu doğrulamalı)                             |
 | **Beta Faz 3**       | ✅ RevenueCat (`BillingGateway` soyutlaması)                       |
 | **Beta Faz 4**       | ✅ Play yayın hazırlığı — **B1 + B2 kapandı** (gerçek upload key)  |
+| **Beta Faz 5**       | ✅ Giriş ekranı yeniden tasarımı (hero + güven şeridi + sıfırlama) |
 
 ## 3. Aktif faz
 
-# 🔵 Beta Faz 5 — Giriş ekranı yeniden tasarımı
+# 🔵 Beta Faz 6 — Onboarding cilası
 
-Kaynak belge: **`ASSET_GENERATION_LIBRARY.md` §4.2** · Roadmap: `BETA_READINESS_ROADMAP.md` → "Faz 5".
+Kaynak belge: **`ASSET_GENERATION_LIBRARY.md` §4.3** · Roadmap: `BETA_READINESS_ROADMAP.md` → "Faz 6".
 
 ## 4. Kalan yol haritası
 
-`5` (aktif) → `6` Onboarding cilası → `7` Profil avatarları → `8` Karşılama deneyimi →
-`9` Akan AI → `10` Kabin kumandaları → `11` Ders yeniden tasarımı →
-`12` Video hattı araştırması → `13` Nihai denetim → `BETA_READINESS_FINAL_REPORT.md`.
+`6` (aktif) → `7` Profil avatarları → `8` Karşılama deneyimi → `9` Akan AI →
+`10` Kabin kumandaları → `11` Ders yeniden tasarımı → `12` Video hattı araştırması →
+`13` Nihai denetim → `BETA_READINESS_FINAL_REPORT.md`.
 
 ## 5. Değişmez mühendislik kuralları
 
@@ -100,7 +101,7 @@ Bir faz bitmeden bu sayıların **altına düşülmemeli**:
 
 ```
 flutter analyze  → 0
-flutter test     → 311
+flutter test     → 326
 @ea/web          → 516
 @ea/db           → 6
 @ea/content-schema → 17 · @ea/question-bank → 10 · @ea/srs-engine → 12
@@ -135,37 +136,32 @@ bilinçli olarak değiştirilmedi (o dosyaya yalnız kural eklenir). Sapma burad
 
 **Cihazı her fazın başında doğrula:** `adb devices -l`.
 
-## 10. Faz 5'in ilk görevi — TAM OLARAK BU
+## 10. Faz 6'nın ilk görevi — TAM OLARAK BU
 
-> **Görev:** `ASSET_GENERATION_LIBRARY.md` §4.2'yi oku, sonra **giriş ekranını yeniden tasarla**.
+> **Görev:** `ASSET_GENERATION_LIBRARY.md` §4.3'ü oku; onboarding görselleri **hem yerleşim hem
+> çözünürlük** işidir.
 
 Adımlar:
 
-1. `apps/mobile/lib/features/auth/auth_screen.dart` dosyasını oku — Faz 2'de Google düğmesi
-   eklendi, **bozulmayacak**.
-2. `apps/assets/interface-assets/022-assets.png` (1536×1024) → **hero olarak sevk edilir**,
-   1080×720 WebP → `apps/mobile/assets/img/auth_hero.webp`.
-   ⚠️ **Renault logosu okunuyor** — rötuşlanmalı veya markasız varyant üretilmeli, karar rapora yazılmalı.
-3. `023-assets.png` / `024-assets.png` **arayüz mockup'ıdır** → **raster sevk EDİLMEZ**, widget
-   olarak uygulanır (gömülü metin temaya uymaz, yazı tipi ölçeğiyle büyümez, çevrilemez).
-4. **"Apple ile giriş" KONMAZ** — iOS yok, çalışmayan düğme ölü gezinmedir (disiplin kural 3).
-5. **"MEB müfredatına uygun"** ifadesi doğrulanabilir bir iddiadır; kaynak gösterilemiyorsa
-   **kullanılmaz**.
-6. Sabit renk yok — `context.palette` (`design_tokens_test.dart` bunu zorluyor). Açık **ve** koyu
-   temada doğrulanır.
-7. Görüntü alanı dolar, garip boşluk kalmaz; e-posta/parola/misafir/Google yolları **korunur**.
-8. Testler: mevcut giriş testleri geçmeye devam eder + yeni yüzey için test eklenir.
-9. Cihaz: açık ve koyu temada doğrulama + ekran görüntüsü.
-10. `BETA_PHASE_5_REPORT.md` + bellek **ekleme** + commit + push + **CI yeşil bekle**.
+1. Beş görsel **695–820 px**; 3× cihazda tam genişlik için **1080×1080** gerekiyor
+   (`onb_welcome` · `onb_wheel` · `onb_think` · `onb_tablet` · `onb_calendar`).
+   Mevcutları büyütmek **yumuşama** yaratır — bu bir varlık üretim işidir.
+2. Görsel, güvenli alanın **%85–95'ini** kaplamalı · **kaydırma YOK** · aşırı boşluk yok.
+3. **E6'daki `OnboardingDensity` mimarisi KORUNUR** — değiştirilmez.
+4. **En az iki ekran ölçüsünde** kaydırmasız doğrulama (393×851 dp ve daha dar bir ölçü).
+5. `BETA_PHASE_6_REPORT.md` + bellek **ekleme** + commit + push + **CI yeşil bekle**.
+
+**Faz 5'ten devreden ders:** ortamda inpainting aracı yok ve ImageMagick WebP `-quality`
+bayrağını yok sayıyor; varlık üretimi gerekiyorsa bunu **dürüstçe** raporla, kötü çıktı sevk etme.
 
 ## 11. İlk 60 saniyede çalıştırılacak doğrulama
 
 ```bash
 cd /home/emre/Downloads/OTHER-RESEARCH/other_report/ehliyet-akademi
-git log --oneline -3          # en üstte Faz 4 commit'i olmalı
+git log --oneline -3          # en üstte Faz 5 commit'i olmalı
 git status --short            # boş olmalı
 gh run list --limit 3         # son çalışmalar yeşil olmalı
-adb devices -l                # jfzxugsgnnvsrsg6 görmelisin (§9)
+adb devices -l                # SABİT KİMLİK YOK — §9
 ```
 
 Farklıysa önce `SESSION_HANDOVER.md` §2 ile karşılaştır. **Depo belgeden üstündür** — fark varsa

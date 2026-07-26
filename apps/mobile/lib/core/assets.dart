@@ -27,6 +27,14 @@ class AppImages {
   static const owlWave = '$_base/owl_wave.webp'; // coach / AI intro
   static const owlTeacher = '$_base/owl_teacher.webp'; // practice runner
 
+  // Auth hero (Beta Faz 5)
+  //
+  // Kaynak: `apps/assets/interface-assets/022-assets.png` (1536×1024) — gece İstanbul silueti,
+  // sürücü kursu aracı, koniler, trafik işaretleri. **Üst %58'i kırpıldı** (1536×600 → 1080×422):
+  // kırpma, aracın ızgarasındaki üçüncü taraf marka amblemini kareden tamamen çıkarır ve
+  // kaynağın bilinçli olarak boş bıraktığı sol bölgeyi korur. Gerekçe: BETA_PHASE_5_REPORT.md.
+  static const authHero = '$_base/auth_hero.webp';
+
   // Illustration heroes
   static const illTarget = '$_base/ill_target.webp'; // session results success
   static const illFolder = '$_base/ill_folder.webp'; // collections

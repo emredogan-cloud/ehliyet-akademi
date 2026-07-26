@@ -1,3 +1,7 @@
+// `material` import'u burada Badge çakışması yaratır (helpers `content_enums`'un Badge'ini
+// kullanıyor) → yalnız gereken tip alınır.
+import 'dart:ui' show Size;
+
 import 'package:ehliyet_akademi/app/app.dart';
 import 'package:ehliyet_akademi/core/storage/token_store.dart';
 import 'package:ehliyet_akademi/data/auth/auth_api.dart';
@@ -56,6 +60,20 @@ class FakeAuthApi implements AuthApi {
   Future<AuthResult> loginWithGoogle(String idToken) async {
     lastGoogleIdToken = idToken;
     return _result('google@ea.dev', name: 'Google Kullanıcı');
+  }
+
+  /// Beta Faz 5 — parola sıfırlama talebi kaydedilir ki test doğrulayabilsin.
+  String? lastResetEmail;
+  int resetCalls = 0;
+
+  /// Doluysa `requestPasswordReset` bu hatayı döndürür (sunucu reddi taklidi).
+  String? resetFailMessage;
+
+  @override
+  Future<String?> requestPasswordReset(String email) async {
+    resetCalls++;
+    lastResetEmail = email;
+    return resetFailMessage;
   }
 
   AuthResult _result(String email, {String name = 'Test'}) {
@@ -534,6 +552,19 @@ class FakeSocialApi implements SocialApi {
     String? targetType,
     String? targetRef,
   }) async => reports.add('${targetType ?? 'user'}:${targetRef ?? userId}:${reason.wire}');
+}
+
+/// Test yüzeyini YÜKSELTİR (800×1400) — uzun ekranlar için.
+///
+/// NEDEN: varsayılan 800×600 test yüzeyinde uzun ekranların (ödeme, giriş) alt yarısı görünüm
+/// alanının dışında kalır; `tap()` ıskalar ve akış hiç çalışmaz. **Genişlik 800'de BIRAKILIR**:
+/// testlerin Ahem yazı tipi gerçeğinden geniştir ve daha dar bir yüzeyde cihazda BULUNMAYAN
+/// taşmalar üretir (cihazda 393 dp'de taşma yok — Faz 3/4'te doğrulandı).
+///
+/// `pumpApp`'ten ÖNCE çağrılır; sökme işlemi otomatik kaydedilir.
+Future<void> useTallSurface(WidgetTester tester, {Size size = const Size(800, 1400)}) async {
+  await tester.binding.setSurfaceSize(size);
+  addTearDown(() => tester.binding.setSurfaceSize(null));
 }
 
 /// Pump the full app with test-safe overrides (no platform channels / network / native drift).

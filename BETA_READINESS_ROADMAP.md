@@ -4,11 +4,11 @@
 
 > ## 📍 İLERLEME — son güncelleme 2026-07-26, commit `3471378` sonrası
 >
-> | Durum             | Fazlar                                                                                                                                  |
-> | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-> | ✅ **TAMAMLANDI** | **0** (belgeler) · **1** (varlık denetimi) · **2** (Google Sign-In) · **3** (RevenueCat) · **4** (Play yayın hazırlığı — B1+B2 kapandı) |
-> | 🔵 **SIRADAKİ**   | **Faz 5 — Giriş ekranı yeniden tasarımı**                                                                                               |
-> | ⬜ Kalan          | Faz 6 · 7 · 8 · 9 · 10 · 11 · 12 · 13 + kapanış raporu                                                                                  |
+> | Durum             | Fazlar                                                                                                                      |
+> | ----------------- | --------------------------------------------------------------------------------------------------------------------------- |
+> | ✅ **TAMAMLANDI** | **0** · **1** · **2** (Google Sign-In) · **3** (RevenueCat) · **4** (Play hazırlığı — B1+B2 kapandı) · **5** (Giriş ekranı) |
+> | 🔵 **SIRADAKİ**   | **Faz 6 — Onboarding cilası**                                                                                               |
+> | ⬜ Kalan          | Faz 7 · 8 · 9 · 10 · 11 · 12 · 13 + kapanış raporu                                                                          |
 >
 > Ayrıntılı devir bilgisi: **`SESSION_HANDOVER.md`** · Hızlı başlangıç: **`NEXT_SESSION_START.md`**
 > **Hedef:** Üretimdeki uygulamayı **Google Play Kapalı Test**'e hazır bir sürüm adayına dönüştürmek.
@@ -184,7 +184,7 @@ araç `jarsigner`. İki belgedeki hatalı talimat düzeltildi.
 **`oauth_client` boş → Google girişi henüz çalışmaz** (`GOOGLE_AUTH_SETUP.md` §9.5).
 **B6 elle kalıyor** — Play Console'a yükleme kod işi değildir.
 
-### 🔵 Faz 5 — Giriş ekranı yeniden tasarımı — SIRADAKİ FAZ
+### ✅ Faz 5 — Giriş ekranı yeniden tasarımı — TAMAMLANDI
 
 Referanslar: `apps/assets/login-page.png` ve `apps/assets/interface-assets/{022,023,024}-assets.png`
 (mevcut; ölçüldü: 1536×1024 · 1024×1536 · 1994×789). Varlıklar **birebir** uygulanır, yaklaşık
@@ -192,8 +192,16 @@ geçilmez. Mevcut tasarım sistemi korunur; **yeni görsel dil getirilmez**. Gö
 garip boşluk kalmaz.
 
 **DoD:** Temel DoD + cihazda açık ve koyu temada doğrulama.
+**SONUÇ:** ✅ `BETA_PHASE_5_REPORT.md` · `flutter test` 326 (+15) · açık **ve** koyu tema cihazda
+doğrulandı (`AYXSUKIVJVPZ7HPZ`, Android 11).
+**Marka kararı:** üç rötuş denemesi de görünür artefakt ürettiği için amblem **silinmedi**;
+kaynağın üst %58'i kırpılarak amblem **kareye hiç sokulmadı** (1080×422, 20,7 KB).
+**Sapmalar (testle sabit):** Apple düğmesi KONMADI · "Şifremi unuttum?" **gerçek uca bağlandı**
+(yeni uç yazılmadı; sunucunun sızdırmama davranışı arayüze taşındı) · saydam AppBar kaldırıldı
+(kaydırmada marka işaretiyle çakışıyordu — cihazda görüldü).
+**"MEB müfredatına uygun":** ürünün **zaten yayında olan** ifadesi kullanıldı (web giriş sayfası).
 
-### Faz 6 — Onboarding cilası
+### 🔵 Faz 6 — Onboarding cilası — SIRADAKİ FAZ
 
 Mevcut illüstrasyonlar küçük. Görsel **güvenli alanın ~%85–95'ini** kaplamalı; kaydırma yok;
 aşırı boşluk yok; illüstrasyon düzene hâkim; referans kompozisyon izlenir; duyarlılık korunur

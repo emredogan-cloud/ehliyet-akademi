@@ -1,4 +1,5 @@
 import 'package:ehliyet_akademi/core/storage/token_store.dart';
+import 'package:ehliyet_akademi/design/brand.dart';
 import 'package:ehliyet_akademi/domain/auth/app_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -36,6 +37,9 @@ void main() {
 
   testWidgets('login flow: guest -> auth screen -> authenticated', (tester) async {
     final api = FakeAuthApi();
+    // Faz 5: giriş ekranı hero + güven şeridiyle uzadı; 800×600'de gönder düğmesi görünüm
+    // alanının dışında kalıyordu (cihazda sorun yok — test yüzeyi artefaktı).
+    await useTallSurface(tester);
     await pumpApp(tester, auth: api);
 
     await tester.tap(find.text('Profil'));
@@ -47,10 +51,14 @@ void main() {
     expect(find.text('Tekrar hoş geldin'), findsOneWidget);
     await tester.enterText(find.widgetWithText(TextFormField, 'E-posta'), 'user@ea.dev');
     await tester.enterText(find.widgetWithText(TextFormField, 'Parola'), 'parola-1234');
-    await tester.tap(find.widgetWithText(FilledButton, 'Giriş yap'));
+    // Beta Faz 5: gönder düğmesi GradientPillButton oldu. AppBar başlığı da "Giriş yap"
+    // olduğu için düğme AÇIKÇA hedeflenir — aksi hâlde başlığa dokunulur ve giriş hiç olmaz.
+    await tester.tap(find.widgetWithText(GradientPillButton, 'Giriş yap'));
     await tester.pumpAndSettle();
 
-    // Back on Profil, now authenticated
+    // Back on Profil, now authenticated. Giriş ekranı kapandığı için e-posta artık form
+    // alanından değil, profil kartından geliyor.
+    expect(find.text('Giriş yap / Kayıt ol'), findsNothing); // auth ekranı kapandı
     expect(find.text('user@ea.dev'), findsOneWidget);
     expect(find.text('Çıkış yap'), findsOneWidget);
   });

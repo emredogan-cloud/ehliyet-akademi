@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
+import '../../data/auth/google_auth_service.dart';
 import '../../domain/auth/auth_controller.dart';
 
 /// Login / register screen. Full-screen over the tab shell. Guests reach it from Profil.
@@ -52,9 +53,29 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     }
   }
 
+  /// Beta Faz 2 — Google ile giriş.
+  ///
+  /// Vazgeçme ('' dönüşü) hata DEĞİLDİR: hesap seçiciyi kapatan kullanıcıya mesaj gösterilmez.
+  Future<void> _google() async {
+    setState(() {
+      _error = null;
+      _busy = true;
+    });
+    final err = await ref.read(authControllerProvider.notifier).loginWithGoogle();
+    if (!mounted) return;
+    setState(() => _busy = false);
+    if (err == null) {
+      if (context.canPop()) context.pop();
+    } else if (err.isNotEmpty) {
+      setState(() => _error = err);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
+    // Yapılandırılmadıysa düğme HİÇ gösterilmez — çalışmayan düğme ölü gezinmedir.
+    final googleReady = ref.watch(googleAuthServiceProvider).isConfigured;
     return Scaffold(
       appBar: AppBar(title: Text(_isRegister ? 'Kayıt ol' : 'Giriş yap')),
       body: SafeArea(
@@ -150,6 +171,25 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                             )
                           : Text(_isRegister ? 'Kayıt ol' : 'Giriş yap'),
                     ),
+                    if (googleReady) ...[
+                      const SizedBox(height: AppSpacing.s4),
+                      Row(
+                        children: [
+                          Expanded(child: Divider(color: p.border)),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s3),
+                            child: Text('veya', style: TextStyle(color: p.text3, fontSize: 13)),
+                          ),
+                          Expanded(child: Divider(color: p.border)),
+                        ],
+                      ),
+                      const SizedBox(height: AppSpacing.s4),
+                      OutlinedButton.icon(
+                        onPressed: _busy ? null : _google,
+                        icon: const _GoogleMark(),
+                        label: const Text('Google ile devam et'),
+                      ),
+                    ],
                     const SizedBox(height: AppSpacing.s3),
                     TextButton(
                       onPressed: _busy
@@ -171,4 +211,56 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       ),
     );
   }
+}
+
+/// Google'ın dört renkli "G" işareti.
+///
+/// Google marka kılavuzu, işaretin renklerinin değiştirilmemesini ister; bu yüzden bu widget
+/// tasarım token'larını KULLANMAZ ve tema ile değişmez — bilinçli bir istisnadır.
+class _GoogleMark extends StatelessWidget {
+  const _GoogleMark();
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 18,
+      height: 18,
+      child: CustomPaint(painter: _GoogleMarkPainter()),
+    );
+  }
+}
+
+class _GoogleMarkPainter extends CustomPainter {
+  // Google marka renkleri — sabit olmak ZORUNDA (marka kılavuzu).
+  static const _blue = Color(0xFF4285F4);
+  static const _red = Color(0xFFEA4335);
+  static const _yellow = Color(0xFFFBBC05);
+  static const _green = Color(0xFF34A853);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final r = size.width / 2;
+    final c = Offset(r, r);
+    final stroke = r * 0.42;
+    final rect = Rect.fromCircle(center: c, radius: r - stroke / 2);
+    final paint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = stroke
+      ..strokeCap = StrokeCap.butt;
+
+    // Dört çeyrek yay — sadeleştirilmiş "G".
+    canvas.drawArc(rect, -0.45, 1.25, false, paint..color = _blue);
+    canvas.drawArc(rect, 0.85, 1.35, false, paint..color = _green);
+    canvas.drawArc(rect, 2.25, 1.35, false, paint..color = _yellow);
+    canvas.drawArc(rect, 3.65, 1.35, false, paint..color = _red);
+
+    // "G"nin yatay çubuğu.
+    canvas.drawRect(
+      Rect.fromLTWH(c.dx, c.dy - stroke / 2, r - stroke / 2, stroke),
+      Paint()..color = _blue,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

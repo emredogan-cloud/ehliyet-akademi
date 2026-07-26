@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/storage/token_store.dart';
 import '../../data/auth/auth_api.dart';
+import '../../data/auth/google_auth_service.dart';
 import 'app_user.dart';
 
 enum AuthStatus { unknown, guest, authenticated }
@@ -60,6 +61,22 @@ class AuthController extends Notifier<AuthState> {
   }) async {
     final r = await _api.register(name: name, email: email, password: password);
     return _apply(r);
+  }
+
+  /// Beta Faz 2 — Google ile giriş.
+  ///
+  /// Dönüş: `null` başarı · `''` KULLANICI VAZGEÇTİ (mesaj gösterilmez) · aksi hâlde hata metni.
+  /// Vazgeçmeyi hatadan ayırmak önemli: hesap seçiciyi kapatan kullanıcıya hata göstermek yanlış.
+  Future<String?> loginWithGoogle() async {
+    final outcome = await ref.read(googleAuthServiceProvider).signIn();
+    switch (outcome) {
+      case GoogleSignInCancelled():
+        return '';
+      case GoogleSignInError(:final message):
+        return message;
+      case GoogleSignInToken(:final idToken):
+        return _apply(await _api.loginWithGoogle(idToken));
+    }
   }
 
   Future<String?> _apply(AuthResult r) async {

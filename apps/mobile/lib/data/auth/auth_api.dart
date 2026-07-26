@@ -24,6 +24,10 @@ class AuthFailure extends AuthResult {
 abstract class AuthApi {
   Future<AuthResult> register({required String name, required String email, required String password});
   Future<AuthResult> login({required String email, required String password});
+
+  /// Beta Faz 2 — Google ID token'ını sunucuda doğrulatıp Bearer oturumuna çevirir.
+  /// Token SUNUCUDA doğrulanır; istemcinin kimlik iddiasına güvenilmez.
+  Future<AuthResult> loginWithGoogle(String idToken);
   Future<AppUser?> me();
   Future<void> logout();
 }
@@ -43,6 +47,10 @@ class DioAuthApi implements AuthApi {
   @override
   Future<AuthResult> login({required String email, required String password}) =>
       _auth('/api/auth/login', {'email': email, 'password': password});
+
+  @override
+  Future<AuthResult> loginWithGoogle(String idToken) =>
+      _auth('/api/auth/google', {'idToken': idToken});
 
   Future<AuthResult> _auth(String path, Map<String, dynamic> body) async {
     try {

@@ -18,6 +18,8 @@ void main() {
     'lib/design/brand.dart': 'Gölge rengi; p.brightness ile dallanıyor.',
     'lib/features/coach/coach_screen.dart': 'Balon zemini; p.brightness ile dallanıyor.',
     'lib/core/theme/app_theme.dart': 'Buton ön plan rengi; p.brightness ile dallanıyor.',
+    'lib/features/auth/auth_screen.dart':
+        'Google markasının dört rengi — marka kılavuzu değiştirilmesini yasaklıyor, temayla değişemez.',
     'lib/features/learn/widgets/traffic_sign_view.dart':
         'Trafik levhasının MEVZUATTAKİ kırmızısı — temaya göre değişemez.',
   };

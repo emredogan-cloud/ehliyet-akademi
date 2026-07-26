@@ -3,6 +3,7 @@ import 'package:ehliyet_akademi/core/storage/token_store.dart';
 import 'package:ehliyet_akademi/data/auth/auth_api.dart';
 import 'package:ehliyet_akademi/data/coach/coach_api.dart';
 import 'package:ehliyet_akademi/data/community/community_repository.dart';
+import 'package:ehliyet_akademi/data/auth/google_auth_service.dart';
 import 'package:ehliyet_akademi/data/community/groups_repository.dart';
 import 'package:ehliyet_akademi/data/community/social_repository.dart';
 import 'package:ehliyet_akademi/data/content/content_repository.dart';
@@ -46,6 +47,15 @@ class FakeAuthApi implements AuthApi {
     required String password,
   }) async =>
       _result(email, name: name);
+
+  /// Beta Faz 2 — sunucuya gönderilen ID token kaydedilir ki test doğrulayabilsin.
+  String? lastGoogleIdToken;
+
+  @override
+  Future<AuthResult> loginWithGoogle(String idToken) async {
+    lastGoogleIdToken = idToken;
+    return _result('google@ea.dev', name: 'Google Kullanıcı');
+  }
 
   AuthResult _result(String email, {String name = 'Test'}) {
     if (failMessage != null) return AuthFailure(failMessage!);
@@ -536,6 +546,7 @@ Future<void> pumpApp(
   CommunityApi? community,
   SocialApi? social,
   GroupsApi? groups,
+  GoogleAuthService? google,
   List<String>? owned,
   Map<String, Object>? prefs,
   bool onboardingSeen = true,
@@ -571,6 +582,7 @@ Future<void> pumpApp(
         communityApiProvider.overrideWithValue(community ?? FakeCommunityApi()),
         socialApiProvider.overrideWithValue(social ?? FakeSocialApi()),
         groupsApiProvider.overrideWithValue(groups ?? FakeGroupsApi()),
+        googleAuthServiceProvider.overrideWithValue(google ?? FakeGoogleAuthService()),
         entitlementsApiProvider.overrideWithValue(FakeEntitlementsApi(owned ?? const [])),
         // Content + questions come from fixed snapshots in tests → never touch drift/network.
         if (overrideContent) ...[
@@ -702,5 +714,33 @@ class FakeGroupsApi implements GroupsApi {
               : c,
         )
         .toList();
+  }
+}
+
+
+/// Beta Faz 2 — sahte Google servisi. Platform kanalı gerekmez.
+class FakeGoogleAuthService implements GoogleAuthService {
+  FakeGoogleAuthService({
+    this.configured = true,
+    this.outcome = const GoogleSignInToken('fake-id-token'),
+  });
+
+  final bool configured;
+  final GoogleSignInOutcome outcome;
+  int signInCalls = 0;
+  int signOutCalls = 0;
+
+  @override
+  bool get isConfigured => configured;
+
+  @override
+  Future<GoogleSignInOutcome> signIn() async {
+    signInCalls++;
+    return outcome;
+  }
+
+  @override
+  Future<void> signOut() async {
+    signOutCalls++;
   }
 }

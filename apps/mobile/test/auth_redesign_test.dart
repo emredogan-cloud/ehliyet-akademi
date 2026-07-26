@@ -42,8 +42,13 @@ void main() {
           .where((i) => assetNameOf(i.image) == AppImages.authHero);
       expect(hero, isNotEmpty, reason: 'auth_hero.webp ekranda olmalı');
 
-      expect(find.text('Ehliyet Akademi'), findsOneWidget);
-      expect(find.byType(BrandMark), findsWidgets);
+      // Beta R3: marka kimliği artık ikon+metin bileşimi değil, referanstaki MARKA KİLİDİ
+      // görselidir (`brand_lockup.webp`). Ekran okuyucu için etiketi korunur.
+      final lockup = tester
+          .widgetList<Image>(find.byType(Image))
+          .where((i) => assetNameOf(i.image) == AppImages.brandLockup);
+      expect(lockup, isNotEmpty, reason: 'marka kilidi hero üstünde olmalı');
+      expect(lockup.first.semanticLabel, 'Ehliyet Akademi');
     });
 
     testWidgets('AppBar YOKTUR; geri düğmesi hero içindedir', (tester) async {
@@ -59,7 +64,7 @@ void main() {
       await tester.tap(find.byTooltip('Geri'));
       await tester.pumpAndSettle();
       // Profil'e dönülür — giriş ekranı kapanmıştır.
-      expect(find.text('Tekrar hoş geldin'), findsNothing);
+      expect(find.text('Tekrar Hoş Geldin! 👋'), findsNothing);
       expect(find.text('Giriş yap / Kayıt ol'), findsOneWidget);
     });
 
@@ -112,7 +117,7 @@ void main() {
       await openAuth(tester, auth: api);
 
       await tester.enterText(
-        find.widgetWithText(TextFormField, 'E-posta'),
+        find.widgetWithText(TextFormField, 'E-posta adresiniz'),
         'unutkan@ea.dev',
       );
       await tester.tap(find.text('Şifremi unuttum?'));
@@ -184,14 +189,14 @@ void main() {
   group('mevcut yollar KORUNUR', () {
     testWidgets('e-posta/parola alanları, gönder düğmesi ve kip geçişi durur', (tester) async {
       await openAuth(tester);
-      expect(find.widgetWithText(TextFormField, 'E-posta'), findsOneWidget);
-      expect(find.widgetWithText(TextFormField, 'Parola'), findsOneWidget);
-      expect(find.widgetWithText(GradientPillButton, 'Giriş yap'), findsOneWidget);
+      expect(find.widgetWithText(TextFormField, 'E-posta adresiniz'), findsOneWidget);
+      expect(find.widgetWithText(TextFormField, 'Şifreniz'), findsOneWidget);
+      expect(find.widgetWithText(GradientPillButton, 'Giriş Yap'), findsOneWidget);
 
       await tester.tap(find.text('Hesabın yok mu? Kayıt ol'));
       await tester.pumpAndSettle();
       expect(find.widgetWithText(TextFormField, 'Ad Soyad'), findsOneWidget);
-      expect(find.widgetWithText(GradientPillButton, 'Kayıt ol'), findsOneWidget);
+      expect(find.widgetWithText(GradientPillButton, 'Kayıt Ol'), findsOneWidget);
     });
 
     testWidgets('parola göster/gizle ipucu korunur (E13 erişilebilirlik)', (tester) async {

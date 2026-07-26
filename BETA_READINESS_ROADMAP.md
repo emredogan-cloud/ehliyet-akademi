@@ -327,7 +327,7 @@ ulaşmalı.
 kaydırmasızlık ölçüsü eklendi ve orada saklanan 234 px'lik gerileme düzeltildi.
 Ayrıntı: `BETA_PHASE_R2_REPORT.md`.
 
-### 🔴 R3 — Giriş ekranı YENİDEN (Faz 5'in yerine geçer)
+### ✅ R3 — Giriş ekranı YENİDEN (Faz 5'in yerine geçer)
 
 Mevcut tasarım referansı yakalamıyor: esnetilmiş, düz, sönük duruyor ve verilen görseli yanlış
 kullanıyor.
@@ -339,6 +339,11 @@ Hero'yu esnetmek YETMEZ; kompozisyon, görsel hiyerarşi, boşluk, ışık, deri
 kurulur**. Sonuç ilk bakışta amiral gemisi bir ticari uygulama gibi hissettirmeli.
 
 **DoD:** Temel DoD + referansla yan yana karşılaştırma + açık/koyu temada cihaz doğrulaması.
+
+**Sonuç:** kök neden 2,56:1 varlığın 1,69:1 kutuya `cover` edilmesiydi (yatay kırpma). Görsel artık
+`fitWidth` ile kendi oranında çizilir; marka kilidi varlık olarak üretildi; hero her iki temada
+koyu **gece medyası** bloğudur. Cihazda koyu + açık tema doğrulandı.
+Ayrıntı: `BETA_PHASE_R3_REPORT.md`.
 
 ---
 

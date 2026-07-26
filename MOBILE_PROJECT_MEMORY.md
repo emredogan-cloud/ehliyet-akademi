@@ -2455,3 +2455,51 @@ flutter analyze 0 · flutter test 366 · cihazda taşma 0
 Adım 3'te orta kademede görsel çizilmez: gövde 648 px, içerik 570 px, kalan 78 px görselin taban
 ölçüsüne (72 px + ara) yetmiyor → 42 px taşırıyor. O adımın **kartları zaten illüstrasyon
 taşıdığı** için sayfa dolu görünüyor. Bu bir eksik değil, ölçülmüş bir sınırdır.
+
+---
+
+# Beta Faz R3 — Giriş ekranı yeniden tasarımı
+
+## A. Kök neden (tek satır)
+
+En-boy oranı **2,56:1** olan varlığı **1,69:1** bir kutuya `BoxFit.cover` ile koymak. Cover farkı
+**yatay kırparak** kapatır → sağdaki trafik işaretleri, tavan tabelası ve solda marka için
+**bilinçli bırakılmış boş bölge** kareden çıkar. "Esnetilmiş / sönük" şikâyetinin kaynağı buydu.
+
+**Kural:** kutuya sığmayan bir görselde önce `fit`'i değil, **kompozisyonu** sorgula. Görsel kendi
+oranıyla çizilip etrafındaki alan tasarlanabiliyorsa, kırpma hiç gerekmez.
+
+## B. Kalıcı kurallar
+
+1. **Hero görseli `fitWidth` + alta yaslı çizilir**, yükseklik genişlikten türer
+   (`_heroAspect = 1080/422`). Varlık değişirse bu sabit de değişmeli.
+2. **Üstte kalan alan görselin kendi gece göğüyle aynı renktedir** → dikey degrade dikişi yok eder.
+   "Tek parça hero" hissi bundan doğar, daha büyük görselden değil.
+3. **Giriş hero'su her iki temada KOYU kalır.** Tema yüzeyi değil, **gece medyası bloğu**. Açık
+   temada `p.bg` kullanılırsa: beyaz logo yazısı kaybolur, koyu görsel beyaz içinde sert dikdörtgen
+   olur, slogan okunmaz. Değerler `AppPalette.dark`'tan gelir → sabit renk kuralı bozulmaz.
+4. Bunun **zorunlu eşlikçisi**: `AnnotatedRegion<SystemUiOverlayStyle>` ile açık durum çubuğu
+   simgeleri. Koyu bir hero + tema kaynaklı koyu simge = okunmayan saat/pil.
+
+## C. Tuzaklar
+
+1. **`RenderImage` dokunuşu YUTAR** (kendini hit-test eder). Görsel bir düğmenin üstüne gelirse
+   düğme sessizce tıklanamaz olur. Dekoratif görsel blokları `IgnorePointer` ile sarılmalı.
+2. **Boş yere geçen test.** `find.text('eski başlık'), findsNothing` iddiası, başlık değişince
+   hiçbir şeyle eşleşmediği için **her koşulda** geçer. Metin değiştirilirken bu tür negatif
+   iddialar da güncellenmeli — yoksa gerçek bir kusuru (geri düğmesinin çalışmaması) saklar.
+3. **Opak logo varlığı bindirilemez.** Zemin rengine uzaklığa göre **yumuşak alfa rampası**
+   (12→46) gerekir; sert eşik amblemin koyu bölgelerini de siler.
+
+## D. Ölçülen
+
+```
+alt degrade: 0,34 → araç yıkanıyor · 0,20 → kesik sert çizgi · 0,30 [0,18–0,95] → DENGE
+analyze 0 · test 366 · cihazda koyu+açık tema doğrulandı · taşma 0
+```
+
+## E. Dürüst sınır
+
+Referansta aracın tamamı görünür; bizde alt gövde yok. Sebep tasarım değil, **hukuki tercih**:
+varlık üçüncü taraf marka amblemini kadraj dışında bırakmak için üstten kırpıldı (Faz 5 kararı,
+korundu). Rötuş yerine kadraj seçildi.

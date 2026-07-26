@@ -48,12 +48,12 @@ void main() {
     await tester.pumpAndSettle();
 
     // Auth screen
-    expect(find.text('Tekrar hoş geldin'), findsOneWidget);
-    await tester.enterText(find.widgetWithText(TextFormField, 'E-posta'), 'user@ea.dev');
-    await tester.enterText(find.widgetWithText(TextFormField, 'Parola'), 'parola-1234');
+    expect(find.text('Tekrar Hoş Geldin! 👋'), findsOneWidget);
+    await tester.enterText(find.widgetWithText(TextFormField, 'E-posta adresiniz'), 'user@ea.dev');
+    await tester.enterText(find.widgetWithText(TextFormField, 'Şifreniz'), 'parola-1234');
     // Beta Faz 5: gönder düğmesi GradientPillButton oldu. AppBar başlığı da "Giriş yap"
     // olduğu için düğme AÇIKÇA hedeflenir — aksi hâlde başlığa dokunulur ve giriş hiç olmaz.
-    await tester.tap(find.widgetWithText(GradientPillButton, 'Giriş yap'));
+    await tester.tap(find.widgetWithText(GradientPillButton, 'Giriş Yap'));
     await tester.pumpAndSettle();
 
     // Back on Profil, now authenticated. Giriş ekranı kapandığı için e-posta artık form

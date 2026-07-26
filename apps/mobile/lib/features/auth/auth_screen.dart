@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -115,7 +116,15 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     // Yapılandırılmadıysa düğme HİÇ gösterilmez — çalışmayan düğme ölü gezinmedir.
     final googleReady = ref.watch(googleAuthServiceProvider).isConfigured;
 
-    return Scaffold(
+    // Hero her iki temada KOYU olduğu için durum çubuğu simgeleri de AÇIK olmalı. Açık temada
+    // sistem koyu simge çiziyordu ve saat/pil, gece görselinin üstünde okunmuyordu (cihazda
+    // görüldü). Bu, hero'yu temadan bağımsız kılmanın doğrudan sonucudur; birlikte düzeltilir.
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.light.copyWith(
+        statusBarColor: Colors.transparent,
+        statusBarBrightness: Brightness.dark,
+      ),
+      child: Scaffold(
       // AppBar YOK — bilinçli. Saydam bir AppBar kullanıldığında, ekran kaydırıldıkça geri oku
       // hero'daki marka işaretinin ÜSTÜNE biniyordu (cihazda görüldü). Üst alanı hero'nun
       // kendisi yönetiyor; geri düğmesi hero'nun içinde, durum çubuğu boşluğuna saygılı duruyor.
@@ -144,9 +153,12 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               Text(
-                                _isRegister ? 'Hesabını oluştur' : 'Tekrar hoş geldin',
+                                _isRegister ? 'Hesabını Oluştur' : 'Tekrar Hoş Geldin! 👋',
                                 textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.headlineMedium,
+                                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                  height: 1.15,
+                                  letterSpacing: -0.6,
+                                ),
                               ),
                               const SizedBox(height: AppSpacing.s2),
                               Text(
@@ -161,9 +173,13 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                                 TextFormField(
                                   controller: _name,
                                   textInputAction: TextInputAction.next,
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                     labelText: 'Ad Soyad',
-                                    prefixIcon: Icon(Icons.person_outline_rounded),
+                                    prefixIcon: const Icon(Icons.person_outline_rounded),
+                                    // Referans 023 ikonları TEAL. Genel tema `text3` kullanıyor;
+                                    // burada YEREL olarak değiştirilir — global tema, uygulamanın
+                                    // geri kalanındaki formları da etkilerdi.
+                                    prefixIconColor: p.primary,
                                   ),
                                   validator: (v) => (v == null || v.trim().length < 2)
                                       ? 'Adını gir.'
@@ -176,9 +192,10 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                                 keyboardType: TextInputType.emailAddress,
                                 textInputAction: TextInputAction.next,
                                 autocorrect: false,
-                                decoration: const InputDecoration(
-                                  labelText: 'E-posta',
-                                  prefixIcon: Icon(Icons.mail_outline_rounded),
+                                decoration: InputDecoration(
+                                  labelText: 'E-posta adresiniz',
+                                  prefixIcon: const Icon(Icons.mail_outline_rounded),
+                                  prefixIconColor: p.primary,
                                 ),
                                 validator: (v) =>
                                     (v == null || !v.contains('@') || !v.contains('.'))
@@ -192,8 +209,9 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                                 textInputAction: TextInputAction.done,
                                 onFieldSubmitted: (_) => _submit(),
                                 decoration: InputDecoration(
-                                  labelText: 'Parola',
+                                  labelText: 'Şifreniz',
                                   prefixIcon: const Icon(Icons.lock_outline_rounded),
+                                  prefixIconColor: p.primary,
                                   suffixIcon: IconButton(
                                     // Faz E13 erişilebilirlik: ipucu yoksa ekran okuyucu bu
                                     // düğmeyi anlamlı biçimde seslendiremiyordu.
@@ -228,7 +246,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                               ],
                               SizedBox(height: _isRegister ? AppSpacing.s5 : AppSpacing.s2),
                               GradientPillButton(
-                                label: _isRegister ? 'Kayıt ol' : 'Giriş yap',
+                                label: _isRegister ? 'Kayıt Ol' : 'Giriş Yap',
                                 loading: _busy,
                                 trailingIcon: Icons.arrow_forward_rounded,
                                 onPressed: _busy ? null : _submit,
@@ -265,10 +283,27 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                                         _isRegister = !_isRegister;
                                         _error = null;
                                       }),
-                                child: Text(
-                                  _isRegister
-                                      ? 'Zaten hesabın var mı? Giriş yap'
-                                      : 'Hesabın yok mu? Kayıt ol',
+                                // Referansta SORU gri, EYLEM teal. Tek renk metin, eylemi
+                                // görünmez kılıyordu. `Text.rich` düğmenin dokunma alanını ve
+                                // testlerin gördüğü metni değiştirmez.
+                                child: Text.rich(
+                                  TextSpan(
+                                    style: TextStyle(color: p.text3, fontWeight: FontWeight.w600),
+                                    children: [
+                                      TextSpan(
+                                        text: _isRegister
+                                            ? 'Zaten hesabın var mı? '
+                                            : 'Hesabın yok mu? ',
+                                      ),
+                                      TextSpan(
+                                        text: _isRegister ? 'Giriş yap' : 'Kayıt ol',
+                                        style: TextStyle(
+                                          color: p.primary,
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -281,100 +316,187 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                   ),
                 ),
               ),
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-/// Giriş ekranının hero şeridi (referans `022`).
+/// Giriş ekranının hero şeridi — **Beta R3'te yeniden kuruldu**.
 ///
-/// Görselin sağ tarafı doludur (araç, işaretler, silüet); **sol tarafı bilinçli olarak boştur** ve
-/// marka kimliği oraya yerleşir. Alt kenarda zemine eriyen bir geçiş var — böylece görsel
-/// kartın altına doğru kesintisiz akar ve sert bir kenar oluşmaz.
+/// Faz 5'teki kusur ve kök nedeni: hero 232 dp sabit yükseklikteydi ve görsel `BoxFit.cover` ile
+/// çiziliyordu. 2,56:1 oranındaki varlık 1,7:1 bir kutuya "cover" edilince YATAY olarak kırpılır;
+/// sağdaki trafik lambası, yaya ve 50 işaretleri ile solda **bilinçli bırakılmış boş alan**
+/// kareden çıkıyordu. Geriye ortada kalan gökyüzü şeridi kalıyordu — "esnetilmiş ve sönük"
+/// görünmesinin sebebi buydu.
+///
+/// R3 çözümü — kırpmak yerine **kompozisyonu yeniden kurmak**:
+/// 1. Görsel kendi en-boy oranıyla, **tam genişlikte** ve **alta yaslı** çizilir (`fitWidth`).
+///    Hiçbir öge kırpılmaz, hiçbir yerde esneme yoktur.
+/// 2. Üstte kalan alan görselin kendi gece göğüyle **aynı renktedir** (`p.bg`), üstüne inen
+///    dikey degrade dikişi tamamen yok eder. Referanstaki "tek parça hero" hissi böyle doğar.
+/// 3. Marka kilidi ve slogan, kaynağın solda bıraktığı boşluğa oturur — referanstaki yerleşim.
+/// 4. Alt kenarda zemine eriyen ikinci bir degrade, hero'yu form kartına bağlar.
 class _AuthHero extends StatelessWidget {
   const _AuthHero({required this.isRegister});
   final bool isRegister;
 
+  /// Varlığın gerçek en-boy oranı (1080×422). Sabit değil, **ölçülmüş** değerdir; varlık
+  /// değişirse burası da değişmeli, yoksa hero yüksekliği görselle uyuşmaz.
+  static const _heroAspect = 1080 / 422;
+
   @override
   Widget build(BuildContext context) {
-    final p = context.palette;
+    // Hero, HER İKİ TEMADA da koyu kalır — bu bir tema yüzeyi değil, bir GECE MEDYASI bloğudur.
+    //
+    // NEDEN (açık temada ölçüldü): zemin `p.bg` (beyaza yakın) alınınca üç şey birden bozuluyordu
+    // — (1) marka kilidinin beyaz yazısı beyaz zeminde kayboluyor, (2) koyu görselin üst kenarı
+    // beyazın içinde SERT BİR DİKDÖRTGEN oluşturuyor, (3) beyaz slogan okunmuyor. Referans zaten
+    // koyu bir kompozisyon; onu açık temaya "çevirmek" tasarımı bozuyor, taşımak koruyor.
+    //
+    // Sabit renk DEĞİL: değerler token paletinden (`AppPalette.dark`) gelir.
+    const hero = AppPalette.dark;
     final topPad = MediaQuery.paddingOf(context).top;
+    final media = MediaQuery.sizeOf(context);
 
-    return SizedBox(
-      height: 232 + topPad,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          Image.asset(
-            AppImages.authHero,
-            fit: BoxFit.cover,
-            alignment: Alignment.bottomCenter,
-            // Büyük görselin çözünürlüğü gösterim genişliğine indirilir (bellek).
-            cacheWidth: 1080,
-            // Görsel dekoratiftir; içeriği metinle zaten anlatılıyor.
-            excludeFromSemantics: true,
-          ),
-          // Zemine eriyen geçiş — metin okunurluğu ve kesintisiz akış.
-          DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  p.bg.withValues(alpha: 0.15),
-                  p.bg.withValues(alpha: 0.55),
-                  p.bg,
-                ],
-                stops: const [0.0, 0.62, 1.0],
+    return LayoutBuilder(
+      builder: (context, c) {
+        final w = c.maxWidth;
+        // Görselin ÇİZİLECEĞİ yükseklik — genişlikten türer, asla esnetilmez.
+        final art = w / _heroAspect;
+        // Hero, referansta sayfanın ~%36'sı. Görselden artan yer marka bloğuna kalır; görselin
+        // kendisi hiçbir koşulda kırpılmaz.
+        final h = topPad + (media.height * 0.36).clamp(art + 96, 420.0);
+        // Geri düğmesi üst solda 48 dp yer tutuyor; marka bloğu ONUN ALTINDA başlar, yoksa
+        // ikisi çakışıyor (ilk denemede çakıştı: kilit görseli dokunuşu da emdi).
+        const backRoom = 46.0;
+        const taglineRoom = 46.0;
+        // Marka kilidinin ölçüsü GENİŞLİĞE bağlanır: referansta kilit, sayfa genişliğinin
+        // ~%36'sı. Yüksekliğe bağlanırsa telefonun uzun ekranında orantısız büyüyor
+        // (referans sayfa 2:3, telefon ~9:19,5 — dikey oran birebir eşlenemez).
+        final lockupMax = h - topPad - backRoom - taglineRoom - AppSpacing.s3 - 8;
+        final lockupH = (w * 0.383).clamp(64.0, lockupMax);
+
+        return SizedBox(
+          height: h,
+
+          width: w,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              ColoredBox(color: hero.bg),
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: art,
+                child: Image.asset(
+                  AppImages.authHero,
+                  fit: BoxFit.fitWidth,
+                  alignment: Alignment.bottomCenter,
+                  // Gösterim genişliğine indirilir (bellek); 2× cihaz oranına kadar keskin.
+                  cacheWidth: 1080,
+                  excludeFromSemantics: true,
+                ),
               ),
-            ),
-          ),
-          // Geri düğmesi hero'nun içinde: durum çubuğu boşluğuna saygılı, koyu görselin
-          // üstünde okunur. Ayrı bir AppBar olsaydı kaydırmada marka işaretiyle çakışırdı.
-          Positioned(
-            top: topPad + AppSpacing.s1,
-            left: AppSpacing.s2,
-            child: IconButton(
-              tooltip: 'Geri',
-              icon: const Icon(Icons.arrow_back_rounded),
-              color: p.text,
-              onPressed: () => context.canPop() ? context.pop() : null,
-            ),
-          ),
-          Positioned(
-            left: AppSpacing.s5,
-            right: AppSpacing.s5,
-            bottom: AppSpacing.s5,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const BrandMark(size: 44),
-                const SizedBox(height: AppSpacing.s3),
-                Text(
-                  'Ehliyet Akademi',
-                  style: TextStyle(
-                    color: p.text,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: -0.4,
+              // Görselin ÜST kenarını yok eden degrade — dikişsiz gökyüzü.
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: art - 1,
+                height: art * 0.55,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [hero.bg.withValues(alpha: 0), hero.bg],
+                      stops: const [0.0, 0.85],
+                    ),
                   ),
                 ),
-                const SizedBox(height: AppSpacing.s1),
-                Text(
-                  isRegister
-                      ? 'Hesabını oluştur, ilerlemen kaybolmasın.'
-                      : 'Sınava hazırlığın kaldığı yerden devam etsin.',
-                  style: TextStyle(color: p.text2, fontSize: 13.5, height: 1.35),
+              ),
+              // ALT kenarı forma bağlayan degrade.
+              //
+              // ÖLÇÜLDÜ (cihazda): varlık aracın gövdesinde bitiyor (üst kırpma, `assets.dart`).
+              // Geçiş 0,20'ye kısaltılınca bu kesik SERT BİR ÇİZGİ olarak göründü; 0,34'te ise
+              // aracın yarısı yıkanıyordu. 0,30 + geç başlayan durak, kesiği gizlerken aracı
+              // görünür bırakan denge noktasıdır.
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: art * 0.30,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [hero.bg.withValues(alpha: 0), hero.bg],
+                      stops: const [0.18, 0.95],
+                    ),
+                  ),
                 ),
-              ],
-            ),
+              ),
+              Positioned(
+                top: topPad + AppSpacing.s1,
+                left: AppSpacing.s2,
+                child: IconButton(
+                  tooltip: 'Geri',
+                  icon: const Icon(Icons.arrow_back_rounded),
+                  color: hero.text,
+                  onPressed: () => context.canPop() ? context.pop() : null,
+                ),
+              ),
+              // Marka kilidi + slogan: kaynağın SOLDA bıraktığı boşlukta, referanstaki gibi.
+              //
+              // `IgnorePointer` ŞART: `RenderImage` kendini hit-test eder, yani kilit görseli
+              // altındaki geri düğmesinin dokunuşunu YUTUYORDU (testte yakalandı). Blok tamamen
+              // dekoratif olduğu için işaretçiyi hiç almaz.
+              Positioned(
+                left: AppSpacing.s5,
+                right: w * 0.42,
+                top: topPad + backRoom,
+                child: IgnorePointer(
+                  child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      AppImages.brandLockup,
+                      height: lockupH,
+                      fit: BoxFit.contain,
+                      alignment: Alignment.centerLeft,
+                      cacheWidth: 760,
+                      semanticLabel: 'Ehliyet Akademi',
+                    ),
+                    const SizedBox(height: AppSpacing.s3),
+                    Text(
+                      isRegister ? 'Hesabını oluştur,\nilerlemen kaybolmasın.' : 'Eğitimi tamamla,\nsınava güvenle gir.',
+                      style: TextStyle(
+                        color: hero.text,
+                        fontSize: 17,
+                        height: 1.3,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: -0.2,
+                        shadows: [
+                          // Görselin üstünde okunurluk — kaplama yerine yalnız metne gölge.
+                          Shadow(color: hero.bg, blurRadius: 12),
+                          Shadow(color: hero.bg, blurRadius: 4),
+                        ],
+                      ),
+                    ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -412,7 +534,7 @@ class _TrustStrip extends StatelessWidget {
 
     Widget item(({IconData icon, String title, String subtitle}) e, {required bool row}) {
       final text = Column(
-        crossAxisAlignment: row ? CrossAxisAlignment.start : CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
@@ -426,7 +548,14 @@ class _TrustStrip extends StatelessWidget {
       return Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          IconBadge(icon: e.icon, color: p.primary, size: 36),
+          // Referans 024'te ikonlar DOLGULU rozet içinde değil, kendi teal parıltısıyla duran
+          // anahat ikonlardır. Rozet, mockup'ın hafif "cam" hissini ağırlaştırıyordu.
+          Icon(
+            e.icon,
+            size: 26,
+            color: p.primary,
+            shadows: [BoxShadow(color: p.primary.withValues(alpha: 0.55), blurRadius: 12)],
+          ),
           const SizedBox(width: AppSpacing.s3),
           row ? Flexible(child: text) : Expanded(child: text),
         ],
@@ -441,7 +570,11 @@ class _TrustStrip extends StatelessWidget {
       decoration: BoxDecoration(
         color: p.surface.withValues(alpha: 0.55),
         borderRadius: BorderRadius.circular(AppRadii.lg),
-        border: Border.all(color: p.border),
+        // Referans 024'te şeridin kenarı teal ve dışa doğru hafifçe parlıyor.
+        border: Border.all(color: p.primary.withValues(alpha: 0.28)),
+        boxShadow: [
+          BoxShadow(color: p.primary.withValues(alpha: 0.10), blurRadius: 20, spreadRadius: -6),
+        ],
       ),
       child: LayoutBuilder(
         builder: (context, c) {
@@ -455,7 +588,7 @@ class _TrustStrip extends StatelessWidget {
                     Container(
                       width: 1,
                       height: 34,
-                      color: p.border,
+                      color: p.primary.withValues(alpha: 0.22),
                       margin: const EdgeInsets.symmetric(horizontal: AppSpacing.s3),
                     ),
                   Flexible(child: item(_items[i], row: true)),

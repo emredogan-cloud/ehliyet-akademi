@@ -109,9 +109,9 @@ void main() {
       await pumpApp(tester, google: FakeGoogleAuthService());
       await openAuth(tester);
 
-      expect(find.widgetWithText(TextFormField, 'E-posta'), findsOneWidget);
-      expect(find.widgetWithText(TextFormField, 'Parola'), findsOneWidget);
-      expect(find.widgetWithText(GradientPillButton, 'Giriş yap'), findsOneWidget);
+      expect(find.widgetWithText(TextFormField, 'E-posta adresiniz'), findsOneWidget);
+      expect(find.widgetWithText(TextFormField, 'Şifreniz'), findsOneWidget);
+      expect(find.widgetWithText(GradientPillButton, 'Giriş Yap'), findsOneWidget);
     });
 
     testWidgets('kayıt moduna geçiş çalışmaya devam eder', (tester) async {
@@ -121,7 +121,7 @@ void main() {
 
       await tester.tap(find.text('Hesabın yok mu? Kayıt ol'));
       await tester.pumpAndSettle();
-      expect(find.widgetWithText(GradientPillButton, 'Kayıt ol'), findsOneWidget);
+      expect(find.widgetWithText(GradientPillButton, 'Kayıt Ol'), findsOneWidget);
     });
   });
 }

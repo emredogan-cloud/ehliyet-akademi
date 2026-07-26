@@ -35,6 +35,15 @@ class AppImages {
   // kaynağın bilinçli olarak boş bıraktığı sol bölgeyi korur. Gerekçe: BETA_PHASE_5_REPORT.md.
   static const authHero = '$_base/auth_hero.webp';
 
+  // Marka kilidi (Beta R3)
+  //
+  // Kaynak: `apps/assets/app_icon.png` (1254², **opak** koyu lacivert zeminli). Referans giriş
+  // sayfası bu kilidi hero'nun sol üstünde kullanıyor; opak hâliyle bindirilirse görselin
+  // üstünde belirgin bir DİKDÖRTGEN kenar oluşuyor. Bu yüzden zemin rengine olan uzaklığa göre
+  // yumuşak bir alfa rampasıyla (12→46) anahtarlandı: amblemin koyu yol/araç bölgeleri korunur,
+  // düz zemin şeffaflaşır. İçerik kutusuna kırpılıp 760 px'e indirildi.
+  static const brandLockup = '$_base/brand_lockup.webp';
+
   // Illustration heroes
   static const illTarget = '$_base/ill_target.webp'; // session results success
   static const illFolder = '$_base/ill_folder.webp'; // collections

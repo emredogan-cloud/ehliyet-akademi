@@ -1,7 +1,17 @@
 # Beta Readiness Roadmap — Google Play Kapalı Test (12 test kullanıcısı)
 
 **Program başlangıcı:** 2026-07-26 · **Önceki program:** Evolution (E1–E13) — TAMAMLANDI, dokunulmaz.
-**Hedef:** Üretimdeki uygulamayı **Google Play Kapalı Test**'e hazır bir sürüm adayına dönüştürmek.
+
+> ## 📍 İLERLEME — son güncelleme 2026-07-26, commit `21fac08`
+>
+> | Durum             | Fazlar                                                                          |
+> | ----------------- | ------------------------------------------------------------------------------- |
+> | ✅ **TAMAMLANDI** | **Faz 0** (belgeler) · **Faz 1** (varlık denetimi) · **Faz 2** (Google Sign-In) |
+> | 🔵 **SIRADAKİ**   | **Faz 3 — RevenueCat**                                                          |
+> | ⬜ Kalan          | Faz 4 · 5 · 6 · 7 · 8 · 9 · 10 · 11 · 12 · 13 + kapanış raporu                  |
+>
+> Ayrıntılı devir bilgisi: **`SESSION_HANDOVER.md`** · Hızlı başlangıç: **`NEXT_SESSION_START.md`**
+> **Hedef:** Üretimdeki uygulamayı **Google Play Kapalı Test**'e hazır bir sürüm adayına dönüştürmek.
 
 Bu yol haritası Evolution programının mühendislik disiplinini **aynen** sürdürür:
 `MOBILE_ENGINEERING_DISCIPLINE.md` her fazdan önce okunur, bellek yalnız **eklenerek** güncellenir,
@@ -81,7 +91,7 @@ bitmeden sonraki başlamaz.
 
 ## 2. Faz ayrıntıları
 
-### Faz 0 — Yayın hazırlığı (kod YOK)
+### ✅ Faz 0 — Yayın hazırlığı (kod YOK) — TAMAMLANDI
 
 Üretilecek dokuz belge, **yeni bir geliştiricinin dışarıdan hiçbir belgeye bakmadan** uygulamayı
 yayınlayabileceği ayrıntıda olmalı:
@@ -91,8 +101,10 @@ yayınlayabileceği ayrıntıda olmalı:
 `ASSET_GENERATION_LIBRARY.md` (iskelet; Faz 1'de doldurulur) · `RELEASE_AUDIT_PLAN.md`.
 
 **DoD:** dokuz dosya mevcut · prettier temiz · commit + push + CI yeşil.
+**SONUÇ:** ✅ commit `9efb20c` + `8abe6ed` · CI yeşil. Ayrı faz raporu yazılmadı — çıktı
+belgelerin kendisiydi.
 
-### Faz 1 — Tam varlık denetimi (kod YOK)
+### ✅ Faz 1 — Tam varlık denetimi (kod YOK) — TAMAMLANDI
 
 Projenin **tamamı** taranır; kalan her yer tutucu bulunur: yordamsal/geçici SVG, üretilmiş
 illüstrasyon, sahte fotoğraf, eksik boş-durum görseli, geçici ikon/diyagram, düz vektör, eski
@@ -104,8 +116,10 @@ görsel stil · dosya adı · uzantı · hedef çözünürlük · kayıt dizini 
 
 **DoD:** `ASSET_GENERATION_LIBRARY.md` üretime hazır promptlarla dolu · her kayıt gerçek bir
 dosya/ekrana bağlı (uydurma kayıt yok).
+**SONUÇ:** ✅ commit `21b9fd9` · CI yeşil. 19 görsel üretilecek (14 boş durum + 5 onboarding).
+Referans `023`/`024` dosyalarının **mockup** olduğu keşfedildi → widget olarak uygulanacaklar.
 
-### Faz 2 — Google Sign-In
+### ✅ Faz 2 — Google Sign-In — TAMAMLANDI
 
 Android + Firebase + mevcut Bearer oturumla bütünleşik, **sunucu tarafı doğrulamalı** Google
 girişi. Misafir kullanım bozulmaz. Play Integrity ile uyumlu. `.env.example`'a
@@ -117,8 +131,13 @@ upload hem Play App Signing parmak izleri belgelenir) · sunucu doğrulaması at
 sahtelenebilir (mitigasyon: `idToken` sunucuda Google'ın JWKS'iyle doğrulanır, entegrasyon testi).
 
 **DoD:** Temel DoD + gerçek cihazda gerçek Google hesabıyla giriş + sunucu doğrulama testi.
+**SONUÇ:** ✅ commit `bb27882` + `21fac08` · CI/Mobile CI/CodeQL yeşil · `BETA_PHASE_2_REPORT.md`.
+Sunucu doğrulaması 21 saf + 11 entegrasyon testiyle kanıtlandı; mobil 8 widget testi.
+**DoD'nin "gerçek Google hesabıyla giriş" kısmı YAPILAMADI** — Firebase kurulumu elle yapılacak
+bir adımdır (bkz. `GOOGLE_AUTH_SETUP.md` §10). Doğrulanan: arayüzün her iki koşulu cihazda,
+sunucunun reddetmesi gereken bütün durumlar testle.
 
-### Faz 3 — RevenueCat
+### 🔵 Faz 3 — RevenueCat — SIRADAKİ FAZ
 
 Üretim RevenueCat entegrasyonu; **gizli anahtarlar hariç her şey**. `.env.example`'a
 `REVENUECAT_PUBLIC_KEY`, `REVENUECAT_PROJECT_ID`, `REVENUECAT_ENTITLEMENT`,

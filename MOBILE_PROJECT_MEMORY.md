@@ -1332,3 +1332,289 @@ yapılandırılmış → ayırıcı + düğme + dört renkli G işareti.
 `google-services.json` ve SHA parmak izleri elle kurulacak adımlar. **Play App Signing SHA'sı
 kapalı teste ilk yüklemeden sonra Firebase'e eklenmezse Play'den kurulan yapıda giriş çalışmaz.**
 Apple ile giriş konmadı (iOS yok → ölü gezinme olurdu).
+
+---
+
+# ⛳ BAĞLAM KONTROL NOKTASI — Beta Faz 0–2 (2026-07-26)
+
+> Bu bölüm, oturum sıfırlanmadan önce yazıldı. Amacı: **sohbet geçmişi tamamen kaybolsa bile**
+> projenin yalnız diskten sürdürülebilmesi. Aşağıdaki hiçbir bilgi başka yerde durmuyor.
+
+## A. Program durumu — kesin
+
+| Alan           | Değer                                                                           |
+| -------------- | ------------------------------------------------------------------------------- |
+| Önceki program | **Evolution E1–E13 — TAMAMLANDI.** Dokunulmaz, yeniden başlatılmaz              |
+| Aktif program  | **Beta Readiness** (Google Play Kapalı Test, 12 test kullanıcısı)               |
+| Tamamlanan     | **Faz 0** (belgeler) · **Faz 1** (varlık denetimi) · **Faz 2** (Google Sign-In) |
+| Sıradaki       | **Faz 3 — RevenueCat**                                                          |
+| Dal            | `main`                                                                          |
+| Son commit     | `21fac08` — "docs(beta): Faz 2 raporu + proje belleği"                          |
+| Çalışma ağacı  | temiz                                                                           |
+| Son yeşil CI   | `21fac08` (CI + CodeQL) · `bb27882` (CI + Mobile CI + CodeQL)                   |
+
+**Test sayıları (ölçüldü, tahmin değil):** `flutter test` **275** · web **516** · `@ea/db` **6** ·
+`@ea/content-schema` **17** · `@ea/question-bank` **10** · `@ea/srs-engine` **12** ·
+`flutter analyze` **0**.
+
+## B. Faz 0 — yayın hazırlığı belgeleri
+
+Dokuz belge üretildi ve **depodan okunan** değerlerle yazıldı (varsayım yok):
+`BETA_READINESS_ROADMAP.md` · `RELEASE_CHECKLIST.md` · `GOOGLE_AUTH_SETUP.md` ·
+`PLAY_CONSOLE_SETUP.md` · `REVENUECAT_SETUP.md` · `CLOSED_TEST_GUIDE.md` · `ENV_TEMPLATE.md` ·
+`ASSET_GENERATION_LIBRARY.md` · `RELEASE_AUDIT_PLAN.md`.
+
+**Not:** Faz 0 ve Faz 1 için ayrı `BETA_PHASE_N_REPORT.md` yazılmadı — bu iki fazın **çıktısı
+zaten belgelerin kendisiydi**. Faz 2'den itibaren her fazın raporu var (`BETA_PHASE_2_REPORT.md`).
+
+### Ölçülen başlangıç durumu
+
+| Ölçüt                  | Değer                                                               |
+| ---------------------- | ------------------------------------------------------------------- |
+| Uygulama kimliği       | `com.ehliyetegitim.ehliyet_akademi` (yayından sonra DEĞİŞTİRİLEMEZ) |
+| Sürüm                  | `1.0.0+1` (versionName 1.0.0 · versionCode 1)                       |
+| Flutter                | 3.41.9 stable                                                       |
+| compileSdk / targetSdk | **36** (Android 16) — Play asgarisinin üstünde                      |
+| Java / Kotlin JVM      | 17 · core library desugaring açık                                   |
+| İzinler                | `POST_NOTIFICATIONS`, `RECEIVE_BOOT_COMPLETED` — **yalnız ikisi**   |
+| Release artefaktları   | AAB 57,3 MB · arm64 APK 27,9 MB · evrensel APK 69,9 MB              |
+
+## C. YAYIN ENGELLERİ — açık olanlar
+
+| #      | Engel                                                                                                                                                             | Durum                       | Çözüleceği faz |
+| ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- | -------------- |
+| **B1** | Release derlemesi **DEBUG ANAHTARIYLA** imzalanıyor (`android/app/build.gradle.kts` → `signingConfig = signingConfigs.getByName("debug")`). **Play kabul etmez.** | ⛔ AÇIK                     | Faz 4          |
+| **B2** | Aynı dosyada Flutter şablonundan kalan yapılacak-notları (disiplin kural 3 ihlali)                                                                                | ⛔ AÇIK                     | Faz 4          |
+| **B3** | Google Sign-In yok                                                                                                                                                | ✅ KAPANDI (Faz 2)          | —              |
+| **B4** | RevenueCat yok                                                                                                                                                    | ⛔ AÇIK                     | Faz 3          |
+| **B5** | Üretim veritabanında Evolution doğrulama artıkları (`AyseE9`, `BurakE9`, `CemE9`, `E8 Dogrulama`, `Cihaz Dogrulama Ekibi`)                                        | ⛔ AÇIK — **onay bekliyor** | Faz 13         |
+| **B6** | Play Console kaydı/beyanları yok                                                                                                                                  | ⛔ AÇIK (elle)              | Faz 4          |
+
+## D. Faz 1 — varlık denetimi bulguları
+
+- Mobil varlık: **263 dosya · 4,7 MB** (`dash` 60 · `img` 21 · `mech` 101 · `signs` 81)
+- **Yetim (kodda referanssız) varlık: 0** — hepsi kullanılıyor
+- **38 emoji boş/hata durumu** → emoji'ler tekrar ettiği için **14 illüstrasyon** hepsini kapatır
+  (📡×9 · 🔍×7 · 🔒×4 · 💬×3 · kalanlar tekil)
+- **Giriş ekranında hiç görsel yoktu** — Faz 5'in gerçek gerekçesi (Faz 2'de logo + başlık eklendi
+  ama tam yeniden tasarım hâlâ Faz 5'in işi)
+- Onboarding görselleri **695–820 px**; 3× cihazda tam genişlik için **1080 px** gerekiyor →
+  **Faz 6 yalnız yerleşim değil, varlık çözünürlüğü işi de**
+- `CustomPainter` × 4 (`readiness_radar`, `result_view`, `brand` direksiyon, `readiness_ring`)
+  **yer tutucu DEĞİL** — veri görselleştirme, raster olamaz, üretilmeyecekler listesinde
+- **Üretilecek toplam: 19 görsel** (14 boş durum + 5 onboarding) ≈ 1,1 MB
+
+### Referans varlıkların GERÇEK niteliği (kritik keşif)
+
+`apps/assets/interface-assets/` altında 24 referans var. Faz 5'in adı geçen üçü:
+
+| Dosya            | Boyut     | Gerçekte nedir                                                                                                   | Karar                                            |
+| ---------------- | --------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| `022-assets.png` | 1536×1024 | **Gerçek hero görseli** — gece İstanbul silueti, sürücü kursu aracı, koniler; sol taraf içerik için bilinçli boş | Raster olarak sevk edilir (1080×720 WebP)        |
+| `023-assets.png` | 1024×1536 | **Arayüz mockup'ı** — giriş formu, gömülü Türkçe metin                                                           | **Widget olarak uygulanır**, raster sevk EDİLMEZ |
+| `024-assets.png` | 1994×789  | **Arayüz mockup'ı** — güven şeridi, gömülü Türkçe metin                                                          | **Widget olarak uygulanır**                      |
+
+**Neden 023/024 raster sevk edilmez:** gömülü metin (a) temaya uymaz — ikisi de yalnız koyu tema,
+(b) kullanıcının yazı tipi ölçeğiyle büyümez → erişilebilirlik ihlali, (c) çevrilemez,
+(d) form alanları zaten etkileşimli olmak zorunda.
+
+### Faz 5'e taşınan üç uyarı
+
+1. **`022-assets.png` içinde Renault logosu okunuyor.** Evolution roadmap'i "üçüncü taraf markalar →
+   markasız varyant tercih edilir, seçim belgelenir" diyor. **Rötuş veya markasız varyant gerekli.**
+2. **Mockup'taki "Apple ile giriş yap" düğmesi KONMAYACAK** — iOS derlemesi yok (macOS yok),
+   çalışmayan düğme **ölü gezinme** olur (disiplin kural 3). Faz 2'de zaten konmadı.
+3. **"MEB müfredatına uygun" ifadesi** (024) doğrulanabilir bir iddiadır; kaynak gösterilemiyorsa
+   **kullanılmamalı** (dürüstlük disiplini).
+
+## E. Faz 2 — Google Sign-In: mimari ve kararlar
+
+### Akış
+
+```
+Android → google_sign_in v7 → ID token (JWT)
+   → POST /api/auth/google → Google JWKS ile RS256 imza doğrulaması (önbellekli, 1 saat)
+   → iss / aud / exp / email_verified kontrolü (saf katman)
+   → kullanıcı bul veya oluştur → MEVCUT createSession() → Bearer jeton → TokenStore
+```
+
+### Dosyalar
+
+| Katman               | Dosya                                                 | Sorumluluk                                        |
+| -------------------- | ----------------------------------------------------- | ------------------------------------------------- |
+| Sunucu (saf)         | `apps/web/lib/server/google-verify.ts`                | iss·aud·exp·email_verified·ad türetme. **Ağ yok** |
+| Sunucu (saf test)    | `apps/web/lib/server/google-verify.test.ts`           | **21 test**                                       |
+| Sunucu (uç)          | `apps/web/app/api/auth/google/route.ts`               | JWKS + imza + oturum                              |
+| Sunucu (entegrasyon) | `apps/web/lib/server/google-auth.integration.test.ts` | **11 test**, gerçek RSA anahtar çiftiyle          |
+| Mobil (arayüz)       | `apps/mobile/lib/data/auth/google_auth_service.dart`  | `GoogleAuthService` + v7 uygulaması               |
+| Mobil (sözleşme)     | `apps/mobile/lib/data/auth/auth_api.dart`             | `loginWithGoogle(idToken)` eklendi                |
+| Mobil (durum)        | `apps/mobile/lib/domain/auth/auth_controller.dart`    | `loginWithGoogle()`                               |
+| Mobil (yüzey)        | `apps/mobile/lib/features/auth/auth_screen.dart`      | Düğme + "veya" ayırıcı + `_GoogleMark`            |
+| Mobil (test)         | `apps/mobile/test/google_auth_test.dart`              | **8 test**                                        |
+| Mobil (sahte)        | `apps/mobile/test/helpers.dart`                       | `FakeGoogleAuthService` + `pumpApp(google:)`      |
+
+### Kalıcı kararlar
+
+1. **Google girişi YENİ OTURUM SİSTEMİ GETİRMEZ.** Mevcut Bearer oturumuna bir giriş kapısı ekler.
+   E-posta/parola ve misafir yolları dokunulmadan durur. **Sonraki kimlik sağlayıcıları da aynı
+   deseni izlemeli.**
+2. **Kimlik iddiası SUNUCUDA doğrulanır.** İstemciden gelen e-postaya asla güvenilmez.
+3. **Hata mesajları durum SIZDIRMAZ:** imza/aud/issuer/biçim hepsi **aynı** mesaj. Yalnız
+   kullanıcının düzeltebileceği iki durum (doğrulanmamış e-posta, süre dolması) ayrı mesaj alır.
+4. **HESAP BİRLEŞTİRME:** aynı e-postayla parolayla kaydolmuş kullanıcı Google ile girince **AYNI**
+   hesaba bağlanır (201 değil 200 döner). İkinci hesap açmak ilerlemeyi ikiye bölerdi.
+5. **Google ile açılan hesapta** `passwordHash: 'google$no-password'` → parola girişi her zaman
+   başarısız olur.
+6. **YAPILANDIRILMAMIŞSA düğme HİÇ gösterilmez** (`isConfigured == false`). Çalışmayan düğme ölü
+   gezinmedir. **Bu kalıp Faz 3'te RevenueCat için de kullanılacak.**
+7. **Vazgeçme HATA DEĞİLDİR.** `GoogleSignInCancelled` ayrı sonuç türü; kullanıcıya mesaj gösterilmez.
+8. Sunucu yapılandırılmamışsa **503 + dürüst mesaj**; sahte başarı asla döndürülmez.
+
+### Reddedilen alternatifler
+
+- **İstemcide doğrulama** — reddedildi: uygulama değiştirilerek herhangi bir e-posta iddia edilebilir.
+- **Google için ayrı kullanıcı tablosu / ayrı hesap** — reddedildi: ilerleme ikiye bölünürdü.
+- **`firebase_auth` paketi** — eklenmedi: yalnız kimlik doğrulama gerekiyordu; `google_sign_in` +
+  kendi sunucu doğrulamamız yeterli, ek bağımlılık ve Firebase SDK yükü orantısız.
+- **Apple ile giriş** — reddedildi: iOS yok, ölü gezinme olurdu.
+
+### google_sign_in v7 tuzakları (kaydedildi)
+
+- API v6'dan **tamamen farklı**: `GoogleSignIn.instance` singleton ·
+  `await initialize(serverClientId:)` · `await authenticate()` → `GoogleSignInAccount` ·
+  `account.authentication.idToken`.
+- **`serverClientId` = WEB istemci kimliği**, Android istemci **DEĞİL**. Yanlış verilirse `idToken`
+  **null** döner ve giriş **sessizce** başarısız olur. Kod bu durumu ayrı mesajla yakalıyor.
+- `supportsAuthenticate()` kontrol edilmeli — her platformda desteklenmiyor.
+
+## F. Firebase gereksinimleri (ELLE — kod yapamaz)
+
+`GOOGLE_AUTH_SETUP.md` tam anlatım. Özet:
+
+1. Firebase projesi + Android uygulaması (`com.ehliyetegitim.ehliyet_akademi`, birebir).
+2. **ÜÇ SHA parmak izi** eklenmeli:
+   - debug (`~/.android/debug.keystore`, alias `androiddebugkey`, parola `android`)
+   - upload key (Faz 4'te üretilecek)
+   - **Play App Signing** — Play Console → Yayın → Kurulum → Uygulama imzalama
+3. `google-services.json` → `apps/mobile/android/app/` (CI'da base64 secret olarak verilmeli)
+4. OAuth onay ekranı: Harici · kapsam yalnız `email`, `profile`, `openid` · test kullanıcıları eklenir
+5. `GOOGLE_SERVER_CLIENT_ID` Vercel ortam değişkenlerine girilir
+
+**⚠️ EN KRİTİK:** Play App Signing SHA'sı **kapalı teste ilk yüklemeden sonra** görünür. Firebase'e
+eklenmezse **Play'den kurulan yapıda Google girişi ÇALIŞMAZ** (cihazda çalışsa bile).
+
+## G. RevenueCat kararları (Faz 3 — HENÜZ KODLANMADI)
+
+`REVENUECAT_SETUP.md` tam anlatım. Kaydedilmesi gereken **model çakışması**:
+
+- Uygulama bugün **TEK SEFERLİK ömür boyu** paket satıyor: `komple-ehliyet`, 399 TL,
+  `buyNonConsumable`, yetenekler `teori-premium · direksiyon-premium · sinirsiz-deneme ·
+soru-bankasi-tam · ai-sinirsiz · video-tam` (`lib/domain/premium/products.dart`).
+- Program ise `REVENUECAT_MONTHLY_PRODUCT` / `YEARLY_PRODUCT` istiyor → **abonelik**.
+- **Bu bir ÜRÜN KARARIDIR, mühendislik kararı değil.** Karar verilmedi.
+- **Çözüm:** `entitlement` kavramı üzerinden her iki model de desteklenir. Ömür boyu ürün de,
+  aylık/yıllık abonelik de **aynı `premium` yetkisini** açar; uygulama "hangi ürün" diye sormaz,
+  "`premium` var mı" diye sorar. Ürün modeli sonradan değişse bile **uygulama kodu değişmez**.
+
+**Faz 3 mimari kuralı:** mevcut `in_app_purchase` yolu **SÖKÜLMEZ**. `BillingGateway` arayüzü
+eklenir; RevenueCat onun bir uygulaması olur, mevcut `IapService` diğeri. Anahtar yoksa mevcut yola
+düşülür ve **uygulama çökmez** (Faz 2'deki kalıbın aynısı, testle korunacak).
+
+**Ortam kısıtı (değişmedi):** gerçek satın alma **bu Linux geliştirme ortamında TEST EDİLEMEZ**.
+Play Billing yalnız Play'den yüklenmiş, imzalı yapıda çalışır. Doğru yol: AAB'yi iç teste yükle,
+lisans test hesabıyla dene.
+
+## H. Play Console kararları (Faz 4 — HENÜZ YAPILMADI)
+
+`PLAY_CONSOLE_SETUP.md` tam anlatım. Kritik noktalar:
+
+- **Ücretsiz** uygulama seçilmeli (uygulama içi satın alma var; sonradan ücretliye geçilemez).
+- **Play App Signing açık bırakılır.**
+- **Uygulama erişimi:** incelemeciye **çalışan** test hesabı verilmeli — giremezse **kesin ret**.
+- **İçerik derecelendirme:** kullanıcı üretimi içerik **VAR** (topluluk mesajları/tartışmaları) →
+  bu soruya **evet** denmeli, aksi hâlde yanlış beyan.
+- **Veri Güvenliği:** e-posta, görünen ad, uygulama etkileşimi, satın alma geçmişi toplanıyor;
+  konum/rehber **toplanmıyor**. **Faz 7 (avatar) tamamlanınca "Fotoğraflar" satırı eklenmeli** —
+  yanlış beyan mağazadan kaldırılma sebebidir.
+- **AI beyanı:** AI Koç üretken; uygunsuz çıktı bildirme yolu bulunmalı.
+- **versionCode** her yüklemede artmalı. `--split-per-abi` ABI'ye göre öteleme yapar
+  (armeabi-v7a 1001 · arm64-v8a 2001 · x86_64 3001) ama **AAB kullanılınca öteleme gerekmez**.
+
+## I. Test stratejisi (program boyunca değişmedi)
+
+1. **Saf mantık ayrı katmanda** → doğrudan test edilir (`google-verify.ts` 21 test).
+2. **Platforma bağlı her şey arayüz + sahte uygulama** → widget testleri platform kanalı olmadan
+   çalışır (`GoogleAuthService`, `PlaybackController`, `CommunityApi`, `SocialApi`, `GroupsApi`).
+3. **Güvenlik sınırları testle sabitlenir** — reddedilmesi gereken her durum ayrı test.
+4. **Dürüstlük testle zorunlu** — `design_tokens_test.dart` (sabit renk), `videos.test.ts`
+   (animasyon etiketi), `verify` kapısı (yer tutucu/sır).
+
+## J. CI dersleri (bu oturumda öğrenilenler)
+
+1. **`pnpm verify` yasaklı kalıp tarıyor.** Play belgesinde gradle'daki mevcut şablon notunu
+   **kanıt olarak** birebir alıntılamak kapıyı kırdı. **Kapı gevşetilmedi**, alıntı yeniden yazıldı.
+   **Kural: kanıt alıntılarken deponun kendi yasaklı kalıplarına dikkat et.**
+2. **Prettier, yeni `.md` ve `.ts` dosyalarını da tarıyor** — yazdıktan sonra
+   `npx prettier --write` çalıştır, sonra `pnpm format` ile doğrula.
+3. (Evolution'dan devam) **CI yeşil olması üretimin ayakta olduğu anlamına gelmez** — şemaya
+   dokunan her yayından sonra canlı uç çağrılmalı.
+
+## K. Cihaz doğrulama dersleri
+
+- Cihaz: `AYXSUKIVJVPZ7HPZ` — Redmi M1908C3JGG · Android 11 · 1080×2340 (393×851 dp).
+- Ekran kapalıysa `adb exec-out screencap` **siyah kare** döndürür → önce
+  `input keyevent KEYCODE_WAKEUP`.
+- `pm clear` sonrası uygulama tanıtımdan başlar; "Atla" ~(963,167).
+- Profil ekranındaki satır konumları **oturum durumuna göre kayar** (giriş yapılmışsa profil kartı
+  yer kaplar) → tap koordinatı sabit varsayılmamalı, önce ekran görüntüsü alınmalı.
+- Faz 2'de **iki ayrı derleme** ile doğrulandı: `--dart-define` olmadan (düğme yok) ve
+  `--dart-define=GOOGLE_SERVER_CLIENT_ID=...` ile (düğme var).
+
+## L. Bu oturumda yapılan hatalar ve düzeltmeleri
+
+| Hata                                                   | Nasıl düzeltildi                                                                                                                             |
+| ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Play belgesinde yasaklı kalıp alıntılandı → CI kırıldı | Alıntı yeniden yazıldı, kapı gevşetilmedi                                                                                                    |
+| `public/ui/*.png` için "11 MB kazanç" sanıldı          | `git rm` başarısız olunca `.gitignore`'da olduğu görüldü — dokunulmadı. **Kural: "kazandık" demeden önce dosyanın takipli olduğunu doğrula** |
+| Google marka renkleri token muhafızını kırdı           | Beklenen davranış; gerekçesiyle izin listesine eklendi                                                                                       |
+| Yeni `.md`/`.ts` dosyaları prettier kapısına takıldı   | `npx prettier --write` sonra `pnpm format`                                                                                                   |
+
+## M. Bekleyen ELLE yapılacak işler (kod yapamaz)
+
+1. Google Play geliştirici hesabı (25 USD) + kimlik doğrulama
+2. **Upload key üretimi** ve `android/key.properties` (Faz 4 kodlayacak, anahtar elle üretilecek)
+3. Firebase projesi + üç SHA + `google-services.json`
+4. OAuth onay ekranı + test kullanıcıları
+5. RevenueCat hesabı + Play ürünleri + servis hesabı + Pub/Sub bildirimleri
+6. Play Console: uygulama oluşturma, beyanlar, mağaza varlıkları (simge 512², **Öne Çıkan
+   Grafik 1024×500**, 2+ ekran görüntüsü)
+7. Gizlilik politikası sayfasının yayınlanması
+8. İncelemeci test hesabı oluşturma ve **çalıştığını sınama**
+9. **Üretim veritabanı temizliği (B5)** — onay bekliyor
+10. LemonSqueezy ürün görselinin (`apps/web/design-sources/new_icon-lemonsqueezy.png`) mağaza
+    paneline yüklenmesi
+
+## N. Varsayımlar
+
+- Ürün modeli kararı (ömür boyu vs abonelik) **verilmedi**; Faz 3 her ikisini de destekleyecek.
+- Kapalı test için Google Analytics **kapalı** varsayıldı (beyan yükünü azaltmak için).
+- Hedef kitle **18+**, çocuklara yönelik değil.
+- Uygulama **ücretsiz** (uygulama içi satın alma ile).
+
+## O. Riskler
+
+| Risk                                                                                 | Etki   | Azaltma                                             |
+| ------------------------------------------------------------------------------------ | ------ | --------------------------------------------------- |
+| Play App Signing SHA'sı Firebase'e eklenmezse Play'den kurulan yapıda giriş çalışmaz | Yüksek | `RELEASE_CHECKLIST.md` §E'de kapı olarak var        |
+| Faz 7 avatar → Veri Güvenliği formu güncellenmezse mağazadan kaldırılma              | Kritik | Faz 7 DoD'sinde ve Play belgesinde yazılı           |
+| Faz 7 fotoğraf yükleme, E8'in "fotoğraf yok" moderasyon kararını değiştiriyor        | Yüksek | Moderasyon aynı fazda ele alınmalı (roadmap Faz 7)  |
+| Gizli anahtar depoya girer                                                           | Kritik | Yalnız `.example` şablonları + gitleaks             |
+| Ürün modeli kararsızlığı Faz 3'ü bloke eder                                          | Orta   | Entitlement soyutlaması kararı beklemeden ilerletir |
+
+## P. Teknik borç
+
+- `BETA_PHASE_0/1_REPORT.md` yazılmadı (çıktıları belgelerin kendisiydi) — bilinçli.
+- Kare düzeyinde jank hâlâ ölçülemedi (E13'ten devam); Faz 13'te `--profile` derlemesiyle denenecek.
+- `assets/vehicle` (11 MB web) yeniden sıkıştırılmadı — ortamda `cwebp` yok, ImageMagick webp
+  kalite bayrağını yok sayıyor.
+- Evrensel APK 69,9 MB; küçülme yalnız split-APK/AAB dağıtımıyla geliyor.

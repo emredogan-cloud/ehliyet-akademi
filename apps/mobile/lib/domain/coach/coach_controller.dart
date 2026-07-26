@@ -39,17 +39,33 @@ class ChatMessage {
 }
 
 class CoachChatState {
-  const CoachChatState({this.messages = const [], this.sending = false, this.error});
+  const CoachChatState({
+    this.messages = const [],
+    this.sending = false,
+    this.error,
+    this.streaming = false,
+  });
   final List<ChatMessage> messages;
   final bool sending;
   final String? error;
 
-  CoachChatState copyWith({List<ChatMessage>? messages, bool? sending, String? error}) =>
-      CoachChatState(
-        messages: messages ?? this.messages,
-        sending: sending ?? this.sending,
-        error: error,
-      );
+  /// Beta Faz 9 — son AI mesajı ŞU AN parça parça yazılıyor mu?
+  ///
+  /// Yalnız sunucu `streamed: true` dediğinde açılır. Tek parça yanıtta **kapalı kalır**:
+  /// arayüz o durumda yazma göstergesi çizmez, çünkü ortada akan bir şey yoktur.
+  final bool streaming;
+
+  CoachChatState copyWith({
+    List<ChatMessage>? messages,
+    bool? sending,
+    String? error,
+    bool? streaming,
+  }) => CoachChatState(
+    messages: messages ?? this.messages,
+    sending: sending ?? this.sending,
+    error: error,
+    streaming: streaming ?? this.streaming,
+  );
 }
 
 const _kChat = 'ea:chat:v1';
@@ -102,10 +118,59 @@ class CoachChatController extends Notifier<CoachChatState> {
     final q = question.trim();
     if (q.length < 3 || state.sending) return;
     final withUser = [...state.messages, ChatMessage(role: 'user', text: q)];
-    state = state.copyWith(messages: withUser, sending: true, error: null);
+    state = state.copyWith(messages: withUser, sending: true, error: null, streaming: false);
     unawaited(_persist(withUser));
+    final ctx = context ?? _profileContext();
+
+    // Beta Faz 9 — ÖNCE akan uç denenir.
+    //
+    // Sözleşme: `streamed: false` gelirse yanıt tek parçadır ve arayüz onu **olduğu gibi** çizer;
+    // yapay bir yazma animasyonu üretilmez. Akış hiç kurulamazsa (eski sunucu, ağ, 404) sessizce
+    // tek parça uca düşülür — kullanıcı bir gerileme görmez.
     try {
-      final ans = await ref.read(coachApiProvider).ask(q, context: context ?? _profileContext());
+      var text = '';
+      var meta = const CoachMeta(grounded: false, sources: [], model: '', streamed: false);
+      var started = false;
+
+      await for (final evt in ref.read(coachApiProvider).askStream(q, context: ctx)) {
+        switch (evt) {
+          case CoachMeta():
+            meta = evt;
+          case CoachDelta():
+            text += evt.text;
+            final msg = ChatMessage(
+              role: 'ai',
+              text: text,
+              grounded: meta.grounded,
+              sources: meta.sources,
+              model: meta.model,
+            );
+            state = state.copyWith(
+              // İlk parçada mesaj EKLENİR, sonrakilerde YERİNE YAZILIR — her parça için yeni
+              // balon eklenirse sohbet tek yanıttan onlarca mesaj üretir.
+              messages: started ? [...withUser, msg] : [...state.messages, msg],
+              sending: true,
+              streaming: meta.streamed,
+            );
+            started = true;
+          case CoachDone():
+            break;
+        }
+      }
+
+      if (!started) throw StateError('ai_stream_no_content');
+      final finalMessages = state.messages;
+      state = state.copyWith(sending: false, streaming: false);
+      unawaited(_persist(finalMessages));
+      return;
+    } catch (_) {
+      // Akış kurulamadı → tek parça uca düş. Yarım kalmış AI balonu varsa geri alınır ki
+      // kullanıcı iki kez yanıt görmesin.
+      state = state.copyWith(messages: withUser, sending: true, streaming: false);
+    }
+
+    try {
+      final ans = await ref.read(coachApiProvider).ask(q, context: ctx);
       final withAi = [
         ...withUser,
         ChatMessage(
@@ -116,10 +181,14 @@ class CoachChatController extends Notifier<CoachChatState> {
           model: ans.model,
         ),
       ];
-      state = state.copyWith(messages: withAi, sending: false);
+      state = state.copyWith(messages: withAi, sending: false, streaming: false);
       unawaited(_persist(withAi));
     } catch (_) {
-      state = state.copyWith(sending: false, error: 'Bağlantı hatası. İnternetini kontrol et.');
+      state = state.copyWith(
+        sending: false,
+        streaming: false,
+        error: 'Bağlantı hatası. İnternetini kontrol et.',
+      );
     }
   }
 

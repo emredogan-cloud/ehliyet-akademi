@@ -2503,3 +2503,50 @@ analyze 0 · test 366 · cihazda koyu+açık tema doğrulandı · taşma 0
 Referansta aracın tamamı görünür; bizde alt gövde yok. Sebep tasarım değil, **hukuki tercih**:
 varlık üçüncü taraf marka amblemini kadraj dışında bırakmak için üstten kırpıldı (Faz 5 kararı,
 korundu). Rötuş yerine kadraj seçildi.
+
+---
+
+# Beta Faz 9 — Akan (streaming) AI
+
+## A. Mimari
+
+`/api/ai/ask` (tek parça) **duruyor**; akış AYRI bir uçtur (`/api/ai/ask/stream`, SSE).
+`answerGrounded` değişmedi, `answerGroundedStream` eklendi. Olaylar: `meta` → `delta`* → `done`.
+
+## B. Kalıcı kurallar
+
+1. **`streamed` bayrağı sözleşmenin parçasıdır.** Tek parça yanıt geldiğinde `false` olur ve
+   istemci metni OLDUĞU GİBİ çizer. Bayrak olmasa istemci ayırt edemez ve "güzel görünsün" diye
+   sahte yazma animasyonu eklenirdi — açıkça yasak.
+2. **`meta`, İLK PARÇA gelene kadar gönderilmez.** Akış ilk baytta patlarsa istemciye "akıyor"
+   demiş olmayız. Sahte akışın en sinsi biçimi: söz verip tutmamak.
+3. **Halüsinasyon kapısı akıştan ÖNCE çalışır.** Akış yalnız modelin yanıtını taşır.
+4. **Her iki uçta da TAMPON şart.** Ağ, SSE satırlarını ortadan böler; yalnız tam `\n\n` blokları
+   işlenmeli. Yapılmazsa JSON çözümlemesi sessizce patlar ve akış ortada kesilir.
+5. **İlk parçada mesaj EKLENİR, sonrakilerde YERİNE YAZILIR.** Aksi hâlde tek yanıt onlarca
+   balona bölünür.
+6. **"Düşünüyor" göstergesi yalnız içerik YOKKEN.** Akış başladıktan sonra büyüyen metnin kendisi
+   göstergedir.
+
+## C. Ölçülen
+
+```
+22 parça · ilk 0,64 s · son 4,94 s · yayılım 4,31 s (gerçek HTTP + gerçek model)
+cihaz: 3 × POST /api/ai/ask/stream · POST /api/ai/ask → 0 (yedeğe düşülmedi)
+üretimde uç henüz yok (404) → sessizce tek parça uca düşüldü, kullanıcı fark etmedi
+```
+
+## D. Test tuzakları (ikisi de ısırdı)
+
+1. **`controller.error()` kuyruğu BOŞALTIR.** `enqueue` + hemen `error` yazılırsa parça okuyucuya
+   hiç ulaşmaz; test "ortada kopma"yı değil "hiç başlamama"yı ölçer. Parça ilk çekimde, hata
+   ikinci çekimde verilmeli.
+2. **Bildirim sayısı ≠ metin durumu.** `sending` kapanışı da bildirim üretir ama metni
+   değiştirmez. "Ara metin yok" iddiası, görülen FARKLI metinlerle ölçülmeli.
+
+## E. Dürüst sınır
+
+Cihazda kademeli çizimin KENDİSİ ekran görüntüsüyle gösterilemedi: ilk parçada liste sonuna
+kaydırılıyor ve görünür alan tek örneklemede doluyor. Kademeli çizim denetleyici testinde ara
+metinler gözlenerek doğrulandı. "Gözle görülen yazma efekti" iddiası kanıtlanmadı, öyle de
+sunulmuyor.

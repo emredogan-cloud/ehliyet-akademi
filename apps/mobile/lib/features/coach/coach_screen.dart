@@ -110,7 +110,10 @@ class _CoachScreenState extends ConsumerState<CoachScreen> {
                   : ListView.builder(
                       controller: _scroll,
                       padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s4, AppSpacing.s4, AppSpacing.s4),
-                      itemCount: chat.messages.length + (chat.sending ? 1 : 0),
+                      // Beta Faz 9: "Koç düşünüyor…" balonu yalnız HENÜZ İÇERİK YOKKEN durur.
+                      // Akış başladıktan sonra büyüyen yanıtın kendisi zaten göstergedir; ikisi
+                      // birden çizilirse kullanıcı iki ayrı yanıt bekliyormuş gibi görür.
+                      itemCount: chat.messages.length + (_awaiting(chat) ? 1 : 0),
                       itemBuilder: (context, i) {
                         if (i >= chat.messages.length) return const _TypingBubble();
                         return _MessageBubble(message: chat.messages[i]);
@@ -376,6 +379,10 @@ class _TypingBubble extends StatelessWidget {
     );
   }
 }
+
+/// Henüz tek bir parça bile gelmedi mi? (Akış başladıysa son mesaj artık AI'dır.)
+bool _awaiting(CoachChatState chat) =>
+    chat.sending && (chat.messages.isEmpty || chat.messages.last.role == 'user');
 
 class _SuggestionChip extends StatelessWidget {
   const _SuggestionChip({required this.text, required this.onTap});

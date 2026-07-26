@@ -162,3 +162,151 @@ export async function answerGrounded(question: string): Promise<GroundedAnswer> 
   }
   return { answer: mockCompose(g), grounded: true, sources, model: 'mock' };
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Beta Faz 9 — GERÇEK akış (streaming)
+//
+// TEMEL KURAL: anlık (tek parça) yanıt **asla** akıyormuş gibi gösterilmez. Bu yüzden akış
+// olayları, yanıtın gerçekten parça parça mı geldiğini (`streamed`) açıkça bildirir; istemci
+// sahte bir yazma animasyonu uydurmak yerine bu bayrağa uyar.
+//
+// Halüsinasyon kapısı akıştan ÖNCE çalışır (aşağıda): eşleşme yoksa ve gerçek model yoksa model
+// hiç çağrılmaz — kapının anlamı akışta da korunur.
+//
+// `answerGrounded` DEĞİŞMEDİ; `/api/ai/ask` aynen çalışmaya devam eder.
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Akış olayı — istemciye SSE olarak taşınır. */
+export type AiStreamEvent =
+  | { type: 'meta'; grounded: boolean; sources: string[]; model: string; streamed: boolean }
+  | { type: 'delta'; text: string }
+  | { type: 'done' };
+
+/**
+ * Anthropic Messages API'sinden **gerçek** metin parçaları.
+ *
+ * `stream: true` ile yanıt `text/event-stream`'dir; bize lazım olan tek olay
+ * `content_block_delta` → `delta.text`. Diğer olaylar (ping, message_start, …) yok sayılır.
+ *
+ * Ağ gövdesi parça sınırlarına saygı GÖSTERMEZ: bir SSE satırı iki okuma arasında bölünebilir.
+ * Bu yüzden tampon tutulur ve yalnız TAM satırlar işlenir — aksi hâlde JSON.parse sessizce
+ * bozulur ve akış ortada kesilir.
+ */
+async function* anthropicStream(system: string, user: string): AsyncGenerator<string> {
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'x-api-key': process.env.ANTHROPIC_API_KEY!,
+      'anthropic-version': '2023-06-01',
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: process.env.ANTHROPIC_MODEL ?? 'claude-haiku-4-5-20251001',
+      max_tokens: 600,
+      system,
+      messages: [{ role: 'user', content: user }],
+      stream: true,
+    }),
+  });
+  if (!res.ok || !res.body) throw new Error(`anthropic_${res.status}`);
+
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let buf = '';
+  let produced = 0;
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buf += decoder.decode(value, { stream: true });
+    let nl: number;
+    while ((nl = buf.indexOf('\n')) !== -1) {
+      const line = buf.slice(0, nl).trim();
+      buf = buf.slice(nl + 1);
+      if (!line.startsWith('data:')) continue;
+      const payload = line.slice(5).trim();
+      if (!payload || payload === '[DONE]') continue;
+      try {
+        const evt = JSON.parse(payload) as {
+          type?: string;
+          delta?: { type?: string; text?: string };
+        };
+        if (evt.type === 'content_block_delta' && evt.delta?.type === 'text_delta') {
+          const t = evt.delta.text ?? '';
+          if (t) {
+            produced += t.length;
+            yield t;
+          }
+        }
+      } catch {
+        // Bozuk tek bir olay akışı öldürmez; sonraki satırla devam edilir.
+      }
+    }
+  }
+  if (produced === 0) throw new Error('anthropic_empty');
+}
+
+/**
+ * Grounded yanıtı **akış olarak** üretir.
+ *
+ * Sıra bilinçlidir: önce retrieval + kapı, sonra `meta`, sonra parçalar. İstemci kaynakları
+ * yanıtın SONUNU beklemeden gösterebilir.
+ *
+ * Gerçek model yoksa ya da akış hata verirse tek parça yanıta düşülür ve `streamed: false`
+ * bildirilir — **sahte akış üretilmez**.
+ */
+export async function* answerGroundedStream(question: string): AsyncGenerator<AiStreamEvent> {
+  const g = retrieve(question);
+  const hasMatch = Boolean(g.question || g.lessonSlug);
+  const { text: context, sources } = hasMatch
+    ? buildContext(g)
+    : { text: '', sources: [] as string[] };
+
+  if (aiConfigured()) {
+    const user = hasMatch
+      ? `BAĞLAM:\n${context}\n\nSORU: ${question}`
+      : `SORU: ${question}\n\n(Doğrudan içerik bağlamı yok. Soru KAPSAM içindeyse uzman ekip bilginle yanıtla; kapsam dışıysa nazikçe reddet. Kesin rakam/madde gerekiyorsa MEB/MTSK'ya yönlendir.)`;
+    const model = hasMatch ? 'anthropic' : 'anthropic-domain';
+
+    // İlk parça gelene kadar `meta` GÖNDERİLMEZ: akış daha ilk baytta patlarsa istemciye
+    // "akıyor" demiş olmayalım — bu, sahte akışın en sinsi biçimi olurdu.
+    let first: string | null = null;
+    let iter: AsyncGenerator<string> | null = null;
+    try {
+      iter = anthropicStream(SYSTEM_PROMPT, user);
+      const n = await iter.next();
+      if (!n.done) first = n.value;
+    } catch (e) {
+      logger.warn('ai_stream_fallback', { err: String(e) });
+      iter = null;
+    }
+
+    if (iter && first !== null) {
+      yield { type: 'meta', grounded: true, sources, model, streamed: true };
+      yield { type: 'delta', text: first };
+      try {
+        for await (const chunk of iter) yield { type: 'delta', text: chunk };
+        yield { type: 'delta', text: DISCLAIMER };
+        yield { type: 'done' };
+        return;
+      } catch (e) {
+        // Akış ortada koptu: kullanıcı elindeki metni korur, uyarı yine eklenir.
+        logger.warn('ai_stream_broken', { err: String(e) });
+        yield { type: 'delta', text: DISCLAIMER };
+        yield { type: 'done' };
+        return;
+      }
+    }
+  }
+
+  // Akış YOK — tek parça, dürüstçe işaretlenmiş.
+  const single = await answerGrounded(question);
+  yield {
+    type: 'meta',
+    grounded: single.grounded,
+    sources: single.sources,
+    model: single.model,
+    streamed: false,
+  };
+  yield { type: 'delta', text: single.answer };
+  yield { type: 'done' };
+}

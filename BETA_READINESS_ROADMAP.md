@@ -162,7 +162,7 @@ ile mimariye açıkça kodlandı. Cihazda **iki derleme** doğrulandı: anahtars
 **Yan düzeltme:** `.env.example` şablonları `.gitignore` yüzünden depoya hiç girmemişti (Faz 2
 açığı) — düzeltildi.
 
-### 🔵 Faz 4 — Google Play yayın hazırlığı — SIRADAKİ FAZ
+### ✅ Faz 4 — Google Play yayın hazırlığı — TAMAMLANDI
 
 `release-keystore.properties.example` üretilir; **upload key oluşturulur**; parolalar Git dışında
 tutulur. `build.gradle.kts` release imzalaması gerçek anahtara bağlanır ve şablon `TODO`ları
@@ -253,14 +253,18 @@ yerde konuyor. Beş sütun tanıtılıyor ve hepsi uygulamada gerçekten var.
 **AÇIK BULGU:** 360×640 @1.3× uç bileşiminde özet adımında **24 px yatay taşma** ölçüldü, kaynağı
 izole edilemedi; testte kapsam dışı bırakıldığı YAZILI — Faz 13'e devredildi.
 
-### 🔵 Faz 9 — Akan (streaming) AI — SIRADAKİ FAZ
+### ✅ Faz 9 — Akan (streaming) AI — TAMAMLANDI
 
 Anlık yanıt çizimi kaldırılır. Backend akış destekliyorsa **gerçek akış**; yoksa **aşamalı parça
 çizimi** ve SSE'ye geçişe uygun mimari. **Anlık yanıt asla sahte akış gibi gösterilmez.**
 
 **DoD:** Temel DoD + backend'in akış destekleyip desteklemediği **ölçülerek** rapora yazılır.
 
-### Faz 10 — Kabin kumandaları detay sayfaları
+**Sonuç:** akış yoktu, **gerçek akış** eklendi (`/api/ai/ask/stream`, SSE). Ölçüm: 22 parça ·
+ilk parça 0,64 s · tam yanıt 4,94 s. `streamed` bayrağı sözleşmenin parçası — tek parça yanıt
+asla akıyormuş gibi gösterilmez. `/api/ai/ask` bozulmadı. Ayrıntı: `BETA_PHASE_9_REPORT.md`.
+
+### 🔵 Faz 10 — Kabin kumandaları detay sayfaları — SIRADAKİ FAZ
 
 Şu an detay sayfası açılmıyor. Mekanik kütüphanesiyle **aynı kalitede** detay sayfası: büyük
 görsel, zoom, açıklama, ipuçları, öğrenme kartları.
@@ -293,7 +297,7 @@ izinler, hedef SDK, mağaza hazırlığı, yayın hazırlığı. **B5** (üretim
 
 Bu üç iş **tamamlanmış sayılmaz**; ilgili fazların DoD'si karşılanana kadar açık kalır.
 
-### 🔴 R1 — Karşılama deneyimi YENİDEN (Faz 8'in yerine geçer)
+### ✅ R1 — Karşılama deneyimi YENİDEN (Faz 8'in yerine geçer)
 
 **Yanlış anlaşılan:** Faz 8, karşılama ekranına bir tanıtım **sayfası** ekledi. İstenen bu değildi.
 

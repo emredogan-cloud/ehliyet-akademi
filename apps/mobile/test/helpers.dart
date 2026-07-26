@@ -246,11 +246,27 @@ ContentSnapshot sampleSnapshot() => ContentSnapshot(
 );
 
 /// A fake CoachApi for tests — no network. Returns a fixed grounded answer.
+///
+/// Beta Faz 9: akış da taklit edilir. `chunks` verilirse parça parça (streamed:true), verilmezse
+/// tek parça (streamed:false) döner — istemcinin sahte akış üretmediğini ölçebilmek için.
 class FakeCoachApi implements CoachApi {
-  FakeCoachApi({this.answer = 'Kırmızı ışıkta durulur.', this.grounded = true});
+  FakeCoachApi({
+    this.answer = 'Kırmızı ışıkta durulur.',
+    this.grounded = true,
+    this.chunks,
+    this.streamThrows = false,
+  });
   final String answer;
   final bool grounded;
+
+  /// Verilirse akış bu parçaları sırayla yayar ve `streamed: true` bildirir.
+  final List<String>? chunks;
+
+  /// Akan uç yoksa/patlarsa çağıranın tek parça uca düşmesini sınamak için.
+  final bool streamThrows;
+
   int calls = 0;
+  int streamCalls = 0;
   String? lastQuestion;
 
   @override
@@ -258,6 +274,28 @@ class FakeCoachApi implements CoachApi {
     calls++;
     lastQuestion = question;
     return CoachAnswer(answer: answer, grounded: grounded, sources: const ['trafik'], model: 'mock');
+  }
+
+  @override
+  Stream<CoachStreamEvent> askStream(String question, {String? context}) async* {
+    streamCalls++;
+    lastQuestion = question;
+    if (streamThrows) throw StateError('no_stream');
+    final parts = chunks;
+    yield CoachMeta(
+      grounded: grounded,
+      sources: const ['trafik'],
+      model: 'mock',
+      streamed: parts != null,
+    );
+    if (parts == null) {
+      yield CoachDelta(answer);
+    } else {
+      for (final p in parts) {
+        yield CoachDelta(p);
+      }
+    }
+    yield const CoachDone();
   }
 }
 

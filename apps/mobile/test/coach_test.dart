@@ -25,7 +25,10 @@ void main() {
     await tester.tap(find.text('Kırmızı ışıkta sağa dönülür mü?'));
     await tester.pumpAndSettle();
 
-    expect(coach.calls, 1);
+    // Beta Faz 9: istemci ÖNCE akan ucu dener. Sahte API akışı desteklediği için tek parça uç
+    // hiç çağrılmaz; eski iddia (`calls == 1`) artık yeni yolu değil, yalnız yedek yolu ölçerdi.
+    expect(coach.streamCalls, 1);
+    expect(coach.calls, 0);
     expect(find.text('Kırmızı ışıkta sağa dönülür mü?'), findsWidgets); // user bubble
     expect(find.text('Kırmızı ışıkta tam durulur.'), findsOneWidget); // AI answer
     expect(find.text('İçeriğe dayalı'), findsOneWidget); // grounded badge

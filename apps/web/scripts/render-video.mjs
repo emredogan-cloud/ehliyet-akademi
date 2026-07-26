@@ -1,18 +1,23 @@
 /**
- * Animasyon sahnesi → MP4 video üretim hattı (Program 2 · Faz 4 · ADR-013).
- * ADR-012 sahnelerinin bire bir kopyası standalone HTML'e gömülür; Web Animations API ile
- * kare kare dondurulup (currentTime) Playwright ile ekran görüntüsü alınır; ffmpeg birleştirir.
+ * Animasyon sahnesi → premium video üretim hattı (Evolution Faz E12; ADR-013'ün devamı).
  *
- * Kullanım: node apps/web/scripts/render-video.mjs [--only parallel-park] [--fps 12]
- * Çıktı:   apps/web/public/videos/<id>.mp4 + <id>-poster.jpg
- * Not: Sahne markup'ı components/anim/scenes.tsx + globals.css keyframe'lerinin kopyasıdır;
- *      sahneler değişirse burası da güncellenmelidir (test: videolar diskte + boyut makul).
+ * E12 YÜKSELTMELERİ:
+ *  - Çözünürlük 840×480 → **1120×640**, kare hızı 12 → **30 fps** (akıcı hareket).
+ *  - Sahneler tasarım token'larının renkleriyle çizilir; araçlarda tekerlek/cam/far ayrıntısı var.
+ *  - **Adım etiketleri** videonun içine gömülür ve bölümlerle aynı anda değişir.
+ *  - Bölüm ve altyazı verisi sahneyle AYNI kaynaktan gelir (`video-scenes.mjs`) → hat ile içerik
+ *    arasında sapma YAPISAL OLARAK imkânsız (roadmap'in E12 için işaretlediği risk buydu).
+ *  - Çıktılar: `<id>.mp4`, `<id>.webm`, `<id>-poster.jpg`, `<id>.tr.vtt` ve
+ *    `content/videos.generated.ts` (süre + bölüm + transkript).
+ *
+ * Kullanım: node apps/web/scripts/render-video.mjs [--only l-park] [--fps 30]
  */
 /* global document */
-import { mkdirSync, rmSync, existsSync } from 'node:fs';
+import { mkdirSync, rmSync, existsSync, writeFileSync, statSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 import { resolve, join } from 'node:path';
 import { chromium } from '@playwright/test';
+import { SCENES } from './video-scenes.mjs';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const OUT = join(ROOT, 'public', 'videos');
@@ -22,69 +27,34 @@ const opt = (n, d) => {
   return i >= 0 && args[i + 1] ? args[i + 1] : d;
 };
 const ONLY = opt('only', '');
-const FPS = Number(opt('fps', '12'));
+const FPS = Number(opt('fps', '30'));
+const W = 1120;
+const H = 640;
 
-const CAR = (body, roof = 'rgba(255,255,255,0.35)') => `
-  <g><rect x="-11" y="-22" width="22" height="44" rx="6" fill="${body}"/>
-  <rect x="-8" y="-12" width="16" height="12" rx="3" fill="${roof}"/>
-  <rect x="-8" y="4" width="16" height="9" rx="3" fill="${roof}" opacity="0.7"/></g>`;
+/** Saniyeyi WebVTT damgasına çevirir (`mm:ss.mmm`). */
+function vttStamp(seconds) {
+  const ms = Math.round(seconds * 1000);
+  const m = Math.floor(ms / 60000);
+  const s = Math.floor((ms % 60000) / 1000);
+  const rest = ms % 1000;
+  return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}.${String(rest).padStart(3, '0')}`;
+}
 
-const SCENES = {
-  'parallel-park': {
-    duration: 9,
-    svg: `<svg viewBox="0 0 420 240" width="840" height="480" xmlns="http://www.w3.org/2000/svg">
-      <rect width="420" height="240" fill="#2c3b33"/>
-      <rect y="60" width="420" height="150" fill="#3a4149"/>
-      <rect y="206" width="420" height="10" fill="#5b6570"/>
-      <rect y="54" width="420" height="6" fill="#5b6570"/>
-      ${[0, 60, 120, 180, 240, 300, 360].map((x) => `<rect x="${x}" y="128" width="30" height="4" rx="2" fill="rgba(255,255,255,0.75)" opacity="0.5"/>`).join('')}
-      <g transform="translate(80 182) rotate(90)">${CAR('#9aa4ae')}</g>
-      <g transform="translate(330 182) rotate(90)">${CAR('#9aa4ae')}</g>
-      <rect x="140" y="164" width="150" height="38" rx="8" fill="none" stroke="rgba(255,255,255,0.75)" stroke-dasharray="6 6" opacity="0.55"/>
-      <g class="anim-car anim-parallel">${CAR('#12b8a6')}</g>
-    </svg>`,
-    css: `@keyframes kf-parallel {
-      0% { transform: translate(-30px, 96px) rotate(90deg); }
-      30% { transform: translate(300px, 96px) rotate(90deg); }
-      38% { transform: translate(300px, 96px) rotate(90deg); }
-      60% { transform: translate(250px, 148px) rotate(66deg); }
-      82% { transform: translate(216px, 178px) rotate(86deg); }
-      92%, 100% { transform: translate(213px, 182px) rotate(90deg); }
-    }
-    .anim-parallel { animation: kf-parallel 9s ease-in-out infinite; }`,
-  },
-  'right-of-way': {
-    duration: 8,
-    svg: `<svg viewBox="0 0 420 240" width="840" height="480" xmlns="http://www.w3.org/2000/svg">
-      <rect width="420" height="240" fill="#2c3b33"/>
-      <rect y="85" width="420" height="70" fill="#3a4149"/>
-      <rect x="175" width="70" height="240" fill="#3a4149"/>
-      ${[10, 60, 110, 300, 350, 400].map((x) => `<rect x="${x}" y="118" width="26" height="4" rx="2" fill="rgba(255,255,255,0.75)" opacity="0.5"/>`).join('')}
-      ${[10, 50, 190, 230].map((y) => `<rect x="208" y="${y}" width="4" height="22" rx="2" fill="rgba(255,255,255,0.75)" opacity="0.5"/>`).join('')}
-      <rect x="150" y="90" width="5" height="60" fill="rgba(255,255,255,0.75)" opacity="0.8"/>
-      <g class="anim-car anim-row-other">${CAR('#f5b301', 'rgba(0,0,0,0.25)')}</g>
-      <g class="anim-car anim-row-ego">${CAR('#12b8a6')}</g>
-    </svg>`,
-    css: `@keyframes kf-row-ego {
-      0% { transform: translate(-30px, 137px) rotate(90deg); }
-      28% { transform: translate(128px, 137px) rotate(90deg); }
-      62% { transform: translate(128px, 137px) rotate(90deg); }
-      100% { transform: translate(460px, 137px) rotate(90deg); }
-    }
-    @keyframes kf-row-other {
-      0% { transform: translate(228px, 280px) rotate(0deg); }
-      15% { transform: translate(228px, 245px) rotate(0deg); }
-      60% { transform: translate(228px, -60px) rotate(0deg); }
-      100% { transform: translate(228px, -60px) rotate(0deg); }
-    }
-    .anim-row-ego { animation: kf-row-ego 8s ease-in-out infinite; }
-    .anim-row-other { animation: kf-row-other 8s ease-in-out infinite; }`,
-  },
-};
+/** Altyazı ipuçlarını WebVTT'ye çevirir; her ipucu bir sonrakine kadar sürer. */
+function toVtt(captions, duration) {
+  const lines = ['WEBVTT', ''];
+  captions.forEach((c, i) => {
+    const end = i + 1 < captions.length ? captions[i + 1].t : duration;
+    lines.push(`${vttStamp(c.t)} --> ${vttStamp(end)}`, c.text, '');
+  });
+  return lines.join('\n');
+}
 
 mkdirSync(OUT, { recursive: true });
 const browser = await chromium.launch();
-const page = await browser.newPage({ viewport: { width: 840, height: 480 }, deviceScaleFactor: 1 });
+const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
+
+const produced = [];
 
 for (const [id, scene] of Object.entries(SCENES)) {
   if (ONLY && ONLY !== id) continue;
@@ -93,9 +63,15 @@ for (const [id, scene] of Object.entries(SCENES)) {
   rmSync(tmp, { recursive: true, force: true });
   mkdirSync(tmp, { recursive: true });
 
+  const svg = `<svg viewBox="0 0 560 320" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
+    ${scene.svg}
+    ${scene.svgExtra}
+  </svg>`;
   const html = `<!doctype html><meta charset="utf-8"><style>
-    html,body{margin:0;background:#0b1214}${scene.css}
-  </style>${scene.svg}`;
+    html,body{margin:0;background:#050b16}
+    ${scene.css}
+    ${scene.cssExtra}
+  </style>${svg}`;
   await page.setContent(html);
 
   for (let f = 0; f < frames; f++) {
@@ -106,25 +82,89 @@ for (const [id, scene] of Object.entries(SCENES)) {
         a.currentTime = t;
       }
     }, tMs);
-    await page.screenshot({ path: join(tmp, `${String(f).padStart(3, '0')}.png`) });
+    await page.screenshot({ path: join(tmp, `${String(f).padStart(4, '0')}.png`) });
   }
+
+  // H.264: cihazlarda donanım hızlandırmalı. `-preset slow` + crf 26 → küçük dosya, temiz kenar.
   execSync(
-    `ffmpeg -y -framerate ${FPS} -i "${tmp}/%03d.png" -c:v libx264 -pix_fmt yuv420p -crf 27 -movflags +faststart "${join(OUT, `${id}.mp4`)}"`,
+    `ffmpeg -y -framerate ${FPS} -i "${tmp}/%04d.png" -c:v libx264 -preset slow -crf 26 ` +
+      `-pix_fmt yuv420p -movflags +faststart "${join(OUT, `${id}.mp4`)}"`,
     { stdio: 'pipe' }
   );
-  // WebM (VP9): açık kodek — Playwright Chromium'da da oynar (H.264 lisanslı kodek içermez)
+  // WebM (VP9): açık kodek — Chromium H.264 lisanslı kodek içermeyebilir.
   execSync(
-    `ffmpeg -y -framerate ${FPS} -i "${tmp}/%03d.png" -c:v libvpx-vp9 -b:v 0 -crf 40 "${join(OUT, `${id}.webm`)}"`,
+    `ffmpeg -y -framerate ${FPS} -i "${tmp}/%04d.png" -c:v libvpx-vp9 -b:v 0 -crf 38 -row-mt 1 ` +
+      `"${join(OUT, `${id}.webm`)}"`,
     { stdio: 'pipe' }
   );
-  // Poster: manevranın bilgilendirici ânı (~%60)
+  // Poster: ikinci bölümün ortası — manevranın anlatan ânı (ilk kare çoğu sahnede boş yol).
+  // Poster ânı: ikinci bölümün ortası. (`a + b ?? c` önceliği (a+b) ?? c olduğu için burada
+  // açıkça yazılıyor — kısa yazım NaN üretiyordu.)
+  const secondStart = scene.chapters[1]?.t;
+  const thirdStart = scene.chapters[2]?.t ?? scene.duration;
+  const posterAt =
+    secondStart === undefined ? scene.duration * 0.5 : (secondStart + thirdStart) / 2;
   execSync(
-    `ffmpeg -y -i "${join(OUT, `${id}.mp4`)}" -ss ${(scene.duration * 0.6).toFixed(1)} -frames:v 1 -q:v 4 "${join(OUT, `${id}-poster.jpg`)}"`,
+    `ffmpeg -y -i "${join(OUT, `${id}.mp4`)}" -ss ${Number(posterAt).toFixed(2)} -frames:v 1 -q:v 3 ` +
+      `"${join(OUT, `${id}-poster.jpg`)}"`,
     { stdio: 'pipe' }
   );
+
+  writeFileSync(join(OUT, `${id}.tr.vtt`), toVtt(scene.captions, scene.duration), 'utf8');
   rmSync(tmp, { recursive: true, force: true });
-  console.log(`✓ ${id}.mp4 (${frames} kare @ ${FPS}fps) + poster`);
+
+  const mb = (p) => (statSync(join(OUT, p)).size / 1024).toFixed(0);
+  produced.push({ id, scene });
+  console.log(
+    `✓ ${id}  ${frames} kare @ ${FPS}fps  ·  mp4 ${mb(`${id}.mp4`)} KB  ·  webm ${mb(`${id}.webm`)} KB  ·  poster ${mb(`${id}-poster.jpg`)} KB`
+  );
 }
 
 await browser.close();
+
+// ── İçerik verisi: bölüm + transkript tek kaynaktan üretilir ────────────────
+if (!ONLY) {
+  const entries = Object.entries(SCENES)
+    .map(([id, s]) => {
+      const chapters = s.chapters
+        .map((c) => `      { t: ${c.t}, title: ${JSON.stringify(c.title)} },`)
+        .join('\n');
+      const transcript = s.captions
+        .map((c) => `      { t: ${c.t}, text: ${JSON.stringify(c.text)} },`)
+        .join('\n');
+      return `  '${id}': {
+    duration: ${s.duration},
+    chapters: [
+${chapters}
+    ],
+    transcript: [
+${transcript}
+    ],
+  },`;
+    })
+    .join('\n');
+
+  const file = `/**
+ * ÜRETİLMİŞ DOSYA — elle düzenlemeyin.
+ * Kaynak: \`scripts/video-scenes.mjs\` · Üretici: \`node scripts/render-video.mjs\`
+ *
+ * Bölüm ve transkript verisi videoyu çizen sahneyle AYNI nesneden türetilir; böylece video ile
+ * katalog arasında sapma olamaz (Evolution Faz E12).
+ */
+import type { VideoChapter, TranscriptCue } from './videos';
+
+export type GeneratedVideoData = {
+  duration: number;
+  chapters: VideoChapter[];
+  transcript: TranscriptCue[];
+};
+
+export const GENERATED_VIDEOS: Record<string, GeneratedVideoData> = {
+${entries}
+};
+`;
+  writeFileSync(join(ROOT, 'content', 'videos.generated.ts'), file, 'utf8');
+  console.log('✓ content/videos.generated.ts yazıldı');
+}
+
 console.log(existsSync(join(OUT, 'parallel-park.mp4')) ? 'bitti' : 'çıktı eksik!');

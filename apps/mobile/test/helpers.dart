@@ -190,6 +190,22 @@ ContentSnapshot sampleSnapshot() => ContentSnapshot(
       duration: 120,
       chapters: [VideoChapter(t: 0, title: 'Giriş'), VideoChapter(t: 30, title: 'Manevra')],
     ),
+    // Faz E12 — manevra seti; ilki ücretsiz önizleme, kalanı premium kapısının arkasında.
+    VideoContent(
+      id: 'l-park',
+      title: 'L Park (Animasyon)',
+      description: 'Dik park.',
+      status: 'available',
+      src: '/videos/l-park.mp4',
+      poster: '/videos/l-park-poster.jpg',
+      captions: '/videos/l-park.tr.vtt',
+      duration: 13,
+      chapters: [
+        VideoChapter(t: 0, title: 'Yanaş ve referansı yakala'),
+        VideoChapter(t: 3.2, title: 'Dur, geri vitese al'),
+        VideoChapter(t: 5.4, title: 'Direksiyonu tam kır'),
+      ],
+    ),
     VideoContent(
       id: 'planned-video',
       title: 'Yakında Video',

@@ -33,84 +33,104 @@ export interface VideoContent {
   relatedLessonSlug?: string;
 }
 
+import { GENERATED_VIDEOS } from './videos.generated';
+
+/**
+ * Bir animasyon videosunun ortak alanlarını üretilmiş veriden doldurur (Evolution Faz E12).
+ * Süre, bölümler ve transkript videoyu çizen sahneden gelir → katalog videodan SAPAMAZ.
+ */
+function animated(
+  id: string,
+  title: string,
+  description: string,
+  relatedLessonSlug?: string
+): VideoContent {
+  const g = GENERATED_VIDEOS[id];
+  if (!g)
+    throw new Error(`videos.generated.ts içinde '${id}' yok — render-video.mjs çalıştırıldı mı?`);
+  return {
+    id,
+    title,
+    description,
+    status: 'available',
+    src: `/videos/${id}.mp4`,
+    srcWebm: `/videos/${id}.webm`,
+    poster: `/videos/${id}-poster.jpg`,
+    captions: `/videos/${id}.tr.vtt`,
+    duration: g.duration,
+    chapters: g.chapters,
+    transcript: g.transcript,
+    relatedLessonSlug,
+  };
+}
+
 export const VIDEOS: VideoContent[] = [
-  {
-    id: 'parallel-park',
-    title: 'Paralel Park — Adım Adım (Animasyon)',
-    description:
-      'İki araç arasına geri geri paralel park manevrasının kuş bakışı animasyonlu anlatımı.',
-    status: 'available',
-    src: '/videos/parallel-park.mp4',
-    srcWebm: '/videos/parallel-park.webm',
-    poster: '/videos/parallel-park-poster.jpg',
-    captions: '/videos/parallel-park.tr.vtt',
-    duration: 9,
-    chapters: [
-      { t: 0, title: 'Yaklaş ve hizalan' },
-      { t: 2.7, title: 'Geri + sağa kır' },
-      { t: 5.4, title: 'Sola çevir, düzelt' },
-      { t: 7.4, title: 'Ortala ve bitir' },
-    ],
-    transcript: [
-      { t: 0, text: 'Boşluğun yanından geç, öndeki araçla hizalan.' },
-      { t: 2.7, text: 'Geri viteste direksiyonu sağa kır — arka boşluğa girsin.' },
-      { t: 5.4, text: 'Araç yaklaşık 45 derece olunca direksiyonu sola çevir, düzelt.' },
-      { t: 7.4, text: 'Araçlar arasında ortala; tekerlekleri düzelt.' },
-    ],
-    relatedLessonSlug: 'park-manevra',
-  },
-  {
-    id: 'right-of-way',
-    title: 'Kavşakta Sağdan Gelen — Adım Adım (Animasyon)',
-    description: 'Işıksız eşit kavşakta sağdan gelene yol vermenin animasyonlu anlatımı.',
-    status: 'available',
-    src: '/videos/right-of-way.mp4',
-    srcWebm: '/videos/right-of-way.webm',
-    poster: '/videos/right-of-way-poster.jpg',
-    captions: '/videos/right-of-way.tr.vtt',
-    duration: 8,
-    chapters: [
-      { t: 0, title: 'Yaklaş ve tara' },
-      { t: 2.2, title: 'Çizgide dur' },
-      { t: 5, title: 'Öncelik sağdakinin' },
-      { t: 6.5, title: 'Kontrollü geç' },
-    ],
-    transcript: [
-      { t: 0, text: 'Kavşağa yaklaşırken yavaşla; sol-ileri-sağ tara.' },
-      { t: 2.2, text: 'Sağdan gelen araç var — kavşak çizgisinde dur.' },
-      { t: 5, text: 'Sağdan gelen güvenle geçsin.' },
-      { t: 6.5, text: 'Yol boşalınca kontrollü geç.' },
-    ],
-    relatedLessonSlug: 'kavsak-oncelik',
-  },
-  // Gerçek çekim gerektiren müfredat — dürüstçe "planlanıyor"
+  // ── Manevra seti (özgün animasyon) ────────────────────────────────────────
+  animated(
+    'parallel-park',
+    'Paralel Park — Adım Adım (Animasyon)',
+    'İki araç arasına geri geri paralel park manevrasının kuş bakışı, adım etiketli anlatımı.',
+    'park-manevra'
+  ),
+  animated(
+    'l-park',
+    'L Park / Dik Park — Adım Adım (Animasyon)',
+    'Park cebine dik girişin referans noktalarıyla, adım adım kuş bakışı anlatımı.',
+    'park-manevra'
+  ),
+  animated(
+    'u-turn',
+    'U Dönüşü — Adım Adım (Animasyon)',
+    'Tek hamlede güvenli U dönüşünün kontrol, sinyal ve direksiyon sırasıyla anlatımı.',
+    'sollama-serit'
+  ),
+  animated(
+    'reverse-25m',
+    '25 Metre Geri Gidiş — Adım Adım (Animasyon)',
+    'Şeritten çıkmadan, kontrollü geri gidişin başlangıç ve bitiş çizgileriyle anlatımı.',
+    'park-manevra'
+  ),
+  animated(
+    'hill-start',
+    'Yokuşta Kalkış — Adım Adım (Animasyon)',
+    'El freni, kavrama noktası ve gaz sırasının şematik anlatımı; aracın geri kaymadan kalkışı. ' +
+      'Pedal kamerasıyla gerçek çekim ayrıca planlanıyor.',
+    'debriyaj-rampa'
+  ),
+  animated(
+    'common-mistakes',
+    'Sık Yapılan 3 Manevra Hatası (Animasyon)',
+    'Çizgiyi aşarak durmak, dönüşü fazla geniş almak ve aynaya bakmadan geri gitmek — ' +
+      'her hatanın yanında doğrusu gösterilir.',
+    'sinav-strateji'
+  ),
+  animated(
+    'right-of-way',
+    'Kavşakta Sağdan Gelen — Adım Adım (Animasyon)',
+    'Işıksız eşit kavşakta sağdan gelene yol vermenin adım etiketli anlatımı.',
+    'kavsak-oncelik'
+  ),
+
+  // ── Gerçek çekim gerektiren müfredat — dürüstçe "planlanıyor" ─────────────
+  // Bunlar animasyonla DÜRÜSTÇE öğretilemez: biri gerçek sınav güzergâhını, diğeri gerçek araç
+  // parçalarının görünümünü gerektirir. Şematik bir animasyon burada yanıltıcı olurdu.
   {
     id: 'exam-walkthrough',
-    title: 'Direksiyon Sınavı Yürüyüşü (Gerçek Çekim)',
-    description: 'Gerçek sınav güzergâhında baştan sona örnek sürüş ve değerlendirme anları.',
+    title: 'Direksiyon Sınavı Yürüyüşü (Gerçek Çekim — planlanıyor)',
+    description:
+      'Gerçek sınav güzergâhında baştan sona örnek sürüş ve değerlendirme anları. ' +
+      'Gerçek çekim gerektirir; hazır olduğunda eklenecek.',
     status: 'planned',
     relatedLessonSlug: 'sinav-strateji',
   },
   {
     id: 'vehicle-inspection',
-    title: 'Sürüş Öncesi Araç Kontrolü (Gerçek Çekim)',
-    description: 'Kaput altı ve araç çevresi kontrollerinin gerçek araç üzerinde gösterimi.',
+    title: 'Sürüş Öncesi Araç Kontrolü (Gerçek Çekim — planlanıyor)',
+    description:
+      'Kaput altı ve araç çevresi kontrollerinin gerçek araç üzerinde gösterimi. ' +
+      'Parçaların tanınması için Araç Tekniği bölümündeki gerçek fotoğraf kütüphanesi bugün de kullanılabilir.',
     status: 'planned',
     relatedLessonSlug: 'arac-hazirlik',
-  },
-  {
-    id: 'hill-start',
-    title: 'Rampada Kalkış (Gerçek Çekim)',
-    description: 'El freni + kavrama noktası koordinasyonunun pedal kamerasıyla gösterimi.',
-    status: 'planned',
-    relatedLessonSlug: 'debriyaj-rampa',
-  },
-  {
-    id: 'common-mistakes',
-    title: 'Sınavda En Sık 10 Hata (Gerçek Çekim)',
-    description: 'Adayların en sık elendiği anların örnek sürüşlerle anlatımı.',
-    status: 'planned',
-    relatedLessonSlug: 'sinav-strateji',
   },
 ];
 

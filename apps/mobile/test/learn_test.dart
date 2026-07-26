@@ -110,4 +110,47 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Yakında Video'), findsOneWidget);
   });
+
+  // ── Evolution Faz E12 ─────────────────────────────────────────────────────
+  testWidgets('E12: yeni manevra videosu listede ve PREMIUM kapısının arkasında', (tester) async {
+    await pumpApp(tester);
+    await _openLearn(tester);
+    await tester.scrollUntilVisible(find.text('Videolar'), 300);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Videolar'));
+    await tester.pumpAndSettle();
+
+    // İlk video ücretsiz önizleme, sonrakiler premium.
+    expect(find.text('İZLE'), findsOneWidget);
+    await tester.scrollUntilVisible(find.text('L Park (Animasyon)'), 300);
+    await tester.pumpAndSettle();
+    expect(find.text('L Park (Animasyon)'), findsOneWidget);
+    expect(find.text('PREMIUM'), findsWidgets);
+  });
+
+  testWidgets('E12: ücretsiz video açılınca BÖLÜMLERİ listeleniyor', (tester) async {
+    await pumpApp(tester);
+    await _openLearn(tester);
+    await tester.scrollUntilVisible(find.text('Videolar'), 300);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Videolar'));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('Paralel Park'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Paralel Park'), warnIfMissed: false);
+    await tester.pumpAndSettle();
+
+    // Oynatıcı ağa çıkamaz (test ortamı) ama bölüm listesi içerikten gelir ve görünmelidir.
+    // Katlanmanın altında kalıyor → görünür olana kadar kaydır.
+    await tester.scrollUntilVisible(
+      find.text('Bölümler'),
+      300,
+      scrollable: find.byType(Scrollable).last,
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Bölümler'), findsOneWidget);
+    expect(find.text('Giriş'), findsOneWidget);
+    expect(find.text('Manevra'), findsOneWidget);
+  });
 }

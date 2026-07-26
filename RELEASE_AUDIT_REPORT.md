@@ -1,6 +1,6 @@
 # Nihai yayın denetimi
 
-**Beta Faz 13 · 2026-07-27** · Denetlenen yapı: `app-release.aab` **64,4 MB** · sürüm `1.0.0+1`
+**Beta Faz 13 · 2026-07-27** · Denetlenen yapı: `app-release.aab` **64,4 MB** (64.352.068 bayt = 61,4 MiB) · sürüm `1.0.0+1`
 
 Beş şapka takıldı: **Play İnceleyicisi · QA · Güvenlik · Erişilebilirlik · Flutter Başarım.**
 Her bulgu ölçüldü; ölçülemeyenler "ölçülmedi" olarak yazıldı.
@@ -128,7 +128,7 @@ içinde yazıyor. Cihazda 393 dp'de görülmüyor.
 | Görsel bellek         | Hero'lar `cacheWidth` ile gösterim genişliğine indiriliyor                                            |
 | Akan AI               | İlk metin **0,64 s** (öncesi: 4,94 s boş ekran)                                                       |
 
-**⚠️ Bulgu (düşük):** 64,4 MB, bir sınav uygulaması için büyük. Kaynağı **varlıklar** (video +
+**⚠️ Bulgu (düşük):** 64,4 MB (61,4 MiB), bir sınav uygulaması için büyük. Kaynağı **varlıklar** (video +
 illüstrasyon + maskot). Kapalı Test'i engellemez; yayın sonrası varlık optimizasyonu adayıdır.
 
 ---

@@ -43,7 +43,7 @@
 ## 3. Ölçülen sonuçlar
 
 ```
-Mobil : flutter analyze 0 · flutter test 395 · AAB 64,4 MB (imzalı, doğrulandı)
+Mobil : flutter analyze 0 · flutter test 395 · AAB 64,4 MB / 61,4 MiB (imzalı, doğrulandı)
 Web   : 559 test · lint · typecheck · format · verify temiz
 CI    : CI ✅ · Mobile CI ✅ · CodeQL ✅ · gitleaks ✅
 Cihaz : AYXSUKIVJVPZ7HPZ (Android 11) — her fazda taşma/istisna 0

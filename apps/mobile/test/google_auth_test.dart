@@ -9,6 +9,7 @@ import 'helpers.dart';
 ///
 /// `GoogleAuthService` arayüzü sayesinde platform kanalı GEREKMEZ: sahte servis bütün akışı sürer.
 void main() {
+  _diagnosticsTests();
   Future<void> openAuth(WidgetTester tester) async {
     await tester.tap(find.text('Profil'));
     await tester.pumpAndSettle();
@@ -122,6 +123,42 @@ void main() {
       await tester.tap(find.text('Hesabın yok mu? Kayıt ol'));
       await tester.pumpAndSettle();
       expect(find.widgetWithText(GradientPillButton, 'Kayıt Ol'), findsOneWidget);
+    });
+  });
+}
+
+/// Beta — teşhis düzeltmesi (`GOOGLE_LOGIN_DEBUG_REPORT.md`).
+///
+/// Cihazda ölçüldü: `authenticate()` `[28444] Developer console is not set up correctly` ile
+/// düşüyordu ama kod bunu tek bir "tamamlanamadı" cümlesine indirip **atıyordu**. Sürüm
+/// derlemesinde nedeni öğrenmenin yolu yoktu.
+void _diagnosticsTests() {
+  group('hata teşhisi korunur', () {
+    test('yapılandırma hatasında TEKRAR DENE denmez, çalışan yola yönlendirilir', () {
+      const desc = '[28444] Developer console is not set up correctly.';
+      final msg = GoogleSignInServiceImpl.messageForDescription(desc);
+      expect(msg, contains('E-posta'));
+      expect(msg.toLowerCase(), isNot(contains('tekrar dene')));
+    });
+
+    test('ağ hatasında tekrar denemek MANTIKLI olduğu için öyle denir', () {
+      final msg = GoogleSignInServiceImpl.messageForDescription('Network error occurred');
+      expect(msg.toLowerCase(), contains('tekrar dene'));
+    });
+
+    test('bilinmeyen hata genel mesaja düşer', () {
+      final msg = GoogleSignInServiceImpl.messageForDescription('something else entirely');
+      expect(msg, 'Google ile giriş tamamlanamadı. Tekrar dene.');
+    });
+
+    test('açıklama null olsa da çökmez', () {
+      expect(GoogleSignInServiceImpl.messageForDescription(null), isNotEmpty);
+    });
+
+    test('GoogleSignInError ham nedeni TAŞIR (kullanıcıya gösterilmez)', () {
+      const e = GoogleSignInError('kullanıcı mesajı', technical: 'code=X description=Y');
+      expect(e.message, 'kullanıcı mesajı');
+      expect(e.technical, 'code=X description=Y');
     });
   });
 }

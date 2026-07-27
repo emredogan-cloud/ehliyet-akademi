@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -29,8 +30,16 @@ class GoogleSignInCancelled extends GoogleSignInOutcome {
 
 /// Gerçek hata; [message] kullanıcıya gösterilir.
 class GoogleSignInError extends GoogleSignInOutcome {
-  const GoogleSignInError(this.message);
+  const GoogleSignInError(this.message, {this.technical});
   final String message;
+
+  /// Geliştirici için HAM neden (Google'ın döndürdüğü kod + açıklama).
+  ///
+  /// Kullanıcıya **gösterilmez**; günlüğe yazılır. Bu alan olmadan sürüm derlemesinde başarısız
+  /// bir girişin nedeni öğrenilemiyordu: kod her hatayı tek bir Türkçe cümleye indiriyor ve
+  /// Google'ın verdiği asıl bilgiyi (`[28444] Developer console is not set up correctly` gibi)
+  /// **atıyordu**. Teşhis için cihaza özel geçici günlük eklemek gerekiyordu.
+  final String? technical;
 }
 
 abstract class GoogleAuthService {
@@ -85,10 +94,47 @@ class GoogleSignInServiceImpl implements GoogleAuthService {
       if (e.code == GoogleSignInExceptionCode.canceled) {
         return const GoogleSignInCancelled();
       }
-      return const GoogleSignInError('Google ile giriş tamamlanamadı.');
-    } catch (_) {
-      return const GoogleSignInError('Google ile giriş tamamlanamadı.');
+      final technical = 'GoogleSignInException code=${e.code} description=${e.description}';
+      _logFailure(technical);
+      return GoogleSignInError(_messageFor(e.description), technical: technical);
+    } catch (e) {
+      final technical = '${e.runtimeType}: $e';
+      _logFailure(technical);
+      return GoogleSignInError(
+        'Google ile giriş tamamlanamadı. Tekrar dene.',
+        technical: technical,
+      );
     }
+  }
+
+  /// Ham hatayı günlüğe yazar.
+  ///
+  /// Yalnız BAŞARISIZ girişte çalışır ve gizli değer içermez (jeton, e-posta yok). Sürüm
+  /// derlemesinde de görünür olması bilinçlidir: bu satır olmasaydı sahadaki bir giriş hatası
+  /// ancak cihaza özel geçici kod eklenerek teşhis edilebilirdi.
+  static void _logFailure(String technical) {
+    debugPrint('[auth/google] $technical');
+  }
+
+  /// Google'ın açıklamasından KULLANICIYA anlamlı bir mesaj türetir.
+  ///
+  /// NEDEN: tek bir "tamamlanamadı" mesajı, düzeltilemeyecek bir durumda kullanıcıyı sonsuza
+  /// kadar "tekrar dene"ye yönlendiriyordu. Yapılandırma hatasında tekrar denemek **düzelmez**;
+  /// doğru davranış kullanıcıyı çalışan yola (e-posta) yönlendirmektir.
+  @visibleForTesting
+  static String messageForDescription(String? description) => _messageFor(description);
+
+  static String _messageFor(String? description) {
+    final d = (description ?? '').toLowerCase();
+    // Google, uygulamanın OAuth istemcisiyle eşleşmediği durumda bu metni döndürür (hata 28444).
+    if (d.contains('developer console') || d.contains('28444')) {
+      return 'Google ile giriş şu an kullanılamıyor. E-posta ile giriş yapabilirsin.';
+    }
+    // Ağ kaynaklı geçici hatalarda tekrar denemek MANTIKLI.
+    if (d.contains('network') || d.contains('timeout')) {
+      return 'Bağlantı sorunu. İnternetini kontrol edip tekrar dene.';
+    }
+    return 'Google ile giriş tamamlanamadı. Tekrar dene.';
   }
 
   @override

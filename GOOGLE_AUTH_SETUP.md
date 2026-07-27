@@ -3,7 +3,11 @@
 > ## 🗄️ ARŞİV — bu belge artık resmî kaynak DEĞİLDİR
 >
 > Dağıtımın tek resmî kaynağı **[`OPERATIONS_MANUAL.md`](OPERATIONS_MANUAL.md)** oldu.
-> Bu belgedeki içerik oraya taşındı: **§8 (Firebase) · §9 (Google Cloud) · §17 (Google Login — uçtan uca)**
+> Google girişinin **resmî ve güncel** kurulum belgesi: **[`GOOGLE_LOGIN_SETUP.md`](GOOGLE_LOGIN_SETUP.md)**
+>
+> Bu belge **Firebase üzerinden** anlatıyordu; proje Firebase kullanmıyor. Yeni belge yalnız
+> Google Cloud Console kullanır. Akışın uçtan uca izi ve sorun giderme:
+> `OPERATIONS_MANUAL.md` §17.
 >
 > Burası tarihsel kayıt olarak duruyor. **Çelişki hâlinde el kitabı geçerlidir** — el kitabındaki
 > her iddia ölçülerek doğrulanmıştır; bu belgedeki bazı ifadeler bayatlamıştır.

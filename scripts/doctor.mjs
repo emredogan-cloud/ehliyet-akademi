@@ -112,22 +112,22 @@ console.log(`\n${C.dim}Hedef: ${BASE}${C.off}\n`);
   }
 }
 
-// ── 5) Firebase OAuth istemcileri ────────────────────────────────────────────
+// ── 5) Paket adı ─────────────────────────────────────────────────────────────
+//
+// Google girişi, Google Cloud'daki ANDROID OAuth istemcisinin paket adı + SHA-1 çiftiyle
+// eşleşmesine bağlıdır. Bu betik Google Cloud'u sorgulayamaz (kimlik bilgisi gerektirir);
+// yapabileceği şey yerel tarafın doğru olduğunu göstermektir.
+//
+// NOT: `google-services.json` bu projede KULLANILMIYOR — Google Services Gradle eklentisi
+// uygulanmadığı için derleme sırasında hiç okunmuyor. Firebase'siz kurulum: GOOGLE_LOGIN_SETUP.md
 {
-  const path = 'apps/mobile/android/app/google-services.json';
   try {
-    const d = JSON.parse(readFileSync(path, 'utf8'));
-    const n = (d.client?.[0]?.oauth_client ?? []).length;
-    const pkg = d.client?.[0]?.client_info?.android_client_info?.package_name;
-    if (pkg !== 'com.ehliyetegitim.ehliyet_akademi') {
-      bad('Firebase paket adı', `"${pkg}" — uygulama kimliğiyle uyuşmuyor`, '§8.2');
-    }
-    if (n === 0) bad('Firebase OAuth istemcisi', 'oauth_client: 0 — SHA eklenmemiş', '§8.3');
-    else if (n === 1)
-      warn('Firebase OAuth istemcisi', 'yalnız 1 istemci — Web eksik olabilir', '§9.2');
-    else ok('Firebase OAuth istemcisi', `${n} istemci`, '§8.4');
+    const gradle = readFileSync('apps/mobile/android/app/build.gradle.kts', 'utf8');
+    const pkg = gradle.match(/applicationId\s*=\s*"([^"]+)"/)?.[1];
+    if (pkg) ok('Paket adı', pkg, 'GOOGLE_LOGIN_SETUP.md §3.3');
+    else warn('Paket adı', 'build.gradle.kts içinde applicationId bulunamadı', '§5.1');
   } catch {
-    warn('Firebase yapılandırması', `${path} okunamadı (git'te izlenmiyor olabilir)`, '§8.4');
+    warn('Paket adı', 'build.gradle.kts okunamadı', '§5.1');
   }
 }
 
@@ -157,7 +157,13 @@ console.log(`\n${C.dim}Hedef: ${BASE}${C.off}\n`);
     if (out.includes('CN=Android Debug')) {
       bad('İmzalama anahtarı', 'HATA AYIKLAMA anahtarı — yayınlanamaz', '§21.4');
     } else {
-      ok('İmzalama anahtarı', `upload · SHA1 ${sha1?.slice(0, 17)}…`, '§6.5');
+      ok('İmzalama anahtarı', 'upload (debug DEĞİL)', '§6.5');
+      if (sha1) {
+        console.log(
+          `${C.dim}   └─ Android OAuth istemcisine girilecek SHA-1: ${sha1}${C.off}\n` +
+            `${C.dim}      → GOOGLE_LOGIN_SETUP.md §3.2${C.off}`
+        );
+      }
     }
   } catch {
     warn('İmzalama anahtarı', 'key.properties yok — release imzalanamaz', '§6.4');

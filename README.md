@@ -5,8 +5,11 @@ Türkiye'nin B sınıfı ehliyet adayları için uçtan uca öğrenme platformu 
 > ## 📘 Dağıtım / kurulum yapacaksan
 >
 > Tek resmî kaynak: **[`OPERATIONS_MANUAL.md`](OPERATIONS_MANUAL.md)**
-> Sıfırdan üretime, Google girişi, satın alma, Play Console, Firebase, Vercel, ortam
-> değişkenleri ve sorun giderme — hepsi orada, düğme düğme.
+> Sıfırdan üretime, satın alma, Play Console, Google Cloud, Vercel, ortam değişkenleri ve
+> sorun giderme — hepsi orada, düğme düğme.
+>
+> **Google ile giriş kurulumu** ayrı belgede (Firebase kullanılmaz):
+> **[`GOOGLE_LOGIN_SETUP.md`](GOOGLE_LOGIN_SETUP.md)**
 >
 > Diğer kurulum belgeleri (`ENV_SETUP_GUIDE.md`, `GOOGLE_AUTH_SETUP.md`,
 > `PLAY_CONSOLE_SETUP.md`, `REVENUECAT_SETUP.md`, `RELEASE_CHECKLIST.md` …) **arşivdir**.

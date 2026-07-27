@@ -5,7 +5,7 @@
 |                |                                                                                                                                                                                                      |
 | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Sürüm          | 1.0 · 2026-07-27                                                                                                                                                                                     |
-| Kapsam         | Web · Mobil · Backend · Play Console · Firebase · Google Cloud · RevenueCat · Vercel · Veritabanı · E-posta · AI · Analitik                                                                          |
+| Kapsam         | Web · Mobil · Backend · Play Console · Google Cloud · RevenueCat · Vercel · Veritabanı · E-posta · AI · Analitik                                                                                     |
 | Yerine geçtiği | `ENV_SETUP_GUIDE.md` · `ENV_TEMPLATE.md` · `GOOGLE_AUTH_SETUP.md` · `REVENUECAT_SETUP.md` · `PLAY_CONSOLE_SETUP.md` · `RELEASE_CHECKLIST.md` · `FINAL_ENVIRONMENT_GUIDE.md` · `CLOSED_TEST_GUIDE.md` |
 | Okur kitlesi   | Projeyi **hiç görmemiş** bir geliştirici                                                                                                                                                             |
 
@@ -45,10 +45,11 @@ Aşağıdakiler tahmin değil; **2026-07-27'de üretime doğrudan istek atılara
 | Google doğrulama        | `POST /api/auth/google` (geçersiz token) | **401**                                                          | ✅ `GOOGLE_SERVER_CLIENT_ID` **sunucuda AYARLI** (ayarlı olmasa **503** dönerdi)                                                                 |
 | Akan AI                 | `POST /api/ai/ask/stream`                | **200**                                                          | ✅ Dağıtıldı ve çalışıyor                                                                                                                        |
 | RevenueCat webhook      | `POST /api/iap/revenuecat`               | **503**                                                          | ✅ Uç dağıtıldı, `REVENUECAT_WEBHOOK_SECRET` yok → **fail-closed** (doğru davranış)                                                              |
-| Firebase yapılandırması | `google-services.json`                   | `oauth_client: 0`                                                | ❌ **Android OAuth istemcisi YOK** → Google girişinin çalışmamasının sebebi budur ([§17.3-B](#belirti-b--hesap-seçici-açılıyor-hemen-kapanıyor)) |
+| Android OAuth istemcisi | Google Cloud → Kimlik bilgileri          | _(elle bakılır)_                                                 | ❌ **Android OAuth istemcisi YOK** → Google girişinin çalışmamasının sebebi budur ([§17.3-B](#belirti-b--hesap-seçici-açılıyor-hemen-kapanıyor)) |
 
 > **Sonuç:** "Google girişi çalışmıyor" sorununun kaynağı **sunucu değil**. Sunucu doğru
-> yapılandırılmış. Eksik olan Google Cloud/Firebase tarafındaki **Android OAuth istemcisidir**.
+> yapılandırılmış. Eksik olan **Google Cloud'daki Android OAuth istemcisidir** —
+> kurulumu: [`GOOGLE_LOGIN_SETUP.md`](GOOGLE_LOGIN_SETUP.md) §3.
 
 ---
 
@@ -71,7 +72,7 @@ Aşağıdakiler tahmin değil; **2026-07-27'de üretime doğrudan istek atılara
             │                                           │
             ▼                                           ▼
 ┌───────────────────────────────┐         ┌──────────────────────────────────┐
-│   VERCEL  (Next.js backend)   │         │   GOOGLE CLOUD / FIREBASE        │
+│   VERCEL  (Next.js backend)   │         │   GOOGLE CLOUD                   │
 │   www.ehliyetegitim.com       │         │   proje: ehliyet-akademi-3daa1   │
 │                               │         │                                  │
 │   /api/auth/google  ──────────┼────────►│   JWKS: oauth2/v3/certs          │
@@ -138,20 +139,20 @@ Sıfırdan üretime giden **doğru sıra**. Sıra önemlidir: her adım bir önc
  4. Anthropic anahtarı al                    (§14)
  5. Vercel projesi oluştur + değişkenleri gir (§11)
  6. İlk dağıtım → /api/health yeşil          (§11.6)
- 7. Firebase projesi + Android uygulaması    (§9)
- 8. SHA parmak izlerini ekle (debug + upload)(§9.3)
- 9. Google Cloud → Web OAuth istemcisi       (§9.2)
+ 7. Google Cloud projesi + OAuth izin ekranı (GOOGLE_LOGIN_SETUP §2)
+ 8. Android OAuth istemcileri (debug + upload) (GOOGLE_LOGIN_SETUP §3)
+ 9. Web OAuth istemcisi                      (GOOGLE_LOGIN_SETUP §2.3)
 10. GOOGLE_SERVER_CLIENT_ID'yi Vercel'e gir  (§11.2)
 11. Upload key üret, Gradle'a bağla          (§6.4)
 12. AAB derle (dart-define ile)              (§6.6)
 13. Play Console'da uygulama oluştur         (§7.2)
 14. AAB'yi kapalı teste yükle                (§7.6)
-15. Play App Signing SHA-1'ini Firebase'e ekle (§8.3.3)  ← EN SIK ATLANAN ADIM
-16. google-services.json'ı YENİDEN indir     (§8.4)
-17. AAB'yi yeniden derle + yükle             (§21)
-18. Play ürünlerini oluştur                  (§7.5)
-19. (İsteğe bağlı) RevenueCat kur            (§10)
-20. 12 test kullanıcısını davet et           (§20)
+15. Play App Signing SHA-1 → yeni Android OAuth istemcisi ← EN SIK ATLANAN ADIM
+    (GOOGLE_LOGIN_SETUP §7.3)
+16. AAB'yi yeniden derle + yükle             (§21)
+17. Play ürünlerini oluştur                  (§7.5)
+18. (İsteğe bağlı) RevenueCat kur            (§10)
+19. 12 test kullanıcısını davet et           (§20)
 ```
 
 **Toplam süre:** ilk kez yapan biri için ~4 saat; Play'in inceleme süreleri hariç.
@@ -164,7 +165,7 @@ Bu üç şeyi bilmeyen herkes takılır:
    Android istemcisi Google Cloud'da **var olmalıdır** ama koda **girilmez**.
 2. **Play, AAB'nizi yeniden imzalar.** Kullanıcıya giden imza sizin upload key'iniz değil,
    Play'in **App Signing** sertifikasıdır. Google girişi için **her ikisinin de** SHA-1'i
-   Firebase'e eklenmelidir.
+   Google Cloud'da **ayrı birer Android OAuth istemcisi** olarak kayıtlı olmalıdır.
 3. **Play Billing sideload edilmiş yapılarda çalışmaz.** "Mağaza kullanılamıyor" mesajının
    en sık sebebi budur; hata değildir.
 
@@ -465,10 +466,11 @@ Varsayılan olarak **Play App Signing açıktır** ve şunu yapar:
 
 > 🔴 **Bunun Google girişine etkisi:** Google Sign-In, uygulamanın **çalışma anındaki** imzasına
 > bakar. Play'den inen yapı için bu **App Signing sertifikasıdır**, senin upload key'in değil.
-> Bu SHA-1 Firebase'e eklenmezse **"debug'da çalışıyor, Play'den inende çalışmıyor"** durumu
+> Bu SHA-1 için Google Cloud'da bir Android OAuth istemcisi yoksa
+> **"debug'da çalışıyor, Play'den inende çalışmıyor"** durumu
 > ortaya çıkar. → [§17.3 Belirti E](#belirti-e--debugda-çalışıyor-playden-inende-çalışmıyor)
 
-**App Signing SHA-1'ini bulmak için:**
+**App Signing SHA-1'ini bulmak için** (ayrıntı: `GOOGLE_LOGIN_SETUP.md` §7.2):
 
 ```
   → Test ve yayınlama → Kurulum → Uygulama imzalama
@@ -477,7 +479,8 @@ Varsayılan olarak **Play App Signing açıktır** ve şunu yapar:
 ```
 
 > Bu ekran **ilk AAB yüklendikten sonra** dolar. Yani sıra zorunlu olarak şudur:
-> AAB yükle → SHA-1'i al → Firebase'e ekle → **AAB'yi yeniden derle ve yükle**.
+> AAB yükle → SHA-1'i al → **Google Cloud'da yeni Android OAuth istemcisi oluştur** →
+> AAB'yi yeniden derle ve yükle.
 
 ### 7.4 Zorunlu beyanlar
 
@@ -587,120 +590,43 @@ Bu hesaplar satın alma akışını **para ödemeden** uçtan uca test edebilir.
 
 ---
 
-## 8. BÖLÜM 5 — FIREBASE
+## 8. BÖLÜM 5 — GOOGLE GİRİŞİ ALTYAPISI (Firebase KULLANILMIYOR)
 
-> **Not:** Bu projede Firebase **yalnız OAuth istemcisi üretmek için** kullanılır. Google
-> Services Gradle eklentisi **uygulanmıyor**, yani `google-services.json` derleme zamanında
-> okunmuyor. Firebase'i tamamen atlayıp doğrudan Google Cloud'da OAuth istemcisi oluşturmak da
-> mümkündür ([§9](#9-bölüm-6--google-cloud)); Firebase yolu daha kolaydır.
+> **Bu proje Firebase kullanmaz.** Doğrulandı: `apps/mobile/android/` altındaki hiçbir Gradle
+> dosyasında `com.google.gms.google-services` eklentisi uygulanmıyor; `google-services.json`
+> derleme sırasında **hiç okunmuyor** ve silinebilir.
+>
+> Google girişi için gereken tek altyapı **Google Cloud Console**'dur.
 
-### 8.1 Proje oluşturma
+### 8.1 Resmî kurulum belgesi
 
-```
-console.firebase.google.com
-  → Proje ekle
-  → Proje adı:  ehliyet-akademi
-  → Google Analytics: (isteğe bağlı, kapatılabilir)
-  → Proje oluştur
-```
+Google girişinin sıfırdan kurulumu ayrı ve **daha ayrıntılı** bir belgededir:
 
-**Bu projedeki mevcut proje kimliği:** `ehliyet-akademi-3daa1`
+**→ [`GOOGLE_LOGIN_SETUP.md`](GOOGLE_LOGIN_SETUP.md)**
 
-### 8.2 Android uygulamasını kaydetme
+| Konu                                                                  | Orada hangi bölüm |
+| --------------------------------------------------------------------- | ----------------- |
+| Sorumluluk dağılımı (Cloud · Play · Flutter · Backend)                | §1                |
+| OAuth izin ekranı · kapsamlar · yayınlama durumu · test kullanıcıları | §2                |
+| **Web** OAuth istemcisi                                               | §2.3              |
+| **Android** OAuth istemcisi · SHA-1 · hangi imza ne zaman             | §3                |
+| Hangi istemci kimliği nereye gider (tablo)                            | §4                |
+| Flutter `serverClientId` · dart-define · release/debug                | §5                |
+| Backend doğrulaması · `aud` · oturum                                  | §6                |
+| Play App Signing'in girişe etkisi                                     | §7                |
+| Doğrulama kontrol listesi                                             | §8                |
+| Sık yapılan hatalar (10 senaryo)                                      | §9                |
 
-```
-  → Proje genel bakış → ⚙️ Proje ayarları
-  → Uygulamalarınız → Android simgesi
-  → Android paket adı:  com.ehliyetegitim.ehliyet_akademi
-        ⚠️ HARFİ HARFİNE aynı olmalı; farklıysa hiçbir şey çalışmaz
-  → Uygulama takma adı:  Ehliyet Akademi (isteğe bağlı)
-  → Hata ayıklama imzalama sertifikası SHA-1: (şimdilik boş bırakılabilir)
-  → Uygulamayı kaydet
-```
+### 8.2 Bu el kitabındaki ilgili bölümler
 
-### 8.3 SHA parmak izleri — **ÜÇÜ de gerekir**
-
-```
-  → ⚙️ Proje ayarları
-  → Uygulamalarınız → com.ehliyetegitim.ehliyet_akademi
-  → SHA sertifika parmak izleri
-  → Parmak izi ekle
-```
-
-#### 8.3.1 Debug (geliştirme sırasında `flutter run`)
-
-```bash
-keytool -list -v -keystore ~/.android/debug.keystore \
-  -alias androiddebugkey -storepass android -keypass android
-```
-
-Bu projede ölçülen: `20:AE:CA:91:98:1B:EE:12:3A:CD:0A:CE:54:9E:BA:7F:D0:A3:04:CF`
-
-#### 8.3.2 Upload key (sideload ettiğin release APK/AAB)
-
-```bash
-keytool -list -v -keystore apps/mobile/android/upload-keystore.jks -alias upload
-```
-
-Bu projede ölçülen: `7E:1F:EA:D9:20:BE:E1:E6:62:A1:40:AC:FF:D7:8D:C0:B6:76:73:57`
-
-**SHA-256'yı da ekle** (Credential Manager API'si bunu ister):
-`46:B2:DF:CE:2F:78:BD:A0:EB:C6:A0:19:FE:4F:14:98:C0:52:37:42:19:94:68:C5:47:D0:4F:68:6F:06:07:D3`
-
-#### 8.3.3 Play App Signing 🔴
-
-```
-Play Console → Test ve yayınlama → Kurulum → Uygulama imzalama
-  → "Uygulama imzalama anahtarı sertifikası" → SHA-1
-```
-
-> Bu ekran **ilk AAB yüklenene kadar boştur.** Yani bu adım zorunlu olarak yükleme sonrasıdır.
-> **Atlanırsa:** uygulama Play'den inen kullanıcılarda Google girişi yapamaz, ama sizin
-> sideload ettiğiniz yapıda çalışır — teşhisi en zor senaryo budur.
-
-### 8.4 `google-services.json`'ı yeniden indir
-
-```
-  → ⚙️ Proje ayarları → Uygulamalarınız → google-services.json indir
-  → Dosyayı şuraya koy:  apps/mobile/android/app/google-services.json
-```
-
-**İndirdikten sonra MUTLAKA doğrula:**
-
-```bash
-python3 -c "
-import json; d=json.load(open('apps/mobile/android/app/google-services.json'))
-c=d['client'][0]
-print('paket :', c['client_info']['android_client_info']['package_name'])
-print('oauth :', len(c.get('oauth_client', [])))
-"
-```
-
-| Çıktı        | Anlamı                                                                          |
-| ------------ | ------------------------------------------------------------------------------- |
-| `oauth : 0`  | ❌ **SHA eklenmemiş** → Google girişi çalışmaz                                  |
-| `oauth : 1`  | ⚠️ Yalnız bir istemci var — muhtemelen yalnız Android; Web istemcisi de gerekir |
-| `oauth : 2+` | ✅ Android + Web istemcileri hazır                                              |
-
-> **Bu projedeki mevcut durum: `oauth : 0`.** Google girişinin çalışmamasının **doğrudan
-> sebebi** budur. Çözüm: §8.3'teki parmak izlerini ekle, dosyayı yeniden indir.
-
-### 8.5 Firebase bu projede NE YAPMAZ
-
-Yanlış anlaşılmayı önlemek için açıkça:
-
-- Firebase **Authentication kullanılmıyor** — oturumlar kendi backend'imizde.
-- Firebase **Firestore/Storage kullanılmıyor** — veri Neon'da.
-- Firebase **Analytics zorunlu değil**.
-- `google-services.json` **derleme zamanında okunmuyor** (Gradle eklentisi uygulanmıyor);
-  dosyanın tek işlevi **hangi OAuth istemcilerinin oluştuğunu doğrulamandır**.
-
----
+- Google Cloud'un genel yapılandırması → [§9](#9-bölüm-6--google-cloud)
+- Google giriş akışının uçtan uca izi ve sorun giderme → [§17](#17-google-login--uçtan-uca)
+- `GOOGLE_SERVER_CLIENT_ID` değişkeninin tam referansı → [§16.3](#163--google_server_client_id)
 
 ## 9. BÖLÜM 6 — GOOGLE CLOUD
 
-Firebase projesi oluşturduğunda **aynı adla bir Google Cloud projesi** otomatik oluşur.
-OAuth istemcileri aslında oradadır.
+Google girişinin tüm kimlikleri burada yaşar. Sıfırdan kurulum için ayrıntılı belge:
+[`GOOGLE_LOGIN_SETUP.md`](GOOGLE_LOGIN_SETUP.md).
 
 ### 9.1 OAuth onay ekranı (bir kez)
 
@@ -759,7 +685,7 @@ console.cloud.google.com
 
 ### 9.3 Android OAuth istemcisi 🔴 — hesap seçicinin açılması için
 
-Firebase'e SHA eklediysen bu **otomatik oluşur**. Kontrol et; yoksa elle oluştur:
+Kullandığın **her imza için** bir tane oluşturulur (ayrıntı: `GOOGLE_LOGIN_SETUP.md` §3):
 
 ```
   → Kimlik bilgileri → + KİMLİK BİLGİLERİ OLUŞTUR → OAuth istemci kimliği
@@ -1523,16 +1449,16 @@ GOOGLE_SERVER_CLIENT_ID=4304...
 
 ### 17.2 Her adımın bağımlılıkları
 
-| Adım | Bağımlılık                                 | Nerede yapılandırılır                                                                        |
-| ---- | ------------------------------------------ | -------------------------------------------------------------------------------------------- |
-| 1    | `--dart-define=GOOGLE_SERVER_CLIENT_ID`    | Derleme komutu ([§5.3](#53-derleme-zamanı-yapılandırması----dart-define))                    |
-| 3    | Google Play Services                       | Cihaz                                                                                        |
-| 5    | Android OAuth istemcisi + SHA-1            | Google Cloud / Firebase ([§9.3](#93-android-oauth-istemcisi--hesap-seçicinin-açılması-için)) |
-| 6    | **Web** istemci kimliği kullanılmış olması | Derleme komutu                                                                               |
-| 8    | `GOOGLE_SERVER_CLIENT_ID`                  | Vercel ([§11.2](#112-ortam-değişkenlerini-girme))                                            |
-| 10   | Google'a giden ağ                          | Vercel çalışma zamanı                                                                        |
-| 12   | `aud` = aynı Web istemci kimliği           | İkisinin **aynı** olması                                                                     |
-| 13   | `DATABASE_URL`                             | Vercel                                                                                       |
+| Adım | Bağımlılık                                 | Nerede yapılandırılır                                                             |
+| ---- | ------------------------------------------ | --------------------------------------------------------------------------------- |
+| 1    | `--dart-define=GOOGLE_SERVER_CLIENT_ID`    | Derleme komutu ([§5.3](#53-derleme-zamanı-yapılandırması----dart-define))         |
+| 3    | Google Play Services                       | Cihaz                                                                             |
+| 5    | Android OAuth istemcisi + SHA-1            | Google Cloud ([§9.3](#93-android-oauth-istemcisi--hesap-seçicinin-açılması-için)) |
+| 6    | **Web** istemci kimliği kullanılmış olması | Derleme komutu                                                                    |
+| 8    | `GOOGLE_SERVER_CLIENT_ID`                  | Vercel ([§11.2](#112-ortam-değişkenlerini-girme))                                 |
+| 10   | Google'a giden ağ                          | Vercel çalışma zamanı                                                             |
+| 12   | `aud` = aynı Web istemci kimliği           | İkisinin **aynı** olması                                                          |
+| 13   | `DATABASE_URL`                             | Vercel                                                                            |
 
 > 🔴 **Altın kural:** adım 6 ve adım 12'deki değer **birebir aynı Web istemci kimliği** olmalıdır.
 > Farklıysa token üretilir ama sunucu `aud` uyuşmazlığı nedeniyle **401** döner.
@@ -1571,9 +1497,9 @@ Bu klasik `DEVELOPER_ERROR` (kod 10) belirtisidir.
 ```
 Seçici açılıp kapanıyor
   ↓
-Kontrol B1: google-services.json'da oauth_client var mı?
-      python3 -c "import json;d=json.load(open('apps/mobile/android/app/google-services.json'));print(len(d['client'][0].get('oauth_client',[])))"
-      → 0 ise: SEBEP BUDUR → §8.3'teki SHA'ları ekle, dosyayı yeniden indir
+Kontrol B1: Google Cloud'da bu imza için ANDROID istemcisi var mı?
+      Google Cloud → Kimlik bilgileri → OAuth 2.0 İstemci Kimlikleri
+      → Yoksa: SEBEP BUDUR → GOOGLE_LOGIN_SETUP.md §3.2
   ↓
 Kontrol B2: Çalışan yapının imzası kayıtlı mı?
       Debug yapı  → debug.keystore SHA-1 kayıtlı olmalı
@@ -1581,7 +1507,7 @@ Kontrol B2: Çalışan yapının imzası kayıtlı mı?
       Play'den    → App Signing SHA-1 kayıtlı olmalı
   ↓
 Kontrol B3: Paket adı birebir aynı mı?
-      Firebase'deki:  com.ehliyetegitim.ehliyet_akademi
+      Google Cloud'daki: com.ehliyetegitim.ehliyet_akademi
       Uygulamadaki:   grep applicationId apps/mobile/android/app/build.gradle.kts
       → Tek harf farkı bile yeter
   ↓
@@ -1659,12 +1585,14 @@ Debug ✅ / Play ❌
 SEBEP (neredeyse her zaman):
       Play, AAB'nizi KENDİ App Signing anahtarıyla YENİDEN İMZALAR.
       Kullanıcının cihazındaki imza sizin upload key'iniz DEĞİLDİR.
-      O SHA-1 Firebase'e eklenmemişse Google girişi yalnız Play yapılarında bozulur.
+      O SHA-1 için Google Cloud'da Android istemcisi yoksa giriş yalnız Play
+      yapılarında bozulur.
   ↓
 ÇÖZÜM:
   1. Play Console → Test ve yayınlama → Kurulum → Uygulama imzalama
   2. "Uygulama imzalama anahtarı sertifikası" → SHA-1'i kopyala
-  3. Firebase → Proje ayarları → Android uygulaması → Parmak izi ekle → yapıştır
+  3. Google Cloud → Kimlik bilgileri → OAuth istemci kimliği → Android →
+     paket adı + bu SHA-1 ile YENİ istemci oluştur
   4. google-services.json'ı yeniden indir (oauth_client sayısı artmalı)
   5. 5 dakika bekle (Google yayılımı)
   6. Uygulamayı Play'den yeniden indir
@@ -1702,7 +1630,7 @@ python3 -c "
 import json;d=json.load(open('apps/mobile/android/app/google-services.json'))
 print('oauth_client:', len(d['client'][0].get('oauth_client',[])))"
 
-# 3) Upload key SHA-1 (Firebase'e girilecek)
+# 3) Upload key SHA-1 (Android OAuth istemcisine girilecek)
 keytool -list -v -keystore apps/mobile/android/upload-keystore.jks -alias upload | grep SHA1
 
 # 4) Debug key SHA-1
@@ -1982,15 +1910,15 @@ Her servis için: **Sağlık kontrolü → Beklenen sonuç → Bozukluk belirtil
 | **Düzeltme**        | Alan adını doğrula, `EMAIL_FROM`'u doğrulanmış alan adıyla eşle                                              |
 | **Doğrulama**       | Yeni hesap aç, e-postanın geldiğini gör                                                                      |
 
-### 19.8 Firebase
+### 19.8 Google Cloud OAuth istemcileri
 
-|                     |                                                 |
-| ------------------- | ----------------------------------------------- |
-| **Sağlık kontrolü** | `google-services.json` → `oauth_client` sayısı  |
-| **Beklenen**        | ≥ 2 (Android + Web)                             |
-| **Belirtiler**      | 0 → hiç SHA eklenmemiş · 1 → yalnız bir istemci |
-| **Düzeltme**        | [§8.3](#83-sha-parmak-izleri--üçü-de-gerekir)   |
-| **Doğrulama**       | Dosyayı yeniden indir, sayıyı tekrar ölç        |
+|                     |                                                                                                                         |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **Sağlık kontrolü** | Google Cloud → API'ler ve Hizmetler → Kimlik bilgileri → OAuth 2.0 İstemci Kimlikleri listesi                           |
+| **Beklenen**        | 1 adet **Web** istemcisi + kullandığın **her imza için** birer **Android** istemcisi                                    |
+| **Belirtiler**      | Hesap seçici açılıp kapanıyor → Android istemcisi yok/SHA yanlış · `idToken` null → Web yerine Android kimliği verilmiş |
+| **Düzeltme**        | `GOOGLE_LOGIN_SETUP.md` §3 (Android) · §2.3 (Web) · §9 (sık hatalar)                                                    |
+| **Doğrulama**       | `pnpm doctor` → paket adı + SHA-1 yazdırır; gerçek cihazda giriş dener                                                  |
 
 ### 19.9 CI / GitHub Actions
 
@@ -2023,10 +1951,10 @@ Araç hiçbir şeyi değiştirmez; her bulguyu bu el kitabının ilgili bölüm�
 ✅ Google (sunucu)           GOOGLE_SERVER_CLIENT_ID ayarlı → §17.1
 ⚠️ RevenueCat webhook        REVENUECAT_WEBHOOK_SECRET yok  → §16.6
 ✅ Akan AI                   gerçek akış çalışıyor          → §14.4
-❌ Firebase OAuth istemcisi  oauth_client: 0 — SHA eklenmemiş → §8.3
+✅ Paket adı                 com.ehliyetegitim.ehliyet_akademi → GOOGLE_LOGIN_SETUP §3.3
 ✅ İmzalama anahtarı         upload · SHA1 7E:1F:EA:D9:20:BE…→ §6.5
 
-1 engelleyici bulgu.
+Yayın engelleyici bulgu yok.
 ```
 
 Ham komutlarla yapmak istersen:
@@ -2065,17 +1993,18 @@ print(len(d['client'][0].get('oauth_client',[])))"
 
 ```
 1. Kapalı test sürümü oluştur ve AAB'yi yükle       (§7.6)
-2. Play App Signing SHA-1'ini al ve Firebase'e ekle (§8.3.3)   ← ZORUNLU
-3. google-services.json'ı yeniden indir             (§8.4)
-4. AAB'yi YENİDEN derle ve YENİ sürüm olarak yükle  (§6.6)
-5. Test kullanıcısı listesi oluştur                 (§7.7)
-6. Lisans test hesaplarını ayarla                   (§7.8)
-7. Katılım bağlantısını 12 kişiye gönder
-8. Her testçi: bağlantı → "Testçi ol" → Play'den indir
+2. Play App Signing SHA-1'i → yeni Android OAuth istemcisi  ← ZORUNLU
+   (GOOGLE_LOGIN_SETUP.md §7.3)
+3. AAB'yi YENİDEN derle ve YENİ sürüm olarak yükle  (§6.6)
+4. Test kullanıcısı listesi oluştur                 (§7.7)
+5. Lisans test hesaplarını ayarla                   (§7.8)
+6. Katılım bağlantısını 12 kişiye gönder
+7. Her testçi: bağlantı → "Testçi ol" → Play'den indir
 ```
 
-> **2–4 arası neden zorunlu?** İlk yüklemeden önce App Signing sertifikası yoktur. O SHA-1
-> Firebase'e eklenmeden Google girişi **Play'den inen yapıda çalışmaz**.
+> **2–3 arası neden zorunlu?** İlk yüklemeden önce App Signing sertifikası yoktur. O SHA-1
+> için Google Cloud'da bir Android OAuth istemcisi oluşturulmadan Google girişi
+> **Play'den inen yapıda çalışmaz**.
 
 ### 20.3 Testçilere gönderilecek metin (şablon)
 
@@ -2231,7 +2160,7 @@ Vercel → Deployments → önceki başarılı dağıtım → ⋯ → Promote to
 | -------------------------- | ------------------------------------------------------------------------------------------------- |
 | Uygulama kimliği           | `com.ehliyetegitim.ehliyet_akademi`                                                               |
 | Üretim alan adı            | `https://www.ehliyetegitim.com`                                                                   |
-| Firebase/GCP proje kimliği | `ehliyet-akademi-3daa1`                                                                           |
+| Google Cloud proje kimliği | `ehliyet-akademi-3daa1`                                                                           |
 | Sürüm                      | `1.0.0+1`                                                                                         |
 | Upload key SHA-1           | `7E:1F:EA:D9:20:BE:E1:E6:62:A1:40:AC:FF:D7:8D:C0:B6:76:73:57`                                     |
 | Upload key SHA-256         | `46:B2:DF:CE:2F:78:BD:A0:EB:C6:A0:19:FE:4F:14:98:C0:52:37:42:19:94:68:C5:47:D0:4F:68:6F:06:07:D3` |
@@ -2269,19 +2198,20 @@ gh run list --limit 5
 
 ### 22.3 Bu el kitabının yerine geçtiği belgeler
 
-| Belge                        | Durum                                                 |
-| ---------------------------- | ----------------------------------------------------- |
-| `ENV_SETUP_GUIDE.md`         | 🗄️ Arşiv — içeriği §16'da                             |
-| `ENV_TEMPLATE.md`            | 🗄️ Arşiv — içeriği §16'da                             |
-| `GOOGLE_AUTH_SETUP.md`       | 🗄️ Arşiv — içeriği §8, §9, §17'de                     |
-| `REVENUECAT_SETUP.md`        | 🗄️ Arşiv — içeriği §10, §18'de                        |
-| `PLAY_CONSOLE_SETUP.md`      | 🗄️ Arşiv — içeriği §7, §20, §21'de                    |
-| `RELEASE_CHECKLIST.md`       | 🗄️ Arşiv — içeriği §21'de                             |
-| `FINAL_ENVIRONMENT_GUIDE.md` | 🗄️ Arşiv — içeriği §16'da                             |
-| `CLOSED_TEST_GUIDE.md`       | 🗄️ Arşiv — içeriği §20'de                             |
-| `DATABASE_CLEANUP_REPORT.md` | ✅ **Geçerli** — ölçüm raporu, §12.5'ten atıf yapılır |
-| `RELEASE_AUDIT_REPORT.md`    | ✅ **Geçerli** — denetim kaydı                        |
-| `MOBILE_PROJECT_MEMORY.md`   | ✅ **Geçerli** — mühendislik kararları ve tuzaklar    |
+| Belge                        | Durum                                                                  |
+| ---------------------------- | ---------------------------------------------------------------------- |
+| `ENV_SETUP_GUIDE.md`         | 🗄️ Arşiv — içeriği §16'da                                              |
+| `ENV_TEMPLATE.md`            | 🗄️ Arşiv — içeriği §16'da                                              |
+| `GOOGLE_AUTH_SETUP.md`       | 🗄️ Arşiv — içeriği §8, §9, §17'de                                      |
+| `REVENUECAT_SETUP.md`        | 🗄️ Arşiv — içeriği §10, §18'de                                         |
+| `PLAY_CONSOLE_SETUP.md`      | 🗄️ Arşiv — içeriği §7, §20, §21'de                                     |
+| `RELEASE_CHECKLIST.md`       | 🗄️ Arşiv — içeriği §21'de                                              |
+| `FINAL_ENVIRONMENT_GUIDE.md` | 🗄️ Arşiv — içeriği §16'da                                              |
+| `CLOSED_TEST_GUIDE.md`       | 🗄️ Arşiv — içeriği §20'de                                              |
+| `GOOGLE_LOGIN_SETUP.md`      | ✅ **Geçerli** — Google girişinin resmî kurulum belgesi (Firebase'siz) |
+| `DATABASE_CLEANUP_REPORT.md` | ✅ **Geçerli** — ölçüm raporu, §12.5'ten atıf yapılır                  |
+| `RELEASE_AUDIT_REPORT.md`    | ✅ **Geçerli** — denetim kaydı                                         |
+| `MOBILE_PROJECT_MEMORY.md`   | ✅ **Geçerli** — mühendislik kararları ve tuzaklar                     |
 
 ### 22.4 Çözülen çelişkiler
 

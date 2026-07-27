@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -35,10 +35,10 @@ class GoogleSignInError extends GoogleSignInOutcome {
 
   /// Geliştirici için HAM neden (Google'ın döndürdüğü kod + açıklama).
   ///
-  /// Kullanıcıya **gösterilmez**; günlüğe yazılır. Bu alan olmadan sürüm derlemesinde başarısız
-  /// bir girişin nedeni öğrenilemiyordu: kod her hatayı tek bir Türkçe cümleye indiriyor ve
-  /// Google'ın verdiği asıl bilgiyi (`[28444] Developer console is not set up correctly` gibi)
-  /// **atıyordu**. Teşhis için cihaza özel geçici günlük eklemek gerekiyordu.
+  /// Kullanıcıya **gösterilmez**. Bu alan olmadan kod, Google'ın verdiği asıl bilgiyi
+  /// (`[28444] Developer console is not set up correctly` gibi) okumadan atıyordu ve başarısız
+  /// bir giriş sahada teşhis edilemiyordu. Alan taşınır; bir hata bildirim katmanı eklendiğinde
+  /// oraya verilecek hazır veridir. **Üretimde günlüğe yazılmaz.**
   final String? technical;
 }
 
@@ -95,25 +95,14 @@ class GoogleSignInServiceImpl implements GoogleAuthService {
         return const GoogleSignInCancelled();
       }
       final technical = 'GoogleSignInException code=${e.code} description=${e.description}';
-      _logFailure(technical);
       return GoogleSignInError(_messageFor(e.description), technical: technical);
     } catch (e) {
       final technical = '${e.runtimeType}: $e';
-      _logFailure(technical);
       return GoogleSignInError(
         'Google ile giriş tamamlanamadı. Tekrar dene.',
         technical: technical,
       );
     }
-  }
-
-  /// Ham hatayı günlüğe yazar.
-  ///
-  /// Yalnız BAŞARISIZ girişte çalışır ve gizli değer içermez (jeton, e-posta yok). Sürüm
-  /// derlemesinde de görünür olması bilinçlidir: bu satır olmasaydı sahadaki bir giriş hatası
-  /// ancak cihaza özel geçici kod eklenerek teşhis edilebilirdi.
-  static void _logFailure(String technical) {
-    debugPrint('[auth/google] $technical');
   }
 
   /// Google'ın açıklamasından KULLANICIYA anlamlı bir mesaj türetir.

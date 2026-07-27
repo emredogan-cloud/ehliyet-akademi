@@ -1,5 +1,13 @@
 # Ortam Değişkenleri — Şablon ve Rehber
 
+> ## 🗄️ ARŞİV — bu belge artık resmî kaynak DEĞİLDİR
+>
+> Dağıtımın tek resmî kaynağı **[`OPERATIONS_MANUAL.md`](OPERATIONS_MANUAL.md)** oldu.
+> Bu belgedeki içerik oraya taşındı: **§16 (Ortam değişkenleri — tam referans)**
+>
+> Burası tarihsel kayıt olarak duruyor. **Çelişki hâlinde el kitabı geçerlidir** — el kitabındaki
+> her iddia ölçülerek doğrulanmıştır; bu belgedeki bazı ifadeler bayatlamıştır.
+
 **Kural:** bu depoda **hiçbir gerçek gizli değer bulunmaz.** Depoda yalnız `.example` şablonları
 durur; gerçek değerler `.env.local` (Git dışı), Vercel ortam değişkenleri ve CI secret'larında
 tutulur. CI'daki **gitleaks** taraması bu kuralı zorlar.

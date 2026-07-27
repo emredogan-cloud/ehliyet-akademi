@@ -1,5 +1,13 @@
 # Ortam değişkenleri — kesin rehber
 
+> ## 🗄️ ARŞİV — bu belge artık resmî kaynak DEĞİLDİR
+>
+> Dağıtımın tek resmî kaynağı **[`OPERATIONS_MANUAL.md`](OPERATIONS_MANUAL.md)** oldu.
+> Bu belgedeki içerik oraya taşındı: **§16 (Ortam değişkenleri — tam referans)**
+>
+> Burası tarihsel kayıt olarak duruyor. **Çelişki hâlinde el kitabı geçerlidir** — el kitabındaki
+> her iddia ölçülerek doğrulanmıştır; bu belgedeki bazı ifadeler bayatlamıştır.
+
 **Beta Faz 13 · Denetim tarihi: 2026-07-27**
 Bu belge, projenin ortam yapılandırması için **tek doğruluk kaynağıdır**. Depo baştan sona
 tarandı: `.env` · `.env.example` · `process.env.*` · `String.fromEnvironment` (dart-define) ·

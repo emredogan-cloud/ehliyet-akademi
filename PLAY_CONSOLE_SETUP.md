@@ -1,5 +1,13 @@
 # Google Play Console — Sıfırdan Yayın Hazırlığı
 
+> ## 🗄️ ARŞİV — bu belge artık resmî kaynak DEĞİLDİR
+>
+> Dağıtımın tek resmî kaynağı **[`OPERATIONS_MANUAL.md`](OPERATIONS_MANUAL.md)** oldu.
+> Bu belgedeki içerik oraya taşındı: **§7 (Play Console) · §20 (Kapalı test) · §21 (Yayın)**
+>
+> Burası tarihsel kayıt olarak duruyor. **Çelişki hâlinde el kitabı geçerlidir** — el kitabındaki
+> her iddia ölçülerek doğrulanmıştır; bu belgedeki bazı ifadeler bayatlamıştır.
+
 **Uygulama kimliği:** `com.ehliyetegitim.ehliyet_akademi` · **Sürüm:** 1.0.0 (versionCode 1)
 **Hedef:** Kapalı Test (12 test kullanıcısı).
 

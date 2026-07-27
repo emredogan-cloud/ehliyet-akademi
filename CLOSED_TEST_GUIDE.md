@@ -1,5 +1,13 @@
 # Kapalı Test Rehberi — 12 Test Kullanıcısı
 
+> ## 🗄️ ARŞİV — bu belge artık resmî kaynak DEĞİLDİR
+>
+> Dağıtımın tek resmî kaynağı **[`OPERATIONS_MANUAL.md`](OPERATIONS_MANUAL.md)** oldu.
+> Bu belgedeki içerik oraya taşındı: **§20 (Zero → Closed Testing)**
+>
+> Burası tarihsel kayıt olarak duruyor. **Çelişki hâlinde el kitabı geçerlidir** — el kitabındaki
+> her iddia ölçülerek doğrulanmıştır; bu belgedeki bazı ifadeler bayatlamıştır.
+
 **Uygulama:** Ehliyet Akademi · `com.ehliyetegitim.ehliyet_akademi`
 **Hedef:** Google Play Kapalı Test kanalında 12 test kullanıcısıyla sürüm adayını doğrulamak.
 

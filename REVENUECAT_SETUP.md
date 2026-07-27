@@ -1,5 +1,13 @@
 # RevenueCat — Sıfırdan Kurulum
 
+> ## 🗄️ ARŞİV — bu belge artık resmî kaynak DEĞİLDİR
+>
+> Dağıtımın tek resmî kaynağı **[`OPERATIONS_MANUAL.md`](OPERATIONS_MANUAL.md)** oldu.
+> Bu belgedeki içerik oraya taşındı: **§10 (RevenueCat) · §18 (Satın alma akışı — uçtan uca)**
+>
+> Burası tarihsel kayıt olarak duruyor. **Çelişki hâlinde el kitabı geçerlidir** — el kitabındaki
+> her iddia ölçülerek doğrulanmıştır; bu belgedeki bazı ifadeler bayatlamıştır.
+
 **Uygulama kimliği:** `com.ehliyetegitim.ehliyet_akademi`
 **Hedef:** Abonelik/satın alma yaşam döngüsünü RevenueCat üzerinden yönetmek; gizli anahtarlar
 depoya **girmeden**.

@@ -19,6 +19,9 @@
 | **Tamamlanan fazlar** | **0–13 (TAMAMI) · düzeltme fazları R1, R2, R3**                                                                                 |
 | **Sıradaki faz**      | **YOK — program %100 tamamlandı**                                                                                               |
 
+> **Dağıtım / kurulum için tek kaynak: [`OPERATIONS_MANUAL.md`](OPERATIONS_MANUAL.md)**
+> Eski kurulum belgeleri arşivlendi; çelişki hâlinde el kitabı geçerlidir.
+
 ## 2. Git durumu
 
 | Alan          | Değer                                                        |

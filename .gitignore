@@ -42,6 +42,9 @@ sınav-soruları-pdf/
 /apps/ASO_IMAGE/
 # Loose reference PDFs
 /*.pdf
+# google-services.json — KULLANILMIYOR (Beta AUTH_ROOT_CAUSE_FINAL_REPORT.md §3).
+# Google Services Gradle eklentisi uygulanmıyor; dosya derlemede hiç okunmuyor ve yanlış
+# projeye (ehliyet-akademi-3daa1) aitti. Google girişi yalnız --dart-define ile yapılandırılır.
 google-services.json
 
 # Google Cloud servis hesabı anahtarları — ASLA depoya girmez.
@@ -49,3 +52,11 @@ google-services.json
 *-[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f].json
 **/service-account*.json
 **/*service_account*.json
+
+# Google servis hesabı anahtarları — ASLA depoya girmez (AUTH_ROOT_CAUSE_FINAL_REPORT.md).
+# Desenler GENİŞ tutuldu: bu dosyalar konsoldan indirildiği için adları öngörülemez.
+**/*service*account*.json
+**/*service-account*.json
+**/*playconsole*.json
+**/*play-console*.json
+apps/mobile/android/app/*.json

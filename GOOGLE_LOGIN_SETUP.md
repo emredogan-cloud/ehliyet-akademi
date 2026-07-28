@@ -1,5 +1,7 @@
 # Google ile Giriş — Sıfırdan Kurulum (Firebase YOK)
 
+> 📘 **İlgili:** [`GOOGLE_PLAY_SIGNIN_PLAYBOOK.md`](GOOGLE_PLAY_SIGNIN_PLAYBOOK.md) — Bu sorunla karşılaşırsan: belirtiden köke giden akış şeması, komut kütüphanesi ve önleme kontrol listesi.
+
 **Ehliyet Akademi · 2026-07-27**
 
 Bu belge Google Sign-In'i **Firebase kullanmadan** sıfırdan kurar. Gereken tek altyapı

@@ -1,5 +1,7 @@
 # OPERASYON EL KİTABI
 
+> 📘 **İlgili:** [`GOOGLE_PLAY_SIGNIN_PLAYBOOK.md`](GOOGLE_PLAY_SIGNIN_PLAYBOOK.md) — Google girişi arızası: belirtiden köke giden akış şeması, komut kütüphanesi ve önleme kontrol listesi.
+
 **Ehliyet Akademi — sıfırdan üretime tek resmî dağıtım kaynağı**
 
 |                |                                                                                                                                                                                                      |

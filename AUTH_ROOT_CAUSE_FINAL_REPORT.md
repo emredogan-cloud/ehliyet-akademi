@@ -1,5 +1,7 @@
 # Google Kimlik Doğrulama — Nihai Kök Neden Raporu
 
+> 📘 **İlgili:** [`GOOGLE_PLAY_SIGNIN_PLAYBOOK.md`](GOOGLE_PLAY_SIGNIN_PLAYBOOK.md) — Soruşturmanın kalıcı özeti ve yeniden kullanılabilir yöntemi: belirtiden köke giden akış şeması, komut kütüphanesi ve önleme kontrol listesi.
+
 **2026-07-28 · Cihaz: AYXSUKIVJVPZ7HPZ (Android 11) · Tüm bulgular CLI çıktısı, cihaz günlüğü veya derlenmiş artefakt ile kanıtlanmıştır.**
 
 > Bu raporda **hiçbir varsayım yoktur.** Play'den kurulu gerçek yapı cihaza indirildi, sertifikası

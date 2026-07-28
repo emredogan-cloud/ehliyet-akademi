@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/assets.dart';
 import '../../core/theme/theme_controller.dart';
+import '../../core/app_version.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/practice/progress_repository.dart';
 import '../../design/brand.dart';
@@ -134,9 +135,14 @@ class ProfileScreen extends ConsumerWidget {
             _PromoCard(),
             const SizedBox(height: AppSpacing.s5),
             Center(
-              child: Text(
-                'Ehliyet Akademi · v1.0 (geliştirme)',
-                style: TextStyle(color: p.text3, fontSize: 12),
+              // GERÇEK sürüm — sabit dize DEĞİL. Derleme numarası, cihazdaki yapının hangi AAB
+              // olduğunu kesin olarak söyler; teşhis için tek güvenilir işaret budur.
+              child: FutureBuilder<AppVersion>(
+                future: AppVersion.load(),
+                builder: (context, snap) => Text(
+                  'Ehliyet Akademi · ${(snap.data ?? AppVersion.unknown).label}',
+                  style: TextStyle(color: p.text3, fontSize: 12),
+                ),
               ),
             ),
           ],
@@ -150,11 +156,13 @@ class ProfileScreen extends ConsumerWidget {
     child: Divider(height: 1, color: p.border),
   );
 
-  static void _showAbout(BuildContext context) {
+  static Future<void> _showAbout(BuildContext context) async {
+    final version = await AppVersion.load();
+    if (!context.mounted) return;
     showAboutDialog(
       context: context,
       applicationName: 'Ehliyet Akademi',
-      applicationVersion: 'v1.0 (geliştirme)',
+      applicationVersion: version.label,
       applicationLegalese:
           'B sınıfı ehliyet sınavına akıllı, kişisel ve çevrimdışı hazırlık.\n'
           'Kesin ve güncel kural için MEB/MTSK esastır.',

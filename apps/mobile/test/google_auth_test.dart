@@ -1,3 +1,4 @@
+import 'package:ehliyet_akademi/core/app_version.dart';
 import 'package:ehliyet_akademi/data/auth/google_auth_service.dart';
 import 'package:ehliyet_akademi/design/brand.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'helpers.dart';
 ///
 /// `GoogleAuthService` arayüzü sayesinde platform kanalı GEREKMEZ: sahte servis bütün akışı sürer.
 void main() {
+  _versionTests();
   _diagnosticsTests();
   Future<void> openAuth(WidgetTester tester) async {
     await tester.tap(find.text('Profil'));
@@ -159,6 +161,35 @@ void _diagnosticsTests() {
       const e = GoogleSignInError('kullanıcı mesajı', technical: 'code=X description=Y');
       expect(e.message, 'kullanıcı mesajı');
       expect(e.technical, 'code=X description=Y');
+    });
+  });
+}
+
+/// GOOGLE_PLAY_SIGNIN_ROOT_CAUSE.md — sürüm görünürlüğü.
+///
+/// Sabit yazılmış `'v1.0 (geliştirme)'` dizesi, bir test kullanıcısının cihazındaki yapının
+/// hangi AAB olduğunu **öğrenilemez** kılıyordu. Derleme numarası artık gerçek pakete dayanır.
+void _versionTests() {
+  group('uygulama sürümü', () {
+    tearDown(() => AppVersion.setForTest(null));
+
+    test('etiket sürüm ADINI ve DERLEME NUMARASINI birlikte gösterir', () {
+      const v = AppVersion(name: '1.0.0', build: '3');
+      expect(v.label, 'v1.0.0 (3)');
+    });
+
+    test('derleme numarası etikette MUTLAKA bulunur — teşhisin can alıcı parçası', () {
+      const v = AppVersion(name: '2.4.1', build: '17');
+      expect(v.label, contains('(17)'));
+    });
+
+    test('okunamayan sürüm ÇÖKMEZ, dürüst yer tutucu döner', () {
+      expect(AppVersion.unknown.label, 'v? (?)');
+    });
+
+    test('sabit "geliştirme" etiketi ARTIK YOK', () {
+      const v = AppVersion(name: '1.0.0', build: '3');
+      expect(v.label.toLowerCase(), isNot(contains('geliştirme')));
     });
   });
 }

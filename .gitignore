@@ -43,3 +43,9 @@ sınav-soruları-pdf/
 # Loose reference PDFs
 /*.pdf
 google-services.json
+
+# Google Cloud servis hesabı anahtarları — ASLA depoya girmez.
+# (RevenueCat/Play doğrulaması için indirilen JSON'lar bu desene uyar.)
+*-[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f].json
+**/service-account*.json
+**/*service_account*.json

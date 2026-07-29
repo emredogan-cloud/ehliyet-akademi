@@ -53,8 +53,21 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   void initState() {
     super.initState();
     _billing = ref.read(billingGatewayProvider);
-    _billing.listen(_onPurchase);
+    _billing.listen(_onPurchase, onError: _onStoreError);
     _loadStore();
+  }
+
+  /// Faz 2 — mağaza akışından gelen HATA.
+  ///
+  /// "Bu ürüne zaten sahipsin" bir çıkmaz değildir: satın almanın gerçekten var olduğunun
+  /// kanıtıdır. Eski davranışta bu olay hiç dinlenmiyordu; kullanıcı düğmeye basıyor, Play
+  /// "zaten sahipsin" diyor ve ekranda HİÇBİR ŞEY olmuyordu. Artık geri yükleme kendiliğinden
+  /// tetiklenir — kullanıcıdan bir şey yapması istenmez.
+  Future<void> _onStoreError(BillingFailure failure) async {
+    if (!mounted) return;
+    setState(() => _busy = false);
+    _snack(failure.message);
+    if (failure.alreadyOwned) await _restore(silent: true);
   }
 
   Future<void> _loadStore() async {
@@ -83,34 +96,36 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   /// · [BillingServerBridge.revenueCatWebhook] — sunucu yetkiyi RevenueCat webhook'undan alır;
   ///   istemcide ham makbuz yoktur, bu yüzden sahiplik sunucudan **tazelenir**.
   Future<void> _onPurchase(BillingPurchase purchase) async {
-    try {
-      final token = purchase.purchaseToken;
-      if (token != null && token.isNotEmpty) {
-        final serverId =
-            productByStoreId(purchase.storeProductId)?.id ??
-            purchase.storeProductId.replaceAll('_', '-');
-        final owned = await ref
-            .read(entitlementsApiProvider)
-            .validatePurchase(
-              productId: serverId,
-              purchaseToken: token,
-              packageName: AppConfig.androidPackage,
-            );
-        await ref.read(entitlementsProvider.notifier).applyOwned(owned);
-      } else {
-        await ref.read(entitlementsProvider.notifier).refresh();
-      }
-      if (mounted) {
-        setState(() => _busy = false);
-        await showPremiumSuccess(context);
-      }
-    } catch (_) {
-      if (mounted) {
-        setState(() => _busy = false);
-        _snack('Doğrulama başarısız. Daha sonra "Geri yükle" ile tekrar dene.');
-      }
+    // SIRA DEĞİŞTİ (Faz 2): önce erişim açılır, sonra sunucuya bağlanmaya çalışılır.
+    //
+    // Eski sıra tam tersiydi ve misafir kullanıcıda şu zinciri üretiyordu: Play ödemeyi alır →
+    // `POST /api/iap/validate` **401** → istisna → hak HİÇ verilmez → özellikler kilitli kalır.
+    // Kullanıcı para ödemiş ama uygulama bunu göremiyordu. Artık mağazanın onayladığı satın alma
+    // cihaza yazılır ve erişim anında açılır; sunucuya bağlama başarısız olursa makbuz kuyrukta
+    // bekler ve oturum açılınca/uygulama açılınca yeniden denenir.
+    final bound = await ref
+        .read(entitlementsProvider.notifier)
+        .grantFromStore(
+          storeProductId: purchase.storeProductId,
+          purchaseToken: purchase.purchaseToken,
+          nowMs: DateTime.now().millisecondsSinceEpoch,
+        );
+    // RevenueCat yolunda ham makbuz YOKTUR; sahiplik sunucudan tazelenir.
+    if (!bound && purchase.purchaseToken == null) {
+      await ref.read(entitlementsProvider.notifier).refresh();
+    }
+    if (!mounted) return;
+    setState(() => _busy = false);
+    // Kutlama YALNIZ satın alma anında; sessiz geri yüklemede pencere açılmaz.
+    if (_celebrateNextGrant) {
+      _celebrateNextGrant = false;
+      await showPremiumSuccess(context);
     }
   }
+
+  /// Bir sonraki hak verilişinde kutlama penceresi açılsın mı? (Satın alma → evet, açılışta
+  /// gelen bekleyen bir işlem → hayır.)
+  bool _celebrateNextGrant = false;
 
   Future<void> _buy() async {
     final product = _storeProduct;
@@ -118,7 +133,10 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
       _snack('Mağaza şu an kullanılamıyor. Lütfen daha sonra tekrar dene.');
       return;
     }
-    setState(() => _busy = true);
+    setState(() {
+      _busy = true;
+      _celebrateNextGrant = true;
+    });
     final result = await _billing.purchase(product);
     if (!mounted) return;
     switch (result) {
@@ -130,33 +148,73 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
         }
       // Vazgeçme HATA DEĞİLDİR — mesaj gösterilmez (Faz 2 kalıbı).
       case BillingCancelled():
-        setState(() => _busy = false);
-      case BillingFailure(:final message):
-        setState(() => _busy = false);
+        setState(() {
+          _busy = false;
+          _celebrateNextGrant = false;
+        });
+      case BillingFailure(:final message, :final alreadyOwned):
+        setState(() {
+          _busy = false;
+          _celebrateNextGrant = false;
+        });
         _snack(message);
+        // "Zaten sahipsin" → kullanıcıyı bir çıkmazda bırakma, erişimi kendin getir.
+        if (alreadyOwned) await _restore(silent: true);
     }
   }
 
   /// **Play politikası: "Satın Alımı Geri Yükle" her koşulda erişilebilir olmalıdır.** Bu yüzden
   /// düğme mağaza kapalıyken de görünür — sahiplik sunucudan da gelebilir.
-  Future<void> _restore() async {
+  /// Faz 2 — geri yükleme ARTIK GERÇEKTEN ÇALIŞIYOR.
+  ///
+  /// İki kök neden vardı ve ikisi de düzeltildi:
+  /// 1. `PlayBillingGateway.restore()` mağazayı beklemeden boş sonuç dönüyordu; ekran bu boşluğa
+  ///    bakıp "bulunamadı" diyordu (bkz. o dosyadaki not).
+  /// 2. Sonuç yalnız SUNUCUDAN okunuyordu; misafirde sunucu 401 döndüğü için geri yüklenen
+  ///    satın alma hiçbir zaman görünmüyordu.
+  ///
+  /// [silent] true ise ("zaten sahipsin" sonrası otomatik çağrı) yalnız başarı bildirilir;
+  /// kullanıcı istemediği bir işlem için hata mesajı görmez.
+  Future<void> _restore({bool silent = false}) async {
+    if (_restoring) return;
+    setState(() => _restoring = true);
     final result = await _billing.restore();
+
+    // Mağazanın geri yüklediği her satın alma cihaza yazılır → erişim oturum olmadan da açılır.
+    if (result case BillingSuccess(:final purchases)) {
+      for (final p in purchases) {
+        await ref
+            .read(entitlementsProvider.notifier)
+            .grantFromStore(
+              storeProductId: p.storeProductId,
+              purchaseToken: p.purchaseToken,
+              nowMs: DateTime.now().millisecondsSinceEpoch,
+            );
+      }
+    }
+    // Sunucu tarafı da tazelenir (başka cihazda alınmış olabilir) ve bekleyen makbuzlar bağlanır.
     await ref.read(entitlementsProvider.notifier).refresh();
+    await ref.read(entitlementsProvider.notifier).bindPendingPurchases();
+
     if (!mounted) return;
+    setState(() => _restoring = false);
     switch (result) {
       case BillingFailure(:final message):
-        _snack(message);
+        if (!silent) _snack(message);
       case BillingCancelled():
         break;
       case BillingSuccess():
         final owned = ref.read(entitlementsProvider);
-        _snack(
-          isPremium(owned)
-              ? 'Satın almaların geri yüklendi.'
-              : 'Geri yüklenecek bir satın alma bulunamadı.',
-        );
+        if (isPremium(owned)) {
+          _snack('Satın almaların geri yüklendi.');
+        } else if (!silent) {
+          _snack('Geri yüklenecek bir satın alma bulunamadı.');
+        }
     }
   }
+
+  /// Geri yükleme sürüyor mu (düğme iki kez basılmasın, durum görünsün).
+  bool _restoring = false;
 
   void _snack(String m) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(m)));
 
@@ -174,8 +232,14 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
         // Play politikası: geri yükleme her koşulda erişilebilir olmalı → koşulsuz eylem.
         actions: [
           TextButton(
-            onPressed: _restore,
-            child: const Text('Geri yükle'),
+            onPressed: _restoring ? null : _restore,
+            child: _restoring
+                ? const SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : const Text('Geri yükle'),
           ),
         ],
       ),
@@ -230,6 +294,11 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                             'Sahip olduğun paketi "Geri yükle" ile getirebilirsin.',
                       ),
                     ),
+                  // Faz 2 — SAHİPSE satın alma yüzeyi HİÇ ÇİZİLMEZ.
+                  //
+                  // Devre dışı bir "Paketi Satın Al" düğmesi bırakmak yetmez: kullanıcı ödediği
+                  // bir şeyin satış ekranını görmeye devam eder. Sahiplik durumunda ekran bir
+                  // DURUM ekranına dönüşür — fiyat, satın alma düğmesi ve güven şeridi kalkar.
                   if (hasPremium)
                     _OwnedBanner()
                   else ...[
@@ -325,29 +394,53 @@ class _TrustRow extends StatelessWidget {
   }
 }
 
+/// Sahiplik durumu — satın alma düğmesinin YERİNE geçer.
+///
+/// Faz 2 gereği düğme "Premium Aktif"e döner ve BASILAMAZ. Devre dışı bir düğme bırakmak yerine
+/// aynı yerde aynı boyutta bir DURUM göstergesi çizilir: kullanıcı aradığı yerde cevabı bulur,
+/// ama tıklanacak bir şey olmadığı da bakışta bellidir.
 class _OwnedBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.s4),
-      decoration: BoxDecoration(
-        color: p.green.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(AppRadii.lg),
-        border: Border.all(color: p.green.withValues(alpha: 0.4)),
-      ),
-      child: Row(
-        children: [
-          Icon(Icons.verified_rounded, color: p.green, size: 22),
-          const SizedBox(width: AppSpacing.s3),
-          Expanded(
-            child: Text(
-              'Premium paketine sahipsin — tüm içerik açık. İyi çalışmalar!',
-              style: TextStyle(color: p.text, fontWeight: FontWeight.w600, fontSize: 14),
+    return Column(
+      children: [
+        Semantics(
+          label: 'Premium Aktif',
+          enabled: false,
+          child: Container(
+            height: 56,
+            decoration: BoxDecoration(
+              color: p.green.withValues(alpha: 0.14),
+              borderRadius: BorderRadius.circular(AppRadii.pill),
+              border: Border.all(color: p.green.withValues(alpha: 0.55), width: 1.6),
+            ),
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.verified_rounded, color: p.green, size: 21),
+                const SizedBox(width: AppSpacing.s2),
+                Text(
+                  'Premium Aktif',
+                  style: TextStyle(
+                    color: p.green,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+        const SizedBox(height: AppSpacing.s3),
+        Text(
+          'Tüm içerik açık — ömür boyu. İyi çalışmalar!',
+          textAlign: TextAlign.center,
+          style: TextStyle(color: p.text2, fontSize: 13.5, height: 1.4),
+        ),
+      ],
     );
   }
 }

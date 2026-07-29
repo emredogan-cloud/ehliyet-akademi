@@ -22,12 +22,23 @@ class IapService {
   }
 
   /// Satın alma akışını dinle. Satın alınan/geri yüklenen her ürün [onPurchased] ile doğrulanır.
-  void listen(Future<void> Function(PurchaseDetails) onPurchased) {
+  ///
+  /// Faz 2 — [onError] EKLENDİ. Eskiden yalnız `purchased`/`restored` işleniyor, `error` sessizce
+  /// düşürülüyordu. Play'in "bu ürüne zaten sahipsin" yanıtı da bir `error` olayıdır; yutulduğu
+  /// için kullanıcı düğmeye basıyor ve HİÇBİR ŞEY olmuyordu.
+  void listen(
+    Future<void> Function(PurchaseDetails) onPurchased, {
+    Future<void> Function(IAPError error)? onError,
+  }) {
     _sub ??= _iap.purchaseStream.listen((purchases) async {
       for (final pd in purchases) {
         if (pd.status == PurchaseStatus.purchased || pd.status == PurchaseStatus.restored) {
           await onPurchased(pd);
+        } else if (pd.status == PurchaseStatus.error && pd.error != null) {
+          await onError?.call(pd.error!);
         }
+        // Tamamlama HER KOŞULDA: işlenmemiş bir işlem Play tarafında "beklemede" kalır ve
+        // sonraki satın alma denemesi de aynı yerde takılır.
         if (pd.pendingCompletePurchase) {
           await _iap.completePurchase(pd);
         }
@@ -44,6 +55,18 @@ class IapService {
     _sub?.cancel();
     _sub = null;
   }
+}
+
+/// Play'in "bu ürüne zaten sahipsin" yanıtı mı?
+///
+/// `in_app_purchase` bu durumu Android'de [IAPError] içinde taşır; kod/metin sürümler arasında
+/// değişebildiği için üç alana birden bakılır. Yanlış pozitif ZARARSIZDIR: sonucu bir geri yükleme
+/// denemesidir ve geri yükleme her koşulda güvenlidir (idempotent).
+bool isAlreadyOwnedError(IAPError e) {
+  final haystack = '${e.code} ${e.message} ${e.details}'.toLowerCase();
+  return haystack.contains('itemalreadyowned') ||
+      haystack.contains('item_already_owned') ||
+      haystack.contains('already owned');
 }
 
 final iapServiceProvider = Provider<IapService>((ref) {

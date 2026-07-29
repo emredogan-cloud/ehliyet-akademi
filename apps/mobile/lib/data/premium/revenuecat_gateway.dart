@@ -212,7 +212,10 @@ class RevenueCatGateway implements BillingGateway {
   );
 
   @override
-  void listen(Future<void> Function(BillingPurchase) onPurchase) {
+  void listen(
+    Future<void> Function(BillingPurchase) onPurchase, {
+    Future<void> Function(BillingFailure)? onError,
+  }) {
     if (!isConfigured || _listener != null) return;
     void handler(CustomerInfo info) {
       final active = info.entitlements.active;
@@ -238,8 +241,11 @@ class RevenueCatGateway implements BillingGateway {
     final code = PurchasesErrorHelper.getErrorCode(e);
     return switch (code) {
       PurchasesErrorCode.purchaseCancelledError => const BillingCancelled(),
+      // Faz 2: bu bir ÇIKMAZ değil — satın almanın var olduğunun kanıtı. Çağıran geri yüklemeyi
+      // kendisi tetikler; kullanıcıdan bir şey yapması istenmez.
       PurchasesErrorCode.productAlreadyPurchasedError => const BillingFailure(
-        'Bu ürüne zaten sahipsin. "Geri yükle" ile erişimini getirebilirsin.',
+        'Bu paketi zaten satın almışsın — erişimin geri getiriliyor…',
+        alreadyOwned: true,
       ),
       PurchasesErrorCode.paymentPendingError => const BillingFailure(
         'Ödemen beklemede. Onaylandığında erişimin otomatik açılacak.',

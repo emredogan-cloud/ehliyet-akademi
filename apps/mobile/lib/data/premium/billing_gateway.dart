@@ -102,8 +102,15 @@ class BillingCancelled extends BillingResult {
 
 /// Gerçek hata; [message] kullanıcıya gösterilir.
 class BillingFailure extends BillingResult {
-  const BillingFailure(this.message);
+  const BillingFailure(this.message, {this.alreadyOwned = false});
   final String message;
+
+  /// Play "bu ürüne zaten sahipsin" dedi.
+  ///
+  /// AYRI BİR ALAN OLMASI ŞART: bu, kullanıcının düzeltebileceği bir hata DEĞİL, satın almanın
+  /// gerçekten var olduğunun kanıtıdır. Doğru davranış hata göstermek değil, geri yüklemeyi
+  /// tetiklemektir. Ekranın bunu metin karşılaştırarak anlaması kırılgan olurdu.
+  final bool alreadyOwned;
 }
 
 /// Ödeme altyapısı sözleşmesi.
@@ -147,7 +154,14 @@ abstract class BillingGateway {
 
   /// Uygulama dışında tamamlanan satın almalar (ör. kesintiden sonra Play'in tamamladığı işlem)
   /// için dinleyici. `in_app_purchase` yolunda bu ŞARTTIR.
-  void listen(Future<void> Function(BillingPurchase) onPurchase);
+  ///
+  /// Faz 2 — [onError] eklendi. Mağaza akışı yalnız başarıyı değil HATAYI da bildirir; en
+  /// önemlisi "bu ürüne zaten sahipsin". Bu olay yutulduğunda kullanıcı satın alma düğmesine
+  /// basıyor ve hiçbir şey olmuyordu (sahadaki asıl şikâyet buydu).
+  void listen(
+    Future<void> Function(BillingPurchase) onPurchase, {
+    Future<void> Function(BillingFailure)? onError,
+  });
 
   void dispose();
 }

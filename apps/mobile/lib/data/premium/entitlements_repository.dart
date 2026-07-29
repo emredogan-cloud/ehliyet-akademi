@@ -4,7 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../core/config.dart';
 import '../../core/network/api_client.dart';
+import '../../domain/premium/products.dart';
+import 'store_purchase_store.dart';
 
 const _kEntitlements = 'ea:entitlements:v1';
 
@@ -56,8 +59,17 @@ class DioEntitlementsApi implements EntitlementsApi {
   }
 }
 
-/// Sahip olunan ürünler (yetenek kaynağı). Yerelde önbelleklenir (`ea:entitlements:v1`, SET —
-/// sunucu kazanır), oturum açıkken sunucudan tazelenir.
+/// Sahip olunan ürünler — yetenek kaynağı.
+///
+/// Faz 2: sahiplik artık İKİ kaynağın BİRLEŞİMİDİR ve bu, kök nedenin doğrudan karşılığıdır:
+///
+/// · **Sunucu** (`GET /api/purchases`) — çapraz cihaz senkronunun kaynağı, oturum ŞART.
+/// · **Cihazdaki mağaza defteri** ([StorePurchaseStore]) — Play'in `purchased`/`restored` olarak
+///   onayladığı satın almalar. Oturum GEREKTİRMEZ.
+///
+/// Eskiden yalnız birincisi vardı. Uygulama misafir kullanımına açık olduğu için, misafirken
+/// satın alan kullanıcının hakkı hiçbir yere yazılamıyor ve özellikler kilitli kalıyordu.
+/// İkisinin birleşimi bunu kapatır: para ödendiyse erişim açıktır, oturum olsun ya da olmasın.
 class EntitlementsController extends Notifier<List<String>> {
   @override
   List<String> build() {
@@ -66,6 +78,10 @@ class EntitlementsController extends Notifier<List<String>> {
   }
 
   EntitlementsApi get _api => ref.read(entitlementsApiProvider);
+  StorePurchaseStore get _store => ref.read(storePurchaseStoreProvider);
+
+  /// Sunucudan gelen sahiplik (önbelleklenmiş hâli dâhil). Birleşimin bir yarısı.
+  List<String> _serverOwned = const [];
 
   Future<void> _load() async {
     // Önce yerel önbellek (çevrimdışı gösterim), sonra sunucudan tazele.
@@ -73,40 +89,105 @@ class EntitlementsController extends Notifier<List<String>> {
       final prefs = await SharedPreferences.getInstance();
       final raw = prefs.getString(_kEntitlements);
       if (raw != null) {
-        state = (jsonDecode(raw) as List).map((e) => e.toString()).toList();
+        _serverOwned = (jsonDecode(raw) as List).map((e) => e.toString()).toList();
       }
     } catch (_) {}
+    await _publish();
     await refresh();
+    // Açılışta bekleyen makbuz varsa sunucuya bağlamayı dene (ağ/oturum o sırada gelmiş olabilir).
+    await bindPendingPurchases();
   }
 
   /// Sunucudan sahiplik listesini yeniden türet (SET, bayat haklar temizlenir).
   Future<void> refresh() async {
     try {
-      final owned = await _api.fetchOwned();
-      await _cache(owned);
-      state = owned;
+      _serverOwned = await _api.fetchOwned();
+      await _cache(_serverOwned);
     } catch (_) {
       // ağ/oturum yok → önbellek korunur
     }
+    await _publish();
   }
 
-  /// Doğrulanmış satın almadan gelen güncel sahipliği uygula.
+  /// Doğrulanmış satın almadan gelen güncel sunucu sahipliğini uygula.
   Future<void> applyOwned(List<String> owned) async {
+    _serverOwned = owned;
     await _cache(owned);
-    state = owned;
+    await _publish();
   }
 
-  /// Çıkışta cihazdaki sahiplik önbelleğini SİL.
+  /// Faz 2 — MAĞAZANIN onayladığı bir satın almayı hakka çevir.
   ///
-  /// Önbellek cihaz genelindedir; kullanıcıya göre bölünmez. Silinmezse aynı telefonda oturum
-  /// açan ikinci kullanıcı, birincinin premium'unu görürdü. Mağaza tarafındaki gerçek satın alma
-  /// kaybolmaz — "Geri yükle" onu her zaman geri getirir.
+  /// Sıra önemlidir: **önce cihaza yaz, sonra sunucuya bağlamayı dene**. Tersi yapıldığında
+  /// (eski davranış) sunucu 401 dönünce istisna fırlıyor ve hak hiç verilmiyordu. Artık sunucu
+  /// ulaşılamazsa bile erişim açılır; makbuz kuyrukta bekler.
+  ///
+  /// Dönüş: sunucuya bağlanabildiyse `true`.
+  Future<bool> grantFromStore({
+    required String storeProductId,
+    String? purchaseToken,
+    required int nowMs,
+  }) async {
+    await _store.add(
+      StorePurchase(storeProductId: storeProductId, purchaseToken: purchaseToken, atMs: nowMs),
+    );
+    await _publish();
+    return _bind(storeProductId: storeProductId, purchaseToken: purchaseToken);
+  }
+
+  /// Kuyrukta bekleyen makbuzları sunucuya bağlamayı dene (oturum açılınca / açılışta / geri
+  /// yüklemede çağrılır). Sessizdir: başarısızlık kullanıcıya yansımaz, erişim zaten açıktır.
+  Future<void> bindPendingPurchases() async {
+    for (final p in await _store.read()) {
+      final token = p.purchaseToken;
+      if (token == null || token.isEmpty) continue;
+      await _bind(storeProductId: p.storeProductId, purchaseToken: token);
+    }
+  }
+
+  Future<bool> _bind({required String storeProductId, String? purchaseToken}) async {
+    if (purchaseToken == null || purchaseToken.isEmpty) return false;
+    final serverId = productByStoreId(storeProductId)?.id ?? storeProductId.replaceAll('_', '-');
+    try {
+      final owned = await _api.validatePurchase(
+        productId: serverId,
+        purchaseToken: purchaseToken,
+        packageName: AppConfig.androidPackage,
+      );
+      _serverOwned = owned;
+      await _cache(owned);
+      await _store.markBound(storeProductId);
+      await _publish();
+      return true;
+    } catch (_) {
+      // Oturum yok / ağ yok / sunucu hatası → makbuz kuyrukta kalır, erişim açık kalır.
+      return false;
+    }
+  }
+
+  /// Çıkışta yalnız SUNUCU tarafı sahiplik silinir.
+  ///
+  /// `ea:entitlements:v1` kullanıcıya aittir; aynı telefonda oturum açan ikinci kullanıcı
+  /// birincinin premium'unu görmemeli (web'deki P0'ın mobil karşılığı).
+  ///
+  /// Cihazdaki mağaza defteri KORUNUR: o kayıt kullanıcıya değil, cihazdaki **Play hesabına**
+  /// aittir. Silinseydi, çıkış yapan kullanıcı kendi satın aldığı paketi kaybederdi.
   Future<void> clearForSignOut() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.remove(_kEntitlements);
     } catch (_) {}
-    state = const [];
+    _serverOwned = const [];
+    await _publish();
+  }
+
+  /// İki kaynağı birleştirip yayımla.
+  Future<void> _publish() async {
+    final fromStore = <String>[
+      for (final p in await _store.read())
+        productByStoreId(p.storeProductId)?.id ?? p.storeProductId.replaceAll('_', '-'),
+    ];
+    state = {..._serverOwned, ...fromStore}.toList();
   }
 
   Future<void> _cache(List<String> owned) async {

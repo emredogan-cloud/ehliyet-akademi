@@ -443,7 +443,18 @@ class FakeIapService implements IapService {
   }
 
   @override
-  void listen(Future<void> Function(PurchaseDetails) onPurchased) => _handler = onPurchased;
+  void listen(
+    Future<void> Function(PurchaseDetails) onPurchased, {
+    Future<void> Function(IAPError error)? onError,
+  }) {
+    _handler = onPurchased;
+    _errorHandler = onError;
+  }
+
+  Future<void> Function(IAPError)? _errorHandler;
+
+  /// Play'in bir HATA olayı ürettiğini taklit et (ör. "bu ürüne zaten sahipsin").
+  Future<void> emitError(IAPError error) async => _errorHandler?.call(error);
 
   @override
   Future<void> buy(ProductDetails details) async => bought.add(details.id);

@@ -15,6 +15,7 @@ import 'package:ehliyet_akademi/data/content/content_repository.dart';
 import 'package:ehliyet_akademi/data/practice/question_repository.dart';
 import 'package:ehliyet_akademi/data/premium/billing_gateway.dart';
 import 'package:ehliyet_akademi/data/premium/entitlements_repository.dart';
+import 'package:ehliyet_akademi/data/premium/store_purchase_store.dart';
 import 'package:ehliyet_akademi/domain/auth/app_user.dart';
 import 'package:ehliyet_akademi/domain/community/community_models.dart';
 import 'package:ehliyet_akademi/domain/community/group_models.dart';
@@ -303,18 +304,34 @@ class FakeCoachApi implements CoachApi {
 
 /// A fake entitlements API for tests — no network. Returns a fixed owned list.
 class FakeEntitlementsApi implements EntitlementsApi {
-  FakeEntitlementsApi([this.owned = const []]);
+  FakeEntitlementsApi([this.owned = const [], this.signedIn = true]);
   List<String> owned;
 
+  /// Faz 2 — MİSAFİR taklidi. `false` iken sunucu her iki ucu da reddeder (401), tıpkı gerçek
+  /// sunucunun oturumsuz istekte yaptığı gibi. Misafir satın alma hatası ancak böyle test edilir.
+  bool signedIn;
+
+  int validateCalls = 0;
+  final List<String> validatedTokens = [];
+
   @override
-  Future<List<String>> fetchOwned() async => owned;
+  Future<List<String>> fetchOwned() async {
+    if (!signedIn) return const [];
+    return owned;
+  }
 
   @override
   Future<List<String>> validatePurchase({
     required String productId,
     required String purchaseToken,
     required String packageName,
-  }) async => [...owned, productId];
+  }) async {
+    validateCalls++;
+    validatedTokens.add(purchaseToken);
+    if (!signedIn) throw Exception('401 — Oturum gerekli.');
+    owned = [...owned, productId];
+    return owned;
+  }
 }
 
 /// A small question bank that fully covers the exam blueprint (23/12/9/6) with headroom + variety.
@@ -637,6 +654,12 @@ Future<void> pumpApp(
   /// Play Store yoktur; dürüst varsayılan budur). Ödeme akışını test edenler kendi ağ geçidini verir.
   BillingGateway? billing,
   List<String>? owned,
+
+  /// Faz 2 — sahiplik API'sini doğrudan vermek (misafir taklidi, çağrı sayacı).
+  FakeEntitlementsApi? entitlementsApi,
+
+  /// Faz 2 — cihazdaki mağaza defteri (mağazanın onayladığı satın almalar).
+  StorePurchaseStore? storePurchases,
   Map<String, Object>? prefs,
   bool onboardingSeen = true,
 
@@ -684,7 +707,12 @@ Future<void> pumpApp(
         groupsApiProvider.overrideWithValue(groups ?? FakeGroupsApi()),
         googleAuthServiceProvider.overrideWithValue(google ?? FakeGoogleAuthService()),
         billingGatewayProvider.overrideWithValue(billing ?? FakeBillingGateway()),
-        entitlementsApiProvider.overrideWithValue(FakeEntitlementsApi(owned ?? const [])),
+        entitlementsApiProvider.overrideWithValue(
+          entitlementsApi ?? FakeEntitlementsApi(owned ?? const []),
+        ),
+        storePurchaseStoreProvider.overrideWithValue(
+          storePurchases ?? MemoryStorePurchaseStore(),
+        ),
         // Content + questions come from fixed snapshots in tests → never touch drift/network.
         if (overrideContent) ...[
           contentSnapshotProvider.overrideWith((ref) async => content ?? sampleSnapshot()),
@@ -870,6 +898,9 @@ class FakeBillingGateway implements BillingGateway {
   int disposeCalls = 0;
   Future<void> Function(BillingPurchase)? onPurchase;
 
+  /// Mağaza akışından gelen hataları ekrana ileten geri çağırım (Faz 2).
+  Future<void> Function(BillingFailure)? onError;
+
   @override
   String get name => 'fake';
 
@@ -910,8 +941,13 @@ class FakeBillingGateway implements BillingGateway {
   };
 
   @override
-  void listen(Future<void> Function(BillingPurchase) onPurchase) =>
-      this.onPurchase = onPurchase;
+  void listen(
+    Future<void> Function(BillingPurchase) onPurchase, {
+    Future<void> Function(BillingFailure)? onError,
+  }) {
+    this.onPurchase = onPurchase;
+    this.onError = onError;
+  }
 
   @override
   void dispose() => disposeCalls++;

@@ -125,7 +125,7 @@ class ProfileScreen extends ConsumerWidget {
                       color: p.red,
                       title: 'Çıkış yap',
                       subtitle: 'Hesabından güvenle çık',
-                      onTap: () => ref.read(authControllerProvider.notifier).logout(),
+                      onTap: () => _logout(context, ref),
                     ),
                   ],
                 ],
@@ -155,6 +155,19 @@ class ProfileScreen extends ConsumerWidget {
     padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4),
     child: Divider(height: 1, color: p.border),
   );
+
+  /// Faz 3 — çıkış: oturumu kapat → **gezinme yığınını temizle** → Giriş ekranına in.
+  ///
+  /// NEDEN yığın temizlenir: eskiden yalnız durum sıfırlanıyordu; kullanıcı Profil'de kalıyor ve
+  /// hiçbir şey olmamış gibi görünüyordu. `context.go` tüm yığını değiştirir — geri tuşuyla oturumlu
+  /// bir ekrana dönülemez. Bu yüzden `push` DEĞİL `go` kullanılır.
+  static Future<void> _logout(BuildContext context, WidgetRef ref) async {
+    final router = GoRouter.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    await ref.read(authControllerProvider.notifier).logout();
+    router.go('/auth');
+    messenger.showSnackBar(const SnackBar(content: Text('Çıkış yapıldı.')));
+  }
 
   static Future<void> _showAbout(BuildContext context) async {
     final version = await AppVersion.load();

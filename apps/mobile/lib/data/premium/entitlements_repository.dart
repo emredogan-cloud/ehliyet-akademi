@@ -96,6 +96,19 @@ class EntitlementsController extends Notifier<List<String>> {
     state = owned;
   }
 
+  /// Çıkışta cihazdaki sahiplik önbelleğini SİL.
+  ///
+  /// Önbellek cihaz genelindedir; kullanıcıya göre bölünmez. Silinmezse aynı telefonda oturum
+  /// açan ikinci kullanıcı, birincinin premium'unu görürdü. Mağaza tarafındaki gerçek satın alma
+  /// kaybolmaz — "Geri yükle" onu her zaman geri getirir.
+  Future<void> clearForSignOut() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove(_kEntitlements);
+    } catch (_) {}
+    state = const [];
+  }
+
   Future<void> _cache(List<String> owned) async {
     try {
       final prefs = await SharedPreferences.getInstance();

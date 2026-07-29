@@ -44,6 +44,21 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     super.dispose();
   }
 
+  /// Giriş ekranından ÇIK.
+  ///
+  /// Ekrana iki yoldan gelinir ve ikisi farklı yığın bırakır:
+  /// · Profil'den **push** ile → geri alınacak bir sayfa VARDIR → `pop`.
+  /// · Çıkış sonrası **go** ile → yığın temizdir → `pop` yapılamaz; Ana Sayfa'ya gidilir.
+  ///
+  /// Bunu ayırmamak, çıkış yapıp tekrar giren kullanıcıyı giriş ekranında KİLİTLİ bırakıyordu.
+  void _leaveAuth() {
+    if (context.canPop()) {
+      context.pop();
+    } else {
+      context.go('/home');
+    }
+  }
+
   Future<void> _submit() async {
     setState(() => _error = null);
     if (!_formKey.currentState!.validate()) return;
@@ -59,7 +74,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     if (!mounted) return;
     setState(() => _busy = false);
     if (err == null) {
-      if (context.canPop()) context.pop();
+      _leaveAuth();
     } else {
       setState(() => _error = err);
     }
@@ -77,7 +92,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     if (!mounted) return;
     setState(() => _busy = false);
     if (err == null) {
-      if (context.canPop()) context.pop();
+      _leaveAuth();
     } else if (err.isNotEmpty) {
       setState(() => _error = err);
     }
@@ -131,7 +146,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            _AuthHero(isRegister: _isRegister),
+            _AuthHero(isRegister: _isRegister, onBack: _leaveAuth),
             Padding(
               padding: const EdgeInsets.fromLTRB(
                 AppSpacing.s5,
@@ -341,8 +356,11 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
 /// 3. Marka kilidi ve slogan, kaynağın solda bıraktığı boşluğa oturur — referanstaki yerleşim.
 /// 4. Alt kenarda zemine eriyen ikinci bir degrade, hero'yu form kartına bağlar.
 class _AuthHero extends StatelessWidget {
-  const _AuthHero({required this.isRegister});
+  const _AuthHero({required this.isRegister, required this.onBack});
   final bool isRegister;
+
+  /// Geri eylemi ekrandan gelir: yığın boşsa (çıkış sonrası) "geri" Ana Sayfa demektir.
+  final VoidCallback onBack;
 
   /// Varlığın gerçek en-boy oranı (1080×422). Sabit değil, **ölçülmüş** değerdir; varlık
   /// değişirse burası da değişmeli, yoksa hero yüksekliği görselle uyuşmaz.
@@ -448,7 +466,7 @@ class _AuthHero extends StatelessWidget {
                   tooltip: 'Geri',
                   icon: const Icon(Icons.arrow_back_rounded),
                   color: hero.text,
-                  onPressed: () => context.canPop() ? context.pop() : null,
+                  onPressed: onBack,
                 ),
               ),
               // Marka kilidi + slogan: kaynağın SOLDA bıraktığı boşlukta, referanstaki gibi.

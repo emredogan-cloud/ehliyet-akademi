@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/storage/token_store.dart';
 import '../../data/auth/auth_api.dart';
 import '../../data/auth/google_auth_service.dart';
+import '../../data/premium/entitlements_repository.dart';
 import 'app_user.dart';
 
 enum AuthStatus { unknown, guest, authenticated }
@@ -92,15 +93,31 @@ class AuthController extends Notifier<AuthState> {
       case AuthSuccess(:final user, :final token):
         await _tokens.write(token);
         state = AuthState(AuthStatus.authenticated, user);
+        // Oturum açıldı → sahiplik SUNUCUDAN yeniden türetilir. Bu, hem yeni kullanıcının
+        // haklarını getirir hem de misafirken yapılmış bir satın almanın hesaba bağlanmasını
+        // tetikler (bkz. `EntitlementsController.refresh`).
+        await ref.read(entitlementsProvider.notifier).refresh();
         return null;
       case AuthFailure(:final message):
         return message;
     }
   }
 
+  /// Oturumu SONLANDIR — sunucu, yerel jeton ve **cihazdaki kullanıcıya bağlı izler** birlikte
+  /// temizlenir.
+  ///
+  /// NEDEN Google de kapatılır: yalnız uygulama jetonunu silmek, cihazdaki Google oturumunu açık
+  /// bırakıyordu; "Çıkış yap" sonrası Google ile giriş, hesap seçici hiç açılmadan AYNI hesapla
+  /// geri dönüyordu — kullanıcı için çıkış yapılmamış gibi. (Cihazda görüldü.)
+  ///
+  /// NEDEN yetki önbelleği silinir: `ea:entitlements:v1` cihaz genelindedir. Silinmezse aynı
+  /// telefonda oturum açan İKİNCİ kullanıcı, birincinin premium'unu görürdü — web'de P0 olarak
+  /// kayıtlı olan "aynı tarayıcıda kullanıcı sızıntısı" hatasının mobil karşılığı.
   Future<void> logout() async {
     await _api.logout();
     await _tokens.clear();
+    await ref.read(googleAuthServiceProvider).signOut();
+    await ref.read(entitlementsProvider.notifier).clearForSignOut();
     state = AuthState.guest;
   }
 }

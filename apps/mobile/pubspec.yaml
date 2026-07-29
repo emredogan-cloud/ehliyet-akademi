@@ -57,6 +57,11 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  # GERÇEK CİHAZ doğrulaması — `flutter test integration_test -d <device>` ile uygulama telefonda
+  # açılır ve akışlar orada koşturulur. Widget testleri (test/) bunu KAPSAMAZ: onlar sahte yüzeyde
+  # çalışır. CI'daki `flutter test` yalnız `test/` dizinini koşar; bu paket CI'yi yavaşlatmaz.
+  integration_test:
+    sdk: flutter
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

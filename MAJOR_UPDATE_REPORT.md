@@ -7,14 +7,14 @@
 
 ## 1. Durum
 
-| Kapı | Sonuç |
-|---|---|
-| `flutter analyze` | **0 sorun** |
-| `flutter test` (mobil) | **530 ✓** (başlangıç: 404) |
-| `pnpm test` (monorepo) | **9/9 görev ✓** — web 602 ✓ |
-| `pnpm lint` · `typecheck` · `format` · `build` | **✓ ✓ ✓ ✓** |
-| GitHub Actions | **CI ✓ · Mobile CI ✓ · CodeQL ✓** |
-| Gerçek cihaz (Redmi 8A, Android 11) | **8/8 ✓** |
+| Kapı                                           | Sonuç                             |
+| ---------------------------------------------- | --------------------------------- |
+| `flutter analyze`                              | **0 sorun**                       |
+| `flutter test` (mobil)                         | **530 ✓** (başlangıç: 404)        |
+| `pnpm test` (monorepo)                         | **9/9 görev ✓** — web 602 ✓       |
+| `pnpm lint` · `typecheck` · `format` · `build` | **✓ ✓ ✓ ✓**                       |
+| GitHub Actions                                 | **CI ✓ · Mobile CI ✓ · CodeQL ✓** |
+| Gerçek cihaz (Redmi 8A, Android 11)            | **8/8 ✓**                         |
 
 Her faz ayrı ayrı commit edildi, ayrı ayrı push edildi ve push'tan önce cihazda koşturuldu.
 
@@ -25,20 +25,20 @@ Her faz ayrı ayrı commit edildi, ayrı ayrı push edildi ve push'tan önce cih
 Fazlar teknik bağımlılığa göre sıralandı (izin verilmişti): kabuğu değiştiren 3/4/6 önce
 yapıldı, çünkü Faz 1'in koç işaretleri **nihai** gezinmeyi tanıtmak zorundaydı.
 
-| # | Faz | Sonuç |
-|---|---|---|
-| 3 | Çıkış | Oturum + Google oturumu + sahiplik önbelleği temizlenir, yığın Giriş ekranına çevrilir |
-| 4 | Topluluk | Alt gezinmede birinci sınıf sekme; kendi yığını olan altıncı dal |
-| 6 | Canlı zemin | Uygulamanın kökünde tek örnek; ölçülen kare maliyeti **p10 ≈ 5,2–6,4 ms** |
-| 1 | Koç işaretleri | Dokuz yüzeyi tanıtan tur; karartma, ışık halkası, Atla/Geri/İleri, kalıcı işaret |
-| 2 | Premium akışı | Misafir satın alma, "zaten sahipsin" ve geri yükleme düzeltildi |
-| 5 | Hesap silme | Referans tasarım + sunucu tarafı yeniden kimlik doğrulama |
-| 7 | Puanlama | Referans tasarım + üç tetik + spam koruması |
-| 11 | A/B/C/D | 1562 sorunun tamamı tam dört şıklı; kural şemaya bağlandı |
-| 9 | Ödeme ekranı | Referans tasarım; fiyat mağazadan, sahte aciliyet yok |
-| 10 | İlerleme | Rozet kutlaması, konfeti, tek dokunuşla paylaşım, sosyal kart |
-| 8 | Davet | Kod, ödül motoru, sahtecilik koruması, yönetici yüzeyi |
-| 12 | Cilalama | Ölçülen 20 kusur (taşma + erişilebilirlik) düzeltildi |
+| #   | Faz            | Sonuç                                                                                  |
+| --- | -------------- | -------------------------------------------------------------------------------------- |
+| 3   | Çıkış          | Oturum + Google oturumu + sahiplik önbelleği temizlenir, yığın Giriş ekranına çevrilir |
+| 4   | Topluluk       | Alt gezinmede birinci sınıf sekme; kendi yığını olan altıncı dal                       |
+| 6   | Canlı zemin    | Uygulamanın kökünde tek örnek; ölçülen kare maliyeti **p10 ≈ 5,2–6,4 ms**              |
+| 1   | Koç işaretleri | Dokuz yüzeyi tanıtan tur; karartma, ışık halkası, Atla/Geri/İleri, kalıcı işaret       |
+| 2   | Premium akışı  | Misafir satın alma, "zaten sahipsin" ve geri yükleme düzeltildi                        |
+| 5   | Hesap silme    | Referans tasarım + sunucu tarafı yeniden kimlik doğrulama                              |
+| 7   | Puanlama       | Referans tasarım + üç tetik + spam koruması                                            |
+| 11  | A/B/C/D        | 1562 sorunun tamamı tam dört şıklı; kural şemaya bağlandı                              |
+| 9   | Ödeme ekranı   | Referans tasarım; fiyat mağazadan, sahte aciliyet yok                                  |
+| 10  | İlerleme       | Rozet kutlaması, konfeti, tek dokunuşla paylaşım, sosyal kart                          |
+| 8   | Davet          | Kod, ödül motoru, sahtecilik koruması, yönetici yüzeyi                                 |
+| 12  | Cilalama       | Ölçülen 20 kusur (taşma + erişilebilirlik) düzeltildi                                  |
 
 ---
 

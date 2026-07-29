@@ -17,6 +17,8 @@ import '../../domain/practice/question.dart';
 import '../../domain/practice/question_bank.dart';
 import '../../domain/practice/srs.dart';
 import '../../domain/premium/premium_prompt.dart';
+import '../../domain/feedback/rating_prompt.dart';
+import '../feedback/rating_dialog.dart';
 import '../premium/premium_popups.dart';
 import 'widgets/bank_scope.dart';
 import 'widgets/question_view.dart';
@@ -123,11 +125,22 @@ class _ExamRunnerScreenState extends ConsumerState<ExamRunnerScreen> {
       _finished = true;
       _result = result;
     });
-    // Deneme tamamlandı → bağlamsal premium teşviki (sık-gösterim sınırlı).
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    // Deneme tamamlandı → bağlamsal pencereler (ikisi de sık-gösterim sınırlı).
+    //
+    // SIRA: premium teşviki ÖNCE, puanlama SONRA — ve ikisi aynı anda AÇILMAZ. Puanlama yalnız
+    // üçüncü sınavda tetiklenir; premium teşviki kendi soğuma süresine tabidir. Aynı karede iki
+    // pencere açmak, ikincisini birincinin arkasında bırakırdı.
+    final examsFinished = progress?.examsFinished() ?? 0;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
+      final nowMs = DateTime.now().millisecondsSinceEpoch;
+      if (ratingTriggeredByExams(examsFinished)) {
+        // Faz 7 — kullanıcı ürünün asıl işini üç kez yaptı; sormak için en iyi an bu.
+        await maybeShowRatingPrompt(context, ref, RatingTrigger.examsCompleted, nowMs: nowMs);
+        return;
+      }
       if (mounted) {
-        maybeShowPremiumIncentive(context, ref, PremiumTrigger.firstExam,
-            nowMs: DateTime.now().millisecondsSinceEpoch);
+        await maybeShowPremiumIncentive(context, ref, PremiumTrigger.firstExam, nowMs: nowMs);
       }
     });
   }

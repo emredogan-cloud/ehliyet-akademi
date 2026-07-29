@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -13,6 +14,8 @@ import '../../design/primitives.dart';
 import '../../domain/coach/coach_controller.dart';
 import '../../domain/coach/nudge.dart';
 import '../../domain/premium/premium_prompt.dart';
+import '../../domain/feedback/rating_prompt.dart';
+import '../feedback/rating_dialog.dart';
 import '../premium/premium_popups.dart';
 import 'widgets/nudge_card.dart';
 
@@ -64,7 +67,27 @@ class _CoachScreenState extends ConsumerState<CoachScreen> {
           curve: AppMotion.easeOut,
         );
       }
+      _maybeAskForRating();
     });
+  }
+
+  /// Faz 7 — UZUN sohbet, puanlama sormak için iyi bir andır: kullanıcı tek soru sorup çıkmamış,
+  /// ürünü gerçekten kullanmıştır.
+  ///
+  /// Eşiğe TAM ULAŞILDIĞINDA tetiklenir (her mesajda değil); ayrıca `maybeShowRatingPrompt` kendi
+  /// sıklık sınırlarını uygular. Yanıt beklenmez — pencere sohbetin akışını kesmemeli.
+  void _maybeAskForRating() {
+    final count = ref.read(coachChatProvider).messages.length;
+    if (!ratingTriggeredByCoach(count)) return;
+    if (!mounted) return;
+    unawaited(
+      maybeShowRatingPrompt(
+        context,
+        ref,
+        RatingTrigger.coachConversation,
+        nowMs: DateTime.now().millisecondsSinceEpoch,
+      ),
+    );
   }
 
   List<Nudge> _nudges() {

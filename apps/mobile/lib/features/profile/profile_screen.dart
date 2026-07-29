@@ -13,6 +13,7 @@ import '../../domain/auth/auth_controller.dart';
 import '../../domain/onboarding/study_profile.dart';
 import '../../domain/practice/srs.dart';
 import '../../domain/progress/gamification.dart';
+import '../feedback/rating_dialog.dart';
 import 'delete_account_dialog.dart';
 
 /// Profil — profil başlığı (auth'a bağlı) + istatistikler + ayarlar. Tema geçişi gerçek bir özellik.
@@ -113,6 +114,17 @@ class ProfileScreen extends ConsumerWidget {
                     title: 'Premium',
                     subtitle: 'Premium özellikleri keşfet',
                     onTap: () => context.push('/premium'),
+                  ),
+                  _divider(p),
+                  // Faz 7 — kullanıcının KENDİSİ istediği yol. Buradan açıldığında sıklık
+                  // sınırları uygulanmaz: kendi isteğiyle açtığı pencereyi "çok erken" diye
+                  // kapatmak saçma olurdu.
+                  _SettingRow(
+                    icon: Icons.star_rounded,
+                    color: p.accent,
+                    title: 'Uygulamayı puanla',
+                    subtitle: 'Google Play’de bize destek ol',
+                    onTap: () => showRatingDialog(context),
                   ),
                   _divider(p),
                   _SettingRow(

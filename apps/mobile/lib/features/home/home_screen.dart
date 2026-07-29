@@ -7,10 +7,13 @@ import '../../core/theme/tokens.dart';
 import '../../data/practice/progress_repository.dart';
 import '../../design/brand.dart';
 import '../../design/primitives.dart';
+import '../../design/coach_marks.dart';
 import '../../design/readiness_ring.dart';
+import '../onboarding/product_tour.dart';
 import 'widgets/ai_welcome_dialog.dart';
 import '../../domain/coach/nudge.dart';
 import '../../domain/onboarding/ai_welcome_controller.dart';
+import '../../domain/onboarding/coach_marks_controller.dart';
 import '../../domain/onboarding/study_profile.dart';
 import '../../domain/practice/srs.dart';
 import '../../domain/progress/gamification.dart';
@@ -33,7 +36,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     super.initState();
     // İLK KARE ÇİZİLDİKTEN SONRA: kullanıcı Ana Sayfa'yı görür, popup onun üstüne gelir.
     // `build` içinde açmak, ekran daha çizilmeden diyalog göstermek olurdu.
-    WidgetsBinding.instance.addPostFrameCallback((_) => _maybeShowAiWelcome());
+    WidgetsBinding.instance.addPostFrameCallback((_) => _runFirstRunSequence());
+  }
+
+  /// İlk açılış SIRASI: AI karşılama penceresi → ürün turu.
+  ///
+  /// Sıra bilinçli ve **seri**: ikisi aynı anda açılırsa karartma pencerenin üstüne biner ve
+  /// kullanıcı ikisini de göremez. Pencere kapanmadan tur başlamaz.
+  Future<void> _runFirstRunSequence() async {
+    await _maybeShowAiWelcome();
+    await _maybeStartTour();
   }
 
   Future<void> _maybeShowAiWelcome() async {
@@ -41,6 +53,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     await AiWelcomeDialog.show(context);
     // HANGİ YOLLA kapanırsa kapansın (CTA · zemin · geri tuşu) işaret buraya gelir.
     await ref.read(aiWelcomeSeenProvider.notifier).markSeen();
+  }
+
+  /// Faz 1 — ürün turu.
+  ///
+  /// Ev sahibi KABUKTA olduğu için Ana Sayfa yalnız "başlat" der; turun nasıl çizileceğini bilmez.
+  /// Tur ister bitsin ister atlansın, işaret aynı yere konur: kullanıcı turu istemediğini
+  /// söylediyse her açılışta ısrar etmek rahatsız edicidir.
+  Future<void> _maybeStartTour() async {
+    if (!mounted || ref.read(coachMarksSeenProvider)) return;
+    final host = CoachMarkHost.maybeOf(context);
+    if (host == null) return; // kabuk dışında (tekil widget testi) — tur yok, ekran çalışır.
+    await host.start(
+      productTourSteps,
+      onFinished: () => ref.read(coachMarksSeenProvider.notifier).markSeen(),
+    );
   }
 
   @override
@@ -95,7 +122,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             const SizedBox(height: AppSpacing.s4),
 
             // Readiness summary → full progress screen
-            GlowCard(
+            CoachAnchor(
+              id: ProductTourAnchors.home,
+              child: GlowCard(
               onTap: () => context.push('/progress'),
               padding: const EdgeInsets.all(AppSpacing.s4),
               child: Row(
@@ -132,11 +161,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                 ],
               ),
+              ),
             ),
             const SizedBox(height: AppSpacing.s4),
 
             // AI Koç hero
-            _CoachHero(nudge: topNudge),
+            CoachAnchor(id: ProductTourAnchors.aiCoach, child: _CoachHero(nudge: topNudge)),
             const SizedBox(height: AppSpacing.s2),
 
             SectionTitle('Bugünkü plan'),
@@ -171,20 +201,75 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
 
             SectionTitle('Hızlı işlemler'),
+            // Faz 1: Ana Sayfa GERÇEK bir merkez oldu — turda tanıtılan her özelliğin buradan bir
+            // girişi var. Eskiden "Çıkmış Sınavlar" ve "Premium" yalnız alt sayfalarda duruyordu;
+            // kullanıcı ikisini de tesadüfen bulmak zorundaydı.
             Row(
               children: [
-                _QuickTile(icon: Icons.timer_outlined, label: 'Deneme\nSınavı', color: p.primary, onTap: () => context.go('/practice/exam')),
+                CoachAnchor(
+                  id: ProductTourAnchors.practiceExam,
+                  child: _QuickTile(
+                    icon: Icons.timer_outlined,
+                    label: 'Deneme\nSınavı',
+                    color: p.primary,
+                    onTap: () => context.go('/practice/exam'),
+                  ),
+                ),
                 const SizedBox(width: AppSpacing.s3),
-                _QuickTile(icon: Icons.bolt_rounded, label: 'Akıllı\nÇalışma', color: p.accent, onTap: () => context.go('/practice/study')),
+                CoachAnchor(
+                  id: ProductTourAnchors.smartStudy,
+                  child: _QuickTile(
+                    icon: Icons.bolt_rounded,
+                    label: 'Akıllı\nÇalışma',
+                    color: p.accent,
+                    onTap: () => context.go('/practice/study'),
+                  ),
+                ),
                 const SizedBox(width: AppSpacing.s3),
-                _QuickTile(icon: Icons.traffic_rounded, label: 'İşaretler', color: p.blue, onTap: () => context.go('/learn/signs')),
+                CoachAnchor(
+                  id: ProductTourAnchors.realExam,
+                  child: _QuickTile(
+                    icon: Icons.history_edu_rounded,
+                    label: 'Çıkmış\nSınavlar',
+                    color: p.green,
+                    onTap: () => context.go('/practice/historical'),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.s3),
+            Row(
+              children: [
+                _QuickTile(
+                  icon: Icons.traffic_rounded,
+                  label: 'İşaretler',
+                  color: p.blue,
+                  onTap: () => context.go('/learn/signs'),
+                ),
                 const SizedBox(width: AppSpacing.s3),
-                _QuickTile(icon: Icons.auto_awesome_rounded, label: 'AI Koç', color: p.purple, onTap: () => context.go('/coach')),
+                _QuickTile(
+                  icon: Icons.play_circle_outline_rounded,
+                  label: 'Video\nDersler',
+                  color: p.purple,
+                  onTap: () => context.go('/learn/videos'),
+                ),
+                const SizedBox(width: AppSpacing.s3),
+                CoachAnchor(
+                  id: ProductTourAnchors.premium,
+                  child: _QuickTile(
+                    icon: Icons.workspace_premium_rounded,
+                    label: 'Premium',
+                    color: p.accent,
+                    onTap: () => context.push('/premium'),
+                  ),
+                ),
               ],
             ),
 
             SectionTitle('İlerleme'),
-            GlowCard(
+            CoachAnchor(
+              id: ProductTourAnchors.progress,
+              child: GlowCard(
               onTap: () => context.push('/progress'),
               padding: const EdgeInsets.all(AppSpacing.s4),
               child: Row(
@@ -204,6 +289,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                   Icon(Icons.chevron_right_rounded, color: p.text3),
                 ],
+              ),
               ),
             ),
           ],

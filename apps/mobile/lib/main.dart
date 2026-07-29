@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app/app.dart';
 import 'domain/onboarding/ai_welcome_controller.dart';
+import 'domain/onboarding/coach_marks_controller.dart';
 import 'domain/onboarding/onboarding_controller.dart';
 import 'domain/onboarding/study_profile.dart';
 import 'domain/onboarding/welcome_controller.dart';
@@ -16,6 +17,8 @@ Future<void> main() async {
   final welcomeSeen = await readWelcomeSeen();
   // Beta R1 — Ana Sayfa popup'ı da senkron okunur: dönen kullanıcıda popup flaşı olmaz.
   final aiWelcomeSeen = await readAiWelcomeSeen();
+  // Faz 1 — ürün turu da senkron okunur: dönen kullanıcıda karartma flaşı olmaz.
+  final coachMarksSeen = await readCoachMarksSeen();
   final studyProfile = await readStudyProfile();
   // Faz E11 — video ilerlemesi/yer imleri açılışta senkron yüklenir (diğer tercihlerle aynı desen).
   final videoStates = await readVideoStates();
@@ -25,6 +28,7 @@ Future<void> main() async {
         onboardingSeenProvider.overrideWith(() => OnboardingController(onboardingSeen)),
         welcomeSeenProvider.overrideWith(() => WelcomeController(welcomeSeen)),
         aiWelcomeSeenProvider.overrideWith(() => AiWelcomeController(aiWelcomeSeen)),
+        coachMarksSeenProvider.overrideWith(() => CoachMarksController(coachMarksSeen)),
         studyProfileProvider.overrideWith(() => StudyProfileController(studyProfile)),
         videoProgressProvider.overrideWith(() => VideoProgressController(videoStates)),
       ],

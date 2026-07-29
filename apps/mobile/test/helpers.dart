@@ -26,6 +26,7 @@ import 'package:ehliyet_akademi/domain/content/traffic_sign.dart';
 import 'package:ehliyet_akademi/domain/content/vehicle_part.dart';
 import 'package:ehliyet_akademi/domain/content/video_content.dart';
 import 'package:ehliyet_akademi/domain/onboarding/ai_welcome_controller.dart';
+import 'package:ehliyet_akademi/domain/onboarding/coach_marks_controller.dart';
 import 'package:ehliyet_akademi/domain/onboarding/onboarding_controller.dart';
 import 'package:ehliyet_akademi/domain/onboarding/study_profile.dart';
 import 'package:ehliyet_akademi/domain/onboarding/welcome_controller.dart';
@@ -646,6 +647,11 @@ Future<void> pumpApp(
   /// Beta R1 — Ana Sayfa'daki AI karşılama popup'ı. VARSAYILAN `true`: mevcut testler Ana
   /// Sayfa'yı popup engellemeden görür. Popup'ı test edenler `false` verir.
   bool aiWelcomeSeen = true,
+
+  /// Faz 1 — koç işaretleri turu. VARSAYILAN `true`: tur, ekranın ÜSTÜNÜ karartıp dokunuşları
+  /// yakalar; açık bırakılsaydı ürünün geri kalanını test eden her test onun arkasında kalırdı.
+  /// Turu test edenler `false` verir.
+  bool coachMarksSeen = true,
   bool overrideContent = true,
   /// Faz E5 — çalışma profili main()'de senkron okunup enjekte edildiği için (onboardingSeen ile
   /// aynı desen), testte de sağlanır. Verilmezse varsayılan profil (B sınıfı) kullanılır.
@@ -667,6 +673,7 @@ Future<void> pumpApp(
         onboardingSeenProvider.overrideWith(() => OnboardingController(onboardingSeen)),
         welcomeSeenProvider.overrideWith(() => WelcomeController(welcomeSeen)),
         aiWelcomeSeenProvider.overrideWith(() => AiWelcomeController(aiWelcomeSeen)),
+        coachMarksSeenProvider.overrideWith(() => CoachMarksController(coachMarksSeen)),
         if (studyProfile != null)
           studyProfileProvider.overrideWith(() => StudyProfileController(studyProfile)),
         tokenStoreProvider.overrideWithValue(tokens ?? MemoryTokenStore()),

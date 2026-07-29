@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
 import '../core/theme/tokens.dart';
+import '../design/coach_marks.dart';
+import '../features/onboarding/product_tour.dart';
 
 /// Uygulama kabuğu — altı sekmeli kalıcı gezinme çubuğu; her sekme kendi yığınını korur.
 ///
@@ -22,7 +24,12 @@ class AppShell extends StatelessWidget {
     NavTab('Öğren', Icons.menu_book_outlined, Icons.menu_book_rounded),
     NavTab('Pratik', Icons.track_changes_outlined, Icons.track_changes_rounded),
     NavTab('AI Koç', Icons.auto_awesome_outlined, Icons.auto_awesome_rounded),
-    NavTab('Topluluk', Icons.groups_outlined, Icons.groups_rounded),
+    NavTab(
+      'Topluluk',
+      Icons.groups_outlined,
+      Icons.groups_rounded,
+      anchorId: ProductTourAnchors.community,
+    ),
     NavTab('Profil', Icons.person_outline_rounded, Icons.person_rounded),
   ];
 
@@ -35,12 +42,20 @@ class AppShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: navigationShell,
-      bottomNavigationBar: AppBottomNav(
-        tabs: tabs,
-        currentIndex: navigationShell.currentIndex,
-        onTap: _onTap,
+    // Faz 1 — koç işaretleri KABUĞU sarmalar, tek bir ekranı değil. Gerekçe: tur alt gezinme
+    // çubuğunu da aydınlatır; çubuk kabuğun parçası olduğu için ev sahibi de burada olmalıdır.
+    // Ekran içindeyken kurulsaydı karartma çubuğun ALTINDA kalırdı.
+    return CoachMarkHost(
+      child: Scaffold(
+        body: navigationShell,
+        bottomNavigationBar: CoachAnchor(
+          id: ProductTourAnchors.bottomNav,
+          child: AppBottomNav(
+            tabs: tabs,
+            currentIndex: navigationShell.currentIndex,
+            onTap: _onTap,
+          ),
+        ),
       ),
     );
   }
@@ -49,10 +64,13 @@ class AppShell extends StatelessWidget {
 /// Tek bir alt gezinme hedefi.
 @immutable
 class NavTab {
-  const NavTab(this.label, this.icon, this.selectedIcon);
+  const NavTab(this.label, this.icon, this.selectedIcon, {this.anchorId});
   final String label;
   final IconData icon;
   final IconData selectedIcon;
+
+  /// Ürün turunda bu sekmenin aydınlatılabilmesi için kimliği. Turda geçmeyen sekmeler için null.
+  final String? anchorId;
 }
 
 /// Alt gezinme çubuğu — kayan seçim göstergesi, yaylanan simge, yuvaya sığan etiket.
@@ -123,12 +141,15 @@ class AppBottomNav extends StatelessWidget {
                     children: [
                       for (var i = 0; i < tabs.length; i++)
                         Expanded(
-                          child: _NavItem(
-                            tab: tabs[i],
-                            selected: i == currentIndex,
-                            slotWidth: slot,
-                            reduceMotion: reduceMotion,
-                            onTap: () => onTap(i),
+                          child: _maybeAnchor(
+                            tabs[i].anchorId,
+                            _NavItem(
+                              tab: tabs[i],
+                              selected: i == currentIndex,
+                              slotWidth: slot,
+                              reduceMotion: reduceMotion,
+                              onTap: () => onTap(i),
+                            ),
                           ),
                         ),
                     ],
@@ -142,6 +163,10 @@ class AppBottomNav extends StatelessWidget {
     );
   }
 }
+
+/// Turda geçen sekmeyi çapayla sarmala; geçmeyeni olduğu gibi bırak (gereksiz katman eklenmez).
+Widget _maybeAnchor(String? id, Widget child) =>
+    id == null ? child : CoachAnchor(id: id, child: child);
 
 class _NavItem extends StatelessWidget {
   const _NavItem({

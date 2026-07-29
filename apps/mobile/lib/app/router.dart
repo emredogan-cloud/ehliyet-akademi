@@ -39,6 +39,7 @@ import '../features/profile/profile_screen.dart';
 import '../features/profile/notification_settings_screen.dart';
 import '../features/progress/progress_screen.dart';
 import '../features/premium/paywall_screen.dart';
+import '../features/referral/referral_screen.dart';
 import '../features/onboarding/onboarding_screen.dart';
 import '../features/onboarding/welcome_screen.dart';
 import '../features/auth/auth_screen.dart';
@@ -269,5 +270,6 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
     GoRoute(path: '/notifications', builder: (_, _) => const NotificationSettingsScreen()),
     GoRoute(path: '/progress', builder: (_, _) => const ProgressScreen()),
     GoRoute(path: '/premium', builder: (_, _) => const PaywallScreen()),
+    GoRoute(path: '/davet', builder: (_, _) => const ReferralScreen()),
   ],
 );

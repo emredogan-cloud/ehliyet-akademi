@@ -116,6 +116,16 @@ class ProfileScreen extends ConsumerWidget {
                     onTap: () => context.push('/premium'),
                   ),
                   _divider(p),
+                  // Faz 8 — davet. Premium'un HEMEN ALTINDA duruyor: premium'a bakan kullanıcı,
+                  // parayla almadan da kazanabileceğini aynı bakışta görür.
+                  _SettingRow(
+                    icon: Icons.card_giftcard_rounded,
+                    color: p.green,
+                    title: 'Arkadaşını davet et',
+                    subtitle: 'Davet et, premium kazan',
+                    onTap: () => context.push('/davet'),
+                  ),
+                  _divider(p),
                   // Faz 7 — kullanıcının KENDİSİ istediği yol. Buradan açıldığında sıklık
                   // sınırları uygulanmaz: kendi isteğiyle açtığı pencereyi "çok erken" diye
                   // kapatmak saçma olurdu.

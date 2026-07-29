@@ -14,12 +14,13 @@ import {
 import { checkRateLimit } from '@/lib/server/rate-limit';
 import { getEmailProvider, welcomeEmail, verificationEmail } from '@/lib/server/email';
 import { logger } from '@/lib/server/logger';
+import { clientIp, recordReferral } from '@/lib/server/referrals';
 
 export const POST = guarded(async (req: Request): Promise<Response> => {
   const limited = checkRateLimit(req, { bucket: 'register', limit: 8, windowMs: 60_000 });
   if (limited) return limited;
 
-  let body: { email?: string; password?: string; name?: string };
+  let body: { email?: string; password?: string; name?: string; referralCode?: string };
   try {
     body = await req.json();
   } catch {
@@ -70,6 +71,27 @@ export const POST = guarded(async (req: Request): Promise<Response> => {
   await db.insert(users).values({ id, email, name, passwordHash: hashPassword(password), role });
   const token = await createSession(db, id, req.headers.get('user-agent') ?? '');
 
+  // Faz 8 — davet kodu (varsa) kaydedilir.
+  //
+  // SESSİZ BAŞARISIZLIK BİLİNÇLİ: geçersiz bir kod KAYDI ENGELLEMEZ. Kullanıcı hesabını açmıştır;
+  // kodu yanlış yazdı diye onu geri çevirmek, davet sistemini kayıt akışının önüne koymak olurdu.
+  // Sonuç yanıtta bildirilir; istemci isterse gösterir.
+  let referral: { ok: boolean; reason?: string } = { ok: false, reason: 'none' };
+  const rawCode = typeof body.referralCode === 'string' ? body.referralCode : '';
+  if (rawCode.trim()) {
+    try {
+      const verdict = await recordReferral({
+        db,
+        rawCode,
+        referredUserId: id,
+        ip: clientIp(req),
+      });
+      referral = verdict.ok ? { ok: true } : { ok: false, reason: verdict.reason };
+    } catch (e) {
+      logger.warn('referral_record_failed', { err: String(e) });
+    }
+  }
+
   // Hoş geldin + e-posta doğrulama (best-effort; e-posta servisi yoksa yalnız loglanır).
   const verifyToken = newToken();
   try {
@@ -90,7 +112,7 @@ export const POST = guarded(async (req: Request): Promise<Response> => {
 
   // `token`: mobil (Bearer) istemciler için; web çerezi kullanır ve bunu yok sayar.
   return json(
-    { user: { id, email, name, role }, token },
+    { user: { id, email, name, role }, token, referral },
     { status: 201, setCookie: sessionSetCookie(token) }
   );
 });

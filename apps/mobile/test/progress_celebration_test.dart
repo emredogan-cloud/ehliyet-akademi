@@ -1,6 +1,3 @@
-import 'dart:typed_data';
-
-import 'package:ehliyet_akademi/data/share/share_service.dart';
 import 'package:ehliyet_akademi/design/confetti.dart';
 import 'package:ehliyet_akademi/design/share_card.dart';
 import 'package:ehliyet_akademi/core/theme/app_theme.dart';
@@ -206,27 +203,3 @@ Widget wrapCard(Widget card) => MaterialApp(
   home: Scaffold(body: UnconstrainedBox(child: card)),
 );
 
-/// Testlerde paylaşım kanalına gidilmez.
-class FakeShareService implements ShareService {
-  int imageCalls = 0;
-  int textCalls = 0;
-  String? lastText;
-
-  @override
-  Future<bool> shareImage({
-    required Uint8List pngBytes,
-    required String fileName,
-    required String text,
-  }) async {
-    imageCalls++;
-    lastText = text;
-    return true;
-  }
-
-  @override
-  Future<bool> shareText(String text) async {
-    textCalls++;
-    lastText = text;
-    return true;
-  }
-}

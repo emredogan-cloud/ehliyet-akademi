@@ -74,6 +74,37 @@ CREATE TABLE IF NOT EXISTS purchases (
 );
 CREATE UNIQUE INDEX IF NOT EXISTS purchases_user_product_uq ON purchases(user_id, product_id);
 
+CREATE TABLE IF NOT EXISTS referral_codes (
+  user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+  code TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE UNIQUE INDEX IF NOT EXISTS referral_codes_code_uq ON referral_codes(code);
+
+CREATE TABLE IF NOT EXISTS referrals (
+  id TEXT PRIMARY KEY,
+  referrer_user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  referred_user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  code TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'pending',
+  signup_ip_hash TEXT NOT NULL DEFAULT '',
+  void_reason TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  qualified_at TIMESTAMPTZ
+);
+CREATE UNIQUE INDEX IF NOT EXISTS referrals_referred_uq ON referrals(referred_user_id);
+CREATE INDEX IF NOT EXISTS referrals_referrer_idx ON referrals(referrer_user_id);
+
+CREATE TABLE IF NOT EXISTS referral_rewards (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  milestone INTEGER NOT NULL,
+  months INTEGER NOT NULL,
+  granted_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  expires_at TIMESTAMPTZ NOT NULL
+);
+CREATE INDEX IF NOT EXISTS referral_rewards_user_idx ON referral_rewards(user_id);
+
 ALTER TABLE users ADD COLUMN IF NOT EXISTS role TEXT NOT NULL DEFAULT 'user';
 
 -- Sprint 4: e-posta doğrulama + ödeme makbuz referansı

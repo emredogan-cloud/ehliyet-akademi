@@ -59,8 +59,14 @@ class AuthController extends Notifier<AuthState> {
     required String name,
     required String email,
     required String password,
+    String? referralCode,
   }) async {
-    final r = await _api.register(name: name, email: email, password: password);
+    final r = await _api.register(
+      name: name,
+      email: email,
+      password: password,
+      referralCode: referralCode,
+    );
     return _apply(r);
   }
 

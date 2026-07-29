@@ -22,7 +22,14 @@ class AuthFailure extends AuthResult {
 
 /// Auth API contract (overridable in tests with a fake).
 abstract class AuthApi {
-  Future<AuthResult> register({required String name, required String email, required String password});
+  Future<AuthResult> register({
+    required String name,
+    required String email,
+    required String password,
+
+    /// Faz 8 — isteğe bağlı davet kodu. Geçersiz kod KAYDI ENGELLEMEZ (sunucu sessizce yok sayar).
+    String? referralCode,
+  });
   Future<AuthResult> login({required String email, required String password});
 
   /// Beta Faz 2 — Google ID token'ını sunucuda doğrulatıp Bearer oturumuna çevirir.
@@ -51,8 +58,13 @@ class DioAuthApi implements AuthApi {
     required String name,
     required String email,
     required String password,
-  }) =>
-      _auth('/api/auth/register', {'name': name, 'email': email, 'password': password});
+    String? referralCode,
+  }) => _auth('/api/auth/register', {
+    'name': name,
+    'email': email,
+    'password': password,
+    if (referralCode != null && referralCode.isNotEmpty) 'referralCode': referralCode,
+  });
 
   @override
   Future<AuthResult> login({required String email, required String password}) =>

@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 // `material` import'u burada Badge çakışması yaratır (helpers `content_enums`'un Badge'ini
 // kullanıyor) → yalnız gereken tip alınır.
 import 'dart:ui' show Size;
@@ -18,6 +19,7 @@ import 'package:ehliyet_akademi/data/practice/question_repository.dart';
 import 'package:ehliyet_akademi/data/premium/billing_gateway.dart';
 import 'package:ehliyet_akademi/data/premium/entitlements_repository.dart';
 import 'package:ehliyet_akademi/data/premium/store_purchase_store.dart';
+import 'package:ehliyet_akademi/data/referral/referral_api.dart';
 import 'package:ehliyet_akademi/data/share/share_service.dart';
 import 'package:ehliyet_akademi/domain/auth/app_user.dart';
 import 'package:ehliyet_akademi/domain/community/community_models.dart';
@@ -57,8 +59,14 @@ class FakeAuthApi implements AuthApi {
     required String name,
     required String email,
     required String password,
-  }) async =>
-      _result(email, name: name);
+    String? referralCode,
+  }) async {
+    lastReferralCode = referralCode;
+    return _result(email, name: name);
+  }
+
+  /// Faz 8 — kayıtta gönderilen davet kodu (test doğrulayabilsin).
+  String? lastReferralCode;
 
   /// Beta Faz 2 — sunucuya gönderilen ID token kaydedilir ki test doğrulayabilsin.
   String? lastGoogleIdToken;
@@ -663,6 +671,9 @@ Future<void> pumpApp(
   /// paylaşımı test edenler kendi sahtesini verir.
   ShareService? share,
 
+  /// Faz 8 — davet ucu (sahte).
+  ReferralApi? referral,
+
   /// Beta Faz 3 — ödeme ağ geçidi. VARSAYILAN: mağazası KAPALI sahte ağ geçidi (test ortamında
   /// Play Store yoktur; dürüst varsayılan budur). Ödeme akışını test edenler kendi ağ geçidini verir.
   BillingGateway? billing,
@@ -722,6 +733,7 @@ Future<void> pumpApp(
         accountApiProvider.overrideWithValue(account ?? FakeAccountApi()),
         if (storeReview != null) storeReviewServiceProvider.overrideWithValue(storeReview),
         if (share != null) shareServiceProvider.overrideWithValue(share),
+        if (referral != null) referralApiProvider.overrideWithValue(referral),
         billingGatewayProvider.overrideWithValue(billing ?? FakeBillingGateway()),
         entitlementsApiProvider.overrideWithValue(
           entitlementsApi ?? FakeEntitlementsApi(owned ?? const []),
@@ -1038,5 +1050,30 @@ class FakeAccountApi implements AccountApi {
       return const AccountDeletionWrongPassword('Parola hatalı.');
     }
     return const AccountDeleted();
+  }
+}
+
+/// Faz 10 — testlerde paylaşım kanalına gidilmez.
+class FakeShareService implements ShareService {
+  int imageCalls = 0;
+  int textCalls = 0;
+  String? lastText;
+
+  @override
+  Future<bool> shareImage({
+    required Uint8List pngBytes,
+    required String fileName,
+    required String text,
+  }) async {
+    imageCalls++;
+    lastText = text;
+    return true;
+  }
+
+  @override
+  Future<bool> shareText(String text) async {
+    textCalls++;
+    lastText = text;
+    return true;
   }
 }

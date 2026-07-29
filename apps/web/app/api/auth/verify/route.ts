@@ -3,6 +3,7 @@ import { getDb, users, emailVerificationTokens } from '@ea/db';
 import { getSessionUser, newToken, sha256, json, guarded } from '@/lib/server/auth';
 import { checkRateLimit } from '@/lib/server/rate-limit';
 import { getEmailProvider, emailConfigured, verificationEmail } from '@/lib/server/email';
+import { qualifyReferralOnVerification } from '@/lib/server/referrals';
 
 /**
  * E-posta doğrulama (Sprint 4).
@@ -34,6 +35,10 @@ export const POST = guarded(async (req: Request): Promise<Response> => {
       return json({ error: 'Doğrulama bağlantısı geçersiz veya süresi dolmuş.' }, { status: 400 });
     await db.update(users).set({ emailVerified: true }).where(eq(users.id, row.userId));
     await db.delete(emailVerificationTokens).where(eq(emailVerificationTokens.userId, row.userId));
+    // Faz 8 — "başarılı kayıt" TAM OLARAK BURADA gerçekleşir: e-postası doğrulanmış hesap.
+    // Bu tek kural, sahte hesapla ödül toplamanın maliyetini kullanılabilir bir e-posta kutusuna
+    // çıkarır. Davet motoru ödül eşiklerini de burada değerlendirir.
+    await qualifyReferralOnVerification(db, row.userId);
     return json({ ok: true, verified: true });
   }
 

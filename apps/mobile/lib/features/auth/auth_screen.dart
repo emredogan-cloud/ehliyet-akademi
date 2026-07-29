@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/assets.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/auth/google_auth_service.dart';
+import '../../data/referral/referral_api.dart';
 import '../../design/brand.dart';
 import '../../domain/auth/auth_controller.dart';
 
@@ -31,6 +32,9 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   final _name = TextEditingController();
   final _email = TextEditingController();
   final _password = TextEditingController();
+
+  /// Faz 8 — isteğe bağlı davet kodu (yalnız kayıt kipinde).
+  final _referral = TextEditingController();
   bool _isRegister = false;
   bool _busy = false;
   bool _obscure = true;
@@ -41,6 +45,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     _name.dispose();
     _email.dispose();
     _password.dispose();
+    _referral.dispose();
     super.dispose();
   }
 
@@ -59,6 +64,20 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     }
   }
 
+  /// Kanonikleştirilmiş davet kodu (boşsa null).
+  String? get _referralCode {
+    final code = normalizeReferralCode(_referral.text);
+    return code.isEmpty ? null : code;
+  }
+
+  /// Yazılan kod biçimsel olarak eksikse nazik bir uyarı — HATA DEĞİL.
+  String? get _referralHint {
+    final code = normalizeReferralCode(_referral.text);
+    if (code.isEmpty) return null;
+    if (isValidReferralCodeFormat(code)) return null;
+    return 'Davet kodu $kReferralCodeLength karakter olmalı (şu an ${code.length}).';
+  }
+
   Future<void> _submit() async {
     setState(() => _error = null);
     if (!_formKey.currentState!.validate()) return;
@@ -69,6 +88,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
             name: _name.text.trim(),
             email: _email.text.trim(),
             password: _password.text,
+            referralCode: _referralCode,
           )
         : await ctrl.login(email: _email.text.trim(), password: _password.text);
     if (!mounted) return;
@@ -242,6 +262,40 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                                 validator: (v) =>
                                     (v == null || v.length < 8) ? 'En az 8 karakter.' : null,
                               ),
+                              // Faz 8 — davet kodu. YALNIZ kayıt kipinde ve İSTEĞE BAĞLI.
+                              //
+                              // Boş bırakmak serbesttir; geçersiz kod da kaydı ENGELLEMEZ (sunucu
+                              // sessizce yok sayar). Bir davet alanının kayıt akışını
+                              // zorlaştırması, davet sisteminin kendisinden daha pahalıya gelirdi.
+                              if (_isRegister) ...[
+                                const SizedBox(height: AppSpacing.s4),
+                                TextFormField(
+                                  controller: _referral,
+                                  textCapitalization: TextCapitalization.characters,
+                                  // `maxLength` DEĞİL: o, ayraçları da sayar. Kullanıcı
+                                  // "ABCD-EFGH" yazdığında sekizinci karakter tireye denk gelip
+                                  // kod "ABCDEF"e kırpılıyordu (testte yakalandı). Biçimlendirici
+                                  // yazarken normalleştirir; sayım TEMİZ karakterler üzerinden olur.
+                                  inputFormatters: [_ReferralCodeFormatter()],
+                                  decoration: const InputDecoration(
+                                    labelText: 'Davet kodu (isteğe bağlı)',
+                                    prefixIcon: Icon(Icons.card_giftcard_rounded),
+                                    counterText: '',
+                                    helperText: 'Arkadaşının kodu varsa yaz — ikiniz de kazanın.',
+                                  ),
+                                  // Doğrulayıcı YOK: yanlış yazılmış bir kod yüzünden kayıt
+                                  // reddedilmez. Yalnız biçimsel uyarı verilir.
+                                  onChanged: (_) => setState(() {}),
+                                ),
+                                if (_referralHint != null)
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 4),
+                                    child: Text(
+                                      _referralHint!,
+                                      style: TextStyle(color: p.accent, fontSize: 12),
+                                    ),
+                                  ),
+                              ],
                               // Sıfırlama yalnız GİRİŞ kipinde anlamlı — kayıtta parolayı
                               // kullanıcı zaten belirliyor.
                               if (!_isRegister)
@@ -336,6 +390,21 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Faz 8 — davet kodu alanının biçimlendiricisi.
+///
+/// Yazarken kanonikleştirir (büyük harf, ayraçsız, 0→O / 1→I) ve sekiz TEMİZ karakterde durur.
+/// Böylece kullanıcı kodu istediği gibi yazabilir; alan doğrusunu tutar.
+class _ReferralCodeFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    final cleaned = normalizeReferralCode(newValue.text);
+    return TextEditingValue(
+      text: cleaned,
+      selection: TextSelection.collapsed(offset: cleaned.length),
     );
   }
 }

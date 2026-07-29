@@ -86,6 +86,78 @@ export const purchases = pgTable(
   (t) => [uniqueIndex('purchases_user_product_uq').on(t.userId, t.productId)]
 );
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Davet (referral) sistemi — Faz 8.
+//
+// TASARIM: üç tablo, üç ayrı sorumluluk.
+// · `referral_codes`  — kimin hangi kodu var (kullanıcı başına TEK kod).
+// · `referrals`       — kim kimi davet etti ve davet HANGİ DURUMDA.
+// · `referral_rewards`— hangi ödül, ne zaman verildi, ne zaman biter.
+//
+// Ödülü `purchases` tablosuna yazmıyoruz ÇÜNKÜ orada süre kavramı yok (ömür boyu tek ürün).
+// Süreli erişim ayrı tutulur ve `GET /api/purchases` etkin ödülü sahipliğe EKLER; böylece mobil
+// tarafta tek satır kod değişmeden premium açılır.
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Kullanıcının davet kodu — kullanıcı başına tek, değişmez. */
+export const referralCodes = pgTable(
+  'referral_codes',
+  {
+    userId: text('user_id')
+      .primaryKey()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    code: text('code').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [uniqueIndex('referral_codes_code_uq').on(t.code)]
+);
+
+/**
+ * Bir davet ilişkisi.
+ *
+ * `status`:
+ * · `pending`   — kayıt oldu, e-postası HENÜZ doğrulanmadı (ödüle sayılmaz).
+ * · `qualified` — e-postası doğrulandı; "başarılı kayıt" budur.
+ * · `void`      — sahtecilik/iade nedeniyle yönetici tarafından iptal edildi.
+ *
+ * `signupIpHash` ham IP DEĞİLDİR: tuzlanmış SHA-256. Sahtecilik tespitine yeter, kişisel veriyi
+ * saklamaz (KVKK veri minimizasyonu).
+ */
+export const referrals = pgTable(
+  'referrals',
+  {
+    id: text('id').primaryKey(),
+    referrerUserId: text('referrer_user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    // Davet edilen kullanıcı silinirse davet de düşer — silinmiş bir hesap ödüle sayılamaz.
+    referredUserId: text('referred_user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    code: text('code').notNull(),
+    status: text('status').notNull().default('pending'),
+    signupIpHash: text('signup_ip_hash').notNull().default(''),
+    voidReason: text('void_reason'),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    qualifiedAt: timestamp('qualified_at', { withTimezone: true }),
+  },
+  // Bir kullanıcı YALNIZ BİR KEZ davet edilebilir — aynı kişiyi iki kez saymanın önündeki set.
+  (t) => [uniqueIndex('referrals_referred_uq').on(t.referredUserId)]
+);
+
+/** Verilen ödül — süreli premium erişim. */
+export const referralRewards = pgTable('referral_rewards', {
+  id: text('id').primaryKey(),
+  userId: text('user_id')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  /** Kaçıncı eşik için verildi (5, 10, 15 …). Aynı eşik iki kez ödüllendirilmez. */
+  milestone: integer('milestone').notNull(),
+  months: integer('months').notNull(),
+  grantedAt: timestamp('granted_at', { withTimezone: true }).notNull().defaultNow(),
+  expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
+});
+
 /** Soru bildirimleri (QIP Faz 6 · Part 13 — topluluk incelemesi). Anonim de olabilir (user_id null). */
 export const questionReports = pgTable('question_reports', {
   id: text('id').primaryKey(), // uuid

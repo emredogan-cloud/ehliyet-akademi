@@ -56,7 +56,7 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
           if (community.joined)
             IconButton(
               tooltip: 'Topluluk profilim',
-              onPressed: () => context.push('/profile/community/join'),
+              onPressed: () => context.push('/community/join'),
               icon: const Icon(Icons.manage_accounts_rounded),
             ),
         ],
@@ -126,7 +126,7 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
           label: 'Topluluğa katıl',
           trailingIcon: Icons.arrow_forward_rounded,
           onPressed: () async {
-            await context.push('/profile/community/join');
+            await context.push('/community/join');
             _reload();
           },
         ),
@@ -202,7 +202,7 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
                   child: _SocialButton(
                     icon: e.$1,
                     label: e.$2,
-                    onTap: () => context.push('/profile/community/${e.$3}'),
+                    onTap: () => context.push('/community/${e.$3}'),
                   ),
                 ),
                 const SizedBox(width: AppSpacing.s2),
@@ -276,7 +276,7 @@ class _CommunityScreenState extends ConsumerState<CommunityScreen> {
                     _RankRow(
                       entry: row,
                       highlight: row.userId == page.me?.userId,
-                      onTap: () => context.push('/profile/community/user/${row.userId}'),
+                      onTap: () => context.push('/community/user/${row.userId}'),
                     ),
                     const SizedBox(height: AppSpacing.s2),
                   ],

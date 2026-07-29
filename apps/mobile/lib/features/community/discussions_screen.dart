@@ -140,7 +140,7 @@ class _DiscussionsScreenState extends ConsumerState<DiscussionsScreen> {
                       final t = threads[i];
                       return GlowCard(
                         onTap: () async {
-                          await context.push('/profile/community/discussions/${t.id}');
+                          await context.push('/community/discussions/${t.id}');
                           _reload();
                         },
                         padding: const EdgeInsets.all(AppSpacing.s3),

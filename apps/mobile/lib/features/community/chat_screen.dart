@@ -99,7 +99,7 @@ class _ChatListScreenState extends ConsumerState<ChatListScreen> {
                 final t = threads[i];
                 return GlowCard(
                   onTap: () async {
-                    await context.push('/profile/community/chat/${t.userId}');
+                    await context.push('/community/chat/${t.userId}');
                     _reload();
                   },
                   padding: const EdgeInsets.symmetric(
@@ -231,7 +231,7 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
           ),
           IconButton(
             tooltip: 'Profili aç',
-            onPressed: () => context.push('/profile/community/user/${widget.userId}'),
+            onPressed: () => context.push('/community/user/${widget.userId}'),
             icon: const Icon(Icons.person_rounded),
           ),
         ],

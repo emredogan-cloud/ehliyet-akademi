@@ -1,10 +1,11 @@
+import 'package:ehliyet_akademi/app/shell.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'helpers.dart';
 
 Finder _coachTab() =>
-    find.descendant(of: find.byType(NavigationBar), matching: find.text('AI Koç'));
+    find.descendant(of: find.byType(AppBottomNav), matching: find.text('AI Koç'));
 
 void main() {
   testWidgets('AI Koç intro shows nudges + suggestions, and chat sends a question', (tester) async {

@@ -184,14 +184,14 @@ class _FriendsScreenState extends ConsumerState<FriendsScreen> {
                   for (final f in page.friends) ...[
                     _FriendCard(
                       entry: f,
-                      onTap: () => context.push('/profile/community/chat/${f.userId}'),
+                      onTap: () => context.push('/community/chat/${f.userId}'),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
                             tooltip: 'Mesaj gönder',
                             onPressed: () =>
-                                context.push('/profile/community/chat/${f.userId}'),
+                                context.push('/community/chat/${f.userId}'),
                             icon: Icon(Icons.chat_bubble_outline_rounded, color: p.primary),
                           ),
                           IconButton(

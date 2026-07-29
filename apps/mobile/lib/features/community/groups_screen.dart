@@ -132,7 +132,7 @@ class _GroupsScreenState extends ConsumerState<GroupsScreen> {
                   for (final g in groups) ...[
                     _GroupCard(
                       group: g,
-                      onOpen: () => context.push('/profile/community/groups/${g.id}'),
+                      onOpen: () => context.push('/community/groups/${g.id}'),
                       onCopy: () => _copyCode(g.joinCode),
                     ),
                     const SizedBox(height: AppSpacing.s3),

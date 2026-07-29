@@ -61,15 +61,8 @@ void main() {
 
   group('arkadaşlar ekranı', () {
     Future<void> openFriends(WidgetTester tester) async {
-      await tester.tap(find.text('Profil'));
-      await tester.pumpAndSettle();
-      await tester.scrollUntilVisible(
-        find.text('Sıralama ve topluluk profilin (isteğe bağlı)'),
-        200,
-        scrollable: find.byType(Scrollable).first,
-      );
-      await tester.tap(find.text('Sıralama ve topluluk profilin (isteğe bağlı)'));
-      await tester.pumpAndSettle();
+      // Faz 4: Topluluk artık alt gezinmede birinci sınıf sekme.
+      await tapTab(tester, 'Topluluk');
       await tester.tap(find.text('Arkadaşlar'));
       await tester.pumpAndSettle();
     }
@@ -148,15 +141,8 @@ void main() {
 
     /// Arkadaş listesinden sohbete geç (gerçek yönlendirme yolu).
     Future<void> openChat(WidgetTester tester) async {
-      await tester.tap(find.text('Profil'));
-      await tester.pumpAndSettle();
-      await tester.scrollUntilVisible(
-        find.text('Sıralama ve topluluk profilin (isteğe bağlı)'),
-        200,
-        scrollable: find.byType(Scrollable).first,
-      );
-      await tester.tap(find.text('Sıralama ve topluluk profilin (isteğe bağlı)'));
-      await tester.pumpAndSettle();
+      // Faz 4: Topluluk artık alt gezinmede birinci sınıf sekme.
+      await tapTab(tester, 'Topluluk');
       await tester.tap(find.text('Arkadaşlar'));
       await tester.pumpAndSettle();
       await tester.tap(find.byTooltip('Mesaj gönder'));
@@ -243,15 +229,8 @@ void main() {
 
   group('tartışma ekranı', () {
     Future<void> openDiscussions(WidgetTester tester) async {
-      await tester.tap(find.text('Profil'));
-      await tester.pumpAndSettle();
-      await tester.scrollUntilVisible(
-        find.text('Sıralama ve topluluk profilin (isteğe bağlı)'),
-        200,
-        scrollable: find.byType(Scrollable).first,
-      );
-      await tester.tap(find.text('Sıralama ve topluluk profilin (isteğe bağlı)'));
-      await tester.pumpAndSettle();
+      // Faz 4: Topluluk artık alt gezinmede birinci sınıf sekme.
+      await tapTab(tester, 'Topluluk');
       await tester.tap(find.text('Tartışma'));
       await tester.pumpAndSettle();
     }
@@ -399,15 +378,8 @@ void main() {
       community.blocked.add('u9');
       await pumpApp(tester, community: community, social: FakeSocialApi());
 
-      await tester.tap(find.text('Profil'));
-      await tester.pumpAndSettle();
-      await tester.scrollUntilVisible(
-        find.text('Sıralama ve topluluk profilin (isteğe bağlı)'),
-        200,
-        scrollable: find.byType(Scrollable).first,
-      );
-      await tester.tap(find.text('Sıralama ve topluluk profilin (isteğe bağlı)'));
-      await tester.pumpAndSettle();
+      // Faz 4: Topluluk artık alt gezinmede birinci sınıf sekme.
+      await tapTab(tester, 'Topluluk');
       await tester.tap(find.byTooltip('Topluluk profilim'));
       await tester.pumpAndSettle();
       await tester.scrollUntilVisible(

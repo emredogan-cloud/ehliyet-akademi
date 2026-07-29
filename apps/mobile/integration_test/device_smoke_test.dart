@@ -12,6 +12,7 @@
 // `test/` altında kalır — aynı şeyi iki kez test etmek bakım borcudur.
 
 import 'package:ehliyet_akademi/app/app.dart';
+import 'package:ehliyet_akademi/app/shell.dart';
 import 'package:ehliyet_akademi/core/storage/token_store.dart';
 import 'package:ehliyet_akademi/domain/onboarding/ai_welcome_controller.dart';
 import 'package:ehliyet_akademi/domain/onboarding/onboarding_controller.dart';
@@ -53,15 +54,39 @@ Future<void> launchApp(
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('uygulama cihazda açılır ve alt gezinme çalışır', (tester) async {
+  testWidgets('uygulama cihazda açılır ve altı sekmenin hepsi çalışır', (tester) async {
     await launchApp(tester);
-    expect(find.text('Ana Sayfa'), findsWidgets);
+    expect(find.byType(AppBottomNav), findsOneWidget);
 
     // Her sekme gerçekten açılıyor mu (gerçek ekran genişliğinde, gerçek yazı tipiyle).
-    for (final tab in const ['Öğren', 'Pratik', 'AI Koç', 'Profil']) {
-      await tester.tap(find.text(tab).last);
+    for (final tab in const ['Öğren', 'Pratik', 'AI Koç', 'Topluluk', 'Profil', 'Ana Sayfa']) {
+      await tester.tap(find.descendant(of: find.byType(AppBottomNav), matching: find.text(tab)));
       await tester.pump(const Duration(milliseconds: 400));
       await tester.pump(const Duration(milliseconds: 400));
+    }
+    expect(tester.takeException(), isNull);
+  });
+
+  /// Altı sekme, dar telefonlarda etiket taşmasının GERÇEK sınavıdır. Bu, yalnız cihazda
+  /// (gerçek yazı tipi metrikleri + gerçek genişlik) doğrulanabilir; testteki Ahem yazı tipi
+  /// farklı ölçer.
+  testWidgets('altı sekme etiketi cihaz genişliğinde taşmaz', (tester) async {
+    await launchApp(tester);
+    final barWidth = tester.getSize(find.byType(AppBottomNav)).width;
+    final slot = barWidth / AppShell.tabs.length;
+
+    for (final tab in AppShell.tabs) {
+      final finder = find.descendant(
+        of: find.byType(AppBottomNav),
+        matching: find.text(tab.label),
+      );
+      final textWidth = tester.getSize(finder).width;
+      expect(
+        textWidth,
+        lessThanOrEqualTo(slot),
+        reason: '"${tab.label}" yuvasına sığmıyor (${textWidth.toStringAsFixed(1)} > '
+            '${slot.toStringAsFixed(1)} dp)',
+      );
     }
     expect(tester.takeException(), isNull);
   });

@@ -206,61 +206,61 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
         StatefulShellBranch(
           routes: [GoRoute(path: '/coach', builder: (_, _) => const CoachScreen())],
         ),
+        // Faz 4 — Topluluk artık KENDİ dalıdır (alt gezinmede birinci sınıf sekme).
+        //
+        // NEDEN taşındı: Profil'in altındayken topluluk, bir "ayar" gibi görünüyor ve kendi
+        // gezinme yığınını Profil'le paylaşıyordu — bir tartışmadan Profil sekmesine geçip geri
+        // dönmek kullanıcıyı tartışmanın ortasına düşürüyordu. Ayrı dal, her sekmenin kendi
+        // yığınını koruması demektir; yerel uygulamalarda beklenen davranış budur.
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: '/profile',
-              builder: (_, _) => const ProfileScreen(),
+              path: '/community',
+              builder: (_, _) => const CommunityScreen(),
               routes: [
-                // Topluluk, Profil dalının altındadır: kimlik ve sosyal ayarlar oraya aittir.
-                // (Alt gezinme çubuğuna 6. sekme EKLENMEDİ — beş sekme zaten dar ekranlarda sınırda.)
+                GoRoute(path: 'join', builder: (_, _) => const JoinCommunityScreen()),
                 GoRoute(
-                  path: 'community',
-                  builder: (_, _) => const CommunityScreen(),
+                  path: 'user/:id',
+                  builder: (_, state) => CommunityUserScreen(userId: state.pathParameters['id']!),
+                ),
+                // Faz E9 — sosyal grafik yüzeyleri.
+                GoRoute(path: 'blocked', builder: (_, _) => const BlockedUsersScreen()),
+                GoRoute(path: 'friends', builder: (_, _) => const FriendsScreen()),
+                // Faz E10 — çalışma grupları ve meydan okumalar.
+                GoRoute(
+                  path: 'groups',
+                  builder: (_, _) => const GroupsScreen(),
                   routes: [
-                    GoRoute(path: 'join', builder: (_, _) => const JoinCommunityScreen()),
                     GoRoute(
-                      path: 'user/:id',
+                      path: ':groupId',
                       builder: (_, state) =>
-                          CommunityUserScreen(userId: state.pathParameters['id']!),
+                          GroupDetailScreen(groupId: state.pathParameters['groupId']!),
                     ),
-                    // Faz E9 — sosyal grafik yüzeyleri.
-                    GoRoute(path: 'blocked', builder: (_, _) => const BlockedUsersScreen()),
-                    GoRoute(path: 'friends', builder: (_, _) => const FriendsScreen()),
-                    // Faz E10 — çalışma grupları ve meydan okumalar.
+                  ],
+                ),
+                GoRoute(path: 'challenges', builder: (_, _) => const ChallengesScreen()),
+                GoRoute(path: 'messages', builder: (_, _) => const ChatListScreen()),
+                GoRoute(
+                  path: 'chat/:id',
+                  builder: (_, state) => ChatScreen(userId: state.pathParameters['id']!),
+                ),
+                GoRoute(
+                  path: 'discussions',
+                  builder: (_, _) => const DiscussionsScreen(),
+                  routes: [
                     GoRoute(
-                      path: 'groups',
-                      builder: (_, _) => const GroupsScreen(),
-                      routes: [
-                        GoRoute(
-                          path: ':groupId',
-                          builder: (_, state) =>
-                              GroupDetailScreen(groupId: state.pathParameters['groupId']!),
-                        ),
-                      ],
-                    ),
-                    GoRoute(path: 'challenges', builder: (_, _) => const ChallengesScreen()),
-                    GoRoute(path: 'messages', builder: (_, _) => const ChatListScreen()),
-                    GoRoute(
-                      path: 'chat/:id',
-                      builder: (_, state) => ChatScreen(userId: state.pathParameters['id']!),
-                    ),
-                    GoRoute(
-                      path: 'discussions',
-                      builder: (_, _) => const DiscussionsScreen(),
-                      routes: [
-                        GoRoute(
-                          path: ':threadId',
-                          builder: (_, state) =>
-                              DiscussionThreadScreen(threadId: state.pathParameters['threadId']!),
-                        ),
-                      ],
+                      path: ':threadId',
+                      builder: (_, state) =>
+                          DiscussionThreadScreen(threadId: state.pathParameters['threadId']!),
                     ),
                   ],
                 ),
               ],
             ),
           ],
+        ),
+        StatefulShellBranch(
+          routes: [GoRoute(path: '/profile', builder: (_, _) => const ProfileScreen())],
         ),
       ],
     ),

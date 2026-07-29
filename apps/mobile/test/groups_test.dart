@@ -21,15 +21,8 @@ FakeCommunityApi joinedCommunity() => FakeCommunityApi(
 
 /// Topluluk merkezinden E10 yüzeylerine gider (E9 testlerindeki desenin aynısı).
 Future<void> _openHub(WidgetTester tester) async {
-  await tester.tap(find.text('Profil'));
-  await tester.pumpAndSettle();
-  await tester.scrollUntilVisible(
-    find.text('Sıralama ve topluluk profilin (isteğe bağlı)'),
-    200,
-    scrollable: find.byType(Scrollable).first,
-  );
-  await tester.tap(find.text('Sıralama ve topluluk profilin (isteğe bağlı)'));
-  await tester.pumpAndSettle();
+  // Faz 4: Topluluk artık alt gezinmede birinci sınıf sekme.
+  await tapTab(tester, 'Topluluk');
 }
 
 Future<void> _openHubButton(WidgetTester tester, String label) async {

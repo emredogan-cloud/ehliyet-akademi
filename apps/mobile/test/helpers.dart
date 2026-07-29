@@ -3,6 +3,7 @@
 import 'dart:ui' show Size;
 
 import 'package:ehliyet_akademi/app/app.dart';
+import 'package:ehliyet_akademi/app/shell.dart';
 import 'package:ehliyet_akademi/core/storage/token_store.dart';
 import 'package:ehliyet_akademi/data/auth/auth_api.dart';
 import 'package:ehliyet_akademi/data/coach/coach_api.dart';
@@ -591,6 +592,18 @@ class FakeSocialApi implements SocialApi {
     String? targetType,
     String? targetRef,
   }) async => reports.add('${targetType ?? 'user'}:${targetRef ?? userId}:${reason.wire}');
+}
+
+/// Alt gezinme çubuğundaki bir sekmeye dokun.
+///
+/// NEDEN yardımcı: sekme etiketi ekran içeriğinde de geçebilir ("Topluluk" hem sekme hem başlık).
+/// Doğrudan `find.text` çift eşleşir ve test, ekranın ortasındaki bir metne dokunur. Bu yardımcı
+/// dokunuşu HER ZAMAN çubuğa hedefler. Ayrıca çubuk uygulaması değişirse tek yer güncellenir.
+Future<void> tapTab(WidgetTester tester, String label) async {
+  await tester.tap(
+    find.descendant(of: find.byType(AppBottomNav), matching: find.text(label)),
+  );
+  await tester.pumpAndSettle();
 }
 
 /// Test yüzeyini YÜKSELTİR (800×1400) — uzun ekranlar için.

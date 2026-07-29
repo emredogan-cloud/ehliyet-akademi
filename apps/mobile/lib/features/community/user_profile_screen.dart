@@ -218,7 +218,7 @@ class _CommunityUserScreenState extends ConsumerState<CommunityUserScreen> {
                 const SizedBox(width: AppSpacing.s3),
                 Expanded(
                   child: OutlinedButton.icon(
-                    onPressed: () => context.push('/profile/community/chat/${user.userId}'),
+                    onPressed: () => context.push('/community/chat/${user.userId}'),
                     icon: const Icon(Icons.chat_bubble_outline_rounded, size: 18),
                     label: const Text('Mesaj'),
                   ),

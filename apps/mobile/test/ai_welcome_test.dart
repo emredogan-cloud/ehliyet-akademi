@@ -45,11 +45,15 @@ void main() {
       await useTallSurface(tester);
       await pumpApp(tester, aiWelcomeSeen: false);
 
-      expect(find.text('AI Koç yanında'), findsOneWidget);
-      expect(find.text('Öğrenme sistemi'), findsOneWidget);
-      expect(find.text('Sana özel öneriler'), findsOneWidget);
-      expect(find.text('Topluluk'), findsOneWidget);
-      expect(find.text('Premium'), findsOneWidget);
+      // Faz 4: "Topluluk" artık alt gezinme sekmesi olarak da var; arama popup'ın İÇİNE kısılır,
+      // yoksa test sekme etiketini popup içeriği sanar.
+      Finder inDialog(String t) =>
+          find.descendant(of: find.byType(AiWelcomeDialog), matching: find.text(t));
+      expect(inDialog('AI Koç yanında'), findsOneWidget);
+      expect(inDialog('Öğrenme sistemi'), findsOneWidget);
+      expect(inDialog('Sana özel öneriler'), findsOneWidget);
+      expect(inDialog('Topluluk'), findsOneWidget);
+      expect(inDialog('Premium'), findsOneWidget);
     });
   });
 

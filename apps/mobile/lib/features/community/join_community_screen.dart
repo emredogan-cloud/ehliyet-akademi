@@ -204,7 +204,7 @@ class _JoinCommunityScreenState extends ConsumerState<JoinCommunityScreen> {
             if (editing) ...[
               const SectionTitle('Güvenlik'),
               OutlinedButton.icon(
-                onPressed: () => context.push('/profile/community/blocked'),
+                onPressed: () => context.push('/community/blocked'),
                 icon: const Icon(Icons.block_rounded, size: 18),
                 label: const Text('Engellediklerim'),
               ),

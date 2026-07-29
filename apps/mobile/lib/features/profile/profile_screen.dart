@@ -87,12 +87,15 @@ class ProfileScreen extends ConsumerWidget {
                     onTap: () => _showLicencePicker(context, ref),
                   ),
                   _divider(p),
+                  // Faz 4: Topluluk artık alt gezinmede birinci sınıf sekme. Buradaki satır
+                  // ONUN KOPYASI DEĞİL — topluluk KİMLİĞİNİN ayarına (görünen ad, avatar, ayrılma)
+                  // gider. Aynı yere iki kapı açmak menüyü şişirir, keşfedilebilirliği artırmaz.
                   _SettingRow(
                     icon: Icons.groups_rounded,
                     color: p.green,
-                    title: 'Topluluk',
-                    subtitle: 'Sıralama ve topluluk profilin (isteğe bağlı)',
-                    onTap: () => context.push('/profile/community'),
+                    title: 'Topluluk profilim',
+                    subtitle: 'Görünen adın, avatarın ve katılım durumun',
+                    onTap: () => context.push('/community/join'),
                   ),
                   _divider(p),
                   _SettingRow(

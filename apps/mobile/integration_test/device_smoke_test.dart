@@ -11,6 +11,8 @@
 // KAPSAM SÖZÜ: burada yalnız cihaza bağlı olan şeyler doğrulanır. İş kuralları ve saf mantık
 // `test/` altında kalır — aynı şeyi iki kez test etmek bakım borcudur.
 
+import 'dart:ui' show FrameTiming;
+
 import 'package:ehliyet_akademi/app/app.dart';
 import 'package:ehliyet_akademi/app/shell.dart';
 import 'package:ehliyet_akademi/core/storage/token_store.dart';
@@ -89,6 +91,43 @@ void main() {
       );
     }
     expect(tester.takeException(), isNull);
+  });
+
+  /// Faz 6 — canlı zemin GERÇEKTEN ucuz mu?
+  ///
+  /// "60 FPS" bir iddia değil, ÖLÇÜM olmalı. Burada zemin canlıyken ~4 saniyelik bir pencerede
+  /// kare süreleri toplanır ve 90. yüzdelik dilime bakılır. Eşik 16,7 ms değil **24 ms**: bu bir
+  /// hata ayıklama (debug) yapısıdır; JIT ve iddia (assert) kontrolleri her kareye sabit bir yük
+  /// bindirir. Sürüm yapısında pay daha da açılır. Eşiğin amacı mükemmelliği kanıtlamak değil,
+  /// zeminin kareyi ÇÖKERTMEDİĞİNİ kanıtlamaktır.
+  testWidgets('canlı zemin cihazda kareyi düşürmez', (tester) async {
+    final binding = IntegrationTestWidgetsFlutterBinding.instance;
+    await launchApp(tester);
+
+    final timings = <Duration>[];
+    void collect(List<FrameTiming> batch) {
+      for (final t in batch) {
+        timings.add(t.totalSpan);
+      }
+    }
+
+    binding.addTimingsCallback(collect);
+    // Hareketin gerçekten aktığı bir pencere: her kare zemin yeniden boyanır.
+    for (var i = 0; i < 120; i++) {
+      await tester.pump(const Duration(milliseconds: 16));
+    }
+    binding.removeTimingsCallback(collect);
+
+    expect(timings.length, greaterThan(20), reason: 'kare süresi toplanamadı');
+    final sorted = [...timings]..sort();
+    final p90 = sorted[(sorted.length * 0.9).floor().clamp(0, sorted.length - 1)];
+    final median = sorted[sorted.length ~/ 2];
+    // ignore: avoid_print — ölçüm çıktısı raporda kullanılıyor.
+    print(
+      'ZEMİN KARE SÜRESİ — ortanca ${median.inMicroseconds / 1000} ms · '
+      'p90 ${p90.inMicroseconds / 1000} ms · örnek ${timings.length}',
+    );
+    expect(p90.inMilliseconds, lessThan(24));
   });
 
   testWidgets('çıkış: Profil → Çıkış yap → Giriş ekranı (cihazda)', (tester) async {

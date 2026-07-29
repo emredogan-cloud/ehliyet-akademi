@@ -31,7 +31,10 @@ class AppTheme {
       useMaterial3: true,
       brightness: p.brightness,
       colorScheme: scheme,
-      scaffoldBackgroundColor: p.bg,
+      // Faz 6: iskele ŞEFFAF. Zemin artık uygulamanın kökündeki tek canlı katmandan gelir
+      // (`AppBackground`); iskele kendi düz rengini boyasaydı onu tamamen örterdi.
+      // `canvasColor` opak KALIR: menü/çekmece gibi yüzeyler arkasını göstermemeli.
+      scaffoldBackgroundColor: Colors.transparent,
       canvasColor: p.bg,
       dividerColor: p.border,
       splashColor: p.primary.withValues(alpha: 0.10),
@@ -42,7 +45,9 @@ class AppTheme {
       extensions: [AppPaletteExtension(p)],
       textTheme: _textTheme(base.textTheme, p),
       appBarTheme: AppBarTheme(
-        backgroundColor: p.bg,
+        // Zemin başlık çubuğunun da ARDINDAN akar; opak bir çubuk ekranın üstünde ölü bir
+        // dikdörtgen bırakıyordu (canlı zemin eklendiğinde cihazda görüldü).
+        backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         centerTitle: false,

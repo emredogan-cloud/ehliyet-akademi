@@ -10,7 +10,10 @@ void main() {
       final t = AppTheme.light();
       expect(t.brightness, Brightness.light);
       expect(t.colorScheme.primary, const Color(0xFF0D9488)); // web --primary
-      expect(t.scaffoldBackgroundColor, const Color(0xFFF4F6FB)); // web --bg
+      // Faz 6: iskele ŞEFFAF — zemin uygulamanın kökündeki tek canlı katmandan gelir.
+      // Tema rengi kaybolmadı, paletin `bg`'si olarak duruyor ve zeminin tabanını oluşturuyor.
+      expect(t.scaffoldBackgroundColor, Colors.transparent);
+      expect(t.extension<AppPaletteExtension>()!.palette.bg, const Color(0xFFF4F6FB)); // web --bg
       expect(t.extension<AppPaletteExtension>(), isNotNull);
       expect(t.extension<AppPaletteExtension>()!.palette.accent, const Color(0xFFF59E0B));
     });
@@ -19,7 +22,11 @@ void main() {
       final t = AppTheme.dark();
       expect(t.brightness, Brightness.dark);
       expect(t.colorScheme.primary, const Color(0xFF2DD4BF)); // web dark --primary
-      expect(t.scaffoldBackgroundColor, const Color(0xFF050B16)); // web dark --bg
+      expect(t.scaffoldBackgroundColor, Colors.transparent); // Faz 6 — bkz. açık tema testi
+      expect(
+        t.extension<AppPaletteExtension>()!.palette.bg,
+        const Color(0xFF050B16),
+      ); // web dark --bg
     });
 
     test('spacing scale is an 8px grid', () {

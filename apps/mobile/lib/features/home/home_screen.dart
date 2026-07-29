@@ -147,13 +147,28 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           style: TextStyle(color: p.text3, fontSize: 12.5, height: 1.3),
                         ),
                         const SizedBox(height: AppSpacing.s3),
+                        // Faz 12 — üç istatistik kartın genişliğini PAYLAŞIR.
+                        //
+                        // Sabit aralıklı hâli, sayılar büyüdükçe (1250 soru, Lv 12) ve büyük
+                        // sistem yazısında satırı taşırıyordu. Taşma cihazda sarı-siyah şeritli
+                        // bir kare demek; kırpmak yerine paylaştırmak doğru çözüm.
                         Row(
                           children: [
-                            StatTile(value: '${answers.length}', label: 'soru', color: p.primary),
-                            const SizedBox(width: AppSpacing.s5),
-                            StatTile(value: '%$accuracy', label: 'doğruluk'),
-                            const SizedBox(width: AppSpacing.s5),
-                            StatTile(value: 'Lv ${level.level}', label: 'seviye', color: p.accent),
+                            Expanded(
+                              child: StatTile(
+                                value: '${answers.length}',
+                                label: 'soru',
+                                color: p.primary,
+                              ),
+                            ),
+                            Expanded(child: StatTile(value: '%$accuracy', label: 'doğruluk')),
+                            Expanded(
+                              child: StatTile(
+                                value: 'Lv ${level.level}',
+                                label: 'seviye',
+                                color: p.accent,
+                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -357,11 +372,27 @@ class _CoachHero extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Faz 12 — başlık dar cihazlarda (320 dp) maskotun yanında sıkışıp taşıyordu.
+                // `Flexible` + küçültme, rozet ve başlığı bir arada tutar.
                 Row(
                   children: [
                     IconBadge(icon: Icons.auto_awesome_rounded, color: p.primary, size: 40),
                     const SizedBox(width: AppSpacing.s3),
-                    Text('AI Koç', style: TextStyle(color: p.primary, fontWeight: FontWeight.w900, fontSize: 18)),
+                    Flexible(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'AI Koç',
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: p.primary,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: AppSpacing.s3),
@@ -432,7 +463,14 @@ class _PlanRow extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(AppRadii.sm),
-      child: Padding(
+      // Faz 12 — dokunma hedefi EN AZ 48 dp.
+      //
+      // Satır 30 dp yükseklikteydi; Android erişilebilirlik yönergesi (ve Play tarama denetimi)
+      // 48 dp ister. Motor becerisi kısıtlı kullanıcılar için küçük hedefler ekranı kullanılamaz
+      // yapar. Görsel yoğunluk korunuyor — yalnız dokunulabilir alan büyüdü.
+      child: Container(
+        constraints: const BoxConstraints(minHeight: 48),
+        alignment: Alignment.centerLeft,
         padding: const EdgeInsets.symmetric(vertical: 4),
         child: Row(
           children: [

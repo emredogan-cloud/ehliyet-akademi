@@ -306,25 +306,33 @@ class _ProfileHeader extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: AppSpacing.s4),
+                // Faz 12 — üç mini istatistik genişliği PAYLAŞIR. Sabit aralıklı hâli dar
+                // cihazlarda (320 dp) ve büyük sistem yazısında satırı taşırıyordu.
                 Row(
                   children: [
-                    _MiniStat(
-                      icon: Icons.emoji_events_rounded,
-                      value: '$badges',
-                      label: 'Rozet',
-                      color: p.accent,
+                    Expanded(
+                      child: _MiniStat(
+                        icon: Icons.emoji_events_rounded,
+                        value: '$badges',
+                        label: 'Rozet',
+                        color: p.accent,
+                      ),
                     ),
-                    _MiniStat(
-                      icon: Icons.trending_up_rounded,
-                      value: '$answered',
-                      label: 'İlerleme',
-                      color: p.primary,
+                    Expanded(
+                      child: _MiniStat(
+                        icon: Icons.trending_up_rounded,
+                        value: '$answered',
+                        label: 'İlerleme',
+                        color: p.primary,
+                      ),
                     ),
-                    _MiniStat(
-                      icon: Icons.local_fire_department_rounded,
-                      value: '$streakDays',
-                      label: 'Gün',
-                      color: p.red,
+                    Expanded(
+                      child: _MiniStat(
+                        icon: Icons.local_fire_department_rounded,
+                        value: '$streakDays',
+                        label: 'Gün',
+                        color: p.red,
+                      ),
                     ),
                   ],
                 ),
@@ -366,20 +374,36 @@ class _MiniStat extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = context.palette;
     return Padding(
-      padding: const EdgeInsets.only(right: AppSpacing.s5),
+      padding: const EdgeInsets.only(right: AppSpacing.s3),
       child: Row(
         children: [
           Icon(icon, color: color, size: 18),
           const SizedBox(width: 5),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                value,
-                style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: p.text),
-              ),
-              Text(label, style: TextStyle(color: p.text3, fontSize: 10.5)),
-            ],
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    value,
+                    maxLines: 1,
+                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: p.text),
+                  ),
+                ),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    style: TextStyle(color: p.text3, fontSize: 10.5),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -421,11 +445,19 @@ class _ToggleRow extends StatelessWidget {
               ],
             ),
           ),
-          Switch(
-            value: value,
-            onChanged: onChanged,
-            activeThumbColor: Colors.white,
-            activeTrackColor: p.primary,
+          // Faz 12 — anahtarın ETİKETİ olmalı.
+          //
+          // Etiketsiz `Switch`, ekran okuyucuda yalnız "açık/kapalı anahtar" olarak duyurulur;
+          // kullanıcı NEYİ değiştirdiğini bilemez. Satırın başlığı görsel olarak yanında duruyor
+          // ama semantik ağaçta bağlı değildi (yönerge denetiminde yakalandı).
+          Semantics(
+            label: title,
+            child: Switch(
+              value: value,
+              onChanged: onChanged,
+              activeThumbColor: Colors.white,
+              activeTrackColor: p.primary,
+            ),
           ),
         ],
       ),

@@ -149,20 +149,40 @@ class GradientPillButton extends StatelessWidget {
                         width: 22, height: 22,
                         child: CircularProgressIndicator(strokeWidth: 2.4, color: Colors.white),
                       )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          if (leading != null) ...[leading!, const SizedBox(width: AppSpacing.s2)],
-                          Text(
-                            label,
-                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 16),
+                    // Faz 12 — etiket düğmeye SIĞACAK şekilde küçülür.
+                    //
+                    // Bu, uygulamanın her yerinde kullanılan birincil düğme; uzun etiketler
+                    // ("Giriş yap / Kayıt ol", "Arkadaşını davet et") 320 dp'lik cihazlarda ve
+                    // büyük sistem yazısında satırı taşırıyordu (denetimde yakalandı). Kırpmak
+                    // eylemin adını yarım gösterir — küçültmek göstermeye devam eder.
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (leading != null) ...[
+                                leading!,
+                                const SizedBox(width: AppSpacing.s2),
+                              ],
+                              Text(
+                                label,
+                                maxLines: 1,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              if (trailingIcon != null) ...[
+                                const SizedBox(width: AppSpacing.s2),
+                                Icon(trailingIcon, color: Colors.white, size: 20),
+                              ],
+                            ],
                           ),
-                          if (trailingIcon != null) ...[
-                            const SizedBox(width: AppSpacing.s2),
-                            Icon(trailingIcon, color: Colors.white, size: 20),
-                          ],
-                        ],
+                        ),
                       ),
               ),
             ),

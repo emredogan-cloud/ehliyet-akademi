@@ -422,7 +422,14 @@ class _SuggestionChip extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(AppRadii.pill),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s3, vertical: AppSpacing.s2),
+          // Faz 12 — dokunma hedefi EN AZ 48 dp (Android erişilebilirlik yönergesi).
+          //
+          // Çip 35 dp yükseklikteydi; Play erişilebilirlik taraması bunu işaretler ve motor
+          // becerisi kısıtlı kullanıcılar için isabet zorlaşır. Görsel yükseklik dolgu ile
+          // korunuyor — çip aynı görünür, hedefi büyür.
+          constraints: const BoxConstraints(minHeight: 48),
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4, vertical: AppSpacing.s2),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppRadii.pill),
             border: Border.all(color: p.border),

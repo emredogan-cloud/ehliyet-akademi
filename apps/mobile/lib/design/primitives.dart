@@ -106,15 +106,28 @@ class StatTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
+    // Faz 12 — değer ve etiket SIĞACAK şekilde küçülür.
+    //
+    // Bu bileşen dar sütunlarda ve büyük sistem yazısında kullanılıyor; sabit punto satırı
+    // taşırıyordu (denetimde yakalandı). Kırpmak bir sayıyı yarım gösterirdi — küçültmek doğru.
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          value,
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: color ?? p.text),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            value,
+            maxLines: 1,
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: color ?? p.text),
+          ),
         ),
-        Text(label, style: TextStyle(fontSize: 12, color: p.text3)),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(label, maxLines: 1, style: TextStyle(fontSize: 12, color: p.text3)),
+        ),
       ],
     );
   }

@@ -230,16 +230,21 @@ class _NavItem extends StatelessWidget {
               const SizedBox(height: 3),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 2),
-                child: Text(
-                  tab.label,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: labelSize,
-                    height: 1.05,
-                    fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-                    color: color,
+                // Faz 12 — 320 dp'lik cihazlarda (ve geniş yazı tiplerinde) etiket yuvaya
+                // sığmıyordu. Kırpmak bir sekmenin adını yarım gösterir; küçültmek göstermeye
+                // devam eder. Ölçek zinciri: punto seçimi + son çare olarak FittedBox.
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    tab.label,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: labelSize,
+                      height: 1.05,
+                      fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+                      color: color,
+                    ),
                   ),
                 ),
               ),

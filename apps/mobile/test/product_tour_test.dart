@@ -140,6 +140,23 @@ void main() {
       expect(find.byType(CoachMarkHost), findsOneWidget);
     });
 
+    /// CİHAZDA YAKALANAN HATA — testte görünmüyordu.
+    ///
+    /// Bindirme kabuğun `Scaffold`'unun ÜSTÜNDE duruyor; ağaçta `Material` atası olmayınca Flutter
+    /// metni "eksik stil" işaretiyle (daktilo yazı tipi + sarı çift alt çizgi) çiziyordu. Metin
+    /// BULUNUYORDU, yalnız yanlış çiziliyordu — bu yüzden içerik testleri sessiz kaldı. Kural
+    /// artık burada: baloncuğun bir `Material` atası olmalı.
+    testWidgets('baloncuk metni bir Material altında çizilir (sarı alt çizgi hatası)', (
+      tester,
+    ) async {
+      await bootWithTour(tester);
+      expect(
+        find.ancestor(of: find.text('Ana Sayfa').last, matching: find.byType(Material)),
+        findsWidgets,
+        reason: 'Material atası yok → metin "eksik stil" olarak çizilir',
+      );
+    });
+
     /// Turun tanıttığı her düğme GERÇEKTEN Ana Sayfa'da olmalı. Bu test, tur ile ekranın
     /// birbirinden ayrı düşmesini (çapası silinmiş bir adım) yakalar.
     testWidgets('her adımın çapası gerçekten bulunuyor', (tester) async {

@@ -322,7 +322,16 @@ class _CoachMarkOverlay extends StatelessWidget {
     return Semantics(
       container: true,
       explicitChildNodes: true,
-      child: Stack(
+      // `Material` ŞART — süs değil.
+      //
+      // Bindirme kabuğun `Scaffold`'unun ÜSTÜNDE duruyor, yani ağaçta bir `Material` atası YOK.
+      // Flutter bu durumda metni "eksik stil" işaretiyle çizer: daktilo yazı tipi + SARI ÇİFT
+      // ALT ÇİZGİ. Widget testleri bunu yakalamadı (metin bulunuyordu, yalnız YANLIŞ çiziliyordu);
+      // cihazda ilk bakışta görüldü. Saydam Material, metne varsayılan stili verir ve mürekkep
+      // dalgalarını da mümkün kılar.
+      child: Material(
+        type: MaterialType.transparency,
+        child: Stack(
         children: [
           // Karartma + delik. Zemine dokunmak ilerletir (yaygın kalıp) ama arkadaki gerçek
           // arayüze dokunuş GEÇMEZ: tur sırasında yanlışlıkla bir şey açılmamalı.
@@ -359,6 +368,7 @@ class _CoachMarkOverlay extends StatelessWidget {
             onSkip: onSkip,
           ),
         ],
+        ),
       ),
     );
   }

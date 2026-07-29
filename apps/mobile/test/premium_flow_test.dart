@@ -1,6 +1,5 @@
 import 'package:ehliyet_akademi/data/premium/billing_gateway.dart';
 import 'package:ehliyet_akademi/data/premium/store_purchase_store.dart';
-import 'package:ehliyet_akademi/design/brand.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'helpers.dart';
@@ -29,7 +28,7 @@ void main() {
 
       expect(find.text('Premium Aktif'), findsOneWidget);
       // Satın alma düğmesi devre dışı DEĞİL — hiç ÇİZİLMİYOR.
-      expect(find.widgetWithText(GradientPillButton, 'Paketi Satın Al'), findsNothing);
+      expect(find.text('PAKETİ SATIN AL'), findsNothing);
       expect(find.text('· tek seferlik'), findsNothing);
     });
 
@@ -41,7 +40,7 @@ void main() {
       await tester.tap(find.text('Premium').last);
       await tester.pumpAndSettle();
 
-      expect(find.widgetWithText(GradientPillButton, 'Paketi Satın Al'), findsOneWidget);
+      expect(find.text('PAKETİ SATIN AL'), findsOneWidget);
       expect(find.text('Premium Aktif'), findsNothing);
     });
   });
@@ -61,7 +60,9 @@ void main() {
       await tester.tap(find.text('Premium').last);
       await tester.pumpAndSettle();
 
-      await tester.tap(find.widgetWithText(GradientPillButton, 'Paketi Satın Al'));
+      await tester.ensureVisible(find.text('PAKETİ SATIN AL'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('PAKETİ SATIN AL'));
       await tester.pumpAndSettle();
 
       // Erişim AÇIK: ekran artık durum ekranı.
@@ -93,7 +94,9 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.text('Premium').last);
       await tester.pumpAndSettle();
-      await tester.tap(find.widgetWithText(GradientPillButton, 'Paketi Satın Al'));
+      await tester.ensureVisible(find.text('PAKETİ SATIN AL'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('PAKETİ SATIN AL'));
       await tester.pumpAndSettle();
 
       expect(billing.restoreCalls, 1, reason: 'geri yükleme kendiliğinden tetiklenmeli');

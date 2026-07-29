@@ -51,4 +51,11 @@ class AppImages {
   static const illDashboard = '$_base/ill_dashboard.webp'; // turn-signal (exam illustration)
   static const illWheelCheck = '$_base/ill_wheel_check.webp'; // premium success
   static const illLockGold = '$_base/ill_lock_gold.webp'; // premium incentive
+
+  // Ödeme ekranı hero'su (Faz 9)
+  //
+  // Kaynak: `apps/assets/interface-assets/025-assets.png` — taç madalyonu + sürücü kursu aracı +
+  // "KOMPLE EHLİYET PAKETİ" şeridi. Referansın TEK raster parçası; 026/027/028 mockuptur ve
+  // widget olarak uygulanmıştır (gerekçe: `tool/extract_paywall_hero.py`).
+  static const paywallHero = '$_base/paywall_hero.webp';
 }

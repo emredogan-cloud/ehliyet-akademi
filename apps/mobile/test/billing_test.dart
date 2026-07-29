@@ -2,7 +2,6 @@ import 'package:ehliyet_akademi/data/premium/billing_gateway.dart';
 import 'package:ehliyet_akademi/data/premium/iap_service.dart';
 import 'package:ehliyet_akademi/data/premium/play_billing_gateway.dart';
 import 'package:ehliyet_akademi/data/premium/revenuecat_gateway.dart';
-import 'package:ehliyet_akademi/design/brand.dart';
 import 'package:ehliyet_akademi/domain/premium/entitlement_status.dart';
 import 'package:ehliyet_akademi/domain/premium/products.dart';
 import 'package:flutter/material.dart';
@@ -251,7 +250,8 @@ void main() {
 
     testWidgets('yapılandırılmamış ağ geçidiyle ekran ÇÖKMEZ', (tester) async {
       await _openPaywall(tester, FakeBillingGateway(configured: false));
-      expect(find.text('Komple Ehliyet Paketi'), findsOneWidget);
+      // Faz 9: ürün adı hero görselinin içinde; ekranın ayakta olduğu başlıkla doğrulanır.
+      expect(find.text('SINAVA HAZIR OL!'), findsOneWidget);
       expect(find.text('Geri yükle'), findsOneWidget);
       expect(tester.takeException(), isNull);
     });
@@ -269,7 +269,7 @@ void main() {
       final gateway = FakeBillingGateway.withStore();
       await _openPaywall(tester, gateway);
 
-      await tester.tap(find.text('Paketi Satın Al'));
+      await tapBuy(tester);
       await tester.pumpAndSettle();
 
       expect(gateway.purchaseCalls, 1);
@@ -279,7 +279,7 @@ void main() {
       final gateway = FakeBillingGateway.withStore(purchaseResult: const BillingCancelled());
       await _openPaywall(tester, gateway);
 
-      await tester.tap(find.text('Paketi Satın Al'));
+      await tapBuy(tester);
       await tester.pumpAndSettle();
 
       expect(gateway.purchaseCalls, 1);
@@ -295,7 +295,7 @@ void main() {
         ),
       );
 
-      await tester.tap(find.text('Paketi Satın Al'));
+      await tapBuy(tester);
       await tester.pumpAndSettle();
 
       expect(find.text('Bu cihazda satın almaya izin verilmiyor.'), findsOneWidget);
@@ -407,12 +407,26 @@ Future<void> _openPaywall(
   await tester.pumpAndSettle();
 }
 
-/// Ödeme ekranındaki "Paketi Satın Al" düğmesi basılabilir mi?
+/// Faz 9 — satın alma düğmesi referans tasarımdaki altın düğme oldu ("PAKETİ SATIN AL").
+const kBuyLabel = 'PAKETİ SATIN AL';
+
+/// Düğmeye bas. Ekran referans tasarımla uzadı → önce görünür alana getirilir.
+Future<void> tapBuy(WidgetTester tester) async {
+  await tester.ensureVisible(find.text(kBuyLabel));
+  await tester.pumpAndSettle();
+  await tester.tap(find.text(kBuyLabel));
+  await tester.pumpAndSettle();
+}
+
+/// Ödeme ekranındaki satın alma düğmesi basılabilir mi?
+///
+/// Etikete değil, GERÇEK dokunma davranışına bakılır: `InkWell.onTap` null ise düğme ölüdür.
+/// Yükleniyorken etiket hiç çizilmez — o durumda da basılamaz.
 bool _buyEnabled(WidgetTester tester) {
-  final button = tester.widget<GradientPillButton>(
-    find.widgetWithText(GradientPillButton, 'Paketi Satın Al'),
-  );
-  return button.onPressed != null && !button.loading;
+  final label = find.text(kBuyLabel);
+  if (label.evaluate().isEmpty) return false;
+  final inkWell = find.ancestor(of: label, matching: find.byType(InkWell)).first;
+  return tester.widget<InkWell>(inkWell).onTap != null;
 }
 
 /// Sahte `IapService` — `implements` ile örtük arayüz kullanılır, böylece `iap_service.dart`

@@ -259,7 +259,9 @@ void main() {
       await tester.pump(const Duration(milliseconds: 200));
     }
 
-    expect(find.text("Premium'a Geç"), findsOneWidget);
+    // Faz 9 — referans tasarımın başlığı (AppBar başlığı YOK: hero'nun kendi başlığı var).
+    expect(find.text('SINAVA HAZIR OL!'), findsOneWidget);
+    expect(find.text('SINIRSIZ ERİŞİM'), findsOneWidget);
     // Play politikası: geri yükleme HER KOŞULDA erişilebilir.
     expect(find.text('Geri yükle'), findsOneWidget);
     expect(tester.takeException(), isNull);

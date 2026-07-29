@@ -6,10 +6,11 @@ import '../../core/config.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/premium/billing_gateway.dart';
 import '../../data/premium/entitlements_repository.dart';
-import '../../design/brand.dart';
 import '../../design/primitives.dart';
 import '../../domain/premium/entitlement_status.dart';
 import '../../domain/premium/products.dart';
+import '../../domain/premium/paywall_offer.dart';
+import 'paywall_sections.dart';
 import 'premium_popups.dart';
 
 
@@ -40,6 +41,10 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   PremiumLifecycle _lifecycle = PremiumLifecycle.none;
 
   Product get _product => premiumProduct;
+
+  /// Kampanya bilgisi (üstü çizili fiyat + geri sayım). Yapılandırılmadıysa ikisi de KAPALI —
+  /// gerekçe `PaywallOffer` sınıf notunda.
+  final PaywallOffer _offer = PaywallOffer.fromEnvironment();
 
   /// Mağazadan gelen ürün — yoksa null (mağaza kapalı ya da ürün Play'de tanımlı değil).
   BillingProduct? get _storeProduct {
@@ -220,25 +225,26 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final p = context.palette;
     final owned = ref.watch(entitlementsProvider);
     final hasPremium = isPremium(owned);
     final priceLabel = _storeProduct?.priceLabel ?? '₺${_product.priceTRY}';
     final lifecycleMessage = premiumLifecycleMessage(_lifecycle);
 
     return Scaffold(
+      // Referanstaki üst şerit: solda geri, sağda kapat. Başlık YOK — hero'nun kendi başlığı var
+      // ve iki başlık üst üste binerdi.
       appBar: AppBar(
-        title: const Text("Premium'a Geç"),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_rounded),
+          tooltip: 'Geri',
+          onPressed: () => Navigator.of(context).maybePop(),
+        ),
         // Play politikası: geri yükleme her koşulda erişilebilir olmalı → koşulsuz eylem.
         actions: [
           TextButton(
             onPressed: _restoring ? null : _restore,
             child: _restoring
-                ? const SizedBox(
-                    width: 16,
-                    height: 16,
-                    child: CircularProgressIndicator(strokeWidth: 2),
-                  )
+                ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
                 : const Text('Geri yükle'),
           ),
         ],
@@ -248,36 +254,26 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
         child: _loading
             ? const Center(child: CircularProgressIndicator())
             : ListView(
-                padding: const EdgeInsets.fromLTRB(AppSpacing.s5, AppSpacing.s3, AppSpacing.s5, AppSpacing.s6),
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.s4,
+                  0,
+                  AppSpacing.s4,
+                  AppSpacing.s8,
+                ),
                 children: [
-                  Center(child: MascotImage(AppImages.illLockGold, height: 168, semanticLabel: 'Premium')),
-                  const SizedBox(height: AppSpacing.s2),
-                  Center(
-                    child: BrandChip(
-                      label: hasPremium ? 'PREMIUM AKTİF' : "KOMPLE PAKET",
-                      icon: Icons.workspace_premium_rounded,
-                      color: context.palette.accent,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.s3),
-                  Text(
-                    _product.title,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  const SizedBox(height: AppSpacing.s2),
-                  Text(
-                    _product.blurb,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: p.text2, fontSize: 14, height: 1.4),
-                  ),
-                  const SizedBox(height: AppSpacing.s5),
-                  _FeatureCard(product: _product),
+                  _PaywallHeadline(hasPremium: hasPremium),
                   const SizedBox(height: AppSpacing.s4),
+                  const _PaywallHero(),
+                  const SizedBox(height: AppSpacing.s5),
+                  const PaywallFeatureStrip(),
+                  const SizedBox(height: AppSpacing.s4),
+                  PaywallChecklist(features: _product.features),
+                  const SizedBox(height: AppSpacing.s5),
+
                   // Yaşam döngüsü uyarısı — yalnız sağlayıcı gerçekten bir durum bildirdiyse.
                   if (lifecycleMessage != null)
                     Padding(
-                      padding: const EdgeInsets.only(bottom: AppSpacing.s3),
+                      padding: const EdgeInsets.only(bottom: AppSpacing.s4),
                       child: AppCallout(
                         tone: _lifecycle.grantsAccess ? CalloutTone.info : CalloutTone.warning,
                         title: _lifecycle.needsUserAction ? 'Ödeme sorunu' : 'Abonelik durumu',
@@ -286,49 +282,39 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                     ),
                   if (!_storeAvailable && !hasPremium)
                     const Padding(
-                      padding: EdgeInsets.only(bottom: AppSpacing.s3),
+                      padding: EdgeInsets.only(bottom: AppSpacing.s4),
                       child: AppCallout(
                         tone: CalloutTone.warning,
                         title: 'Mağaza kullanılamıyor',
-                        text: 'Uygulama-içi satın alma yalnız Google Play üzerinden yüklenmiş sürümde çalışır. '
+                        text:
+                            'Uygulama-içi satın alma yalnız Google Play üzerinden yüklenmiş sürümde çalışır. '
                             'Sahip olduğun paketi "Geri yükle" ile getirebilirsin.',
                       ),
                     ),
+
                   // Faz 2 — SAHİPSE satın alma yüzeyi HİÇ ÇİZİLMEZ.
                   //
-                  // Devre dışı bir "Paketi Satın Al" düğmesi bırakmak yetmez: kullanıcı ödediği
-                  // bir şeyin satış ekranını görmeye devam eder. Sahiplik durumunda ekran bir
-                  // DURUM ekranına dönüşür — fiyat, satın alma düğmesi ve güven şeridi kalkar.
+                  // Devre dışı bir düğme bırakmak yetmez: kullanıcı ödediği bir şeyin satış
+                  // ekranını görmeye devam eder. Sahiplikte ekran bir DURUM ekranına dönüşür —
+                  // fiyat, sayaç, satın alma düğmesi ve güven şeridi kalkar.
                   if (hasPremium)
                     _OwnedBanner()
                   else ...[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.baseline,
-                      textBaseline: TextBaseline.alphabetic,
-                      children: [
-                        Text(priceLabel, style: TextStyle(color: p.text, fontWeight: FontWeight.w900, fontSize: 34)),
-                        const SizedBox(width: 6),
-                        Text('· tek seferlik', style: TextStyle(color: p.text3, fontSize: 13)),
-                      ],
+                    PaywallPriceBlock(
+                      priceLabel: priceLabel,
+                      offer: _offer,
+                      onBuy: _storeAvailable ? _buy : null,
+                      busy: _busy,
                     ),
-                    const SizedBox(height: AppSpacing.s3),
-                    GradientPillButton(
-                      label: 'Paketi Satın Al',
-                      gold: true,
-                      loading: _busy,
-                      leading: const Icon(Icons.workspace_premium_rounded, color: Colors.white, size: 20),
-                      onPressed: _storeAvailable ? _buy : null,
-                    ),
-                    const SizedBox(height: AppSpacing.s3),
+                    const SizedBox(height: AppSpacing.s5),
                     _TrustRow(),
                   ],
-                  const SizedBox(height: AppSpacing.s3),
+                  const SizedBox(height: AppSpacing.s4),
                   Text(
                     'Ödeme Google Play üzerinden alınır. Ömür boyu erişim, abonelik yok. '
                     'Kesin ve güncel kural için MEB/MTSK esastır.',
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: p.text3, fontSize: 11.5, height: 1.4),
+                    style: TextStyle(color: context.palette.text3, fontSize: 11.5, height: 1.4),
                   ),
                 ],
               ),
@@ -337,35 +323,83 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   }
 }
 
-class _FeatureCard extends StatelessWidget {
-  const _FeatureCard({required this.product});
-  final Product product;
+/// Referanstaki iki satırlık başlık: küçük büyük-harfli üst satır + büyük turkuaz vurgu.
+class _PaywallHeadline extends StatelessWidget {
+  const _PaywallHeadline({required this.hasPremium});
+  final bool hasPremium;
 
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
-    return GlowCard(
-      padding: const EdgeInsets.all(AppSpacing.s5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          for (final f in product.features)
-            Padding(
-              padding: const EdgeInsets.only(bottom: AppSpacing.s3),
-              child: Row(
-                children: [
-                  Container(
-                    width: 26,
-                    height: 26,
-                    decoration: BoxDecoration(color: p.primary.withValues(alpha: 0.14), shape: BoxShape.circle),
-                    child: Icon(Icons.check_rounded, size: 16, color: p.primary),
-                  ),
-                  const SizedBox(width: AppSpacing.s3),
-                  Expanded(child: Text(f, style: const TextStyle(fontSize: 14.5, fontWeight: FontWeight.w600))),
-                ],
-              ),
+    return Column(
+      children: [
+        Text(
+          hasPremium ? 'PAKETİN AKTİF' : 'TÜM POTANSİYELİNİ AÇ',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: p.text2,
+            fontSize: 14,
+            fontWeight: FontWeight.w700,
+            letterSpacing: 1.6,
+          ),
+        ),
+        const SizedBox(height: 4),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            hasPremium ? 'İYİ ÇALIŞMALAR!' : 'SINAVA HAZIR OL!',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: p.primary,
+              fontSize: 34,
+              height: 1.1,
+              fontWeight: FontWeight.w900,
+              letterSpacing: -0.5,
             ),
-        ],
+          ),
+        ),
+        const SizedBox(height: AppSpacing.s3),
+        Text.rich(
+          TextSpan(
+            style: TextStyle(color: p.text2, fontSize: 14, height: 1.45),
+            children: [
+              const TextSpan(text: 'Komple Ehliyet Paketi ile tüm konulara sınırsız eriş, '),
+              TextSpan(
+                text: 'sınavda bir adım önde',
+                style: TextStyle(color: p.accent, fontWeight: FontWeight.w700),
+              ),
+              const TextSpan(text: ' ol!'),
+            ],
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ],
+    );
+  }
+}
+
+/// Hero — taç madalyonu + araç + "KOMPLE EHLİYET PAKETİ" şeridi.
+///
+/// Bu, referansın TEK raster parçasıdır (`tool/extract_paywall_hero.py` notuna bakın): sanat
+/// widget'la yeniden çizilemez, mockup ise raster olarak sevk edilmez.
+class _PaywallHero extends StatelessWidget {
+  const _PaywallHero();
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: 'Komple Ehliyet Paketi',
+      image: true,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(AppRadii.lg),
+        child: Image.asset(
+          AppImages.paywallHero,
+          fit: BoxFit.cover,
+          // Gösterim genişliğine indirilir (bellek); 2× cihaz oranına kadar keskin.
+          cacheWidth: 1080,
+          excludeFromSemantics: true,
+          errorBuilder: (_, _, _) => const SizedBox.shrink(),
+        ),
       ),
     );
   }

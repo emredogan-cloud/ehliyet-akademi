@@ -7,7 +7,9 @@ import 'package:go_router/go_router.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/practice/progress_repository.dart';
 import '../../design/brand.dart';
+import '../../data/share/share_service.dart';
 import '../../design/primitives.dart';
+import '../../design/share_card.dart';
 import '../../domain/content/content_enums.dart';
 import '../../domain/onboarding/study_profile.dart';
 import '../../domain/practice/collections.dart';
@@ -192,7 +194,21 @@ class _ExamRunnerScreenState extends ConsumerState<ExamRunnerScreen> {
             if (exam.questions.isEmpty) {
               return const AppEmptyState(emoji: '🗂️', title: 'Bu set için soru bulunamadı');
             }
-            return _finished ? _resultView(exam, _result!) : _running(exam);
+            if (!_finished) return _running(exam);
+            // Ekran dışı paylaşım kartı ağaçta OLMALI: boyanmamış bir sınırın görüntüsü alınamaz.
+            return Stack(
+        // `Clip.none` ŞART — süs değil.
+        //
+        // `Stack` varsayılan olarak çocuklarını sınırlarına KIRPAR (`Clip.hardEdge`). Ekran dışına
+        // konan paylaşım kartı bu yüzden hiç BOYANMIYOR, boyanmayan bir sınırın `toImage`'ı da
+        // hiçbir zaman tamamlanmıyordu — paylaşım sonsuza kadar "Hazırlanıyor…" kalıyordu
+        // (testte `pumpAndSettle` zaman aşımıyla yakalandı).
+        clipBehavior: Clip.none,
+              children: [
+                Positioned.fill(child: _resultView(exam, _result!)),
+                _offscreenShareCard(_result!),
+              ],
+            );
           },
         ),
       ),
@@ -219,10 +235,61 @@ class _ExamRunnerScreenState extends ConsumerState<ExamRunnerScreen> {
       extra: _SubjectCard(scores: result.perSubject),
       actions: [
         ResultAction(label: 'Bitir', icon: Icons.check_rounded, primary: true, onTap: () => context.pop()),
+        // Faz 10 — sonuç TEK DOKUNUŞLA paylaşılır: kart cihazda çizilir, PNG'ye çevrilir ve
+        // sistem paylaşım sayfasına verilir. Sunucuya hiçbir şey yüklenmez.
+        ResultAction(
+          label: _sharing ? 'Hazırlanıyor…' : 'Sonucu paylaş',
+          icon: Icons.ios_share_rounded,
+          onTap: _sharing ? () {} : () => _shareResult(result, exam),
+        ),
         ResultAction(label: 'Ana sayfaya dön', icon: Icons.home_rounded, onTap: () => context.go('/home')),
       ],
     );
   }
+
+  /// Paylaşılacak kartın görüntüsünü almak için sınır anahtarı.
+  final GlobalKey _shareCardKey = GlobalKey();
+  bool _sharing = false;
+
+  Future<void> _shareResult(ExamResult result, BuiltExam exam) async {
+    setState(() => _sharing = true);
+    final pct = result.total == 0 ? 0 : (result.correct / result.total * 100).round();
+    final text = result.passed
+        ? 'Ehliyet Akademi deneme sınavını geçtim — ${result.correct}/${result.total} doğru (%$pct)!'
+        : 'Ehliyet Akademi deneme sınavı sonucum: ${result.correct}/${result.total} doğru (%$pct).';
+
+    final png = await captureBoundary(_shareCardKey);
+    final service = ref.read(shareServiceProvider);
+    // Görüntü alınamazsa metin paylaşılır — kullanıcı elinde hiçbir şey olmadan kalmaz.
+    final ok = png == null
+        ? await service.shareText(text)
+        : await service.shareImage(pngBytes: png, fileName: 'ehliyet-deneme-sonucu', text: text);
+    if (!mounted) return;
+    setState(() => _sharing = false);
+    if (!ok) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Paylaşım açılamadı.')),
+      );
+    }
+  }
+
+  /// Paylaşılacak kart EKRANIN DIŞINDA, SABİT ölçüde çizilir (1080×1350).
+  ///
+  /// Sonuç ekranının kendisini fotoğraflamak, telefon genişliğine göre değişen ve sosyal
+  /// uygulamalarda kırpılan bir görsel üretirdi.
+  Widget _offscreenShareCard(ExamResult result) => Positioned(
+    left: -3000,
+    top: 0,
+    child: RepaintBoundary(
+      key: _shareCardKey,
+      child: ExamResultShareCard(
+        correct: result.correct,
+        total: result.total,
+        passed: result.passed,
+        durationLabel: _fmt(_elapsed),
+      ),
+    ),
+  );
 
   Widget _running(BuiltExam exam) {
     final p = context.palette;

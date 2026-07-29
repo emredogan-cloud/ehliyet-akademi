@@ -8,12 +8,14 @@ import '../../design/primitives.dart';
 import '../../domain/content/content_enums.dart';
 import '../../domain/practice/srs.dart';
 import '../../domain/progress/gamification.dart';
+import '../../domain/progress/badge_celebration.dart';
+import 'badge_celebration_dialog.dart';
 import 'widgets/readiness_radar.dart';
 import 'widgets/study_heatmap.dart';
 
 /// İlerleme & oyunlaştırma — seviye/XP, ders bazlı radar, çalışma ısı haritası, rozetler.
 /// Tümü yerel cevap/seri/sayaç verilerinden (çevrimdışı).
-class ProgressScreen extends ConsumerWidget {
+class ProgressScreen extends ConsumerStatefulWidget {
   const ProgressScreen({super.key});
 
   static const _shortLabel = {
@@ -25,7 +27,56 @@ class ProgressScreen extends ConsumerWidget {
   static const _theory = [Subject.trafik, Subject.ilkyardim, Subject.motor, Subject.adab];
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ProgressScreen> createState() => _ProgressScreenState();
+}
+
+class _ProgressScreenState extends ConsumerState<ProgressScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Kutlama İLK KARE ÇİZİLDİKTEN SONRA: kullanıcı önce ilerlemesini görür, pencere üstüne gelir.
+    WidgetsBinding.instance.addPostFrameCallback((_) => _celebrateNewBadges());
+  }
+
+  /// Faz 10 — bu ekran açıldığında YENİ açılmış rozet varsa kutla.
+  ///
+  /// Rozetler saf bir fonksiyondan türetilir; "yeni mi" sorusunun cevabı ayrı bir kutlama
+  /// defterinde durur (`badge_celebration.dart` sınıf notu). Defter henüz okunmadıysa hiçbir şey
+  /// yapılmaz — boş küme yüzünden tüm rozetler "yeni" sanılırdı.
+  Future<void> _celebrateNewBadges() async {
+    final controller = ref.read(celebratedBadgesProvider.notifier);
+    // Kalıcı defterin okunmasını bekle (mikro görev sırası).
+    for (var i = 0; i < 20 && !controller.isLoaded; i++) {
+      await Future<void>.delayed(const Duration(milliseconds: 25));
+    }
+    if (!mounted || !controller.isLoaded) return;
+
+    final progress = ref.read(progressRepositoryProvider).value;
+    if (progress == null) return;
+    final achievements = computeAchievements(
+      answers: progress.loadAnswers(),
+      streak: progress.loadStreak(),
+      examsFinished: progress.examsFinished(),
+    );
+
+    final celebrated = ref.read(celebratedBadgesProvider);
+    // İlk senkron: defter boşken açık rozetler SESSİZCE işaretlenir; yoksa yeni kurulumda arka
+    // arkaya beş pencere açılırdı.
+    if (celebrated.isEmpty) {
+      await controller.firstSyncSilently(achievements);
+      return;
+    }
+
+    final fresh = newlyUnlocked(achievements: achievements, alreadyCelebrated: celebrated);
+    for (final a in fresh) {
+      if (!mounted) return;
+      await showBadgeCelebration(context, ref, a);
+      await controller.markCelebrated([a.id]);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('İlerleme')),
       body: SafeArea(
@@ -148,6 +199,12 @@ class _Body extends StatelessWidget {
           runSpacing: AppSpacing.s3,
           children: [for (final a in achievements) _Badge(achievement: a)],
         ),
+        const SizedBox(height: AppSpacing.s3),
+        Text(
+          'Kazandığın bir rozete dokunarak paylaşabilirsin.',
+          textAlign: TextAlign.center,
+          style: TextStyle(color: p.text3, fontSize: 12.5),
+        ),
       ],
     );
   }
@@ -183,12 +240,12 @@ class _StatBox extends StatelessWidget {
   }
 }
 
-class _Badge extends StatelessWidget {
+class _Badge extends ConsumerWidget {
   const _Badge({required this.achievement});
   final Achievement achievement;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final p = context.palette;
     final on = achievement.unlocked;
     final width = (MediaQuery.sizeOf(context).width - AppSpacing.s4 * 2 - AppSpacing.s3 * 2) / 3;
@@ -197,6 +254,9 @@ class _Badge extends StatelessWidget {
       child: Opacity(
         opacity: on ? 1 : 0.45,
         child: AppCard(
+          // Faz 10 — kazanılmış rozet DOKUNULABİLİR: kutlamayı (ve paylaşımı) yeniden açar.
+          // Kilitli rozet dokunulamaz; olmayan bir başarıyı paylaşmanın anlamı yok.
+          onTap: on ? () => showBadgeCelebration(context, ref, achievement) : null,
           padding: const EdgeInsets.symmetric(vertical: AppSpacing.s3, horizontal: AppSpacing.s2),
           child: Column(
             mainAxisSize: MainAxisSize.min,

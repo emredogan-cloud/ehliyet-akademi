@@ -56,6 +56,10 @@ dependencies:
   # Faz 7 — mağaza sayfasını açmak için. Puanın kendisi Google Play'de veriliyor; uygulama
   # yıldızı KAYDETMEZ ve puana göre yol AYIRMAZ (Play politikası bunu yasaklıyor).
   in_app_review: ^2.0.10
+  # Faz 10 — rozet/sonuç kartını paylaşmak için. Kart bir widget'tan PNG'ye çevrilip paylaşılır;
+  # sunucuya hiçbir şey yüklenmez.
+  share_plus: ^13.3.0
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:

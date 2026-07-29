@@ -18,6 +18,7 @@ import 'package:ehliyet_akademi/data/practice/question_repository.dart';
 import 'package:ehliyet_akademi/data/premium/billing_gateway.dart';
 import 'package:ehliyet_akademi/data/premium/entitlements_repository.dart';
 import 'package:ehliyet_akademi/data/premium/store_purchase_store.dart';
+import 'package:ehliyet_akademi/data/share/share_service.dart';
 import 'package:ehliyet_akademi/domain/auth/app_user.dart';
 import 'package:ehliyet_akademi/domain/community/community_models.dart';
 import 'package:ehliyet_akademi/domain/community/group_models.dart';
@@ -658,6 +659,10 @@ Future<void> pumpApp(
   /// Faz 7 — mağaza puanlama yüzeyi (sahte). Verilmezse hiçbir şey açılmaz.
   StoreReviewService? storeReview,
 
+  /// Faz 10 — paylaşım yüzeyi (sahte). Verilmezse gerçek platform kanalı kullanılmaz olmaz;
+  /// paylaşımı test edenler kendi sahtesini verir.
+  ShareService? share,
+
   /// Beta Faz 3 — ödeme ağ geçidi. VARSAYILAN: mağazası KAPALI sahte ağ geçidi (test ortamında
   /// Play Store yoktur; dürüst varsayılan budur). Ödeme akışını test edenler kendi ağ geçidini verir.
   BillingGateway? billing,
@@ -716,6 +721,7 @@ Future<void> pumpApp(
         googleAuthServiceProvider.overrideWithValue(google ?? FakeGoogleAuthService()),
         accountApiProvider.overrideWithValue(account ?? FakeAccountApi()),
         if (storeReview != null) storeReviewServiceProvider.overrideWithValue(storeReview),
+        if (share != null) shareServiceProvider.overrideWithValue(share),
         billingGatewayProvider.overrideWithValue(billing ?? FakeBillingGateway()),
         entitlementsApiProvider.overrideWithValue(
           entitlementsApi ?? FakeEntitlementsApi(owned ?? const []),

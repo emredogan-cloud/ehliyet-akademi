@@ -22,6 +22,11 @@ void main() {
         'Google markasının dört rengi — marka kılavuzu değiştirilmesini yasaklıyor, temayla değişemez.',
     'lib/features/learn/widgets/traffic_sign_view.dart':
         'Trafik levhasının MEVZUATTAKİ kırmızısı — temaya göre değişemez.',
+    'lib/design/share_card.dart':
+        'Paylaşım kartının zemini. Kart bir uygulama YÜZEYİ değil, dışarı çıkan bir MEDYA '
+        'parçasıdır: kullanıcının teması ne olursa olsun sosyal akışta aynı görünmeli. Açık '
+        'temaya bağlansaydı beyaz bir kart üretilir ve akışta kaybolurdu (E13 kuralının bilinçli '
+        'istisnası).',
     'lib/design/coach_marks.dart':
         'Turun karartması. Karartma bir YÜZEY değil, ışığın dışında kalan her şeydir: her iki '
         'temada da aynı derinlikte olmalı. Açık temada paletin açık zeminine bağlansaydı karartma '

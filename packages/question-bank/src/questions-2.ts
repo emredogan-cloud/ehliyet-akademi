@@ -62,10 +62,11 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     stem: 'Kırmızı ışıkta bekleyen sürücü, yeşil yandığında ilk olarak ne yapmalıdır?',
     options: [
       'Hemen gaza basıp hızla kalkmak',
-      'Kavşağın boşaldığını ve yayaların geçtiğini kontrol edip hareket etmek',
       'Korna çalıp öndekini uyarmak',
+      'Kavşağın boşaldığını ve yayaların geçtiğini kontrol edip hareket etmek',
+      'Sarı ışık yanar yanmaz harekete geçmek',
     ],
-    answerIndex: 1,
+    answerIndex: 2,
     explanation:
       'Yeşil ışık geçiş hakkı verir ama güvenliği garanti etmez: kavşağı ihlal eden araç/yaya olabilir. Kısa bir kontrolle hareket edilir.',
     badge: 'safety',
@@ -82,6 +83,7 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
       'Ana yoldaki araçlara yol vermelidir',
       'Öncelik kendisindedir, doğrudan çıkar',
       'Korna çalarak çıkar',
+      'Dörtlü flaşörü yakarak çıkış hakkı kazanır',
     ],
     answerIndex: 0,
     explanation:
@@ -100,6 +102,7 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
       'Dönüşe önce başladığı için önceliklidir',
       'Karşıdan düz gelen araca yol vermelidir',
       'Selektör yapıp geçmelidir',
+      'Kavşağa önce girdiği için karşıdan gelen beklemek zorundadır',
     ],
     answerIndex: 1,
     explanation:
@@ -158,10 +161,11 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     stem: 'Aşağıdaki yerlerin hangisinde öndeki aracı geçmek (sollama) yasaktır?',
     options: [
       'Görüşün açık olduğu düz yolda',
-      'Tepe üstü ve dönemeçlerde (görüş yetersizken)',
       'Bölünmüş yolun sol şeridinde',
+      'Şehirlerarası bölünmüş yolun sağ şeridinde',
+      'Tepe üstü ve dönemeçlerde (görüş yetersizken)',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Görüşün yetersiz olduğu tepe üstü ve dönemeçlerde, yaya/okul geçitlerinde, kavşaklarda ve demiryolu geçitlerinde sollama yasaktır — karşıdan gelen görülemez.',
     badge: 'official',
@@ -174,8 +178,13 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     topic: 'yaya',
     difficulty: 'kolay',
     stem: 'Işıksız yaya geçidine yaklaşan sürücü, geçitte yaya varsa ne yapmalıdır?',
-    options: ['Korna çalıp geçmek', 'Yavaşlamak, gerekiyorsa durup yol vermek', 'Hızlanıp geçmek'],
-    answerIndex: 1,
+    options: [
+      'Korna çalıp geçmek',
+      'Farları yakıp yayayı uyararak geçmek',
+      'Yavaşlamak, gerekiyorsa durup yol vermek',
+      'Hızlanıp geçmek',
+    ],
+    answerIndex: 2,
     explanation:
       'Yaya geçidinde öncelik yayanındır; sürücü yavaşlar, gerekiyorsa durur. Yayaya yol vermemek ağır kusurdur.',
     badge: 'official',
@@ -192,6 +201,7 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
       'Geniş ve açık cadde kenarı',
       'Kavşaklara ve yaya geçitlerine yakın (5 metre içi) alanlar',
       'Otopark girişinin karşı kaldırımı',
+      'Şehirlerarası yolun park cebi',
     ],
     answerIndex: 1,
     explanation:
@@ -206,8 +216,13 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     topic: 'emniyet',
     difficulty: 'kolay',
     stem: 'Otomobilde emniyet kemeri kullanma zorunluluğu kimler için geçerlidir?',
-    options: ['Yalnız sürücü için', 'Yalnız ön koltuktakiler için', 'Sürücü ve tüm yolcular için'],
-    answerIndex: 2,
+    options: [
+      'Yalnız sürücü için',
+      'Yalnız ön koltuktakiler için',
+      'Yalnız şehirlerarası yolda seyredenler için',
+      'Sürücü ve tüm yolcular için',
+    ],
+    answerIndex: 3,
     explanation:
       'Emniyet kemeri, sürücü dahil aracın tüm koltuklarında oturanlar için zorunludur; kaza anında ölüm/yaralanma riskini büyük ölçüde azaltır.',
     badge: 'official',
@@ -255,10 +270,11 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     stem: 'Yerleşim yerlerinde gereksiz korna çalmak için aşağıdakilerden hangisi doğrudur?',
     options: [
       'Serbesttir',
-      'Gürültü kirliliği yaratır ve zorunlu uyarı dışında yasaktır',
       'Yalnız gündüz serbesttir',
+      'Trafiğin yoğun olduğu saatlerde serbesttir',
+      'Gürültü kirliliği yaratır ve zorunlu uyarı dışında yasaktır',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Korna yalnız uyarı amaçlı ve gerektiğinde kullanılır; gereksiz kullanımı gürültü kirliliğidir ve yasaktır.',
     badge: 'official',
@@ -273,10 +289,11 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     stem: 'Bariyeri kapalı olan demiryolu (hemzemin) geçidine gelen sürücü ne yapmalıdır?',
     options: [
       'Bariyer aralığından geçmeye çalışır',
+      'Tren görünmüyorsa dikkatlice geçer',
       'Durur ve bariyer açılmadan geçmez',
       'Korna çalarak bekler, sonra geçer',
     ],
-    answerIndex: 1,
+    answerIndex: 2,
     explanation:
       'Hemzemin geçitte ışık/bariyer talimatına kesin uyulur; bariyer kapalıyken geçmek ölümcül risktir ve ağır kusurdur.',
     badge: 'official',
@@ -308,6 +325,7 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
       'Yanık bölgeye diş macunu/yoğurt sürmek',
       'Bölgeyi en az 15-20 dakika soğuk (akan) suyla soğutmak',
       'Su toplamış kabarcıkları patlatmak',
+      'Yanık bölgeye doğrudan buz koyup ovmak',
     ],
     answerIndex: 1,
     explanation:
@@ -324,10 +342,11 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     stem: 'Kol veya bacakta kırık şüphesi olan kazazedeye ilk yardımda ne yapılır?',
     options: [
       'Kırık bölge düzeltilmeye çalışılır',
-      'Bölge bulunduğu şekilde tespit edilip (sabitleyip) hareketsiz kılınır',
       'Kazazede hemen ayağa kaldırılır',
+      'Bölge bulunduğu şekilde tespit edilip (sabitleyip) hareketsiz kılınır',
+      'Kırık bölgeye sıcak kompres uygulanır',
     ],
-    answerIndex: 1,
+    answerIndex: 2,
     explanation:
       'Kırıkta bölge asla düzeltilmeye çalışılmaz; bulunduğu pozisyonda atel benzeri malzemeyle tespit edilir ve hareket ettirilmez.',
     badge: 'official',
@@ -342,10 +361,11 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     stem: 'Şok belirtileri gösteren (soluk, soğuk terli, hızlı nabızlı) kazazedeye hangi pozisyon verilir?',
     options: [
       'Oturur pozisyon',
-      'Sırtüstü yatırılıp bacaklar ~30 cm yükseltilir (şok pozisyonu)',
       'Yüzüstü pozisyon',
+      'Baş ve omuzlar yükseltilip yarı oturur pozisyon',
+      'Sırtüstü yatırılıp bacaklar ~30 cm yükseltilir (şok pozisyonu)',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Şokta kazazede sırtüstü yatırılır, bacaklar yaklaşık 30 cm yükseltilir; böylece kan yaşamsal organlara yönlendirilir. Üzeri örtülür, sıkan giysiler gevşetilir.',
     badge: 'official',
@@ -360,10 +380,11 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     stem: 'Kazazede araç içinden hangi durumda ve nasıl çıkarılır?',
     options: [
       'Her durumda hemen çıkarılır',
-      'Yangın/patlama gibi hayati tehlike varsa, omurga korunarak (ör. Rautek yöntemiyle) çıkarılır',
       'Kollarından çekilerek hızla çıkarılır',
+      'Boyun ve omurga desteklenmeden, oturduğu yerden doğrudan kaldırılarak çıkarılır',
+      'Yangın/patlama gibi hayati tehlike varsa, omurga korunarak (ör. Rautek yöntemiyle) çıkarılır',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Zorunlu (hayati) tehlike yoksa kazazede yerinden oynatılmaz. Çıkarmak gerekiyorsa baş-boyun-gövde ekseni korunarak Rautek kavraması gibi teknikler kullanılır.',
     badge: 'safety',
@@ -380,6 +401,7 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
       'Su içirilir',
       'Karına bası (Heimlich manevrası) uygulanır',
       'Sırtüstü yatırılıp beklenir',
+      'Ağzına parmak sokularak cisim aranır',
     ],
     answerIndex: 1,
     explanation:
@@ -396,10 +418,11 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     stem: 'Bayılan (kısa süreli bilinç kaybı yaşayan) kişiye ilk yardımda ne yapılır?',
     options: [
       'Ayağa kaldırılıp yürütülür',
-      'Sırtüstü yatırılır, ayakları yükseltilir, sıkan giysiler gevşetilir',
       'Yüzüne su dökülür ve sarsılır',
+      'Koklaması için kolonya/amonyak tutulur',
+      'Sırtüstü yatırılır, ayakları yükseltilir, sıkan giysiler gevşetilir',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Bayılmada kişi sırtüstü yatırılır, ayaklar hafif yükseltilir, temiz hava sağlanır ve sıkan giysiler gevşetilir; kendine gelmezse tıbbi yardım istenir.',
     badge: 'official',
@@ -446,6 +469,7 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
       'Yakıt tüketimi azalır',
       'Motor gücü düşer ve yakıt tüketimi artar',
       'Fren mesafesi kısalır',
+      'Motor daha sessiz çalışır ve performansı artar',
     ],
     answerIndex: 1,
     explanation:
@@ -462,10 +486,11 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     stem: 'Soğutma sistemindeki antifrizin görevi nedir?',
     options: [
       'Yakıtı temizlemek',
-      'Soğutma suyunun kışın donmasını, yazın kolay kaynamasını önlemek',
       'Lastik basıncını korumak',
+      'Motor yağının viskozitesini artırmak',
+      'Soğutma suyunun kışın donmasını, yazın kolay kaynamasını önlemek',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Antifriz; soğutma suyunun donma noktasını düşürür, kaynama noktasını yükseltir ve sistemi korozyona karşı korur. Dört mevsim kullanılır.',
     badge: 'official',
@@ -482,10 +507,11 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     stem: 'Trafikte başka bir sürücü hatalı davranıp önünüze kırdığında trafik adabına uygun davranış hangisidir?',
     options: [
       'Yaklaşıp selektör ve kornayla karşılık vermek',
-      'Sakin kalmak, takip mesafesini açmak ve güvenliği önceliklendirmek',
       'Aynı hatayı ona yaparak ders vermek',
+      'Uzun far yakıp arkasından yakın takip etmek',
+      'Sakin kalmak, takip mesafesini açmak ve güvenliği önceliklendirmek',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Trafik adabı, hata karşısında misilleme değil sakinlik ve hoşgörü gerektirir. Gerekirse hakkından feragat etmek kazayı önler — amaç haklı çıkmak değil, güvenle varmaktır.',
     badge: 'instructor',
@@ -502,6 +528,7 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
       'Kendi hakkını sonuna kadar savunmak',
       'Diğer yol kullanıcılarının durumunu anlamaya çalışıp ona göre davranmak',
       'Yalnızca yayaları düşünmek',
+      'Kurallara herkesten daha sıkı uymak',
     ],
     answerIndex: 1,
     explanation:

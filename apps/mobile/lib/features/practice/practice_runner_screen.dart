@@ -47,7 +47,12 @@ class _PracticeRunnerScreenState extends ConsumerState<PracticeRunnerScreen> {
     final now = DateTime.now().millisecondsSinceEpoch;
     _startMs = now;
     final stats = statsFromAnswers(progress.loadAnswers());
-    final pool = bank.questions.where((q) => q.subject != Subject.pratik).toList();
+    // Faz 11 — biçimi bozuk soru oturuma GİRMEZ (sınav kurucusundaki kuralın aynısı):
+    // sunucudan gelen banka istemcinin kontrolü dışındadır ve üç şıklı bir soruyu A-B-C olarak
+    // çizmektense hiç göstermemek dürüsttür.
+    final pool = bank.questions
+        .where((q) => q.subject != Subject.pratik && isWellFormedQuestion(q))
+        .toList();
     final byId = {for (final q in pool) q.id: q};
     // Oturum boyu = kişisel günlük hedef (10..25 sınırlı).
     final sessionSize = ref.read(studyProfileProvider).sessionSize;

@@ -27,8 +27,12 @@ function raw(path: string, body: string): Request {
     body,
   });
 }
-function del(path: string, cookie?: string): Request {
-  return new Request(BASE + path, { method: 'DELETE', headers: cookie ? { cookie } : {} });
+function del(path: string, cookie?: string, body?: unknown): Request {
+  return new Request(BASE + path, {
+    method: 'DELETE',
+    headers: { 'content-type': 'application/json', ...(cookie ? { cookie } : {}) },
+    ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+  });
 }
 function get(path: string, cookie?: string): Request {
   return new Request(BASE + path, { headers: cookie ? { cookie } : {} });
@@ -160,8 +164,13 @@ describe('e-posta doğrulama (Epic 2)', () => {
 });
 
 describe('hesap silme (Epic 3)', () => {
+  // Faz 5: silme artık YENİDEN KİMLİK DOĞRULAMA ister — bu hesabın parolası var.
+  it('parolasız silme reddedilir', async () => {
+    expect((await accountDelete(del('/api/account', cookie))).status).toBe(400);
+  });
+
   it('hesabı siler; sonrasında oturum düşer', async () => {
-    const r = await accountDelete(del('/api/account', cookie));
+    const r = await accountDelete(del('/api/account', cookie, { password: 'parola-123' }));
     expect(r.status).toBe(200);
     // aynı çerezle me artık kullanıcı döndürmez
     const meRes = await me(get('/api/auth/me', cookie));

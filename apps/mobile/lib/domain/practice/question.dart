@@ -39,3 +39,18 @@ abstract class Question with _$Question {
   }) = _Question;
   factory Question.fromJson(Map<String, Object?> json) => _$QuestionFromJson(json);
 }
+
+/// Faz 11 — her soru TAM DÖRT seçenek taşır: A, B, C, D.
+///
+/// Gerçek e-Sınav dört şıklıdır. Uygulama bir dönem şık harfini `options.length`'ten türetiyordu
+/// ve bankaya sızmış üç şıklı sorularda kullanıcı A-B-C görüyordu. Kural artık üç yerde birden
+/// duruyor: şemada (`z.array(...).length(4)`), veri kümesinde ve burada.
+const int kOptionCount = 4;
+
+/// Bu soru A/B/C/D biçimine uyuyor mu?
+///
+/// Sunucudan gelen banka istemcinin kontrolü DIŞINDADIR: eski bir dağıtım ya da elle düzenlenmiş
+/// bir kayıt yine üç şıklı gelebilir. Uygulamanın buna karşı bir tutumu olmalı — sessizce yanlış
+/// harflendirmektense o soruyu hiç göstermemek dürüsttür.
+bool isWellFormedQuestion(Question q) =>
+    q.options.length == kOptionCount && q.answerIndex >= 0 && q.answerIndex < kOptionCount;

@@ -87,7 +87,7 @@ describe('ingestBatch + mevcut bankaya karşı dedup', () => {
       subject: 'motor' as const,
       topic: 'lastik',
       stem: 'Lastik diş derinliği yasal asgari sınırın altına düştüğünde ne yapılmalıdır?',
-      options: ['Hemen değiştirilmelidir', 'Görmezden gelinir', 'Havası artırılır'],
+      options: ['Hemen değiştirilmelidir', 'Görmezden gelinir', 'Havası artırılır', 'Yıkanır'],
       answerIndex: 0,
       explanation: 'Diş derinliği yasal sınırın altındaki lastik güvenli değildir, değiştirilir.',
     };

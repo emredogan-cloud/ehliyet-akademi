@@ -116,11 +116,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     options: [
       'Ateşleme bujisi',
       'Katalitik konvertör',
-      'Alternatör',
-      'Yakıt filtresi',
       'Kızdırma bujisi (ısıtma bujisi)',
+      'Alternatör',
     ],
-    answerIndex: 4,
+    answerIndex: 2,
     explanation:
       'Dizel motorlar yakıtı sıkıştırma ısısıyla tutuşturur; ateşleme bujisi kullanmaz. Ancak soğukta yanma odasını ısıtıp ilk çalıştırmayı kolaylaştırmak için kızdırma bujisi bulunur. Bu, benzinlideki ateşleme bujisinden farklıdır.',
     whyWrong: [
@@ -415,13 +414,12 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Triger (zaman) kayışının üretici tarafından belirtilen periyotta değiştirilmesi neden önemlidir?',
     options: [
+      'Kayışın kopması hâlinde supap ve pistonlar çarpışarak motor ağır hasar görebilir',
       'Kayış değişimi lastik basıncını ayarlar',
       'Kayış değişimi yakıt deposunu temizler',
       'Kayış değişimi far ayarını yapar',
-      'Kayışın motorla bir ilgisi yoktur',
-      'Kayışın kopması hâlinde supap ve pistonlar çarpışarak motor ağır hasar görebilir',
     ],
-    answerIndex: 4,
+    answerIndex: 0,
     explanation:
       'Triger kayışı krank ile eksantrik milinin senkron dönmesini sağlar. Ömrünü tamamlayıp koparsa zamanlama bozulur; birçok motorda supaplar ve pistonlar çarpışarak ciddi ve pahalı hasar oluşur. Bu yüzden periyodik değişim şarttır.',
     whyWrong: [
@@ -493,11 +491,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     options: [
       'Egzoz - Emme - Ateşleme - Sıkıştırma',
       'Sıkıştırma - Emme - Egzoz - Ateşleme',
-      'Ateşleme - Egzoz - Sıkıştırma - Emme',
       'Emme - Egzoz - Sıkıştırma - Ateşleme',
       'Emme - Sıkıştırma - Ateşleme (iş) - Egzoz',
     ],
-    answerIndex: 4,
+    answerIndex: 3,
     explanation:
       'Dört zamanlı motorda çevrim; havanın/karışımın alındığı emme, sıkıştırma, yanmanın olduğu ateşleme (iş) ve yanmış gazların atıldığı egzoz zamanları sırasıyla tekrarlanır. Bu döngü motorun sürekli güç üretmesini sağlar.',
     whyWrong: [
@@ -813,12 +810,11 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     stem: 'Boşalmış bir aküye başka araçtan takviye (çapraz kablo) yapılırken doğru yaklaşım aşağıdakilerden hangisidir?',
     options: [
       'Kabloların bağlanma sırasına ve kutuplara dikkat edilmeden rastgele bağlanabilir',
+      'Kablolar doğru kutuplara (artı-artı, eksi-eksi) bağlanır ve kıvılcım/patlama riskine karşı dikkatli olunur',
       'Kablolar çalışan motora hiç bağlanmaz, yalnızca boş aküye takılır',
       'Takviye yaparken kutupların ters bağlanması sorun yaratmaz',
-      'Takviye için kablo yerine su kullanılır',
-      'Kablolar doğru kutuplara (artı-artı, eksi-eksi) bağlanır ve kıvılcım/patlama riskine karşı dikkatli olunur',
     ],
-    answerIndex: 4,
+    answerIndex: 1,
     explanation:
       'Takviyede kablolar doğru kutuplara (artı-artı, eksi-eksi) bağlanmalıdır; ters bağlantı elektronik aksama zarar verir. Akü çevresinde patlayıcı gaz bulunabileceğinden kıvılcıma karşı dikkatli olunmalı ve sıralamaya uyulmalıdır.',
     whyWrong: [
@@ -940,11 +936,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     options: [
       'Motoru soğutmak',
       'Yakıtı ateşlemek',
-      'Aküyü şarj etmek',
-      'Egzoz gazını temizlemek',
       'Virajda dış ve iç tekerleğin farklı hızlarda dönebilmesini sağlarken gücü tekerleklere iletmek',
+      'Egzoz gazını temizlemek',
     ],
-    answerIndex: 4,
+    answerIndex: 2,
     explanation:
       'Virajda dıştaki tekerlek içtekinden daha uzun yol alır ve daha hızlı dönmesi gerekir. Diferansiyel, tahrik gücünü tekerleklere iletirken bu hız farkına izin verir; böylece lastik sürtme ve zorlanma olmadan dönüş yapılır.',
     whyWrong: [

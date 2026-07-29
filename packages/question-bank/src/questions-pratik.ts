@@ -518,10 +518,9 @@ export const PRATIK_QUESTIONS: Question[] = [
       'Sadece kontağı kapatmak',
       'Vitesi boşta bırakıp el frenini indirmek',
       'Motoru çalışır bırakıp inmek',
-      'Yalnız dörtlü flaşörü yakıp inmek',
       'El frenini çekmek, aracı uygun vitese/park konumuna almak ve kontağı kapatmak',
     ],
-    answerIndex: 4,
+    answerIndex: 3,
     explanation:
       'Park sırasında el freni çekilir, manuel araçta uygun vites (genelde 1. veya geri, yokuşta yönüne göre) takılır ve kontak kapatılır; böylece araç kendiliğinden hareket etmez. Boşta ve frensiz bırakmak kayma riski yaratır.',
     whyWrong: [

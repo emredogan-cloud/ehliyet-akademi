@@ -97,7 +97,13 @@ BuiltExam buildExam(List<Question> pool, {Rng? rng}) {
   var full = true;
   for (final subject in theorySubjects) {
     final want = examDistribution[subject.name]!;
-    final avail = shuffle(pool.where((q) => q.subject == subject).toList(), r);
+    final avail = shuffle(
+      // Faz 11 — biçimi bozuk soru sınava GİRMEZ. Sunucudan gelen banka istemcinin kontrolü
+      // dışındadır; eski bir dağıtım üç şıklı soru gönderebilir. Onu A-B-C olarak çizmektense
+      // sınava hiç almamak dürüsttür (eksik kalırsa `fullBlueprint=false` zaten bunu bildirir).
+      pool.where((q) => q.subject == subject && isWellFormedQuestion(q)).toList(),
+      r,
+    );
     if (avail.length < want) full = false;
     out.addAll(avail.take(want));
   }

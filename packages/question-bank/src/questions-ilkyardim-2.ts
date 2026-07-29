@@ -31,14 +31,8 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     topic: 'tyd',
     difficulty: 'orta',
     stem: 'Tek kişiyle yapılan erişkin temel yaşam desteğinde kalp masajı ve yapay solunum hangi oranda uygulanır?',
-    options: [
-      '15 bası - 1 soluk',
-      '5 bası - 1 soluk',
-      '10 bası - 2 soluk',
-      '20 bası - 2 soluk',
-      '30 bası - 2 soluk',
-    ],
-    answerIndex: 4,
+    options: ['15 bası - 1 soluk', '10 bası - 2 soluk', '30 bası - 2 soluk', '20 bası - 2 soluk'],
+    answerIndex: 2,
     explanation:
       'Erişkinde temel yaşam desteği 30 göğüs basısının ardından 2 kurtarıcı soluk verilerek, yani 30:2 oranında sürdürülür ve bu döngü kesintisiz tekrarlanır.',
     whyWrong: [
@@ -873,13 +867,12 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Gözüne metal bir cisim batıp saplanmış bir yaralıya ilk yardımda ne yapılmalıdır?',
     options: [
+      'Cisim yerinde bırakılır, göz sabitlenip yaralı sağlık kuruluşuna götürülür',
       'Batan cisim elle çekilip çıkarılır',
       'Göz bastırılarak cisim içeri itilir',
-      'Göz sürekli ovulur',
       'Göze soğuk su tutularak cisim akıtılmaya çalışılır',
-      'Cisim yerinde bırakılır, göz sabitlenip yaralı sağlık kuruluşuna götürülür',
     ],
-    answerIndex: 4,
+    answerIndex: 0,
     explanation:
       'Göze saplanan cisim asla çıkarılmaya çalışılmaz; oynatmak ek hasara ve görme kaybına yol açabilir. Cisim olduğu yerde sabitlenir, göze bası yapılmadan desteklenir ve yaralı hızla sağlık kuruluşuna götürülür.',
     whyWrong: [
@@ -952,10 +945,9 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
       'Yaralıya kesin tıbbi teşhis koymak',
       'Ameliyat gibi tıbbi işlemleri yapmak',
       'Yaralıya ilaç reçetesi yazmak',
-      'Yaralıya laboratuvar tetkiki uygulamak',
       'Durumun kötüleşmesini önleyip yaşamsal işlevleri korumak ve iyileşmeyi kolaylaştırmak',
     ],
-    answerIndex: 4,
+    answerIndex: 3,
     explanation:
       'İlk yardımın amacı; hayat kurtarmak, durumun daha kötüye gitmesini önlemek ve iyileşme sürecini kolaylaştırmaktır. Teşhis, ameliyat, tetkik ve ilaç yazma gibi işlemler sağlık personelinin görevidir.',
     whyWrong: [

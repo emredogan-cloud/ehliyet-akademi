@@ -62,7 +62,13 @@ export const QuestionBase = z.object({
   topic: z.string().min(2),
   difficulty: Difficulty.default('orta'),
   stem: z.string().min(8),
-  options: z.array(z.string().min(1)).min(2).max(5),
+  /**
+   * Faz 11 — TAM DÖRT seçenek (A/B/C/D). Bu bir biçim tercihi değil, gerçek e-Sınav'ın yapısıdır:
+   * MEB e-Sınav'da her soru dört şıklıdır. Şema `.min(2).max(5)` iken bankaya 39 adet üç şıklı ve
+   * 13 adet beş şıklı soru sızmıştı; kullanıcı bazı sorularda A-B-C, bazılarında A-B-C-D-E
+   * görüyordu. Kural artık ŞEMADA: aynı hata bir daha sessizce giremez.
+   */
+  options: z.array(z.string().min(1)).length(4),
   answerIndex: z.number().int().nonnegative(),
   explanation: z.string().min(8),
   badge: Badge.optional(),

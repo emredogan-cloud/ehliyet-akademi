@@ -9,7 +9,7 @@ import { buildReviewContext } from '@/lib/qip';
 const GOOD = [
   {
     stem: 'Şehir dışı bölünmüş kara yolunda otomobil için genel azami hız sınırı kaç kilometredir?',
-    options: ['90 kilometre', '110 kilometre', '120 kilometre'],
+    options: ['90 kilometre', '110 kilometre', '120 kilometre', '130 kilometre'],
     answerIndex: 1,
     explanation:
       'Şehir dışı bölünmüş yollarda otomobil için genel azami hız 110 kilometredir; koşullara göre düşürülür.',
@@ -18,7 +18,12 @@ const GOOD = [
   },
   {
     stem: 'Trafik ışığında sarı yanarken sürücünün doğru davranışı ne olmalıdır kısaca?',
-    options: ['Hızlanarak geçer', 'Durmaya hazırlanır ve güvenliyse durur', 'Korna çalar'],
+    options: [
+      'Hızlanarak geçer',
+      'Durmaya hazırlanır ve güvenliyse durur',
+      'Korna çalar',
+      'Selektör yapar',
+    ],
     answerIndex: 1,
     explanation:
       'Sarı ışıkta sürücü durmaya hazırlanır; güvenle durabiliyorsa durur, aksi hâlde kavşağı güvenle boşaltır.',
@@ -38,7 +43,7 @@ const spec: GenSpec = {
   examples: [
     {
       stem: 'Yerleşim yerinde azami hız?',
-      options: ['30', '50', '70'],
+      options: ['30', '50', '70', '90'],
       answerIndex: 1,
       explanation: 'Yerleşim yerinde 50.',
     },

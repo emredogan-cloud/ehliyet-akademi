@@ -48,7 +48,7 @@ describe('reviewGenerated — AI İnceleyici kapısı', () => {
       nq({
         ...freshGood,
         id: 'gen-test-multi',
-        options: ['120 km/s', '120 km/s', '90 km/s'],
+        options: ['120 km/s', '120 km/s', '90 km/s', '100 km/s'],
         answerIndex: 0,
       }),
       ctx
@@ -65,7 +65,7 @@ describe('reviewGenerated — AI İnceleyici kapısı', () => {
         subject: 'trafik',
         topic: 'yemek',
         stem: 'Bir pastanın fırında pişmesi yaklaşık kaç dakika sürer peki acaba?',
-        options: ['20 dakika', '40 dakika', '60 dakika'],
+        options: ['20 dakika', '40 dakika', '60 dakika', '80 dakika'],
         answerIndex: 1,
         explanation: 'Pasta fırında yaklaşık kırk dakikada güzelce pişer ve kabarır.',
       }),

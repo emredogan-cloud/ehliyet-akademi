@@ -20,8 +20,13 @@ export const SEED_QUESTIONS: QuestionInput[] = [
     topic: 'isaretler',
     difficulty: 'kolay',
     stem: 'Kırmızı zeminli sekizgen "DUR" levhasının bulunduğu yerde sürücü ne yapmalıdır?',
-    options: ['Sadece yavaşlar', 'Tam durur ve geçiş hakkı olana yol verir', 'Korna çalarak geçer'],
-    answerIndex: 1,
+    options: [
+      'Sadece yavaşlar',
+      'Korna çalarak geçer',
+      'Kavşak boş görünüyorsa yavaşlayıp geçer',
+      'Tam durur ve geçiş hakkı olana yol verir',
+    ],
+    answerIndex: 3,
     explanation:
       'DUR levhasında araç, durma çizgisinden önce TAM olarak durmalı ve geçiş üstünlüğü olan trafiğe yol vermelidir. Yavaşlayıp geçmek kural ihlalidir.',
     badge: 'official',
@@ -64,10 +69,11 @@ export const SEED_QUESTIONS: QuestionInput[] = [
     stem: 'Kuru zeminde, normal koşullarda öndeki araçla güvenli takip mesafesi için pratik kural nedir?',
     options: [
       'En az yarım saniyelik mesafe',
-      'En az iki saniyelik mesafe',
       'Aracın hemen arkasına yaklaşmak',
+      'Öndeki aracın plakasını okuyabildiği kadar mesafe',
+      'En az iki saniyelik mesafe',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Kuru zeminde en az "iki saniye kuralı" önerilir: öndeki araç bir noktayı geçtikten sonra siz aynı noktaya en az iki saniyede ulaşmalısınız. Islak/kaygan zeminde mesafe artırılır.',
     badge: 'safety',
@@ -95,11 +101,12 @@ export const SEED_QUESTIONS: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Aşağıdakilerden hangisi yakıt tüketimini ve çevreye verilen zararı azaltır?',
     options: [
+      'Düzenli bakım ve uygun viteste, sabit hızla sürmek',
       'Ani hızlanma ve ani frenlerle sürmek',
       'Motoru gereksiz yere rölantide uzun süre çalıştırmak',
-      'Düzenli bakım ve uygun viteste, sabit hızla sürmek',
+      'Lastik basıncını önerilenin çok altında tutmak',
     ],
-    answerIndex: 2,
+    answerIndex: 0,
     explanation:
       'Düzenli bakım, uygun vites ve sabit/öngörülü sürüş yakıt tüketimini ve emisyonu düşürür. Ani manevralar ve gereksiz rölanti tüketimi artırır.',
     badge: 'best',
@@ -118,6 +125,7 @@ export const SEED_QUESTIONS: QuestionInput[] = [
       'Hemen yaralıyı araçtan çıkarmak',
       'Olay yerinin ve kendinin güvenliğini sağlamak',
       'Yaralıya su vermek',
+      "Hemen 112'yi arayıp yaralılara hiç yaklaşmadan beklemek",
     ],
     answerIndex: 1,
     explanation:
@@ -132,8 +140,8 @@ export const SEED_QUESTIONS: QuestionInput[] = [
     topic: 'tyd',
     difficulty: 'orta',
     stem: 'Yetişkinde temel yaşam desteğinde göğüs (kalp) masajı dakikada kaç bası hızında yapılmalıdır?',
-    options: ['40–60', '100–120', '160–180'],
-    answerIndex: 1,
+    options: ['40–60', '60–80', '100–120', '160–180'],
+    answerIndex: 2,
     explanation:
       'Yetişkinde kalp masajı dakikada 100–120 bası hızında ve yaklaşık 5 cm derinliğinde uygulanır.',
     badge: 'official',
@@ -146,7 +154,12 @@ export const SEED_QUESTIONS: QuestionInput[] = [
     topic: 'pozisyon',
     difficulty: 'orta',
     stem: 'Bilinci kapalı ancak solunumu ve nabzı olan bir kazazedeye hangi pozisyon verilir?',
-    options: ['Sırtüstü düz yatış', 'Yan yatış (koma) pozisyonu', 'Oturma pozisyonu'],
+    options: [
+      'Sırtüstü düz yatış',
+      'Yan yatış (koma) pozisyonu',
+      'Oturma pozisyonu',
+      'Bacaklar yükseltilmiş sırtüstü (şok) pozisyonu',
+    ],
     answerIndex: 1,
     explanation:
       'Solunumu olan bilinçsiz kazazedeye, dil kökünün solunum yolunu tıkamasını ve kusmukla boğulmayı önlemek için yan yatış (koma/derlenme) pozisyonu verilir.',
@@ -161,11 +174,12 @@ export const SEED_QUESTIONS: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Dış kanamalarda uygulanacak ilk ve en temel yöntem hangisidir?',
     options: [
-      'Kanayan bölgeye doğrudan baskı uygulamak',
       'Hemen turnike takmak',
       'Bölgeyi soğuk suyla yıkamak',
+      'Kanayan bölgeyi kalp seviyesinin altında tutmak',
+      'Kanayan bölgeye doğrudan baskı uygulamak',
     ],
-    answerIndex: 0,
+    answerIndex: 3,
     explanation:
       'Dış kanamada ilk yöntem, temiz bir bezle kanayan bölgeye doğrudan baskı uygulamak ve mümkünse bölgeyi kalp seviyesinin üstüne kaldırmaktır. Turnike yalnız durdurulamayan, hayatı tehdit eden uzuv kanamalarında son çaredir.',
     badge: 'safety',
@@ -178,8 +192,13 @@ export const SEED_QUESTIONS: QuestionInput[] = [
     topic: 'temel',
     difficulty: 'orta',
     stem: 'İlk yardımın öncelikli değerlendirme sırası olan "ABC" neyi ifade eder?',
-    options: ['Ağrı - Baş - Ciğer', 'Hava yolu - Solunum - Dolaşım', 'Ateş - Baygınlık - Cilt'],
-    answerIndex: 1,
+    options: [
+      'Ağrı - Baş - Ciğer',
+      'Ateş - Baygınlık - Cilt',
+      'Acil - Bilinç - Can',
+      'Hava yolu - Solunum - Dolaşım',
+    ],
+    answerIndex: 3,
     explanation:
       'ABC; Hava yolu (Airway) açıklığı, Solunum (Breathing) ve Dolaşım (Circulation) değerlendirmesidir — yaşamsal işlevlerin öncelik sırasıdır.',
     badge: 'official',
@@ -198,6 +217,7 @@ export const SEED_QUESTIONS: QuestionInput[] = [
       'Yakıtı ateşlemek',
       'Hareketli parçaları yağlayarak sürtünme ve aşınmayı azaltmak',
       'Camları temizlemek',
+      'Yakıtın oktan değerini yükseltmek',
     ],
     answerIndex: 1,
     explanation:
@@ -216,6 +236,7 @@ export const SEED_QUESTIONS: QuestionInput[] = [
       'Tekerleklerin kilitlenmesini önleyerek yönlendirme kontrolünü korur',
       'Aracın daha hızlı gitmesini sağlar',
       'Yakıt tüketimini artırır',
+      'Fren balatalarının ömrünü iki katına çıkarır',
     ],
     answerIndex: 0,
     explanation:
@@ -234,6 +255,7 @@ export const SEED_QUESTIONS: QuestionInput[] = [
       'Motoru soğutmak',
       'Elektrik enerjisi depolayıp aracın elektrik sistemini beslemek',
       'Yakıt filtrelemek',
+      'Motorun devrini sınırlamak',
     ],
     answerIndex: 1,
     explanation:
@@ -250,10 +272,11 @@ export const SEED_QUESTIONS: QuestionInput[] = [
     stem: 'Motorda üretilen gücü tekerleklere ileten sistem hangisidir?',
     options: [
       'Fren sistemi',
-      'Aktarma organları (debriyaj, vites kutusu, şaft, diferansiyel)',
       'Yakıt sistemi',
+      'Soğutma sistemi',
+      'Aktarma organları (debriyaj, vites kutusu, şaft, diferansiyel)',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Aktarma organları (debriyaj, vites kutusu, şaft ve diferansiyel) motor gücünü tekerleklere iletir.',
     badge: 'official',
@@ -270,6 +293,7 @@ export const SEED_QUESTIONS: QuestionInput[] = [
       'Hız artırılarak devam edilir',
       'Güvenli bir yerde durulup motorun soğuması beklenir',
       'Klima açılıp yola devam edilir',
+      'Radyatör kapağı hemen açılıp soğuk su eklenir',
     ],
     answerIndex: 1,
     explanation:
@@ -290,6 +314,7 @@ export const SEED_QUESTIONS: QuestionInput[] = [
       'Korna çalarak yayayı hızlandırmak',
       'Yavaşlayıp gerekiyorsa durarak yayaya yol vermek',
       'Yayadan önce hızlanıp geçmek',
+      'Yayaya el işareti yapıp aynı hızda geçmek',
     ],
     answerIndex: 1,
     explanation:
@@ -306,10 +331,11 @@ export const SEED_QUESTIONS: QuestionInput[] = [
     stem: 'Trafikte öfke ve stresle başa çıkmanın en uygun yolu hangisidir?',
     options: [
       'Karşı sürücüye tepki gösterip hakkını aramak',
-      'Sakin kalıp empati kurmak ve güvenliği önceliklendirmek',
       'Hızlanarak öfkeyi atmak',
+      'Müziği açıp diğer sürücüleri tamamen görmezden gelmek',
+      'Sakin kalıp empati kurmak ve güvenliği önceliklendirmek',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Trafik adabının temeli; sakinlik, empati ve hoşgörüdür. Öfkeli tepkiler kaza riskini artırır; can güvenliği her zaman önce gelir.',
     badge: 'instructor',
@@ -326,6 +352,7 @@ export const SEED_QUESTIONS: QuestionInput[] = [
       'Yolu kapatıp beklemek',
       'Güvenli şekilde sağa yanaşıp geçiş kolaylığı sağlamak',
       'Hızlanıp ambulansın önünden gitmek',
+      'Kırmızı ışıkta bile hemen kavşağa girip yol açmak',
     ],
     answerIndex: 1,
     explanation:
@@ -342,10 +369,11 @@ export const SEED_QUESTIONS: QuestionInput[] = [
     stem: 'Trafikte "değerli olan can güvenliğidir" ilkesi neyi vurgular?',
     options: [
       'Bir an önce varış noktasına ulaşmayı',
-      'Kurallara ve diğer yol kullanıcılarına saygıyı, güvenliği önceliklendirmeyi',
       'En pahalı aracın önceliğini',
+      'Trafikte en deneyimli sürücünün haklı olduğunu',
+      'Kurallara ve diğer yol kullanıcılarına saygıyı, güvenliği önceliklendirmeyi',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Trafik adabı; kurallara ve tüm yol kullanıcılarına (yaya, bisikletli, sürücü) saygıyı ve can güvenliğini her şeyin üstünde tutmayı vurgular.',
     badge: 'best',
@@ -360,8 +388,13 @@ export const SEED_QUESTIONS: QuestionInput[] = [
     topic: 'puanlama',
     difficulty: 'kolay',
     stem: 'Direksiyon uygulama sınavında araca binince emniyet kemerini takmamak hangi hata sınıfındadır?',
-    options: ['Mavi (küçük) hata', 'Sarı (tali) hata', 'Kırmızı (asli) hata — anında elenme'],
-    answerIndex: 2,
+    options: [
+      'Mavi (küçük) hata',
+      'Sarı (tali) hata',
+      'Yeşil (uyarı) hata',
+      'Kırmızı (asli) hata — anında elenme',
+    ],
+    answerIndex: 3,
     explanation:
       'Emniyet kemerini takmamak asli (kırmızı) kusurdur ve tek başına sınavdan elenmeye yol açar.',
     badge: 'official',

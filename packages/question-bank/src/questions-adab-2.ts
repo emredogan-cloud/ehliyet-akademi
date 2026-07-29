@@ -91,10 +91,11 @@ export const ADAB_QUESTIONS_2: QuestionInput[] = [
     stem: 'Yaya geçidinden yavaş adımlarla geçen yaşlı bir yaya, siz beklerken henüz karşıya ulaşamadı. Ne yaparsınız?',
     options: [
       'Yaklaşıp yavaşça geçmesi için baskı yapmak',
-      'Sabırla bekleyip güvenle karşıya geçmesini sağlamak',
       'Korna çalarak acele etmesini istemek',
+      'Aracı hafifçe ileri sürerek geçişi hızlandırmak',
+      'Sabırla bekleyip güvenle karşıya geçmesini sağlamak',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Yaşlı yayalar daha yavaş hareket eder ve aceleye getirildiğinde dengesini kaybedebilir; sabırla beklemek yaşa gösterilen saygının ve güvenliğin bir gereğidir.',
     whyWrong: [
@@ -643,12 +644,11 @@ export const ADAB_QUESTIONS_2: QuestionInput[] = [
     stem: 'Bir kavşakta başka bir sürücü dikkatsizce önünüze girip sizi sert fren yapmaya zorladı ve öfkeniz kabardı. En olgun davranış hangisidir?',
     options: [
       'Peşine düşüp aynı şekilde önünü kesmek',
+      'Derin bir nefes alıp öfkenizi yatıştırarak güvenli sürüşe geri dönmek',
       'Yanına gelip camdan bağırarak hesap sormak',
       'Aracınızla sıkıştırıp gözünü korkutmak',
-      'Uzun uzun korna çalıp arkasından kovalamak',
-      'Derin bir nefes alıp öfkenizi yatıştırarak güvenli sürüşe geri dönmek',
     ],
-    answerIndex: 4,
+    answerIndex: 1,
     explanation:
       'Öfkeyle verilen tepkiler muhakemeyi zayıflatıp yeni kazalara yol açar; birkaç saniye nefes alıp sakinleşmek hem sizi hem çevrenizi koruyan olgun bir tutumdur.',
     whyWrong: [
@@ -671,6 +671,7 @@ export const ADAB_QUESTIONS_2: QuestionInput[] = [
       'Hızlanıp otobüsün önünden geçmek',
       'Hızınızı azaltıp otobüsün yeniden trafiğe katılmasına yol vermek',
       'Korna çalıp otobüsün beklemesini istemek',
+      'Şerit değiştirip otobüsün yanından sıkışarak geçmek',
     ],
     answerIndex: 1,
     explanation:

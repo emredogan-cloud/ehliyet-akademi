@@ -145,4 +145,5 @@ class OptionTile extends StatelessWidget {
       );
 }
 
+/// Sıradan harfe: 0→A, 1→B, 2→C, 3→D. (Kural `domain/practice/question.dart` içinde.)
 String optionLetter(int index) => String.fromCharCode(65 + index);

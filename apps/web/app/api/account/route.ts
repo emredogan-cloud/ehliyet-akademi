@@ -76,7 +76,10 @@ export const DELETE = guarded(async (req: Request): Promise<Response> => {
     }
 
     if (!password) {
-      return json({ error: 'Devam etmek için parolanı gir.', requiresPassword: true }, { status: 400 });
+      return json(
+        { error: 'Devam etmek için parolanı gir.', requiresPassword: true },
+        { status: 400 }
+      );
     }
     if (!verifyPassword(password, row.passwordHash)) {
       // 403: kimlik doğrulandı (oturum geçerli) ama bu işlem için yetkilendirme başarısız.

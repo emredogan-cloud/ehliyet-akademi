@@ -22,7 +22,7 @@ const good = {
   subject: 'trafik',
   topic: 'isaretler',
   stem: 'Kırmızı zeminli sekizgen "DUR" levhasında ne yapılır?',
-  options: ['Yavaşlanır', 'Tam durulur ve öncelik verilir', 'Korna çalınır'],
+  options: ['Yavaşlanır', 'Tam durulur ve öncelik verilir', 'Korna çalınır', 'Sağa yanaşılır'],
   answerIndex: 1,
   explanation: 'DUR levhasında araç tam durmalı ve geçiş hakkı olana öncelik vermelidir.',
   badge: 'official',
@@ -40,9 +40,15 @@ describe('Question şeması', () => {
     expect(r.success).toBe(false);
   });
 
-  it('boş seçenek listesini reddeder', () => {
-    const r = Question.safeParse({ ...good, options: ['tek'] });
-    expect(r.success).toBe(false);
+  /// Faz 11 — seçenek sayısı TAM DÖRT olmalı (gerçek e-Sınav yapısı). Az da çok da reddedilir;
+  /// bankaya üç ve beş şıklı sorular tam bu kural olmadığı için sızmıştı.
+  it('dörtten az seçeneği reddeder', () => {
+    expect(Question.safeParse({ ...good, options: ['tek'] }).success).toBe(false);
+    expect(Question.safeParse({ ...good, options: ['a', 'b', 'c'] }).success).toBe(false);
+  });
+
+  it('dörtten çok seçeneği reddeder', () => {
+    expect(Question.safeParse({ ...good, options: ['a', 'b', 'c', 'd', 'e'] }).success).toBe(false);
   });
 });
 
@@ -106,7 +112,7 @@ describe('QIP Faz 1 — normalleştirme', () => {
       topic: 'fren',
       difficulty: 'zor',
       stem: 'Fren pedalı boşaldığında ilk yapılması gereken nedir?',
-      options: ['Motoru durdur', 'El frenini kademeli çek', 'Gaza bas'],
+      options: ['Motoru durdur', 'El frenini kademeli çek', 'Gaza bas', 'Kontağı kapat'],
       answerIndex: 1,
       explanation: 'Fren boşaldığında motor freni ve el freni ile kademeli yavaşlanır.',
       objective: 'Fren arızasında güvenli durma refleksini kavramak.',
@@ -132,7 +138,7 @@ describe('QIP Faz 1 — normalleştirme', () => {
       subject: 'trafik',
       topic: 'isaretler',
       stem: 'DUR levhası ne anlama gelir ve ne yapılır?',
-      options: ['Yavaşla', 'Tam dur ve öncelik ver', 'Korna çal'],
+      options: ['Yavaşla', 'Tam dur ve öncelik ver', 'Korna çal', 'Selektör yap'],
       answerIndex: 1,
       explanation: 'DUR levhasında araç tam durur ve geçiş hakkı olana öncelik verir.',
     });
@@ -166,7 +172,7 @@ describe('Sprint 2 — CMS sözleşmeleri', () => {
       subject: 'trafik',
       topic: 'isaretler',
       stem: 'CMS üzerinden eklenen deneme sorusu?',
-      options: ['A', 'B', 'C'],
+      options: ['A', 'B', 'C', 'D'],
       answerIndex: 1,
       explanation: 'Bu bir CMS doğrulama testidir; açıklama yeterince uzun.',
     });

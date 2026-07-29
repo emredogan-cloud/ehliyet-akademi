@@ -222,13 +222,12 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'zor',
     stem: 'Bir kavşakta trafik görevlisi, ışıklı işaret ve levha birbiriyle çelişirse sürücü hangi öncelik sırasına uyar?',
     options: [
+      'Trafik görevlisi > ışıklı işaret > levha > yer işaretlemeleri',
       'Yer çizgileri > levha > ışık > görevli',
       'Levha > görevli > ışık > yer çizgileri',
       'Işıklı işaret > görevli > levha',
-      'Görevli olmadan yalnızca levha yeterlidir',
-      'Trafik görevlisi > ışıklı işaret > levha > yer işaretlemeleri',
     ],
-    answerIndex: 4,
+    answerIndex: 0,
     explanation:
       'Çelişki durumunda uyulacak sıra en üstte trafik görevlisi, sonra ışıklı işaret, sonra levha ve en son yol üzerindeki yer işaretlemeleridir.',
     whyWrong: [
@@ -726,10 +725,9 @@ export const TRAFIK_QUESTIONS: Question[] = [
       'Yalnızca şehirlerarası yolda',
       'Yalnızca ön koltukta',
       'Yalnızca otoyolda',
-      'Yalnızca gece sürüşünde',
       'Hem yerleşim yeri içinde hem dışında, ön ve arka tüm koltuklarda',
     ],
-    answerIndex: 4,
+    answerIndex: 3,
     explanation:
       'Emniyet kemeri kullanımı yol ve zaman ayrımı yapılmaksızın hem yerleşim içi hem dışı yollarda, ön ve arka tüm koltuklarda zorunludur.',
     whyWrong: [
@@ -898,8 +896,8 @@ export const TRAFIK_QUESTIONS: Question[] = [
     topic: 'alkol',
     difficulty: 'zor',
     stem: 'Hususi (özel) otomobil sürücüsü için kandaki yasal azami alkol sınırı kaç promildir?',
-    options: ['0.00', '0.20', '0.80', '1.00', '0.50'],
-    answerIndex: 4,
+    options: ['0.00', '0.20', '0.50', '0.80'],
+    answerIndex: 2,
     explanation:
       'Hususi otomobil sürücüleri için yasal azami sınır 0.50 promildir; bu sınırın üzerinde araç kullanmak yasaktır ve idari yaptırım uygulanır.',
     whyWrong: [

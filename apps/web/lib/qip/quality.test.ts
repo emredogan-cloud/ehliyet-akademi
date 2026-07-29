@@ -36,7 +36,7 @@ describe('scoreQuality', () => {
       nq({
         ...goodRaw,
         id: 'q-dupopt',
-        options: ['50 km/s', '50 km/s', '70 km/s'],
+        options: ['50 km/s', '50 km/s', '70 km/s', '90 km/s'],
         answerIndex: 0,
       })
     );
@@ -53,7 +53,7 @@ describe('scoreQuality', () => {
         subject: 'trafik',
         topic: 'hiz',
         stem: 'Hız nedir?', // < 20
-        options: ['A uzun seçenek', 'B uzun seçenek'],
+        options: ['A uzun seçenek', 'B uzun seçenek', 'C uzun seçenek', 'D uzun seçenek'],
         answerIndex: 0,
         explanation: 'Kısa açık.', // < 20
       })

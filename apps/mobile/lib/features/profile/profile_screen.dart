@@ -13,6 +13,7 @@ import '../../domain/auth/auth_controller.dart';
 import '../../domain/onboarding/study_profile.dart';
 import '../../domain/practice/srs.dart';
 import '../../domain/progress/gamification.dart';
+import 'delete_account_dialog.dart';
 
 /// Profil — profil başlığı (auth'a bağlı) + istatistikler + ayarlar. Tema geçişi gerçek bir özellik.
 class ProfileScreen extends ConsumerWidget {
@@ -130,6 +131,16 @@ class ProfileScreen extends ConsumerWidget {
                       subtitle: 'Hesabından güvenle çık',
                       onTap: () => _logout(context, ref),
                     ),
+                    _divider(p),
+                    // Faz 5 — KVKK m.7 / GDPR "silme hakkı". Yıkıcı eylem listenin EN ALTINDA ve
+                    // "Çıkış yap"tan sonra durur: yanlışlıkla dokunma olasılığı en düşük yer.
+                    _SettingRow(
+                      icon: Icons.delete_outline_rounded,
+                      color: p.red,
+                      title: 'Hesabımı sil',
+                      subtitle: 'Hesabını ve tüm verilerini kalıcı olarak sil',
+                      onTap: () => _deleteAccount(context, ref),
+                    ),
                   ],
                 ],
               ),
@@ -170,6 +181,26 @@ class ProfileScreen extends ConsumerWidget {
     await ref.read(authControllerProvider.notifier).logout();
     router.go('/auth');
     messenger.showSnackBar(const SnackBar(content: Text('Çıkış yapıldı.')));
+  }
+
+  /// Faz 5 — hesap silme. Sunucudaki satır gittikten sonra CİHAZDA da hiçbir iz kalmamalı.
+  ///
+  /// Sıra önemli: silme başarılı olduktan SONRA yerel oturum temizlenir (`logout`) ve yığın
+  /// değiştirilir. Tersi yapılsaydı, silme başarısız olduğunda kullanıcı sebepsiz yere çıkmış
+  /// olurdu.
+  static Future<void> _deleteAccount(BuildContext context, WidgetRef ref) async {
+    final deleted = await showDeleteAccountDialog(context);
+    if (!deleted || !context.mounted) return;
+
+    final router = GoRouter.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    // Sunucu oturumu zaten yok (satır silindi, cascade oturumları da düşürdü); bu çağrı yerel
+    // jetonu, Google oturumunu ve sahiplik önbelleğini temizler.
+    await ref.read(authControllerProvider.notifier).logout();
+    router.go('/auth');
+    messenger.showSnackBar(
+      const SnackBar(content: Text('Hesabın ve tüm verilerin silindi.')),
+    );
   }
 
   static Future<void> _showAbout(BuildContext context) async {

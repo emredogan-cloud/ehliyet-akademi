@@ -5,6 +5,7 @@ import 'dart:ui' show Size;
 import 'package:ehliyet_akademi/app/app.dart';
 import 'package:ehliyet_akademi/app/shell.dart';
 import 'package:ehliyet_akademi/core/storage/token_store.dart';
+import 'package:ehliyet_akademi/data/auth/account_api.dart';
 import 'package:ehliyet_akademi/data/auth/auth_api.dart';
 import 'package:ehliyet_akademi/data/coach/coach_api.dart';
 import 'package:ehliyet_akademi/data/community/community_repository.dart';
@@ -650,6 +651,9 @@ Future<void> pumpApp(
   GroupsApi? groups,
   GoogleAuthService? google,
 
+  /// Faz 5 — hesap silme ucu (sahte).
+  AccountApi? account,
+
   /// Beta Faz 3 — ödeme ağ geçidi. VARSAYILAN: mağazası KAPALI sahte ağ geçidi (test ortamında
   /// Play Store yoktur; dürüst varsayılan budur). Ödeme akışını test edenler kendi ağ geçidini verir.
   BillingGateway? billing,
@@ -706,6 +710,7 @@ Future<void> pumpApp(
         socialApiProvider.overrideWithValue(social ?? FakeSocialApi()),
         groupsApiProvider.overrideWithValue(groups ?? FakeGroupsApi()),
         googleAuthServiceProvider.overrideWithValue(google ?? FakeGoogleAuthService()),
+        accountApiProvider.overrideWithValue(account ?? FakeAccountApi()),
         billingGatewayProvider.overrideWithValue(billing ?? FakeBillingGateway()),
         entitlementsApiProvider.overrideWithValue(
           entitlementsApi ?? FakeEntitlementsApi(owned ?? const []),
@@ -977,5 +982,50 @@ class FakeGoogleAuthService implements GoogleAuthService {
   @override
   Future<void> signOut() async {
     signOutCalls++;
+  }
+}
+
+
+/// Faz 5 — hesap silme ucu için sahte.
+///
+/// Sunucunun KURALINI taklit eder (parolası olan hesapta parola zorunlu), çünkü ekranın davranışı
+/// tam olarak buna bağlıdır. Kuralın kendisi ayrıca sunucu entegrasyon testinde doğrulanır.
+class FakeAccountApi implements AccountApi {
+  FakeAccountApi({
+    this.requiresPassword = true,
+    this.email = 'a@ea.dev',
+    this.correctPassword = 'dogru-parola',
+    this.requirementsUnavailable = false,
+    this.failure,
+  });
+
+  final bool requiresPassword;
+  final String email;
+  final String correctPassword;
+
+  /// Ağ yok → koşullar okunamadı (ekran en temkinli varsayıma düşmeli).
+  final bool requirementsUnavailable;
+
+  /// Doluysa silme her koşulda bu hatayla döner.
+  final String? failure;
+
+  int deleteCalls = 0;
+  String? lastPassword;
+
+  @override
+  Future<AccountDeletionRequirements?> requirements() async {
+    if (requirementsUnavailable) return null;
+    return AccountDeletionRequirements(requiresPassword: requiresPassword, email: email);
+  }
+
+  @override
+  Future<AccountDeletionResult> delete({String? password}) async {
+    deleteCalls++;
+    lastPassword = password;
+    if (failure != null) return AccountDeletionFailed(failure!);
+    if (requiresPassword && password != correctPassword) {
+      return const AccountDeletionWrongPassword('Parola hatalı.');
+    }
+    return const AccountDeleted();
   }
 }

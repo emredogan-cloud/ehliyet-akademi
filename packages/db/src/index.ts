@@ -357,6 +357,48 @@ CREATE TABLE IF NOT EXISTS question_reports (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS question_reports_status_idx ON question_reports(status);
+CREATE TABLE IF NOT EXISTS referral_visits (
+  id TEXT PRIMARY KEY,
+  code TEXT NOT NULL,
+  known BOOLEAN NOT NULL DEFAULT false,
+  ip_hash TEXT NOT NULL DEFAULT '',
+  day TEXT NOT NULL,
+  platform TEXT NOT NULL DEFAULT 'web',
+  at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE UNIQUE INDEX IF NOT EXISTS referral_visits_uq ON referral_visits(code, ip_hash, day);
+CREATE INDEX IF NOT EXISTS referral_visits_at_idx ON referral_visits(at);
+CREATE TABLE IF NOT EXISTS analytics_events (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  user_id TEXT REFERENCES users(id) ON DELETE SET NULL,
+  anon_id TEXT NOT NULL DEFAULT '',
+  platform TEXT NOT NULL DEFAULT 'android',
+  app_version TEXT NOT NULL DEFAULT '',
+  props JSONB NOT NULL DEFAULT '{}',
+  at TIMESTAMPTZ NOT NULL,
+  received_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE UNIQUE INDEX IF NOT EXISTS analytics_events_id_uq ON analytics_events(id);
+CREATE INDEX IF NOT EXISTS analytics_events_name_at_idx ON analytics_events(name, at);
+CREATE TABLE IF NOT EXISTS error_reports (
+  id TEXT PRIMARY KEY,
+  kind TEXT NOT NULL,
+  fingerprint TEXT NOT NULL,
+  message TEXT NOT NULL,
+  stack TEXT NOT NULL DEFAULT '',
+  route TEXT NOT NULL DEFAULT '',
+  user_id TEXT REFERENCES users(id) ON DELETE SET NULL,
+  anon_id TEXT NOT NULL DEFAULT '',
+  platform TEXT NOT NULL DEFAULT 'android',
+  app_version TEXT NOT NULL DEFAULT '',
+  context JSONB NOT NULL DEFAULT '{}',
+  fatal BOOLEAN NOT NULL DEFAULT false,
+  at TIMESTAMPTZ NOT NULL,
+  received_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE UNIQUE INDEX IF NOT EXISTS error_reports_id_uq ON error_reports(id);
+CREATE INDEX IF NOT EXISTS error_reports_fp_at_idx ON error_reports(fingerprint, at);
 `;
 
 let _db: Db | null = null;

@@ -114,13 +114,22 @@ const String kReferralAlphabet = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
 const int kReferralCodeLength = 8;
 
 /// Kullanıcının yazdığı kodu kanonik biçime getir (sunucudaki `normalizeReferralCode` ile aynı).
+///
+/// ## Buradan KALDIRILAN şey ve nedeni (Beta Faz 1)
+///
+/// Bu fonksiyon eskiden `0`→`O` ve `1`→`I` çevirisi yapıyordu; gerekçesi "alfabede 0/1 yok, kullanıcı
+/// yanlışlıkla yazdıysa niyeti açık" idi. **Gerekçe hatalıydı:** alfabede `O`, `I` ve `L` de yok
+/// (karıştırılabilir çiftin İKİ üyesi de çıkarılmıştır). Çeviri, geçersiz bir karakteri başka bir
+/// geçersiz karaktere dönüştürüyordu; kod yine doğrulamadan geçmiyordu.
+///
+/// Zararı kullanıcının gözüne çarpıyordu: `AB0DEF1H` → `ABODEFIH` (8 karakter, geçersiz) ve ekran
+/// **"Davet kodu 8 karakter olmalı (şu an 8)."** diyordu — kendisiyle çelişen bir hata.
+///
+/// Kodun içinde ne `0` ne `O` bulunabileceği için, kullanıcı bunlardan birini yazdığında
+/// kurtarılabilir bir niyet YOKTUR: kaynağı yanlış okumuştur. Karakter olduğu gibi bırakılır,
+/// doğrulama reddeder ve arayüz sorunu ADIYLA söyler ([describeReferralCodeProblem]).
 String normalizeReferralCode(String raw) {
-  final cleaned = raw
-      .toUpperCase()
-      .replaceAll(RegExp(r'[\s-]'), '')
-      // Alfabede 0 ve 1 yok; kullanıcı yanlışlıkla yazdıysa niyeti açıktır.
-      .replaceAll('0', 'O')
-      .replaceAll('1', 'I');
+  final cleaned = raw.toUpperCase().replaceAll(RegExp(r'[\s-]'), '');
   return cleaned.length <= kReferralCodeLength
       ? cleaned
       : cleaned.substring(0, kReferralCodeLength);
@@ -129,6 +138,27 @@ String normalizeReferralCode(String raw) {
 /// Kod biçimsel olarak geçerli mi?
 bool isValidReferralCodeFormat(String code) =>
     code.length == kReferralCodeLength && code.split('').every(kReferralAlphabet.contains);
+
+/// Kodun NEDEN geçersiz olduğunu insan diliyle söyle (geçerliyse ya da boşsa `null`).
+///
+/// Sunucudaki `describeReferralCodeProblem` ile AYNI kural. İki farklı sorun (alfabe dışı karakter
+/// ve yanlış uzunluk) iki farklı cümle gerektirir; alfabe dışı karakter durumunda **hangi
+/// karakterin** sorunlu olduğu söylenir, yoksa kullanıcı sekiz karakteri tek tek denemek zorunda
+/// kalır.
+String? describeReferralCodeProblem(String code) {
+  if (code.isEmpty) return null;
+  final offenders = <String>{
+    for (final ch in code.split(''))
+      if (!kReferralAlphabet.contains(ch)) ch,
+  };
+  if (offenders.isNotEmpty) {
+    return 'Davet kodunda ${offenders.join(', ')} karakteri olamaz — kodu tekrar kontrol et.';
+  }
+  if (code.length != kReferralCodeLength) {
+    return 'Davet kodu $kReferralCodeLength karakter olmalı (şu an ${code.length}).';
+  }
+  return null;
+}
 
 final referralApiProvider = Provider<ReferralApi>((ref) => DioReferralApi(ref.watch(dioProvider)));
 

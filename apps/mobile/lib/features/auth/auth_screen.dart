@@ -3,12 +3,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/analytics/analytics.dart';
+import '../../core/analytics/analytics_event.dart';
 import '../../core/assets.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/auth/google_auth_service.dart';
 import '../../data/referral/referral_api.dart';
 import '../../design/brand.dart';
 import '../../domain/auth/auth_controller.dart';
+import '../../domain/referral/pending_referral.dart';
 
 /// Giriş / kayıt ekranı. Sekme kabuğunun üstünde tam ekran; misafirler Profil'den ulaşır.
 ///
@@ -21,7 +24,10 @@ import '../../domain/auth/auth_controller.dart';
 /// · **"Apple ile giriş" YOK** — iOS derlemesi yok; çalışmayan düğme ölü gezinmedir.
 /// · **"Şifremi unuttum?" GERÇEK** — `POST /api/auth/forgot` çağırır; süs değildir.
 class AuthScreen extends ConsumerStatefulWidget {
-  const AuthScreen({super.key});
+  const AuthScreen({super.key, this.startInRegister = false});
+
+  /// Beta Faz 1 — ekran doğrudan KAYIT kipinde açılsın mı (`/auth?kayit=1`).
+  final bool startInRegister;
 
   @override
   ConsumerState<AuthScreen> createState() => _AuthScreenState();
@@ -35,10 +41,29 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
 
   /// Faz 8 — isteğe bağlı davet kodu (yalnız kayıt kipinde).
   final _referral = TextEditingController();
-  bool _isRegister = false;
+  late bool _isRegister = widget.startInRegister;
   bool _busy = false;
   bool _obscure = true;
   String? _error;
+
+  /// Beta Faz 1 — kod derin bağlantıdan mı geldi (arayüzde "davetten geldi" işareti için).
+  bool _referralFromLink = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Beta Faz 1 — derin bağlantıdan gelen davet kodunu forma doldur.
+    //
+    // `initState` içinde BİR KEZ okunur: `build` içinde okunsa kullanıcının alanı elle
+    // düzeltmesi her yeniden çizimde geri alınırdı.
+    final pending = ref.read(pendingReferralProvider).code;
+    if (pending != null) {
+      _referral.text = pending;
+      _referralFromLink = true;
+      // Kod dolu geldiyse kullanıcının işi kayıt olmaktır.
+      _isRegister = true;
+    }
+  }
 
   @override
   void dispose() {
@@ -71,29 +96,39 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   }
 
   /// Yazılan kod biçimsel olarak eksikse nazik bir uyarı — HATA DEĞİL.
-  String? get _referralHint {
-    final code = normalizeReferralCode(_referral.text);
-    if (code.isEmpty) return null;
-    if (isValidReferralCodeFormat(code)) return null;
-    return 'Davet kodu $kReferralCodeLength karakter olmalı (şu an ${code.length}).';
-  }
+  ///
+  /// Mesaj tek tip DEĞİLDİR: alfabe dışı bir karakterde uzunluk cümlesi kurmak, kullanıcıya
+  /// "8 karakter olmalı (şu an 8)" gibi kendisiyle çelişen bir hata gösteriyordu (Beta Faz 1).
+  String? get _referralHint => describeReferralCodeProblem(normalizeReferralCode(_referral.text));
 
   Future<void> _submit() async {
     setState(() => _error = null);
     if (!_formKey.currentState!.validate()) return;
     setState(() => _busy = true);
     final ctrl = ref.read(authControllerProvider.notifier);
+    final code = _referralCode;
     final err = _isRegister
         ? await ctrl.register(
             name: _name.text.trim(),
             email: _email.text.trim(),
             password: _password.text,
-            referralCode: _referralCode,
+            referralCode: code,
           )
         : await ctrl.login(email: _email.text.trim(), password: _password.text);
     if (!mounted) return;
     setState(() => _busy = false);
     if (err == null) {
+      // Beta Faz 1 — bekleyen davet kodu TÜKETİLDİ. Kayıt başarılıysa kod sunucuya gitmiştir;
+      // sunucu daveti reddetmiş olsa bile (kendi kodu, IP sınırı) kodu saklamak, sonraki her
+      // kayıtta aynı reddi tekrarlamak olurdu.
+      if (_isRegister && code != null) {
+        ref.read(pendingReferralProvider).clear();
+        ref.read(analyticsProvider).log(AnalyticsEvent.registration(withReferral: true));
+      } else if (_isRegister) {
+        ref.read(analyticsProvider).log(AnalyticsEvent.registration(withReferral: false));
+      } else {
+        ref.read(analyticsProvider).log(AnalyticsEvent.login);
+      }
       _leaveAuth();
     } else {
       setState(() => _error = err);
@@ -277,15 +312,36 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                                   // kod "ABCDEF"e kırpılıyordu (testte yakalandı). Biçimlendirici
                                   // yazarken normalleştirir; sayım TEMİZ karakterler üzerinden olur.
                                   inputFormatters: [_ReferralCodeFormatter()],
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                     labelText: 'Davet kodu (isteğe bağlı)',
-                                    prefixIcon: Icon(Icons.card_giftcard_rounded),
+                                    prefixIcon: const Icon(Icons.card_giftcard_rounded),
                                     counterText: '',
-                                    helperText: 'Arkadaşının kodu varsa yaz — ikiniz de kazanın.',
+                                    // Cihazda ölçüldü: yardımcı metin tek satıra sığmıyor ve
+                                    // "…dokunmana ge…" diye kırpılıyordu. Kırpmak yerine ikinci
+                                    // satıra izin verilir — yarım okunan bir açıklama, hiç
+                                    // olmamasından daha kötüdür (kullanıcı kodu silmeye kalkar).
+                                    helperMaxLines: 2,
+                                    // Beta Faz 1 — kod derin bağlantıdan geldiyse bunu SÖYLE.
+                                    // Kendiliğinden dolmuş bir alanı açıklamamak, kullanıcıya
+                                    // "bunu ben mi yazdım?" diye sordurur; en kötüsü de silmesine
+                                    // yol açar — davet o anda kaybolurdu.
+                                    helperText: _referralFromLink
+                                        ? 'Davet bağlantısından geldi — dokunmana gerek yok.'
+                                        : 'Arkadaşının kodu varsa yaz — ikiniz de kazanın.',
+                                    suffixIcon: _referralFromLink
+                                        ? Icon(
+                                            Icons.check_circle_rounded,
+                                            size: 20,
+                                            color: p.primary,
+                                          )
+                                        : null,
                                   ),
                                   // Doğrulayıcı YOK: yanlış yazılmış bir kod yüzünden kayıt
                                   // reddedilmez. Yalnız biçimsel uyarı verilir.
-                                  onChanged: (_) => setState(() {}),
+                                  onChanged: (_) => setState(() {
+                                    // Kullanıcı elle dokunduysa artık "bağlantıdan geldi" değil.
+                                    _referralFromLink = false;
+                                  }),
                                 ),
                                 if (_referralHint != null)
                                   Padding(

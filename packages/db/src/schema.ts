@@ -158,6 +158,98 @@ export const referralRewards = pgTable('referral_rewards', {
   expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
 });
 
+/**
+ * Beta Faz 1 — bir davet bağlantısının AÇILMASI (`/davet/<KOD>`).
+ *
+ * NEDEN gerekli: davet hunisinin ilk basamağı buydu ve ölçülmüyordu. `referrals` yalnız KAYIT OLMUŞ
+ * daveti bilir; kaç kişinin bağlantıyı açıp vazgeçtiği görünmüyordu. Huni artık üç basamak:
+ * ziyaret → kayıt (`referrals.pending`) → nitelikli (`referrals.qualified`).
+ *
+ * GÜN BAŞINA TEK SATIR (`day` + `code` + `ip_hash` tekil): aynı kişinin sayfayı yenilemesi ziyareti
+ * şişirmesin. Sayfa yenilemesi yeni bir ilgi DEĞİLDİR; onu saymak huniyi iyimser gösterirdi.
+ *
+ * `ipHash` ham IP DEĞİLDİR — `referrals.signupIpHash` ile aynı tuzlu SHA-256 (KVKK).
+ */
+export const referralVisits = pgTable(
+  'referral_visits',
+  {
+    id: text('id').primaryKey(),
+    code: text('code').notNull(),
+    /** Kod gerçekten bir kullanıcıya mı ait? Yanlış/uydurma kodlar da ölçülür (yazım hatası tespiti). */
+    known: boolean('known').notNull().default(false),
+    ipHash: text('ip_hash').notNull().default(''),
+    /** `YYYY-MM-DD` — tekil indeksin gün bileşeni. */
+    day: text('day').notNull(),
+    /** `web` | `android` — bağlantı hangi yüzeyde açıldı. */
+    platform: text('platform').notNull().default('web'),
+    at: timestamp('at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [uniqueIndex('referral_visits_uq').on(t.code, t.ipHash, t.day)]
+);
+
+/**
+ * Beta Faz 3 — ürün analitiği olayları (sunucu tarafı havuz).
+ *
+ * NEDEN kendi tablomuz: uygulama üçüncü taraf bir SDK (Firebase/Amplitude) taşımıyor ve taşımak
+ * KVKK açısından ayrı bir karar. Olaylar kendi sunucumuzda toplanır; yönetici paneli doğrudan
+ * bunları okur. Üçüncü taraf eklenirse bu tablo yine kalır (kaynak doğruluk).
+ *
+ * `userId` NULL OLABİLİR: misafir kullanım gerçek ve ölçülmesi gereken bir durumdur. Kimliksiz
+ * olayları `anonId` (cihaz başına rastgele, kişisel veri içermeyen) birbirine bağlar.
+ *
+ * `props` serbest JSON'dur ama **kişisel veri içermez** — istemci tarafındaki olay sözlüğü bunu
+ * kural olarak dayatır (`lib/core/analytics/events.dart`).
+ */
+export const analyticsEvents = pgTable(
+  'analytics_events',
+  {
+    id: text('id').primaryKey(),
+    name: text('name').notNull(),
+    userId: text('user_id').references(() => users.id, { onDelete: 'set null' }),
+    /** Cihaz başına rastgele kimlik — oturumsuz kullanımı birbirine bağlar, kişiyi tanımlamaz. */
+    anonId: text('anon_id').notNull().default(''),
+    platform: text('platform').notNull().default('android'),
+    appVersion: text('app_version').notNull().default(''),
+    props: jsonb('props').notNull().default({}),
+    /** Olayın CİHAZDA gerçekleştiği an (çevrimdışı kuyruklanmış olabilir). */
+    at: timestamp('at', { withTimezone: true }).notNull(),
+    /** Sunucuya ULAŞTIĞI an — kuyruk gecikmesi bu ikisinin farkıdır. */
+    receivedAt: timestamp('received_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [uniqueIndex('analytics_events_id_uq').on(t.id)]
+);
+
+/**
+ * Beta Faz 4 — istemciden gelen hata raporları (çökme gözlemlenebilirliği).
+ *
+ * Üçüncü taraf (Crashlytics/Sentry) YOK; rapor kendi sunucumuza gelir. `fingerprint` aynı hatayı
+ * gruplamak içindir (tür + en üstteki kendi kod çerçevemiz) — sayım "kaç farklı hata" sorusunu
+ * cevaplayabilsin.
+ */
+export const errorReports = pgTable(
+  'error_reports',
+  {
+    id: text('id').primaryKey(),
+    /** `flutter` | `async` | `platform` | `network` | `store` | `google-signin` | `isolate` */
+    kind: text('kind').notNull(),
+    fingerprint: text('fingerprint').notNull(),
+    message: text('message').notNull(),
+    stack: text('stack').notNull().default(''),
+    /** Hatanın olduğu ekran/rota — "nerede" sorusunun cevabı. */
+    route: text('route').notNull().default(''),
+    userId: text('user_id').references(() => users.id, { onDelete: 'set null' }),
+    anonId: text('anon_id').notNull().default(''),
+    platform: text('platform').notNull().default('android'),
+    appVersion: text('app_version').notNull().default(''),
+    /** Cihaz/oturum bağlamı: model, Android sürümü, ağ durumu, son olaylar. */
+    context: jsonb('context').notNull().default({}),
+    fatal: boolean('fatal').notNull().default(false),
+    at: timestamp('at', { withTimezone: true }).notNull(),
+    receivedAt: timestamp('received_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [uniqueIndex('error_reports_id_uq').on(t.id)]
+);
+
 /** Soru bildirimleri (QIP Faz 6 · Part 13 — topluluk incelemesi). Anonim de olabilir (user_id null). */
 export const questionReports = pgTable('question_reports', {
   id: text('id').primaryKey(), // uuid

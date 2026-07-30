@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../core/analytics/analytics.dart';
+import '../core/analytics/analytics_event.dart';
 import '../core/theme/app_theme.dart';
 import '../data/premium/entitlements_repository.dart';
 import '../core/theme/theme_controller.dart';
 import '../design/app_background.dart';
+import '../domain/auth/auth_controller.dart';
 import 'router.dart';
 
 /// Root application widget — themed (light+dark), router-driven.
@@ -27,10 +30,60 @@ class EhliyetAkademiApp extends ConsumerWidget {
       // NEDEN burada: her ekrana ayrı ayrı konsaydı sayfa geçişinde zemin sökülüp yeniden
       // kurulurdu ve hareket her geçişte başa sararak "zıplardı". Burada tek örnek vardır;
       // sayfalar onun üstünde gelip geçer, zemin akmaya devam eder.
-      builder: (context, child) => _EntitlementsBootstrap(
-        child: AppBackground(child: child ?? const SizedBox.shrink()),
+      builder: (context, child) => _AnalyticsBootstrap(
+        child: _EntitlementsBootstrap(
+          child: AppBackground(child: child ?? const SizedBox.shrink()),
+        ),
       ),
     );
+  }
+}
+
+/// Beta Faz 3 — açılış olaylarını gönderir ve oturum kimliğini analitiğe bağlar.
+///
+/// NEDEN burada (kökte): açılış olayları bir EKRANA bağlanamaz. Ana Sayfa'ya bağlansaydı, derin
+/// bağlantıyla davet ekranında açılan oturum hiç sayılmazdı.
+class _AnalyticsBootstrap extends ConsumerStatefulWidget {
+  const _AnalyticsBootstrap({required this.child});
+  final Widget child;
+
+  @override
+  ConsumerState<_AnalyticsBootstrap> createState() => _AnalyticsBootstrapState();
+}
+
+class _AnalyticsBootstrapState extends ConsumerState<_AnalyticsBootstrap> {
+  @override
+  void initState() {
+    super.initState();
+    // `addPostFrameCallback`: ilk kare çizilmeden önce analitik kurulumu yapmak açılışı geciktirir.
+    // Ölçüm, ölçtüğü şeyi yavaşlatmamalı.
+    WidgetsBinding.instance.addPostFrameCallback((_) => _bootstrap());
+  }
+
+  Future<void> _bootstrap() async {
+    final analytics = ref.read(analyticsProvider);
+    await analytics.ensureContext();
+
+    /// `app_installed` ve `first_launch` ilk açılışta AYNI ANDA gider — bu bilinçli.
+    ///
+    /// Kurulup hiç açılmayan bir uygulamayı istemciden görmek MÜMKÜN DEĞİLDİR; o sayı yalnız Play
+    /// Console'da vardır. Bu yüzden ikisi istemcide aynı anı işaretler: biri "bu cihazda kurulum"
+    /// (huninin tabanı), diğeri "ilk oturum". Ayrı tutulmaları, ileride Play Install Referrer
+    /// verisi bağlandığında kurulum ile ilk açılış arasındaki farkın ölçülebilmesi içindir.
+    await analytics.logOnce(AnalyticsEvent.installed);
+    await analytics.logOnce(AnalyticsEvent.firstLaunch);
+    await analytics.log(AnalyticsEvent.appOpened);
+    // Önceki oturumdan kalan kuyruk (çevrimdışıyken biriken olaylar) şimdi boşaltılır.
+    await analytics.flush();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Oturum değiştiğinde analitiğin kimliği de değişir. Çıkışta `null` verilir: aynı cihazdaki
+    // ikinci kullanıcının olayları birincinin kimliğine yazılmaz.
+    final auth = ref.watch(authControllerProvider);
+    ref.read(analyticsProvider).setUser(auth.user?.id);
+    return widget.child;
   }
 }
 

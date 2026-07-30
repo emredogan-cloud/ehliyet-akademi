@@ -42,18 +42,27 @@ export const REFERRAL_FIRST_GOAL = REFERRAL_MILESTONES[0]!.count;
 export const REFERRAL_ALPHABET = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
 export const REFERRAL_CODE_LENGTH = 8;
 
-/** Kullanıcının yazdığı kodu kanonik biçime getir (büyük harf, boşluk/tire yok). */
+/**
+ * Kullanıcının yazdığı kodu kanonik biçime getir (büyük harf, boşluk/tire yok).
+ *
+ * ## Buradan KALDIRILAN şey ve nedeni (Beta Faz 1)
+ *
+ * Bu fonksiyon eskiden `0`→`O` ve `1`→`I` çevirisi yapıyordu; gerekçesi "alfabede 0/1 yok, kullanıcı
+ * yanlışlıkla yazdıysa niyet açık" idi. **Gerekçe hatalıydı:** alfabede `O`, `I` ve `L` de yok
+ * (karıştırılabilir ÇİFTİN İKİ ÜYESİ de çıkarılmıştır). Dolayısıyla çeviri, geçersiz bir karakteri
+ * BAŞKA bir geçersiz karaktere dönüştürüyordu — kod yine doğrulamadan geçmiyordu.
+ *
+ * Zararı görünürdü: `AB0DEF1H` → `ABODEFIH` (8 karakter, geçersiz) ve arayüz
+ * **"Davet kodu 8 karakter olmalı (şu an 8)."** diyordu. Kullanıcı kendisiyle çelişen bir hata
+ * mesajı görüyor, hatayı düzeltmenin yolunu bulamıyordu.
+ *
+ * Gerçek şu: kodun içinde ne `0` ne `O` bulunabileceği için, kullanıcı bunlardan birini yazdığında
+ * **kurtarılabilir bir niyet YOKTUR** — kaynağı yanlış okumuştur. Doğru davranış, karakteri olduğu
+ * gibi bırakıp doğrulamanın onu reddetmesi ve arayüzün SORUNU ADIYLA söylemesidir
+ * ([describeReferralCodeProblem]).
+ */
 export function normalizeReferralCode(raw: string): string {
-  return (
-    raw
-      .toUpperCase()
-      .replace(/[\s-]/g, '')
-      // Sık yapılan okuma hataları kabul edilir: O→0 DEĞİL, tersi. Alfabede 0/1 yok; kullanıcı
-      // yanlışlıkla yazdıysa en yakın geçerli harfe çevrilir.
-      .replace(/0/g, 'O')
-      .replace(/1/g, 'I')
-      .slice(0, REFERRAL_CODE_LENGTH)
-  );
+  return raw.toUpperCase().replace(/[\s-]/g, '').slice(0, REFERRAL_CODE_LENGTH);
 }
 
 /** Kod biçimsel olarak geçerli mi? (Var olup olmadığı ayrı bir soru — o veritabanına aittir.) */
@@ -63,6 +72,26 @@ export function isValidReferralCodeFormat(code: string): boolean {
     if (!REFERRAL_ALPHABET.includes(ch)) return false;
   }
   return true;
+}
+
+/**
+ * Kodun NEDEN geçersiz olduğunu insan diliyle söyle (geçerliyse `null`).
+ *
+ * Arayüz eskiden her hata için tek bir uzunluk mesajı gösteriyordu; alfabe dışı karakterde bu mesaj
+ * kendisiyle çelişiyordu. İki farklı sorun, iki farklı cümle gerektirir — ve alfabe dışı karakter
+ * durumunda **hangi karakterin** sorunlu olduğu söylenmelidir, yoksa kullanıcı sekiz karakteri tek
+ * tek denemek zorunda kalır.
+ */
+export function describeReferralCodeProblem(code: string): string | null {
+  if (code.length === 0) return null;
+  const offenders = [...new Set([...code].filter((ch) => !REFERRAL_ALPHABET.includes(ch)))];
+  if (offenders.length > 0) {
+    return `Davet kodunda ${offenders.join(', ')} karakteri olamaz — kodu tekrar kontrol et.`;
+  }
+  if (code.length !== REFERRAL_CODE_LENGTH) {
+    return `Davet kodu ${REFERRAL_CODE_LENGTH} karakter olmalı (şu an ${code.length}).`;
+  }
+  return null;
 }
 
 /**

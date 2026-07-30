@@ -1,12 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app/app.dart';
+import 'core/analytics/analytics.dart';
+import 'core/analytics/analytics_sink.dart';
+import 'core/network/api_client.dart';
 import 'domain/onboarding/ai_welcome_controller.dart';
 import 'domain/onboarding/coach_marks_controller.dart';
 import 'domain/onboarding/onboarding_controller.dart';
 import 'domain/onboarding/study_profile.dart';
 import 'domain/onboarding/welcome_controller.dart';
+import 'domain/referral/pending_referral.dart';
 import 'domain/video/video_progress.dart';
 
 Future<void> main() async {
@@ -22,6 +27,11 @@ Future<void> main() async {
   final studyProfile = await readStudyProfile();
   // Faz E11 — video ilerlemesi/yer imleri açılışta senkron yüklenir (diğer tercihlerle aynı desen).
   final videoStates = await readVideoStates();
+  // Beta Faz 1 — önceki açılıştan kalmış davet kodu. Yönlendirici derin bağlantı gelmeden ÖNCE
+  // buna bakabilmeli: uygulamayı davet bağlantısıyla kurup kaydı sonra yapan kullanıcının kodu
+  // ancak böyle korunur.
+  final pendingReferralCode = await PendingReferral.read();
+
   runApp(
     ProviderScope(
       overrides: [
@@ -31,6 +41,21 @@ Future<void> main() async {
         coachMarksSeenProvider.overrideWith(() => CoachMarksController(coachMarksSeen)),
         studyProfileProvider.overrideWith(() => StudyProfileController(studyProfile)),
         videoProgressProvider.overrideWith(() => VideoProgressController(videoStates)),
+        pendingReferralProvider.overrideWithValue(
+          PendingReferral(initial: pendingReferralCode),
+        ),
+        // Beta Faz 3 — gerçek analitik: olaylar diske kuyruklanır, ağ geldiğinde toplu gönderilir.
+        //
+        // Hata ayıklama derlemesinde konsola da yazılır; bir olayın gerçekten gönderildiğini
+        // görmenin en hızlı yolu budur ve üretim derlemesine sızmaz (`kDebugMode`).
+        analyticsProvider.overrideWith((ref) {
+          final remote = RemoteAnalyticsSink(ref.watch(dioProvider));
+          return Analytics(
+            sink: kDebugMode
+                ? FanOutAnalyticsSink([DebugAnalyticsSink(), remote])
+                : remote,
+          );
+        }),
       ],
       child: const EhliyetAkademiApp(),
     ),

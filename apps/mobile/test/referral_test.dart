@@ -23,14 +23,35 @@ void main() {
 
     test('normalleştirme sunucudakiyle aynı', () {
       expect(normalizeReferralCode(' ab-cd ef gh '), 'ABCDEFGH');
-      expect(normalizeReferralCode('AB0DEF1H'), 'ABODEFIH');
       expect(normalizeReferralCode('abcdefghXYZ'), 'ABCDEFGH');
+    });
+
+    /// Beta Faz 1 — bu beklenti DEĞİŞTİ. Eskiden `AB0DEF1H` → `ABODEFIH` çevrilirdi; ama üstteki
+    /// test `O` ve `I`nın da alfabede olmadığını söylüyor, yani çeviri geçersiz bir karakteri
+    /// başka bir geçersiz karaktere dönüştürüyordu. Kullanıcı sonuçta kendisiyle çelişen bir hata
+    /// görüyordu: "Davet kodu 8 karakter olmalı (şu an 8)."
+    test('alfabe dışı karakter UYDURULMAZ', () {
+      expect(normalizeReferralCode('AB0DEF1H'), 'AB0DEF1H');
+      expect(isValidReferralCodeFormat('AB0DEF1H'), isFalse);
     });
 
     test('geçerlilik kontrolü', () {
       expect(isValidReferralCodeFormat('ABCDEFGH'), isTrue);
       expect(isValidReferralCodeFormat('ABCDEFG'), isFalse);
       expect(isValidReferralCodeFormat('ABCDEFG0'), isFalse);
+    });
+
+    /// Hata mesajı SORUNU ADIYLA söyler; iki farklı sorun iki farklı cümle kurar.
+    test('geçersizlik nedeni adıyla söylenir', () {
+      final badChar = describeReferralCodeProblem('AB0DEF1H');
+      expect(badChar, contains('0'));
+      expect(badChar, contains('1'));
+      // Kendisiyle çelişen eski mesaj bir daha kurulmamalı.
+      expect(badChar, isNot(contains('şu an 8')));
+
+      expect(describeReferralCodeProblem('ABCDEFG'), contains('8 karakter olmalı'));
+      expect(describeReferralCodeProblem('ABCDEFGH'), isNull);
+      expect(describeReferralCodeProblem(''), isNull);
     });
   });
 

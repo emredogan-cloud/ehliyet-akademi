@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { login, register, forgotPassword, resetPassword } from '@/lib/authClient';
 import { Icon, type IconName } from '@/components/ui/icons';
+import { isValidReferralCodeFormat, normalizeReferralCode } from '@/lib/referrals';
 
 type Mode = 'login' | 'register' | 'forgot' | 'reset';
 
@@ -30,10 +31,25 @@ const PROMO: Array<{ icon: IconName; accent: string; title: string; desc: string
 
 export default function GirisPage() {
   const router = useRouter();
-  const [mode, setMode] = useState<Mode>('login');
+  /**
+   * Beta Faz 1 — davet bağlantısından gelen kod (`/giris?mod=kayit&ref=<KOD>`).
+   *
+   * `/davet/<KOD>` sayfasındaki "Web'de hesap oluştur" bu adresi verir. Kod URL'den okunur; çerez
+   * ya da localStorage KULLANILMAZ. Gerekçe: kodun ömrü tek bir kayıt akışı kadardır, kalıcı
+   * saklamak aynı tarayıcıyı paylaşan ikinci kişiye yanlış kodu yazdırırdı.
+   */
+  const search = useSearchParams();
+  const refFromLink = normalizeReferralCode(search.get('ref') ?? '');
+  const hasRefLink = isValidReferralCodeFormat(refFromLink);
+
+  const [mode, setMode] = useState<Mode>(
+    // Davet bağlantısıyla gelen kişinin işi kayıt olmak; ona giriş sekmesini göstermek fazla adım.
+    search.get('mod') === 'kayit' || hasRefLink ? 'register' : 'login'
+  );
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [referral, setReferral] = useState(hasRefLink ? refFromLink : '');
   const [token, setToken] = useState('');
   const [msg, setMsg] = useState('');
   const [err, setErr] = useState('');
@@ -51,7 +67,8 @@ export default function GirisPage() {
         if (!r.ok) return setErr(r.error ?? 'Giriş başarısız.');
         router.push('/panel');
       } else if (mode === 'register') {
-        const r = await register(email, password, name);
+        const code = normalizeReferralCode(referral);
+        const r = await register(email, password, name, code || undefined);
         if (!r.ok) return setErr(r.error ?? 'Kayıt başarısız.');
         router.push('/panel');
       } else if (mode === 'forgot') {
@@ -186,6 +203,37 @@ export default function GirisPage() {
                     onChange={(e) => setName(e.target.value)}
                     autoComplete="name"
                     data-testid="name"
+                  />
+                </span>
+              </label>
+            )}
+            {/* Beta Faz 1 — davet kodu. İSTEĞE BAĞLI: yanlış/boş kod kaydı ENGELLEMEZ (sunucu da
+                aynı kuralı uygular). Davet bağlantısından gelindiyse dolu ve doğrulanmış gelir. */}
+            {mode === 'register' && (
+              <label className="auth-field">
+                <span className="auth-field__row">
+                  <span>
+                    Davet kodu <span className="muted">(varsa)</span>
+                  </span>
+                  {hasRefLink && (
+                    <span className="auth-ref-ok">
+                      <Icon name="check-circle" size={14} /> Davetten geldi
+                    </span>
+                  )}
+                </span>
+                <span className="auth-field__wrap">
+                  <span className="auth-field__ic" aria-hidden>
+                    <Icon name="trophy" size={17} />
+                  </span>
+                  <input
+                    className="ui-input auth-field__input"
+                    value={referral}
+                    onChange={(e) => setReferral(e.target.value.toUpperCase())}
+                    maxLength={12}
+                    spellCheck={false}
+                    autoCapitalize="characters"
+                    placeholder="ABCD2345"
+                    data-testid="referral"
                   />
                 </span>
               </label>

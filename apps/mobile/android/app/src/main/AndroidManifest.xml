@@ -24,9 +24,55 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
+            <!-- Beta Faz 1 — derin bağlantı desteği.
+                 Flutter'ın YERLEŞİK derin bağlantı yolu açılır: gelen URI doğrudan go_router'a
+                 verilir ve `/davet/<KOD>` rotası eşleşir. Ek bir eklenti (app_links vb.) GEREKMEZ.
+                 Bu bayrak olmadan intent-filter'lar uygulamayı açar ama URI yönlendiriciye
+                 ULAŞMAZ — uygulama ana sayfada açılır ve kod sessizce kaybolur. -->
+            <meta-data
+              android:name="flutter_deeplinking_enabled"
+              android:value="true" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <!-- Android App Link (doğrulanmış https).
+                 `autoVerify` → Android, kurulumda `https://<alan>/.well-known/assetlinks.json`
+                 dosyasını okur ve alan adının bu uygulamaya izin verdiğini doğrular. Doğrulanırsa
+                 bağlantı SEÇİM PENCERESİ OLMADAN uygulamada açılır.
+                 Doğrulama, imzalama parmak izinin sunucudaki dosyada bulunmasına bağlıdır
+                 (bkz. `apps/web/app/.well-known/assetlinks.json/route.ts`). Doğrulanmazsa bağlantı
+                 tarayıcıda açılır ve web sayfası kullanıcıyı yine uygulamaya yönlendirir —
+                 akış kırılmaz, yalnız bir dokunuş uzar. -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="https"
+                      android:host="www.ehliyetegitim.com"
+                      android:pathPrefix="/davet"/>
+                <!-- www'suz alan adı da aynı sayfaya çıkar; ikisi ayrı "host" sayılır. -->
+                <data android:scheme="https"
+                      android:host="ehliyetegitim.com"
+                      android:pathPrefix="/davet"/>
+            </intent-filter>
+            <!-- Özel şema — doğrulama GEREKTİRMEZ, kurulu uygulamayı her koşulda açar.
+                 App Links doğrulaması (sunucu yapılandırması, DNS, önbellek) bizim elimizde
+                 olmayan sebeplerle bozulabilir; web sayfasındaki "uygulamada aç" düğmesi bu şemayı
+                 kullanabilir. Tek başına yeterli DEĞİLDİR: uygulama kurulu değilse hiçbir şey
+                 olmaz, bu yüzden yedek yol olarak durur.
+
+                 `host="app"` ZORUNLU — süs değil. Flutter gelen URI'yi OLDUĞU GİBİ yönlendiriciye
+                 verir (`data.toString()`), go_router ise yalnız `uri.path` ile eşleştirir.
+                 `ehliyetakademi://davet/<KOD>` yazılsaydı `Uri.parse` "davet"i HOST sayar ve path
+                 BOŞ kalırdı → hiçbir rota eşleşmez, uygulama hata rotasında açılırdı. Araya bir
+                 host konunca path `/davet/<KOD>` olur ve https biçimiyle AYNI yola düşer.
+                 Doğru biçim: `ehliyetakademi://app/davet/<KOD>` (test: `deep_link_test.dart`). -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="ehliyetakademi" android:host="app" android:pathPrefix="/davet"/>
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

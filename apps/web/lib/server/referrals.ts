@@ -6,7 +6,15 @@
  */
 import { and, eq, inArray } from 'drizzle-orm';
 import { randomBytes, createHash } from 'node:crypto';
-import { getDb, referralCodes, referralRewards, referrals, users, type Db } from '@ea/db';
+import {
+  getDb,
+  referralCodes,
+  referralRewards,
+  referralVisits,
+  referrals,
+  users,
+  type Db,
+} from '@ea/db';
 import { newId } from '@/lib/server/auth';
 import { logger } from '@/lib/server/logger';
 import {
@@ -86,6 +94,81 @@ export async function referrerByCode(db: Db, code: string): Promise<string | nul
     .from(referralCodes)
     .where(eq(referralCodes.code, code));
   return rows[0]?.userId ?? null;
+}
+
+/**
+ * Beta Faz 1 — davet sayfasının gösterebileceği KADAR bilgi.
+ *
+ * `known`: kod gerçekten bir kullanıcıya ait mi. `firstName`: davet edenin YALNIZ ilk adı.
+ *
+ * NEDEN yalnız ilk ad: `/davet/<KOD>` herkese açık bir sayfadır. Tam ad + e-posta göstermek, kodu
+ * ele geçiren birine kod sahibinin kimliğini verirdi. İlk ad, "bu bağlantıyı tanıdığım biri
+ * gönderdi" güvenini kurmaya yeter ve tek başına kimseyi tanımlamaz.
+ *
+ * NEDEN İKİ ALAN AYRI: adı boş olan bir kullanıcının kodu GEÇERLİDİR. İkisi tek alana sıkıştırılsa
+ * (ör. yalnız ad dönse) adsız davet eden "bilinmeyen kod" sayılır ve davetliye yanlış uyarı
+ * gösterilirdi.
+ */
+export async function referrerPublicInfoByCode(
+  db: Db,
+  code: string
+): Promise<{ known: boolean; firstName: string | null }> {
+  const rows = await db
+    .select({ name: users.name })
+    .from(referralCodes)
+    .innerJoin(users, eq(users.id, referralCodes.userId))
+    .where(eq(referralCodes.code, code));
+  if (!rows[0]) return { known: false, firstName: null };
+  const first = (rows[0].name ?? '').trim().split(/\s+/)[0] ?? '';
+  return { known: true, firstName: first ? first.slice(0, 24) : null };
+}
+
+/** `YYYY-MM-DD` (UTC) — ziyaret tekilliğinin gün bileşeni. */
+export function visitDay(now: Date): string {
+  return now.toISOString().slice(0, 10);
+}
+
+/**
+ * Beta Faz 1 — davet bağlantısının açıldığını kaydet (hunideki ilk basamak).
+ *
+ * Aynı gün + aynı kod + aynı IP için İKİNCİ satır AÇILMAZ (tekil indeks). Çakışma bir hata değil,
+ * beklenen durumdur: sayfayı yenileyen kullanıcı yeni bir ilgi değildir. Bu yüzden hata YUTULUR ve
+ * `false` döner — çağıran isterse "yeni ziyaret mi" bilgisini kullanır.
+ *
+ * ASLA istek akışını kırmaz: analitik yazımı başarısız olsa da davet sayfası açılmalıdır.
+ */
+export async function recordReferralVisit(args: {
+  db: Db;
+  code: string;
+  known: boolean;
+  ip: string;
+  platform: 'web' | 'android';
+  now?: Date;
+}): Promise<boolean> {
+  const now = args.now ?? new Date();
+  try {
+    await args.db.insert(referralVisits).values({
+      id: newId(),
+      code: args.code,
+      known: args.known,
+      ipHash: hashIp(args.ip),
+      day: visitDay(now),
+      platform: args.platform,
+      at: now,
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/** Bir kodun kaç kez açıldığı (tekilleştirilmiş ziyaret). */
+export async function visitCountByCode(db: Db, code: string): Promise<number> {
+  const rows = await db
+    .select({ id: referralVisits.id })
+    .from(referralVisits)
+    .where(eq(referralVisits.code, code));
+  return rows.length;
 }
 
 /**
@@ -249,6 +332,8 @@ export async function referralSummary(userId: string) {
 
   return {
     code,
+    // Beta Faz 1 — hunideki ilk basamak: bağlantı kaç kez açıldı.
+    visits: await visitCountByCode(db, code),
     invited: all.length,
     qualified: all.filter((r) => r.status === 'qualified').length,
     pending: all.filter((r) => r.status === 'pending').length,

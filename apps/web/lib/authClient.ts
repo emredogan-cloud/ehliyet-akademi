@@ -145,11 +145,13 @@ export async function me(): Promise<AuthUser | null> {
 export async function register(
   email: string,
   password: string,
-  name: string
+  name: string,
+  /** Beta Faz 1 — isteğe bağlı davet kodu (`/davet/<KOD>` → `/giris?ref=<KOD>`). */
+  referralCode?: string
 ): Promise<{ ok: boolean; error?: string }> {
   const { status, data } = await api<{ user?: AuthUser; error?: string }>('/api/auth/register', {
     method: 'POST',
-    body: JSON.stringify({ email, password, name }),
+    body: JSON.stringify({ email, password, name, referralCode }),
   });
   if (status !== 201)
     return { ok: false, error: (data as { error?: string }).error ?? 'Kayıt başarısız.' };

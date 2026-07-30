@@ -39,7 +39,10 @@ import '../features/profile/profile_screen.dart';
 import '../features/profile/notification_settings_screen.dart';
 import '../features/progress/progress_screen.dart';
 import '../features/premium/paywall_screen.dart';
+import '../features/referral/referral_invite_screen.dart';
 import '../features/referral/referral_screen.dart';
+import '../data/referral/referral_api.dart';
+import '../domain/referral/pending_referral.dart';
 import '../features/onboarding/onboarding_screen.dart';
 import '../features/onboarding/welcome_screen.dart';
 import '../features/auth/auth_screen.dart';
@@ -62,12 +65,35 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
   /// NOT: kişiselleştirmeyi "Atla" ile geçen kullanıcı karşılamayı da görmez — seçmediği değerleri
   /// özetleyen bir ekran göstermek yanıltıcı olurdu (`OnboardingScreen._finish` her iki işareti de koyar).
   redirect: (context, state) {
+    // ── Beta Faz 1 — davet derin bağlantısı, tanıtım kapısından ÖNCE yakalanır ────────────────
+    //
+    // Sıra kritik: `/davet/<KOD>` bağlantısıyla açılan İLK kurulumda kullanıcı henüz tanıtımı
+    // görmemiştir ve aşağıdaki kapı onu `/onboarding`'e çevirir. Kod o çevirmeden önce
+    // alınmazsa SESSİZCE KAYBOLUR — davet eden ödülünü hiç almaz ve kimse nedenini bilemez.
+    //
+    // `capture` dinleyicisi olmayan bir kaba yazar (bkz. `PendingReferral`): `redirect` gezinme
+    // çözümlenirken çalıştığı için burada durum bildirimi yapmak "build sırasında setState"
+    // hatası verirdi.
+    final pending = ref.read(pendingReferralProvider);
+    final deepLinkCode = referralCodeFromPath(state.uri.path);
+    if (deepLinkCode != null) pending.capture(deepLinkCode);
+
     final onboarded = ref.read(onboardingSeenProvider);
     final welcomed = ref.read(welcomeSeenProvider);
     final loc = state.matchedLocation;
     if (!onboarded) return loc == '/onboarding' ? null : '/onboarding';
     if (!welcomed) return loc == '/welcome' ? null : '/welcome';
     if (loc == '/onboarding' || loc == '/welcome') return '/home';
+
+    // Davet bağlantısıyla gelen kullanıcı, tanıtım turu bittikten sonra Ana Sayfa'ya değil daveti
+    // karşılayan ekrana iner. Onun uygulamayı açma sebebi bir davetti; sıradan bir ana sayfa
+    // göstermek o sebebi görmezden gelmek olurdu.
+    //
+    // NEDEN `/home` üzerinden ve tek seferlik: tur bittiğinde `OnboardingScreen` DOĞRUDAN `/home`'a
+    // gider, yani burada `/onboarding` konumu artık görünmez (cihazda ölçüldü — gerekçe
+    // `PendingReferral.shouldGreet`). Karşılama bir kez gösterilir; `markGreeted` sonrası `/home`
+    // bir daha ele geçirilmez.
+    if (loc == '/home' && pending.shouldGreet) return '/davet/${pending.code}';
     return null;
   },
   routes: [
@@ -266,10 +292,27 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
       ],
     ),
     // Full-screen over the tab shell (login/register).
-    GoRoute(path: '/auth', builder: (_, _) => const AuthScreen()),
+    //
+    // `?kayit=1` → ekran doğrudan KAYIT kipinde açılır. Davet ekranından gelen kullanıcının işi
+    // hesap açmaktır; ona giriş sekmesini gösterip bir dokunuş daha istemek gereksiz.
+    GoRoute(
+      path: '/auth',
+      builder: (_, state) =>
+          AuthScreen(startInRegister: state.uri.queryParameters['kayit'] == '1'),
+    ),
     GoRoute(path: '/notifications', builder: (_, _) => const NotificationSettingsScreen()),
     GoRoute(path: '/progress', builder: (_, _) => const ProgressScreen()),
     GoRoute(path: '/premium', builder: (_, _) => const PaywallScreen()),
     GoRoute(path: '/davet', builder: (_, _) => const ReferralScreen()),
+    // Beta Faz 1 — davet derin bağlantısının indiği yer.
+    //
+    // `/davet`in ALT rotası DEĞİL, KARDEŞİ: alt rota olsaydı go_router soğuk açılışta yığını
+    // `/davet` → `/davet/<KOD>` diye kurardı ve geri tuşu, yeni kullanıcıyı "önce giriş yap"
+    // diyen kendi davet ekranına düşürürdü. Kardeş rota kendi başına durur.
+    GoRoute(
+      path: '/davet/:code',
+      builder: (_, state) =>
+          ReferralInviteScreen(code: normalizeReferralCode(state.pathParameters['code']!)),
+    ),
   ],
 );

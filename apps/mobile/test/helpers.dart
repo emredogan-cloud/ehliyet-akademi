@@ -4,7 +4,11 @@ import 'dart:typed_data';
 import 'dart:ui' show Size;
 
 import 'package:ehliyet_akademi/app/app.dart';
+import 'package:ehliyet_akademi/app/router.dart';
 import 'package:ehliyet_akademi/app/shell.dart';
+import 'package:ehliyet_akademi/core/analytics/analytics.dart';
+import 'package:ehliyet_akademi/core/app_version.dart';
+import 'package:ehliyet_akademi/core/analytics/analytics_sink.dart';
 import 'package:ehliyet_akademi/core/storage/token_store.dart';
 import 'package:ehliyet_akademi/data/auth/account_api.dart';
 import 'package:ehliyet_akademi/data/auth/auth_api.dart';
@@ -38,7 +42,9 @@ import 'package:ehliyet_akademi/domain/onboarding/study_profile.dart';
 import 'package:ehliyet_akademi/domain/onboarding/welcome_controller.dart';
 import 'package:ehliyet_akademi/domain/practice/question.dart';
 import 'package:ehliyet_akademi/domain/practice/question_bank.dart';
+import 'package:ehliyet_akademi/domain/referral/pending_referral.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -674,6 +680,13 @@ Future<void> pumpApp(
   /// Faz 8 — davet ucu (sahte).
   ReferralApi? referral,
 
+  /// Beta Faz 3 — analitik sink'i. Verilirse gönderilen olaylar testte okunabilir.
+  /// Verilmezse varsayılan bellek-içi sink kullanılır (ağa çıkılmaz).
+  MemoryAnalyticsSink? analytics,
+
+  /// Beta Faz 1 — derin bağlantıdan gelmiş gibi bekleyen davet kodu.
+  String? pendingReferralCode,
+
   /// Beta Faz 3 — ödeme ağ geçidi. VARSAYILAN: mağazası KAPALI sahte ağ geçidi (test ortamında
   /// Play Store yoktur; dürüst varsayılan budur). Ödeme akışını test edenler kendi ağ geçidini verir.
   BillingGateway? billing,
@@ -714,6 +727,13 @@ Future<void> pumpApp(
   );
   addTearDown(tester.platformDispatcher.clearAccessibilityFeaturesTestValue);
   SharedPreferences.setMockInitialValues(prefs ?? {});
+  // Beta Faz 3 — sürüm, testte platform kanalından OKUNMAZ.
+  //
+  // `PackageInfo.fromPlatform()` cevapsız bir kanalda hiç tamamlanmaz (hata da fırlatmaz). Gerçek
+  // kodda buna bir zaman aşımı kondu (`AppVersion.loadTimeout`), ama testin iki saniye beklemesi
+  // anlamsız olurdu: sınıfın kendi test dikişi kullanılır ve sürüm deterministik olur.
+  AppVersion.setForTest(const AppVersion(name: '1.0.0', build: '4'));
+  addTearDown(() => AppVersion.setForTest(null));
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
@@ -734,6 +754,11 @@ Future<void> pumpApp(
         if (storeReview != null) storeReviewServiceProvider.overrideWithValue(storeReview),
         if (share != null) shareServiceProvider.overrideWithValue(share),
         if (referral != null) referralApiProvider.overrideWithValue(referral),
+        if (analytics != null)
+          analyticsProvider.overrideWithValue(Analytics(sink: analytics)),
+        pendingReferralProvider.overrideWithValue(
+          PendingReferral(initial: pendingReferralCode),
+        ),
         billingGatewayProvider.overrideWithValue(billing ?? FakeBillingGateway()),
         entitlementsApiProvider.overrideWithValue(
           entitlementsApi ?? FakeEntitlementsApi(owned ?? const []),
@@ -1077,3 +1102,12 @@ class FakeShareService implements ShareService {
     return true;
   }
 }
+
+/// Beta Faz 1 — testten yönlendiriciye erişim (derin bağlantı taklidi).
+///
+/// Derin bağlantılar arayüzden TIKLANARAK üretilemez: uygulama dışından gelirler. Bu yardımcı,
+/// `router.go('/davet/<KOD>')` ile motorun uygulamaya verdiği yolu taklit eder — Android tarafında
+/// olan tam olarak budur (`FlutterActivityAndFragmentDelegate` gelen URI'yi yönlendiriciye verir).
+GoRouter routerOf(WidgetTester tester) => ProviderScope.containerOf(
+  tester.element(find.byType(EhliyetAkademiApp)),
+).read(routerProvider);

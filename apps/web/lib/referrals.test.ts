@@ -13,6 +13,7 @@ import {
   isValidReferralCodeFormat,
   nextMilestone,
   normalizeReferralCode,
+  describeReferralCodeProblem,
   pendingMilestones,
   rewardExpiry,
 } from './referrals';
@@ -29,10 +30,33 @@ describe('kod biçimi', () => {
     expect(normalizeReferralCode('abcdefghIJK')).toBe('ABCDEFGH');
   });
 
-  /// Kullanıcı `O` yerine `0`, `I` yerine `1` yazarsa kabul edilir — alfabede o rakamlar yok,
-  /// yani niyet açık.
-  it('sık yapılan okuma hataları düzeltilir', () => {
-    expect(normalizeReferralCode('AB0DEF1H')).toBe('ABODEFIH');
+  /**
+   * Beta Faz 1 — bu testin BEKLENTİSİ DEĞİŞTİ ve nedeni kayda değer.
+   *
+   * Eskiden `normalizeReferralCode('AB0DEF1H')` → `'ABODEFIH'` bekleniyordu; gerekçe "alfabede 0/1
+   * yok, kullanıcı yanlışlıkla yazdıysa niyeti açık" idi. Ama alfabede `O`/`I`/`L` de yok — yani
+   * çeviri geçersiz bir karakteri BAŞKA bir geçersiz karaktere dönüştürüyordu. İki test yan yana
+   * konduğunda çelişki görünür oluyordu: bu test "0 → O olur" diyor, üstteki test "O alfabede yok"
+   * diyor. Sonuç, kullanıcıya **"Davet kodu 8 karakter olmalı (şu an 8)."** diyen bir hata mesajıydı.
+   *
+   * Artık karakter olduğu gibi bırakılıyor ve sorun ADIYLA söyleniyor.
+   */
+  it('alfabe dışı karakter UYDURULMAZ — olduğu gibi bırakılır', () => {
+    expect(normalizeReferralCode('AB0DEF1H')).toBe('AB0DEF1H');
+    expect(isValidReferralCodeFormat('AB0DEF1H')).toBe(false);
+  });
+
+  it('geçersizlik nedeni ADIYLA söylenir (uzunluk ile karıştırılmaz)', () => {
+    // Alfabe dışı karakter: hangi karakter olduğu söylenir.
+    expect(describeReferralCodeProblem('AB0DEF1H')).toContain('0');
+    expect(describeReferralCodeProblem('AB0DEF1H')).toContain('1');
+    // Kendisiyle çelişen eski mesaj bir daha kurulmamalı.
+    expect(describeReferralCodeProblem('AB0DEF1H')).not.toContain('şu an 8');
+    // Yanlış uzunluk: uzunluk cümlesi kurulur.
+    expect(describeReferralCodeProblem('ABCDEFG')).toContain('8 karakter olmalı');
+    // Geçerli kod ve boş giriş: uyarı YOK.
+    expect(describeReferralCodeProblem('ABCDEFGH')).toBeNull();
+    expect(describeReferralCodeProblem('')).toBeNull();
   });
 
   it('geçerlilik: uzunluk ve alfabe', () => {

@@ -19,7 +19,13 @@ export type AnalyticsEvent =
   | { name: 'signup_completed'; props: Record<string, never> }
   | { name: 'feature_used'; props: { feature: string } }
   | { name: 'drop_off'; props: { step: string } }
-  | { name: 'ai_question_asked'; props: { grounded: boolean; action?: string } };
+  | { name: 'ai_question_asked'; props: { grounded: boolean; action?: string } }
+  // Beta Faz 1 — davet hunisi. `code` KİŞİSEL VERİ DEĞİLDİR: rastgele üretilmiş, kişiye
+  // çözülemeyen bir tanıtıcıdır ve zaten herkese açık bir URL'de duruyor.
+  | { name: 'referral_link_opened'; props: { code: string } }
+  | { name: 'referral_app_open_attempted'; props: { code: string } }
+  | { name: 'referral_store_opened'; props: { code: string } }
+  | { name: 'referral_web_signup_clicked'; props: { code: string } };
 
 export interface AnalyticsSink {
   track(e: AnalyticsEvent): void;

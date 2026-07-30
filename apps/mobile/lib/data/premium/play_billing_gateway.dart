@@ -139,6 +139,8 @@ class PlayBillingGateway implements BillingGateway {
   void listen(
     Future<void> Function(BillingPurchase) onPurchase, {
     Future<void> Function(BillingFailure)? onError,
+    Future<void> Function()? onCancelled,
+    Future<void> Function(BillingPurchase)? onPending,
   }) {
     _iap.listen(
       (pd) async {
@@ -159,6 +161,11 @@ class PlayBillingGateway implements BillingGateway {
         }
         await onError?.call(BillingFailure(e.message.isEmpty ? 'Satın alma tamamlanamadı.' : e.message));
       },
+      onCanceled: () async => onCancelled?.call(),
+      // Bekleyen satın almada makbuz TAŞINMAZ: henüz doğrulanacak bir ödeme yok. Ödeme
+      // tamamlandığında Play işlemi akıştan tekrar gönderir ve normal `onPurchase` yolu işler.
+      onPending: (pd) async =>
+          onPending?.call(BillingPurchase(storeProductId: pd.productID)),
     );
   }
 

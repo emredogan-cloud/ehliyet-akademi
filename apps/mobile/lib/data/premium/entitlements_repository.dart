@@ -14,8 +14,17 @@ const _kEntitlements = 'ea:entitlements:v1';
 /// Satın alma / yetenek API'si. Sahiplik SUNUCUDAN türetilir (purchases tablosu) — asla senkron
 /// edilen bir anahtara güvenilmez (web P0: aynı tarayıcıda kullanıcı sızıntısı).
 abstract class EntitlementsApi {
-  /// GET /api/purchases → sahip olunan ürün id listesi. Oturum yoksa boş.
-  Future<List<String>> fetchOwned();
+  /// GET /api/purchases → sahip olunan ürün id listesi.
+  ///
+  /// **`null` ile boş liste AYNI ŞEY DEĞİLDİR** (Beta Faz 2):
+  /// · `[]`   → sunucu cevap verdi ve "bu kullanıcının hiçbir şeyi yok" dedi. **Yetkili cevap.**
+  /// · `null` → sunucuya sorulamadı (oturum yok/401, ağ yok, 5xx). **Bilgi yok.**
+  ///
+  /// Ayrım, iade tespiti için ZORUNLUDUR. İkisi eskiden aynı değere (`[]`) indirgeniyordu; bu
+  /// yüzden "iade edildi" ile "misafirim" ayırt edilemiyor ve iade hiç tespit edilemiyordu.
+  /// Karıştırılsaydı ters yönde daha kötü bir hata çıkardı: misafir kullanıcının ödediği paket
+  /// silinirdi.
+  Future<List<String>?> fetchOwned();
 
   /// POST /api/iap/validate → Google Play makbuzunu doğrula + hak ver → güncel sahiplik.
   Future<List<String>> validatePurchase({
@@ -30,14 +39,23 @@ class DioEntitlementsApi implements EntitlementsApi {
   final Dio _dio;
 
   @override
-  Future<List<String>> fetchOwned() async {
-    final res = await _dio.get<Map<String, dynamic>>(
-      '/api/purchases',
-      options: Options(responseType: ResponseType.json, validateStatus: (s) => s == 200 || s == 401),
-    );
-    if (res.statusCode != 200) return const [];
-    final list = (res.data?['purchases'] as List?) ?? const [];
-    return list.map((e) => (e as Map)['productId'].toString()).toSet().toList();
+  Future<List<String>?> fetchOwned() async {
+    try {
+      final res = await _dio.get<Map<String, dynamic>>(
+        '/api/purchases',
+        options: Options(
+          responseType: ResponseType.json,
+          validateStatus: (s) => s != null && s < 500,
+        ),
+      );
+      // YALNIZ 200 yetkilidir. 401 (oturum yok) ve 5xx "bilgi yok" demektir → null.
+      if (res.statusCode != 200) return null;
+      final list = (res.data?['purchases'] as List?) ?? const [];
+      return list.map((e) => (e as Map)['productId'].toString()).toSet().toList();
+    } on DioException catch (_) {
+      // Ağ yok / zaman aşımı → bilgi yok. Boş liste dönmek "hiçbir şeyin yok" demek olurdu.
+      return null;
+    }
   }
 
   @override
@@ -99,15 +117,62 @@ class EntitlementsController extends Notifier<List<String>> {
   }
 
   /// Sunucudan sahiplik listesini yeniden türet (SET, bayat haklar temizlenir).
+  ///
+  /// Beta Faz 2 — burada ayrıca **iade/geri alma uzlaşması** yapılır.
   Future<void> refresh() async {
     try {
-      _serverOwned = await _api.fetchOwned();
-      await _cache(_serverOwned);
+      final owned = await _api.fetchOwned();
+      // `null` = sunucuya sorulamadı. Önbellek ve defter OLDUĞU GİBİ korunur.
+      if (owned != null) {
+        _serverOwned = owned;
+        await _cache(owned);
+        await _reconcileRevoked(owned);
+      }
     } catch (_) {
-      // ağ/oturum yok → önbellek korunur
+      // Beklenmeyen bir istisna da "bilgi yok" sayılır; hak asla bu yüzden kaybedilmez.
     }
     await _publish();
   }
+
+  /// Sunucunun GERİ ALDIĞI hakları cihaz defterinden düş (iade, zincirleme geri çekme).
+  ///
+  /// ## Neden gerekliydi
+  ///
+  /// Defter ekleme-odaklıydı ve sahiplik `birleşim(sunucu, defter)` olarak yayımlanıyordu. Sunucu
+  /// iadeden sonra hakkı geri alsa bile defterdeki kayıt o cihazda **sonsuza kadar** premium
+  /// veriyordu. Yani iade edilen para geri gidiyor, erişim gitmiyordu.
+  ///
+  /// ## Neden bu kadar ihtiyatlı
+  ///
+  /// Yanlış yönde hata yapmak çok daha pahalı: ödenmiş bir paketi silmek. Bu yüzden bir kayıt
+  /// ancak ÜÇ koşul birlikte sağlanınca düşer:
+  ///
+  /// 1. **Sunucu cevap verdi** — çağıran bunu garanti eder (`owned != null`, yalnız HTTP 200).
+  /// 2. **Kayıt daha önce sunucuya bağlanmıştı** (`bound`) — sunucu onu BİLİYORDU. Bağlanmamış
+  ///    bir kayıt (misafirken alınmış) sunucu için hiç var olmadı; yokluğu geri alma değildir.
+  /// 3. **Sunucu artık o ürünü vermiyor.**
+  ///
+  /// Eksik kalan hâller bilinçli olarak dokunulmaz bırakılır: bir hakkı fazladan bir süre açık
+  /// tutmak, haksız yere kapatmaktan iyidir.
+  ///
+  /// SINIR (dürüstçe): sunucu tarafı iade bildirimi (Play RTDN webhook'u) henüz bağlı değil. Yani
+  /// bu uzlaşma, sunucunun iadeyi ÖĞRENDİĞİ an devreye girer; öğrenme yolunun kendisi ayrı bir
+  /// yayın öncesi işidir (`BETA_READINESS_REPORT.md`).
+  Future<void> _reconcileRevoked(List<String> serverOwned) async {
+    final ledger = await _store.read();
+    if (ledger.isEmpty) return;
+    for (final p in ledger) {
+      if (!p.bound) continue;
+      final serverId = _serverIdOf(p.storeProductId);
+      if (!serverOwned.contains(serverId)) {
+        await _store.remove(p.storeProductId);
+      }
+    }
+  }
+
+  /// Mağaza ürün kimliğini sunucudaki ürün kimliğine çevir (`komple_ehliyet` → `komple-ehliyet`).
+  String _serverIdOf(String storeProductId) =>
+      productByStoreId(storeProductId)?.id ?? storeProductId.replaceAll('_', '-');
 
   /// Doğrulanmış satın almadan gelen güncel sunucu sahipliğini uygula.
   Future<void> applyOwned(List<String> owned) async {
@@ -183,10 +248,7 @@ class EntitlementsController extends Notifier<List<String>> {
 
   /// İki kaynağı birleştirip yayımla.
   Future<void> _publish() async {
-    final fromStore = <String>[
-      for (final p in await _store.read())
-        productByStoreId(p.storeProductId)?.id ?? p.storeProductId.replaceAll('_', '-'),
-    ];
+    final fromStore = <String>[for (final p in await _store.read()) _serverIdOf(p.storeProductId)];
     state = {..._serverOwned, ...fromStore}.toList();
   }
 

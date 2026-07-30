@@ -158,9 +158,23 @@ abstract class BillingGateway {
   /// Faz 2 — [onError] eklendi. Mağaza akışı yalnız başarıyı değil HATAYI da bildirir; en
   /// önemlisi "bu ürüne zaten sahipsin". Bu olay yutulduğunda kullanıcı satın alma düğmesine
   /// basıyor ve hiçbir şey olmuyordu (sahadaki asıl şikâyet buydu).
+  ///
+  /// Beta Faz 2 — [onCancelled] ve [onPending] eklendi.
+  ///
+  /// **Bu iki geri çağırım isteğe bağlı GÖRÜNÜR ama `clientReceipt` yolunda ZORUNLUDUR.** Sebebi
+  /// sözleşmenin asenkron olması: `purchase()` yalnız akışın BAŞLATILDIĞINI bildirir, sonucu
+  /// bildirmez. Dolayısıyla "kullanıcı vazgeçti" ve "ödeme beklemede" haberleri buradan gelmezse
+  /// ödeme ekranının beklemesi hiç bitmez — gerçek cihazda düğme sonsuza kadar dönüyordu.
   void listen(
     Future<void> Function(BillingPurchase) onPurchase, {
     Future<void> Function(BillingFailure)? onError,
+
+    /// Kullanıcı Play sayfasını kapattı. **Hata değildir**; mesaj gösterilmez, yalnız bekleme biter.
+    Future<void> Function()? onCancelled,
+
+    /// Satın alma BEKLEMEDE (nakit ödeme / operatör faturası). Para henüz alınmadı → hak VERİLMEZ,
+    /// ama kullanıcıya durumu söylenmelidir; sessizlik "ödedim mi?" sorusunu doğurur.
+    Future<void> Function(BillingPurchase)? onPending,
   });
 
   void dispose();

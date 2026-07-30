@@ -58,8 +58,53 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   void initState() {
     super.initState();
     _billing = ref.read(billingGatewayProvider);
-    _billing.listen(_onPurchase, onError: _onStoreError);
+    _billing.listen(
+      _onPurchase,
+      onError: _onStoreError,
+      onCancelled: _onStoreCancelled,
+      onPending: _onStorePending,
+    );
     _loadStore();
+  }
+
+  /// Beta Faz 2 — kullanıcı Play sayfasını KAPATTI.
+  ///
+  /// KÖK NEDEN: `purchase()` asenkron sözleşme gereği hemen `BillingSuccess([])` döner ve ekran
+  /// "sonuç akıştan gelecek" diye beklemeye geçer. Vazgeçme akıştan `canceled` olarak geliyordu
+  /// ama `IapService` onu SESSİZCE DÜŞÜRÜYORDU → bekleme hiç bitmiyor, düğme sonsuza kadar
+  /// dönüyordu. Sahte ağ geçidi `purchase()` içinden `BillingCancelled` döndürdüğü için testler
+  /// bu yolu hiç geçmemişti.
+  ///
+  /// Vazgeçme HATA DEĞİLDİR: mesaj gösterilmez, yalnız bekleme biter (Faz 2'nin genel kalıbı).
+  Future<void> _onStoreCancelled() async {
+    if (!mounted) return;
+    setState(() {
+      _busy = false;
+      _celebrateNextGrant = false;
+    });
+  }
+
+  /// Beta Faz 2 — satın alma BEKLEMEDE (nakit ödeme / operatör faturası).
+  ///
+  /// Play bu durumu `PurchaseStatus.pending` ile bildirir ve **para henüz alınmamıştır**. İki kural:
+  ///
+  /// · **Hak VERİLMEZ.** Ödenmemiş bir satın almaya erişim açmak, ödeme hiç tamamlanmazsa
+  ///   geri alınması gereken bir hak yaratır.
+  /// · **Kullanıcıya SÖYLENİR.** Sessiz kalmak en kötü seçenek: kullanıcı ödeme talimatını
+  ///   vermiştir, uygulamada hiçbir şey değişmemiştir ve "param gitti mi?" diye sorar.
+  ///
+  /// Ödeme tamamlandığında Play işlemi akıştan TEKRAR gönderir; normal `_onPurchase` yolu işler ve
+  /// onay (acknowledge) ancak o zaman verilir.
+  Future<void> _onStorePending(BillingPurchase purchase) async {
+    if (!mounted) return;
+    setState(() {
+      _busy = false;
+      _celebrateNextGrant = false;
+    });
+    _snack(
+      'Ödemen onay bekliyor. Onaylandığında premium kendiliğinden açılır — '
+      'uygulamayı tekrar açman yeterli.',
+    );
   }
 
   /// Faz 2 — mağaza akışından gelen HATA.

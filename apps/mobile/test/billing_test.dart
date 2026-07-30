@@ -460,15 +460,29 @@ class FakeIapService implements IapService {
   void listen(
     Future<void> Function(PurchaseDetails) onPurchased, {
     Future<void> Function(IAPError error)? onError,
+    Future<void> Function()? onCanceled,
+    Future<void> Function(PurchaseDetails)? onPending,
   }) {
     _handler = onPurchased;
     _errorHandler = onError;
+    _cancelHandler = onCanceled;
+    _pendingHandler = onPending;
   }
 
   Future<void> Function(IAPError)? _errorHandler;
 
+  /// Beta Faz 2 — akışın diğer iki durumu.
+  Future<void> Function()? _cancelHandler;
+  Future<void> Function(PurchaseDetails)? _pendingHandler;
+
   /// Play'in bir HATA olayı ürettiğini taklit et (ör. "bu ürüne zaten sahipsin").
   Future<void> emitError(IAPError error) async => _errorHandler?.call(error);
+
+  /// Kullanıcı Play sayfasını kapattı.
+  Future<void> emitCanceled() async => _cancelHandler?.call();
+
+  /// Ödeme beklemede (nakit / operatör faturası).
+  Future<void> emitPending(PurchaseDetails pd) async => _pendingHandler?.call(pd);
 
   @override
   Future<void> buy(ProductDetails details) async => bought.add(details.id);

@@ -40,6 +40,7 @@ import 'package:ehliyet_akademi/domain/onboarding/coach_marks_controller.dart';
 import 'package:ehliyet_akademi/domain/onboarding/onboarding_controller.dart';
 import 'package:ehliyet_akademi/domain/onboarding/study_profile.dart';
 import 'package:ehliyet_akademi/domain/onboarding/welcome_controller.dart';
+import 'package:ehliyet_akademi/domain/premium/products.dart';
 import 'package:ehliyet_akademi/domain/practice/question.dart';
 import 'package:ehliyet_akademi/domain/practice/question_bank.dart';
 import 'package:ehliyet_akademi/domain/referral/pending_referral.dart';
@@ -331,9 +332,13 @@ class FakeEntitlementsApi implements EntitlementsApi {
   int validateCalls = 0;
   final List<String> validatedTokens = [];
 
+  /// Beta Faz 2 — oturumsuzluk artık `null` döner, boş liste DEĞİL.
+  ///
+  /// Gerçek sunucu 401 verir ve bu "hiçbir şeyin yok" demek DEĞİL, "sormadın/soramadım" demektir.
+  /// İkisini aynı değere indirmek iade tespitini imkânsız kılıyordu (bkz. `EntitlementsApi`).
   @override
-  Future<List<String>> fetchOwned() async {
-    if (!signedIn) return const [];
+  Future<List<String>?> fetchOwned() async {
+    if (!signedIn) return null;
     return owned;
   }
 
@@ -997,10 +1002,142 @@ class FakeBillingGateway implements BillingGateway {
   void listen(
     Future<void> Function(BillingPurchase) onPurchase, {
     Future<void> Function(BillingFailure)? onError,
+    Future<void> Function()? onCancelled,
+    Future<void> Function(BillingPurchase)? onPending,
   }) {
     this.onPurchase = onPurchase;
     this.onError = onError;
+    this.onCancelled = onCancelled;
+    this.onPending = onPending;
   }
+
+  /// Beta Faz 2 — akıştan gelen vazgeçme/beklemede haberleri.
+  Future<void> Function()? onCancelled;
+  Future<void> Function(BillingPurchase)? onPending;
+
+  @override
+  void dispose() => disposeCalls++;
+}
+
+/// Beta Faz 2 — GERÇEK `PlayBillingGateway`'in sözleşmesini taklit eden sahte ağ geçidi.
+///
+/// ## Neden ikinci bir sahte gerekti
+///
+/// [FakeBillingGateway], `purchase()` çağrısından DOĞRUDAN sonuç döndürüyor (`BillingCancelled`,
+/// `BillingFailure`…). Gerçek `in_app_purchase` yolu böyle çalışmaz: `purchase()` yalnız akışın
+/// başlatıldığını bildirip `BillingSuccess([])` döner, gerçek sonuç satın alma AKIŞINDAN gelir.
+///
+/// Bu fark masum değildi — tam olarak bir hatanın saklandığı yerdi: vazgeçme akıştan geliyor,
+/// `IapService` onu yutuyor ve ödeme ekranının beklemesi hiç bitmiyordu. Sahte ağ geçidi o yolu
+/// hiç kullanmadığı için testler yeşil kalmıştı.
+///
+/// Bu sınıf sonucu YAYMAK için `emit*` yöntemleri sunar; böylece akış tabanlı durumlar (vazgeçme,
+/// beklemede, zaten sahipsin, başarı) testte gerçek sırayla kurulabilir.
+class StreamBillingGateway implements BillingGateway {
+  StreamBillingGateway({this.storeAvailable = true});
+
+  final bool storeAvailable;
+
+  int purchaseCalls = 0;
+  int restoreCalls = 0;
+  int disposeCalls = 0;
+
+  Future<void> Function(BillingPurchase)? _onPurchase;
+  Future<void> Function(BillingFailure)? _onError;
+  Future<void> Function()? _onCancelled;
+  Future<void> Function(BillingPurchase)? _onPending;
+
+  @override
+  String get name => 'stream-fake';
+
+  @override
+  bool get isConfigured => true;
+
+  @override
+  BillingServerBridge get serverBridge => BillingServerBridge.clientReceipt;
+
+  @override
+  Future<bool> available() async => storeAvailable;
+
+  @override
+  Future<List<BillingProduct>> products() async => storeAvailable
+      ? [
+          BillingProduct(
+            storeProductId: premiumProduct.storeProductId,
+            priceLabel: '₺399,00',
+            title: 'Komple Ehliyet Paketi',
+            period: BillingPeriod.lifetime,
+          ),
+        ]
+      : const [];
+
+  /// GERÇEK sözleşme: yalnız akışın başlatıldığını bildirir. Sonuç `emit*` ile gelir.
+  @override
+  Future<BillingResult> purchase(BillingProduct product) async {
+    purchaseCalls++;
+    return const BillingSuccess([]);
+  }
+
+  @override
+  Future<BillingResult> restore() async {
+    restoreCalls++;
+    return const BillingSuccess([]);
+  }
+
+  @override
+  Future<List<EntitlementFacts>> entitlementFacts() async => const [];
+
+  @override
+  Future<Set<String>> entitlements() async => const {};
+
+  @override
+  void listen(
+    Future<void> Function(BillingPurchase) onPurchase, {
+    Future<void> Function(BillingFailure)? onError,
+    Future<void> Function()? onCancelled,
+    Future<void> Function(BillingPurchase)? onPending,
+  }) {
+    _onPurchase = onPurchase;
+    _onError = onError;
+    _onCancelled = onCancelled;
+    _onPending = onPending;
+  }
+
+  /// Olayı yay ve DÖNÜŞÜ BEKLEME.
+  ///
+  /// KİLİTLENME TUZAĞI (bir kez düşüldü, bir daha düşülmesin diye burada duruyor): ödeme ekranının
+  /// `_onPurchase` işleyicisi başarı penceresini `await` eder ve o pencere ancak kullanıcı kapatınca
+  /// kapanır. Test `await gateway.emitPurchased(...)` yazarsa, işleyicinin dönüşünü bekler; ama
+  /// pencereyi kapatacak olan da testin kendisidir ve pump edemeden beklemeye girmiştir. Sonuç:
+  /// on dakikalık zaman aşımı.
+  ///
+  /// Gerçek dünyada da olan budur: platform akışı olayı VERİR ve kimseyi beklemez. Bu yüzden
+  /// işleyicinin future'ı bilinçli olarak yutulur; test olaydan sonra `pump` ederek ilerler.
+  void _fire(Future<void>? handler) => handler?.ignore();
+
+  /// Play: satın alma tamamlandı.
+  void emitPurchased({String? token}) => _fire(
+    _onPurchase?.call(
+      BillingPurchase(storeProductId: premiumProduct.storeProductId, purchaseToken: token),
+    ),
+  );
+
+  /// Play: kullanıcı ödeme sayfasını kapattı.
+  void emitCancelled() => _fire(_onCancelled?.call());
+
+  /// Play: ödeme beklemede (nakit / operatör faturası).
+  void emitPending() =>
+      _fire(_onPending?.call(BillingPurchase(storeProductId: premiumProduct.storeProductId)));
+
+  /// Play: "bu ürüne zaten sahipsin".
+  void emitAlreadyOwned() => _fire(
+    _onError?.call(
+      const BillingFailure(
+        'Bu paketi zaten satın almışsın — erişimin geri getiriliyor…',
+        alreadyOwned: true,
+      ),
+    ),
+  );
 
   @override
   void dispose() => disposeCalls++;

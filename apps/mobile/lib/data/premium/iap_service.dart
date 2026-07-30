@@ -26,20 +26,53 @@ class IapService {
   /// Faz 2 — [onError] EKLENDİ. Eskiden yalnız `purchased`/`restored` işleniyor, `error` sessizce
   /// düşürülüyordu. Play'in "bu ürüne zaten sahipsin" yanıtı da bir `error` olayıdır; yutulduğu
   /// için kullanıcı düğmeye basıyor ve HİÇBİR ŞEY olmuyordu.
+  /// Beta Faz 2 — [onCanceled] ve [onPending] EKLENDİ; onay artık KOŞULLU.
+  ///
+  /// ## Vazgeçme neden eklendi (gerçek, görünür hata)
+  ///
+  /// `PurchaseStatus.canceled` sessizce düşürülüyordu. Zincir şöyleydi: `PlayBillingGateway.purchase`
+  /// akış asenkron olduğu için hemen `BillingSuccess([])` döner; ödeme ekranı boş sonucu görüp
+  /// "sonuç akıştan gelecek" diye BEKLEMEYE geçer. Kullanıcı Play sayfasını kapattığında akıştan
+  /// yalnız `canceled` gelir — ve o yutulduğu için ekranın beklemesi HİÇ BİTMEZ. Gerçek cihazda
+  /// satın alma düğmesi sonsuza kadar dönüyordu. (Testler yeşildi: sahte ağ geçidi `purchase()`
+  /// içinden `BillingCancelled` döndürüyor, yani kırılan yolu hiç kullanmıyordu.)
+  ///
+  /// ## Onay (acknowledge) neden koşullu oldu
+  ///
+  /// Eskiden `pendingCompletePurchase` doğruysa **her durumda** `completePurchase` çağrılıyordu.
+  /// O alan eklentide `!isAcknowledged` olarak hesaplanır — yani **BEKLEMEDE olan** bir satın alma
+  /// için de doğrudur. `completePurchase` ise doğrudan `acknowledgePurchase` çağırır. Sonuç: parası
+  /// henüz ALINMAMIŞ bir satın alma onaylanıyordu.
+  ///
+  /// Google Play Billing kuralı açıktır: bekleyen bir satın alma **onaylanmaz**; onay yalnız durum
+  /// `PURCHASED` olduktan sonra verilir. (Bekleyen satın alma nakit ödeme ve operatör faturasında
+  /// gerçekleşir; ödeme tamamlandığında Play işlemi akıştan TEKRAR gönderir ve onay o zaman
+  /// verilir.)
   void listen(
     Future<void> Function(PurchaseDetails) onPurchased, {
     Future<void> Function(IAPError error)? onError,
+    Future<void> Function()? onCanceled,
+    Future<void> Function(PurchaseDetails)? onPending,
   }) {
     _sub ??= _iap.purchaseStream.listen((purchases) async {
       for (final pd in purchases) {
-        if (pd.status == PurchaseStatus.purchased || pd.status == PurchaseStatus.restored) {
-          await onPurchased(pd);
-        } else if (pd.status == PurchaseStatus.error && pd.error != null) {
-          await onError?.call(pd.error!);
+        final completed =
+            pd.status == PurchaseStatus.purchased || pd.status == PurchaseStatus.restored;
+        switch (pd.status) {
+          case PurchaseStatus.purchased:
+          case PurchaseStatus.restored:
+            await onPurchased(pd);
+          case PurchaseStatus.pending:
+            await onPending?.call(pd);
+          case PurchaseStatus.canceled:
+            await onCanceled?.call();
+          case PurchaseStatus.error:
+            if (pd.error != null) await onError?.call(pd.error!);
         }
-        // Tamamlama HER KOŞULDA: işlenmemiş bir işlem Play tarafında "beklemede" kalır ve
-        // sonraki satın alma denemesi de aynı yerde takılır.
-        if (pd.pendingCompletePurchase) {
+        // Onay YALNIZ tamamlanmış satın almalar için. İşlenmemiş bir TAMAMLANMIŞ işlem Play
+        // tarafında askıda kalır ve sonraki satın alma denemesi de aynı yerde takılır — bu yüzden
+        // burada mutlaka onaylanır. Bekleyen işlem ise onaylanmaz (yukarıdaki gerekçe).
+        if (completed && pd.pendingCompletePurchase) {
           await _iap.completePurchase(pd);
         }
       }

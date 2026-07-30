@@ -215,6 +215,12 @@ class RevenueCatGateway implements BillingGateway {
   void listen(
     Future<void> Function(BillingPurchase) onPurchase, {
     Future<void> Function(BillingFailure)? onError,
+    // RevenueCat yolunda vazgeçme ve beklemede durumu AKIŞTAN GELMEZ: `purchasePackage` doğrudan
+    // fırlatır ve `purchase()` bunu `BillingCancelled`/`BillingFailure` olarak DÖNDÜRÜR. Yani
+    // `clientReceipt` yolundaki asenkron boşluk burada yoktur; geri çağırımlar bilinçli olarak
+    // kullanılmaz (sözleşme aynı kalsın diye kabul edilir).
+    Future<void> Function()? onCancelled,
+    Future<void> Function(BillingPurchase)? onPending,
   }) {
     if (!isConfigured || _listener != null) return;
     void handler(CustomerInfo info) {

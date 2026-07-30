@@ -32,7 +32,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// Mağazanın onayladığı tek bir satın alma.
 class StorePurchase {
-  const StorePurchase({required this.storeProductId, this.purchaseToken, this.atMs = 0});
+  const StorePurchase({
+    required this.storeProductId,
+    this.purchaseToken,
+    this.atMs = 0,
+    this.bound = false,
+  });
 
   final String storeProductId;
 
@@ -40,16 +45,27 @@ class StorePurchase {
   final String? purchaseToken;
   final int atMs;
 
+  /// Beta Faz 2 — bu satın alma sunucuya BAŞARIYLA bağlandı mı.
+  ///
+  /// NEDEN GEREKLİ: iade/geri alma tespitinin tek güvenli dayanağı budur. Sunucu bir ürünü
+  /// vermiyorsa bunun iki farklı anlamı olabilir:
+  ///   · "hiç bilmiyordum" (misafirken alınmış, hiç bağlanmamış) → hak KORUNMALI,
+  ///   · "biliyordum, artık vermiyorum" (iade edildi) → hak DÜŞMELİ.
+  /// İkisini ayırmadan defterden silmek, ödenmiş bir paketi kaybettirirdi.
+  final bool bound;
+
   Map<String, dynamic> toJson() => {
     'p': storeProductId,
     if (purchaseToken != null) 't': purchaseToken,
     'at': atMs,
+    if (bound) 'b': true,
   };
 
   static StorePurchase fromJson(Map<String, dynamic> j) => StorePurchase(
     storeProductId: (j['p'] ?? '').toString(),
     purchaseToken: j['t'] as String?,
     atMs: (j['at'] as num?)?.toInt() ?? 0,
+    bound: j['b'] == true,
   );
 }
 
@@ -63,6 +79,14 @@ abstract class StorePurchaseStore {
 
   /// Sunucuya bağlanmayı bekleyen makbuzlar (bağlanınca çıkarılır).
   Future<void> markBound(String storeProductId);
+
+  /// Beta Faz 2 — bir kaydı defterden ÇIKAR (iade/geri alma).
+  ///
+  /// Defter eskiden yalnız büyüyordu. Sahiplik `birleşim(sunucu, defter)` olarak yayımlandığı için
+  /// iade edilmiş bir satın alma o cihazda SONSUZA KADAR premium veriyordu. Çıkarma yolu olmadan
+  /// bunu düzeltmek imkânsızdı. Ne zaman çağrılacağının kuralı `EntitlementsController.refresh`
+  /// içindedir — orada üç koşul birlikte aranır.
+  Future<void> remove(String storeProductId);
 }
 
 class PrefsStorePurchaseStore implements StorePurchaseStore {
@@ -100,8 +124,18 @@ class PrefsStorePurchaseStore implements StorePurchaseStore {
     final i = all.indexWhere((p) => p.storeProductId == storeProductId);
     if (i < 0) return;
     // Kayıt SİLİNMEZ — erişimin kaynağı odur. Yalnız makbuz düşürülür: sunucuya bağlandı,
-    // tekrar denemeye gerek yok.
-    all[i] = StorePurchase(storeProductId: all[i].storeProductId, atMs: all[i].atMs);
+    // tekrar denemeye gerek yok. `bound` işareti KALIR: iade tespiti ona dayanır.
+    all[i] = StorePurchase(
+      storeProductId: all[i].storeProductId,
+      atMs: all[i].atMs,
+      bound: true,
+    );
+    await _write(all);
+  }
+
+  @override
+  Future<void> remove(String storeProductId) async {
+    final all = [...await read()]..removeWhere((p) => p.storeProductId == storeProductId);
     await _write(all);
   }
 
@@ -136,7 +170,16 @@ class MemoryStorePurchaseStore implements StorePurchaseStore {
   Future<void> markBound(String storeProductId) async {
     final i = _all.indexWhere((p) => p.storeProductId == storeProductId);
     if (i < 0) return;
-    _all[i] = StorePurchase(storeProductId: _all[i].storeProductId, atMs: _all[i].atMs);
+    _all[i] = StorePurchase(
+      storeProductId: _all[i].storeProductId,
+      atMs: _all[i].atMs,
+      bound: true,
+    );
+  }
+
+  @override
+  Future<void> remove(String storeProductId) async {
+    _all.removeWhere((p) => p.storeProductId == storeProductId);
   }
 }
 

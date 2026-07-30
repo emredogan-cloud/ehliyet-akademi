@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/analytics/analytics_event.dart';
+import '../../core/analytics/analytics_ref.dart';
 import '../../core/storage/token_store.dart';
 import '../../data/auth/auth_api.dart';
 import '../../data/auth/google_auth_service.dart';
@@ -52,7 +54,9 @@ class AuthController extends Notifier<AuthState> {
   /// Returns null on success, or an error message.
   Future<String?> login({required String email, required String password}) async {
     final r = await _api.login(email: email, password: password);
-    return _apply(r);
+    final err = await _apply(r);
+    if (err == null) ref.track(AnalyticsEvent.login);
+    return err;
   }
 
   Future<String?> register({
@@ -67,7 +71,20 @@ class AuthController extends Notifier<AuthState> {
       password: password,
       referralCode: referralCode,
     );
-    return _apply(r);
+    final err = await _apply(r);
+    if (err == null) {
+      ref.track(AnalyticsEvent.registration(withReferral: referralCode != null));
+      // Davet KABULÜ ayrı bir olaydır: kod gönderilmiş olması kabul edildiği anlamına gelmez.
+      // Sunucu onu sessizce reddedebilir (kendi kodu, IP sınırı, bilinmeyen kod) ve pano bunu
+      // bilmezse gerçekte olmayan davetleri sayardı.
+      final outcome = _lastReferralOutcome;
+      if (outcome != null) {
+        ref.track(
+          AnalyticsEvent.referralAccepted(accepted: outcome.accepted, reason: outcome.reason),
+        );
+      }
+    }
+    return err;
   }
 
   /// Beta Faz 2 — Google ile giriş.
@@ -82,7 +99,9 @@ class AuthController extends Notifier<AuthState> {
       case GoogleSignInError(:final message):
         return message;
       case GoogleSignInToken(:final idToken):
-        return _apply(await _api.loginWithGoogle(idToken));
+        final err = await _apply(await _api.loginWithGoogle(idToken));
+        if (err == null) ref.track(AnalyticsEvent.googleLogin);
+        return err;
     }
   }
 
@@ -94,9 +113,17 @@ class AuthController extends Notifier<AuthState> {
   Future<String?> requestPasswordReset(String email) =>
       _api.requestPasswordReset(email);
 
+  /// Son başarılı kimlik işleminde sunucunun davet kodu hakkındaki kararı.
+  ///
+  /// `_apply` tek bir hata metni döndürdüğü için (arayüzün ihtiyacı bu), davet sonucu ayrıca
+  /// burada tutulur. Alternatif, `_apply`'ın dönüş tipini şişirip üç çağıranı da değiştirmekti;
+  /// tek kullanımlık bir bilgi için değmezdi.
+  ReferralOutcome? _lastReferralOutcome;
+
   Future<String?> _apply(AuthResult r) async {
     switch (r) {
-      case AuthSuccess(:final user, :final token):
+      case AuthSuccess(:final user, :final token, :final referral):
+        _lastReferralOutcome = referral;
         await _tokens.write(token);
         state = AuthState(AuthStatus.authenticated, user);
         // Oturum açıldı → sahiplik SUNUCUDAN yeniden türetilir. Bu, hem yeni kullanıcının
@@ -125,6 +152,7 @@ class AuthController extends Notifier<AuthState> {
     await ref.read(googleAuthServiceProvider).signOut();
     await ref.read(entitlementsProvider.notifier).clearForSignOut();
     state = AuthState.guest;
+    ref.track(AnalyticsEvent.logout);
   }
 }
 

@@ -3,6 +3,9 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/analytics/analytics_event.dart';
+import '../../core/analytics/analytics_ref.dart';
+
 import '../../core/theme/tokens.dart';
 import '../../data/feedback/store_review_service.dart';
 import '../../domain/feedback/rating_prompt.dart';
@@ -57,7 +60,12 @@ class _RatingDialogState extends ConsumerState<_RatingDialog> {
     if (!mounted) return;
     // Mağaza açıldıysa kullanıcı istediğimizi yapmıştır; gerçekten puan verip vermediğini
     // BİLEMEYİZ (mağaza söylemez) ama tekrar sormak saygısızlık olur.
-    if (opened) await ref.read(ratingPromptProvider.notifier).recordRated();
+    if (opened) {
+      await ref.read(ratingPromptProvider.notifier).recordRated();
+      // Olay "mağaza sayfası açıldı" demektir; VERİLEN YILDIZ değil. Uygulama yıldızı hiç
+      // kaydetmiyor (Play, puanlamayı filtrelemeyi yasaklar — `store_review_service.dart`).
+      ref.track(AnalyticsEvent.appRated);
+    }
     if (!mounted) return;
     Navigator.of(context).pop();
     if (!opened) {

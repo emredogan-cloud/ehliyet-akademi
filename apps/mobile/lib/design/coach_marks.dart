@@ -105,6 +105,19 @@ class _CoachAnchorState extends State<CoachAnchor> with AutomaticKeepAliveClient
 
 /// Turu yöneten ev sahibi. Uygulama kabuğunu sarmalar; böylece alt gezinme çubuğu da
 /// aydınlatılabilir.
+/// Beta Faz 3 — turun NASIL bittiği.
+///
+/// Ayrım ürün açısından önemli: turu sonuna kadar izleyen kullanıcı ile ikinci adımda kapatan
+/// kullanıcı aynı şeyi yaşamadı. İkisi tek bir "tur bitti" olayına indirgenirse turun uzunluğu
+/// hakkında hiçbir şey öğrenilemez.
+enum CoachMarkOutcome {
+  /// Son adım da görüldü.
+  completed,
+
+  /// "Atla" ile kapatıldı.
+  skipped,
+}
+
 class CoachMarkHost extends StatefulWidget {
   const CoachMarkHost({super.key, required this.child});
 
@@ -125,7 +138,7 @@ class CoachMarkHostState extends State<CoachMarkHost> with SingleTickerProviderS
   int _index = 0;
   bool _active = false;
   Rect? _spot;
-  VoidCallback? _onFinished;
+  void Function(CoachMarkOutcome outcome, int atStep, int total)? _onFinished;
 
   /// DİKKAT — `late final ... = AnimationController(...)` KULLANILMAZ.
   ///
@@ -143,7 +156,10 @@ class CoachMarkHostState extends State<CoachMarkHost> with SingleTickerProviderS
 
   /// Turu başlat. Çapası bulunamayan adımlar SESSİZCE atlanır — eksik bir çapa yüzünden
   /// kullanıcının karşısına boş bir ışık halkası çıkmaz.
-  Future<void> start(List<CoachMarkStep> steps, {VoidCallback? onFinished}) async {
+  Future<void> start(
+    List<CoachMarkStep> steps, {
+    void Function(CoachMarkOutcome outcome, int atStep, int total)? onFinished,
+  }) async {
     if (_active || steps.isEmpty || !mounted) return;
     _steps = steps;
     _index = 0;
@@ -154,16 +170,26 @@ class CoachMarkHostState extends State<CoachMarkHost> with SingleTickerProviderS
   }
 
   /// Turu bitir (Atla ya da son adımdan sonra).
-  void finish() {
+  ///
+  /// [skipped] "Atla" ile kapatıldığını söyler. İşaret HER İKİ durumda da konur (kullanıcı turu
+  /// istemediğini söylediyse her açılışta ısrar etmek rahatsız edicidir), ama ölçüm ikisini
+  /// ayırır — hangi adımda bırakıldığı turun neresinin uzun geldiğini söyleyen tek veridir.
+  void finish({bool skipped = false}) {
     if (!_active) return;
     _pulse.stop();
+    final atStep = _index;
+    final total = _steps.length;
     setState(() {
       _active = false;
       _spot = null;
     });
     final done = _onFinished;
     _onFinished = null;
-    done?.call();
+    done?.call(
+      skipped ? CoachMarkOutcome.skipped : CoachMarkOutcome.completed,
+      atStep,
+      total,
+    );
   }
 
   void next() {
@@ -257,7 +283,7 @@ class CoachMarkHostState extends State<CoachMarkHost> with SingleTickerProviderS
                 pulse: _pulse,
                 onNext: next,
                 onPrevious: _index > 0 ? previous : null,
-                onSkip: finish,
+                onSkip: () => finish(skipped: true),
               ),
             ),
         ],

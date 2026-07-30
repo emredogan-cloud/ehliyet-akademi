@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/analytics/analytics_event.dart';
+import '../../core/analytics/analytics_ref.dart';
+
 import '../../core/theme/tokens.dart';
 import '../../data/share/share_service.dart';
 import '../../design/confetti.dart';
@@ -52,6 +55,9 @@ class _BadgeCelebrationDialogState extends ConsumerState<_BadgeCelebrationDialog
         : await service.shareImage(pngBytes: png, fileName: 'ehliyet-rozet-${a.id}', text: text);
     if (!mounted) return;
     setState(() => _sharing = false);
+    // YALNIZ paylaşım sayfası gerçekten açıldıysa sayılır. Açılmadıysa kullanıcı hiçbir şey
+    // paylaşmamıştır; saymak paylaşım oranını olduğundan yüksek gösterirdi.
+    if (ok) ref.track(AnalyticsEvent.badgeShared(badgeId: a.id));
     if (!ok) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Paylaşım açılamadı.')),

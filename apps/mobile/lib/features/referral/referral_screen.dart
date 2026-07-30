@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/analytics/analytics_event.dart';
+import '../../core/analytics/analytics_ref.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/referral/referral_api.dart';
 import '../../data/share/share_service.dart';
@@ -88,6 +90,9 @@ class _Body extends ConsumerWidget {
         'Ehliyet sınavına Ehliyet Akademi ile hazırlanıyorum. '
         'Sen de katıl — davet kodum: ${summary.code}\n${summary.link}';
     final ok = await ref.read(shareServiceProvider).shareText(text);
+    // YALNIZ paylaşım sayfası gerçekten açıldıysa sayılır — açılmayan bir paylaşım, davet
+    // üretmez ve huninin başını olduğundan geniş gösterirdi.
+    if (ok) ref.track(AnalyticsEvent.referralCreated(channel: 'share'));
     if (!ok && context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Paylaşım açılamadı.')),
@@ -95,8 +100,11 @@ class _Body extends ConsumerWidget {
     }
   }
 
-  Future<void> _copy(BuildContext context) async {
+  Future<void> _copy(BuildContext context, WidgetRef ref) async {
     await Clipboard.setData(ClipboardData(text: summary.code));
+    // Kopyalama da bir davet üretme niyetidir; paylaşım sayfasından geçmeyen kullanıcılar
+    // (kodu WhatsApp'a elle yapıştıranlar) sayılmazsa huni eksik okunur.
+    ref.track(AnalyticsEvent.referralCreated(channel: 'copy'));
     if (!context.mounted) return;
     HapticFeedback.selectionClick();
     ScaffoldMessenger.of(context).showSnackBar(
@@ -153,7 +161,7 @@ class _Body extends ConsumerWidget {
               ),
               const SizedBox(height: AppSpacing.s3),
               OutlinedButton.icon(
-                onPressed: () => _copy(context),
+                onPressed: () => _copy(context, ref),
                 icon: const Icon(Icons.copy_rounded, size: 17),
                 label: const Text('Kodu kopyala'),
                 style: OutlinedButton.styleFrom(

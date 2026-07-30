@@ -302,7 +302,13 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
     ),
     GoRoute(path: '/notifications', builder: (_, _) => const NotificationSettingsScreen()),
     GoRoute(path: '/progress', builder: (_, _) => const ProgressScreen()),
-    GoRoute(path: '/premium', builder: (_, _) => const PaywallScreen()),
+    // `?from=` — ödeme ekranına HANGİ yüzeyden gelindiği. Ekran bunu kendisi bilemez; sekme
+    // kabuğunda bu geçişler rota itmediği için bir gezinme gözlemcisi de göremez.
+    GoRoute(
+      path: '/premium',
+      builder: (_, state) =>
+          PaywallScreen(source: state.uri.queryParameters['from'] ?? 'unknown'),
+    ),
     GoRoute(path: '/davet', builder: (_, _) => const ReferralScreen()),
     // Beta Faz 1 — davet derin bağlantısının indiği yer.
     //

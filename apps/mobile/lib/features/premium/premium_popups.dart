@@ -113,7 +113,7 @@ class _PremiumIncentiveDialog extends StatelessWidget {
             leading: const Icon(Icons.workspace_premium_rounded, color: Colors.white, size: 20),
             onPressed: () {
               Navigator.of(context).pop();
-              context.push('/premium');
+              context.push('/premium?from=incentive-popup');
             },
           ),
           const SizedBox(height: AppSpacing.s3),

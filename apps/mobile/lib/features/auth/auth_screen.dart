@@ -3,8 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../core/analytics/analytics.dart';
-import '../../core/analytics/analytics_event.dart';
 import '../../core/assets.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/auth/google_auth_service.dart';
@@ -121,14 +119,12 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       // Beta Faz 1 — bekleyen davet kodu TÜKETİLDİ. Kayıt başarılıysa kod sunucuya gitmiştir;
       // sunucu daveti reddetmiş olsa bile (kendi kodu, IP sınırı) kodu saklamak, sonraki her
       // kayıtta aynı reddi tekrarlamak olurdu.
-      if (_isRegister && code != null) {
-        ref.read(pendingReferralProvider).clear();
-        ref.read(analyticsProvider).log(AnalyticsEvent.registration(withReferral: true));
-      } else if (_isRegister) {
-        ref.read(analyticsProvider).log(AnalyticsEvent.registration(withReferral: false));
-      } else {
-        ref.read(analyticsProvider).log(AnalyticsEvent.login);
-      }
+      //
+      // ANALİTİK BURADA YOK (Beta Faz 3): `registration`, `login` ve `referral_accepted` olayları
+      // `AuthController` içinde, işin GERÇEKTEN olduğu yerde gönderiliyor. Burada da göndermek,
+      // aynı olayın iki kaynağı olması ve zamanla ayrışması demekti — ayrıca Google girişi ve
+      // ileride eklenecek başka bir kayıt yüzeyi bu ekrandan geçmiyor.
+      if (_isRegister && code != null) ref.read(pendingReferralProvider).clear();
       _leaveAuth();
     } else {
       setState(() => _error = err);

@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/assets.dart';
+import '../../core/analytics/analytics_event.dart';
+import '../../core/analytics/analytics_ref.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/practice/progress_repository.dart';
 import '../../design/brand.dart';
@@ -64,9 +66,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     if (!mounted || ref.read(coachMarksSeenProvider)) return;
     final host = CoachMarkHost.maybeOf(context);
     if (host == null) return; // kabuk dışında (tekil widget testi) — tur yok, ekran çalışır.
+    ref.track(AnalyticsEvent.coachMarksStarted);
     await host.start(
       productTourSteps,
-      onFinished: () => ref.read(coachMarksSeenProvider.notifier).markSeen(),
+      onFinished: (outcome, atStep, total) {
+        ref.read(coachMarksSeenProvider.notifier).markSeen();
+        ref.track(
+          outcome == CoachMarkOutcome.completed
+              ? AnalyticsEvent.coachMarksCompleted
+              : AnalyticsEvent.coachMarksSkipped(atStep: atStep, totalSteps: total),
+        );
+      },
     );
   }
 
@@ -275,7 +285,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     icon: Icons.workspace_premium_rounded,
                     label: 'Premium',
                     color: p.accent,
-                    onTap: () => context.push('/premium'),
+                    onTap: () => context.push('/premium?from=home'),
                   ),
                 ),
               ],

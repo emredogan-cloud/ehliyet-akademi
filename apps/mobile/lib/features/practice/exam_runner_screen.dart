@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/analytics/analytics_event.dart';
+import '../../core/analytics/analytics_ref.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/practice/progress_repository.dart';
 import '../../design/brand.dart';
@@ -127,6 +129,30 @@ class _ExamRunnerScreenState extends ConsumerState<ExamRunnerScreen> {
       _finished = true;
       _result = result;
     });
+
+    // ── Beta Faz 3 — sınav ölçümü ────────────────────────────────────────────────────────────
+    //
+    // `first_exam` ETKİNLEŞME (activation) metriğidir: kullanıcının hayatındaki ilk sınavı. Cihaz
+    // ömründe bir kez gider (`trackOnce`); tekrarı kurulum sayısını gerçek etkinleşmeden ayırmayı
+    // imkânsız kılardı.
+    //
+    // `exam_completed` her sınavda gider ve `passed` boyutunu taşır. `exam_passed`/`exam_failed`
+    // AYRICA gönderilir — panoda "kaç kişi geçti" sorusunu tek bir sayımla cevaplayabilmek için;
+    // ikisi aynı gerçeğin iki okunuşudur, çelişemezler çünkü aynı yerden üretiliyorlar.
+    ref.trackOnce(AnalyticsEvent.firstExam);
+    ref.track(
+      AnalyticsEvent.examCompleted(
+        correct: result.correct,
+        total: exam.questions.length,
+        passed: result.passed,
+        durationSeconds: _elapsed,
+      ),
+    );
+    ref.track(
+      result.passed
+          ? AnalyticsEvent.examPassed(correct: result.correct, total: exam.questions.length)
+          : AnalyticsEvent.examFailed(correct: result.correct, total: exam.questions.length),
+    );
     // Deneme tamamlandı → bağlamsal pencereler (ikisi de sık-gösterim sınırlı).
     //
     // SIRA: premium teşviki ÖNCE, puanlama SONRA — ve ikisi aynı anda AÇILMAZ. Puanlama yalnız

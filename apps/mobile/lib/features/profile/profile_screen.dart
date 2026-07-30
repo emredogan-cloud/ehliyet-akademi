@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import '../../core/assets.dart';
 import '../../core/theme/theme_controller.dart';
 import '../../core/app_version.dart';
+import '../../core/analytics/analytics_event.dart';
+import '../../core/analytics/analytics_ref.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/practice/progress_repository.dart';
 import '../../design/brand.dart';
@@ -113,7 +115,7 @@ class ProfileScreen extends ConsumerWidget {
                     color: p.accent,
                     title: 'Premium',
                     subtitle: 'Premium özellikleri keşfet',
-                    onTap: () => context.push('/premium'),
+                    onTap: () => context.push('/premium?from=profile'),
                   ),
                   _divider(p),
                   // Faz 8 — davet. Premium'un HEMEN ALTINDA duruyor: premium'a bakan kullanıcı,
@@ -213,6 +215,10 @@ class ProfileScreen extends ConsumerWidget {
   static Future<void> _deleteAccount(BuildContext context, WidgetRef ref) async {
     final deleted = await showDeleteAccountDialog(context);
     if (!deleted || !context.mounted) return;
+
+    // Hesap SİLİNDİ. Olay `logout`'tan ÖNCE gönderilir: `logout` analitiğin kullanıcı kimliğini
+    // düşürür ve olay sonra gönderilseydi hangi hesabın silindiği kayda geçmezdi.
+    ref.track(AnalyticsEvent.accountDeleted);
 
     final router = GoRouter.of(context);
     final messenger = ScaffoldMessenger.of(context);

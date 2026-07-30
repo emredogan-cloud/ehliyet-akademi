@@ -10,9 +10,35 @@ sealed class AuthResult {
 }
 
 class AuthSuccess extends AuthResult {
-  const AuthSuccess(this.user, this.token);
+  const AuthSuccess(this.user, this.token, {this.referral});
   final AppUser user;
   final String token;
+
+  /// Beta Faz 3 — kayıt isteğine eklenen davet kodunun SUNUCUDAKİ sonucu (yalnız kayıtta dolu).
+  ///
+  /// NEDEN taşınıyor: "davet kabul edildi" olayı, kodun GÖNDERİLDİĞİNİ değil KABUL EDİLDİĞİNİ
+  /// ölçmeli. İkisi aynı değil — sunucu kodu sessizce reddedebilir (kendi kodu, aynı IP'den
+  /// üçüncü kayıt, bilinmeyen kod). İstemci varsayımla ölçerse pano gerçekte olmayan davetleri
+  /// sayar ve ödül merdiveni ile tutmaz.
+  final ReferralOutcome? referral;
+}
+
+/// Sunucunun davet kodu hakkındaki kararı (`POST /api/auth/register` yanıtındaki `referral`).
+class ReferralOutcome {
+  const ReferralOutcome({required this.accepted, this.reason});
+  final bool accepted;
+
+  /// Reddedilme nedeni: `self` | `already-referred` | `unknown-code` | `bad-format` | `ip-limit`.
+  final String? reason;
+
+  static ReferralOutcome? fromJson(Object? raw) {
+    if (raw is! Map) return null;
+    final ok = raw['ok'] == true;
+    final reason = raw['reason']?.toString();
+    // `none` = istemci hiç kod göndermedi; ölçülecek bir davet yok.
+    if (!ok && reason == 'none') return null;
+    return ReferralOutcome(accepted: ok, reason: ok ? null : reason);
+  }
 }
 
 class AuthFailure extends AuthResult {
@@ -83,6 +109,7 @@ class DioAuthApi implements AuthApi {
           return AuthSuccess(
             AppUser.fromJson(Map<String, dynamic>.from(data['user'] as Map)),
             data['token'] as String,
+            referral: ReferralOutcome.fromJson(data['referral']),
           );
         }
         return const AuthFailure('Beklenmeyen sunucu yanıtı.');

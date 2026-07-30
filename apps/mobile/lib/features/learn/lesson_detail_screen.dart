@@ -79,7 +79,7 @@ class _LockedGate extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.s3),
             TextButton(
-              onPressed: () => context.push('/premium'),
+              onPressed: () => context.push('/premium?from=locked-lesson'),
               child: const Text('Tüm paketler'),
             ),
           ],

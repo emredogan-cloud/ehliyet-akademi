@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/analytics/analytics_event.dart';
+import '../../core/analytics/analytics_ref.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/practice/progress_repository.dart';
 import '../../design/app_card.dart';
@@ -34,6 +36,7 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
   @override
   void initState() {
     super.initState();
+    ref.track(AnalyticsEvent.progressScreen);
     // Kutlama İLK KARE ÇİZİLDİKTEN SONRA: kullanıcı önce ilerlemesini görür, pencere üstüne gelir.
     WidgetsBinding.instance.addPostFrameCallback((_) => _celebrateNewBadges());
   }
@@ -70,6 +73,9 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
     final fresh = newlyUnlocked(achievements: achievements, alreadyCelebrated: celebrated);
     for (final a in fresh) {
       if (!mounted) return;
+      // Rozet YENİ açıldı. `firstSyncSilently` yolundan geçenler burada SAYILMAZ ve bu doğrudur:
+      // orada rozet o an kazanılmıyor, defter geç kurulduğu için sessizce işaretleniyor.
+      ref.track(AnalyticsEvent.badgeEarned(badgeId: a.id));
       await showBadgeCelebration(context, ref, a);
       await controller.markCelebrated([a.id]);
     }

@@ -2,6 +2,8 @@ import 'package:ehliyet_akademi/core/analytics/analytics.dart';
 import 'package:ehliyet_akademi/core/analytics/analytics_event.dart';
 import 'package:ehliyet_akademi/core/analytics/analytics_sink.dart';
 import 'package:ehliyet_akademi/core/app_version.dart';
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -154,6 +156,9 @@ void main() {
     });
   });
 
+  _unusedEventGuard();
+  _retryPolicyGuard();
+
   group('kayıt serileştirme', () {
     test('gidiş-dönüş bilgi kaybetmez', () {
       final record = AnalyticsRecord(
@@ -227,3 +232,73 @@ final List<AnalyticsEvent> _allEvents = [
   AnalyticsEvent.badgeShared(badgeId: 'first_pass'),
   AnalyticsEvent.appRated,
 ];
+
+/// Sözlükteki her olayın GERÇEKTEN bir yerden gönderildiğini doğrular.
+///
+/// ## Neden bu test var
+///
+/// Ölçümün en sinsi hatası, olayın tanımlı ama HİÇ GÖNDERİLMİYOR olmasıdır. Pano o olayı sıfır
+/// gösterir ve sıfır, "kimse yapmıyor" diye okunur — oysa "kimse ölçmüyor"dur. İkisi arasındaki
+/// farkı kodu okumadan anlamak mümkün değildir.
+///
+/// Test, kaynak ağacını tarayıp her üreticinin en az bir çağrı yeri olduğunu arar. Ucuzdur ve
+/// yeni bir olay eklenip bağlanmadığında hemen kırılır.
+void _unusedEventGuard() {
+  test('sözlükteki her olay en az bir yerden gönderiliyor', () {
+    final lib = Directory('lib');
+    final sources = lib
+        .listSync(recursive: true)
+        .whereType<File>()
+        .where((f) => f.path.endsWith('.dart') && !f.path.endsWith('analytics_event.dart'))
+        .map((f) => f.readAsStringSync())
+        .join('\n');
+
+    final declared = RegExp(r'static (?:const|AnalyticsEvent) (\w+)')
+        .allMatches(File('lib/core/analytics/analytics_event.dart').readAsStringSync())
+        .map((m) => m.group(1)!)
+        .toSet();
+
+    final unused = [
+      for (final name in declared)
+        if (!sources.contains('AnalyticsEvent.$name')) name,
+    ]..sort();
+
+    expect(
+      unused,
+      isEmpty,
+      reason:
+          'Bu olaylar tanımlı ama hiçbir yerden gönderilmiyor. Panoda sıfır görünecekler ve bu '
+          '"kimse yapmıyor" diye okunacak: $unused',
+    );
+  });
+}
+
+/// Kuyruğun ne zaman kayıt DÜŞÜRDÜĞÜ — çevrimdışı dayanıklılığın can alıcı kuralı.
+///
+/// Yanlış tarafa düşmek iki farklı hasar verir:
+/// · Fazla düşürmek → ölçüm sessizce kaybolur (ör. sunucu henüz dağıtılmamışken 404).
+/// · Hiç düşürmemek → kalıcı bir hata (bozuk gövde, yetkisiz) kuyruğu tıkar ve arkasındaki
+///   yeni olayları da bloke eder.
+void _retryPolicyGuard() {
+  group('kuyruk yeniden deneme politikası', () {
+    test('2xx düşürülür; kalıcı istemci hataları da düşürülür', () {
+      expect(shouldDropBatch(200), isTrue);
+      expect(shouldDropBatch(204), isTrue);
+      expect(shouldDropBatch(400), isTrue, reason: 'bozuk gövde tekrar denemekle düzelmez');
+      expect(shouldDropBatch(401), isTrue);
+      expect(shouldDropBatch(403), isTrue);
+    });
+
+    test('404 KUYRUKTA KALIR — uç nokta sonradan dağıtılabilir', () {
+      // Uygulama sunucu güncellemesinden önce yayınlanmış olabilir. Düşürülseydi, ilk
+      // kullanıcıların bütün olayları kaybolurdu.
+      expect(shouldDropBatch(404), isFalse);
+    });
+
+    test('geçici hatalar kuyrukta kalır', () {
+      for (final code in [408, 429, 500, 502, 503]) {
+        expect(shouldDropBatch(code), isFalse, reason: '$code geçicidir');
+      }
+    });
+  });
+}

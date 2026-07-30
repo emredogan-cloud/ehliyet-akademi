@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/analytics/analytics_event.dart';
+import '../../core/analytics/analytics_ref.dart';
 import '../../core/assets.dart';
 import '../../core/config.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/premium/billing_gateway.dart';
 import '../../data/premium/entitlements_repository.dart';
 import '../../design/primitives.dart';
+import '../../domain/auth/auth_controller.dart';
 import '../../domain/premium/entitlement_status.dart';
 import '../../domain/premium/products.dart';
 import '../../domain/premium/paywall_offer.dart';
@@ -22,7 +25,15 @@ import 'premium_popups.dart';
 /// Etkin ağ geçidi derleme zamanı anahtarına göre seçilir (RevenueCat varsa o, yoksa mevcut
 /// `in_app_purchase` yolu). **Ekran hangisinin etkin olduğunu bilmez** — yalnız sözleşmeyi kullanır.
 class PaywallScreen extends ConsumerStatefulWidget {
-  const PaywallScreen({super.key});
+  const PaywallScreen({super.key, this.source = 'unknown'});
+
+  /// Beta Faz 3 — ödeme ekranına HANGİ yüzeyden gelindi (`/premium?from=...`).
+  ///
+  /// Bu bilgi ekranın kendisinde YOKTUR; yalnız çağıran bilir. Dönüşümü ayıran tek boyut da
+  /// budur: Ana Sayfa kartından gelen ile kilitli derste duvara toslayıp gelen aynı kullanıcı
+  /// değildir. Gezinme gözlemcisiyle türetmek denendi ve bırakıldı — uygulamanın sekme kabuğunda
+  /// bu geçişlerin hiçbiri rota İTMİYOR, dolayısıyla gözlemci kaynağı göremiyor.
+  final String source;
 
   @override
   ConsumerState<PaywallScreen> createState() => _PaywallScreenState();
@@ -65,6 +76,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
       onPending: _onStorePending,
     );
     _loadStore();
+    ref.track(AnalyticsEvent.premiumScreenViewed(source: widget.source));
   }
 
   /// Beta Faz 2 — kullanıcı Play sayfasını KAPATTI.
@@ -78,6 +90,9 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   /// Vazgeçme HATA DEĞİLDİR: mesaj gösterilmez, yalnız bekleme biter (Faz 2'nin genel kalıbı).
   Future<void> _onStoreCancelled() async {
     if (!mounted) return;
+    ref.track(
+      AnalyticsEvent.purchaseAbandoned(productId: _product.storeProductId, reason: 'cancelled'),
+    );
     setState(() {
       _busy = false;
       _celebrateNextGrant = false;
@@ -97,6 +112,9 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   /// onay (acknowledge) ancak o zaman verilir.
   Future<void> _onStorePending(BillingPurchase purchase) async {
     if (!mounted) return;
+    ref.track(
+      AnalyticsEvent.purchaseAbandoned(productId: purchase.storeProductId, reason: 'pending'),
+    );
     setState(() {
       _busy = false;
       _celebrateNextGrant = false;
@@ -115,6 +133,12 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   /// tetiklenir — kullanıcıdan bir şey yapması istenmez.
   Future<void> _onStoreError(BillingFailure failure) async {
     if (!mounted) return;
+    // "Zaten sahipsin" bir vazgeçme DEĞİLDİR (satın alma zaten var) → terk olarak sayılmaz.
+    if (!failure.alreadyOwned) {
+      ref.track(
+        AnalyticsEvent.purchaseAbandoned(productId: _product.storeProductId, reason: 'error'),
+      );
+    }
     setState(() => _busy = false);
     _snack(failure.message);
     if (failure.alreadyOwned) await _restore(silent: true);
@@ -166,6 +190,17 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     }
     if (!mounted) return;
     setState(() => _busy = false);
+    // Satın alma mı geri yükleme mi olduğunu `_celebrateNextGrant` ayırır: yalnız kullanıcının
+    // BAŞLATTIĞI akış bir satın almadır. Geri yüklemede bu olay gönderilmez, yoksa her geri
+    // yükleme yeni bir satın alma gibi sayılırdı.
+    if (_celebrateNextGrant) {
+      ref.track(
+        AnalyticsEvent.purchaseCompleted(
+          productId: purchase.storeProductId,
+          guest: !ref.read(authControllerProvider).isAuthenticated,
+        ),
+      );
+    }
     // Kutlama YALNIZ satın alma anında; sessiz geri yüklemede pencere açılmaz.
     if (_celebrateNextGrant) {
       _celebrateNextGrant = false;
@@ -187,6 +222,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
       _busy = true;
       _celebrateNextGrant = true;
     });
+    ref.track(AnalyticsEvent.purchaseStarted(productId: product.storeProductId));
     final result = await _billing.purchase(product);
     if (!mounted) return;
     switch (result) {
@@ -248,6 +284,14 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
 
     if (!mounted) return;
     setState(() => _restoring = false);
+    ref.track(
+      AnalyticsEvent.restorePurchases(
+        found: switch (result) {
+          BillingSuccess(:final purchases) => purchases.length,
+          _ => 0,
+        },
+      ),
+    );
     switch (result) {
       case BillingFailure(:final message):
         if (!silent) _snack(message);

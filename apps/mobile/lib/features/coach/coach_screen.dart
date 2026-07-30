@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/analytics/analytics.dart';
+import '../../core/analytics/analytics_event.dart';
 import '../../core/assets.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/practice/progress_repository.dart';
@@ -38,8 +40,52 @@ class _CoachScreenState extends ConsumerState<CoachScreen> {
     'Takograf ne işe yarar?',
   ];
 
+  /// Beta Faz 3 — AI Koç oturumunun başladığı an ve kaç tur konuşulduğu.
+  ///
+  /// NEDEN sekme kabuğunda ölçüm burada: AI Koç bir SEKME. Sekme değişimi rota İTMEZ
+  /// (`StatefulShellRoute.indexedStack` yalnız gösterilen dalı değiştirir), dolayısıyla bir
+  /// gezinme gözlemcisi bu ekranın açıldığını göremez. Ekranın kendi yaşam döngüsü tek güvenilir
+  /// kaynaktır.
+  ///
+  /// Sekme kabuğu dalları CANLI TUTULUR: kullanıcı başka sekmeye geçip döndüğünde `initState`
+  /// tekrar çalışmaz. Yani bu ölçüm "uygulama açılışından beri AI Koç'ta geçen süre"dir; her
+  /// sekme ziyaretini ayrı oturum saymaz. Sayılsaydı sekmeye şöyle bir uğrayan kullanıcı da
+  /// "oturum" üretirdi ve ortalama süre anlamsızlaşırdı.
+  DateTime? _sessionStartedAt;
+  int _turns = 0;
+
+  /// Analitik örneği `initState`'te YAKALANIR — `dispose` içinde `ref` KULLANILAMAZ.
+  ///
+  /// Riverpod, sökülmekte olan bir widget'ta `ref.read` çağrısını açıkça yasaklar: `Ref`
+  /// `BuildContext`'e dayanır ve o bağlam artık geçersizdir. İlk yazımda bu kural gözden kaçtı ve
+  /// widget testleri **"Bad state: Using ref when a widget is about to or has been unmounted"**
+  /// diye patladı — yani hata cihaza gitmeden yakalandı, ama gitseydi AI Koç ekranı her
+  /// sökülüşünde istisna fırlatacaktı.
+  late final Analytics _analytics;
+
+  @override
+  void initState() {
+    super.initState();
+    _analytics = ref.read(analyticsProvider);
+    _sessionStartedAt = DateTime.now();
+    _analytics.log(AnalyticsEvent.aiCoachStarted).ignore();
+  }
+
   @override
   void dispose() {
+    final startedAt = _sessionStartedAt;
+    // Hiç soru sorulmadıysa oturum uzunluğu GÖNDERİLMEZ: ekrana bakıp çıkmak bir koçluk oturumu
+    // değildir ve ortalamayı sıfıra çeker.
+    if (startedAt != null && _turns > 0) {
+      _analytics
+          .log(
+            AnalyticsEvent.aiCoachSessionLength(
+              seconds: DateTime.now().difference(startedAt).inSeconds,
+              turns: _turns,
+            ),
+          )
+          .ignore();
+    }
     _input.dispose();
     _scroll.dispose();
     super.dispose();
@@ -56,6 +102,7 @@ class _CoachScreenState extends ConsumerState<CoachScreen> {
       return;
     }
     _input.clear();
+    _turns++;
     ref.read(coachChatProvider.notifier).send(q);
     quota?.consumeAi(owned);
     FocusScope.of(context).unfocus();

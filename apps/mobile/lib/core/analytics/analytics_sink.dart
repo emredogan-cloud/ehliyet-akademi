@@ -84,6 +84,14 @@ const int kAnalyticsQueueLimit = 500;
 /// Tek istekte gönderilen kayıt sayısı.
 const int kAnalyticsBatchSize = 50;
 
+/// Bu HTTP durumundan sonra parti kuyruktan DÜŞÜRÜLEBİLİR mi? (Saf kural — doğrudan test edilir.)
+///
+/// Ayrıntılı gerekçe `RemoteAnalyticsSink._send` üzerindedir.
+bool shouldDropBatch(int statusCode) {
+  if (statusCode >= 200 && statusCode < 300) return true;
+  return statusCode == 400 || statusCode == 401 || statusCode == 403;
+}
+
 /// Beta Faz 3 — kalıcı kuyruklu, çevrimdışına DAYANIKLI sunucu sink'i.
 ///
 /// Olay önce diske yazılır, sonra gönderilmeye çalışılır. Gönderim başarısızsa kayıt kuyrukta
@@ -148,19 +156,26 @@ class RemoteAnalyticsSink implements AnalyticsSink {
     }
   }
 
-  /// Gövde gönderildi mi? Sunucu 2xx dönerse evet.
+  /// Bu parti kuyruktan düşürülebilir mi?
   ///
-  /// 4xx **kalıcı** bir hatadır (gövde biçimi/yetki): tekrar denemek sonsuz döngü olur, bu yüzden
-  /// kayıtlar kuyruktan DÜŞÜRÜLÜR (true). 5xx ve ağ hatası geçicidir → kuyrukta kalır (false).
+  /// Ayrım "başarılı mı" değil, **tekrar denemenin bir şeyi değiştirip değiştirmeyeceği**dir:
+  ///
+  /// · `2xx` → yazıldı, düşür.
+  /// · `400` (bozuk gövde), `401`/`403` (yetki) → tekrar denemek AYNI sonucu verir; kayıtlar
+  ///   sonsuza kadar kuyrukta dönerdi ve arkalarındaki yeni olayları da bloke ederlerdi. Düşür.
+  /// · `404` → uç nokta HENÜZ YOK. Bu geçicidir: uygulama, sunucu güncellemesinden önce
+  ///   yayınlanmış olabilir. Kuyrukta KALIR ve sunucu dağıtıldığında gönderilir. (Kuyruk zaten
+  ///   [kAnalyticsQueueLimit] ile sınırlı olduğu için uç nokta hiç gelmese bile sınırsız
+  ///   büyüme olmaz.)
+  /// · `408`, `429`, `5xx`, ağ hatası → geçici. Kuyrukta kalır.
   Future<bool> _send(List<AnalyticsRecord> batch) async {
     try {
       final res = await _dio.post<Map<String, dynamic>>(
         '/api/analytics/collect',
         data: {'events': [for (final r in batch) r.toJson()]},
-        options: Options(validateStatus: (s) => s != null && s < 500),
+        options: Options(validateStatus: (s) => s != null && s < 600),
       );
-      final code = res.statusCode ?? 0;
-      return code >= 200 && code < 500;
+      return shouldDropBatch(res.statusCode ?? 0);
     } on DioException catch (_) {
       return false;
     }

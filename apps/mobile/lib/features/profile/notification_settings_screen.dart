@@ -5,6 +5,7 @@ import '../../core/theme/tokens.dart';
 import '../../design/app_card.dart';
 import '../../design/primitives.dart';
 import '../../domain/coach/notification_prefs.dart';
+import '../../domain/notifications/notification_kind.dart';
 
 /// Bildirim ayarları — günlük çalışma hatırlatması (yerel bildirim, çevrimdışı) + test.
 class NotificationSettingsScreen extends ConsumerWidget {
@@ -44,9 +45,9 @@ class NotificationSettingsScreen extends ConsumerWidget {
                         );
                       }
                     },
-                    title: const Text('Çalışma hatırlatması'),
+                    title: const Text('Bildirimler'),
                     subtitle: Text(
-                      'Her gün seçtiğin saatte kısa bir hatırlatma',
+                      'Kapalıyken hiçbir bildirim gönderilmez',
                       style: TextStyle(color: p.text3, fontSize: 12.5),
                     ),
                     secondary: Icon(Icons.notifications_active_outlined, color: p.primary),
@@ -77,6 +78,45 @@ class NotificationSettingsScreen extends ConsumerWidget {
                 ],
               ),
             ),
+            const SizedBox(height: AppSpacing.s5),
+
+            // Beta Faz 6 — TÜR başına tercih.
+            //
+            // Tek bir anahtar kullanıcıya "hepsi ya da hiçbiri" dayatıyordu. Haftalık özetten
+            // rahatsız olan kişi çalışma hatırlatmasını da kaybediyor ve pratikte bildirimlerin
+            // tamamını kapatıyordu — kapatılan bildirim bir daha açılmaz.
+            const SectionTitle('Neler bildirilsin?'),
+            Padding(
+              padding: const EdgeInsets.only(bottom: AppSpacing.s2),
+              child: Text(
+                'Her birini ayrı ayrı açıp kapatabilirsin.',
+                style: TextStyle(color: p.text3, fontSize: 12.5),
+              ),
+            ),
+            AppCard(
+              padding: EdgeInsets.zero,
+              child: Column(
+                children: [
+                  for (final kind in NotificationKind.values) ...[
+                    if (kind != NotificationKind.values.first) Divider(height: 1, color: p.border),
+                    SwitchListTile(
+                      value: prefs.effectiveKinds.contains(kind),
+                      // Ana anahtar kapalıyken tür anahtarları da kapalı görünür ama
+                      // DEĞİŞTİRİLEBİLİR kalır: kullanıcı önce neyi isteyeceğini seçip sonra
+                      // ana anahtarı açabilmeli.
+                      onChanged: (v) => ctrl.setKind(kind, v),
+                      title: Text(kind.label),
+                      subtitle: Text(
+                        kind.description,
+                        style: TextStyle(color: p.text3, fontSize: 12.5),
+                      ),
+                      dense: true,
+                    ),
+                  ],
+                ],
+              ),
+            ),
+
             const SizedBox(height: AppSpacing.s4),
             OutlinedButton.icon(
               onPressed: () => ctrl.sendTest(),
@@ -89,6 +129,7 @@ class NotificationSettingsScreen extends ConsumerWidget {
               title: 'Nasıl çalışır?',
               text:
                   'Hatırlatmalar cihazında yerel olarak planlanır ve internet olmadan da çalışır. '
+                  'Gece 23:00–08:00 arasında bildirim gönderilmez. '
                   'Sunucudan gönderilen anlık bildirimler (push) ileride eklenecek.',
             ),
           ],

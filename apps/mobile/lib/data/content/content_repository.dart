@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/network/api_client.dart';
@@ -15,25 +16,52 @@ class ContentRepository {
   final ContentApi _api;
   final ContentLocalStore _store;
 
+  /// İçeriği getir.
+  ///
+  /// ## Beta Faz 5 — önbellek ARTIK BEKLETMİYOR (cihazda ölçülerek bulundu)
+  ///
+  /// Eski davranış "çevrimdışı-öncelik" idi ama yalnız **depolamada**; gecikmede değildi. Önbellek
+  /// dolu olsa bile şu sıra izleniyordu:
+  ///
+  ///   önbelleği oku → **ağı bekle** → hata gelirse önbelleği döndür
+  ///
+  /// Ağ yokken o "hata" hemen gelmez: bağlantı zaman aşımı dolana kadar (12 sn) beklenir. Yani
+  /// uçaktaki kullanıcı, telefonunda ZATEN DURAN dersleri görmek için on iki saniye bekliyordu.
+  /// Cihazda görüldü: Öğren ekranında sayıların bir kısmı hemen çıkarken içerikten gelen satır
+  /// uzun süre "—" kalıyordu.
+  ///
+  /// Yeni sıra: **önbellek varsa ANINDA döner**, tazeleme arka planda yapılır. Tazeleme yeni bir
+  /// sürüm getirirse diske yazılır ve bir sonraki açılışta görünür — içeriğin kullanıcı okurken
+  /// altından değişmesi zaten istenmez.
   Future<ContentSnapshot> load() async {
     final cached = await _store.read();
 
     if (cached != null) {
-      // Önbellek var → ETag ile tazelemeyi dene; her ağ hatasında önbelleği koru (çevrimdışı çalışır).
-      try {
-        final res = await _api.fetch(etag: '"${cached.version}"');
-        if (res.notModified) return _decode(cached.body);
-        await _store.write(version: res.version!, body: res.rawJson!);
-        return res.snapshot!;
-      } catch (_) {
-        return _decode(cached.body);
-      }
+      // Arka planda tazele; BEKLEME. Hata yutulur — çevrimdışı olmak bir arıza değildir.
+      _refreshInBackground(cached.version);
+      return _decode(cached.body);
     }
 
-    // Önbellek yok → ilk kez çevrimiçi indirilmeli (ağ yoksa hata fırlatır → hata durumu gösterilir).
+    // Önbellek yok → ilk kez çevrimiçi indirilmeli (ağ yoksa hata fırlatır → dürüst hata durumu
+    // ve "tekrar dene" gösterilir; `ContentBuilder`).
     final res = await _api.fetch();
     await _store.write(version: res.version!, body: res.rawJson!);
     return res.snapshot!;
+  }
+
+  /// Sürüm değiştiyse yeni anlık görüntüyü diske al. Beklenmez, hata yutulur.
+  ///
+  /// Test edilebilir olması için ayrı: `load()` artık dönüşünü beklemediğinden, tazelemenin
+  /// gerçekten yapıldığı ancak buraya bakarak doğrulanabilir.
+  @visibleForTesting
+  Future<void> refreshFromNetwork(String cachedVersion) async {
+    final res = await _api.fetch(etag: '"$cachedVersion"');
+    if (res.notModified) return;
+    await _store.write(version: res.version!, body: res.rawJson!);
+  }
+
+  void _refreshInBackground(String cachedVersion) {
+    refreshFromNetwork(cachedVersion).catchError((Object _) {});
   }
 
   ContentSnapshot _decode(String body) =>

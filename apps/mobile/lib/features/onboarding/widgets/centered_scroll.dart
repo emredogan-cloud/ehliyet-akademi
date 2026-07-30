@@ -28,12 +28,34 @@ class CenteredScroll extends StatelessWidget {
   /// değişmez ve `maxScrollExtent == 0` kapısı korunur.
   final bool distribute;
 
+  /// Kullanılabilir yükseklikten dolguyu düşür — ama **asla eksiye inme**.
+  ///
+  /// ## Gerçek cihazda yakalanan hata (Beta Faz 5, Redmi Note 11R / Android 13)
+  ///
+  /// `minHeight - padding.vertical` çıplak hâlde kullanılıyordu. Dolgu, o anki kullanılabilir
+  /// yükseklikten büyük olduğunda sonuç NEGATİF çıkıyor ve Flutter
+  /// **"BoxConstraints has a negative minimum height"** diye fırlatıyordu
+  /// (ölçülen değer: `-16.0<=h<=Infinity; NOT NORMALIZED`).
+  ///
+  /// Ne zaman olur: sistem çubukları/hareket alanı yerleşirken ilk düzen geçişinde `c.maxHeight`
+  /// kısa bir an çok küçük gelir. Bu, cihaza ve Android sürümüne göre değişir — Redmi 8A'da
+  /// (Android 11) hiç görülmedi, Redmi Note 11R'de (Android 13) her açılışta görüldü. Bu yüzden
+  /// tek bir cihazda doğrulama yeterli değildir.
+  ///
+  /// Neden bu düzeltme doğru: en küçük yükseklik matematiksel olarak negatif OLAMAZ. Sıfıra
+  /// sıkıştırmak bir tasarım kararı değil, aritmetiğin kendisidir — ve davranışı hiç bozmaz:
+  /// yer yoksa `SingleChildScrollView` zaten kaydırmaya geçer.
+  double get _minContentHeight {
+    final available = minHeight - padding.vertical;
+    return available > 0 ? available : 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: padding,
       child: ConstrainedBox(
-        constraints: BoxConstraints(minHeight: minHeight - padding.vertical),
+        constraints: BoxConstraints(minHeight: _minContentHeight),
         child: Column(
           mainAxisAlignment: distribute ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,

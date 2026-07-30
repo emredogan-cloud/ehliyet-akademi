@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/network/api_client.dart';
@@ -90,21 +91,33 @@ class QuestionRepository {
   final QuestionApi _api;
   final QuestionLocalStore _store;
 
+  /// Soru bankasını getir.
+  ///
+  /// Beta Faz 5 — önbellek ARTIK BEKLETMİYOR; gerekçesi `ContentRepository.load` üzerinde
+  /// ayrıntılı. Burada sonuç daha da ağır: bu banka **sınav başlatmanın** önündeki kapıdır.
+  /// Eski sırada, ağı olmayan kullanıcı "Deneme Sınavı"na basıp on iki saniye boş ekrana bakıyordu
+  /// — hem de sorular telefonunda hazır dururken.
   Future<QuestionBank> load() async {
     final cached = await _store.read();
     if (cached != null) {
-      try {
-        final res = await _api.fetch(etag: '"${cached.version}"');
-        if (res.notModified) return _decode(cached.body);
-        await _store.write(version: res.version!, body: res.rawJson!);
-        return res.bank!;
-      } catch (_) {
-        return _decode(cached.body);
-      }
+      _refreshInBackground(cached.version);
+      return _decode(cached.body);
     }
     final res = await _api.fetch();
     await _store.write(version: res.version!, body: res.rawJson!);
     return res.bank!;
+  }
+
+  /// Sürüm değiştiyse yeni bankayı diske al. Beklenmez, hata yutulur.
+  @visibleForTesting
+  Future<void> refreshFromNetwork(String cachedVersion) async {
+    final res = await _api.fetch(etag: '"$cachedVersion"');
+    if (res.notModified) return;
+    await _store.write(version: res.version!, body: res.rawJson!);
+  }
+
+  void _refreshInBackground(String cachedVersion) {
+    refreshFromNetwork(cachedVersion).catchError((Object _) {});
   }
 
   QuestionBank _decode(String body) =>

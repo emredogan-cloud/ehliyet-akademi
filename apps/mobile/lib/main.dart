@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app/app.dart';
+import 'app/router.dart';
 import 'core/analytics/analytics.dart';
 import 'core/analytics/analytics_sink.dart';
 import 'core/network/api_client.dart';
+import 'core/observability/error_report.dart';
+import 'core/observability/error_reporter.dart';
+import 'core/storage/token_store.dart';
 import 'domain/onboarding/ai_welcome_controller.dart';
 import 'domain/onboarding/coach_marks_controller.dart';
 import 'domain/onboarding/onboarding_controller.dart';
@@ -32,32 +36,72 @@ Future<void> main() async {
   // ancak böyle korunur.
   final pendingReferralCode = await PendingReferral.read();
 
-  runApp(
-    ProviderScope(
-      overrides: [
-        onboardingSeenProvider.overrideWith(() => OnboardingController(onboardingSeen)),
-        welcomeSeenProvider.overrideWith(() => WelcomeController(welcomeSeen)),
-        aiWelcomeSeenProvider.overrideWith(() => AiWelcomeController(aiWelcomeSeen)),
-        coachMarksSeenProvider.overrideWith(() => CoachMarksController(coachMarksSeen)),
-        studyProfileProvider.overrideWith(() => StudyProfileController(studyProfile)),
-        videoProgressProvider.overrideWith(() => VideoProgressController(videoStates)),
-        pendingReferralProvider.overrideWithValue(
-          PendingReferral(initial: pendingReferralCode),
-        ),
-        // Beta Faz 3 — gerçek analitik: olaylar diske kuyruklanır, ağ geldiğinde toplu gönderilir.
-        //
-        // Hata ayıklama derlemesinde konsola da yazılır; bir olayın gerçekten gönderildiğini
-        // görmenin en hızlı yolu budur ve üretim derlemesine sızmaz (`kDebugMode`).
-        analyticsProvider.overrideWith((ref) {
-          final remote = RemoteAnalyticsSink(ref.watch(dioProvider));
-          return Analytics(
-            sink: kDebugMode
-                ? FanOutAnalyticsSink([DebugAnalyticsSink(), remote])
-                : remote,
-          );
-        }),
-      ],
-      child: const EhliyetAkademiApp(),
+  // ── Beta Faz 4 — gözlemlenebilirlik, uygulamadan ÖNCE kurulur ────────────────────────────────
+  //
+  // Sıra kritik: `installErrorHandlers` içinde `runZonedGuarded` var ve `runApp` onun İÇİNDE
+  // çalışmak zorunda. Dışarıda çalıştırılırsa bölge hiçbir şey yakalamaz.
+  //
+  // Dairesel bağımlılık burada çözülür: raportör ağ istemcisine (dio) ihtiyaç duyar, dio ise ağ
+  // hatalarını raportöre bildirmek ister. İkisi de sağlayıcı kapsamı dışında, elle kurulur ve
+  // sonra sağlayıcılara ENJEKTE edilir — böylece ne dairesel bir sağlayıcı grafiği doğar ne de
+  // ikinci bir dio örneği ortaya çıkar.
+  late final ErrorReporter reporter;
+  ProviderContainer? containerRef;
+
+  final tokens = SecureTokenStore();
+  final dio = buildDio(
+    tokens,
+    onNetworkFailure: (e) => reporter.report(e, e.stackTrace, kind: ErrorKind.network).ignore(),
+  );
+  final analytics = Analytics(
+    sink: kDebugMode
+        ? FanOutAnalyticsSink([DebugAnalyticsSink(), RemoteAnalyticsSink(dio)])
+        : RemoteAnalyticsSink(dio),
+  );
+  reporter = ErrorReporter(
+    dio: dio,
+    analytics: analytics,
+    // Rota, hatanın NEREDE olduğunu söyler. Yönlendirici sağlayıcıdan okunur ama raportör
+    // kapsamdan önce kurulduğu için değer bir kapanışla, ihtiyaç anında alınır.
+    currentRoute: () {
+      try {
+        return containerRef?.read(routerProvider).routerDelegate.currentConfiguration.uri.path ??
+            '';
+      } catch (_) {
+        return '';
+      }
+    },
+  );
+
+  final container = ProviderContainer(
+    overrides: [
+      onboardingSeenProvider.overrideWith(() => OnboardingController(onboardingSeen)),
+      welcomeSeenProvider.overrideWith(() => WelcomeController(welcomeSeen)),
+      aiWelcomeSeenProvider.overrideWith(() => AiWelcomeController(aiWelcomeSeen)),
+      coachMarksSeenProvider.overrideWith(() => CoachMarksController(coachMarksSeen)),
+      studyProfileProvider.overrideWith(() => StudyProfileController(studyProfile)),
+      videoProgressProvider.overrideWith(() => VideoProgressController(videoStates)),
+      pendingReferralProvider.overrideWithValue(PendingReferral(initial: pendingReferralCode)),
+      // Analitik, ağ istemcisi ve raportör TEK örnek olarak paylaşılır.
+      //
+      // Hata ayıklama derlemesinde olaylar konsola da yazılır; bir olayın gerçekten gönderildiğini
+      // görmenin en hızlı yolu budur ve üretim derlemesine sızmaz (`kDebugMode`).
+      tokenStoreProvider.overrideWithValue(tokens),
+      dioProvider.overrideWithValue(dio),
+      analyticsProvider.overrideWithValue(analytics),
+      errorReporterProvider.overrideWithValue(reporter),
+    ],
+  );
+  containerRef = container;
+
+  // Önceki oturumdan kalan raporlar (çökmeden hemen önce yazılıp gönderilememiş olanlar) şimdi
+  // gönderilir. Çökme ağı da götürmüş olabilir; kuyruk tam bunun için var.
+  reporter.flush().ignore();
+
+  installErrorHandlers(
+    reporter,
+    () => runApp(
+      UncontrolledProviderScope(container: container, child: const EhliyetAkademiApp()),
     ),
   );
 }

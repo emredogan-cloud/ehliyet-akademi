@@ -111,6 +111,20 @@ class Analytics {
   /// Şu anki bağlam (test ve tanılama için).
   AnalyticsContext? get context => _context;
 
+  /// Beta Faz 4 — son olayların adları ("kullanıcı çökmeden hemen önce ne yaptı").
+  ///
+  /// Bir yığın izi NEREDE kırıldığını söyler, NASIL gelindiğini söylemez. Hatayı yeniden üretmek
+  /// çoğu zaman ikincisini gerektirir ve kullanıcıya "ne yaptınız?" diye sormak güvenilir bir
+  /// cevap vermez — kimse adımlarını hatırlamaz.
+  ///
+  /// YALNIZ olay ADLARI tutulur, boyutları değil: bağlam kısa kalmalı ve içine kişisel veri
+  /// sızma ihtimali olan hiçbir alan girmemeli.
+  static const int _kBreadcrumbLimit = 12;
+  final List<String> _breadcrumbs = [];
+
+  /// Son olay adları, eskiden yeniye.
+  List<String> get breadcrumbs => List.unmodifiable(_breadcrumbs);
+
   /// Oturum açan/kapayan kullanıcıyı bildir. Sonraki olaylar bu kimlikle gider.
   ///
   /// Çıkışta `null` verilir: aynı cihazdaki ikinci kullanıcının olayları birincinin kimliğine
@@ -154,6 +168,11 @@ class Analytics {
   /// Olayı kaydet. **Beklemek zorunlu değildir** — çağıran taraf `unawaited` bırakabilir.
   Future<void> log(AnalyticsEvent event) async {
     try {
+      // İz kaydı bağlamı BEKLEMEDEN düşer: bir çökme, bağlam hazırlanmadan önce de olabilir ve
+      // tam o çökmenin izi en değerlisidir.
+      _breadcrumbs.add(event.name);
+      if (_breadcrumbs.length > _kBreadcrumbLimit) _breadcrumbs.removeAt(0);
+
       await ensureContext();
       final ctx = _context;
       if (ctx == null) return;

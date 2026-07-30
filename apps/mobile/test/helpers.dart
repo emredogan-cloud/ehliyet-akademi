@@ -8,6 +8,7 @@ import 'package:ehliyet_akademi/app/router.dart';
 import 'package:ehliyet_akademi/app/shell.dart';
 import 'package:ehliyet_akademi/core/analytics/analytics.dart';
 import 'package:ehliyet_akademi/core/app_version.dart';
+import 'package:ehliyet_akademi/core/observability/error_reporter.dart';
 import 'package:ehliyet_akademi/core/analytics/analytics_sink.dart';
 import 'package:ehliyet_akademi/core/storage/token_store.dart';
 import 'package:ehliyet_akademi/data/auth/account_api.dart';
@@ -44,6 +45,7 @@ import 'package:ehliyet_akademi/domain/premium/products.dart';
 import 'package:ehliyet_akademi/domain/practice/question.dart';
 import 'package:ehliyet_akademi/domain/practice/question_bank.dart';
 import 'package:ehliyet_akademi/domain/referral/pending_referral.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -692,6 +694,9 @@ Future<void> pumpApp(
   /// Beta Faz 1 — derin bağlantıdan gelmiş gibi bekleyen davet kodu.
   String? pendingReferralCode,
 
+  /// Beta Faz 4 — hata raportörü. Verilmezse ağa çıkmayan bir örnek kullanılır.
+  ErrorReporter? errorReporter,
+
   /// Beta Faz 3 — ödeme ağ geçidi. VARSAYILAN: mağazası KAPALI sahte ağ geçidi (test ortamında
   /// Play Store yoktur; dürüst varsayılan budur). Ödeme akışını test edenler kendi ağ geçidini verir.
   BillingGateway? billing,
@@ -764,6 +769,7 @@ Future<void> pumpApp(
         pendingReferralProvider.overrideWithValue(
           PendingReferral(initial: pendingReferralCode),
         ),
+        errorReporterProvider.overrideWithValue(errorReporter ?? testErrorReporter()),
         billingGatewayProvider.overrideWithValue(billing ?? FakeBillingGateway()),
         entitlementsApiProvider.overrideWithValue(
           entitlementsApi ?? FakeEntitlementsApi(owned ?? const []),
@@ -1248,3 +1254,29 @@ class FakeShareService implements ShareService {
 GoRouter routerOf(WidgetTester tester) => ProviderScope.containerOf(
   tester.element(find.byType(EhliyetAkademiApp)),
 ).read(routerProvider);
+
+/// Beta Faz 4 — ağa ÇIKMAYAN hata raportörü (widget testleri için).
+///
+/// `ErrorReporter` somut bir sınıf ve gerçek bir `Dio` ister. Test için sahte bir arayüz
+/// türetmek yerine dio'nun ADAPTÖRÜ değiştirilir: istek katmanı gerçek kalır (kuyruk, parmak izi,
+/// susturma hepsi test edilen kodun kendisidir), yalnız sokete çıkılmaz.
+class _OfflineAdapter implements HttpClientAdapter {
+  @override
+  Future<ResponseBody> fetch(
+    RequestOptions options,
+    Stream<Uint8List>? requestStream,
+    Future<void>? cancelFuture,
+  ) async => ResponseBody.fromString('{}', 200, headers: {
+    Headers.contentTypeHeader: [Headers.jsonContentType],
+  });
+
+  @override
+  void close({bool force = false}) {}
+}
+
+/// Testte kullanılan raportör: gerçek sınıf, sahte taşıma.
+ErrorReporter testErrorReporter() {
+  final dio = Dio(BaseOptions(baseUrl: 'http://test.local'))
+    ..httpClientAdapter = _OfflineAdapter();
+  return ErrorReporter(dio: dio);
+}

@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/analytics/analytics_event.dart';
 import '../../core/analytics/analytics_ref.dart';
+import '../../core/observability/error_report.dart';
+import '../../core/observability/error_reporter.dart';
 import '../../core/storage/token_store.dart';
 import '../../data/auth/auth_api.dart';
 import '../../data/auth/google_auth_service.dart';
@@ -97,6 +99,18 @@ class AuthController extends Notifier<AuthState> {
       case GoogleSignInCancelled():
         return '';
       case GoogleSignInError(:final message):
+        // Beta Faz 4 — Google girişi, bu projede EN ÇOK zaman kaybettiren yüzey oldu
+        // (`GOOGLE_PLAY_SIGNIN_PLAYBOOK.md`). Hatanın kendisi kullanıcıya gösteriliyor ama
+        // hangi cihazda kaç kez olduğu görünmüyordu; sahadan "çalışmıyor" haberi gelince de
+        // hangi yapının konuşulduğu bilinemiyordu. Rapor bunu kapatır.
+        ref
+            .read(errorReporterProvider)
+            .report(
+              StateError(message),
+              StackTrace.current,
+              kind: ErrorKind.googleSignIn,
+            )
+            .ignore();
         return message;
       case GoogleSignInToken(:final idToken):
         final err = await _apply(await _api.loginWithGoogle(idToken));

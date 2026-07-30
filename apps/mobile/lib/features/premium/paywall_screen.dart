@@ -5,6 +5,8 @@ import '../../core/analytics/analytics_event.dart';
 import '../../core/analytics/analytics_ref.dart';
 import '../../core/assets.dart';
 import '../../core/config.dart';
+import '../../core/observability/error_report.dart';
+import '../../core/observability/error_reporter.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/premium/billing_gateway.dart';
 import '../../data/premium/entitlements_repository.dart';
@@ -135,6 +137,18 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     if (!mounted) return;
     // "Zaten sahipsin" bir vazgeçme DEĞİLDİR (satın alma zaten var) → terk olarak sayılmaz.
     if (!failure.alreadyOwned) {
+      // Beta Faz 4 — mağaza hatası GÖZLEMLENEBİLİR olmalı. Ödeme, kırıldığında kullanıcının
+      // şikâyet ETMEDİĞİ ve sessizce vazgeçtiği yerdir; sahadan haber gelmesini beklemek
+      // gelir kaybını görmemek demektir.
+      ref
+          .read(errorReporterProvider)
+          .report(
+            StateError(failure.message),
+            StackTrace.current,
+            kind: ErrorKind.store,
+            extra: {'gateway': _billing.name, 'product': _product.storeProductId},
+          )
+          .ignore();
       ref.track(
         AnalyticsEvent.purchaseAbandoned(productId: _product.storeProductId, reason: 'error'),
       );

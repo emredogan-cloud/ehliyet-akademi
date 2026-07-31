@@ -2851,3 +2851,87 @@ indirim icat edilmez.**
 Kampanyalı bir yapı (`--dart-define-from-file`) ile: tebrik penceresi → teklif → ödeme ekranı
 zinciri koşuldu; kampanya kartı, %40 rozeti, üstü çizili ₺799,99 → ₺479,99 ve canlı sayaç
 (47:48:14 → 47:44:21) çalışıyor. Sevk edilen AAB'de `CAMPAIGNS_JSON` **yoktur**.
+
+---
+
+# Post-Beta Faz 6–9 — fiyatlandırma, içerik hattı, varlık çözümleyicisi
+
+## A. Bu ürün eğitim kategorisinden AYRILIR: kullanım penceresi SINIRLI
+
+Genel eğitim uygulamaları süresiz kullanılır (dil öğrenme yıllarca sürer). Ehliyet sınavı
+uygulamasında kullanıcı ~4–8 hafta hazırlanır, **geçer ve gider**. Sonuçları:
+
+- **Churn bir kusur değil, ürünün doğasıdır** — abonelik churn'ünü "düzeltmek" yanlış hedef.
+- **LTV sınav tarihiyle tavanlıdır** — yıllık abonelik, kullanıcının ihtiyaç duymadığı 10 ayı
+  satmaktır; iade ve kötü yorum davet eder.
+- **Tek seferlik ürün doğru seçimdir.** Mevcut model tesadüf değil.
+
+Sektör verisi (2026): yüksek fiyatlı eğitim uygulamaları düşük fiyatlıların **2 KATI** dönüşüyor
+(%2,8 ↔ %1,4). Fiyat düşürerek dönüşüm aramak bu kategoride veriye aykırı. Ayrıca fiyat denemesi
+LTV'yi %46, dönüşümü yalnız %28 oranında iyileştiriyor → **fiyat kararı aynı gün dönüşümüne
+bakarak verilemez.**
+
+## B. Abonelik BUGÜN eklenemez — ön koşulu var
+
+Abonelik, yenileme/iptalin sunucuda görülmesini zorunlu kılar. E1 (`GOOGLE_PLAY_SA_JSON`) açık ve
+RTDN bağlı değil. Bu ikisi kapanmadan abonelik satmak "iptal etti ama erişimi sürüyor" hatasını
+KAÇINILMAZ kılar. Tek seferlik üründe bu risk yok (cihaz defteri + geri yükleme yeter) —
+bugünkü modelin ayakta durma sebebi budur.
+
+**Sıra: E1 → RTDN → aylık katman + deneme.**
+
+## C. Süreli erişim altyapısı ZATEN VAR
+
+Davet ödülü `GET /api/purchases` içinde türetiliyor ve süresi dolunca kendiliğinden kapanıyor.
+Abonelik geldiğinde sıfırdan mekanizma kurulmayacak; var olanın ikinci kullanıcısı olacak.
+
+## D. Görselli soru bir İÇERİK işi değil, ŞEMA işi
+
+`Question` modelinde görsel alanı **yok**: `id, subject, topic, difficulty, stem, options,
+answerIndex, explanation, badge, whyWrong`. 1.562 sorunun tamamı metin.
+
+Uygulamada 81 işaret vektörü + 60 ikaz ışığı + 101 mekanik görseli **var** ama yalnız Öğren
+bölümünde kullanılıyor. Şema açılmadan üretilecek görselli soru yerini bulamaz.
+
+`media.alt` **zorunlu** olmalı: görsel yüklenmezse soru cevaplanamaz hâle gelir.
+
+## E. Varlık sınıfı, ÜRETİM ARACINI belirler
+
+| Sınıf            | Örnek             | Doğru araç                     | Neden                                                              |
+| ---------------- | ----------------- | ------------------------------ | ------------------------------------------------------------------ |
+| Düzenlemeye tabi | levha, ikaz ışığı | **resmî kaynaktan vektörleme** | biçim KGM/ISO 2575 ile sabit; AI'ın uydurduğu levha yanlış öğretir |
+| Şematik          | kavşak, öncelik   | **SVG olarak kod**             | geometri anlam taşır; rasterde araç yönü/sayısı tutarsız çıkar     |
+| Betimleyici      | ilk yardım, sahne | **AI görsel üretimi**          | tam biçim değil anlaşılırlık önemli                                |
+
+**AI ile trafik levhası ÜRETİLMEZ.** %95 benzerlik, ehliyet öğreten bir üründe yeterli değildir.
+
+## F. Bir üretim hattının en değerli çıktısı "bunu üretme" demesidir
+
+Eksik görünen 35 levhanın **14'ü** sayı-parametrik hız levhası (`azami-hiz-*`, `asgari-hiz-*`).
+Bunlar kırmızı/mavi daire + sayıdır; parametrik çizici zaten üretiyor ve sonuç rasterden **daha
+iyi** (her ölçekte keskin, sayı veriden geliyor). **Karar: üretilmeyecek.**
+
+Denetim öncesi 161 varlık talebi açılabilirdi; ölçüm sonrası gerçek ihtiyaç **116** ve bunun 21'i
+üretim değil vektörleme.
+
+## G. Klasöre bırakılan varlık, elle tablo satırı olmadan KULLANILMIYORDU
+
+`official_signs.dart` / `dash_assets.dart` / `mech_assets.dart` elle yazılmış `id → yol`
+tabloları. `pubspec.yaml` klasörün tamamını bildirdiği için dosya **pakete giriyor** ama tabloya
+satır eklenmedikçe kullanılmıyordu.
+
+`lib/core/asset_resolver.dart` (Faz 8) sırayı tersine çevirdi:
+
+1. **sözleşme** — `assets/<kategori>/<id>.<uzantı>` paketteyse o kullanılır (svg → webp → png),
+2. **istisna tablosu** — dosya adı kimlikten farklıysa (`agirlik-siniri` → `tt-24.svg`).
+
+Sözleşmeye uyan YENİ dosya eski istisna satırını **geçersiz kılar**.
+
+**DÜRÜST SINIR:** Flutter varlıkları derleme zamanında gömülür. Söz "kod değişmeden kullanılır";
+"kurulu uygulamaya dosya eklenince görünür" DEĞİL — yeniden derleme şart.
+
+## H. Hat onaya kadar özerktir
+
+Araştırma → boşluk → varlık → prompt → yazım → makine denetimi → taslak → **İNSAN ONAYI** → yayın.
+Onay pazarlık edilemez: yanlış bir ilk yardım bilgisi, yavaş bir içerik hattından çok daha
+pahalıdır. Bunu "tam otomatik içerik üretimi" diye anlatmak yanlış olurdu.

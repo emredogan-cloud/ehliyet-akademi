@@ -57,7 +57,7 @@ class _PremiumIncentiveDialog extends StatelessWidget {
       (Icons.smart_toy_rounded, 'AI Koç ile Akıllı Destek', 'Sorularını sor, anında öğren'),
       (Icons.event_note_rounded, 'Kişisel Çalışma Planı', 'Sana özel planlama ve hatırlatıcılar'),
     ];
-    return _DialogShell(
+    return PremiumDialogShell(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -143,7 +143,7 @@ class _PremiumSuccessDialog extends StatelessWidget {
       (Icons.bar_chart_rounded, p.primary, 'Kişisel Plan', 'Size özel çalışma'),
       (Icons.smart_toy_rounded, p.primary, 'Sınırsız AI Koç', 'Her zaman yanında'),
     ];
-    return _DialogShell(
+    return PremiumDialogShell(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -200,8 +200,9 @@ class _PremiumSuccessDialog extends StatelessWidget {
 }
 
 /// Ortak pencere kabuğu — koyu kart, kaydırılabilir içerik, kapatma düğmesi.
-class _DialogShell extends StatelessWidget {
-  const _DialogShell({required this.child});
+/// Faz 3'te herkese açıldı: dönüşüm akışının pencereleri de aynı kabuğu kullanıyor.
+class PremiumDialogShell extends StatelessWidget {
+  const PremiumDialogShell({super.key, required this.child});
   final Widget child;
 
   @override

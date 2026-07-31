@@ -19,6 +19,7 @@ import '../../domain/onboarding/coach_marks_controller.dart';
 import '../../domain/onboarding/study_profile.dart';
 import '../../domain/practice/srs.dart';
 import '../../domain/progress/gamification.dart';
+import '../premium/conversion_flow.dart';
 
 /// Home — the app's center, bound to real local progress (readiness, streak, accuracy, a proactive
 /// nudge, today's personalized plan). Falls back to gentle "get started" copy before any practice.
@@ -41,13 +42,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) => _runFirstRunSequence());
   }
 
-  /// İlk açılış SIRASI: AI karşılama penceresi → ürün turu.
+  /// İlk açılış SIRASI: AI karşılama penceresi → ürün turu → (Faz 4/5) tutundurma hatırlatması.
   ///
   /// Sıra bilinçli ve **seri**: ikisi aynı anda açılırsa karartma pencerenin üstüne biner ve
   /// kullanıcı ikisini de göremez. Pencere kapanmadan tur başlamaz.
+  ///
+  /// Tutundurma penceresi EN SONA konur ve yalnız ilk açılış zinciri bittiğinde bakılır: yeni
+  /// kullanıcı daha uygulamayı görmeden "premium paketine bakmıştın" demek anlamsızdır (zaten
+  /// koşulları da sağlanmaz, ama sıranın kendisi bunu garanti eder).
   Future<void> _runFirstRunSequence() async {
     await _maybeShowAiWelcome();
     await _maybeStartTour();
+    if (!mounted) return;
+    await maybeShowRetentionPrompt(
+      context,
+      ref,
+      nowMs: DateTime.now().millisecondsSinceEpoch,
+    );
   }
 
   Future<void> _maybeShowAiWelcome() async {

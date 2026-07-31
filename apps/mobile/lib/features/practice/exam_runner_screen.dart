@@ -8,6 +8,7 @@ import '../../core/analytics/analytics_event.dart';
 import '../../core/analytics/analytics_ref.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/practice/progress_repository.dart';
+import '../../data/premium/entitlements_repository.dart';
 import '../../design/brand.dart';
 import '../../data/share/share_service.dart';
 import '../../design/primitives.dart';
@@ -20,9 +21,12 @@ import '../../domain/practice/historical.dart';
 import '../../domain/practice/question.dart';
 import '../../domain/practice/question_bank.dart';
 import '../../domain/practice/srs.dart';
+import '../../domain/premium/conversion.dart';
 import '../../domain/premium/premium_prompt.dart';
+import '../../domain/premium/products.dart';
 import '../../domain/feedback/rating_prompt.dart';
 import '../feedback/rating_dialog.dart';
+import '../premium/conversion_flow.dart';
 import '../premium/premium_popups.dart';
 import 'widgets/bank_scope.dart';
 import 'widgets/question_view.dart';
@@ -167,8 +171,33 @@ class _ExamRunnerScreenState extends ConsumerState<ExamRunnerScreen> {
         await maybeShowRatingPrompt(context, ref, RatingTrigger.examsCompleted, nowMs: nowMs);
         return;
       }
+      if (!mounted) return;
+
+      // Faz 3 — HAYATTAKİ İLK sınav: koç önce TEBRİK eder, teklif ancak kullanıcı isterse gelir.
+      //
+      // Eskiden burada her sınav sonunda doğrudan premium teşviki açılıyordu ve pencerenin adı
+      // `firstExam` olmasına rağmen ilk sınav olup olmadığı HİÇ SORULMUYORDU — yalnız soğuma
+      // süresine bakılıyordu. Yani "ilk sınavını tamamladın!" başlığı beşinci sınavdan sonra da
+      // çıkabiliyordu. Artık koşul gerçekten sayıya bakıyor.
+      final premium = isPremium(ref.read(entitlementsProvider));
+      if (shouldRunFirstExamConversion(
+        examsFinished: examsFinished,
+        premium: premium,
+        alreadyShown: ref.read(premiumPromptProvider).count > 0,
+      )) {
+        await showFirstExamConversion(
+          context,
+          ref,
+          correct: result.correct,
+          total: exam.questions.length,
+          passMark: exam.passCorrect,
+          nowMs: nowMs,
+        );
+        return;
+      }
+
       if (mounted) {
-        await maybeShowPremiumIncentive(context, ref, PremiumTrigger.firstExam, nowMs: nowMs);
+        await maybeShowPremiumIncentive(context, ref, PremiumTrigger.engagement, nowMs: nowMs);
       }
     });
   }

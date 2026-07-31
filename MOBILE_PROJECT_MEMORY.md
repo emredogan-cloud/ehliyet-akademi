@@ -2689,3 +2689,249 @@ beklenen durumdur (yükleme anahtarı kendinden imzalı).
 14 faz + 3 düzeltme fazı · mobil 395 test · web 559 test
 AAB 64,4 MB imzalı · yayın engelleyici bulgu YOK
 ```
+
+---
+
+# Sürüm Adayı doğrulaması (RC 1.0.0+4) — cihazda bulunan dört kusur
+
+## A. Kural: ölçüt ile GÖSTERİLEN sayı aynı kaynaktan gelmeli
+
+`computeReadiness` ışığı **güvenle düşürülmüş** değerden (`mastery × min(1, answered/8)`)
+hesaplıyor ama `PerSubjectReadiness.mastery` alanına **ham** değeri koyuyor. Koç dürtmesi ışığa
+bakıp gövdede ham ustalığı yazınca ekran kendini yalanladı:
+
+> "En zayıf dersin: İlk Yardım — **%100 ustalık**. Bu derse biraz daha çalışalım mı?"
+
+**Kalıcı kural:** bir iddiayı bir ölçüte dayandırıp kullanıcıya BAŞKA bir ölçütü gösterme.
+Sıralama, kapı ve gövde aynı sayıyı kullanmalı.
+
+## B. Fiyatı yalnız MAĞAZA söyler
+
+Ödeme ekranı, mağaza kapalıyken katalog sabitine düşüyordu (`₺399`); Play'in bildirdiği gerçek
+fiyat **₺479,99**. Düğme o durumda devre dışı olsa bile yanlış rakam yanlış beklenti bırakır.
+Artık mağaza fiyat vermediyse `—` gösteriliyor; `priceTRY` yalnız sunucu/ürün eşlemesi için durur.
+
+## C. `StatTile` satırlarında boşluk ZORUNLU
+
+`StatTile` içeriğini sola yaslar. Aralıksız `Expanded`'larda geniş bir değer komşusuna değiyor:
+`%100 doğruluk` + `Lv 1` → **"%100Lv 1"**. Uygulamadaki diğer bütün `StatTile` satırları zaten
+`AppSpacing.s3` ile ayrılmıştı; ana sayfa hazırlık kartı ayrık kalmıştı.
+
+## D. Aynı çelişki iki yerde yaşayabilir
+
+`/davet/ABC12345` (TAM 8 karakter ama alfabede olmayan `1` içeriyor) web sayfasında
+"kodlar 8 karakterdir" hatası veriyordu. Mobil tarafta bu çelişki bir kez düzeltilmişti
+(`normalizeReferralCode` notu), web tarafında duruyordu. **Bir kuralı düzeltirken o kuralın
+İKİNCİ uygulamasını ara.**
+
+## E. Üretim derlemesi bayrak ister — sessizce bozulur
+
+`flutter build appbundle --release` tek başına **eksik** bir yapı üretir: `GOOGLE_SERVER_CLIENT_ID`
+verilmezse Google giriş düğmesi **hiç görünmez**, hata da vermez. Doğrulama:
+
+```bash
+unzip -p <artefakt> base/lib/arm64-v8a/libapp.so | grep -a apps.googleusercontent.com
+```
+
+---
+
+# Post-Beta Faz 1 — sürüm derlemesi (versionCode 5)
+
+## A. `local.properties` BAYAT KALIR
+
+`android/local.properties` içindeki `flutter.versionCode` bir **önbellektir**; `pubspec.yaml`
+`1.0.0+5`'e çıkarıldığında dosyada hâlâ `4` yazıyordu. `flutter build` onu pubspec'ten yeniden
+yazar, ama **doğrudan `./gradlew bundleRelease`** çağıran biri eski numarayla derler.
+
+**Kural:** sürüm numarası pubspec'ten doğrulanmaz — **artefaktın kendisinden** doğrulanır:
+
+```bash
+bundletool dump manifest --bundle=app-release.aab | grep -oE 'versionCode="[0-9]+"'
+```
+
+---
+
+# Post-Beta Faz 2 — sayfa geçişi çakışması
+
+## A. Kök neden: SAYDAM SAYFA + KAYDIRMALI GEÇİŞ = bileşim hatası
+
+İskele şeffaf (`scaffoldBackgroundColor: Colors.transparent`, canlı zemin kökte tek örnek).
+`CupertinoPageTransitionsBuilder` gelen sayfayı gidenin ÜSTÜNE kaydırır ve **hiç soldurmaz**.
+İki saydam katman aynı anda çizilince ikisi de görünür.
+
+**Cihazda videoya alındı** (`screenrecord` + `ffmpeg` ile kare kare): Öğren → Dersler geçişinde
+Öğren'in baykuş görseli ve liste metni, gelen Dersler sayfasının İÇİNDEN okunuyordu.
+
+## B. Çözüm: SIRALI solma (Material shared-axis)
+
+`SharedAxisPageTransitionsBuilder` yazıldı. Belirleyici özellik solmaların **örtüşmemesi**:
+`t < 0,35` → gelen tamamen görünmez; `t > 0,35` → giden tamamen görünmez. Çarpımları her `t`
+için sıfır; bu, `page_transition_test.dart` içinde 1000 örnekle kapı altında.
+
+**Flutter'ın hazır `FadeForwardsPageTransitionsBuilder`'ı KULLANILMADI:** solma aralıkları
+örtüşüyor (giden `Interval(0, 0.25)`, gelen `Interval(0, 0.75)`) — opak sayfalarda sorunsuz,
+saydam sayfalarda aynı kusuru üretir. Ayrıca geçiş boyunca `ColorScheme.surface` ile opak bir
+kutu çizip canlı zemini söndürüyor.
+
+## C. iOS bilinçli olarak Cupertino'da BIRAKILDI
+
+O geçiş aynı zamanda kenardan kaydırıp geri gitme jestini kurar. Bu makinede iOS derlenemiyor
+(disiplin kuralı 7); **doğrulanamayan platformda davranış değiştirilmez.** Aynı çakışma iOS'ta
+da vardır ve iOS gerçekten derlenebildiğinde ele alınmalıdır — kayıt burada.
+
+## D. Araç notu: geçiş hatası ancak VİDEODAN görülür
+
+Tek kare `screencap` 320–400 ms'lik bir geçişi yakalayamaz. Yöntem:
+`adb shell screenrecord` → `adb pull` → `ffmpeg -vf fps=30` → kareleri `tile` ile birleştir.
+Önce/sonra karşılaştırması böyle yapıldı.
+
+---
+
+# Post-Beta Faz 3–5 — dönüşüm, tutundurma, geri kazanım
+
+## A. Kampanya bir VERİ nesnesidir, ekrana yazılmış metin değil
+
+`Campaign` motoru geldi: `id · title · explanation · kind · discountPercent · oldPriceLabel ·
+newPriceLabel · startsAt · endsAt · enabled`. Kaynak `--dart-define=CAMPAIGNS_JSON=[...]`.
+
+**Varsayılan: HİÇ KAMPANYA YOK.** Bu, sahte aciliyeti yapısal olarak imkânsız kılar:
+
+- sayaç YALNIZ `enabled && pencere içinde && endsAt != null` ise çizilir,
+- üstü çizili fiyat YALNIZ yürürlükteki kampanyada çizilir,
+- bozuk JSON = boş katalog (çökme yok) — pazarlama yapılandırma hatası uygulamayı açılamaz
+  hâle getirmemeli.
+
+Eski iki `--dart-define` (`PAYWALL_LIST_PRICE`, `PAYWALL_OFFER_ENDS_AT`) **yedek yol** olarak
+duruyor: o değerlerle derlenmiş bir yapı sahada olabilir.
+
+## B. Adı bir şeyi anlatan kod, o şeyi KONTROL ETMİYOR olabilir
+
+`PremiumTrigger.firstExam` başlığı "İlk deneme sınavını tamamladın! 🎉" diyordu ama tetikleyici
+**ilk sınav olup olmadığına HİÇ BAKMIYORDU** — yalnız 24 saatlik soğumaya bakıyordu. Yani beşinci
+sınavdan sonra da "ilk sınavını tamamladın" çıkabiliyordu. Artık `shouldRunFirstExamConversion`
+gerçekten `examsFinished == 1` soruyor.
+
+**Kural:** bir sabitin ADI bir koşulu ima ediyorsa, o koşulun kodda gerçekten aranıp aranmadığını
+doğrula.
+
+## C. Tebrik ile satış AYNI pencerede olmaz
+
+İlk sınav sonrası akış ikiye ayrıldı: (1) koç sonucu **dürüstçe** okur — satış yok, (2) kullanıcı
+"öneriyi gör" derse teklif açılır. Koçun okuması üç banda ayrılır ve **sonuçtan bağımsız övgü
+yoktur**: 50 soruda 4 doğru yapmış birine "harikasın" demek, ürünün kendi ölçümüne inanmadığını
+gösterir.
+
+Teklifin giriş cümlesi de kullanıcının KENDİ sayısını taşır ("50 soruda 4 doğru, geçmek için 31
+soru daha") — "sana özel" iddiasının arkasında gerçek veri olmalı.
+
+## D. `dispose` içinde `ref` okunmaz — `deactivate` kullanılır
+
+Ödeme ekranını satın almadan terk etme damgası `deactivate()` içinde alınıyor. `dispose` sırasında
+sağlayıcı sökülmüş olabilir ve Riverpod okumayı yasaklıyor.
+
+İLK terk anı korunur: ekran beş kez açılıp kapatılırsa bekleme süresi her seferinde baştan
+başlamamalı, yoksa hatırlatma sonsuza kadar ötelenir.
+
+## E. Tutundurma penceresi "bir kez, gecikmeli, kapatılabilir"
+
+- Ödeme ekranı hatırlatması: terkten **24 saat** sonra, **ömür boyu bir kez**. 24 saat, mevcut
+  bağlamsal teşvikin soğumasıyla aynı → iki sistem aynı gün üst üste binemez.
+- Geri kazanım: erişim kaybından **1 saat** sonra, bir kez. Sıfır değil — açılışta sunucu senkronu
+  geçici olarak "sahip değil" diyebilir; bekleme gerçek kaybı gürültüden ayırır.
+- İkisi aynı anda AÇILMAZ; geri kazanım önceliklidir.
+
+## F. Kampanya yoksa geri kazanım UYDURMAZ
+
+Geri kazanım penceresi, yürürlükte bir `winBack` kampanyası varsa teklifi gösterir; yoksa yalnız
+dürüst bilgilendirme yapar ("ilerlemen duruyor, ücretsiz devam edebilirsin"). **Kampanya yokken
+indirim icat edilmez.**
+
+## G. Cihazda doğrulandı
+
+Kampanyalı bir yapı (`--dart-define-from-file`) ile: tebrik penceresi → teklif → ödeme ekranı
+zinciri koşuldu; kampanya kartı, %40 rozeti, üstü çizili ₺799,99 → ₺479,99 ve canlı sayaç
+(47:48:14 → 47:44:21) çalışıyor. Sevk edilen AAB'de `CAMPAIGNS_JSON` **yoktur**.
+
+---
+
+# Post-Beta Faz 6–9 — fiyatlandırma, içerik hattı, varlık çözümleyicisi
+
+## A. Bu ürün eğitim kategorisinden AYRILIR: kullanım penceresi SINIRLI
+
+Genel eğitim uygulamaları süresiz kullanılır (dil öğrenme yıllarca sürer). Ehliyet sınavı
+uygulamasında kullanıcı ~4–8 hafta hazırlanır, **geçer ve gider**. Sonuçları:
+
+- **Churn bir kusur değil, ürünün doğasıdır** — abonelik churn'ünü "düzeltmek" yanlış hedef.
+- **LTV sınav tarihiyle tavanlıdır** — yıllık abonelik, kullanıcının ihtiyaç duymadığı 10 ayı
+  satmaktır; iade ve kötü yorum davet eder.
+- **Tek seferlik ürün doğru seçimdir.** Mevcut model tesadüf değil.
+
+Sektör verisi (2026): yüksek fiyatlı eğitim uygulamaları düşük fiyatlıların **2 KATI** dönüşüyor
+(%2,8 ↔ %1,4). Fiyat düşürerek dönüşüm aramak bu kategoride veriye aykırı. Ayrıca fiyat denemesi
+LTV'yi %46, dönüşümü yalnız %28 oranında iyileştiriyor → **fiyat kararı aynı gün dönüşümüne
+bakarak verilemez.**
+
+## B. Abonelik BUGÜN eklenemez — ön koşulu var
+
+Abonelik, yenileme/iptalin sunucuda görülmesini zorunlu kılar. E1 (`GOOGLE_PLAY_SA_JSON`) açık ve
+RTDN bağlı değil. Bu ikisi kapanmadan abonelik satmak "iptal etti ama erişimi sürüyor" hatasını
+KAÇINILMAZ kılar. Tek seferlik üründe bu risk yok (cihaz defteri + geri yükleme yeter) —
+bugünkü modelin ayakta durma sebebi budur.
+
+**Sıra: E1 → RTDN → aylık katman + deneme.**
+
+## C. Süreli erişim altyapısı ZATEN VAR
+
+Davet ödülü `GET /api/purchases` içinde türetiliyor ve süresi dolunca kendiliğinden kapanıyor.
+Abonelik geldiğinde sıfırdan mekanizma kurulmayacak; var olanın ikinci kullanıcısı olacak.
+
+## D. Görselli soru bir İÇERİK işi değil, ŞEMA işi
+
+`Question` modelinde görsel alanı **yok**: `id, subject, topic, difficulty, stem, options,
+answerIndex, explanation, badge, whyWrong`. 1.562 sorunun tamamı metin.
+
+Uygulamada 81 işaret vektörü + 60 ikaz ışığı + 101 mekanik görseli **var** ama yalnız Öğren
+bölümünde kullanılıyor. Şema açılmadan üretilecek görselli soru yerini bulamaz.
+
+`media.alt` **zorunlu** olmalı: görsel yüklenmezse soru cevaplanamaz hâle gelir.
+
+## E. Varlık sınıfı, ÜRETİM ARACINI belirler
+
+| Sınıf            | Örnek             | Doğru araç                     | Neden                                                              |
+| ---------------- | ----------------- | ------------------------------ | ------------------------------------------------------------------ |
+| Düzenlemeye tabi | levha, ikaz ışığı | **resmî kaynaktan vektörleme** | biçim KGM/ISO 2575 ile sabit; AI'ın uydurduğu levha yanlış öğretir |
+| Şematik          | kavşak, öncelik   | **SVG olarak kod**             | geometri anlam taşır; rasterde araç yönü/sayısı tutarsız çıkar     |
+| Betimleyici      | ilk yardım, sahne | **AI görsel üretimi**          | tam biçim değil anlaşılırlık önemli                                |
+
+**AI ile trafik levhası ÜRETİLMEZ.** %95 benzerlik, ehliyet öğreten bir üründe yeterli değildir.
+
+## F. Bir üretim hattının en değerli çıktısı "bunu üretme" demesidir
+
+Eksik görünen 35 levhanın **14'ü** sayı-parametrik hız levhası (`azami-hiz-*`, `asgari-hiz-*`).
+Bunlar kırmızı/mavi daire + sayıdır; parametrik çizici zaten üretiyor ve sonuç rasterden **daha
+iyi** (her ölçekte keskin, sayı veriden geliyor). **Karar: üretilmeyecek.**
+
+Denetim öncesi 161 varlık talebi açılabilirdi; ölçüm sonrası gerçek ihtiyaç **116** ve bunun 21'i
+üretim değil vektörleme.
+
+## G. Klasöre bırakılan varlık, elle tablo satırı olmadan KULLANILMIYORDU
+
+`official_signs.dart` / `dash_assets.dart` / `mech_assets.dart` elle yazılmış `id → yol`
+tabloları. `pubspec.yaml` klasörün tamamını bildirdiği için dosya **pakete giriyor** ama tabloya
+satır eklenmedikçe kullanılmıyordu.
+
+`lib/core/asset_resolver.dart` (Faz 8) sırayı tersine çevirdi:
+
+1. **sözleşme** — `assets/<kategori>/<id>.<uzantı>` paketteyse o kullanılır (svg → webp → png),
+2. **istisna tablosu** — dosya adı kimlikten farklıysa (`agirlik-siniri` → `tt-24.svg`).
+
+Sözleşmeye uyan YENİ dosya eski istisna satırını **geçersiz kılar**.
+
+**DÜRÜST SINIR:** Flutter varlıkları derleme zamanında gömülür. Söz "kod değişmeden kullanılır";
+"kurulu uygulamaya dosya eklenince görünür" DEĞİL — yeniden derleme şart.
+
+## H. Hat onaya kadar özerktir
+
+Araştırma → boşluk → varlık → prompt → yazım → makine denetimi → taslak → **İNSAN ONAYI** → yayın.
+Onay pazarlık edilemez: yanlış bir ilk yardım bilgisi, yavaş bir içerik hattından çok daha
+pahalıdır. Bunu "tam otomatik içerik üretimi" diye anlatmak yanlış olurdu.

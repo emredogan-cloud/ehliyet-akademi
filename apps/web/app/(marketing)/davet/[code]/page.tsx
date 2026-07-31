@@ -104,9 +104,9 @@ export default async function DavetPage({ params }: { params: Promise<{ code: st
               gerçekten yanlışsa zaten uzunluğu söyler. Kural sunucu ve mobil ile AYNI kaynaktan.
             */}
             <p className="mk-hero__lead">
-              {describeReferralCodeProblem(code) ?? 'Bağlantı kopyalanırken eksilmiş olabilir.'} Kodu
-              sana gönderen kişiden bağlantıyı yeniden istersen, ya da kodu uygulamada kayıt olurken
-              elle yazarsan davet işler.
+              {describeReferralCodeProblem(code) ?? 'Bağlantı kopyalanırken eksilmiş olabilir.'}{' '}
+              Kodu sana gönderen kişiden bağlantıyı yeniden istersen, ya da kodu uygulamada kayıt
+              olurken elle yazarsan davet işler.
             </p>
             <div className="mk-hero__cta">
               <a className="ui-btn ui-btn--primary ui-btn--lg" href={playStoreUrl()}>

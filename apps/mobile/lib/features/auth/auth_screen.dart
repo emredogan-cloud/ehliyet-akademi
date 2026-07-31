@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -508,7 +510,19 @@ class _AuthHero extends StatelessWidget {
         final art = w / _heroAspect;
         // Hero, referansta sayfanın ~%36'sı. Görselden artan yer marka bloğuna kalır; görselin
         // kendisi hiçbir koşulda kırpılmaz.
-        final h = topPad + (media.height * 0.36).clamp(art + 96, 420.0);
+        //
+        // ── Beta Faz 11 — TABLETTE ÇÖKÜYORDU ────────────────────────────────────────────────
+        //
+        // Eski satır `(media.height * 0.36).clamp(art + 96, 420.0)` idi. `clamp` alt sınırın üst
+        // sınırdan büyük olmasına İZİN VERMEZ ve fırlatır. Görselin yüksekliği genişlikten
+        // türediği için geniş ekranda `art` büyüyor: 1024 dp'de `art + 96 = 496,12` ve üst sınır
+        // hâlâ 420 → `clamp(496.12, 420)` → **"Invalid argument(s): 496.11851851851856"**.
+        // Yani giriş/kayıt ekranı TABLETTE AÇILMIYORDU. Telefonda hiç görünmüyor (320–400 dp'de
+        // `art + 96` 220–251 arasında kalıyor), bu yüzden bugüne kadar fark edilmedi.
+        //
+        // Doğrusu bir sıkıştırma değil, bir ÖNCELİK: görselin sığması (`art + 96`) pazarlık
+        // konusu değildir; %36 hedefi ve 420 tavanı ancak ondan SONRA gelir.
+        final h = topPad + math.max(art + 96, math.min(media.height * 0.36, 420.0));
         // Geri düğmesi üst solda 48 dp yer tutuyor; marka bloğu ONUN ALTINDA başlar, yoksa
         // ikisi çakışıyor (ilk denemede çakıştı: kilit görseli dokunuşu da emdi).
         const backRoom = 46.0;
@@ -516,7 +530,9 @@ class _AuthHero extends StatelessWidget {
         // Marka kilidinin ölçüsü GENİŞLİĞE bağlanır: referansta kilit, sayfa genişliğinin
         // ~%36'sı. Yüksekliğe bağlanırsa telefonun uzun ekranında orantısız büyüyor
         // (referans sayfa 2:3, telefon ~9:19,5 — dikey oran birebir eşlenemez).
-        final lockupMax = h - topPad - backRoom - taglineRoom - AppSpacing.s3 - 8;
+        // Aynı tuzak burada da vardı: `lockupMax` dar/kısa bir ekranda 64'ün ALTINA düşerse
+        // `clamp(64, lockupMax)` yine geçersiz olurdu. Alt sınır her koşulda korunur.
+        final lockupMax = math.max(64.0, h - topPad - backRoom - taglineRoom - AppSpacing.s3 - 8);
         final lockupH = (w * 0.383).clamp(64.0, lockupMax);
 
         return SizedBox(

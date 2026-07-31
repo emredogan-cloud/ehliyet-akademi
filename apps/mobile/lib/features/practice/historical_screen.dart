@@ -44,13 +44,26 @@ class HistoricalScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(s.label, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
+                            Text(
+                              s.label,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
+                            ),
                             const SizedBox(height: 3),
                             Row(
                               children: [
                                 Icon(Icons.description_outlined, size: 13, color: p.text3),
                                 const SizedBox(width: 4),
-                                Text('50 soru · MEB formatı', style: TextStyle(color: p.text3, fontSize: 12.5)),
+                                // Beta Faz 11 — esnek: 320 dp'de ve 1,3× yazıda satır taşıyordu.
+                                Flexible(
+                                  child: Text(
+                                    '50 soru · MEB formatı',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(color: p.text3, fontSize: 12.5),
+                                  ),
+                                ),
                               ],
                             ),
                           ],

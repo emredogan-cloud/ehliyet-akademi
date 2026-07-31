@@ -244,8 +244,15 @@ class _Explanation extends StatelessWidget {
             children: [
               Icon(correct ? Icons.check_circle_rounded : Icons.cancel_rounded, color: color, size: 18),
               const SizedBox(width: 6),
-              Text(correct ? 'Doğru!' : 'Yanlış',
-                  style: TextStyle(color: color, fontWeight: FontWeight.w800, fontSize: 14.5)),
+              // Beta Faz 11 — esnek. Büyük sistem yazısında (1,3×) sabit metin satırı taşırıyordu.
+              Flexible(
+                child: Text(
+                  correct ? 'Doğru!' : 'Yanlış',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: color, fontWeight: FontWeight.w800, fontSize: 14.5),
+                ),
+              ),
             ],
           ),
           const SizedBox(height: AppSpacing.s2),

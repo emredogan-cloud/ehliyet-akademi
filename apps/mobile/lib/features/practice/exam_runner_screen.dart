@@ -335,29 +335,48 @@ class _ExamRunnerScreenState extends ConsumerState<ExamRunnerScreen> {
                   children: [
                     Icon(Icons.timer_outlined, size: 26, color: timeLow ? p.red : p.primary),
                     const SizedBox(width: AppSpacing.s2),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          _fmt(_secondsLeft),
-                          style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 20,
-                            color: timeLow ? p.red : p.text,
-                            fontFeatures: const [FontFeature.tabularFigures()],
+                    // Sayaç bloğu ESNEK: yanındaki ilerleme metniyle birlikte dar ekranda
+                    // satırı taşırıyordu.
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            _fmt(_secondsLeft),
+                            style: TextStyle(
+                              fontWeight: FontWeight.w900,
+                              fontSize: 20,
+                              color: timeLow ? p.red : p.text,
+                              fontFeatures: const [FontFeature.tabularFigures()],
+                            ),
                           ),
-                        ),
-                        Text('Kalan süre', style: TextStyle(color: p.text3, fontSize: 11)),
-                      ],
+                          Text(
+                            'Kalan süre',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(color: p.text3, fontSize: 11),
+                          ),
+                        ],
+                      ),
                     ),
                     const Spacer(),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text('$answeredCount / ${exam.questions.length}',
-                            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20, color: p.primary)),
-                        Text('yanıtlandı', style: TextStyle(color: p.text3, fontSize: 11)),
-                      ],
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            '$answeredCount / ${exam.questions.length}',
+                            maxLines: 1,
+                            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20, color: p.primary),
+                          ),
+                          Text(
+                            'yanıtlandı',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(color: p.text3, fontSize: 11),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -504,7 +523,20 @@ class _NextButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(label, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 15)),
+              // Beta Faz 11 — etiket ESNEK. Dar ekranda (320 dp) ve büyük sistem yazısında
+              // (1,3×) sabit metin satırı taşırıyordu. Kırpmak yerine KÜÇÜLTME seçildi:
+              // bir eylemin adı yarım okunmamalı (Faz 12'de `GradientPillButton` için verilen
+              // aynı karar).
+              Flexible(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 15),
+                  ),
+                ),
+              ),
               const SizedBox(width: 4),
               Icon(icon, color: Colors.white, size: 20),
             ],

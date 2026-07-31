@@ -150,20 +150,35 @@ class _LessonCard extends ConsumerWidget {
                   style: TextStyle(color: p.text3, fontSize: 12.5, height: 1.35),
                 ),
                 const SizedBox(height: AppSpacing.s2),
-                Row(
+                // Beta Faz 11 — üstveri satırı 320 dp'de taşıyordu (17 px). İki rozet yan yana
+                // sığmadığında ALT SATIRA geçer; kırpmak yerine sarmak doğru: "12 dk" ve
+                // "3 hedef" ikisi de okunabilir kalmalı.
+                Wrap(
+                  spacing: AppSpacing.s3,
+                  runSpacing: 4,
+                  crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
-                    Icon(Icons.schedule_rounded, size: 13, color: p.text3),
-                    const SizedBox(width: 4),
-                    Text(
-                      '${lesson.minutes} dk',
-                      style: TextStyle(color: p.text3, fontSize: 12, fontWeight: FontWeight.w600),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.schedule_rounded, size: 13, color: p.text3),
+                        const SizedBox(width: 4),
+                        Text(
+                          '${lesson.minutes} dk',
+                          style: TextStyle(color: p.text3, fontSize: 12, fontWeight: FontWeight.w600),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: AppSpacing.s3),
-                    Icon(Icons.checklist_rounded, size: 13, color: p.text3),
-                    const SizedBox(width: 4),
-                    Text(
-                      '${lesson.objectives.length} hedef',
-                      style: TextStyle(color: p.text3, fontSize: 12, fontWeight: FontWeight.w600),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.checklist_rounded, size: 13, color: p.text3),
+                        const SizedBox(width: 4),
+                        Text(
+                          '${lesson.objectives.length} hedef',
+                          style: TextStyle(color: p.text3, fontSize: 12, fontWeight: FontWeight.w600),
+                        ),
+                      ],
                     ),
                   ],
                 ),

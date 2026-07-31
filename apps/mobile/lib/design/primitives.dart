@@ -144,21 +144,35 @@ class AppEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.s8),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(emoji, style: const TextStyle(fontSize: 44)),
-            const SizedBox(height: AppSpacing.s3),
-            Text(title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.titleMedium),
-            if (subtitle != null) ...[
-              const SizedBox(height: AppSpacing.s2),
-              Text(subtitle!, textAlign: TextAlign.center, style: TextStyle(color: p.text3)),
-            ],
-            if (action != null) ...[const SizedBox(height: AppSpacing.s4), action!],
-          ],
+    // Beta Faz 11 — KAYDIRILABİLİR.
+    //
+    // Boş durum kartı, kısa bir görünüm alanında (yatay yönde 800×400: üst çubuk ve süzgeç
+    // satırından sonra ~280 dp kalıyor) dikeyde 3 px taşıyordu. Bu bileşen uygulamanın HER boş
+    // durumunda kullanılıyor; tek yerde düzeltmek hepsini düzeltir.
+    //
+    // `Center` + kaydırma birlikte: içerik sığdığında ortalanmış kalır (asıl tasarım), sığmadığında
+    // kırpılmak yerine kaydırılır. Emoji ya da eylem düğmesinin ekran dışında kalması, boş
+    // durumun tek çıkış yolunu (o düğmeyi) ulaşılmaz yapardı.
+    return SingleChildScrollView(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(minHeight: MediaQuery.sizeOf(context).height * 0.3),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.s8),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(emoji, style: const TextStyle(fontSize: 44)),
+                const SizedBox(height: AppSpacing.s3),
+                Text(title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.titleMedium),
+                if (subtitle != null) ...[
+                  const SizedBox(height: AppSpacing.s2),
+                  Text(subtitle!, textAlign: TextAlign.center, style: TextStyle(color: p.text3)),
+                ],
+                if (action != null) ...[const SizedBox(height: AppSpacing.s4), action!],
+              ],
+            ),
+          ),
         ),
       ),
     );

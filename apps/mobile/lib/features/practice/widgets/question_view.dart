@@ -17,22 +17,33 @@ class QuestionStem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Beta Faz 11 — üstveri satırı hem AKILLI ÇALIŞMA hem DENEME SINAVI ekranında taşıyordu
+        // (320 dp'de 145–169 px, 1,3× yazıda 187 px). İki ekran da bu bileşeni kullanıyor; tek
+        // yerde düzeltmek ikisini birden düzeltir.
+        //
+        // Ders + zorluk rozeti ESNEK: "Araç Tekniği · Zor" gibi uzun bir birleşim dar ekranda
+        // sığmıyor. Soru sayacı (`3 / 50`) ise kırpılmamalı — kullanıcı nerede olduğunu bilmeli.
         Row(
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s2, vertical: 3),
-              decoration: BoxDecoration(
-                color: p.primary050,
-                borderRadius: BorderRadius.circular(AppRadii.sm),
-              ),
-              child: Text(
-                '${question.subject.label} · ${question.difficulty.label}',
-                style: TextStyle(color: p.primary, fontWeight: FontWeight.w700, fontSize: 11.5),
+            Flexible(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s2, vertical: 3),
+                decoration: BoxDecoration(
+                  color: p.primary050,
+                  borderRadius: BorderRadius.circular(AppRadii.sm),
+                ),
+                child: Text(
+                  '${question.subject.label} · ${question.difficulty.label}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: p.primary, fontWeight: FontWeight.w700, fontSize: 11.5),
+                ),
               ),
             ),
-            const Spacer(),
+            const SizedBox(width: AppSpacing.s2),
             Text(
               '${index + 1} / $total',
+              maxLines: 1,
               style: TextStyle(color: p.text3, fontWeight: FontWeight.w700, fontSize: 12.5),
             ),
           ],

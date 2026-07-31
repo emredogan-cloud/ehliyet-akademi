@@ -74,6 +74,40 @@ void main() {
     expect(n.any((x) => x.id.startsWith('weak-topic-') && x.title.contains('Trafik')), isTrue);
   });
 
+  /// GERİLEME KAPISI — cihazda bulundu (Redmi Note 11R, sürüm adayı doğrulaması).
+  ///
+  /// `computeReadiness`, ışığı GÜVEN KATSAYISIYLA düşürülmüş değerden hesaplar ama `mastery`
+  /// alanına HAM değeri koyar. Tek soru doğru cevaplandığında ham ustalık %100, düşürülmüş değer
+  /// %12,5 olur → ışık KIRMIZI. Eski kapı ışığa baktığı için koç şunu yazıyordu:
+  ///
+  ///   "En zayıf dersin: İlk Yardım Bilgisi — %100 ustalık. Bu derse biraz daha çalışalım mı?"
+  ///
+  /// Gösterilen sayı iddianın kendisini yalanlıyordu. Ham ustalığı yüksek bir ders "en zayıf"
+  /// diye sunulmamalı.
+  test('ham ustalığı yüksek ders, ışığı kırmızı olsa bile "en zayıf" diye sunulmaz', () {
+    final n = computeNudges(
+      readiness: _readiness(TrafficLight.kirmizi, 13, [
+        // Tek doğru cevap: ham %100, güvenle düşürülmüş %12,5 → ışık kırmızı.
+        const PerSubjectReadiness(
+          subject: Subject.ilkyardim,
+          mastery: 1.0,
+          light: TrafficLight.kirmizi,
+        ),
+      ]),
+      streak: StreakState(current: 1, best: 1, lastDay: today),
+      dueCount: 0,
+      answered: 1,
+      nowMs: _now,
+    );
+    expect(
+      n.any((x) => x.id.startsWith('weak-topic-')),
+      isFalse,
+      reason: '%100 ustalıkla "en zayıf ders" denemez',
+    );
+    // Kullanıcı yine de yönlendirilir: düşük hazırlık dürtmesi yerinde durur.
+    expect(n.any((x) => x.id == 'exam-readiness-low'), isTrue);
+  });
+
   test('green readiness → exam-ready nudge points to a mock exam', () {
     final n = computeNudges(
       readiness: _readiness(TrafficLight.yesil, 88, [

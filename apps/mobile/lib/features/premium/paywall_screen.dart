@@ -330,7 +330,16 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   Widget build(BuildContext context) {
     final owned = ref.watch(entitlementsProvider);
     final hasPremium = isPremium(owned);
-    final priceLabel = _storeProduct?.priceLabel ?? '₺${_product.priceTRY}';
+    // FİYATI MAĞAZA SÖYLER — uygulama UYDURMAZ.
+    //
+    // Eski hâli, mağaza kapalıyken katalog sabitine düşüyordu (`₺399`). Cihazda ölçüldü: Play'in
+    // bildirdiği GERÇEK fiyat **₺479,99**. Yani geri düşüş, gerçek fiyatın %17 ALTINDA bir sayıyı
+    // fiyat diye gösteriyordu. Düğme o durumda zaten devre dışı ve "Mağaza kullanılamıyor" uyarısı
+    // görünüyor; ama yanlış bir rakam görmek kullanıcıda yanlış beklenti bırakır — bu ekranın
+    // tamamı (bkz. `PaywallOffer`) yanıltıcı fiyatlandırmadan kaçınmak üzere kurulu.
+    //
+    // Katalogdaki `priceTRY` sunucu/ürün eşlemesi için durur; EKRANDA fiyat olarak kullanılmaz.
+    final priceLabel = _storeProduct?.priceLabel ?? '—';
     final lifecycleMessage = premiumLifecycleMessage(_lifecycle);
 
     return Scaffold(

@@ -241,6 +241,9 @@ void main() {
 
       expect(find.text('Mağaza kullanılamıyor'), findsOneWidget);
       expect(_buyEnabled(tester), isFalse, reason: 'mağaza kapalıyken satın alma basılamaz');
+      // GERİLEME KAPISI — cihazda bulundu: mağaza kapalıyken ekran katalog sabitini (`₺399`)
+      // fiyat diye gösteriyordu; Play'deki gerçek fiyat ₺479,99. Fiyatı yalnız mağaza söyler.
+      expect(find.textContaining('399'), findsNothing, reason: 'uydurma fiyat gösterilemez');
     });
 
     testWidgets('GERİ YÜKLE her koşulda VARDIR — Play politikası', (tester) async {

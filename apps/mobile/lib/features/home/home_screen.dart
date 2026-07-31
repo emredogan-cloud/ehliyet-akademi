@@ -162,6 +162,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         // Sabit aralıklı hâli, sayılar büyüdükçe (1250 soru, Lv 12) ve büyük
                         // sistem yazısında satırı taşırıyordu. Taşma cihazda sarı-siyah şeritli
                         // bir kare demek; kırpmak yerine paylaştırmak doğru çözüm.
+                        //
+                        // ARALARINDAKİ BOŞLUK ZORUNLU. `StatTile` içeriğini SOLA yaslar; paylar
+                        // bitişik olduğunda geniş bir değer kendi payını doldurup komşusuna
+                        // DEĞİYOR. Cihazda görüldü: %100 doğruluk + Lv 1 yan yana "%100Lv 1"
+                        // olarak okunuyordu. Uygulamadaki diğer bütün `StatTile` satırları
+                        // (davet ekranı, topluluk profili) zaten `s3` ile ayrılmış — burası
+                        // ayrık kalmıştı.
                         Row(
                           children: [
                             Expanded(
@@ -171,7 +178,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 color: p.primary,
                               ),
                             ),
+                            const SizedBox(width: AppSpacing.s3),
                             Expanded(child: StatTile(value: '%$accuracy', label: 'doğruluk')),
+                            const SizedBox(width: AppSpacing.s3),
                             Expanded(
                               child: StatTile(
                                 value: 'Lv ${level.level}',

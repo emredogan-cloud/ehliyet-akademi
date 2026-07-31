@@ -1,7 +1,7 @@
 # Ehliyet Akademi — Final Release Report
 
 **Sürüm adayı:** `1.0.0 (4)` · **Tarih:** 31 Temmuz 2026
-**Taban commit:** `9726123` → **sürüm commit'i:** _(bu raporu taşıyan commit)_
+**Taban commit:** `9726123` → **sürüm commit’i:** `ce617e2`
 **Kapsam:** son cihaz doğrulaması + üretim AAB'si. Yeni özellik eklenmedi; yalnız doğrulama
 sırasında bulunan kusurlar düzeltildi.
 

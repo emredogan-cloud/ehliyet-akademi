@@ -4,9 +4,21 @@ Draft store metadata for the Android app. Language: **Türkçe (tr-TR)** primary
 `com.ehliyetegitim.ehliyet_akademi`. Category: **Education**. Content rating: **Everyone / 3+**
 (educational; no user-to-user content, no ads, one-time in-app purchases).
 
-> Not: Yayına almadan önce Play Console'da 5 yönetilen ürün (`premium_teori`, `premium_direksiyon`,
-> `simulator_paketi`, `premium_soru_bankasi`, `komple_b`) tanımlanmalı ve backend'e `GOOGLE_PLAY_SA_JSON`
-> eklenmeli (bkz. PHASE_7 raporu). İmzalı `flutter build appbundle` yüklenir (üretim keystore'u gerekir).
+> **Beta Faz 9 — DÜZELTİLDİ.** Bu not eskiden **beş** yönetilen ürün sayıyordu
+> (`premium_teori`, `premium_direksiyon`, `simulator_paketi`, `premium_soru_bankasi`, `komple_b`).
+> Katalog o günden beri **tek ürüne** indi (`apps/mobile/lib/domain/premium/products.dart`).
+> Eski liste kaldırılmasaydı, Play Console'da var olmayan dört ürün tanımlanır ve uygulamanın
+> sorduğu tek ürün (`komple_ehliyet`) unutulabilirdi — mağaza "ürün bulunamadı" der, satın alma
+> hiç açılmaz ve sebebi uygulamada aranırdı.
+>
+> **Play Console'da tanımlanacak TEK yönetilen ürün:**
+>
+> | Ürün kimliği     | Tür                      | Fiyat  |
+> | ---------------- | ------------------------ | ------ |
+> | `komple_ehliyet` | Yönetilen (tek seferlik) | 399 TL |
+>
+> Ayrıca yayın öncesi: backend'e `GOOGLE_PLAY_SA_JSON` (sunucu tarafı makbuz doğrulaması —
+> `BILLING_AUDIT.md` §4.1) ve imzalı `flutter build appbundle` (üretim keystore'u gerekir).
 
 ## App name
 

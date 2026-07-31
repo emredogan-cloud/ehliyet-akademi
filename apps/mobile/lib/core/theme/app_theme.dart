@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'page_transitions.dart';
 import 'tokens.dart';
 
 /// Builds Flutter [ThemeData] from the design tokens — light + dark, 1:1 with the web.
@@ -128,9 +129,22 @@ class AppTheme {
           borderSide: BorderSide(color: p.red),
         ),
       ),
+      // Faz 2 — sayfa geçişi. Gerekçenin tamamı `page_transitions.dart` başındadır.
+      //
+      // KISACA: iskele ŞEFFAF (yukarıda, satır ~37). Saydam bir sayfa başka bir sayfanın
+      // üstüne KAYDIRILAMAZ — alttaki üstteki içinden görünür. Cupertino geçişi tam bunu
+      // yapıyordu ve cihazda videoya alındı: Öğren → Dersler geçişinde Öğren'in baykuşu
+      // gelen sayfanın içinden okunuyordu. Çözüm gecikme değil, SIRALI SOLMA.
+      //
+      // iOS BİLİNÇLİ OLARAK Cupertino'da BIRAKILDI: o geçiş aynı zamanda kenardan
+      // kaydırarak geri gitme jestini kurar; onu kaldırmak iOS'ta bir platform
+      // davranışını sessizce yok ederdi. Bu makinede iOS derlenemiyor (disiplin kuralı 7)
+      // ve doğrulanamayan bir platformda davranış değiştirilmez. Aynı çakışma iOS'ta da
+      // vardır; kapanması ya opak sayfa ya da Cupertino'yla uyumlu ayrı bir çözüm ister
+      // ve o iş, iOS gerçekten derlenebildiğinde yapılmalıdır.
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: {
-          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.android: SharedAxisPageTransitionsBuilder(),
           TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
         },
       ),

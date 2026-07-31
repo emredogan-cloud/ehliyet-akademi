@@ -2689,3 +2689,98 @@ beklenen durumdur (yükleme anahtarı kendinden imzalı).
 14 faz + 3 düzeltme fazı · mobil 395 test · web 559 test
 AAB 64,4 MB imzalı · yayın engelleyici bulgu YOK
 ```
+
+---
+
+# Sürüm Adayı doğrulaması (RC 1.0.0+4) — cihazda bulunan dört kusur
+
+## A. Kural: ölçüt ile GÖSTERİLEN sayı aynı kaynaktan gelmeli
+
+`computeReadiness` ışığı **güvenle düşürülmüş** değerden (`mastery × min(1, answered/8)`)
+hesaplıyor ama `PerSubjectReadiness.mastery` alanına **ham** değeri koyuyor. Koç dürtmesi ışığa
+bakıp gövdede ham ustalığı yazınca ekran kendini yalanladı:
+
+> "En zayıf dersin: İlk Yardım — **%100 ustalık**. Bu derse biraz daha çalışalım mı?"
+
+**Kalıcı kural:** bir iddiayı bir ölçüte dayandırıp kullanıcıya BAŞKA bir ölçütü gösterme.
+Sıralama, kapı ve gövde aynı sayıyı kullanmalı.
+
+## B. Fiyatı yalnız MAĞAZA söyler
+
+Ödeme ekranı, mağaza kapalıyken katalog sabitine düşüyordu (`₺399`); Play'in bildirdiği gerçek
+fiyat **₺479,99**. Düğme o durumda devre dışı olsa bile yanlış rakam yanlış beklenti bırakır.
+Artık mağaza fiyat vermediyse `—` gösteriliyor; `priceTRY` yalnız sunucu/ürün eşlemesi için durur.
+
+## C. `StatTile` satırlarında boşluk ZORUNLU
+
+`StatTile` içeriğini sola yaslar. Aralıksız `Expanded`'larda geniş bir değer komşusuna değiyor:
+`%100 doğruluk` + `Lv 1` → **"%100Lv 1"**. Uygulamadaki diğer bütün `StatTile` satırları zaten
+`AppSpacing.s3` ile ayrılmıştı; ana sayfa hazırlık kartı ayrık kalmıştı.
+
+## D. Aynı çelişki iki yerde yaşayabilir
+
+`/davet/ABC12345` (TAM 8 karakter ama alfabede olmayan `1` içeriyor) web sayfasında
+"kodlar 8 karakterdir" hatası veriyordu. Mobil tarafta bu çelişki bir kez düzeltilmişti
+(`normalizeReferralCode` notu), web tarafında duruyordu. **Bir kuralı düzeltirken o kuralın
+İKİNCİ uygulamasını ara.**
+
+## E. Üretim derlemesi bayrak ister — sessizce bozulur
+
+`flutter build appbundle --release` tek başına **eksik** bir yapı üretir: `GOOGLE_SERVER_CLIENT_ID`
+verilmezse Google giriş düğmesi **hiç görünmez**, hata da vermez. Doğrulama:
+
+```bash
+unzip -p <artefakt> base/lib/arm64-v8a/libapp.so | grep -a apps.googleusercontent.com
+```
+
+---
+
+# Post-Beta Faz 1 — sürüm derlemesi (versionCode 5)
+
+## A. `local.properties` BAYAT KALIR
+
+`android/local.properties` içindeki `flutter.versionCode` bir **önbellektir**; `pubspec.yaml`
+`1.0.0+5`'e çıkarıldığında dosyada hâlâ `4` yazıyordu. `flutter build` onu pubspec'ten yeniden
+yazar, ama **doğrudan `./gradlew bundleRelease`** çağıran biri eski numarayla derler.
+
+**Kural:** sürüm numarası pubspec'ten doğrulanmaz — **artefaktın kendisinden** doğrulanır:
+
+```bash
+bundletool dump manifest --bundle=app-release.aab | grep -oE 'versionCode="[0-9]+"'
+```
+
+---
+
+# Post-Beta Faz 2 — sayfa geçişi çakışması
+
+## A. Kök neden: SAYDAM SAYFA + KAYDIRMALI GEÇİŞ = bileşim hatası
+
+İskele şeffaf (`scaffoldBackgroundColor: Colors.transparent`, canlı zemin kökte tek örnek).
+`CupertinoPageTransitionsBuilder` gelen sayfayı gidenin ÜSTÜNE kaydırır ve **hiç soldurmaz**.
+İki saydam katman aynı anda çizilince ikisi de görünür.
+
+**Cihazda videoya alındı** (`screenrecord` + `ffmpeg` ile kare kare): Öğren → Dersler geçişinde
+Öğren'in baykuş görseli ve liste metni, gelen Dersler sayfasının İÇİNDEN okunuyordu.
+
+## B. Çözüm: SIRALI solma (Material shared-axis)
+
+`SharedAxisPageTransitionsBuilder` yazıldı. Belirleyici özellik solmaların **örtüşmemesi**:
+`t < 0,35` → gelen tamamen görünmez; `t > 0,35` → giden tamamen görünmez. Çarpımları her `t`
+için sıfır; bu, `page_transition_test.dart` içinde 1000 örnekle kapı altında.
+
+**Flutter'ın hazır `FadeForwardsPageTransitionsBuilder`'ı KULLANILMADI:** solma aralıkları
+örtüşüyor (giden `Interval(0, 0.25)`, gelen `Interval(0, 0.75)`) — opak sayfalarda sorunsuz,
+saydam sayfalarda aynı kusuru üretir. Ayrıca geçiş boyunca `ColorScheme.surface` ile opak bir
+kutu çizip canlı zemini söndürüyor.
+
+## C. iOS bilinçli olarak Cupertino'da BIRAKILDI
+
+O geçiş aynı zamanda kenardan kaydırıp geri gitme jestini kurar. Bu makinede iOS derlenemiyor
+(disiplin kuralı 7); **doğrulanamayan platformda davranış değiştirilmez.** Aynı çakışma iOS'ta
+da vardır ve iOS gerçekten derlenebildiğinde ele alınmalıdır — kayıt burada.
+
+## D. Araç notu: geçiş hatası ancak VİDEODAN görülür
+
+Tek kare `screencap` 320–400 ms'lik bir geçişi yakalayamaz. Yöntem:
+`adb shell screenrecord` → `adb pull` → `ffmpeg -vf fps=30` → kareleri `tile` ile birleştir.
+Önce/sonra karşılaştırması böyle yapıldı.

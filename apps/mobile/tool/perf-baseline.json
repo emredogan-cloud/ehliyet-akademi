@@ -1,0 +1,11 @@
+{
+  "device": "ANE-LX1",
+  "android": "9",
+  "runs": 3,
+  "coldStartMs": 759,
+  "warmStartMs": 154,
+  "memoryPssKb": 64956,
+  "apkArm64Mb": 31,
+  "apkArm32Mb": 30,
+  "aabMb": 62
+}

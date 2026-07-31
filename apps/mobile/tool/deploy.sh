@@ -85,11 +85,22 @@ for i in "${!PATTERNS[@]}"; do
   # için sıra bu şekildedir.
   if timeout 60 adb -s "$candidate" uninstall com.ehliyetegitim.ehliyet_akademi >/dev/null 2>&1; then
     echo "eski yapı kaldırıldı, yeniden deneniyor: $candidate" >&2
-    if timeout "$INSTALL_TIMEOUT" adb -s "$candidate" install -r "$APK" >/dev/null 2>&1; then
-      echo "kuruldu: $candidate — ${NAMES[$i]} (temiz kurulum)" >&2
-      echo "$candidate"
-      exit 0
-    fi
+    # KALDIRMA SONRASI BEKLEME — betiğin kendi hatasıydı, cihazda görüldü.
+    #
+    # Kaldırmadan hemen sonra yapılan kurulum bazen sessizce başarısız oluyor (paket yöneticisi
+    # hâlâ eski paketi topluyor). O durumda cihaz, BAŞLADIĞINDAN DAHA KÖTÜ bir hâlde kalıyordu:
+    # eski yapı silinmiş, yenisi kurulmamış, uygulama hiç yok. Kısa bir bekleme ve ikinci bir
+    # deneme bunu kapatıyor.
+    sleep 3
+    for attempt in 1 2; do
+      if timeout "$INSTALL_TIMEOUT" adb -s "$candidate" install -r "$APK" >/dev/null 2>&1; then
+        echo "kuruldu: $candidate — ${NAMES[$i]} (temiz kurulum)" >&2
+        echo "$candidate"
+        exit 0
+      fi
+      sleep 4
+    done
+    echo "UYARI: $candidate üzerinde eski yapı kaldırıldı ama yenisi KURULAMADI." >&2
   fi
   echo "başarısız/askıda: $candidate — ${NAMES[$i]} → sıradaki cihaza geçiliyor" >&2
   # Askıda kalmış kurulum oturumunu temizle; bırakılırsa sonraki denemeyi de kilitler.

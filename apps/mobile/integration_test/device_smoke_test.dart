@@ -15,6 +15,7 @@ import 'dart:async' show unawaited;
 import 'dart:ui' show FrameTiming;
 
 import 'package:ehliyet_akademi/app/app.dart';
+import 'package:ehliyet_akademi/app/router.dart';
 import 'package:ehliyet_akademi/core/theme/app_theme.dart';
 import 'package:ehliyet_akademi/data/share/share_service.dart';
 import 'package:ehliyet_akademi/design/app_background.dart';
@@ -28,6 +29,7 @@ import 'package:ehliyet_akademi/domain/onboarding/coach_marks_controller.dart';
 import 'package:ehliyet_akademi/domain/onboarding/onboarding_controller.dart';
 import 'package:ehliyet_akademi/domain/onboarding/welcome_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -273,13 +275,21 @@ void main() {
   /// uçtan uca test edilir.
   testWidgets('ödeme ekranı cihazda dürüst davranıyor', (tester) async {
     await launchApp(tester);
-    await tester.tap(find.descendant(of: find.byType(AppBottomNav), matching: find.text('Profil')));
-    for (var i = 0; i < 10; i++) {
-      await tester.pump(const Duration(milliseconds: 150));
-    }
-    await tester.scrollUntilVisible(find.text('Premium özellikleri keşfet'), 200);
-    await tester.tap(find.text('Premium özellikleri keşfet'));
-    for (var i = 0; i < 20; i++) {
+
+    // GEZİNME DOĞRUDAN YÖNLENDİRİCİDEN — metinle gezinmek bu ekranda GÜVENİLİR DEĞİL.
+    //
+    // Eski hâli "Profil sekmesine dokun → listede kaydır → Premium satırına dokun" diyordu ve
+    // cihazda tutarlı biçimde BAŞARISIZ oldu: ekranda Pratik sekmesinin içeriği kalıyordu.
+    //
+    // Kök neden: `StatefulShellRoute.indexedStack` altı dalın HEPSİNİ ağaçta tutar (görünmeyenler
+    // dâhil). `scrollUntilVisible`, kaydırılacak alanı belirtmediğinde bulduğu İLK `Scrollable`'ı
+    // sürükler — bu, o an görünen dalın listesi olmak zorunda değildir. Yanlış listeyi sürükleyip
+    // sonra görünmeyen bir satıra dokununca gezinme hiç olmuyordu.
+    //
+    // Bu testin konusu ödeme ekranının DÜRÜSTLÜĞÜ; oraya nasıl gidildiği değil. Profil → Premium
+    // yolu zaten widget testlerinde koşuyor.
+    routerOf(tester).push('/premium?from=device-test');
+    for (var i = 0; i < 25; i++) {
       await tester.pump(const Duration(milliseconds: 200));
     }
 
@@ -383,3 +393,10 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 }
+
+/// Testten yönlendiriciye erişim.
+///
+/// Sekme kabuğunda metinle gezinmek güvenilir değil (bkz. ödeme ekranı testindeki not); rota
+/// üzerinden gitmek deterministiktir ve gerçek uygulamanın kendi gezinme yığınını kullanır.
+GoRouter routerOf(WidgetTester tester) =>
+    ProviderScope.containerOf(tester.element(find.byType(EhliyetAkademiApp))).read(routerProvider);

@@ -48,17 +48,20 @@ serial_of_model() {
   echo "$devices" | grep -iE "model:$1" | head -1 | awk '{print $1}'
 }
 
-# Politika sırası: birincil Redmi Note 11R → yedek Huawei ANE-LX1.
+# Politika sırası: birincil Huawei ANE-LX1 → yedek Redmi Note 11R.
+#
+# SIRA SAHİBİN TALİMATIYLA DEĞİŞTİ (Huawei önce). Kod bunu bir sabit olarak taşır; "hangi cihazda
+# doğrulandı" sorusunun cevabı betikten okunabilsin diye.
 #
 # BAŞKA CİHAZ KULLANILMAZ (sahibin açık talimatı). Bu makinede bir Redmi 8A da bağlı; birincil
 # cihaz USB'den düştüğünde ona geçmek cazip ama YANLIŞ: doğrulama, sahibin belirlediği donanımda
 # yapılmalı. Aksi hâlde "cihazda doğrulandı" cümlesi, sahibin kastettiği cihazı anlatmaz.
 #
 # İkisi de kullanılamıyorsa betik HATA ile döner — sessizce başka bir cihaza kaymaz.
-declare -a PATTERNS=('22095RA98C' 'ANE.?LX1')
+declare -a PATTERNS=('ANE.?LX1' '22095RA98C')
 declare -a NAMES=(
-  'Redmi Note 11R (birincil)'
-  'Huawei ANE-LX1 (yedek)'
+  'Huawei ANE-LX1 (birincil)'
+  'Redmi Note 11R (yedek)'
 )
 
 tried=""
@@ -93,6 +96,6 @@ for i in "${!PATTERNS[@]}"; do
   timeout 10 adb -s "$candidate" shell pm install-abandon 2>/dev/null >/dev/null || true
 done
 
-echo "HATA: Redmi Note 11R ve Huawei ANE-LX1 kullanılamıyor (denenen:$tried)." >&2
+echo "HATA: Huawei ANE-LX1 ve Redmi Note 11R kullanılamıyor (denenen:$tried)." >&2
 echo "       Politika gereği BAŞKA cihaza geçilmez; kabloyu/izni kontrol et." >&2
 exit 1

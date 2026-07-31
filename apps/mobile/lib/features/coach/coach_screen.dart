@@ -19,6 +19,9 @@ import '../../domain/premium/premium_prompt.dart';
 import '../../domain/feedback/rating_prompt.dart';
 import '../feedback/rating_dialog.dart';
 import '../premium/premium_popups.dart';
+import '../../domain/coach/coach_insights.dart';
+import '../../domain/practice/srs.dart';
+import 'widgets/insight_cards.dart';
 import 'widgets/nudge_card.dart';
 
 /// AI Koç — proaktif deterministik dürtme kartları + grounded sohbet (`/api/ai/ask`).
@@ -202,9 +205,27 @@ class _CoachScreenState extends ConsumerState<CoachScreen> {
     );
   }
 
+  /// Beta Faz 7 — koçun ANALİZ katmanı.
+  ///
+  /// Tümü yerel cevap defterinden deterministik hesaplanır; ağ gerekmez (Faz 5 kuralı). Veri
+  /// yetmiyorsa kart HİÇ ÇİZİLMEZ — boş bir "zayıf konuların" başlığı, kullanıcının zayıf konusu
+  /// olmadığını sandırırdı.
   Widget _intro() {
     final p = context.palette;
     final nudges = _nudges();
+
+    final progress = ref.watch(progressRepositoryProvider).value;
+    final answers = progress?.loadAnswers() ?? const <AnswerLog>[];
+    final now = DateTime.now().millisecondsSinceEpoch;
+    final weak = weakTopics(answers);
+    final trend = progressTrend(answers, nowMs: now);
+    final forecast = examForecast(
+      readiness: answers.isEmpty ? null : progress!.readiness(),
+      answeredCount: answers.length,
+    );
+    final dueCards = progress == null
+        ? 0
+        : progress.loadCards().values.where((c) => c.dueAt <= now).length;
     return ListView(
       padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s3, AppSpacing.s4, AppSpacing.s4),
       children: [
@@ -243,6 +264,27 @@ class _CoachScreenState extends ConsumerState<CoachScreen> {
             NudgeCard(nudge: n, onTap: () => context.push(n.action)),
             const SizedBox(height: AppSpacing.s3),
           ],
+        ],
+
+        // ── Beta Faz 7 — analiz ────────────────────────────────────────────────────────────────
+        if (answers.isNotEmpty) ...[
+          const SectionTitle('Durum analizin'),
+          ExamForecastCard(forecast: forecast),
+          if (trend.isMeaningful) ...[
+            const SizedBox(height: AppSpacing.s3),
+            ProgressFeedbackCard(trend: trend),
+          ],
+          if (weak.isNotEmpty) ...[
+            const SizedBox(height: AppSpacing.s3),
+            WeakTopicsCard(
+              topics: weak,
+              // Zayıf konuya dokunmak DOĞRUDAN çalışmaya götürür. Analiz gösterip yol
+              // göstermemek, kullanıcıyı sorunla baş başa bırakmaktır.
+              onStudy: (_) => context.push('/practice/study'),
+            ),
+          ],
+          const SizedBox(height: AppSpacing.s3),
+          StudyPlanCard(plan: sevenDayPlan(weak: weak, dueCardCount: dueCards)),
         ],
         const SectionTitle('Bir şey sor'),
         Wrap(

@@ -5,6 +5,7 @@ import { Icon } from '@/components/ui/icons';
 import { buildMetadata } from '@/lib/seo/metadata';
 import {
   REFERRAL_MILESTONES,
+  describeReferralCodeProblem,
   isValidReferralCodeFormat,
   normalizeReferralCode,
 } from '@/lib/referrals';
@@ -90,10 +91,22 @@ export default async function DavetPage({ params }: { params: Promise<{ code: st
           <div>
             <p className="mk-hero__eyebrow">DAVET BAĞLANTISI</p>
             <h1 className="mk-hero__title">Bu davet kodu okunamadı</h1>
+            {/*
+              SORUNU ADIYLA SÖYLE — uzunluğu suçlama.
+
+              Eskiden burada koşulsuz "Davet kodları 8 karakterdir" yazıyordu. Cihazda ölçüldü:
+              `/davet/ABC12345` (TAM 8 karakter, ama alfabede olmayan `1` içeriyor) bu sayfayı
+              açıyor ve kullanıcı "kodum zaten 8 karakter" diyerek çıkmaza giriyordu — mobil
+              tarafta aynı çelişki bir kez düzeltilmişti (`normalizeReferralCode` notu), web
+              tarafında duruyordu.
+
+              `describeReferralCodeProblem` hangi karakterin sorunlu olduğunu söyler; uzunluk
+              gerçekten yanlışsa zaten uzunluğu söyler. Kural sunucu ve mobil ile AYNI kaynaktan.
+            */}
             <p className="mk-hero__lead">
-              Bağlantı kopyalanırken eksilmiş olabilir. Davet kodları <strong>8 karakterdir</strong>
-              . Kodu sana gönderen kişiden bağlantıyı yeniden istersen, ya da kodu uygulamada kayıt
-              olurken elle yazarsan davet işler.
+              {describeReferralCodeProblem(code) ?? 'Bağlantı kopyalanırken eksilmiş olabilir.'} Kodu
+              sana gönderen kişiden bağlantıyı yeniden istersen, ya da kodu uygulamada kayıt olurken
+              elle yazarsan davet işler.
             </p>
             <div className="mk-hero__cta">
               <a className="ui-btn ui-btn--primary ui-btn--lg" href={playStoreUrl()}>

@@ -113,8 +113,19 @@ List<Nudge> computeNudges({
       );
     }
     // En zayıf ders (sarı/kırmızı olanlar arasından en düşük ustalık).
+    //
+    // KAPI `mastery` ÜZERİNDEN — `light` üzerinden DEĞİL. Fark cihazda yakalandı:
+    // `computeReadiness`, `light`'ı GÜVEN KATSAYISIYLA düşürülmüş değerden hesaplar
+    // (`mastery * min(1, answered/8)`), ama `mastery` alanına HAM değeri koyar. Tek soru doğru
+    // cevaplanmış bir derste ham ustalık %100, düşürülmüş değer %12,5 olur → ışık kırmızı yanar
+    // ve bu dürtme "En zayıf dersin: İlk Yardım · %100 ustalık. Bu derse biraz daha çalışalım mı?"
+    // diyordu. Kullanıcıya gösterilen sayı, iddianın kendisini yalanlıyordu.
+    //
+    // Sıralama ham ustalıkla yapılıyor, gövdede ham ustalık yazılıyor; kapı da ham ustalığa
+    // bakmalı. Veri azlığından kırmızı yanan bir ders GERÇEKTEN zayıf değildir — hazırlık
+    // dürtmesi (§4 başı) o kullanıcıyı zaten çalışmaya yönlendiriyor.
     final weak = [...readiness.perSubject]..sort((a, b) => a.mastery.compareTo(b.mastery));
-    if (weak.isNotEmpty && weak.first.light != TrafficLight.yesil) {
+    if (weak.isNotEmpty && lightFor(weak.first.mastery) != TrafficLight.yesil) {
       final w = weak.first;
       out.add(
         Nudge(

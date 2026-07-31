@@ -14,6 +14,9 @@ const TABS = [
   { href: '/admin/soru-zekasi', label: 'Soru Zekâsı' },
   { href: '/admin/soru-uretimi', label: 'Soru Üretimi' },
   { href: '/admin/bildirimler', label: 'Bildirimler' },
+  // Beta Faz 8 — telemetri ve davet yüzeyleri. İkisinin de API'si vardı, ekranı yoktu.
+  { href: '/admin/telemetri', label: 'Telemetri' },
+  { href: '/admin/davetler', label: 'Davetler' },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

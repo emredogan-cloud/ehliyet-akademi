@@ -20,6 +20,13 @@ import {
 } from '@/lib/server/referrals';
 import { sanitizeProps, safeAt, KNOWN_EVENTS } from '@/lib/server/telemetry';
 import { parseFingerprints } from '@/app/.well-known/assetlinks.json/route';
+import { GET as telemetryGet } from '@/app/api/admin/telemetry/route';
+import {
+  errorGroups,
+  eventCounts,
+  productFunnel,
+  referralFunnel,
+} from '@/lib/server/telemetry-report';
 
 const BASE = 'http://test.local';
 const T = Date.now();
@@ -412,4 +419,116 @@ beforeAll(async () => {
   // Şema bootstrap'ı ilk `getDb()` çağrısında uygulanır; kullanıcı tablosuna dokunarak tetikle.
   const db = await getDb();
   await db.select({ id: users.id }).from(users).limit(1);
+});
+
+describe('yönetici telemetri panosu', () => {
+  /// YETKİ SINIRI: bu uç, TÜM kullanıcıların davranışını ve hata raporlarını gösterir. Sıradan bir
+  /// kullanıcıya açık olması, ürünün en hassas verisini sızdırmak olurdu.
+  it('sıradan kullanıcı erişemez', async () => {
+    const reg = await register(
+      post('/api/auth/register', { email: `plain-${T}@ea.dev`, password: PW, name: 'P' })
+    );
+    const cookie = cookieOf(reg);
+    const res = await telemetryGet(
+      new Request(BASE + '/api/admin/telemetry', { headers: { cookie } })
+    );
+    expect(res.status).toBe(403);
+  });
+
+  it('oturumsuz erişemez', async () => {
+    const res = await telemetryGet(new Request(BASE + '/api/admin/telemetry'));
+    expect([401, 403]).toContain(res.status);
+  });
+
+  /// Sözlükteki AMA hiç gelmemiş olaylar da SIFIRLA listelenir.
+  /// "Listede yok" ile "sıfır" farklı şeylerdir: birincisi ölçümün koptuğunu, ikincisi kimsenin
+  /// yapmadığını gösterir. Karıştırılırsa kopmuş bir ölçüm aylarca fark edilmez.
+  it('hiç gelmemiş olaylar sıfırla listelenir', async () => {
+    const counts = await eventCounts(30);
+    expect(counts.length).toBe(KNOWN_EVENTS.length);
+    expect(counts.every((c) => KNOWN_EVENTS.includes(c.name))).toBe(true);
+  });
+
+  it('huni TEKİL kişi sayar, toplam olay değil', async () => {
+    const at = new Date().toISOString();
+    // Aynı cihazdan üç `app_opened`: bir kişi.
+    for (let i = 0; i < 3; i++) {
+      await collect(
+        post('/api/analytics/collect', {
+          events: [{ id: `fn-${T}-${i}`, name: 'app_opened', at, anonId: 'same-device' }],
+        })
+      );
+    }
+    const funnel = await productFunnel(30);
+    const opened = funnel.find((s) => s.label === 'Uygulamayı açtı')!;
+    // En az bir kişi görünmeli ama üç kez sayılmamalı (başka testlerin verisi de olabilir).
+    expect(opened.value).toBeGreaterThanOrEqual(1);
+
+    const counts = await eventCounts(30);
+    const appOpened = counts.find((c) => c.name === 'app_opened')!;
+    expect(appOpened.total).toBeGreaterThan(appOpened.uniqueActors);
+  });
+
+  /// Gruplama olmadan liste işe yaramaz: bir çökme döngüsü listeyi tek başına doldurur ve
+  /// altındaki nadir ama ciddi hata görünmez.
+  it('hatalar parmak izine göre gruplanır ve ETKİLENEN KİŞİYE göre sıralanır', async () => {
+    const at = new Date().toISOString();
+    // Tek cihazdan aynı hatadan 5 tane.
+    for (let i = 0; i < 5; i++) {
+      await reportErrors(
+        post('/api/errors/report', {
+          reports: [
+            {
+              id: `eg-loop-${T}-${i}`,
+              kind: 'flutter',
+              fingerprint: 'flutter:StateError@loop.dart:1',
+              message: 'döngü hatası',
+              anonId: 'device-a',
+              at,
+            },
+          ],
+        })
+      );
+    }
+    // İki FARKLI cihazdan başka bir hata.
+    for (const device of ['device-b', 'device-c']) {
+      await reportErrors(
+        post('/api/errors/report', {
+          reports: [
+            {
+              id: `eg-wide-${T}-${device}`,
+              kind: 'network',
+              fingerprint: 'network:DioException@api.dart:9',
+              message: 'yaygın hata',
+              anonId: device,
+              at,
+            },
+          ],
+        })
+      );
+    }
+
+    const groups = await errorGroups(30);
+    const loop = groups.find((g) => g.fingerprint === 'flutter:StateError@loop.dart:1')!;
+    const wide = groups.find((g) => g.fingerprint === 'network:DioException@api.dart:9')!;
+
+    expect(loop.count).toBe(5);
+    expect(loop.affectedActors).toBe(1);
+    expect(wide.count).toBe(2);
+    expect(wide.affectedActors).toBe(2);
+
+    // Tek cihazın döngüye girip beş rapor üretmesi, o hatayı EN ÖNEMLİ hata yapmaz.
+    expect(groups.indexOf(wide)).toBeLessThan(groups.indexOf(loop));
+  });
+
+  it('davet hunisi üç basamağı da taşır', async () => {
+    const steps = await referralFunnel(30);
+    expect(steps.map((s) => s.label)).toEqual([
+      'Davet bağlantısı açıldı',
+      'Kayıt oldu',
+      'E-postasını doğruladı (nitelikli)',
+    ]);
+    // İlk basamağın dönüşümü YOKTUR (öncesi yok) — uydurma bir %100 gösterilmemeli.
+    expect(steps[0]!.conversion).toBeNull();
+  });
 });

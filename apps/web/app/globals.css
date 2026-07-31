@@ -5127,3 +5127,40 @@ table.tbl {
   font-weight: 700;
   color: var(--primary);
 }
+
+/* ── Beta Faz 8 — telemetri panosu ───────────────────────────────────────────────────────────── */
+.tlm-range {
+  display: flex;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-4);
+}
+.tlm-h2 {
+  margin: var(--sp-6) 0 var(--sp-3);
+  font-size: var(--fs-lg);
+}
+.tlm-funnel {
+  display: grid;
+  gap: var(--sp-3);
+}
+.tlm-step__head {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-sm);
+  margin-bottom: 4px;
+}
+.tlm-bar {
+  height: 10px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  overflow: hidden;
+}
+.tlm-bar__fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-bright), var(--primary));
+}
+.tlm-step__conv {
+  font-size: var(--fs-xs);
+}
+.tlm-zero td {
+  opacity: 0.45;
+}

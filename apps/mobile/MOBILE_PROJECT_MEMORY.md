@@ -104,3 +104,105 @@ demeden önce dosyanın gerçekten takipli/yayınlanıyor olduğu doğrulanmalı
 **PROGRAM KAPANDI (E1–E13).** Yayın öncesi iki iş kaldı ve ikisi de onay bekliyor:
 (a) üretim veritabanındaki doğrulama artıklarının temizlenmesi, (b) LemonSqueezy ürün görselinin
 mağaza paneline elle yüklenmesi.
+
+---
+
+# Beta Hazırlık Sprinti (Faz 1–11) — 31 Temmuz 2026
+
+`cdb9774` → `c90338c` · 11 commit · 94 dosya · +9.430 / −256
+Mobil test **530 → 888** · web **603 → 633** · `flutter analyze` 0
+
+Ayrıntı: `BETA_READINESS_REPORT.md` (ana) · `BILLING_AUDIT.md` · `PLAY_DATA_SAFETY.md`
+
+## Kalıcı mühendislik dersleri
+
+Bunlar bu sprintte **pahalıya öğrenildi**; tekrar etmemek için buradalar.
+
+### 1. Test ikilisi, gerçeğin SÖZLEŞMESİNDEN ayrılırsa test yalan söyler
+
+Ödeme ekranında "vazgeçince düğme sonsuza kadar döner" hatası, testler yeşilken vardı.
+Sahte ağ geçidi `purchase()`'tan doğrudan `BillingCancelled` dönüyordu; gerçek ağ geçidi
+`BillingSuccess([])` dönüp sonucu AKIŞTAN gönderiyor. Sahte, gerçeğin kırık olduğu yolu hiç
+kullanmıyordu.
+
+**Kural:** bir sahte yazarken "gerçek ne DÖNDÜRÜR" değil, "gerçek ne ZAMAN ve NEREDEN bildirir"
+sorusu sorulur. Asenkron bir sözleşmeyi senkron bir sahteyle taklit etmek, tam da o asenkronluktan
+doğan hataları görünmez kılar.
+
+### 2. Tek cihazda doğrulama yetmez — Android sürümü davranışı değiştirir
+
+`BoxConstraints has a negative minimum height`: Redmi 8A'da (Android 11) HİÇ olmuyor,
+Redmi Note 11R'de (Android 13) HER açılışta oluyordu. Sistem çubuğu yerleşirken gelen kısa
+yükseklik cihaza ve sürüme göre değişiyor.
+
+Aynı şekilde giriş ekranındaki `clamp(alt > üst)` çökmesi yalnız ≥1024 dp'de (tablet) oluyor.
+
+**Kural:** en az iki farklı Android sürümü; genişlik/yazı ölçeği/yön matrisi otomatik taranmalı.
+
+### 3. "Ölçemiyorsan ölçüyormuş gibi yapma"
+
+Başarım labı ilk yazımda `dumpsys gfxinfo` ile jank okuyordu ve `frameP90 = 4950 ms` üretiyordu.
+`4950` bir kare süresi değil, histogramın SON KOVASININ ETİKETİ. Kök neden: `gfxinfo` Android'in
+kendi çizim sistemini (HWUI) ölçer; **Flutter HWUI'yi kullanmaz**, bu yüzden bir Flutter
+uygulaması için her zaman 0 kare bildirir.
+
+**Kural:** bir metrik makul görünüyor diye doğru değildir. Ölçüm aracının ölçtüğü şeyin, ölçmek
+istediğin şey olduğu doğrulanmalı. Doğru kaynak uygulama içindeki `FrameTiming`'dir.
+
+### 4. `null` ile boş liste AYNI ŞEY DEĞİLDİR
+
+`fetchOwned()` hem "sunucu cevap verdi, hiçbir şeyin yok" hem "sunucuya sorulamadı" durumunu `[]`
+ile temsil ediyordu. Sonuç: iade tespiti imkânsızdı, çünkü "iade edildi" ile "misafirim" ayırt
+edilemiyordu.
+
+**Kural:** "bilgi yok" ile "bilgi: hiçbir şey yok" ayrı tiplerle temsil edilir. Karıştırıldığında
+yanlış yön, ödenmiş bir hakkı silmek olur.
+
+### 5. Ölçüm, ölçtüğü şeyin en kırılgan parçasına bağlanmamalı
+
+`AppVersion.load()` cevapsız bir platform kanalında HİÇ TAMAMLANMIYORDU (hata da fırlatmıyor).
+Analitik bağlamı sürümü beklediği için hiçbir olay gönderilemiyordu — sürüm etiketi gibi
+tamamen ikincil bir alan, bütün ölçümü durduruyordu.
+
+**Kural:** ikincil bir alanın alınamaması, birincil işi bloke edemez. Zaman sınırı koy.
+
+### 6. Riverpod: `dispose()` içinde `ref` KULLANILMAZ
+
+`ref.read` sökülmekte olan bir widget'ta yasaktır. Gereken örnek `initState`'te alanda yakalanır.
+
+### 7. go_router özel şema: `scheme://host/yol` — host ATLANAMAZ
+
+`ehliyetakademi://davet/<KOD>` yazıldığında `Uri.parse` "davet"i HOST sayar ve yol boşalır;
+go_router yalnız `uri.path` ile eşleştirdiği için hiçbir rota tutmaz. Doğrusu
+`ehliyetakademi://app/davet/<KOD>`.
+
+### 8. `StatefulShellRoute.indexedStack` bütün dalları ağaçta tutar
+
+`scrollUntilVisible`, alan belirtilmediğinde bulduğu İLK `Scrollable`'ı sürükler — bu, görünen
+dalın listesi olmak zorunda değil. Testlerde gezinme metinle değil, **rota üzerinden** yapılmalı.
+
+### 9. "Çevrimdışı-öncelik" depolamada değil, GECİKMEDE ölçülür
+
+Önbellek doluyken bile ağ beklenirse kullanıcı zaman aşımı kadar (12 sn) bekler. Önbellek varsa
+ANINDA dönülür, tazeleme arka planda yapılır.
+
+### 10. Boş yönetim ekranı EKLENMEZ
+
+Kampanya/ödül/bayrak yönetimi için arkalarında mekanizma olmadığı için ekran eklenmedi. Olmayan
+bir yeteneği varmış gibi göstermek, sahibi yanlış bir güvene sokar.
+
+## Cihaz politikası
+
+`apps/mobile/tool/deploy.sh` politikayı KODDA taşır: birincil Huawei ANE-LX1 → yedek Redmi Note
+11R. Başka cihaza SESSİZCE geçmez; ikisi de yoksa hata verir ("cihazda doğrulandı" cümlesi
+sahibin kastettiği cihazı anlatmalı).
+
+İmza uyuşmazlığında önce kaldırıp yeniden kurar — **kaldırma sonrası bekleme ve ikinci deneme
+şart**: hemen yapılan kurulum sessizce başarısız olup cihazı "uygulama hiç kurulu değil" hâlinde
+bırakıyordu.
+
+## Başarım taban çizgisi
+
+`apps/mobile/tool/perf-baseline.json` — ANE-LX1/Android 9, release, 3 koşu medyanı:
+soğuk 759 ms · sıcak 154 ms · PSS 64,9 MB · APK arm64 31 MB · kare p10 11,87 ms (bütçe 12).
+`tool/perf_lab.sh` gerilemede exit 1 verir; kapının gerçekten kırılabildiği doğrulandı.

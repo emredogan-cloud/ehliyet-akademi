@@ -12,9 +12,11 @@ import '../../data/premium/billing_gateway.dart';
 import '../../data/premium/entitlements_repository.dart';
 import '../../design/primitives.dart';
 import '../../domain/auth/auth_controller.dart';
+import '../../domain/premium/campaign.dart';
 import '../../domain/premium/entitlement_status.dart';
 import '../../domain/premium/products.dart';
 import '../../domain/premium/paywall_offer.dart';
+import '../../domain/premium/retention.dart';
 import 'paywall_sections.dart';
 import 'premium_popups.dart';
 
@@ -56,8 +58,15 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   Product get _product => premiumProduct;
 
   /// Kampanya bilgisi (üstü çizili fiyat + geri sayım). Yapılandırılmadıysa ikisi de KAPALI —
-  /// gerekçe `PaywallOffer` sınıf notunda.
-  final PaywallOffer _offer = PaywallOffer.fromEnvironment();
+  /// gerekçe `PaywallOffer` ve `Campaign` sınıf notlarında.
+  ///
+  /// Faz 3: kaynak artık **kampanya motoru**. Ekranın çizim mantığı değişmedi; yalnız cevabın
+  /// nereden geldiği değişti. Katalog boşsa (varsayılan) eski `--dart-define` yoluna, o da boşsa
+  /// kampanyasız hâle düşülür.
+  PaywallOffer get _offer => PaywallOffer.fromCampaign(
+    activeCampaign(ref.read(campaignCatalogProvider), DateTime.now()),
+    DateTime.now(),
+  );
 
   /// Mağazadan gelen ürün — yoksa null (mağaza kapalı ya da ürün Play'de tanımlı değil).
   BillingProduct? get _storeProduct {
@@ -79,6 +88,24 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     );
     _loadStore();
     ref.track(AnalyticsEvent.premiumScreenViewed(source: widget.source));
+  }
+
+  /// Faz 4 — ödeme ekranı SATIN ALMA OLMADAN kapatıldı.
+  ///
+  /// `dispose` içinde `ref` okumak Riverpod'da yasak (sağlayıcı o an sökülüyor olabilir); bu
+  /// yüzden damga burada, sökülme başlamadan alınır. Sahiplik varsa hiçbir şey kaydedilmez —
+  /// satın almış kullanıcıya "bakmıştın" demek anlamsızdır.
+  ///
+  /// İlk terk anı korunur (bkz. `PaywallReminderController.recordLeftWithoutPurchase`): ekranı
+  /// beş kez açıp kapatmak hatırlatmayı sürekli ötelememelidir.
+  @override
+  void deactivate() {
+    if (!isPremium(ref.read(entitlementsProvider))) {
+      ref
+          .read(paywallReminderProvider.notifier)
+          .recordLeftWithoutPurchase(DateTime.now().millisecondsSinceEpoch);
+    }
+    super.deactivate();
   }
 
   /// Beta Faz 2 — kullanıcı Play sayfasını KAPATTI.

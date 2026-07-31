@@ -2784,3 +2784,70 @@ da vardır ve iOS gerçekten derlenebildiğinde ele alınmalıdır — kayıt bu
 Tek kare `screencap` 320–400 ms'lik bir geçişi yakalayamaz. Yöntem:
 `adb shell screenrecord` → `adb pull` → `ffmpeg -vf fps=30` → kareleri `tile` ile birleştir.
 Önce/sonra karşılaştırması böyle yapıldı.
+
+---
+
+# Post-Beta Faz 3–5 — dönüşüm, tutundurma, geri kazanım
+
+## A. Kampanya bir VERİ nesnesidir, ekrana yazılmış metin değil
+
+`Campaign` motoru geldi: `id · title · explanation · kind · discountPercent · oldPriceLabel ·
+newPriceLabel · startsAt · endsAt · enabled`. Kaynak `--dart-define=CAMPAIGNS_JSON=[...]`.
+
+**Varsayılan: HİÇ KAMPANYA YOK.** Bu, sahte aciliyeti yapısal olarak imkânsız kılar:
+
+- sayaç YALNIZ `enabled && pencere içinde && endsAt != null` ise çizilir,
+- üstü çizili fiyat YALNIZ yürürlükteki kampanyada çizilir,
+- bozuk JSON = boş katalog (çökme yok) — pazarlama yapılandırma hatası uygulamayı açılamaz
+  hâle getirmemeli.
+
+Eski iki `--dart-define` (`PAYWALL_LIST_PRICE`, `PAYWALL_OFFER_ENDS_AT`) **yedek yol** olarak
+duruyor: o değerlerle derlenmiş bir yapı sahada olabilir.
+
+## B. Adı bir şeyi anlatan kod, o şeyi KONTROL ETMİYOR olabilir
+
+`PremiumTrigger.firstExam` başlığı "İlk deneme sınavını tamamladın! 🎉" diyordu ama tetikleyici
+**ilk sınav olup olmadığına HİÇ BAKMIYORDU** — yalnız 24 saatlik soğumaya bakıyordu. Yani beşinci
+sınavdan sonra da "ilk sınavını tamamladın" çıkabiliyordu. Artık `shouldRunFirstExamConversion`
+gerçekten `examsFinished == 1` soruyor.
+
+**Kural:** bir sabitin ADI bir koşulu ima ediyorsa, o koşulun kodda gerçekten aranıp aranmadığını
+doğrula.
+
+## C. Tebrik ile satış AYNI pencerede olmaz
+
+İlk sınav sonrası akış ikiye ayrıldı: (1) koç sonucu **dürüstçe** okur — satış yok, (2) kullanıcı
+"öneriyi gör" derse teklif açılır. Koçun okuması üç banda ayrılır ve **sonuçtan bağımsız övgü
+yoktur**: 50 soruda 4 doğru yapmış birine "harikasın" demek, ürünün kendi ölçümüne inanmadığını
+gösterir.
+
+Teklifin giriş cümlesi de kullanıcının KENDİ sayısını taşır ("50 soruda 4 doğru, geçmek için 31
+soru daha") — "sana özel" iddiasının arkasında gerçek veri olmalı.
+
+## D. `dispose` içinde `ref` okunmaz — `deactivate` kullanılır
+
+Ödeme ekranını satın almadan terk etme damgası `deactivate()` içinde alınıyor. `dispose` sırasında
+sağlayıcı sökülmüş olabilir ve Riverpod okumayı yasaklıyor.
+
+İLK terk anı korunur: ekran beş kez açılıp kapatılırsa bekleme süresi her seferinde baştan
+başlamamalı, yoksa hatırlatma sonsuza kadar ötelenir.
+
+## E. Tutundurma penceresi "bir kez, gecikmeli, kapatılabilir"
+
+- Ödeme ekranı hatırlatması: terkten **24 saat** sonra, **ömür boyu bir kez**. 24 saat, mevcut
+  bağlamsal teşvikin soğumasıyla aynı → iki sistem aynı gün üst üste binemez.
+- Geri kazanım: erişim kaybından **1 saat** sonra, bir kez. Sıfır değil — açılışta sunucu senkronu
+  geçici olarak "sahip değil" diyebilir; bekleme gerçek kaybı gürültüden ayırır.
+- İkisi aynı anda AÇILMAZ; geri kazanım önceliklidir.
+
+## F. Kampanya yoksa geri kazanım UYDURMAZ
+
+Geri kazanım penceresi, yürürlükte bir `winBack` kampanyası varsa teklifi gösterir; yoksa yalnız
+dürüst bilgilendirme yapar ("ilerlemen duruyor, ücretsiz devam edebilirsin"). **Kampanya yokken
+indirim icat edilmez.**
+
+## G. Cihazda doğrulandı
+
+Kampanyalı bir yapı (`--dart-define-from-file`) ile: tebrik penceresi → teklif → ödeme ekranı
+zinciri koşuldu; kampanya kartı, %40 rozeti, üstü çizili ₺799,99 → ₺479,99 ve canlı sayaç
+(47:48:14 → 47:44:21) çalışıyor. Sevk edilen AAB'de `CAMPAIGNS_JSON` **yoktur**.

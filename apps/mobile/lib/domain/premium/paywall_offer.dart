@@ -1,3 +1,5 @@
+import 'campaign.dart';
+
 /// Faz 9 — ödeme ekranındaki KAMPANYA bilgisi.
 ///
 /// ## Neden ayrı ve neden yapılandırmaya bağlı
@@ -34,10 +36,31 @@ class PaywallOffer {
   static const _endsAt = String.fromEnvironment('PAYWALL_OFFER_ENDS_AT');
 
   /// Derleme zamanı yapılandırmasından oku. Geçersiz tarih ÇÖKME üretmez; sayaç kapalı kalır.
+  ///
+  /// ESKİ YOL — Faz 3'te gelen [Campaign] motorundan ÖNCEKİ iki `--dart-define`. Kaldırılmadı
+  /// çünkü bu değerlerle derlenmiş bir yapı hâlâ sahada olabilir; kampanya motoru bir şey
+  /// söylemezse bu yol yedek olarak durur ([fromCampaign] içindeki geri düşüş).
   static PaywallOffer fromEnvironment() => PaywallOffer(
     listPriceLabel: _listPrice.isEmpty ? null : _listPrice,
     endsAt: _endsAt.isEmpty ? null : DateTime.tryParse(_endsAt),
   );
+
+  /// Faz 3 — teklif artık **kampanya motorundan** türetilir.
+  ///
+  /// Ödeme ekranının çizim mantığı (`PaywallPriceBlock`) değişmedi: hâlâ "üstü çizili fiyat var
+  /// mı" ve "sayaç görünür mü" diye sorar. Değişen, cevabın NEREDEN geldiğidir — artık tek bir
+  /// veri kaynağı (`Campaign`) var ve o kaynak varsayılan olarak boştur.
+  ///
+  /// [campaign] yoksa eski `--dart-define` yoluna düşülür; o da boşsa **kampanyasız** hâl kalır
+  /// ve ekran yalnız mağazanın gerçek fiyatını gösterir.
+  static PaywallOffer fromCampaign(Campaign? campaign, DateTime now) {
+    if (campaign == null || !campaign.isActiveAt(now)) return fromEnvironment();
+    return PaywallOffer(
+      listPriceLabel: campaign.hasListPriceAt(now) ? campaign.oldPriceLabel : null,
+      // Sayaç YALNIZ bitişi olan kampanyada; bitişi yoksa `endsAt` null kalır ve çizilmez.
+      endsAt: campaign.hasCountdownAt(now) ? campaign.endsAt : null,
+    );
+  }
 
   /// Üstü çizili fiyat gösterilsin mi?
   bool get hasListPrice => (listPriceLabel ?? '').trim().isNotEmpty;

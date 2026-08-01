@@ -15,6 +15,7 @@ import '../../domain/content/lesson.dart';
 import '../../domain/content/lesson_meta.dart';
 import '../../domain/premium/products.dart';
 import 'widgets/content_scope.dart';
+import 'widgets/narration_player.dart';
 
 /// Ders detayı — hedefler, bölümler (rozet + vurgu + karşılaştırma), hafıza teknikleri, sınav
 /// stratejisi, sık hatalar, ipuçları, özet ve tekrar kartları. Premium dersler kilitlenir.
@@ -168,6 +169,13 @@ class _LessonBodyState extends State<_LessonBody> {
         // `figureId` boş ya da tanınmayan bir değerse hiçbir şey çizilmez; ders bugünkü
         // hâliyle görünmeye devam eder.
         LessonFigure(figureId: lesson.figureId),
+
+        // Sesli anlatım — Premium Kalite Programı · Faz 5.
+        //
+        // Kaynak ses veremiyorsa bu widget HİÇBİR ŞEY çizmez. Bugün öyle: ses üretilmedi,
+        // dolayısıyla oynatıcı görünmüyor. "Yakında" rozeti konmadı — olmayan bir özelliği
+        // varmış gibi göstermek, denetimde tur metninde yakalanan kusurun aynısı olurdu.
+        NarrationPlayer(lesson: lesson),
 
         // Hedefler
         if (lesson.objectives.isNotEmpty) ...[

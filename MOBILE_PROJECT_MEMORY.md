@@ -2989,3 +2989,47 @@ zenginleştirmeyi override ile KAPATIYOR; görsel üretim kendi dosyasında doğ
 
 **Kural:** üretim davranışını değiştiren bir sağlayıcı eklerken, test yardımcısının o
 sağlayıcıyı da kontrol edip etmediğine bak.
+
+---
+
+# QIP v3 — Faz 5–10: üreteç, kalite kapısı, cihaz
+
+## A. Üretecin İDDİASI ölçülebilir olmalı
+
+`ExamPlan` (bySubject/byDifficulty/visualCount/repeatedImages/weakTopicCount) arayüzde
+gösterilmiyor; **testler ve teşhis** için var. "Zorluk dengeliyorum" iddiası ancak sayılabildiği
+için test edilebiliyor. Ölçülemeyen bir iddia, kod yorumundan ibarettir.
+
+## B. Aynı kural İKİ KOD YOLUNDA birden uygulanmalı
+
+Zayıf konu önceliği yalnız ders döngüsünde vardı; uyarlanabilir kip `subjects: {}` ile
+çağrıldığında (ders ayrımı yapmayan yol) kipin **tek işi sessizce çalışmıyordu**. Test yakaladı.
+
+**Kural:** bir seçim mantığının iki dalı varsa, özellik bayrağının İKİSİNDE de uygulandığını
+doğrula. Faz 3'teki "adı bir şeyi anlatan kod o şeyi kontrol etmiyor" kusurunun akrabası.
+
+## C. Şık karıştırmanın sinsi kusuru
+
+Şıklar karışır ama `answerIndex` yeniden eşlenmezse üreteç **sessizce yanlış cevap öğretir** ve
+hiçbir şey kırılmaz. Ayrı fonksiyon + ayrı test ile korunuyor.
+
+## D. Zorluk dengelemesi neden "kovadan sırayla"
+
+Havuzu karıştırıp almak, hangi zorluk çoksa sınavı ona kaydırır. Bankada `orta` baskın olduğu
+için dengeleme olmadan sınavlar ortaya yığılıyordu. Üç kovadan sırayla almak bunu düzeltiyor.
+
+## E. Göç izni ≠ göç gerekliliği
+
+Veritabanı göçüne izin verilmişti; **yapılmadı, çünkü gerekmedi**: banka kodda duruyor,
+`content_items.payload` JSONB (yeni alanlar göçsüz giriyor), yazarlık tabloları zaten vardı ve
+görsel sorular cihazda üretiliyor (saklanmıyor). İzin verilen bir işi gereksizken yapmamak da
+bir karardır.
+
+## F. Cihazda kanıtlanan
+
+Deneme sınavının 6/50. sorusu: "Bu ikaz ışığı yandığında sürücünün yapması gereken nedir?" —
+ikaz ışığı görseli ÇİZİLDİ, şıklar önem düzeyi etiketleri. Sprint öncesi bu imkânsızdı
+(modelde alan yok, projeksiyonda geçiş yok, arayüzde çizim yok).
+
+Görsel sorular kademeli geliyor: ikaz ışıkları pakete gömülü olduğu için hemen, işaret ve parça
+soruları içerik anlık görüntüsü indikten sonra.

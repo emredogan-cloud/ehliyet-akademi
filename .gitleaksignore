@@ -1,0 +1,17 @@
+# gitleaks — bilinçli olarak yok sayılan bulgular.
+#
+# KURAL: buraya yalnız GERÇEK BİR SIR OLMADIĞI doğrulanmış bulgular yazılır ve her satırın
+# gerekçesi üstünde durur. "CI kırmızı kalmasın" tek başına bir gerekçe değildir; bir sırrı
+# buraya yazmak, onu depoda bırakmakla aynı şeydir.
+#
+# Biçim: <commit>:<dosya>:<kural>:<satır>
+#
+# ── Bulgu 1 ───────────────────────────────────────────────────────────────────────────────
+# Entegrasyon testi demirbaşı: `password: 'katilmayan-parola-123'`.
+# · Gerçek bir kimlik bilgisi değil; test içinde anında oluşturulup atılan bir kullanıcının
+#   parolası. Hiçbir ortama, hiçbir servise ait değil.
+# · Güncel kaynakta ARTIK YOK — `FIXTURE_LOGIN` sabitine taşındı. Bulgu yalnızca geçmişte
+#   duruyor, dolayısıyla satır içi `gitleaks:allow` yorumu bunu susturamaz.
+# · `pull_request` koşusunda görünmüyor (yalnız PR commit'lerine bakıyor); `workflow_dispatch`
+#   tüm geçmişi taradığı için orada çıkıyordu.
+8ec24808b2af44e6f433d0b97fd0c5a06871888f:apps/web/lib/server/social.integration.test.ts:generic-api-key:162

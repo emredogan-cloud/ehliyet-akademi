@@ -126,6 +126,37 @@ List<Question> buildSignQuestions(List<TrafficSign> signs, Rng rng) {
       rng: rng,
     );
     if (q != null) out.add(q);
+
+    // İKİNCİ AÇI — "hangi gruba girer?".
+    //
+    // Anlamı ezberlemekle grubunu okumak AYNI beceri değildir ve ikincisi daha güçlüdür:
+    // grubu şekil ve renkten çıkarabilen aday, hiç görmediği bir levhayı bile
+    // sınıflandırabilir. Ders içeriğindeki "önce grubunu tanı" öğüdünün sınav karşılığı budur.
+    //
+    // Çeldirici havuzu KATEGORİ ETİKETLERİ; sekiz kategori var, üç benzersiz çeldirici
+    // her zaman bulunur.
+    final group = _question(
+      id: 'vq-sign-${sign.id}-grup',
+      subject: Subject.trafik,
+      topic: 'Trafik İşaretleri',
+      difficulty: Difficulty.kolay,
+      stem: 'Aşağıdaki trafik işareti hangi işaret grubuna girer?',
+      correct: sign.category.label,
+      pool: [
+        for (final c in SignCategory.values)
+          if (c != sign.category) c.label,
+      ],
+      fallback: const [],
+      explanation:
+          '${sign.name}, "${sign.category.label}" grubundandır. ${sign.memoryTip} '
+          'İşaretin şekli ve rengi grubunu ele verir; grubu tanımak, tek tek ezberlemekten güçlüdür.',
+      objective: 'Trafik işaretini şekil ve renginden yola çıkarak grubuna yerleştirir.',
+      kind: QuestionKind.sign,
+      assetId: sign.id,
+      alt: '${sign.name} trafik işareti',
+      rng: rng,
+    );
+    if (group != null) out.add(group);
   }
   return out;
 }
@@ -240,6 +271,33 @@ List<Question> buildPartQuestions(List<VehiclePart> parts, Rng rng) {
       rng: rng,
     );
     if (purpose != null) out.add(purpose);
+
+    // ÜÇÜNCÜ AÇI — "hangi sistemde bulunur?".
+    //
+    // Parçayı tanımak ile aracın neresinde arayacağını bilmek farklı şeylerdir. Sınavda
+    // "kaput altında ne var" tipi sorular bu ayrımı ölçer; uygulamada da Öğren ▸ Araç
+    // bölümü parçaları bu sistemlere göre gruplayarak gösteriyor.
+    final system = _question(
+      id: 'vq-part-${part.id}-sistem',
+      subject: Subject.motor,
+      topic: 'Araç Tekniği',
+      difficulty: Difficulty.kolay,
+      stem: 'Görseldeki parça aracın hangi bölümünde bulunur?',
+      correct: part.system.label,
+      pool: [
+        for (final s in VehicleSystem.values)
+          if (s != part.system) s.label,
+      ],
+      fallback: const [],
+      explanation:
+          '${part.name}, "${part.system.label}" bölümünde bulunur. ${part.tip}',
+      objective: 'Araç parçasının hangi sistemde/bölümde bulunduğunu belirler.',
+      kind: QuestionKind.mechanic,
+      assetId: part.id,
+      alt: '${part.name} görseli',
+      rng: rng,
+    );
+    if (system != null) out.add(system);
   }
   return out;
 }

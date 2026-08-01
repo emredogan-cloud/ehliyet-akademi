@@ -70,12 +70,15 @@ void main() {
     test('answerIndex karıştırmadan sonra doğru şıkkı gösterir', () {
       final qs = buildSignQuestions(signs, rng());
       for (final q in qs) {
-        final id = q.id.replaceFirst('vq-sign-', '');
+        // Her levha İKİ soru üretir: anlam ve grup. Doğru şık, sorunun açısına göre
+        // ya işaretin anlamı ya da kategori etiketidir.
+        final isGroup = q.id.endsWith('-grup');
+        final id = q.id.replaceFirst('vq-sign-', '').replaceFirst(RegExp(r'-grup$'), '');
         final sign = signs.firstWhere((s) => s.id == id);
         expect(
           q.options[q.answerIndex],
-          sign.meaning,
-          reason: '${q.id}: doğru şık işaretin anlamı olmalı',
+          isGroup ? sign.category.label : sign.meaning,
+          reason: '${q.id}: doğru şık ${isGroup ? "kategori etiketi" : "işaretin anlamı"} olmalı',
         );
       }
     });
@@ -153,16 +156,31 @@ void main() {
   group('çeldirici yetersizse soru ÜRETİLMEZ', () {
     /// Üç benzersiz çeldirici bulunamıyorsa üç şıklı soru üretmektense hiç üretmemek doğrudur
     /// (Faz 11'de kapatılan "üç şıklı soru" kusuru geri gelmemeli).
-    test('havuz küçükse üretim atlanır, bozuk soru çıkmaz', () {
+    /// ANLAM sorusu çeldiricilerini KATALOGDAN alır; katalog küçükse üretilemez.
+    /// GRUP sorusu ise çeldiricilerini `SignCategory` etiketlerinden alır — sekiz sabit
+    /// kategori her zaman üç benzersiz çeldirici verir. Bu yüzden tek levhalık bir katalogda
+    /// bile geçerli bir soru çıkar; üretilemeyen yalnızca anlam sorusudur.
+    test('havuz küçükse ANLAM sorusu atlanır, bozuk soru çıkmaz', () {
       final tiny = [_sign('a', SignCategory.tehlike, 'Tek anlam')];
-      expect(buildSignQuestions(tiny, rng()), isEmpty);
+      final qs = buildSignQuestions(tiny, rng());
+      expect(qs.where((q) => !q.id.endsWith('-grup')), isEmpty);
+      for (final q in qs) {
+        expect(q.options, hasLength(kOptionCount));
+        expect(q.options.toSet(), hasLength(kOptionCount));
+      }
     });
 
-    test('aynı anlamı taşıyan levhalar çeldirici sayısını düşürür', () {
+    test('aynı anlamı taşıyan levhalar ANLAM sorusunun çeldiricisini tüketir', () {
       final dup = [
         for (var i = 0; i < 4; i++) _sign('d$i', SignCategory.tehlike, 'Aynı anlam'),
       ];
-      expect(buildSignQuestions(dup, rng()), isEmpty);
+      final qs = buildSignQuestions(dup, rng());
+      expect(qs.where((q) => !q.id.endsWith('-grup')), isEmpty);
+      // Grup sorusu yine de üretilebilir ve dört şıklı, tekrarsız olmak zorundadır.
+      expect(qs.where((q) => q.id.endsWith('-grup')), isNotEmpty);
+      for (final q in qs) {
+        expect(q.options.toSet(), hasLength(kOptionCount), reason: '${q.id}: şıklar tekrarsız');
+      }
     });
   });
 

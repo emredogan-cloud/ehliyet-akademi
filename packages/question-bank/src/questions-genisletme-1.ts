@@ -20,10 +20,10 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'kolay',
     stem: 'Kavşakta yalnızca yanıp sönen sarı ışık sürücüye ne anlatır?',
     options: [
-      'Dur ve bekle',
+      'Dur çizgisinde tam olarak dur ve bekle',
       'Yavaşla, dikkatli ol ve kurallara göre geç',
-      'Hızlan ve hemen geç',
-      'Geri dön',
+      'Hızlan ve kavşağı hemen geçmeye çalış',
+      'Kavşağa girme, geri dönerek başka yola sap',
     ],
     answerIndex: 1,
     explanation:
@@ -254,11 +254,11 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     stem: 'Motor yağının değişim zamanı genel olarak neye göre belirlenir?',
     options: [
       'Aracın dış rengine ve model yılına göre belirlenir',
-      'Üreticinin belirttiği kilometre veya süreye göre',
-      'Yalnızca gözle görülür bir arıza çıkınca',
       'Lastik hava basıncı değerine göre',
+      'Yalnızca gözle görülür bir arıza çıkınca',
+      'Üreticinin belirttiği kilometre veya süreye göre',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Motor yağı, üreticinin el kitabında belirttiği kilometre veya zaman aralığında (hangisi önce dolarsa) değiştirilir; düzenli değişim motor ömrünü korur.',
     whyWrong: [
@@ -280,11 +280,11 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     stem: 'Tıkanmış bir hava filtresinin araca etkisi ne olur?',
     options: [
       'Fren mesafesini kısaltıp frenleme gücünü belirgin artırır',
-      'Yakıt tüketimini artırır ve motor performansını düşürür',
-      'Lastik ömrünü uzatır ve aşınmayı yavaşlatır',
       'Direksiyonu ağırlaştırır ve manevrayı zorlaştırır',
+      'Lastik ömrünü uzatır ve aşınmayı yavaşlatır',
+      'Yakıt tüketimini artırır ve motor performansını düşürür',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Kirli/tıkalı hava filtresi motora yeterli hava girişini engeller; yanma bozulur, yakıt tüketimi artar ve güç düşer. Periyodik olarak değişmelidir.',
     whyWrong: [
@@ -306,11 +306,11 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     stem: 'Cam sileceği süpürgesi camda iz bırakıyor ve iyi temizlemiyorsa ne yapılmalıdır?',
     options: [
       'Görmezden gelinir; iz zamanla kendiliğinden geçer',
-      'Silecek lastiği/süpürgesi yenisiyle değiştirilir',
-      'Cam sürekli açık bırakılarak kurutulur',
       'Sinyal kolu ve silecek motoru değiştirilir',
+      'Cam sürekli açık bırakılarak kurutulur',
+      'Silecek lastiği/süpürgesi yenisiyle değiştirilir',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Yıpranmış silecek lastiği görüşü bozar; yağmurda güvenliği doğrudan etkilediğinden yenisiyle değiştirilmelidir.',
     whyWrong: [
@@ -466,11 +466,11 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     stem: 'Trafikte "duraklama" en doğru şekilde nasıl tanımlanır?',
     options: [
       'Aracı uzun süre terk etmek',
-      'Yolcu indirip bindirmek veya kısa bir iş için aracı kısa süreli durdurmak',
-      'Motoru kapatıp gece boyu bırakmak',
       'Aracı tamir için bırakmak',
+      'Motoru kapatıp gece boyu bırakmak',
+      'Yolcu indirip bindirmek veya kısa bir iş için aracı kısa süreli durdurmak',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Duraklama; yolcu indirme-bindirme, yük alma-verme gibi nedenlerle aracın kısa süreli durdurulmasıdır. Uzun süreli bırakma park kapsamındadır.',
     whyWrong: [
@@ -492,9 +492,9 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     stem: 'Yokuş aşağı, bordürlü (kaldırımlı) bir yolda park eden sürücü ön tekerlekleri hangi yöne çevirmelidir?',
     options: [
       'Yoldan uzağa, bordüre (kaldırıma) doğru',
-      'Yola paralel bırakır',
-      'Yola doğru, trafiğe bakacak şekilde',
-      'Fark etmez',
+      'Tekerlekleri yola paralel biçimde düz bırakır',
+      'Yola doğru, trafiğe bakacak şekilde çevirir',
+      'Tekerlek yönünün eğimli yolda bir önemi yoktur',
     ],
     answerIndex: 0,
     explanation:

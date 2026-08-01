@@ -492,12 +492,12 @@ export const ADAB_QUESTIONS: Question[] = [
     difficulty: 'orta',
     stem: 'Yağmurlu havada su birikintisinin yanındaki kaldırımda yayalar yürüyor. Empatik sürücü nasıl davranır?',
     options: [
-      'Hızını değiştirmeden geçip yayaların ıslanmasına aldırmamak',
       'Yavaşlayarak birikintiden su sıçratmamaya özen göstermek',
+      'Hızını değiştirmeden geçip yayaların ıslanmasına aldırmamak',
       'Su sıçratmayı eğlenceli bulup birikintide hızlanmak',
       'Kornaya basıp yayaların uzaklaşmasını beklemek',
     ],
-    answerIndex: 1,
+    answerIndex: 0,
     explanation:
       'Kendini yayanın yerine koyan sürücü, birikinti yanında yavaşlayıp su sıçratmaktan kaçınır; bu küçük dikkat empatinin somut bir yansımasıdır.',
     whyWrong: [

@@ -509,12 +509,12 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Bebeklerde göğüs basısının derinliği yaklaşık ne kadar olmalıdır?',
     options: [
-      'Erişkindekiyle aynı, yaklaşık beş santimetre derinliğinde olmalı',
       'Göğüs yüksekliğinin (ön-arka çapının) yaklaşık üçte biri kadar',
+      'Erişkindekiyle aynı, yaklaşık beş santimetre derinliğinde olmalı',
       'Göğüs kafesi tamamen çökecek kadar derin olmalı',
       'Belli belirsiz, yarım santimetreyi geçmeyecek kadar az',
     ],
-    answerIndex: 1,
+    answerIndex: 0,
     explanation:
       'Bebekte göğüs basısı, göğsün ön-arka yüksekliğinin yaklaşık üçte biri çökecek derinlikte ve iki parmakla uygulanır; erişkin derinliği bebeğin küçük gövdesi için fazladır.',
     whyWrong: [
@@ -609,12 +609,12 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Kanamalar, kanın aktığı bölgeye göre kaç grupta incelenir ve bunlar nelerdir?',
     options: [
-      'İkiye ayrılır: hızlı ve yavaş kanamalar',
       'Üçe ayrılır: dış kanama, iç kanama ve doğal deliklerden olan kanama',
+      'İkiye ayrılır: hızlı ve yavaş kanamalar',
       'Dörde ayrılır: kol, bacak, baş ve gövde bölgesinden olan kanamalar biçiminde',
       'Gruplandırılmaz; tüm kanamalar aynı kabul edilir',
     ],
-    answerIndex: 1,
+    answerIndex: 0,
     explanation:
       'Kanamalar; kanın vücut dışına aktığı dış kanama, vücut boşluklarına aktığı iç kanama ve kulak, burun gibi doğal deliklerden gelen kanama olmak üzere üç grupta incelenir.',
     whyWrong: [
@@ -710,11 +710,11 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     stem: 'Kazada başını çarpan ve ilk anda iyi görünen bir kişide, ilerleyen saatlerde ortaya çıkan hangi durum acil sağlık başvurusu gerektirir?',
     options: [
       'İştahının hafifçe açılması',
-      'Giderek artan uyku hâli, tekrarlayan kusma ve dengesizlik',
-      'Kısa süreli hapşırma',
       'Saç derisinde birkaç saat boyunca süren hafif bir hassasiyet',
+      'Kısa süreli hapşırma',
+      'Giderek artan uyku hâli, tekrarlayan kusma ve dengesizlik',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Kafa travmasında belirtiler saatler sonra ortaya çıkabilir; giderek artan uyuklama, tekrarlayan kusma, dengesizlik veya bilinç bulanıklığı kafa içi kanama işareti olabilir ve derhal sağlık kuruluşuna başvurmayı gerektirir.',
     whyWrong: [
@@ -785,11 +785,11 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     stem: 'Kaza geçiren motosiklet sürücüsünün kaskı ile ilgili doğru ilk yardım davranışı hangisidir?',
     options: [
       'Kask her durumda hemen çıkarılır',
-      'Solunumu engelleyen bir durum yoksa kask çıkarılmaz',
-      'Kask kırılarak baştan uzaklaştırılır',
       'Kask çıkarılıp yaralının başının altına destek olarak konur',
+      'Kask kırılarak baştan uzaklaştırılır',
+      'Solunumu engelleyen bir durum yoksa kask çıkarılmaz',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Kaza geçiren motosikletlinin boyun omurları yaralanmış olabilir; kaskı çıkarma girişimi boynu oynatarak hasarı ağırlaştırabilir. Bu nedenle solunumu engelleyen zorunlu bir durum yoksa kask çıkarılmaz ve sağlık ekibi beklenir.',
     whyWrong: [
@@ -885,11 +885,11 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     stem: 'Üçüncü derece yanıkta ağrının beklenenden az olmasının nedeni nedir?',
     options: [
       'Yanığın çok yüzeysel olması',
-      'Derinin tüm katlarıyla birlikte sinir uçlarının da zarar görmüş olması',
-      'Vücudun ağrıya zamanla alışması',
       'İnsan derisinin bu bölgesinde hiçbir zaman sinir ucu bulunmamış olmasıdır',
+      'Vücudun ağrıya zamanla alışması',
+      'Derinin tüm katlarıyla birlikte sinir uçlarının da zarar görmüş olması',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Üçüncü derece yanıkta deri tüm katlarıyla ve altındaki dokularla birlikte hasar görür; ağrıyı ileten sinir uçları da zarar gördüğünden derin yanık alanında ağrı beklenenden az olabilir. Bu, yanığın hafif değil ağır olduğunun işaretidir.',
     whyWrong: [
@@ -984,12 +984,12 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Zehirlenmeler, zehrin vücuda giriş yoluna göre hangi üç grupta incelenir?',
     options: [
-      'Göz, kulak ve burun delikleri yoluyla',
       'Sindirim, solunum ve cilt (deri) yolu',
+      'Göz, kulak ve burun delikleri yoluyla',
       'Saç, tırnak ve diş yolu',
       'Kas, kemik ve eklem yolu',
     ],
-    answerIndex: 1,
+    answerIndex: 0,
     explanation:
       'Zehirlenmeler; ağızdan alınan maddelerle sindirim yolu, gaz ve buharlarla solunum yolu, temas eden kimyasallarla cilt yolu olmak üzere üç grupta incelenir. Giriş yolu, uygulanacak ilk yardımı belirler.',
     whyWrong: [
@@ -1085,11 +1085,11 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     stem: 'Arı sokmasından kısa süre sonra yüzünde ve dilinde şişme, ciltte yaygın kızarıklık ve nefes darlığı başlayan kişide ne yapılmalıdır?',
     options: [
       'Belirtiler kendiliğinden geçene kadar evde oturarak beklenir',
-      'Ağır alerjik tepki düşünülerek vakit kaybetmeden 112 aranır',
-      'Kişiye bol yemek yedirilir',
       'Kişiye sıcak duş aldırılır',
+      'Kişiye bol yemek yedirilir',
+      'Ağır alerjik tepki düşünülerek vakit kaybetmeden 112 aranır',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Yüz ve dilde şişme, yaygın kızarıklık ve nefes darlığı, tüm vücudu etkileyen ağır alerjik tepkinin işaretidir; hava yolu kısa sürede tıkanabileceği için hiç beklemeden 112 aranır ve kişi yalnız bırakılmaz.',
     whyWrong: [
@@ -1160,11 +1160,11 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     stem: 'Vücut ısısı ileri derecede düşmüş (hipotermideki) bir kişiye yapılan uygulamalardan hangisi yanlıştır?',
     options: [
       'Kişiyi rüzgârdan korunan ılık bir ortama almak',
-      'Isınması için alkollü içecek içirmek',
-      'Islak giysilerini kuru giysilerle değiştirmek',
       'Battaniyeye sarıp yavaş yavaş ısıtmak',
+      'Islak giysilerini kuru giysilerle değiştirmek',
+      'Isınması için alkollü içecek içirmek',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Alkol geçici sıcaklık hissi verse de damarları genişleterek ısı kaybını hızlandırır ve bilinci baskılar; hipotermideki kişiye kesinlikle alkollü içecek verilmez. Doğru yaklaşım kuru giysi, örtü ve yavaş ısıtmadır.',
     whyWrong: [
@@ -1260,11 +1260,11 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     stem: 'Karın bölgesindeki derin yaralanmada organlar dışarı çıkmışsa ilk yardımda ne yapılır?',
     options: [
       'Organlar elle yavaşça içeri itilir',
-      'Organlar içeri itilmez',
-      'Organların üzerine kuru pamuk bastırılır',
       'Yaralı oturtulup su içirilir',
+      'Organların üzerine kuru pamuk bastırılır',
+      'Organlar içeri itilmez',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Dışarı çıkan organlar kesinlikle içeri itilmez; bu, enfeksiyona ve ek hasara yol açar. Organların üzeri kurumalarını önlemek için nemli ve temiz bir bezle örtülür, yaralıya ağızdan bir şey verilmez ve 112 beklenir.',
     whyWrong: [
@@ -1360,11 +1360,11 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     stem: 'İnme (felç) belirtileri gösteren bir kişide 112 aranırken hangi bilginin not edilmesi tedavi açısından özellikle önemlidir?',
     options: [
       'Kişinin doğum yeri',
-      'Belirtilerin başladığı saat',
-      'Kullandığı aracın plaka numarası',
       'O günkü hava sıcaklığı',
+      'Kullandığı aracın plaka numarası',
+      'Belirtilerin başladığı saat',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'İnmede bazı tedaviler yalnızca belirtilerin başlangıcından sonraki sınırlı bir zaman diliminde uygulanabilir; bu nedenle yüz kayması, kolda güçsüzlük veya konuşma bozukluğunun ilk fark edildiği saat not edilip sağlık ekibine bildirilmelidir.',
     whyWrong: [

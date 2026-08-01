@@ -772,7 +772,7 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Doktorunuzun yazdığı bir ilacın kutusunda "uyku yapabilir, araç kullanmayınız" uyarısı var ama kendinizi iyi hissediyorsunuz. Sorumlu bir sürücü ne yapar?',
     options: [
-      'Kendini iyi hissettiği için uyarıyı dikkate almadan araç kullanmak',
+      'Kendini iyi hissettiği için uyarıyı hiç dikkate almadan araç kullanmak',
       'Uyarıyı ciddiye alıp o ilacı kullandığı sürece direksiyona geçmemek',
       'İlaç dozunu kendi kararıyla yarıya indirip araç kullanmak',
       'Yalnızca kısa mesafelerde araç kullanmak',
@@ -798,7 +798,7 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     stem: 'Uzun bir yolculuk öncesi alerji ilacı almanız gerekiyor ama bu ilaçların bazılarının uyku yaptığını biliyorsunuz. En doğru yaklaşım hangisidir?',
     options: [
       'Yola çıkmadan önce eczacınıza ya da doktorunuza danışıp uyku yapmayan bir alternatif olup olmadığını sormak',
-      'İlacı alıp etkisini yolda görmeyi beklemek',
+      'İlacı alıp etkisini yolda görmeyi beklemek ve uyku bastırırsa o anda uygun bir karar vermeyi planlamış olmak',
       'İlacı hiç almayıp sağlığınızı riske atmak',
       'Uyku bastırırsa kahveyle dengelemeyi planlamak',
     ],
@@ -875,7 +875,7 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
       'Kural ihlalinin bir sonucu olarak görüp bir daha aynı hatayı yapmamak için bir hatırlatma, bir ders olarak değerlendirir',
       'Yalnızca "yakalandım" diye üzülüp kuralı değil, denetimi suçlar',
       'Bir dahaki sefere radar yerini önceden öğrenmeye karar verir',
-      'Cezayı haksızlık sayıp trafik kurallarına daha da az uymaya başlar',
+      'Cezayı tamamen haksızlık sayıp trafik kurallarına daha da az uymaya başlar ve denetimlerin yalnızca gelir amaçlı olduğunu düşünür',
     ],
     answerIndex: 0,
     explanation:
@@ -900,7 +900,7 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
       'Öfkelenmesi doğaldır; cezaların hiçbir eğitici yönü yoktur',
       'Cezanın amacını, yani davranışı düzelterek can güvenliğini korumayı görmezden gelip yalnızca maddi tarafına takılması',
       'Cezaya öfkelenmek, bir daha ihlal yapmamayı garanti eder',
-      'Sorun cezanın miktarındadır; ücretsiz olsa davranış kendiliğinden değişirdi',
+      'Asıl sorun cezanın miktarındadır; ceza tutarı düşük olsaydı sürücünün davranışı kendiliğinden düzelir ve öfkesi geçerdi',
     ],
     answerIndex: 1,
     explanation:
@@ -1001,7 +1001,7 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Gürültü, park hâlinde ya da geçerken fark etmeksizin komşuların dinlenme ve uyku hakkını ihlal eder',
       'Sorun yalnızca aracın hızındadır, sesin bir önemi yoktur',
-      'Komşular pencerelerini kapatarak çözebilir, sürücülere düşen bir şey yoktur',
+      'Komşular pencerelerini kapatarak sorunu kendileri çözebilir; sürücülere düşen herhangi bir sorumluluk yoktur',
       'Egzoz sesi güçlüyse araç daha güvenlidir, bu yüzden hoş görülmelidir',
     ],
     answerIndex: 0,
@@ -1052,7 +1052,7 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
       'Kendi sitesi olduğu için istediği hızda gitme hakkı vardır',
       'Site içinde kural olmadığından herkes kendi kararını verir',
       'Ortak yaşam alanında herkesin, özellikle çocukların güvenliği kişisel konfordan önce gelir',
-      'Yalnızca misafirler yavaş sürmeli, siteyi tanıyanlar hızlı gidebilir',
+      'Yalnızca siteyi tanımayan misafirler yavaş sürmeli; burada oturanlar istedikleri hızda gidebilir',
     ],
     answerIndex: 2,
     explanation:
@@ -1124,7 +1124,7 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Yanınızda çocuğunuz varken bir sürücüye kızıp yüksek sesle ağır sözler söylediniz. Bunun çocuk üzerindeki en önemli etkisi nedir?',
     options: [
-      'Çocuk küçük olduğu için hiçbir şey hatırlamaz, etkilenmez',
+      'Çocuk küçük olduğu için söylenenleri hiç hatırlamaz ve bundan etkilenmez',
       'Çocuk yalnızca o an korkar, sonra tümüyle unutur',
       'Çocuk, trafikte öfke ve saldırganlığı normal bir tepki olarak öğrenir',
       'Çocuk sözlerin anlamını bilmediği için hiç etkilenmez',
@@ -1177,7 +1177,7 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
       'Hayvanları ilgilendirmez diye hiç yavaşlamadan geçmek',
       'Güvenliği sağlayarak durup mümkünse yetkililere (belediye, hayvan barınağı ya da ilgili birim) haber vermek',
       'Kornaya basıp hayvanı yoldan kaçırmaya çalışmak',
-      'Sosyal medyada paylaşmak için fotoğrafını çekip yola devam etmek',
+      'Sosyal medyada paylaşmak için fotoğrafını çekip yola devam etmek ve konuyu takipçilerinin gündemine taşımak',
     ],
     answerIndex: 1,
     explanation:
@@ -1200,7 +1200,7 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     stem: 'Gece şehirlerarası yolda, ilerideki şeride bir hayvanın çıktığını gördünüz; arkanızda da yakın takipte bir araç var. Hem merhamet hem güvenlik açısından en doğru tepki nedir?',
     options: [
       'Direksiyonu ani kırmadan, kontrolü kaybetmeden hızı azaltmak ve mümkünse fren yaparak yavaşlamak',
-      'Hayvana çarpmamak için direksiyonu sertçe kırıp karşı şeride geçmek',
+      'Hayvana çarpmamak için direksiyonu sertçe kırıp karşı şeride geçmek ve gerekirse sert fren yapmak',
       'Hiç yavaşlamadan hızla geçip gitmek',
       'Aniden sert fren yapıp tam olduğunuz yerde durmak',
     ],
@@ -1225,7 +1225,7 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Trafik güvenliğine katkı sunmak isteyen bir vatandaş, araç kullanmak dışında gönüllü olarak neler yapabilir?',
     options: [
-      'Yalnızca kendi aracını kurallara uygun kullanmak, başka hiçbir şey yapamaz',
+      'Yalnızca kendi aracını kurallara uygun biçimde kullanmakla yetinmek; trafik güvenliği bireysel bir konu olduğundan gönüllü çalışma, eğitim ya da farkındalık faaliyetlerine katılmanın hiçbir katkısı bulunmaz',
       'Sadece sosyal medyada trafik kazası haberlerini paylaşmak',
       'Okullarda ve çevresinde trafik bilinci etkinliklerine katılmak, çocuklara doğru örnek olmak, güvenli davranışları yaymak ve toplumsal farkındalık çalışmalarına destek vermek',
       'Trafik güvenliği yalnızca devletin işidir, bireye düşen bir şey yoktur',

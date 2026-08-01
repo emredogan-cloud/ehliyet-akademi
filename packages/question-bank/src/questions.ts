@@ -307,11 +307,11 @@ export const SEED_QUESTIONS: QuestionInput[] = [
     stem: 'Yaya geçidine yaklaşan bir sürücünün trafik adabına uygun davranışı nedir?',
     options: [
       'Korna çalarak yayanın adımlarını hızlandırmasını beklemek',
-      'Yavaşlayıp gerekiyorsa durarak yayaya yol vermek',
-      'Yayadan önce hızlanıp geçidi boşaltmaya çalışmak',
       'Yayaya el işareti yapıp aynı hızda geçmek',
+      'Yayadan önce hızlanıp geçidi boşaltmaya çalışmak',
+      'Yavaşlayıp gerekiyorsa durarak yayaya yol vermek',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Yaya geçidinde öncelik yayanındır. Saygılı ve güvenli davranış, yavaşlayıp gerektiğinde durarak yol vermektir.',
     badge: 'official',
@@ -344,12 +344,12 @@ export const SEED_QUESTIONS: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Arkadan siren ve tepe lambasıyla gelen bir ambulans için sürücü ne yapmalıdır?',
     options: [
-      'Şeridi kapatıp ambulansın kendi yolunu bulmasını beklemek',
       'Güvenli şekilde sağa yanaşıp geçiş kolaylığı sağlamak',
+      'Şeridi kapatıp ambulansın kendi yolunu bulmasını beklemek',
       'Hızlanıp ambulansın önünden gitmeyi sürdürmek',
       'Kırmızı ışıkta bile hemen kavşağa girip yol açmak',
     ],
-    answerIndex: 1,
+    answerIndex: 0,
     explanation:
       'Geçiş üstünlüğüne sahip araçlara (ambulans, itfaiye vb.) güvenli biçimde yol verilmeli, geçiş kolaylığı sağlanmalıdır.',
     badge: 'official',

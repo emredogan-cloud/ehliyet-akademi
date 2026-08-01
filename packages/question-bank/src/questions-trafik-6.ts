@@ -1336,12 +1336,12 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Aşağıdaki yerlerden hangisinde öndeki aracı geçmek (sollama) genel olarak yasaktır?',
     options: [
-      'Görüşün açık olduğu düz ve geniş yollarda',
       'Tepe üstlerinde, keskin virajlarda, yaya geçitlerinde ve kavşaklarda',
+      'Görüşün açık olduğu düz ve geniş yollarda',
       'Karşı şeridin uzun süre boş olduğu yollarda',
       'Geçme yasağı işareti bulunmayan her yerde',
     ],
-    answerIndex: 1,
+    answerIndex: 0,
     explanation:
       'Sollama, karşı şeridin görülebildiği ve boş olduğu yerlerde yapılabilir. Tepe üstü ve keskin viraj görüşü kapatır; yaya geçidi ve kavşak ise yaya ile başka araçların hareket alanıdır. Bu yerlerde sollama yasaktır.',
     whyWrong: [
@@ -1441,11 +1441,11 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Gece karayolunda ilerleyen traktör gibi yavaş ve ağır bir aracın arkadan gelen sürücüler tarafından fark edilmesi neden özellikle önemlidir?',
     options: [
       'Yavaş araçların gece sürmesi tamamen yasak olduğu için',
-      'Hızlı gelen araç önündeki yavaş aracı geç fark ederse arkadan çarpma riski çok yükseldiği için, bu araçların lamba ve yansıtıcılarının çalışır olması gerekir',
-      'Yavaş araçların farı olması gerekmediği için',
       'Gece görüşün gündüzden daha iyi olduğu için',
+      'Yavaş araçların farı olması gerekmediği için',
+      'Hızlı gelen araç önündeki yavaş aracı geç fark ederse arkadan çarpma riski çok yükseldiği için, bu araçların lamba ve yansıtıcılarının çalışır olması gerekir',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Gece, arkadan hızla yaklaşan bir sürücü önündeki yavaş aracın hızını yanlış değerlendirebilir. Yavaş aracın arka lambaları ve yansıtıcıları çalışır durumda değilse, aradaki hız farkı yüzünden arkadan çarpma riski çok yükselir.',
     whyWrong: [

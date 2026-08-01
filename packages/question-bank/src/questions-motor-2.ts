@@ -64,12 +64,12 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Motorda yağ filtresinin görevi aşağıdakilerden hangisidir?',
     options: [
-      'Egzoz gazındaki zararlı maddeleri temizleyip salınımı azaltmak',
       'Dolaşan motor yağındaki metal partikül ve kirleri süzmek',
+      'Egzoz gazındaki zararlı maddeleri temizleyip salınımı azaltmak',
       'Yakıt basıncını yükseltip enjektörlere iletmek',
       'Soğutma suyunu ısıtıp motorun çabuk ısınmasını sağlamak',
     ],
-    answerIndex: 1,
+    answerIndex: 0,
     explanation:
       'Yağ filtresi, motor içinde dolaşan yağdaki metal talaşı, kurum ve kir parçacıklarını süzer; böylece temiz yağın parçalara ulaşmasını sağlayarak aşınmayı azaltır. Genellikle yağ değişiminde birlikte değiştirilir.',
     whyWrong: [
@@ -140,11 +140,11 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     stem: 'Marş motorunun (marş dinamosu) temel görevi aşağıdakilerden hangisidir?',
     options: [
       'Aküyü şarj edip elektrik sistemini beslemek',
-      'Motoru ilk hareketle döndürüp çalışmasını başlatmak',
-      'Fren basıncını üretip tekerlekleri yavaşlatmak',
       'Egzoz gazını temizleyip zararlı salınımı azaltmak ve sesi kısmak',
+      'Fren basıncını üretip tekerlekleri yavaşlatmak',
+      'Motoru ilk hareketle döndürüp çalışmasını başlatmak',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Marş motoru, aküden aldığı elektrik enerjisiyle krank milini döndürerek motorun ilk hareketini sağlar; motor çalışmaya başladığında görevi biter. Sürekli değil, yalnızca çalıştırma anında devreye girer.',
     whyWrong: [
@@ -213,8 +213,8 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     topic: 'sarj',
     difficulty: 'orta',
     stem: 'Alternatörü döndürerek şarj üretilmesini sağlayan ve gevşerse/koparsa şarj sorununa yol açan parça hangisidir?',
-    options: ['Triger (zaman) kayışı', 'Vantilatör (V) kayışı', 'Fren balatası', 'Debriyaj teli'],
-    answerIndex: 1,
+    options: ['Triger (zaman) kayışı', 'Debriyaj teli', 'Fren balatası', 'Vantilatör (V) kayışı'],
+    answerIndex: 3,
     explanation:
       'Alternatör, motordan aldığı hareketi V (vantilatör) kayışı aracılığıyla alır ve döndürülerek elektrik üretir. Bu kayış gevşer ya da koparsa alternatör dönemez, şarj kesilir ve akü boşalır.',
     whyWrong: [
@@ -259,12 +259,12 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Soğutma suyu seviyesi kontrol edilirken doğru davranış aşağıdakilerden hangisidir?',
     options: [
-      'Motor çok sıcakken radyatör kapağını hemen açıp bakmak',
       'Motor soğukken genleşme (yedek su) deposundan bakmak',
+      'Motor çok sıcakken radyatör kapağını hemen açıp bakmak',
       'Su seviyesini hiç kontrol etmemek',
       'Suyun yerine yağ eklemek',
     ],
-    answerIndex: 1,
+    answerIndex: 0,
     explanation:
       'Soğutma suyu seviyesi, motor soğukken genleşme deposundaki alt-üst (min-maks) işaretleri arasında olmalıdır. Sıcak motorda basınçlı sistem tehlikeli olduğundan kapak açılmaz; kontrol soğuk motorda yapılır.',
     whyWrong: [
@@ -310,11 +310,11 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     stem: 'Amortisörleri arızalı bir araçta hangi olumsuzluk beklenir?',
     options: [
       'Yakıt deposunun beklenenden hızlı boşalması ve tüketimin artması',
-      'Yol tutuşun azalması, aracın zıplaması ve savrulmaya yatkınlığı',
-      'Motor sesinin tamamen kesilmesi ve titreşimin yok olması',
       'Akünün aşırı şarj olup kısa sürede bitmesi',
+      'Motor sesinin tamamen kesilmesi ve titreşimin yok olması',
+      'Yol tutuşun azalması, aracın zıplaması ve savrulmaya yatkınlığı',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Zayıflamış amortisörler yol darbelerini söndüremez; tekerlekler zıplayarak yolla temasını kaybeder. Bu, fren mesafesinin uzamasına, virajda savrulmaya ve genel yol tutuş kaybına yol açarak güvenliği tehlikeye atar.',
     whyWrong: [
@@ -385,11 +385,11 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     stem: 'Kalkışta ve yüklenmede motor devri yükseldiği hâlde araç yeterince hızlanmıyor ve yanık kokusu geliyorsa bu en çok neyi düşündürür?',
     options: [
       'Lastik hava basıncının olması gerekenden yüksek olduğunu',
-      'Debriyaj (kavrama) balatasının aşınıp kaydığını',
-      'Radyatörün yeni değiştirilmiş olduğunu',
       'Akünün tam şarjlı ve sağlam olduğunu',
+      'Radyatörün yeni değiştirilmiş olduğunu',
+      'Debriyaj (kavrama) balatasının aşınıp kaydığını',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Debriyaj balatası aşındığında baskı yeterli olmaz ve kavrama kayar; motor devri artsa da güç tekerleğe tam iletilemez, sürtünmeden yanık kokusu gelir. Bu durumda debriyaj kontrol/onarım gerektirir.',
     whyWrong: [
@@ -760,11 +760,11 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     stem: 'Uzun ve dik bir yokuş inişinde sürekli fren pedalına basmak yerine önerilen güvenli yöntem nedir?',
     options: [
       'Vitesi boşa alıp aracın yokuş boyunca serbestçe süzülmesine izin vermek',
-      'Uygun düşük vitese geçerek motor freninden yararlanmak',
-      'El frenini hafifçe çekili tutarak ek bir yavaşlatma kuvveti sağlamak',
       'Kontağı kapatıp motoru durdurarak iniş boyunca yakıttan tasarruf etmek',
+      'El frenini hafifçe çekili tutarak ek bir yavaşlatma kuvveti sağlamak',
+      'Uygun düşük vitese geçerek motor freninden yararlanmak',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Uzun inişte sürekli fren kullanmak balataları ısıtıp fren performansını düşürür (fren kaybı). Uygun düşük vitese geçilerek motor freninden yararlanılır; motorun tutuşu hızı sınırlar ve frenler yedekte kalır.',
     whyWrong: [
@@ -810,11 +810,11 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     stem: 'Boşalmış bir aküye başka araçtan takviye (çapraz kablo) yapılırken doğru yaklaşım aşağıdakilerden hangisidir?',
     options: [
       'Kabloların bağlanma sırasına ve kutuplara dikkat edilmeden rastgele bağlanabilir',
-      'Kablolar doğru kutuplara (artı-artı, eksi-eksi) bağlanır, sıralamaya uyulur',
-      'Kablolar çalışan motora hiç bağlanmaz, yalnızca boş aküye takılır',
       'Takviye yaparken kutupların ters bağlanması sorun yaratmaz',
+      'Kablolar çalışan motora hiç bağlanmaz, yalnızca boş aküye takılır',
+      'Kablolar doğru kutuplara (artı-artı, eksi-eksi) bağlanır, sıralamaya uyulur',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Takviyede kablolar doğru kutuplara (artı-artı, eksi-eksi) bağlanmalıdır; ters bağlantı elektronik aksama zarar verir. Akü çevresinde patlayıcı gaz bulunabileceğinden kıvılcıma karşı dikkatli olunmalı ve sıralamaya uyulmalıdır.',
     whyWrong: [
@@ -910,11 +910,11 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     stem: 'Gösterge panelindeki devir saati (takometre) sürücüye hangi bilgiyi verir?',
     options: [
       'Depoda kalan yakıtla gidilebilecek tahmini mesafeyi',
-      'Motorun dakikadaki devir sayısını (rpm)',
-      'Motor soğutma suyunun o andaki sıcaklık değerini',
       'Aracın toplam kat ettiği kilometre miktarını',
+      'Motor soğutma suyunun o andaki sıcaklık değerini',
+      'Motorun dakikadaki devir sayısını (rpm)',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Devir saati, motorun dakikadaki dönüş sayısını (devir/rpm) gösterir. Sürücü bu bilgiyle motoru aşırı yükleme veya yüksek devirde zorlamadan uygun vitesi ve gaz seviyesini seçerek verimli ve güvenli sürüş yapabilir. Böylece uygun vites/gaz kullanımına yardımcı olur.',
     whyWrong: [

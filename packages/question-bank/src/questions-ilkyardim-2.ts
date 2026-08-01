@@ -73,11 +73,11 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     stem: 'Yerde hareketsiz yatan bir kişinin bilincinin açık olup olmadığını anlamak için ilk olarak ne yapılır?',
     options: [
       'Yüzüne su dökülür',
-      'Omzundan hafifçe sarsılıp yüksek sesle seslenilir',
-      'Ayağa kaldırılmaya çalışılıp destekle yürütülmesi',
       'Ağzına ilaç verilir',
+      'Ayağa kaldırılmaya çalışılıp destekle yürütülmesi',
+      'Omzundan hafifçe sarsılıp yüksek sesle seslenilir',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Bilinç kontrolü için kişinin omzuna hafifçe dokunup sarsılır ve yüksek sesle seslenilir; yanıt yoksa bilincin kapalı olduğu kabul edilerek yardım çağrılır.',
     whyWrong: [

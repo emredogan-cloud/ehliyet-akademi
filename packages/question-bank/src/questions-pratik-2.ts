@@ -571,7 +571,7 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     stem: 'Debriyajın yarım (kavrama noktası) bırakıldığı an aracın davranışından nasıl anlaşılır?',
     options: [
       'Motor tamamen susar',
-      'Araç geri geri gitmeye başlar',
+      'Motor sesi hiç değişmez, aracın burnu aşağı doğru çöker ve araç yavaşça geri geri kaymaya başlar',
       'Direksiyon aniden kilitlenir',
       'Motor sesi hafif değişir, aracın burnu hafifçe kalkar ve araç ileri doğru yüklenmeye başlar',
     ],
@@ -596,7 +596,7 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     stem: 'Yokuş yukarı trafikte ilerlerken önündeki araç durduğunda geri kaymayı önlemenin en güvenli yolu nedir?',
     options: [
       'Araç dururken el frenini devreye alıp kalkışta debriyaj-gaz-el freni koordinasyonuyla hareket etmek',
-      'Yalnızca debriyajı sürekli yarım basılı tutup beklemek',
+      'Yalnızca debriyajı sürekli yarım basılı tutup aracı kavrama noktasında bekletmek ve el freni kullanmamak',
       'Vitesi boşa alıp fren yapmadan beklemek',
       'Aracı geri bırakıp arkadaki araca yaslamak',
     ],
@@ -621,7 +621,7 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Dış yan aynalar sürüş için en doğru biçimde nasıl ayarlanır?',
     options: [
-      'Aracın kendi gövdesi aynanın tam ortasında görünecek biçimde',
+      'Kendi aracın gövdesi aynanın tam ortasında geniş bir alan kaplayacak, arka yan yolun yalnızca küçük bir bölümü görünecek biçimde',
       'Yalnızca gökyüzü görünecek biçimde yukarı çevrilerek',
       'Kendi aracın gövdesi aynanın iç kenarında ince bir şerit hâlinde kalacak, arka yan yolun büyük kısmı görünecek biçimde',
       'Aynalar tamamen aşağı, sadece zemin görünecek biçimde',
@@ -646,7 +646,7 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Sağa dönüş yapmadan önce özellikle hangi kör nokta tehlikesi kontrol edilmelidir?',
     options: [
-      'Sol arkadan gelen kamyonlar',
+      'Sol tarafta, arkadan yaklaşan kamyonlar ve büyük ticari araçlar ile onların römorkları',
       'Sağ tarafta, aracın yanından ilerleyen bisikletli veya motosikletli ile yayalar',
       'Yalnızca karşıdan gelen araçlar',
       'Arkadaki aracın far durumu',
@@ -675,7 +675,7 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
       'Sinyal otomatik dönmediyse elle kapatılmalıdır',
       'Sinyal sürekli açık bırakılmalıdır',
       'Sinyal yerine dörtlü flaşör açılmalıdır',
-      'Kornaya basılarak manevra bitirilmelidir',
+      'Kornaya basılarak manevranın bittiği bildirilmelidir',
     ],
     answerIndex: 0,
     explanation:
@@ -699,7 +699,7 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     options: [
       'Debriyaja basmadan vites zorlanarak takılır',
       'Gaz sonuna kadar basılıyken vites değiştirilir',
-      'Vites değişimi sırasında hem debriyaj hem gaz tamamen bırakılır ve araç boşta uzun süre gider',
+      'Vites değişimi sırasında hem debriyaj hem gaz tamamen bırakılır ve araç boşta uzun süre süzülerek gider',
       'Debriyaja tam bas, gazı bırak, vitesi değiştir, sonra gazla eş zamanlı debriyajı yumuşakça bırak',
     ],
     answerIndex: 3,
@@ -723,7 +723,7 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     stem: 'Direksiyon sınavında kavşağa yaklaşırken ayna kontrolü yapmadan şerit değiştirmenin değerlendirilme mantığı nedir?',
     options: [
       'Her koşulda önemsiz sayılır',
-      'Sadece hız yüksekse dikkate alınır',
+      'Yalnızca aracın hızı yüksekse dikkate alınır; düşük hızda yapılan şerit değişimi hata sayılmaz',
       'Trafiği kontrol etmeden yapılan şerit değişimi güvenlik ihmali olarak değerlendirilir',
       'Aracın rengi değerlendirmeyi belirler',
     ],
@@ -750,7 +750,7 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     options: [
       'Yakıt tüketimini artırdığı için',
       'Kaza anında sürücüyü koltukta tutan temel korumayı devre dışı bıraktığı ve kural ihlali olduğu için',
-      'Motorun ısınmasını geciktirdiği için',
+      'Kemer takılmadığında koltuk sensörü uyarı verdiği ve bu uyarının motorun ısınmasını geciktirdiği için',
       'Yalnızca estetik göründüğü için',
     ],
     answerIndex: 1,

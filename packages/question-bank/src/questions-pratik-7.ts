@@ -745,11 +745,11 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     stem: 'Sürüş boyunca aynaların kullanımıyla ilgili doğru alışkanlık nedir?',
     options: [
       'Aynalara yalnızca sürüşün başında bir kez bakmak yeterlidir',
-      'Aynalar düzenli aralıklarla (birkaç saniyede bir) ve özellikle şerit değiştirme, dönüş, yavaşlama ile fren öncesinde taranır',
-      'Aynalara yalnızca geri manevra yaparken bakılır',
       'Aynalar dikkati dağıttığı için mümkün olduğunca az kullanılır',
+      'Aynalara yalnızca geri manevra yaparken bakılır',
+      'Aynalar düzenli aralıklarla (birkaç saniyede bir) ve özellikle şerit değiştirme, dönüş, yavaşlama ile fren öncesinde taranır',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Ayna kullanımı bir alışkanlık hâline gelmelidir: aynalar düzenli aralıklarla, birkaç saniyede bir taranır ve özellikle şerit değiştirme, dönüş, yavaşlama ile fren öncesinde mutlaka kontrol edilir. Bu düzenli tarama, arkadan ve yandan gelen trafiğin sürekli bilinmesini sağlar. Ayna kontrolü bir kerelik değil, sürekli bir gözlem alışkanlığıdır. Böylece arkadaki ve yandaki trafik sürekli bilinir.',
     whyWrong: [

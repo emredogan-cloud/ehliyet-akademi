@@ -140,11 +140,11 @@ export const MOTOR_QUESTIONS_4: QuestionInput[] = [
     stem: 'Gece sürüşünde farlar rölantide belirgin şekilde sararıp motor devri yükselince parlaklaşıyorsa bu durum neyi düşündürmelidir?',
     options: [
       'Far ampullerinin yanlış takıldığını',
-      'Şarj sisteminin (alternatör/kayış) verimsiz çalıştığını',
       'Yakıt seviyesinin azaldığını',
+      'Şarj sisteminin (alternatör/kayış) verimsiz çalıştığını',
       'Bunun tüm araçlarda tamamen normal olduğunu ve hiçbir kontrol gerektirmediğini',
     ],
-    answerIndex: 1,
+    answerIndex: 2,
     explanation:
       'Rölantide belirgin sararma ve devirle parlaklaşma, alternatörün düşük devirde yeterli gerilim üretemediğine ya da kayış/regülatör sorununa işaret edebilir. Şarj sistemi ölçtürülmelidir; aksi hâlde akü zamanla boşalır.',
     whyWrong: [

@@ -90,11 +90,11 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     stem: 'İlk yardımcı olay yerinde önce kimin güvenliğini sağlamalıdır?',
     options: [
       'Önce çevredeki izleyicilerin güvenliğini',
-      'Önce kendi güvenliğini',
-      'Önce araçların güvenliğini',
       'Güvenlik sırası önemli değildir; hemen yaralıya koşulur',
+      'Önce araçların güvenliğini',
+      'Önce kendi güvenliğini',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'İlk yardımın temel ilkesi, ilk yardımcının önce kendi güvenliğini sağlamasıdır. Tehlikeyi değerlendirmeden yaralıya koşan kişi kendisi de yaralanırsa hem yardım edemez hem de kurtarılması gereken kişi sayısını artırır. Kendisi tehlikeye girerse kimseye yardım edemez.',
     whyWrong: [
@@ -165,11 +165,11 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     stem: 'Aşağıdakilerden hangisi yaralıyı kaza aracından derhâl çıkarmayı gerektiren geçerli bir neden DEĞİLDİR?',
     options: [
       'Araçta yangın başlaması',
-      'Trafiğin daha hızlı akmasını sağlama isteği',
-      'Patlama tehlikesinin belirmesi',
       'Yaralının solunumunun durması ve araç içinde canlandırma yapılamaması',
+      'Patlama tehlikesinin belirmesi',
+      'Trafiğin daha hızlı akmasını sağlama isteği',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Yaralı, kural olarak araçtan çıkarılmaz; yalnızca yangın, patlama tehlikesi veya solunum durması gibi yaşamsal zorunluluklar çıkarmayı haklı kılar. Trafiği rahatlatma isteği yaşamsal bir gerekçe değildir; bunun için trafik önlemleri alınır.',
     whyWrong: [
@@ -540,11 +540,11 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     stem: 'İç kanamadan şüphelenilen bir yaralıda ilk yardımcının doğru tutumu hangisidir?',
     options: [
       'Ağrısını azaltmak için sıcak çay içirmek',
-      'Ağızdan hiçbir şey vermemek, yaşam bulgularını izlemek ve 112’yi arayıp durumu bildirmek',
       'Yaralıyı ayağa kaldırıp yürüterek dolaşımını hızlandırmaya ve kendine gelmesini sağlamaya çalışmak',
+      'Ağızdan hiçbir şey vermemek, yaşam bulgularını izlemek ve 112’yi arayıp durumu bildirmek',
       'Karnına sıcak su torbası koyup beklemek',
     ],
-    answerIndex: 1,
+    answerIndex: 2,
     explanation:
       'İç kanama dışarıdan durdurulamaz; yaralıya ağızdan yiyecek-içecek verilmez, hareket ettirilmez, bilinç ve solunum düzenli aralıklarla izlenir ve 112 aranarak iç kanama şüphesi açıkça bildirilir.',
     whyWrong: [
@@ -640,11 +640,11 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     stem: 'Bacağı uzun süredir enkaz altında sıkışmış bir kişiyi ilk yardımcının kendi başına çekip çıkarmaya çalışmaması neden önerilir?',
     options: [
       'Kurtarma işlemi için ücret gerektiği için',
-      'Uzun süreli sıkışmada dokular ağır hasar görmüştür',
       'Kişinin enkaz altında daha rahat ettiği için',
+      'Uzun süreli sıkışmada dokular ağır hasar görmüştür',
       'Sıkışan bölgenin zamanla kendiliğinden iyileşeceği için',
     ],
-    answerIndex: 1,
+    answerIndex: 2,
     explanation:
       'Uzun süre baskı altında kalan dokularda ciddi iç hasar gelişir ve bu durum dışarıdan görünmez. Eğitimsiz ve donanımsız bir kurtarma girişimi hem yaralıya zarar verebilir hem de enkazın oynamasına yol açabilir; bu nedenle 112 ve itfaiye beklenir, yaralı bu sürede yalnız bırakılmaz. Bilinçsiz kurtarma girişimi durumu ağırlaştırabilir ve kurtarma donanımlı ekiplerin işidir.',
     whyWrong: [
@@ -715,7 +715,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     stem: 'Vücuda saplanmış bir cismin taşıma sırasında oynamaması için ilk yardımcı ne yapabilir?',
     options: [
       'Cismi bantla doğrudan cilde yapıştırır',
-      'Cismi hafifçe gevşetip yeniden yerleştirir',
+      'Saplanan cismi hafifçe gevşetip taşımaya uygun bir konuma yeniden yerleştirir',
       'Cismin iki yanına rulo yapılmış temiz bezler koyup bunları sargıyla sabitler',
       'Cismin görünen bölümünü keserek kısaltır',
     ],
@@ -740,11 +740,11 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     stem: 'Başından ağır darbe alan bir yaralıya neden aynı zamanda boyun (omurga) yaralanması da varmış gibi davranılır?',
     options: [
       'Boyunluk takmak yasal zorunluluk olduğu için',
-      'Başa gelen darbenin gücü boyna da iletilebildiği ve omurga hasarı dıştan her zaman belli olmadığı için',
       'Boyun yaralanması yalnızca yaşlılarda görüldüğü için',
-      'Baş yaralanması boyundakinden daha önemsiz olduğu için',
+      'Başa gelen darbenin gücü boyna da iletilebildiği ve omurga hasarı dıştan her zaman belli olmadığı için',
+      'Baş yaralanmasının boyun yaralanmasından her zaman daha önemsiz olduğu ve önce başın değerlendirilmesi gerektiği için',
     ],
-    answerIndex: 1,
+    answerIndex: 2,
     explanation:
       'Başı yaralayan enerji çoğu zaman boyun omurlarına da yansır ve omurga hasarı dışarıdan görünmeyebilir. Bu nedenle ağır kafa travmalı her yaralıda boyun da yaralı kabul edilir; baş-boyun ekseni korunur ve yaralı gereksiz yere oynatılmaz.',
     whyWrong: [
@@ -766,7 +766,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Baş bir yastıkla öne doğru itilir',
       'Baş sağa sola çevrilerek rahatlatılır',
-      'Yaralı ayağa kaldırılarak başı dik tutulur',
+      'Yaralı dikkatlice ayağa kaldırılıp başı dik tutularak boynun kendiliğinden düzelmesi sağlanır',
       'İlk yardımcı iki eliyle başı iki yandan kavrayıp baş-boyun-gövde ekseninde hareketsiz tutar',
     ],
     answerIndex: 3,
@@ -814,12 +814,12 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Bayılmış bir kişiye aşağıdakilerden hangisinin yapılması YANLIŞTIR?',
     options: [
-      'Sıkan giysilerinin gevşetilmesi',
-      'Yüzüne tokat atılması ve kolonya koklatılarak zorla ayıltılmaya çalışılması',
-      'Solunumunun kontrol edilmesi',
+      'Sıkan giysilerinin gevşetilmesi ve ortamın havalandırılarak temiz hava sağlanması',
       'Ortamın havalandırılması',
+      'Solunumunun kontrol edilmesi',
+      'Yüzüne tokat atılması ve kolonya koklatılarak zorla ayıltılmaya çalışılması',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Bayılan kişiye tokat atmak, su çarpmak veya kolonya koklatmak gibi zorla ayıltma girişimleri yarar sağlamaz, zarar verebilir. Doğru olan solunumu kontrol etmek, sıkan giysileri gevşetmek ve temiz hava sağlamaktır.',
     whyWrong: [
@@ -840,11 +840,11 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     stem: 'Sara (epilepsi) nöbeti geçiren kişiye aşağıdakilerden hangisi kesinlikle YAPILMAZ?',
     options: [
       'Başının altına yumuşak bir destek konması',
-      'Çenesi zorla açılarak ağzına kaşık, bez gibi bir cisim sokulması',
-      'Çevresindeki sert cisimlerin uzaklaştırılması',
       'Nöbetin ne kadar sürdüğüne dikkat edilmesi',
+      'Çevresindeki sert ve keskin cisimlerin bulunduğu yerden uzaklaştırılması',
+      'Çenesi zorla açılarak ağzına kaşık, bez gibi bir cisim sokulması',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Nöbet sırasında kişinin çenesini açmaya çalışmak ve ağzına cisim sokmak; dişleri kırabilir, ağız içini yaralayabilir ve cismin hava yoluna kaçmasına yol açabilir. Kasılmalar zorla engellenmez; kişinin kendini yaralaması önlenerek nöbetin geçmesi beklenir.',
     whyWrong: [
@@ -890,7 +890,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     stem: 'Nöbet geçiren bir kişi için 112’nin aranması özellikle hangi durumda gerekir?',
     options: [
       'Kişi hayatında ilk kez nöbet geçiriyorsa, nöbet uzun sürüyorsa veya art arda tekrarlıyorsa',
-      'Nöbet kısa sürüp kişi tamamen kendine geldiyse ve bilinen hastalığıysa',
+      'Nöbet kısa sürüp kişi tamamen kendine geldiyse ve bu durum daha önceden bilinen bir hastalığıysa',
       'Kişinin yakınları olay yerindeyse',
       'Nöbet gündüz saatlerinde olduysa',
     ],
@@ -917,7 +917,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
       '112’nin aranması',
       'Solunumunun kontrol edilmesi',
       'Ağzına şekerli su veya yiyecek verilmeye çalışılması',
-      'Solunumu varsa yan pozisyona alınması',
+      'Solunumu varsa yan (koma) pozisyonuna alınıp izlenmesi',
     ],
     answerIndex: 2,
     explanation:
@@ -940,11 +940,11 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     stem: 'Şeker hastasında dakikalar içinde hızla gelişen terleme, titreme, sinirlilik ve ani açlık hissi öncelikle hangi durumu düşündürür?',
     options: [
       'Kan basıncının yükselmesini',
-      'Kan şekerinin düşmesini',
-      'Vücut ısısının yükselmesini',
       'Görme bozukluğunu',
+      'Vücut ısısının yükselmesini',
+      'Kan şekerinin düşmesini',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Kan şekeri düşüklüğü belirtileri dakikalar içinde hızla gelişir: soğuk terleme, titreme, sinirlilik, ani açlık ve giderek bilinç bulanıklığı görülür. Kişi bilinçliyse ve güvenle yutabiliyorsa şekerli içecek verilebilir; bilinç bulanıyorsa 112 aranır.',
     whyWrong: [
@@ -989,14 +989,14 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Soğuk uygulamada buz neden doğrudan cilde konmaz?',
     options: [
-      'Çıplak cilde değen buz, dokuda soğuk yanığına (donmaya benzer hasara)',
-      'Buzun cilde yapışıp kaybolacağı için',
+      'Çıplak cilde değen buz, dokuda soğuk yanığına (donmaya benzer hasara) yol açabileceği için',
+      'Buzun cilde yapışıp kısa sürede eriyerek kaybolacağı ve soğutma etkisini tamamen yitireceği için',
       'Buzun etkisini tamamen yitireceği için',
       'Cildin buzu eritmesinin uzun sürmesi nedeniyle',
     ],
     answerIndex: 0,
     explanation:
-      'Buz doğrudan cilde uygulanırsa aşırı soğuk, dokularda donmaya benzer hasar oluşturabilir. Bu nedenle buz bir beze veya havluya sarılarak uygulanır. Yol açabileceği için.',
+      'Buz doğrudan cilde uygulanırsa aşırı soğuk, dokularda donmaya benzer hasar oluşturabilir. Bu nedenle buz bir beze veya havluya sarılarak uygulanır.',
     whyWrong: [
       'Buzun yapışması veya erime hızı temel gerekçe değildir.',
       'Beze sarılan buz etkisini yitirmez; tam tersine güvenli biçimde soğutur.',
@@ -1017,7 +1017,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
       'Bölgenin kaşınmaya başlaması',
       'Buzun pahalı bir malzeme olması',
       'Aşırı ve uzun soğuğun kendisinin dolaşımı bozup dokuya zarar verebilmesi',
-      'Yaralının üşüyüp uykuya dalması',
+      'Uzun süren soğuk uygulamanın yaralının aşırı üşümesine ve uykuya dalmasına yol açması',
     ],
     answerIndex: 2,
     explanation:
@@ -1042,7 +1042,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
       'Bileğin dinlendirilmesi',
       'Eklemin çekiştirilerek yerine oturtulmaya çalışılması',
       'Beze sarılı soğuk uygulama yapılması',
-      'Bileğin kalp seviyesinden yukarıda tutulması',
+      'Burkulan bileğin kalp seviyesinden yukarıda tutulup dinlendirilmesi',
     ],
     answerIndex: 1,
     explanation:
@@ -1064,7 +1064,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Burkulan bileğin kalp seviyesinden yukarıda tutulmasının amacı nedir?',
     options: [
-      'Kişinin daha rahat televizyon izlemesi',
+      'Kişinin bacağını uzatıp daha rahat oturmasının sağlanması',
       'Bileğin daha hızlı terlemesi',
       'Eklemin kendiliğinden yerine oturması',
       'Bölgeye kan göllenmesini azaltarak şişliğin sınırlanması',
@@ -1091,7 +1091,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     options: [
       'İnce uçlu bir cımbızla deriye en yakın noktasından tutulup düz ve yavaş bir hareketle çekilmeli, ardından sağlık kuruluşuna başvurulmalıdır',
       'Parmaklarla ezilerek koparılmalıdır',
-      'Kene kendiliğinden düşene kadar haftalarca beklenmelidir',
+      'Kene kendiliğinden düşene kadar haftalarca beklenmeli, bu süre boyunca bölgeye hiç dokunulmamalı ve herhangi bir sağlık kuruluşuna başvurulmamalıdır',
       'Deriyle birlikte kesilip çıkarılmalıdır',
     ],
     answerIndex: 0,
@@ -1115,7 +1115,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     stem: 'Deriye tutunmuş kenenin üzerine kolonya, gaz yağı dökmek veya sigarayla yakmaya çalışmak neden yanlıştır?',
     options: [
       'Kenenin daha da büyümesine yol açtığı için',
-      'Kene bu maddelere karşı tamamen duyarsız olduğu için',
+      'Kene bu maddelere karşı tamamen duyarsız olduğu ve uygulanan hiçbir yöntemin onu deriden ayırmaya yetmeyeceği için',
       'Rahatsız edilen kenenin içeriğini deriye boşaltabilmesi ve hastalık bulaştırma riskinin artması nedeniyle',
       'Kolonyanın kene için besleyici olması nedeniyle',
     ],
@@ -1141,7 +1141,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Yaranın iz bırakma olasılığı',
       'Kuduz ve yara enfeksiyonu riskinin ancak sağlık kuruluşunda değerlendirilebilmesi',
-      'Hayvan sahibinden şikayetçi olma zorunluluğu',
+      'Isıran hayvanın sahibinden yasal olarak şikâyetçi olma zorunluluğunun bulunmasıdır',
       'Isırık yerinin kaşınacak olması',
     ],
     answerIndex: 1,
@@ -1166,7 +1166,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Kişiye ortamda süt içirilmesi',
       'Kişinin aynı ortamda dinlendirilmesi',
-      'Gazın kokusunun tanınmaya çalışılması',
+      'Açığa çıkan gazın kokusunun yakından koklanarak hangi kimyasal olduğunun tanınmaya ve belirlenmeye çalışılması',
       'Kişinin ortamdan çıkarılıp temiz havaya alınması, kapı ve pencerelerin açılması ve 112’nin aranması',
     ],
     answerIndex: 3,
@@ -1191,7 +1191,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Tel, ip ve misina gibi ince, kesici malzemeler',
       'Üçgen bandaj',
-      'Katlanmış geniş kumaş şerit',
+      'Katlanarak hazırlanmış geniş ve yumuşak kumaş şerit',
       'Kravat gibi geniş bir bez',
     ],
     answerIndex: 0,
@@ -1217,7 +1217,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
       'Boynun ağrımasına yol açması',
       'Kanamanın gözlere sıçraması',
       'Geriye akan kanın yutulmasına veya soluk borusuna kaçmasına neden olabilmesi',
-      'Kanamanın tamamen görünmez olması',
+      'Kanamanın dışarıdan tamamen görünmez hâle gelmesi ve durup durmadığının anlaşılamaması',
     ],
     answerIndex: 2,
     explanation:
@@ -1242,7 +1242,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
       'Yaralının ağzını elle kapatmalıdır',
       'Kusmuğun hava yolunu tıkamaması için yaralıyı, omurga şüphesi varsa baş-boyun-gövde eksenini koruyarak yan çevirmelidir',
       'Yaralıyı oturtup su içirmelidir',
-      'Kusma bitene kadar hiçbir şey yapmadan izlemelidir',
+      'Kusma tamamen bitene kadar yaralıya hiç dokunmadan sırtüstü konumda beklemeli ve yalnızca solunumunu uzaktan izlemelidir',
     ],
     answerIndex: 1,
     explanation:
@@ -1264,7 +1264,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Göğsünde kalp krizini düşündüren ağrı başlayan bir sürücünün aracını kullanarak kendi başına hastaneye gitmeye çalışması neden sakıncalıdır?',
     options: [
-      'Hastane otoparkında yer bulamayacağı için',
+      'Hastanenin otoparkında uygun bir yer bulamayacağı ve aracını park edemeyeceği için acil servise geç ulaşacağından',
       'Yakıt harcayacağı için',
       'Trafikte ceza yiyebileceği için',
       'Yolda bilinç kaybı gelişirse hem kendisinin hem de trafikteki diğer insanların hayatının tehlikeye gireceği için',
@@ -1315,7 +1315,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     stem: 'Bilinci açık bir yaralıya yaklaşan ilk yardımcının doğru tutumu hangisidir?',
     options: [
       'Yaralıyla hiç konuşmadan sessizce müdahale etmek',
-      'Yaranın ne kadar kötü göründüğünü ayrıntılarıyla anlatmak',
+      'Yaranın ne kadar kötü göründüğünü bütün ayrıntılarıyla anlatıp yaralıyı durumu hakkında bilgilendirmek',
       'Kendini tanıtmak, sakin bir ses tonuyla ne yapacağını açıklamak ve yaralıyı yalnız bırakmamak',
       'Yaralının sorularını cevapsız bırakmak',
     ],
@@ -1340,11 +1340,11 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     stem: 'Kaza yerinde yaralının üzerinin battaniye veya montla örtülmesinin ilk yardım açısından amacı nedir?',
     options: [
       'Yaralının kim olduğunun gizlenmesi',
-      'Vücut ısısının korunması',
-      'Battaniyenin kanamayı kendiliğinden durdurması',
       'Yaralının uyumasının sağlanması',
+      'Battaniyenin kanamayı kendiliğinden durdurması',
+      'Vücut ısısının korunması',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Yaralılar, özellikle kan kaybı olanlar, hızla ısı kaybeder ve üşüme şok tablosunu derinleştirir. Üzerinin örtülmesi vücut ısısını korumaya yardım eder; bu, şok önleminin basit ama önemli bir parçasıdır. Isı kaybının şok tablosunu ağırlaştırabilmesi.',
     whyWrong: [
@@ -1364,7 +1364,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Bilinci açık, omurga yaralanması şüphesi olmayan ancak yürüyemeyen bir yaralı kısa mesafede iki ilk yardımcıyla nasıl taşınabilir?',
     options: [
-      'Kollarından ve saçlarından tutularak',
+      'İki ilk yardımcının yaralıyı kollarından ve bacaklarından tutup gövdesi desteklenmeden havada taşıması',
       'Bir kişinin sırtında sürüklenerek',
       'Ayak bileklerinden çekilerek',
       'İki ilk yardımcının el bileklerini kenetleyerek oluşturduğu oturak (altın beşik) üzerinde',

@@ -42,11 +42,11 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     stem: 'Kırmızı kenarlı üçgen bir levhada, bir yamaçtan yola doğru düşen kaya parçaları sembolü gören sürücü ne anlamalıdır?',
     options: [
       'İleride kamp alanı bulunduğunu',
-      'Yamaçtan yola taş ve kaya düşebileceğini',
-      'Bu kesimde madencilik yapıldığı için geçişin yasak olduğunu',
       'Yolun bittiğini',
+      'Bu kesimde madencilik yapıldığı için geçişin yasak olduğunu',
+      'Yamaçtan yola taş ve kaya düşebileceğini',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Düşen kaya uyarı levhası, dik yamaç veya kaya yarması bulunan kesimlerde yola taş ve kaya parçalarının düşebileceğini bildirir. Sürücü hızını azaltmalı, yol yüzeyindeki parçalara karşı uyanık olmalı ve yamaç dibinde gereksiz yere durmamalıdır. Dikkatli olup hızı azaltması gerektiğini.',
     whyWrong: [

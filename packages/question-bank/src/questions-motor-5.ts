@@ -718,12 +718,12 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Aydınlatma arızasında ilk şüphelenilecek parçalar hangi seçenekte doğru eşleştirilmiştir?',
     options: [
-      'Tek far sönükse sigorta; birden çok lamba sönükse ampul',
       'Tek far sönükse o farın ampulü',
+      'Tek far sönükse sigorta; birden çok lamba sönükse ampul',
       'Her iki durumda da önce alternatör değiştirilir',
       'Her iki durumda da yakıt pompası kontrol edilir',
     ],
-    answerIndex: 1,
+    answerIndex: 0,
     explanation:
       'Tek bir lambanın sönmesi çoğunlukla o lambanın ampulünün ömrünü doldurduğunu gösterir. Aynı sigortadan beslenen birkaç lambanın aynı anda sönmesi ise ortak noktayı, yani sigortayı (veya ortak kabloyu) işaret eder. Aynı devredeki birden çok lamba birden sönükse ortak sigorta.',
     whyWrong: [
@@ -815,11 +815,11 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     stem: 'Kış aylarında silecek su haznesinde donmaya dayanıklı (antifrizli) cam suyu bulundurmanın önemi nedir?',
     options: [
       'Motorun daha hızlı ısınmasını ve kaloriferin çabuk üflemesini sağlar',
-      'Sıradan su donarak haznede ve fıskiyelerde hasar yapabilir',
-      'Yakıt tüketimini azaltıp kışın menzili uzatır',
       'Lastiklerin yüzeyinde buz tutmasını tamamen engeller',
+      'Yakıt tüketimini azaltıp kışın menzili uzatır',
+      'Sıradan su donarak haznede ve fıskiyelerde hasar yapabilir',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Kışın yollardan sıçrayan çamur ve tuzlu su camı hızla kirletir; görüş için yıkama suyu hayati önem taşır. Haznedeki sıradan su donarsa hem sistem çalışmaz hem de genleşen buz hazneyi ve hortumları çatlatabilir. Tam ihtiyaç anında cam yıkanamaz — donmayan cam suyu bu riski ortadan kaldırır.',
     whyWrong: [
@@ -911,11 +911,11 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     stem: 'Kalitesiz veya tortulu yakıt kullanımı enjektörleri nasıl etkiler?',
     options: [
       'Yakıtın içindeki katkılar püskürtme deliklerini temizleyip enjektörlerin kullanım ömrünü uzatır',
-      'Püskürtme deliklerini zamanla tıkayarak yakıtın ince zerrecikler hâlinde püskürtülmesini bozar',
-      'Enjektörleri her çalıştırmada kendiliğinden temizleyip bakım gereğini kaldırır',
       'Yalnızca far ayarını bozar, yakıt sistemine hiç etki etmez',
+      'Enjektörleri her çalıştırmada kendiliğinden temizleyip bakım gereğini kaldırır',
+      'Püskürtme deliklerini zamanla tıkayarak yakıtın ince zerrecikler hâlinde püskürtülmesini bozar',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Enjektör, yakıtı kılcal deliklerden sis gibi püskürterek verimli yanma sağlar. Kirli yakıttaki tortular bu delikleri daraltır; püskürtme deseni bozulunca yanma kötüleşir: sarsıntı, güç kaybı ve fazla tüketim ortaya çıkar. Güvenilir istasyonlardan yakıt almak en basit korumadır. Rölanti düzensizleşir, güç düşer ve tüketim artar.',
     whyWrong: [
@@ -982,12 +982,12 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Akü kutup başlarında beyazımsı-yeşilimsi bir tabaka (oksitlenme) birikmesi neye yol açar?',
     options: [
-      'Akü kapasitesinin belirgin artmasına',
       'Bağlantı direncinin yükselmesine',
+      'Akü kapasitesinin belirgin artmasına',
       'Farların daha parlak yanmasına',
       'Yakıt tüketiminin azalmasına',
     ],
-    answerIndex: 1,
+    answerIndex: 0,
     explanation:
       'Oksit tabakası, kutup başı ile kablo pabucu arasında elektriğin geçişini zorlaştıran bir direnç oluşturur. Sonuçta marş yeterli akımı alamaz, şarj da düzensizleşir. Tabaka temizlenmeli, bağlantı sıkılmalı ve üzerine ince koruyucu (özel sprey/vazelin) uygulanmalıdır. Marşın zayıflamasına ve şarjın düzensizleşmesine — kutup başları temizlenip koruyucu sürülmelidir.',
     whyWrong: [
@@ -1081,11 +1081,11 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     stem: 'Sürekli çok kısa mesafelerde kullanılan araçlarda 100 km başına yakıt tüketiminin yüksek çıkmasının temel nedeni nedir?',
     options: [
       'Kısa yolda lastik çapının küçülmesi ve devir sayısının artması',
-      'Motorun çalışma sıcaklığına ulaşamadan yolculuğun bitmesi',
-      'Kısa yolculuklarda rüzgârın hep önden esmesi',
       'Yakıtın kısa yolda daha hızlı buharlaşıp azalması',
+      'Kısa yolculuklarda rüzgârın hep önden esmesi',
+      'Motorun çalışma sıcaklığına ulaşamadan yolculuğun bitmesi',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Soğuk motorda yağ henüz akışkanlaşmamıştır ve yönetim sistemi daha fazla yakıt püskürtür. Kısa yolculukta motor tam ısınamadan durdurulur; verimsiz geçen bu ilk dakikalar toplam yolun büyük bölümünü oluşturduğu için ortalama tüketim yükselir. Soğuk motorun daha zengin karışım ve yüksek iç sürtünmeyle verimsiz çalışması.',
     whyWrong: [
@@ -1153,11 +1153,11 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     stem: 'Hava yastığı (airbag) hangi mantıkla çalışır?',
     options: [
       'Sürücü gösterge panelindeki bir düğmeye bastığında şişer ve yolculuk boyunca şişik kalarak sürücüyle direksiyon arasında sürekli bir yastık oluşturur ve inmez',
-      'Şiddetli bir çarpışmayı algılayan sensörlerin komutuyla saniyenin çok küçük bir bölümünde şişerek başın ve gövdenin sert yüzeylere çarpmasını yumuşatır',
-      'Araç 50 km/saat hızı geçtiği anda kendiliğinden şişer ve hız düşene kadar açık kalır',
       'Yavaş yavaş şişer ve yolculuk boyunca yarı şişik hâlde bekletilir',
+      'Araç 50 km/saat hızı geçtiği anda kendiliğinden şişer ve hız düşene kadar açık kalır',
+      'Şiddetli bir çarpışmayı algılayan sensörlerin komutuyla saniyenin çok küçük bir bölümünde şişerek başın ve gövdenin sert yüzeylere çarpmasını yumuşatır',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Çarpışma sensörleri ani ve şiddetli yavaşlamayı algıladığında gaz üreteci yastığı göz açıp kapayana dek şişirir; yastık darbeyi emdikten hemen sonra söner. Açılan yastık yenisiyle değiştirilmek zorundadır. Tek kullanımlıktır.',
     whyWrong: [
@@ -1250,11 +1250,11 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     stem: 'Dört zamanlı bir motorda çevrimin (dört zamanın tamamının) gerçekleşmesi için krank mili kaç tur döner?',
     options: [
       'Yarım tur (180 derece)',
-      'İki tam tur (720 derece)',
-      'Bir tam tur (360 derece)',
       'Dört tam tur (1440 derece)',
+      'Bir tam tur (360 derece)',
+      'İki tam tur (720 derece)',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Her zaman, pistonun bir kez inmesi ya da çıkmasıdır ve krankın yarım turuna denk gelir. Dört zaman toplamda iki tam krank turu (720°) sürer. Supaplar çevrimde bir kez açıldığı için eksantrik mili krankın yarı hızında, yani çevrimde bir tur döner. Eksantrik mili ise aynı sürede yalnızca bir tur atar.',
     whyWrong: [
@@ -1323,11 +1323,11 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     stem: 'Birçok yeni araçta kontak açılınca kendiliğinden yanan gündüz sürüş farlarının (DRL) amacı nedir?',
     options: [
       'Geceleri yolu aydınlatarak sürücünün görüş mesafesini belirgin biçimde artırmak',
-      'Gündüz aracın diğer sürücülerce daha kolay fark edilmesini sağlamak',
-      'Yakıt tüketimini artırarak motorun daha hızlı ısınmasını sağlamak',
       'Arka plakayı aydınlatıp okunabilir hâle getirmek',
+      'Yakıt tüketimini artırarak motorun daha hızlı ısınmasını sağlamak',
+      'Gündüz aracın diğer sürücülerce daha kolay fark edilmesini sağlamak',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Gündüz farları, aracı gündüz ışığında öndeki trafiğe belirgin kılan görünürlük lambalarıdır; yolu aydınlatacak güçte değildir. Çoğu araçta DRL yanarken arka lambalar sönüktür; karanlıkta yalnızca DRL ile gitmek aracı arkadan görünmez yapar. Çoğu araçta bu sırada arka lambalar yanmadığından gece mutlaka normal farlar açılmalıdır.',
     whyWrong: [

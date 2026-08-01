@@ -145,7 +145,12 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     topic: 'sollama',
     difficulty: 'kolay',
     stem: 'Öndeki aracı geçmek (sollamak) kural olarak hangi taraftan yapılır?',
-    options: ['Sağından', 'Solundan', 'Banketten', 'Fark etmez'],
+    options: [
+      'Sağından',
+      'Solundan',
+      'Banketten, taşıt yolunun dışından',
+      'Yol boşsa iki taraftan da geçilebilir',
+    ],
     answerIndex: 1,
     explanation:
       'Geçme kural olarak soldan yapılır. (İstisna: sola dönüş sinyali veren aracın sağından, kurallara uygun biçimde geçilebilir.)',
@@ -235,8 +240,8 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     topic: 'alkol',
     difficulty: 'orta',
     stem: 'Hususi otomobil sürücüleri için yasal kandaki alkol sınırı (promil) nedir?',
-    options: ['1.00 promil', '0.50 promil', 'Sınır yoktur', '2.00 promil'],
-    answerIndex: 1,
+    options: ['1.00 promil', '2.00 promil', 'Sınır yoktur', '0.50 promil'],
+    answerIndex: 3,
     explanation:
       'Hususi otomobil sürücülerinde yasal sınır 0.50 promildir; ticari/kamu hizmeti sürücülerinde alkollü araç kullanmak tamamen yasaktır. Güvenli olan hiç almamaktır.',
     badge: 'official',
@@ -251,11 +256,11 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     stem: 'Gece, karşı yönden gelen araçla karşılaşan sürücü farlarını nasıl kullanmalıdır?',
     options: [
       'Uzun farla devam eder',
-      'Kısa fara geçer',
-      'Farları tamamen kapatır',
       'Dörtlü ikaz yakar',
+      'Farları tamamen kapatır',
+      'Kısa fara geçer',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Karşılaşmalarda uzun far karşı sürücüyü kamaştırır; kısa fara geçilir. Farları kapatmak da tehlikelidir — görünürlük kaybolur.',
     badge: 'official',
@@ -531,11 +536,11 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     stem: 'Trafikte "empati" aşağıdakilerden hangisiyle en iyi açıklanır?',
     options: [
       'Kendi hakkını sonuna kadar savunup hiç taviz vermemek',
-      'Diğer yol kullanıcılarının durumunu anlayıp ona göre davranmak',
-      'Yalnızca yayaları düşünüp diğer sürücülerin durumunu göz ardı etmek',
       'Kurallara herkesten daha sıkı uyup başkalarını uyarmak',
+      'Yalnızca yayaları düşünüp diğer sürücülerin durumunu göz ardı etmek',
+      'Diğer yol kullanıcılarının durumunu anlayıp ona göre davranmak',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Empati; acemi sürücüden yaşlı yayaya, diğer yol kullanıcılarının bakış açısını anlamak ve davranışı buna göre ayarlamaktır — güvenli ve saygılı trafiğin temeli.',
     badge: 'best',

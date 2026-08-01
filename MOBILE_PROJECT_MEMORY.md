@@ -3186,3 +3186,105 @@ değil boş vakti ölçen bir tablo üretir.
 Düello ekranındaki 3 saniyelik "rakip aranıyor" gecikmesi `Future.delayed` ile yazılmıştı;
 ekran kapanınca zamanlayıcı hayatta kalıyor ve testte "bekleyen zamanlayıcı" hatası bırakıyordu.
 Beta taşma taraması yakaladı. `Timer` + `dispose()` içinde `cancel()` doğrusu.
+
+---
+
+# Premium Kalite Programı — Faz 1–7 (1 Ağustos 2026)
+
+## A. Tellalık hedefi SIFIR değil, RASTGELE TABAN
+
+"En uzun şıkkı seç" oranını %0'a indirmek kusuru gidermez, TERSİNE ÇEVİRİR:
+
+    "en uzunu seç" doğruluğu = oran
+    "en uzunu ele" doğruluğu = (1 − oran) / 3
+
+oran %25 → ele %25 (bilgi yok, HEDEF bu) · oran %10 → ele %30 · oran %0 → ele %33.
+
+Bu yüzden kapı tek yönlü tavan değil, %25 çevresinde BANT: `maxLongestWinsRate` yanında
+`minLongestWinsRate` de var. Bugün %21,6 → "ele" %26,1, yani uzunluk bilgi taşımıyor.
+
+## B. Tek ölçüt yetmez — bileşimi ölç
+
+Uzunluk düzelince sıra sınav tekniğine geliyor. Tek tek ölçütler temizken BİRLEŞİK teknik
+("mutlak ifadeli şıkları ele, kalanın en uzununu seç") hâlâ %28,3 veriyordu — rastgeleden
+3,3 puan yüksek. `testWiseRate` kapının en kapsayıcı ölçütü oldu.
+
+Ayrıca: mutlak ifade ("asla/her zaman/kesinlikle") yalnız çeldiricilerde birikirse aday
+konuyu bilmeden eleyebilir. Ölçülüyor (`absoluteOnlyRate`).
+
+## C. Kodmod cümle ortasından kesebilir — kuyruğu SİLME, TAŞI
+
+Önceki turun kodmodu 60 soruda doğru şıkkı cümle ortasından kesmişti; kullanıcı ekranda
+"Pistonlardan gelen doğrusal (inip kalkan)" görüyordu. Onarımı mümkün kılan tek şey,
+kodmodun kuyruğu silmek yerine `explanation` sonuna TAŞIMIŞ olmasıydı.
+
+Ders: yıkıcı bir dönüşüm yaparken atılan parçayı bir yere yaz; geri alınabilirlik bedava.
+
+## D. Çeldirici kuralı "uzat" değil, "alan içinde kal"
+
+Termostat sorusunun çeldiricisi "Direksiyonu döndürmek" ise soru iki kez zarar görür:
+kolaylaşır VE hiçbir şey öğretmez. Kural: aynı alan, aynı dilbilgisel biçim, akla yatkın
+bir yanılgı. Metrik bunun YAN ÜRÜNÜ olarak düzelir.
+
+## E. Yeni içerik mandalı kırar — ve kırmalı
+
+Faz 2'de yazılan 43 sorunun 16'sı ilk hâlinde "en uzun şık" ile bilinebiliyordu; kapı
+anında kırıldı. Eşik gevşetilmedi, sorular düzeltildi. `expansion-quality.test.ts` artık
+eklenen içeriğin banka ortalamasından DAHA İYİ doğmasını zorunlu kılıyor.
+
+## F. Ders şeması: raster dört şeyi birden yapamaz
+
+Temaya uymak + yazı tipi ölçeğiyle büyümek + çevrilebilmek + APK'ya bayt eklememek.
+`CustomPainter` + gerçek `Text` dördünü birden çözüyor. 18 şema, sıfır bayt.
+
+Mobil `Lesson` modeli `figureId` alanını TAŞIYOR ama hiçbir yerde ÇİZMİYORDU — QIP v3'teki
+"platform eksik değil, bağlı değil" bulgusunun ders tarafındaki ikizi. Alan aramak yetmez,
+ÇAĞRI YERİ aranmalı.
+
+## G. Bağlanmamış özelliğin arayüzü GÖRÜNMEZ olmalı
+
+Sesli anlatım oynatıcısı, kaynak ses veremiyorsa hiçbir şey çizmiyor. "Yakında" rozeti ya
+da devre dışı düğme konmadı: olmayan bir özelliği varmış gibi göstermek, denetimde tur
+metninde yakalanan kusurun aynısı. Sözleşme "ses ver" değil, "ses VEREBİLİYOR MUSUN".
+
+## H. Ölü bağımlılığı ÖLÇ, sonra kaldır
+
+RevenueCat ağ geçidi hiçbir derlemede seçilmiyordu ama yayınlanan APK'nın classes.dex
+dosyasında 3114 sembolü vardı. Kaldırınca arm64 APK 31,9 → 30,3 MB (−1,59 MB).
+
+Kaldırmanın güvenli olduğu KANITLANABİLİRDİ: seçim koşulu `isConfigured` daima false
+dönüyordu, yani sevk edilen her derleme zaten diğer yolu kullanıyordu. "Kullanılmıyor
+galiba" ile "kullanılmadığı koşuldan belli" arasındaki fark budur.
+
+## I. Üst düzey FONKSİYONUN dispose kancası yoktur
+
+`showNewThreadSheet` bir fonksiyon olduğu için `TextEditingController` her açılışta
+yaratılıp hiç bırakılmıyordu. `showModalBottomSheet(...).whenComplete(controller.dispose)`
+— düğme, geri hareketi ve dışına dokunma dâhil her kapanış yolunda çalışır.
+
+Sızıntı taramasında "dispose metodu var mı" yetmez; SINIF OLMAYAN yerler ayrıca aranmalı.
+
+## J. Bir sızıntıyı BELGELEMEK, onu bir kez daha depoya yazmaktır
+
+gitleaks üç kez kırmızı verdi ve üçü de aynı dersti:
+
+1. kaynak (geçmişte) · 2. önceki turun RAPORU dizgeyi alıntılıyordu · 3. benim
+   `.gitleaksignore` GEREKÇEM dizgeyi alıntılıyordu.
+
+Gerekçe yazarken sızan dizgenin kendisi yazılmaz.
+
+## K. İçerik APK'dan değil, DAĞITILMIŞ API'den gelir
+
+Cihaz doğrulamasında Faz 1/2/3'ün çıktısı görünmedi. Sebep ölçüldü: `/api/mobile/
+question-bank` 1562 eski soru, `/api/mobile/content-snapshot` 13 eski figureId dönüyordu.
+
+APK uygulama KODUNU taşır (şema çizici, seslendirme, SDK kaldırma — üçü de cihazda
+doğrulandı); İÇERİK sunucudan gelir. Soru/ders değişikliği ancak web dağıtımıyla kullanıcıya
+ulaşır. "Cihazda göremedim" ile "çalışmıyor" aynı şey değil — hangisi olduğu ölçülmeli.
+
+## L. Redmi Note 11R'ye kurulum: artık KANITLI
+
+    INSTALL_FAILED_UPDATE_INCOMPATIBLE: Existing package signatures do not match
+
+Play'den kurulmuş kapalı beta var. Kurmak için onu kaldırmak gerekiyor; sahibinin verisini
+silmek geri alınamaz ve istenmedi. Varsayım değil, denenip alınan hata.

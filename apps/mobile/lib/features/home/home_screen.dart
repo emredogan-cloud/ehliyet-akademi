@@ -275,9 +275,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   id: ProductTourAnchors.realExam,
                   child: _QuickTile(
                     icon: Icons.history_edu_rounded,
-                    label: 'Çıkmış\nSınavlar',
+                    // "Çıkmış Sınavlar" DEĞİL: sınavlar üretiliyor, kopyalanmıyor. Eski ad
+                    // kullanıcıya telifli bir kâğıt vaat ediyordu (bkz. ürün turu düzeltmesi).
+                    label: 'Sınav\nArşivi',
                     color: p.green,
-                    onTap: () => context.go('/practice/historical'),
+                    onTap: () => context.go('/practice/library'),
                   ),
                 ),
               ],

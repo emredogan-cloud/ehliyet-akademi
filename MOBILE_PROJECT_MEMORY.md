@@ -3140,3 +3140,24 @@ ve `AssetCatalog.byConvention('signs', id)` ile birebir örtüşüyor.
 
 17 hız levhası için görsel ÜRETİLMEYECEK — rakam veridir, çizim değil; 17 ayrı görsel üretmek
 "yinelenen istem yok" kuralının ihlali olurdu.
+
+## K. Görsel enjeksiyonu dersi bozuyordu (Faz 2'de yakalandı)
+
+`buildExamV2`, ders dağılımını kurduktan SONRA görsel soru serpiştiriyor ve metin sorusunun
+yerine **herhangi bir** görsel soru koyuyordu. Kurulan dağılım böylece bozuluyordu; "İlk Yardım
+Sınavı"na trafik levhası sorusu giriyordu. Değişim artık AYNI DERS içinde yapılıyor.
+
+Ayrıca: `visualRatio` bir sınava görsel *serpiştirir*; "tamamı görsel" sınav için doğru araç
+havuzu SÜZMEK. Oranı 1'e çekmek işe yaramıyor — takas edecek eşleşen ders bulunamıyor.
+
+## L. Ücretsiz sınav sınırı kategori başına olamaz
+
+Altı kategori × üçer ücretsiz = 18 ücretsiz sınav, yani premium'un anlamsızlaşması. Sınır
+kataloğun tamamında üç ve yalnız GENEL kategoride: yeni kullanıcının ilk denemesi gerçek sınav
+provası olmalı, tek derslik bir sınav "bu uygulama beni hazırlıyor mu?" sorusunu yanıtlamaz.
+
+## M. `Flexible` yatayda çözer, dikeyde patlatır
+
+Sınav listesi kartında `Flexible(child: Text(...))` bir Column içine kondu → "RenderFlex children
+have non-zero flex but incoming height constraints are unbounded". Aynı sarmalayıcı bir Row içinde
+doğru çözümdü. Dikeyde taşmayı `maxLines` + `ellipsis` engelliyor; esneme payı gerekmiyor.

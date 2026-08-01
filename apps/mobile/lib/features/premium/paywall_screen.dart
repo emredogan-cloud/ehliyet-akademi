@@ -223,8 +223,9 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   ///
   /// İKİ SUNUCU KÖPRÜSÜ VARDIR ve ikisinde de **yetkinin kaynağı sunucudur**:
   /// · [BillingServerBridge.clientReceipt] — Play makbuzu `POST /api/iap/validate` ile doğrulanır.
-  /// · [BillingServerBridge.revenueCatWebhook] — sunucu yetkiyi RevenueCat webhook'undan alır;
-  ///   istemcide ham makbuz yoktur, bu yüzden sahiplik sunucudan **tazelenir**.
+  /// · [BillingServerBridge.externalWebhook] — sunucu yetkiyi bir aracının webhook'undan alır;
+  ///   istemcide ham makbuz yoktur, bu yüzden sahiplik sunucudan **tazelenir**. Bugün bu yol
+  ///   kullanılmıyor; ayrım, bir aracı entegre edildiğinde neyin değişeceğini gösteriyor.
   Future<void> _onPurchase(BillingPurchase purchase) async {
     // SIRA DEĞİŞTİ (Faz 2): önce erişim açılır, sonra sunucuya bağlanmaya çalışılır.
     //

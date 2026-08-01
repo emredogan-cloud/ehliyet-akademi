@@ -240,6 +240,16 @@ class _DiscussionsScreenState extends ConsumerState<DiscussionsScreen> {
 }
 
 /// Yeni başlık için ad soran alt sayfa (paylaşımlı — soru paylaşımı akışı da kullanır).
+/// SIZINTI NOTU (Premium Kalite Programı · Faz 6): denetimde bulundu ve giderildi.
+///
+/// `TextEditingController` bir `ChangeNotifier`dır; oluşturulduğu her seferde dinleyicileri
+/// ve yerel metin girişi bağlantısıyla birlikte bellekte kalır. Bu sayfa bir SINIF değil, üst
+/// düzey bir fonksiyon olduğu için `dispose()` yaşam döngüsü kancası yoktu ve denetleyici
+/// alt sayfa her açıldığında yeniden yaratılıp hiç bırakılmıyordu — kullanıcı "yeni başlık"ı
+/// on kez açtıysa on denetleyici yaşıyordu.
+///
+/// Düzeltme, kapanışı beklemek: `whenComplete`, sayfa ister düğmeyle ister geri hareketiyle
+/// ister dışına dokunularak kapansın çalışır.
 Future<String?> showNewThreadSheet(BuildContext context, {String? questionRef}) {
   final controller = TextEditingController();
   String? error;
@@ -299,7 +309,7 @@ Future<String?> showNewThreadSheet(BuildContext context, {String? questionRef}) 
         ),
       ),
     ),
-  );
+  ).whenComplete(controller.dispose);
 }
 
 class _Chip extends StatelessWidget {

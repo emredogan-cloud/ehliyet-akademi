@@ -10,6 +10,7 @@ import '../../core/theme/tokens.dart';
 import '../../data/practice/progress_repository.dart';
 import '../../data/premium/entitlements_repository.dart';
 import '../../data/premium/quota_repository.dart';
+import '../../design/living_mascot.dart';
 import '../../design/brand.dart';
 import '../../design/markdown_block.dart';
 import '../../design/primitives.dart';
@@ -254,7 +255,7 @@ class _CoachScreenState extends ConsumerState<CoachScreen> {
                   ],
                 ),
               ),
-              MascotImage(AppImages.owlWave, height: 128, semanticLabel: 'AI Koç'),
+              LivingMascot(AppImages.owlWave, height: 128, semanticLabel: 'AI Koç'),
             ],
           ),
         ),

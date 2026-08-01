@@ -8,13 +8,56 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'helpers.dart';
 
 void main() {
-  group('single premium product + capabilities', () {
-    test('one product only: Komple Ehliyet Paketi @ 399', () {
-      expect(products, hasLength(1));
-      expect(premiumProduct.id, kPremiumProductId);
-      expect(premiumProduct.priceTRY, 399);
-      expect(premiumProduct.title, 'Komple Ehliyet Paketi');
+  group('premium katalog + yetenekler', () {
+    /// Ürün Evrimi v1.1 · Faz 10 — katalog üç pakete çıktı.
+    test('üç paket: haftalık 50, aylık 200, ömür boyu 479,99 (önerilen)', () {
+      expect(products, hasLength(3));
+      expect(products.map((p) => p.id), [
+        kWeeklyProductId,
+        kMonthlyProductId,
+        kPremiumProductId,
+      ]);
+      expect(productById(kWeeklyProductId)!.priceMinor, 5000);
+      expect(productById(kMonthlyProductId)!.priceMinor, 20000);
+      expect(productById(kPremiumProductId)!.priceMinor, 47999);
+      expect(recommendedProduct.id, kPremiumProductId);
+      expect(products.where((p) => p.highlight), hasLength(1));
+    });
+
+    /// GERİYE UYUMLULUK — bu testin kırılması, ödeme yapmış kullanıcıların premium'unu
+    /// kaybetmesi demektir. Ömür boyu paketin kimliği değiştirilemez.
+    test('ömür boyu paketin kimliği DEĞİŞMEDİ — eski satın almalar geçerli kalır', () {
+      expect(kPremiumProductId, 'komple-ehliyet');
       expect(premiumProduct.storeProductId, 'komple_ehliyet');
+      expect(isPremium(['komple-ehliyet']), isTrue);
+    });
+
+    test('yedek fiyat etiketi kuruşu doğru biçimler', () {
+      expect(productById(kWeeklyProductId)!.fallbackPriceLabel, '₺50/hafta');
+      expect(productById(kMonthlyProductId)!.fallbackPriceLabel, '₺200/ay');
+      expect(productById(kPremiumProductId)!.fallbackPriceLabel, '₺479,99');
+    });
+
+    test('abonelik/tek-seferlik ayrımı', () {
+      expect(productById(kWeeklyProductId)!.period.isSubscription, isTrue);
+      expect(productById(kMonthlyProductId)!.period.isSubscription, isTrue);
+      expect(productById(kPremiumProductId)!.period.isSubscription, isFalse);
+    });
+
+    test('activeProduct en iyi paketi seçer', () {
+      expect(activeProduct([]), isNull);
+      expect(activeProduct([kWeeklyProductId])!.id, kWeeklyProductId);
+      expect(activeProduct([kWeeklyProductId, kPremiumProductId])!.id, kPremiumProductId);
+      expect(activeProduct([kWeeklyProductId, kMonthlyProductId])!.id, kMonthlyProductId);
+      expect(activeProduct(['yok-boyle']), isNull);
+    });
+
+    test('üç paket de AYNI yetenekleri açar — fark yalnız süre', () {
+      for (final p in products) {
+        expect(p.capabilities, kAllCapabilities);
+      }
+      expect(isPremium([kWeeklyProductId]), isTrue);
+      expect(isPremium([kMonthlyProductId]), isTrue);
     });
 
     test('the pack grants every capability; empty owns nothing', () {

@@ -75,7 +75,11 @@ class _LockedGate extends StatelessWidget {
             FilledButton.icon(
               onPressed: () => context.push('/premium?product=${product.id}'),
               icon: const Icon(Icons.lock_open_rounded, size: 18),
-              label: Text('Kilidi aç · ${product.priceTRY} ₺'),
+              // FİYAT BURADA YAZILMAZ. Gerçek fiyat mağazadan gelir (ülke, para birimi, vergi,
+              // indirim orada belirlenir) ve yalnız ödeme ekranı onu biliyor. Katalog fiyatını
+              // düğmeye basmak, mağazadakinden farklı bir sayı göstermek demekti — RC 1.0.0'da
+              // ödeme ekranında düzeltilen kusurun aynısı burada yaşıyordu.
+              label: const Text('Kilidi aç'),
             ),
             const SizedBox(height: AppSpacing.s3),
             TextButton(

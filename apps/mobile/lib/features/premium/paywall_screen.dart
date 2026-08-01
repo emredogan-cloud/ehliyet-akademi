@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/analytics/analytics_event.dart';
 import '../../core/analytics/analytics_ref.dart';
-import '../../core/assets.dart';
 import '../../core/config.dart';
 import '../../core/observability/error_report.dart';
 import '../../core/observability/error_reporter.dart';
@@ -17,13 +16,20 @@ import '../../domain/premium/entitlement_status.dart';
 import '../../domain/premium/products.dart';
 import '../../domain/premium/paywall_offer.dart';
 import '../../domain/premium/retention.dart';
+import 'paywall_plans.dart';
 import 'paywall_sections.dart';
 import 'premium_popups.dart';
 
 
-/// Premium paywall — TEK ürün: "Komple Ehliyet Paketi" (399 ₺, tek seferlik / ömür boyu). Satın al +
-/// geri yükle. Gerçek satın alma Play Store'a bağlıdır (bu ortamda test edilemez — mağaza
-/// kullanılamıyorsa dürüstçe bilgilendirilir; sahiplik/geri yükleme sunucudan çalışır).
+/// Premium ödeme ekranı — ÜÇ paket: haftalık / aylık / ömür boyu (önerilen).
+///
+/// Ürün Evrimi v1.1 · Faz 10 — KAYDIRMA YOK: üç paket, özellik listesi ve satın alma düğmesi tek
+/// bakışta görünür. Kahraman görseli kaldırıldı; dikey alanın en pahalı ögesiydi ve karar vermeye
+/// katkısı yoktu. Deneme süresi YOK, sahte aciliyet YOK — geri sayım yalnız gerçekten tanımlı bir
+/// kampanya varsa çıkar (bkz. `Campaign`).
+///
+/// Gerçek satın alma Play Store'a bağlıdır (bu ortamda test edilemez — mağaza kullanılamıyorsa
+/// dürüstçe bilgilendirilir; sahiplik/geri yükleme sunucudan çalışır).
 ///
 /// Beta Faz 3: ekran artık somut bir ödeme eklentisine değil, [BillingGateway] soyutlamasına bağlı.
 /// Etkin ağ geçidi derleme zamanı anahtarına göre seçilir (RevenueCat varsa o, yoksa mevcut
@@ -55,7 +61,11 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   /// hiçbir şey gösterilmez (uydurma durum üretilmez).
   PremiumLifecycle _lifecycle = PremiumLifecycle.none;
 
-  Product get _product => premiumProduct;
+  /// Seçili paket. Varsayılan ÖNERİLEN (ömür boyu) — kullanıcı hiçbir şey seçmeden satın alma
+  /// düğmesine basarsa en çok değer veren paketi almış olur.
+  String _selectedId = recommendedProduct.id;
+
+  Product get _product => productById(_selectedId) ?? recommendedProduct;
 
   /// Kampanya bilgisi (üstü çizili fiyat + geri sayım). Yapılandırılmadıysa ikisi de KAPALI —
   /// gerekçe `PaywallOffer` ve `Campaign` sınıf notlarında.
@@ -68,12 +78,17 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     DateTime.now(),
   );
 
-  /// Mağazadan gelen ürün — yoksa null (mağaza kapalı ya da ürün Play'de tanımlı değil).
+  /// SEÇİLİ paketin mağazadaki karşılığı — yoksa null (mağaza kapalı ya da ürün Play'de tanımsız).
+  ///
+  /// Geri düşüş olarak listedeki ilk ürünü almak KASITLI: tek ürünlü dönemde mağaza kimliği
+  /// eşleşmese bile satın alma çalışsın diye konmuştu. Üç ürünlü katalogda bu tehlikeli —
+  /// kullanıcı "Aylık" seçip "Ömür Boyu" satın alabilirdi. Artık eşleşme yoksa null döner ve
+  /// düğme kapanır.
   BillingProduct? get _storeProduct {
     for (final p in _products) {
       if (p.storeProductId == _product.storeProductId) return p;
     }
-    return _products.isEmpty ? null : _products.first;
+    return null;
   }
 
   @override
@@ -392,70 +407,116 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
         top: false,
         child: _loading
             ? const Center(child: CircularProgressIndicator())
-            : ListView(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.s4,
-                  0,
-                  AppSpacing.s4,
-                  AppSpacing.s8,
-                ),
-                children: [
-                  _PaywallHeadline(hasPremium: hasPremium),
-                  const SizedBox(height: AppSpacing.s4),
-                  const _PaywallHero(),
-                  const SizedBox(height: AppSpacing.s5),
-                  const PaywallFeatureStrip(),
-                  const SizedBox(height: AppSpacing.s4),
-                  PaywallChecklist(features: _product.features),
-                  const SizedBox(height: AppSpacing.s5),
-
-                  // Yaşam döngüsü uyarısı — yalnız sağlayıcı gerçekten bir durum bildirdiyse.
-                  if (lifecycleMessage != null)
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: AppSpacing.s4),
-                      child: AppCallout(
-                        tone: _lifecycle.grantsAccess ? CalloutTone.info : CalloutTone.warning,
-                        title: _lifecycle.needsUserAction ? 'Ödeme sorunu' : 'Abonelik durumu',
-                        text: lifecycleMessage,
-                      ),
-                    ),
-                  if (!_storeAvailable && !hasPremium)
-                    const Padding(
-                      padding: EdgeInsets.only(bottom: AppSpacing.s4),
-                      child: AppCallout(
-                        tone: CalloutTone.warning,
-                        title: 'Mağaza kullanılamıyor',
-                        text:
-                            'Uygulama-içi satın alma yalnız Google Play üzerinden yüklenmiş sürümde çalışır. '
-                            'Sahip olduğun paketi "Geri yükle" ile getirebilirsin.',
-                      ),
-                    ),
-
-                  // Faz 2 — SAHİPSE satın alma yüzeyi HİÇ ÇİZİLMEZ.
-                  //
-                  // Devre dışı bir düğme bırakmak yetmez: kullanıcı ödediği bir şeyin satış
-                  // ekranını görmeye devam eder. Sahiplikte ekran bir DURUM ekranına dönüşür —
-                  // fiyat, sayaç, satın alma düğmesi ve güven şeridi kalkar.
-                  if (hasPremium)
-                    _OwnedBanner()
-                  else ...[
-                    PaywallPriceBlock(
-                      priceLabel: priceLabel,
-                      offer: _offer,
-                      onBuy: _storeAvailable ? _buy : null,
-                      busy: _busy,
-                    ),
-                    const SizedBox(height: AppSpacing.s5),
-                    _TrustRow(),
-                  ],
-                  const SizedBox(height: AppSpacing.s4),
-                  Text(
-                    'Ödeme Google Play üzerinden alınır. Ömür boyu erişim, abonelik yok. '
-                    'Kesin ve güncel kural için MEB/MTSK esastır.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: context.palette.text3, fontSize: 11.5, height: 1.4),
+            // KAYDIRMA YOK — her şey ilk bakışta görünür.
+            //
+            // Yine de bir kaydırıcıya sarılıyor: `minHeight` görünüm yüksekliğine eşit olduğu
+            // için NORMAL cihazlarda içerik tam oturur ve kaydırma HİÇ devreye girmez. Yalnız
+            // görünüm gerçekten kısaldığında (çok küçük ekran, dev yazı tipi, yatay çevirme)
+            // kaydırma açılır. Alternatif metni kırpmaktı; okunamayan bir ödeme ekranı,
+            // kaydırılabilen bir ödeme ekranından kötüdür.
+            : LayoutBuilder(
+                builder: (context, constraints) => SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.s4,
+                    0,
+                    AppSpacing.s4,
+                    AppSpacing.s4,
                   ),
-                ],
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight - AppSpacing.s4,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            _PaywallHeadline(hasPremium: hasPremium),
+                            const SizedBox(height: AppSpacing.s3),
+                            const PaywallFeatureStrip(),
+                            const SizedBox(height: AppSpacing.s3),
+                            PaywallChecklist(features: _product.features),
+                          ],
+                        ),
+
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            // Yaşam döngüsü uyarısı — yalnız sağlayıcı gerçekten bir durum bildirdiyse.
+                            if (lifecycleMessage != null)
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: AppSpacing.s3),
+                                child: AppCallout(
+                                  tone: _lifecycle.grantsAccess
+                                      ? CalloutTone.info
+                                      : CalloutTone.warning,
+                                  title: _lifecycle.needsUserAction
+                                      ? 'Ödeme sorunu'
+                                      : 'Abonelik durumu',
+                                  text: lifecycleMessage,
+                                ),
+                              ),
+                            if (!_storeAvailable && !hasPremium)
+                              const Padding(
+                                padding: EdgeInsets.only(bottom: AppSpacing.s3),
+                                child: AppCallout(
+                                  tone: CalloutTone.warning,
+                                  title: 'Mağaza kullanılamıyor',
+                                  text:
+                                      'Uygulama-içi satın alma yalnız Google Play üzerinden yüklenmiş '
+                                      'sürümde çalışır. Sahip olduğun paketi "Geri yükle" ile getirebilirsin.',
+                                ),
+                              ),
+
+                            // Faz 2 — SAHİPSE satın alma yüzeyi HİÇ ÇİZİLMEZ.
+                            //
+                            // Devre dışı bir düğme bırakmak yetmez: kullanıcı ödediği bir şeyin
+                            // satış ekranını görmeye devam eder. Sahiplikte ekran bir DURUM
+                            // ekranına dönüşür — paketler, fiyat ve satın alma düğmesi kalkar.
+                            if (hasPremium)
+                              _OwnedBanner()
+                            else ...[
+                              PaywallPlans(
+                                selectedId: _selectedId,
+                                storeProducts: _products,
+                                onSelect: (id) => setState(() => _selectedId = id),
+                              ),
+                              const SizedBox(height: AppSpacing.s3),
+                              PaywallPriceBlock(
+                                priceLabel: priceLabel,
+                                period: _product.period,
+                                offer: _offer,
+                                onBuy: _storeAvailable && _storeProduct != null ? _buy : null,
+                                busy: _busy,
+                              ),
+                              const SizedBox(height: AppSpacing.s2),
+                              _TrustRow(period: _product.period),
+                            ],
+                            const SizedBox(height: AppSpacing.s3),
+                            Text(
+                              // Metin SEÇİME göre değişir: "abonelik yok" cümlesi artık yalnız
+                              // ömür boyu paket için doğru. Sabit bırakmak, haftalık paketi seçen
+                              // kullanıcıya yanlış bilgi vermek olurdu.
+                              _product.period.isSubscription
+                                  ? 'Ödeme Google Play üzerinden alınır. Abonelik, sen iptal edene '
+                                        'kadar yenilenir. Kesin ve güncel kural için MEB/MTSK esastır.'
+                                  : 'Ödeme Google Play üzerinden alınır. Tek seferlik, ömür boyu '
+                                        'erişim. Kesin ve güncel kural için MEB/MTSK esastır.',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: context.palette.text3,
+                                fontSize: 11.5,
+                                height: 1.35,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
       ),
     );
@@ -521,47 +582,45 @@ class _PaywallHeadline extends StatelessWidget {
 ///
 /// Bu, referansın TEK raster parçasıdır (`tool/extract_paywall_hero.py` notuna bakın): sanat
 /// widget'la yeniden çizilemez, mockup ise raster olarak sevk edilmez.
-class _PaywallHero extends StatelessWidget {
-  const _PaywallHero();
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      label: 'Komple Ehliyet Paketi',
-      image: true,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(AppRadii.lg),
-        child: Image.asset(
-          AppImages.paywallHero,
-          fit: BoxFit.cover,
-          // Gösterim genişliğine indirilir (bellek); 2× cihaz oranına kadar keskin.
-          cacheWidth: 1080,
-          excludeFromSemantics: true,
-          errorBuilder: (_, _, _) => const SizedBox.shrink(),
-        ),
-      ),
-    );
-  }
-}
-
+/// Güven şeridi — üç KANITLANABİLİR cümle.
+///
+/// Eski hâlinde "7 gün iade" ve "Ömür boyu" yazıyordu; ikisi de doğru değildi:
+/// · İade süresini Google Play belirler, biz değil — sabit bir gün sayısı vaat edemeyiz.
+/// · "Ömür boyu" artık yalnız bir pakete ait; haftalık seçen kullanıcıya yanlış bilgi olurdu.
+///
+/// Yerlerine yalnız doğrulanabilir şeyler kondu ve üçüncüsü SEÇİME göre değişiyor.
 class _TrustRow extends StatelessWidget {
+  const _TrustRow({required this.period});
+
+  final BillingPeriod period;
+
   @override
   Widget build(BuildContext context) {
     final p = context.palette;
-    Widget item(IconData i, String t) => Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(i, size: 15, color: p.green),
-            const SizedBox(width: 5),
-            Text(t, style: TextStyle(color: p.text3, fontSize: 11.5)),
-          ],
-        );
+    Widget item(IconData i, String t) => Flexible(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(i, size: 15, color: p.green),
+          const SizedBox(width: 5),
+          Flexible(
+            child: Text(
+              t,
+              style: TextStyle(color: p.text3, fontSize: 11.5),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+      ),
+    );
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        item(Icons.verified_user_rounded, '7 gün iade'),
-        item(Icons.lock_rounded, '%100 Güvenli'),
-        item(Icons.all_inclusive_rounded, 'Ömür boyu'),
+        item(Icons.lock_rounded, 'Güvenli ödeme'),
+        item(Icons.verified_user_rounded, 'Google Play'),
+        period.isSubscription
+            ? item(Icons.event_repeat_rounded, 'İstediğin an iptal')
+            : item(Icons.all_inclusive_rounded, 'Süre dolmaz'),
       ],
     );
   }

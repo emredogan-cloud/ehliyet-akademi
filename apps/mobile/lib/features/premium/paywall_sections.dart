@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/theme/tokens.dart';
 import '../../domain/premium/paywall_offer.dart';
+import '../../domain/premium/products.dart';
 
 /// Faz 9 — ödeme ekranının referanstan gelen üç bölümü.
 ///
@@ -198,12 +199,18 @@ class PaywallPriceBlock extends StatefulWidget {
   const PaywallPriceBlock({
     super.key,
     required this.priceLabel,
+    required this.period,
     required this.offer,
     required this.onBuy,
     required this.busy,
   });
 
   final String priceLabel;
+
+  /// Seçili paketin dönemi — rozet metni ("tek seferlik ödeme" / "haftalık abonelik") buradan
+  /// gelir. Önceden sabitti ve üç paketli katalogda haftalık seçen kullanıcıya yanlış bilgi olurdu.
+  final BillingPeriod period;
+
   final PaywallOffer offer;
   final VoidCallback? onBuy;
   final bool busy;
@@ -254,27 +261,42 @@ class _PaywallPriceBlockState extends State<PaywallPriceBlock> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(child: _price(p)),
-              if (showCountdown) ...[
-                const SizedBox(width: AppSpacing.s3),
-                _Countdown(remaining: widget.offer.remaining(_now)),
+          // BÜYÜK FİYAT ARTIK YALNIZ KAMPANYADA ÇİZİLİR.
+          //
+          // Paket kartları (bkz. `PaywallPlans`) fiyatı zaten gösteriyor; aynı sayıyı iki kez
+          // yazmak hem yer harcıyor hem de "hangisi geçerli?" sorusu doğuruyordu. Kampanya
+          // varsa durum farklı: orada anlatılacak bir HİKÂYE var — "şu fiyat yerine bu fiyat" —
+          // ve onu kart tek başına anlatamaz.
+          if (widget.offer.hasListPrice || showCountdown) ...[
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(child: _price(p)),
+                if (showCountdown) ...[
+                  const SizedBox(width: AppSpacing.s3),
+                  _Countdown(remaining: widget.offer.remaining(_now)),
+                ],
               ],
-            ],
-          ),
-          const SizedBox(height: AppSpacing.s4),
+            ),
+            const SizedBox(height: AppSpacing.s4),
+          ],
           _BuyButton(onPressed: widget.onBuy, loading: widget.busy),
           const SizedBox(height: AppSpacing.s3),
+          // `Flexible` ŞART — metin dar ekranda satır atlasın diye.
+          //
+          // Bu taşma ESKİDEN DE VARDI ama görünmüyordu: blok bir `ListView` içindeydi ve 320 dp
+          // yükseklikte ekranın altında kaldığı için hiç YERLEŞTİRİLMİYORDU (ListView tembeldir).
+          // Faz 10'da kaydırma kaldırılıp her şey tek karede yerleşince gizli kusur ortaya çıktı.
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(Icons.lock_rounded, size: 14, color: p.text3),
               const SizedBox(width: 6),
-              Text(
-                'Ödeme Google Play üzerinden alınır.',
-                style: TextStyle(color: p.text3, fontSize: 12),
+              Flexible(
+                child: Text(
+                  'Ödeme Google Play üzerinden alınır.',
+                  style: TextStyle(color: p.text3, fontSize: 12),
+                ),
               ),
             ],
           ),
@@ -330,7 +352,12 @@ class _PaywallPriceBlockState extends State<PaywallPriceBlock> {
                   border: Border.all(color: p.primary.withValues(alpha: 0.45)),
                 ),
                 child: Text(
-                  'tek seferlik ödeme',
+                  switch (widget.period) {
+                    BillingPeriod.weekly => 'haftalık abonelik',
+                    BillingPeriod.monthly => 'aylık abonelik',
+                    BillingPeriod.yearly => 'yıllık abonelik',
+                    BillingPeriod.lifetime || BillingPeriod.unknown => 'tek seferlik ödeme',
+                  },
                   style: TextStyle(color: p.primary, fontSize: 11.5, fontWeight: FontWeight.w700),
                 ),
               ),

@@ -48,6 +48,7 @@ void main() {
     'Sınav arşivi': '/practice/library',
     'Arşiv · kategori': '/practice/library/genel',
     'Arşiv · görsel kategori': '/practice/library/gorsel',
+    'Düello': '/practice/duel',
     'AI Koç': '/coach',
     'Topluluk': '/community',
     'Topluluğa katıl': '/community/join',

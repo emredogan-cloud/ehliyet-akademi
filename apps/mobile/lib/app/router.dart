@@ -21,6 +21,7 @@ import '../features/practice/practice_screen.dart';
 import '../features/practice/practice_runner_screen.dart';
 import '../features/practice/exam_runner_screen.dart';
 import '../features/practice/collections_screen.dart';
+import '../features/duel/duel_screen.dart';
 import '../features/practice/exam_library_screen.dart';
 import '../features/practice/historical_screen.dart';
 import '../domain/practice/exam_library.dart';
@@ -217,6 +218,9 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
                   ),
                 ),
                 GoRoute(path: 'historical', builder: (_, _) => const HistoricalScreen()),
+
+                // Ürün Evrimi v1.1 · Faz 4 — Düello.
+                GoRoute(path: 'duel', builder: (_, _) => const DuelScreen()),
 
                 // Ürün Evrimi v1.1 · Faz 2 — sınav kütüphanesi.
                 GoRoute(path: 'library', builder: (_, _) => const ExamLibraryScreen()),

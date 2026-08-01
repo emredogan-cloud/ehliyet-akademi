@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'app/app.dart';
 import 'app/router.dart';
 import 'core/asset_resolver.dart';
+import 'data/duel/duel_energy_repository.dart';
 import 'core/analytics/analytics.dart';
 import 'core/analytics/analytics_sink.dart';
 import 'core/network/api_client.dart';
@@ -44,6 +45,9 @@ Future<void> main() async {
   // pakette var mı?" sorusunu sorabiliyor ve ayrılmış ama henüz üretilmemiş bir levha adına
   // düşüp kırık görsel çizmiyorlar.
   await AssetCatalog.load();
+
+  // Faz 4 — düello enerjisi (günlük hak + bekleme) senkron okunabilsin diye açılışta yüklenir.
+  await initDuelEnergyStorage();
 
   // ── Beta Faz 4 — gözlemlenebilirlik, uygulamadan ÖNCE kurulur ────────────────────────────────
   //

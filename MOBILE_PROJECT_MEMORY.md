@@ -3161,3 +3161,28 @@ provası olmalı, tek derslik bir sınav "bu uygulama beni hazırlıyor mu?" sor
 Sınav listesi kartında `Flexible(child: Text(...))` bir Column içine kondu → "RenderFlex children
 have non-zero flex but incoming height constraints are unbounded". Aynı sarmalayıcı bir Row içinde
 doğru çözümdü. Dikeyde taşmayı `maxLines` + `ellipsis` engelliyor; esneme payı gerekmiyor.
+
+## N. Düello: hız tek başına kazandırmamalı
+
+Yalnız hıza puan verilseydi en iyi strateji "soruyu okuma, rastgele bas" olurdu. Doğru cevap
+100 puan, hız bonusu en fazla 50 — yani EN YAVAŞ doğru bile EN HIZLI yanlıştan çok ediyor.
+Yanlış cevap puan GÖTÜRMÜYOR: ceza, tahmin etmeyi değil cevaplamayı caydırır.
+
+Kaybeden de XP alıyor. Sıfır veren sistem, oyuncuyu zayıf olduğu konudan kaçırır — tam olarak
+çalışması gereken konudan.
+
+Rakip doğruluğu **%85'te tavanlı**. Kusursuz rakip, oyuncunun kusursuz oynamadıkça
+kazanamayacağı demektir. Taban %55 (rastgele %25'ten belirgin yüksek, yoksa rakip komik olur).
+
+Rakip [DuelOpponent] ARAYÜZÜYLE soyutlandı ve `answerFor` asenkron: çevrimiçi rakip geldiğinde
+aynı arayüzü uygular, ekran kodu değişmez. Sahte kullanıcı adı üretilmiyor — çevrimiçi olmayan
+bir özelliği çevrimiçiymiş gibi göstermek olurdu.
+
+Premium günlük hakkı SINIRSIZ DEĞİL (30). Sınırsız hak, sunucu sıralaması geldiğinde beceriyi
+değil boş vakti ölçen bir tablo üretir.
+
+## O. `Future.delayed` sökülünce iptal edilemez
+
+Düello ekranındaki 3 saniyelik "rakip aranıyor" gecikmesi `Future.delayed` ile yazılmıştı;
+ekran kapanınca zamanlayıcı hayatta kalıyor ve testte "bekleyen zamanlayıcı" hatası bırakıyordu.
+Beta taşma taraması yakaladı. `Timer` + `dispose()` içinde `cancel()` doğrusu.

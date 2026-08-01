@@ -18,6 +18,7 @@ import '../../domain/content/content_enums.dart';
 import '../../domain/onboarding/study_profile.dart';
 import '../../domain/practice/collections.dart';
 import '../../domain/practice/exam.dart';
+import '../../domain/practice/exam_library.dart';
 import '../../domain/practice/exam_v2.dart';
 import '../../domain/practice/historical.dart';
 import '../../domain/practice/question.dart';
@@ -34,7 +35,14 @@ import 'widgets/bank_scope.dart';
 import 'widgets/question_view.dart';
 import 'widgets/result_view.dart';
 
-enum ExamSource { standard, collection, historical }
+enum ExamSource {
+  standard,
+  collection,
+  historical,
+
+  /// Ürün Evrimi v1.1 · Faz 2 — sınav kütüphanesinden gelen sınav. `id` = `<kategori>-<tarih>`.
+  library,
+}
 
 /// Sınav çalıştırıcı — standart 50-soruluk deneme, koleksiyon veya geçmiş (MEB) sınavı.
 /// Zamanlayıcı, soru haritası, puanlama ve ders bazlı sonuç. Tamamen çevrimdışı (bankadan kurulur).
@@ -76,6 +84,14 @@ class _ExamRunnerScreenState extends ConsumerState<ExamRunnerScreen> {
         const ExamConfig(mode: ExamMode.exam, visualRatio: 0.2),
       ).exam,
       ExamSource.historical => historicalExam(bank.questions, widget.id!),
+      // Kimlik çözülemezse (elle yazılmış/bayat bağlantı) standart denemeye düşülür — boş
+      // ekran göstermek yerine kullanılabilir bir sınav verilir.
+      ExamSource.library => () {
+        final e = libraryExamById(widget.id ?? '', DateTime.now());
+        return e == null
+            ? buildExamV2(bank.questions, const ExamConfig(mode: ExamMode.exam, visualRatio: 0.2)).exam
+            : buildLibraryExam(bank.questions, e);
+      }(),
       ExamSource.collection => _fromCollection(bank),
     };
     _exam = built;

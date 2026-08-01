@@ -117,12 +117,7 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
     topic: 'kirmizida-saga-donus',
     difficulty: 'kolay',
     stem: 'Ülkemizde, ayrı bir yeşil ok ışığı bulunmayan bir kavşakta kırmızı ışıkta sağa dönmek ile ilgili hangisi doğrudur?',
-    options: [
-      'Yol boşsa serbesttir',
-      'Gece serbesttir',
-      'Yavaş dönülürse serbesttir',
-      'Yasaktır',
-    ],
+    options: ['Yol boşsa serbesttir', 'Gece serbesttir', 'Yavaş dönülürse serbesttir', 'Yasaktır'],
     answerIndex: 3,
     explanation:
       'Ülkemizde kırmızı ışıkta sağa dönüş serbest değildir. Ayrı bir yeşil sağa dönüş oku yanmıyorsa, kırmızı ışık o koldaki bütün hareketleri durdurur; sürücü yeşili beklemek zorundadır.',

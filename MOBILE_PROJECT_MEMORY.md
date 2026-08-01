@@ -3058,11 +3058,11 @@ getirdi. Kalan sorun **doğru şıkkın uzunluğu değil, çeldiricilerin kısal
 
 Daha agresif kesme kuralları DENENDİ ve REDDEDİLDİ — cevabı bozuyorlardı:
 
-| Kural | Sonuç |
-|---|---|
+| Kural                            | Sonuç                                                                                      |
+| -------------------------------- | ------------------------------------------------------------------------------------------ |
 | baştaki `-arak/-erek` ulacını at | `adab-005`: "Sakin kalmak, takip \| mesafesini açmak" — "takip mesafesi" ortadan bölünüyor |
-| `ve` sonrasını at | `trafik-131`: "…ön \| arka tüm koltuklarda" — saçmalaşıyor |
-| son virgüllü öbeği at | `trafik-505`: cevabın yarısı gidiyor ve **yanlış** oluyor |
+| `ve` sonrasını at                | `trafik-131`: "…ön \| arka tüm koltuklarda" — saçmalaşıyor                                 |
+| son virgüllü öbeği at            | `trafik-505`: cevabın yarısı gidiyor ve **yanlış** oluyor                                  |
 
 Yanlış cevap, uzun cevaptan kötüdür. Yalnız AÇIK açıklama ayracı (`;`, parantez kuyruğu, bağlaç
 kuyruğu) kesildi ve kuyruk silinmedi — `explanation` alanına **taşındı**.
@@ -3147,7 +3147,7 @@ ve `AssetCatalog.byConvention('signs', id)` ile birebir örtüşüyor.
 yerine **herhangi bir** görsel soru koyuyordu. Kurulan dağılım böylece bozuluyordu; "İlk Yardım
 Sınavı"na trafik levhası sorusu giriyordu. Değişim artık AYNI DERS içinde yapılıyor.
 
-Ayrıca: `visualRatio` bir sınava görsel *serpiştirir*; "tamamı görsel" sınav için doğru araç
+Ayrıca: `visualRatio` bir sınava görsel _serpiştirir_; "tamamı görsel" sınav için doğru araç
 havuzu SÜZMEK. Oranı 1'e çekmek işe yaramıyor — takas edecek eşleşen ders bulunamıyor.
 
 ## L. Ücretsiz sınav sınırı kategori başına olamaz

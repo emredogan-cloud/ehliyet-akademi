@@ -451,7 +451,12 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     topic: 'elektrik',
     difficulty: 'kolay',
     stem: 'Farlardan biri veya sinyal lambası çalışmıyorsa ilk olarak ne kontrol edilmelidir?',
-    options: ['Motor yağı seviyesi', 'İlgili sigorta ve ampul', 'Fren hidroliği seviyesi', 'Lastik hava basıncı'],
+    options: [
+      'Motor yağı seviyesi',
+      'İlgili sigorta ve ampul',
+      'Fren hidroliği seviyesi',
+      'Lastik hava basıncı',
+    ],
     answerIndex: 1,
     explanation:
       'Aydınlatma/sinyal arızalarında ilk bakılacak yer ilgili sigorta ve ampuldür; sigorta atmışsa aynı amper değerinde yenisiyle değiştirilir.',

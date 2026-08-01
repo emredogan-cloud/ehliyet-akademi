@@ -270,12 +270,7 @@ export const SEED_QUESTIONS: QuestionInput[] = [
     topic: 'aktarma',
     difficulty: 'orta',
     stem: 'Motorda üretilen gücü tekerleklere ileten sistem hangisidir?',
-    options: [
-      'Fren sistemi',
-      'Yakıt sistemi',
-      'Aydınlatma sistemi',
-      'Aktarma organları',
-    ],
+    options: ['Fren sistemi', 'Yakıt sistemi', 'Aydınlatma sistemi', 'Aktarma organları'],
     answerIndex: 3,
     explanation:
       'Aktarma organları (debriyaj, vites kutusu, şaft ve diferansiyel) motor gücünü tekerleklere iletir.',
@@ -388,12 +383,7 @@ export const SEED_QUESTIONS: QuestionInput[] = [
     topic: 'puanlama',
     difficulty: 'kolay',
     stem: 'Direksiyon uygulama sınavında araca binince emniyet kemerini takmamak hangi hata sınıfındadır?',
-    options: [
-      'Mavi (küçük) hata',
-      'Sarı (tali) hata',
-      'Yeşil (uyarı) hata',
-      'Kırmızı (asli)',
-    ],
+    options: ['Mavi (küçük) hata', 'Sarı (tali) hata', 'Yeşil (uyarı) hata', 'Kırmızı (asli)'],
     answerIndex: 3,
     explanation:
       'Emniyet kemerini takmamak asli (kırmızı) kusurdur ve tek başına sınavdan elenmeye yol açar. Hata — anında elenme.',

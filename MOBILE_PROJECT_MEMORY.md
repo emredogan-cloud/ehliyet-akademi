@@ -2935,3 +2935,57 @@ Sözleşmeye uyan YENİ dosya eski istisna satırını **geçersiz kılar**.
 Araştırma → boşluk → varlık → prompt → yazım → makine denetimi → taslak → **İNSAN ONAYI** → yayın.
 Onay pazarlık edilemez: yanlış bir ilk yardım bilgisi, yavaş bir içerik hattından çok daha
 pahalıdır. Bunu "tam otomatik içerik üretimi" diye anlatmak yanlış olurdu.
+
+---
+
+# QIP v3 — Faz 0–2/4: platform eksik değildi, BAĞLI değildi
+
+## A. Denetimin asıl bulgusu
+
+`apps/web/lib/qip/` altında 19 olgun modül var (dedup, kalite puanı, aileler, dinamik sınav,
+uyarlanabilir seçim, tarihsel sınav, görsel üretim). **Hiçbiri kullanıcıya ULAŞMIYORDU.**
+
+Zincir `/api/mobile/question-bank` içindeki `lean()` projeksiyonunda kopuyordu: yalnız
+`id, subject, topic, difficulty, stem, options, answerIndex, explanation, badge, whyWrong`
+geçiriliyor, `image` **düşürülüyordu**. Mobil `Question` modelinde de görsel alanı yoktu.
+
+Sonuç: 1.562 sorunun %100'ü metin; 81 işaret + 60 ikaz + 101 mekanik görseli yalnız Öğren'de.
+
+**Kural:** bir yetenek "var" demek için üretimden KULLANICIYA kadar zinciri izle. Ara katmandaki
+bir projeksiyon, olgun bir platformu görünmez kılabilir.
+
+## B. Zod `.default()` çıktı tipini ZORUNLU yapar
+
+`kind: QuestionKind.default('text')` eklendiğinde `packages/question-bank` derlenmedi: banka
+dosyaları diziyi `Question[]` (şemanın ÇIKTI tipi) ile bildiriyor ve `.default()` alanı çıktıda
+zorunlu oluyor → 1.562 sorunun tamamına elle `kind: 'text'` yazmak gerekirdi.
+
+**Çözüm:** `.optional()` + tek okuma noktası (`kindOf(q) => q.kind ?? 'text'`). Sıfır dosya
+değişti. Geriye dönük uyumluluk, "yeni alan ekledim" ile değil **derleyiciyle** doğrulanır.
+
+## C. Görsel sorular CİHAZDA üretiliyor, sunucuda değil
+
+Üç katalog da pakete gömülü. Sunucuda üretilseydi: banka yükü ~%36 büyürdü, sunucu varlığın
+cihazda olup olmadığını bilemezdi (kırık görselli soru), ve ilk eşitleme öncesi hiç görsel soru
+olmazdı. Cihazda üretmek üçünü birden çözüyor ve uygulamanın kurulu deseniyle aynı (SRS,
+`buildExam`, koleksiyonlar zaten Dart'ta).
+
+## D. `assetId` = KİMLİK, dosya yolu DEĞİL
+
+Levhaların 35'inin resmî vektörü yok; parametrik çizici onları KİMLİKTEN çiziyor. `assetId`
+alanına dosya yolu yazılsaydı bu 35 levha için soru üretilemezdi. Çizim yolu türden seçiliyor:
+`sign` → `TrafficSignView`, `dashboard`/`mechanic` → `Image.asset`.
+
+## E. Çeldirici yetmezse soru ÜRETİLMEZ
+
+Üç benzersiz çeldirici bulunamıyorsa üreteç o soruyu atlıyor. Üç şıklı soru üretmek, Faz 11'de
+şemaya bağlanan "tam dört şık" kuralını üreteç eliyle delmek olurdu.
+
+## F. Zenginleştirme testlerin havuzunu SESSİZCE büyütür
+
+`enrichedBankProvider` üretimde doğru davranıyor ama "5 soruluk kısa sınav" kuran testlerin
+havuzuna ~120 ikaz sorusu ekleyip testi ölçmek istediği şeyden kopardı. `test/helpers.dart`
+zenginleştirmeyi override ile KAPATIYOR; görsel üretim kendi dosyasında doğrudan sınanıyor.
+
+**Kural:** üretim davranışını değiştiren bir sağlayıcı eklerken, test yardımcısının o
+sağlayıcıyı da kontrol edip etmediğine bak.

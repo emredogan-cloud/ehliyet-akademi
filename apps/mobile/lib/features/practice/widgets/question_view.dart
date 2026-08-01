@@ -2,14 +2,25 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/tokens.dart';
 import '../../../design/markdown_text.dart';
+import '../../../domain/content/traffic_sign.dart';
 import '../../../domain/practice/question.dart';
+import 'question_media_view.dart';
 
 /// Soru gövdesi — ders/konu etiketi + kök metin (markdown-hafif).
 class QuestionStem extends StatelessWidget {
-  const QuestionStem({super.key, required this.question, required this.index, required this.total});
+  const QuestionStem({
+    super.key,
+    required this.question,
+    required this.index,
+    required this.total,
+    this.signs = const [],
+  });
   final Question question;
   final int index;
   final int total;
+
+  /// Levha soruları için katalog (boşsa levha görseli yerine `alt` metni okunur).
+  final List<TrafficSign> signs;
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +64,9 @@ class QuestionStem extends StatelessWidget {
           question.stem,
           style: TextStyle(fontSize: 17, height: 1.4, fontWeight: FontWeight.w600, color: p.text),
         ),
+        // Görsel, kök metnin ALTINDA: kullanıcı önce ne sorulduğunu okur, sonra görsele bakar.
+        // Üstte olsaydı soruyu görmeden görseli yorumlamaya çalışırdı.
+        QuestionMediaView(question: question, signs: signs),
       ],
     );
   }

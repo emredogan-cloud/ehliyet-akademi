@@ -53,6 +53,89 @@ export const ReviewStatus = z.enum(['draft', 'in-review', 'approved']);
 export type ReviewStatus = z.infer<typeof ReviewStatus>;
 
 /**
+ * QIP v3 · Faz 1 — soru TÜRÜ.
+ *
+ * Neden ayrı bir alan: bir sorunun görsel taşıyıp taşımadığı `media` alanının varlığından
+ * çıkarılabilirdi, ama tür bundan FAZLASINI söyler — aynı "görselli" soru bir levha tanıma
+ * sorusu da olabilir, bir kavşak önceliği sorusu da. Arayüz ikisini farklı çizer (levha kare ve
+ * küçük, kavşak geniş ve şemadır), üreteç farklı oranlarda karar, kalite motoru farklı kurallar
+ * uygular. Türü `media`'dan tahmin etmek bu üç yerde de tahmin yürütmek olurdu.
+ *
+ * Varsayılan `text` — mevcut 1.562 soru tek satır değişmeden geçerli kalır.
+ */
+export const QuestionKind = z.enum([
+  'text',
+  'image',
+  'scenario',
+  'diagram',
+  'intersection',
+  'sign',
+  'mechanic',
+  'dashboard',
+]);
+export type QuestionKind = z.infer<typeof QuestionKind>;
+
+/**
+ * Görsel üstünde İLGİ ALANI (hotspot). **Bugün çizilmiyor** — şemada yer tutuyor.
+ *
+ * Neden şimdiden: "aşağıdaki kavşakta hangi araç önce geçer, ARACA DOKUN" tipi sorular
+ * yol haritasında var. Alan sonradan eklenirse, o gün yayında olan bütün soruların şeması
+ * değişir ve mobil istemcilerin eski sürümleri yeni yükü çözemez. Opsiyonel bir alanı bugün
+ * koymak bedavadır; yarın koymak göç demektir.
+ *
+ * Koordinatlar 0–1 aralığında NORMALİZE: görselin piksel boyutundan bağımsız, her ekranda aynı.
+ */
+export const ImageHotspot = z.object({
+  id: z.string().min(1),
+  x: z.number().min(0).max(1),
+  y: z.number().min(0).max(1),
+  w: z.number().min(0).max(1),
+  h: z.number().min(0).max(1),
+  label: z.string().min(1),
+});
+export type ImageHotspot = z.infer<typeof ImageHotspot>;
+
+/** Soruya bağlı tek görsel. */
+export const QuestionImage = z.object({
+  /** Varlık kimliği — `AssetCatalog` sözleşmesiyle çözülür (`assets/<kategori>/<id>.<uzantı>`). */
+  assetId: z.string().min(1),
+  /**
+   * ZORUNLU. Görsel yüklenmezse soru cevaplanamaz hâle gelir; ekran okuyucu kullanan biri için
+   * ise soru zaten hiç var olmamış olur. Opsiyonel bırakılsaydı er geç `alt`sız soru girerdi.
+   */
+  alt: z.string().min(3),
+  caption: z.string().optional(),
+  hotspots: z.array(ImageHotspot).default([]),
+});
+export type QuestionImage = z.infer<typeof QuestionImage>;
+
+/**
+ * Sorunun görsel yükü. **Çoklu görsel** baştan destekleniyor: "aşağıdaki iki levhadan hangisi…"
+ * ve "şu üç durumdan hangisinde…" tipleri tek görselle kurulamaz.
+ */
+export const QuestionMedia = z.object({
+  images: z.array(QuestionImage).min(1),
+  /** `single` tek görsel · `grid` yan yana · `compare` karşılaştırma (A/B). */
+  layout: z.enum(['single', 'grid', 'compare']).default('single'),
+});
+export type QuestionMedia = z.infer<typeof QuestionMedia>;
+
+/**
+ * ÜRETİM metaverisi — soru bir üreteçten çıktıysa hangi üreteç, hangi sürüm, hangi tohum.
+ *
+ * Neden gerekli: üretilmiş sorularda bir kusur bulunduğunda (ör. çeldirici seçimi zayıf),
+ * "hangi sorular bu üreteçten çıktı" sorusu cevaplanabilmeli ki toplu düzeltme yapılabilsin.
+ * `seed` ile üretim birebir yeniden oynatılabilir.
+ */
+export const GenerationMeta = z.object({
+  generator: z.string().min(2),
+  version: z.number().int().positive(),
+  seed: z.number().int().optional(),
+  generatedAt: z.string().optional(),
+});
+export type GenerationMeta = z.infer<typeof GenerationMeta>;
+
+/**
  * Özgün soru gövdesi (refine'siz taban) — ROADMAP C.4/E.6: kaynak = resmî müfredat, kendi
  * ifademizle. QIP Faz 1: `NormalizedQuestion` bu tabandan `.extend` ile türetilir.
  */
@@ -84,7 +167,52 @@ export const QuestionBase = z.object({
   review: ReviewStatus.default('draft'),
   reviewedBy: z.string().optional(),
   sourceRef: z.string().optional(),
+  /**
+   * QIP v3 · Faz 1 — tür + görsel + üretim izi. **Hepsi opsiyonel/varsayılanlı**, yani mevcut
+   * 1.562 soru ve onları üreten her çağrı tek satır değişmeden geçerli kalır.
+   */
+  kind: QuestionKind.optional(),
+  media: QuestionMedia.optional(),
+  generation: GenerationMeta.optional(),
 });
+
+/**
+ * Tür ile görsel yükü TUTARLI mı?
+ *
+ * Görsel gerektiren bir tür (`sign`, `dashboard`, `mechanic`, `diagram`, `intersection`, `image`)
+ * `media` olmadan tanımlanamaz: soru metni "aşağıdaki levha" diyip ortada levha olmaması,
+ * kullanıcı için cevaplanamaz bir sorudur. Bu kural ŞEMADA durur ki üreteç ya da yazar
+ * unutamasın (Faz 11'deki "dört şık" kuralının aynı gerekçesi).
+ */
+/**
+ * `kind` NEDEN `.default('text')` DEĞİL, `.optional()`.
+ *
+ * Banka dosyaları (`packages/question-bank/src/*.ts`) diziyi `Question[]` — yani şemanın ÇIKTI
+ * tipiyle — bildiriyor. Zod'da `.default()` bir alanı çıktı tipinde ZORUNLU yapar; `kind` için
+ * varsayılan konsaydı 1.562 sorunun tamamına elle `kind: 'text'` yazmak gerekirdi. Bu, "geriye
+ * dönük uyumluluğu asla bozma" kuralının doğrudan ihlali olurdu.
+ *
+ * Onun yerine alan opsiyonel bırakıldı ve okuma tek bir yerden yapılıyor: [kindOf].
+ */
+export function kindOf(q: { kind?: QuestionKind }): QuestionKind {
+  return q.kind ?? 'text';
+}
+
+export const VISUAL_KINDS: QuestionKind[] = [
+  'image',
+  'diagram',
+  'intersection',
+  'sign',
+  'mechanic',
+  'dashboard',
+];
+
+const mediaMatchesKind = (q: { kind?: QuestionKind; media?: unknown }): boolean =>
+  !VISUAL_KINDS.includes(kindOf(q)) || q.media != null;
+const MEDIA_KIND_MSG = {
+  message: 'görsel gerektiren türde `media` zorunludur',
+  path: ['media'] as (string | number)[],
+};
 
 /** answerIndex, options aralığında mı? (Question + NormalizedQuestion ortak kısıtı) */
 const answerInRange = (q: { answerIndex: number; options: unknown[] }): boolean =>
@@ -95,7 +223,10 @@ const ANSWER_RANGE_MSG = {
 };
 
 /** Özgün soru — kaynak = resmî müfredat, kendi ifademizle. */
-export const Question = QuestionBase.refine(answerInRange, ANSWER_RANGE_MSG);
+export const Question = QuestionBase.refine(answerInRange, ANSWER_RANGE_MSG).refine(
+  mediaMatchesKind,
+  MEDIA_KIND_MSG
+);
 export type Question = z.infer<typeof Question>;
 /** Yazım tipi: `.default([])` alanları (whyWrong/tags) girişte opsiyoneldir. */
 export type QuestionInput = z.input<typeof Question>;
@@ -188,7 +319,9 @@ export const NormalizedQuestion = QuestionBase.extend({
   qualityScore: z.number().min(0).max(100).optional(),
   fingerprint: z.string().min(4),
   version: z.number().int().positive().default(1),
-}).refine(answerInRange, ANSWER_RANGE_MSG);
+})
+  .refine(answerInRange, ANSWER_RANGE_MSG)
+  .refine(mediaMatchesKind, MEDIA_KIND_MSG);
 export type NormalizedQuestion = z.infer<typeof NormalizedQuestion>;
 export type NormalizedQuestionInput = z.input<typeof NormalizedQuestion>;
 

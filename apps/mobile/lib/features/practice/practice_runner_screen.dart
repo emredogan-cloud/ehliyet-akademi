@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/theme/tokens.dart';
+import '../../data/content/content_repository.dart';
 import '../../data/practice/progress_repository.dart';
 import '../../design/app_card.dart';
 import '../../design/markdown_text.dart';
@@ -143,7 +144,12 @@ class _PracticeRunnerScreenState extends ConsumerState<PracticeRunnerScreen> {
           child: ListView(
             padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s4, AppSpacing.s4, AppSpacing.s6),
             children: [
-              QuestionStem(question: q, index: _index, total: _queue.length),
+              QuestionStem(
+                question: q,
+                index: _index,
+                total: _queue.length,
+                signs: ref.watch(contentSnapshotProvider).value?.signs ?? const [],
+              ),
               const SizedBox(height: AppSpacing.s5),
               for (var i = 0; i < q.options.length; i++)
                 OptionTile(

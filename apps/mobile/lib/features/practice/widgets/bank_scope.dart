@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/tokens.dart';
-import '../../../data/practice/question_repository.dart';
+import '../../../data/practice/enriched_bank.dart';
 import '../../../design/primitives.dart';
 import '../../../domain/practice/question_bank.dart';
 
@@ -15,11 +15,11 @@ class PracticeContentBuilder extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final async = ref.watch(questionBankProvider);
+    final async = ref.watch(enrichedBankProvider);
     return async.when(
       data: (bank) => builder(context, bank),
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, _) => _BankError(onRetry: () => ref.invalidate(questionBankProvider)),
+      error: (error, _) => _BankError(onRetry: () => ref.invalidate(enrichedBankProvider)),
     );
   }
 }

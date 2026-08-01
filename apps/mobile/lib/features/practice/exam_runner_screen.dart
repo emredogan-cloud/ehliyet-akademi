@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/analytics/analytics_event.dart';
 import '../../core/analytics/analytics_ref.dart';
 import '../../core/theme/tokens.dart';
+import '../../data/content/content_repository.dart';
 import '../../data/practice/progress_repository.dart';
 import '../../data/premium/entitlements_repository.dart';
 import '../../design/brand.dart';
@@ -443,7 +444,12 @@ class _ExamRunnerScreenState extends ConsumerState<ExamRunnerScreen> {
           child: ListView(
             padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s2, AppSpacing.s4, AppSpacing.s6),
             children: [
-              QuestionStem(question: q, index: _current, total: exam.questions.length),
+              QuestionStem(
+                question: q,
+                index: _current,
+                total: exam.questions.length,
+                signs: ref.watch(contentSnapshotProvider).value?.signs ?? const [],
+              ),
               const SizedBox(height: AppSpacing.s5),
               for (var i = 0; i < q.options.length; i++)
                 OptionTile(

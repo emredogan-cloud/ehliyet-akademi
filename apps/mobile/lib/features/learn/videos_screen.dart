@@ -21,7 +21,7 @@ String absoluteMediaUrl(String path) {
 }
 
 /// Videolar — oynatılabilir (available) ve yakında (planned) ayrımıyla dürüst liste. İlk video
-/// ücretsiz önizleme; diğer videolar premium (Komple Ehliyet Paketi ile açılır).
+/// ücretsiz önizleme; diğer videolar premium (premium ile açılır).
 class VideosScreen extends ConsumerWidget {
   const VideosScreen({super.key});
 

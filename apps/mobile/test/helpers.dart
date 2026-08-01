@@ -20,6 +20,7 @@ import 'package:ehliyet_akademi/data/auth/google_auth_service.dart';
 import 'package:ehliyet_akademi/data/community/groups_repository.dart';
 import 'package:ehliyet_akademi/data/community/social_repository.dart';
 import 'package:ehliyet_akademi/data/content/content_repository.dart';
+import 'package:ehliyet_akademi/data/practice/enriched_bank.dart';
 import 'package:ehliyet_akademi/data/practice/question_repository.dart';
 import 'package:ehliyet_akademi/data/premium/billing_gateway.dart';
 import 'package:ehliyet_akademi/data/premium/entitlements_repository.dart';
@@ -781,6 +782,15 @@ Future<void> pumpApp(
         if (overrideContent) ...[
           contentSnapshotProvider.overrideWith((ref) async => content ?? sampleSnapshot()),
           questionBankProvider.overrideWith((ref) async => bank ?? sampleBank()),
+          // QIP v3 — testler KENDİ havuzlarını kurar.
+          //
+          // `enrichedBankProvider` üretimde yazılmış bankaya kataloglardan üretilmiş görsel
+          // soruları ekler (ikaz ışıkları pakete gömülü olduğu için içerik inmemiş olsa bile
+          // ~120 soru gelir). Bu, ürün davranışı olarak DOĞRU; ama "5 soruluk kısa sınav"
+          // kuran bir testin havuzunu sessizce büyütür ve test artık ölçmek istediği şeyi
+          // ölçmez. Görsel üretimin kendisi `visual_questions_test.dart` içinde doğrudan
+          // sınanıyor; burada zenginleştirme KAPALI tutulur.
+          enrichedBankProvider.overrideWith((ref) async => bank ?? sampleBank()),
         ],
       ],
       child: const EhliyetAkademiApp(),

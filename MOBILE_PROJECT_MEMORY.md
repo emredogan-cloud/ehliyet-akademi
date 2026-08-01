@@ -2935,3 +2935,101 @@ Sözleşmeye uyan YENİ dosya eski istisna satırını **geçersiz kılar**.
 Araştırma → boşluk → varlık → prompt → yazım → makine denetimi → taslak → **İNSAN ONAYI** → yayın.
 Onay pazarlık edilemez: yanlış bir ilk yardım bilgisi, yavaş bir içerik hattından çok daha
 pahalıdır. Bunu "tam otomatik içerik üretimi" diye anlatmak yanlış olurdu.
+
+---
+
+# QIP v3 — Faz 0–2/4: platform eksik değildi, BAĞLI değildi
+
+## A. Denetimin asıl bulgusu
+
+`apps/web/lib/qip/` altında 19 olgun modül var (dedup, kalite puanı, aileler, dinamik sınav,
+uyarlanabilir seçim, tarihsel sınav, görsel üretim). **Hiçbiri kullanıcıya ULAŞMIYORDU.**
+
+Zincir `/api/mobile/question-bank` içindeki `lean()` projeksiyonunda kopuyordu: yalnız
+`id, subject, topic, difficulty, stem, options, answerIndex, explanation, badge, whyWrong`
+geçiriliyor, `image` **düşürülüyordu**. Mobil `Question` modelinde de görsel alanı yoktu.
+
+Sonuç: 1.562 sorunun %100'ü metin; 81 işaret + 60 ikaz + 101 mekanik görseli yalnız Öğren'de.
+
+**Kural:** bir yetenek "var" demek için üretimden KULLANICIYA kadar zinciri izle. Ara katmandaki
+bir projeksiyon, olgun bir platformu görünmez kılabilir.
+
+## B. Zod `.default()` çıktı tipini ZORUNLU yapar
+
+`kind: QuestionKind.default('text')` eklendiğinde `packages/question-bank` derlenmedi: banka
+dosyaları diziyi `Question[]` (şemanın ÇIKTI tipi) ile bildiriyor ve `.default()` alanı çıktıda
+zorunlu oluyor → 1.562 sorunun tamamına elle `kind: 'text'` yazmak gerekirdi.
+
+**Çözüm:** `.optional()` + tek okuma noktası (`kindOf(q) => q.kind ?? 'text'`). Sıfır dosya
+değişti. Geriye dönük uyumluluk, "yeni alan ekledim" ile değil **derleyiciyle** doğrulanır.
+
+## C. Görsel sorular CİHAZDA üretiliyor, sunucuda değil
+
+Üç katalog da pakete gömülü. Sunucuda üretilseydi: banka yükü ~%36 büyürdü, sunucu varlığın
+cihazda olup olmadığını bilemezdi (kırık görselli soru), ve ilk eşitleme öncesi hiç görsel soru
+olmazdı. Cihazda üretmek üçünü birden çözüyor ve uygulamanın kurulu deseniyle aynı (SRS,
+`buildExam`, koleksiyonlar zaten Dart'ta).
+
+## D. `assetId` = KİMLİK, dosya yolu DEĞİL
+
+Levhaların 35'inin resmî vektörü yok; parametrik çizici onları KİMLİKTEN çiziyor. `assetId`
+alanına dosya yolu yazılsaydı bu 35 levha için soru üretilemezdi. Çizim yolu türden seçiliyor:
+`sign` → `TrafficSignView`, `dashboard`/`mechanic` → `Image.asset`.
+
+## E. Çeldirici yetmezse soru ÜRETİLMEZ
+
+Üç benzersiz çeldirici bulunamıyorsa üreteç o soruyu atlıyor. Üç şıklı soru üretmek, Faz 11'de
+şemaya bağlanan "tam dört şık" kuralını üreteç eliyle delmek olurdu.
+
+## F. Zenginleştirme testlerin havuzunu SESSİZCE büyütür
+
+`enrichedBankProvider` üretimde doğru davranıyor ama "5 soruluk kısa sınav" kuran testlerin
+havuzuna ~120 ikaz sorusu ekleyip testi ölçmek istediği şeyden kopardı. `test/helpers.dart`
+zenginleştirmeyi override ile KAPATIYOR; görsel üretim kendi dosyasında doğrudan sınanıyor.
+
+**Kural:** üretim davranışını değiştiren bir sağlayıcı eklerken, test yardımcısının o
+sağlayıcıyı da kontrol edip etmediğine bak.
+
+---
+
+# QIP v3 — Faz 5–10: üreteç, kalite kapısı, cihaz
+
+## A. Üretecin İDDİASI ölçülebilir olmalı
+
+`ExamPlan` (bySubject/byDifficulty/visualCount/repeatedImages/weakTopicCount) arayüzde
+gösterilmiyor; **testler ve teşhis** için var. "Zorluk dengeliyorum" iddiası ancak sayılabildiği
+için test edilebiliyor. Ölçülemeyen bir iddia, kod yorumundan ibarettir.
+
+## B. Aynı kural İKİ KOD YOLUNDA birden uygulanmalı
+
+Zayıf konu önceliği yalnız ders döngüsünde vardı; uyarlanabilir kip `subjects: {}` ile
+çağrıldığında (ders ayrımı yapmayan yol) kipin **tek işi sessizce çalışmıyordu**. Test yakaladı.
+
+**Kural:** bir seçim mantığının iki dalı varsa, özellik bayrağının İKİSİNDE de uygulandığını
+doğrula. Faz 3'teki "adı bir şeyi anlatan kod o şeyi kontrol etmiyor" kusurunun akrabası.
+
+## C. Şık karıştırmanın sinsi kusuru
+
+Şıklar karışır ama `answerIndex` yeniden eşlenmezse üreteç **sessizce yanlış cevap öğretir** ve
+hiçbir şey kırılmaz. Ayrı fonksiyon + ayrı test ile korunuyor.
+
+## D. Zorluk dengelemesi neden "kovadan sırayla"
+
+Havuzu karıştırıp almak, hangi zorluk çoksa sınavı ona kaydırır. Bankada `orta` baskın olduğu
+için dengeleme olmadan sınavlar ortaya yığılıyordu. Üç kovadan sırayla almak bunu düzeltiyor.
+
+## E. Göç izni ≠ göç gerekliliği
+
+Veritabanı göçüne izin verilmişti; **yapılmadı, çünkü gerekmedi**: banka kodda duruyor,
+`content_items.payload` JSONB (yeni alanlar göçsüz giriyor), yazarlık tabloları zaten vardı ve
+görsel sorular cihazda üretiliyor (saklanmıyor). İzin verilen bir işi gereksizken yapmamak da
+bir karardır.
+
+## F. Cihazda kanıtlanan
+
+Deneme sınavının 6/50. sorusu: "Bu ikaz ışığı yandığında sürücünün yapması gereken nedir?" —
+ikaz ışığı görseli ÇİZİLDİ, şıklar önem düzeyi etiketleri. Sprint öncesi bu imkânsızdı
+(modelde alan yok, projeksiyonda geçiş yok, arayüzde çizim yok).
+
+Görsel sorular kademeli geliyor: ikaz ışıkları pakete gömülü olduğu için hemen, işaret ve parça
+soruları içerik anlık görüntüsü indikten sonra.

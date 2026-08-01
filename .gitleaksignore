@@ -4,14 +4,22 @@
 # gerekçesi üstünde durur. "CI kırmızı kalmasın" tek başına bir gerekçe değildir; bir sırrı
 # buraya yazmak, onu depoda bırakmakla aynı şeydir.
 #
+# İKİNCİ KURAL — bu turda öğrenildi: gerekçe yazarken sızan dizgenin KENDİSİ YAZILMAZ.
+# Bu dosyanın ilk hâlinde dizge örnek olarak alıntılanmıştı ve gitleaks onu YENİ bir bulgu
+# olarak yakaladı. Aynı hata `PRODUCT_EVOLUTION_IMPLEMENTATION_REPORT.md` içinde de vardı:
+# bir sızıntıyı belgelemek, onu bir kez daha depoya yazmak anlamına gelir.
+#
 # Biçim: <commit>:<dosya>:<kural>:<satır>
 #
 # ── Bulgu 1 ───────────────────────────────────────────────────────────────────────────────
-# Entegrasyon testi demirbaşı: `password: 'katilmayan-parola-123'`.
-# · Gerçek bir kimlik bilgisi değil; test içinde anında oluşturulup atılan bir kullanıcının
-#   parolası. Hiçbir ortama, hiçbir servise ait değil.
-# · Güncel kaynakta ARTIK YOK — `FIXTURE_LOGIN` sabitine taşındı. Bulgu yalnızca geçmişte
+# Entegrasyon testi demirbaşı bir parola dizgesi (`social.integration.test.ts`, eski hâli).
+# · Gerçek bir kimlik bilgisi değil; test içinde anında oluşturulup atılan bir kullanıcıya
+#   ait. Hiçbir ortama, hiçbir servise, hiçbir hesaba karşılık gelmiyor.
+# · Güncel kaynakta ARTIK YOK — paylaşılan bir sabite taşındı. Bulgu yalnızca geçmişte
 #   duruyor, dolayısıyla satır içi `gitleaks:allow` yorumu bunu susturamaz.
-# · `pull_request` koşusunda görünmüyor (yalnız PR commit'lerine bakıyor); `workflow_dispatch`
-#   tüm geçmişi taradığı için orada çıkıyordu.
 8ec24808b2af44e6f433d0b97fd0c5a06871888f:apps/web/lib/server/social.integration.test.ts:generic-api-key:162
+#
+# ── Bulgu 2 ───────────────────────────────────────────────────────────────────────────────
+# Bulgu 1'in RAPOR İÇİNDE alıntılanmış hâli. Rapor metni güncel sürümde sansürlendi; aşağıdaki
+# parmak izi yalnızca o commit'teki geçmiş kopyayı susturur.
+fab069eca03f1fc0156e400c1191b1d430ad5318:PRODUCT_EVOLUTION_IMPLEMENTATION_REPORT.md:generic-api-key:415

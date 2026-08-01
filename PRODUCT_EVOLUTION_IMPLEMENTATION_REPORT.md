@@ -412,10 +412,16 @@ generic-api-key  apps/web/lib/server/social.integration.test.ts:162
 commit 8ec2480 — "feat(community): Evolution E9 — social graph, messaging, discussions"
 ```
 
-Bu satır bir **entegrasyon testi demirbaşı**: `password: 'katilmayan-parola-123'`. Gerçek bir sır
-değil, bu programın commit'lerinden de değil — deponun geçmişinde duruyor ve PR #15'in
-`pull_request` koşusunda gitleaks **başarılı** olmuştu (o koşu yalnız PR commit'lerine bakıyordu).
+Bu satır bir **entegrasyon testi demirbaşıdır** — testin içinde anında oluşturulup atılan bir
+kullanıcının parolası. Gerçek bir sır değil, bu programın commit'lerinden de değil; deponun
+geçmişinde duruyor ve PR #15'in `pull_request` koşusunda gitleaks **başarılı** olmuştu (o koşu
+yalnız PR commit'lerine bakıyordu).
 
 Yani bu kırmızı, bu çalışmanın ürünü değil. Yine de sahiplenilmeli: ya demirbaş
 `gitleaks:allow` ile işaretlenmeli ya da `.gitleaksignore`'a alınmalı. **Yapmadım** — bu
 programın kapsamı dışında ve deponun geçmişine dokunan bir karar.
+
+> **Sonraki turun notu (Premium Kalite Programı):** çözüldü, `.gitleaksignore` ile. Bu
+> paragrafın ilk hâlinde sızan dizge örnek olarak **alıntılanmıştı** ve gitleaks onu ikinci
+> bir bulgu olarak yakaladı: bir sızıntıyı belgelemek, onu bir kez daha depoya yazmaktır.
+> Alıntı kaldırıldı.

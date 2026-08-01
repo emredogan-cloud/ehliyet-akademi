@@ -934,12 +934,12 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Ev tipi (düşük gerilim) elektrik akımına kapılan kişiye ulaşmak için akım kesilemiyorsa ne yapılabilir?',
     options: [
-      'Kuru tahta veya plastik gibi yalıtkan bir cisimle kişinin akımla teması kesilir',
+      'Kişinin üzerine su dökülür',
       'Kişi ıslak elle hızla çekilir',
       'Elektrik kablosu uzun metal bir çubukla uzaktan itilerek kişiden uzaklaştırılır',
-      'Kişinin üzerine su dökülür',
+      'Kuru tahta veya plastik gibi yalıtkan bir cisimle kişinin akımla teması kesilir',
     ],
-    answerIndex: 0,
+    answerIndex: 3,
     explanation:
       'Ev elektriğinde akım kesilemiyorsa, kuru zeminde durularak kuru tahta sopa veya plastik gibi yalıtkan bir cisimle kişinin akımla teması kesilebilir. Yüksek gerilim hatlarında ise bu bile yapılmaz; güvenli mesafede beklenip yetkililere haber verilir.',
     whyWrong: [
@@ -1209,12 +1209,12 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Göze toz ya da kirpik gibi serbest bir yabancı cisim kaçtığında ilk yardım olarak ne yapılır?',
     options: [
-      'Göz ovulmaz',
+      'Göze sıcak hava tutulur',
       'Göz rahatlayana kadar kuvvetlice ovulur',
       'Cisim sivri bir aletle alınmaya çalışılır',
-      'Göze sıcak hava tutulur',
+      'Göz ovulmaz',
     ],
-    answerIndex: 0,
+    answerIndex: 3,
     explanation:
       'Göze kaçan toz veya kirpik için göz kesinlikle ovulmaz; bol temiz suyla yıkanarak cismin akıp gitmesi sağlanır. Çıkmazsa göz temiz bir bezle kapatılıp kişi sağlık kuruluşuna yönlendirilir.',
     whyWrong: [

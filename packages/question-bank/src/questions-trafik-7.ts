@@ -15,12 +15,12 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Kenarları kırmızı üçgen bir levhada, tekerlekten sıçrayan taş taneleri sembolü (gevşek malzeme) bulunması sürücüye neyi bildirir?',
     options: [
-      'Yol yüzeyinde tekerleklerin fırlatabileceği gevşek malzeme (mıcır) bulunduğunu',
+      'Yolda yalnızca kamyonların geçebileceğini',
       'İleride ücretsiz park yeri bulunduğunu',
       'Bu yolun tamamen trafiğe kapalı olduğunu',
-      'Yolda yalnızca kamyonların geçebileceğini',
+      'Yol yüzeyinde tekerleklerin fırlatabileceği gevşek malzeme (mıcır) bulunduğunu',
     ],
-    answerIndex: 0,
+    answerIndex: 3,
     explanation:
       'Kırmızı kenarlı üçgen levhalar tehlike-uyarı işaretidir. Gevşek malzeme sembolü, kaplamada sabitlenmemiş taş ve çakıl bulunduğunu bildirir; yüksek hızda bu taneler tekerlekten fırlayıp araçlara zarar verebilir ve zemin kaygan olabilir. Sürücü hızını azaltıp öndeki araçla mesafeyi açar. Hızı azaltıp araya mesafe koyması gerektiğini.',
     whyWrong: [
@@ -1627,12 +1627,12 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Kısa mesafelerde mümkün olduğunda toplu taşımayı, yürümeyi veya bisikleti tercih etmenin çevreye katkısı nedir?',
     options: [
-      'Trafiğe çıkan özel araç ve dolayısıyla toplam egzoz salımı ile trafik yoğunluğunu azaltması',
+      'Yakıt tüketimini yükseltmesi',
       'Hiçbir katkısı olmaması',
       'Hava kirliliğini artırması',
-      'Yakıt tüketimini yükseltmesi',
+      'Trafiğe çıkan özel araç ve dolayısıyla toplam egzoz salımı ile trafik yoğunluğunu azaltması',
     ],
-    answerIndex: 0,
+    answerIndex: 3,
     explanation:
       'Herkesin ayrı ayrı özel araç kullanması yerine toplu taşımanın, yürümenin veya bisikletin tercih edilmesi; yola çıkan araç sayısını azaltır. Bu da toplam egzoz salımını, yakıt tüketimini ve trafik yoğunluğunu düşürerek hava kalitesine katkı sağlar.',
     whyWrong: [

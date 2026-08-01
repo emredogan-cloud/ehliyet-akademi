@@ -884,12 +884,12 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Yakıt göstergesinin ibresi rezerv (kırmızı) bölgeye yaklaştığında doğru davranış nedir?',
     options: [
-      'İlk uygun istasyonda yakıt ikmali yapmak',
+      'Rezerv ikaz ışığı sönene kadar aracı park hâlinde rölantide bekletmek',
       'Göstergeyi dikkate almadan depo tamamen boşalana kadar yola devam etmek',
       'Klimayı kapatıp hızı artırarak kalan yakıtla daha uzun yol gitmeye çalışmak',
-      'Rezerv ikaz ışığı sönene kadar aracı park hâlinde rölantide bekletmek',
+      'İlk uygun istasyonda yakıt ikmali yapmak',
     ],
-    answerIndex: 0,
+    answerIndex: 3,
     explanation:
       'Yakıt göstergesi rezerve düştüğünde depodaki yakıt sınırlıdır; sürücü ilk uygun istasyonda ikmal yapmalıdır. Yakıtın tamamen bitmesi araçta stop etmeye ve yakıt sisteminde soruna yol açabilir.',
     whyWrong: [

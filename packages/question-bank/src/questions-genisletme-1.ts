@@ -491,12 +491,12 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'zor',
     stem: 'Yokuş aşağı, bordürlü (kaldırımlı) bir yolda park eden sürücü ön tekerlekleri hangi yöne çevirmelidir?',
     options: [
-      'Yoldan uzağa, bordüre (kaldırıma) doğru',
+      'Tekerlek yönünün eğimli yolda bir önemi yoktur',
       'Tekerlekleri yola paralel biçimde düz bırakır',
       'Yola doğru, trafiğe bakacak şekilde çevirir',
-      'Tekerlek yönünün eğimli yolda bir önemi yoktur',
+      'Yoldan uzağa, bordüre (kaldırıma) doğru',
     ],
-    answerIndex: 0,
+    answerIndex: 3,
     explanation:
       'Yokuş aşağı parkta araç kayarsa bordür engel olsun diye ön tekerlekler kaldırıma doğru çevrilir; ayrıca el freni çekilir ve vites takılır.',
     whyWrong: [

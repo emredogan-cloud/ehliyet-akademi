@@ -6,6 +6,7 @@ import '../../core/theme/tokens.dart';
 import '../../design/brand.dart';
 import '../../data/premium/entitlements_repository.dart';
 import '../../design/app_card.dart';
+import '../../design/lesson_figure.dart';
 import '../../design/markdown_text.dart';
 import '../../design/primitives.dart' as ui;
 import '../../domain/content/content_enums.dart';
@@ -157,6 +158,16 @@ class _LessonBodyState extends State<_LessonBody> {
         _LessonHero(lesson: lesson),
         const SizedBox(height: AppSpacing.s4),
         MarkdownText(lesson.summary, style: TextStyle(color: p.text2, height: 1.45, fontSize: 14.5)),
+
+        // Ders şeması — Premium Kalite Programı · Faz 4.
+        //
+        // Özetin HEMEN ALTINDA duruyor çünkü şema, dersin zihinsel çerçevesini bölümlere
+        // girmeden kuruyor: "sağdaki önce geçer", "iki saniye", "ABC sırası". Bölümlerin
+        // arasına serpiştirmek bu çerçeveyi geç kurardı.
+        //
+        // `figureId` boş ya da tanınmayan bir değerse hiçbir şey çizilmez; ders bugünkü
+        // hâliyle görünmeye devam eder.
+        LessonFigure(figureId: lesson.figureId),
 
         // Hedefler
         if (lesson.objectives.isNotEmpty) ...[

@@ -389,6 +389,7 @@ export const MOTO_LESSONS: LessonInput[] = [
     slug: 'moto-trafikte-guvenlik',
     no: 24,
     subject: 'trafik',
+    figureId: 'blind-spot',
     licences: ['a'],
     title: 'Motosikletle Trafikte Görünürlük ve Konum',
     summary:
@@ -792,6 +793,7 @@ export const BUS_LESSONS: LessonInput[] = [
     slug: 'otobus-yolcu-guvenligi',
     no: 28,
     subject: 'trafik',
+    figureId: 'load-placement',
     licences: ['d'],
     title: 'Yolcu Güvenliği ve Acil Durumlar',
     summary:
@@ -900,6 +902,7 @@ export const BUS_LESSONS: LessonInput[] = [
     slug: 'otobus-manevra-olcu',
     no: 29,
     subject: 'pratik',
+    figureId: 'blind-spot',
     licences: ['d'],
     title: 'Büyük Araçla Manevra: Ölü Nokta ve Kuyruk Taşması',
     summary:

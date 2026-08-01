@@ -367,6 +367,7 @@ const raw: LessonInput[] = [
         back: 'Sağa yanaşıp yavaşlamak, gerekirse durmak.',
       },
     ],
+    figureId: 'officer-signals',
     references: ['MEB Trafik Adabı müfredatı'],
   },
 ];

@@ -23,3 +23,10 @@
 # Bulgu 1'in RAPOR İÇİNDE alıntılanmış hâli. Rapor metni güncel sürümde sansürlendi; aşağıdaki
 # parmak izi yalnızca o commit'teki geçmiş kopyayı susturur.
 fab069eca03f1fc0156e400c1191b1d430ad5318:PRODUCT_EVOLUTION_IMPLEMENTATION_REPORT.md:generic-api-key:415
+#
+# ── Bulgu 3 ───────────────────────────────────────────────────────────────────────────────
+# BU DOSYANIN kendi ilk sürümü. Gerekçeyi yazarken dizge örnek olarak alıntılanmıştı; bir
+# sonraki commit'te kaldırıldı ama geçmişte kaldı. Üçüncü kez aynı ders: sızıntıyı anlatırken
+# sızıntıyı yeniden yazma. Geçmiş yeniden yazılmıyor — bu, paylaşılan bir dalda tek bir
+# demirbaş uğruna göze alınacak bir işlem değil.
+22d5275cdb61a0a3be0c9847ccef355d023bb285:.gitleaksignore:generic-api-key:10

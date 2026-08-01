@@ -23,7 +23,10 @@
 | 11 · Cihaz doğrulaması      | ✅ tamam                                                        |
 
 **Kapılar:** `flutter analyze` **0** · mobil **1073 ✓** (978'den) · content-schema **31 ✓** ·
-question-bank **14 ✓** · `pnpm lint` 0 hata · `pnpm typecheck` temiz.
+question-bank **14 ✓** · `pnpm lint` 0 hata · `pnpm typecheck` temiz · `prettier --check` temiz.
+
+**CI (PR #17):** Lint · Typecheck · Test · Build ✅ · E2E (Playwright) ✅ · Mobile CI ✅ ·
+gitleaks ⚠️ — ayrıntı §13.
 
 **Çıktılar:** APK 81,9 MB · **AAB 65,3 MB, versionCode 5, versionName 1.0.0, `jar verified.`**
 
@@ -384,3 +387,35 @@ Yalnız iki yeni belge:
 
 `ASSET_GENERATION_LIBRARY.md` (§7 levhalar, §8 maskot katmanları) ve `MOBILE_PROJECT_MEMORY.md`
 **genişletildi**, yeni dosya açılmadı.
+
+---
+
+## 13. CI hakkında iki dürüst not
+
+### 13.1 `pull_request` olayı tetiklenmiyor
+
+PR #15 **çalışma sürerken birleştirildi** (12:15). O andan sonra dala yapılan hiçbir itme CI
+başlatmadı; yeni PR açmak (#16), PR'ı kapatıp açmak ve **temiz bir daldan** yeni PR açmak (#17)
+da tetiklemedi. Yalnız Vercel tepki veriyor.
+
+`workflow_dispatch` **çalışıyor** — yani Actions kapalı ya da kotasız değil. Sorun depo tarafında
+ve düzeltmesi bende değil. Bu yüzden kapılar elle tetiklenerek koşuldu; koşan işler PR'da
+koşacak olanların **aynısı**.
+
+### 13.2 gitleaks — elle tetiklemenin yan etkisi
+
+`workflow_dispatch` ile gitleaks **tüm geçmişi** tarar; `pull_request` ile yalnız PR'ın
+commit'lerini. Tam tarama tek bir bulgu veriyor:
+
+```
+generic-api-key  apps/web/lib/server/social.integration.test.ts:162
+commit 8ec2480 — "feat(community): Evolution E9 — social graph, messaging, discussions"
+```
+
+Bu satır bir **entegrasyon testi demirbaşı**: `password: 'katilmayan-parola-123'`. Gerçek bir sır
+değil, bu programın commit'lerinden de değil — deponun geçmişinde duruyor ve PR #15'in
+`pull_request` koşusunda gitleaks **başarılı** olmuştu (o koşu yalnız PR commit'lerine bakıyordu).
+
+Yani bu kırmızı, bu çalışmanın ürünü değil. Yine de sahiplenilmeli: ya demirbaş
+`gitleaks:allow` ile işaretlenmeli ya da `.gitleaksignore`'a alınmalı. **Yapmadım** — bu
+programın kapsamı dışında ve deponun geçmişine dokunan bir karar.

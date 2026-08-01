@@ -938,7 +938,7 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     topic: 'otoyol',
     difficulty: 'kolay',
     stem: 'Aşağıdakilerden hangisi otoyola giremez?',
-    options: ['Otomobiller', 'Yayalar, traktörler ve motorsuz araçlar', 'Otobüsler', 'Kamyonlar'],
+    options: ['Otomobiller ve minibüsler', 'Traktörler ve motorsuz araçlar', 'Otobüsler ve kamyonlar', 'Motosikletler ve otomobiller'],
     answerIndex: 1,
     explanation:
       'Otoyollara yayalar, motorsuz araçlar, traktör ve iş makineleri gibi düşük hızlı unsurlar giremez; bu yollar hızlı motorlu taşıt trafiği içindir.',
@@ -960,14 +960,14 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Taksi, otobüs, kamyon gibi ticari araç veya kamu hizmeti aracı sürücüleri için kandaki yasal alkol sınırı nedir?',
     options: [
-      '0.00 promil; hiç alkollü araç kullanamazlar',
+      '0.00 promil',
       '0.20 promil',
       '0.50 promil',
       '1.00 promil',
     ],
     answerIndex: 0,
     explanation:
-      'Ticari araç ve kamu hizmeti aracı sürücüleri alkollü olarak hiç araç kullanamaz; bu sürücüler için yasal sınır 0.00 promildir.',
+      'Ticari araç ve kamu hizmeti aracı sürücüleri alkollü olarak hiç araç kullanamaz; bu sürücüler için yasal sınır 0.00 promildir. Hiç alkollü araç kullanamazlar.',
     whyWrong: [
       '0.50 promil yalnızca hususi otomobil sürücülerine tanınan sınırdır.',
       '0.20 ve 1.00 promil mevzuatta bu sürücüler için tanımlı değerler değildir.',
@@ -986,10 +986,10 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Ticari araç (taksi, minibüs, otobüs, kamyon) kullanan sürücüler için yasal alkol sınırı nedir?',
     options: [
+      '0.20 promil',
       '0.50 promil',
+      '0.00 promil',
       '0.80 promil',
-      '0.00 promil (alkollü araç kullanamazlar)',
-      '1.00 promil',
     ],
     answerIndex: 2,
     explanation:
@@ -1422,7 +1422,7 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Zorunlu Trafik Sigortası (Zorunlu Mali Sorumluluk Sigortası) neyi karşılar?',
     options: [
-      'Kazada karşı tarafa (üçüncü kişilere) verilen zararları',
+      'Kazada karşı tarafa (üçüncü kişilere)',
       'Sürücünün kendi aracının hasarını',
       'Aracın çalınmasını',
       'Motorun arızasını',

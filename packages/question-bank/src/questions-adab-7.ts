@@ -16,13 +16,13 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
     stem: '"Trafik adabı" kavramı en doğru biçimde nasıl tanımlanır?',
     options: [
       'Yalnızca yazılı trafik kurallarına eksiksiz uymaktır',
-      'Kuralların ötesinde; yolu paylaşan herkese saygı, empati ve sorumlulukla yaklaşmayı gerektiren bir değerler bütünüdür',
+      'Kuralların ötesinde',
       'Trafik cezalarından kaçınmayı sağlayan pratik ipuçları toplamıdır',
       'Yalnızca deneyimli sürücülerin zamanla kazandığı bir sürüş yeteneğidir',
     ],
     answerIndex: 1,
     explanation:
-      'Trafik adabı, ceza korkusuyla değil; karşımızdakini bir insan olarak görmekten doğan saygı, empati ve sorumluluk gibi değerlerle sürmektir. Kurallar asgari sınırı çizer, adap ise o sınırın ötesinde gönüllü bir olgunluktur.',
+      'Trafik adabı, ceza korkusuyla değil; karşımızdakini bir insan olarak görmekten doğan saygı, empati ve sorumluluk gibi değerlerle sürmektir. Kurallar asgari sınırı çizer, adap ise o sınırın ötesinde gönüllü bir olgunluktur. Yolu paylaşan herkese saygı, empati ve sorumlulukla yaklaşmayı gerektiren bir değerler bütünüdür.',
     whyWrong: [
       'Kurallara uymak adabın bir parçasıdır ama tamamı değildir; adap, kural olmayan yerlerde de nasıl davrandığımızla ilgilidir.',
       'Adabı ceza kaçınma taktiğine indirgemek, onun değer temelli özünü görmezden gelir.',
@@ -43,12 +43,12 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
     options: [
       'Değerler yazılı olduğu için kurallardan daha bağlayıcıdır',
       'Değerler yalnızca trafikte, kurallar ise her yerde geçerlidir',
-      'Kural dıştan bir denetimle zorlanır; değer ise kişinin içselleştirdiği, denetim olmasa da davranışına yön veren bir inançtır',
+      'Kural dıştan bir denetimle zorlanır',
       'Değerler ve kurallar aslında aynı şeydir, aralarında fark yoktur',
     ],
     answerIndex: 2,
     explanation:
-      'Kurala ceza korkusuyla uyulur; değere ise inanıldığı için uyulur. Bir sürücü hız sınırına radar olduğu için değil, hız güvenliği tehdit ettiği için uyuyorsa kuralı bir değere dönüştürmüş demektir. Adabın kalıcılığı bu içselleştirmeden gelir.',
+      'Kurala ceza korkusuyla uyulur; değere ise inanıldığı için uyulur. Bir sürücü hız sınırına radar olduğu için değil, hız güvenliği tehdit ettiği için uyuyorsa kuralı bir değere dönüştürmüş demektir. Adabın kalıcılığı bu içselleştirmeden gelir. Değer ise kişinin içselleştirdiği, denetim olmasa da davranışına yön veren bir inançtır.',
     whyWrong: [
       'Değerler çoğu zaman yazılı değildir; bağlayıcılıkları dıştan değil vicdandan gelir.',
       'Değerler trafikle sınırlı değildir; saygı ve sorumluluk hayatın her alanında geçerlidir.',
@@ -96,11 +96,11 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
       'Hoşgörünün sınırı yoktur; her davranış koşulsuz hoş görülmelidir',
       'Hoşgörü yalnızca tanıdığımız sürücülere gösterilmelidir',
       'Hoşgörü, karşı tarafın konumuna ve aracının türüne göre ayarlanmalıdır',
-      'Başkasının hatasını sükûnetle karşılamak hoşgörüdür; ancak bu, tehlikeli bir davranışı görmezden gelip güvenlikten ödün vermeye dönüşmemelidir',
+      'Başkasının hatasını sükûnetle karşılamak hoşgörüdür',
     ],
     answerIndex: 3,
     explanation:
-      'Hoşgörü, bir hataya öfkeyle karşılık vermemektir; ama tekrarlayan ya da can güvenliğini tehdit eden bir davranışı "hoş görüp" önlem almamak değildir. Örneğin agresif bir sürücüye kızmamak hoşgörüdür; ondan uzaklaşmak ise güvenliktir. İkisi birbirini tamamlar.',
+      'Hoşgörü, bir hataya öfkeyle karşılık vermemektir; ama tekrarlayan ya da can güvenliğini tehdit eden bir davranışı "hoş görüp" önlem almamak değildir. Örneğin agresif bir sürücüye kızmamak hoşgörüdür; ondan uzaklaşmak ise güvenliktir. İkisi birbirini tamamlar. Ancak bu, tehlikeli bir davranışı görmezden gelip güvenlikten ödün vermeye dönüşmemelidir.',
     whyWrong: [
       'Sınırsız hoşgörü, tehlikeli davranışları normalleştirir ve güvenliği zedeler.',
       'Hoşgörüyü tanıdıklıkla ya da aracın türüyle sınırlamak, onu değer olmaktan çıkarıp ayrımcılığa çevirir.',
@@ -146,13 +146,13 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
     stem: 'Trafikte "sorumluluk" değeri en kapsamlı biçimde nasıl tanımlanır?',
     options: [
       'Yalnızca kendi aracına zarar gelmesini önlemektir',
-      'Kendi davranışlarının; kendisi, yolcuları, diğer sürücüler ve yayalar üzerindeki sonuçlarını üstlenmek ve bunları önceden hesaba katmaktır',
+      'Kendi davranışlarının',
       'Bir kaza olduğunda kusuru en hızlı biçimde karşı tarafa yıkabilmektir',
       'Sadece trafik cezası ödeyecek kadar para bulundurmaktır',
     ],
     answerIndex: 1,
     explanation:
-      'Sorumluluk, direksiyondaki kişinin yalnızca kendinden değil, davranışının dokunduğu herkesten sorumlu olduğunu kabul etmesidir. Bu hem hata yapıldığında sonucunu üstlenmeyi hem de daha önemlisi olası sonuçları önceden düşünüp önlem almayı kapsar.',
+      'Sorumluluk, direksiyondaki kişinin yalnızca kendinden değil, davranışının dokunduğu herkesten sorumlu olduğunu kabul etmesidir. Bu hem hata yapıldığında sonucunu üstlenmeyi hem de daha önemlisi olası sonuçları önceden düşünüp önlem almayı kapsar. Kendisi, yolcuları, diğer sürücüler ve yayalar üzerindeki sonuçlarını üstlenmek ve bunları önceden hesaba katmaktır.',
     whyWrong: [
       'Sorumluluk yalnızca kendi aracını korumak değil, çevredeki herkesin güvenliğini gözetmektir.',
       'Kusuru karşıya yıkmak sorumluluğun değil, ondan kaçmanın ifadesidir.',
@@ -330,7 +330,7 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
     options: [
       'Bencillik hızlı, paylaşım ise yavaş sürmektir',
       'İkisi arasında pratikte hiçbir fark yoktur',
-      'Bencil sürücü yolu yalnızca kendi menfaatine göre kullanır; paylaşımcı sürücü ise yolun herkese ait ortak bir alan olduğunu kabul edip başkalarının hakkını da gözetir',
+      'Bencil sürücü yolu yalnızca kendi menfaatine göre kullanır',
       'Bencillik yalnızca otoparkta, paylaşım yalnızca otoyolda geçerlidir',
     ],
     answerIndex: 2,
@@ -355,7 +355,7 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
     stem: 'Haberlerde sıkça geçen "trafik terörü" kavramı en doğru biçimde neyi anlatır?',
     options: [
       'Yalnızca trafikte yaşanan olağan sıkışıklık ve gecikmeleri',
-      'Öfke, saldırganlık ve kural tanımazlıkla başkalarının can güvenliğini kasıtlı biçimde tehdit eden; yol kesme, sıkıştırma, üzerine sürme gibi davranışları',
+      'Öfke, saldırganlık ve kural tanımazlıkla başkalarının can güvenliğini kasıtlı biçimde tehdit eden',
       'Aracın teknik arızadan dolayı yolda kalmasını',
       'Trafik cezalarının yüksek olmasını',
     ],
@@ -409,11 +409,11 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
       'Otomatikleşme her zaman iyidir; alışkanlıklar asla sorun çıkarmaz',
       'Otomatikleşme her zaman tehlikelidir; sürüş hiçbir zaman alışkanlığa dönmemelidir',
       'Alışkanlıkların davranışla hiçbir ilgisi yoktur',
-      'İyi alışkanlıklar (sinyal verme, ayna kontrolü) güvenliği kolaylaştırır; ancak kötü alışkanlıklar da farkında olmadan otomatikleşip yanlışı "normal" hâle getirebilir, bu yüzden alışkanlıkları ara sıra gözden geçirmek gerekir',
+      'İyi alışkanlıklar (sinyal verme, ayna kontrolü) güvenliği kolaylaştırır',
     ],
     answerIndex: 3,
     explanation:
-      'Beyin, sık tekrarlanan davranışları otomatiğe alarak dikkatimizi serbest bırakır; bu sayede sinyal vermeyi ya da ayna kontrolünü düşünmeden yaparız. Ama aynı mekanizma kötü davranışları da otomatikleştirir: sinyalsiz dönmek ya da hız aşımı zamanla "normal" gibi hissedilir. Bu yüzden olgun sürücü alışkanlıklarını zaman zaman sorgular.',
+      'Beyin, sık tekrarlanan davranışları otomatiğe alarak dikkatimizi serbest bırakır; bu sayede sinyal vermeyi ya da ayna kontrolünü düşünmeden yaparız. Ama aynı mekanizma kötü davranışları da otomatikleştirir: sinyalsiz dönmek ya da hız aşımı zamanla "normal" gibi hissedilir. Bu yüzden olgun sürücü alışkanlıklarını zaman zaman sorgular. Ancak kötü alışkanlıklar da farkında olmadan otomatikleşip yanlışı "normal" hâle getirebilir, bu yüzden alışkanlıkları ara sıra gözden geçirmek gerekir.',
     whyWrong: [
       'Otomatikleşme, kötü davranışlar söz konusu olduğunda tehlikelidir; koşulsuz iyi değildir.',
       'Otomatikleşme büsbütün kötü de değildir; iyi alışkanlıklar güvenliğin temelidir.',
@@ -434,13 +434,13 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
     stem: 'Kurallara uyan bir sürücünün, çevresindeki diğer insanlar için bir "rol model" olması ne anlama gelir?',
     options: [
       'Diğer sürücülerin davranışının bizi hiç etkilemediği anlamına gelir',
-      'Bizim adaplı davranışımızın; çevremizdeki sürücülere ve özellikle çocuklara örnek olup olumlu davranışların yayılmasına katkı sağlamasıdır',
+      'Bizim adaplı davranışımızın',
       'Yalnızca sürüş yarışmalarında birinci olmaktır',
       'Aracımızı en pahalı ve gösterişli hâle getirmektir',
     ],
     answerIndex: 1,
     explanation:
-      'Trafikte davranışlar bulaşıcıdır: bir sürücünün yayaya sabırla yol vermesi, arkadaki sürücüye de aynı inceliği hatırlatır. Rol model olmak, "herkes bozuyor, ben de bozayım" demek yerine doğruyu yaşayıp örnek olmaktır. Bu, özellikle bizi izleyen çocuklar için geleceğin trafik kültürünü şekillendirir.',
+      'Trafikte davranışlar bulaşıcıdır: bir sürücünün yayaya sabırla yol vermesi, arkadaki sürücüye de aynı inceliği hatırlatır. Rol model olmak, "herkes bozuyor, ben de bozayım" demek yerine doğruyu yaşayıp örnek olmaktır. Bu, özellikle bizi izleyen çocuklar için geleceğin trafik kültürünü şekillendirir. Çevremizdeki sürücülere ve özellikle çocuklara örnek olup olumlu davranışların yayılmasına katkı sağlamasıdır.',
     whyWrong: [
       'Rol model olmak, etkileşimi yok saymak değil, çevreyi olumlu yönde etkilemektir.',
       'Rol model olmak bir yarışma başarısı değil, bir davranış örnekliğidir.',
@@ -459,10 +459,10 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Bir trafik kazası yalnızca kazaya karışanları değil, tüm toplumu etkiler. Kazaların "toplumsal maliyeti" kavramı en doğru neyi kapsar?',
     options: [
-      'Yalnızca hasar gören aracın tamir masrafını',
-      'Yalnızca sürücünün ödeyeceği trafik cezasını',
-      'Maddi hasarların yanı sıra kaybedilen canları, sakat kalmaları, ailelerin yaşadığı duygusal yıkımı, iş gücü kaybını ve sağlık sistemine binen yükü kapsayan geniş bir bedeller bütününü',
-      'Sadece o gün trafikte oluşan kısa süreli sıkışıklığı',
+      'Hasar gören araçların tamir masrafı ile çekici ve otopark ücretlerini',
+      'Sürücüye kesilen trafik cezası ile ehliyetine işlenen ceza puanlarını',
+      'Kaybedilen canları, iş gücü kaybını ve sağlık sistemine binen yükü',
+      'Kaza yerinde oluşan trafik sıkışıklığının yol açtığı zaman kaybını',
     ],
     answerIndex: 2,
     explanation:
@@ -485,14 +485,14 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: '"Sürdürülebilir bir trafik kültürü" kavramı en doğru biçimde neyi anlatır?',
     options: [
-      'Adaplı davranışların bireysel bir çabayla sınırlı kalmayıp; eğitim, örnek olma ve toplumsal kabul yoluyla kuşaktan kuşağa aktarılarak kalıcı hâle gelmesidir',
+      'Adaplı davranışların bireysel bir çabayla sınırlı kalmayıp',
       'Yalnızca daha fazla trafik cezası kesilerek sağlanan geçici bir düzendir',
       'Herkesin aracını daha az kullanmasıyla trafiğin tamamen bitmesidir',
       'Trafik sorunlarının yalnızca yeni yollar yapılarak çözülmesidir',
     ],
     answerIndex: 0,
     explanation:
-      'Bir kültür, tek tek iyi davranışlardan değil; bu davranışların yaygınlaşıp benimsenmesinden ve yeni kuşaklara aktarılmasından doğar. Sürdürülebilir trafik kültürü, adabın ceza korkusuna değil ortak bir değere dayandığı, ebeveynden çocuğa taşınarak kendini yenileyen bir düzendir.',
+      'Bir kültür, tek tek iyi davranışlardan değil; bu davranışların yaygınlaşıp benimsenmesinden ve yeni kuşaklara aktarılmasından doğar. Sürdürülebilir trafik kültürü, adabın ceza korkusuna değil ortak bir değere dayandığı, ebeveynden çocuğa taşınarak kendini yenileyen bir düzendir. Eğitim, örnek olma ve toplumsal kabul yoluyla kuşaktan kuşağa aktarılarak kalıcı hâle gelmesidir.',
     whyWrong: [
       'Yalnızca cezaya dayalı düzen, denetim gevşediğinde çözülür; sürdürülebilir değildir.',
       'Sürdürülebilirlik, trafiğin bitmesi değil, sağlıklı biçimde yönetilmesidir.',
@@ -515,11 +515,11 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
       'Sürücü aslında hâlâ ceza korkusuyla hareket etmektedir',
       'Kimse yokken kurala uymanın hiçbir anlamı yoktur',
       'Bu davranış tümüyle şansa bağlıdır, bir nedeni yoktur',
-      'Sürücüyü yönlendiren şey vicdanıdır; kuralı bir değere dönüştürüp içselleştirdiği için dış denetim olmasa da doğru davranır ve bu, adabın en olgun hâlidir',
+      'Sürücüyü yönlendiren şey vicdanıdır',
     ],
     answerIndex: 3,
     explanation:
-      'Kurala yalnızca görüldüğümüz için uyuyorsak, denetim kalktığında kural da kalkar. Oysa vicdan, kimsenin görmediği yerde bile bizi doğruya bağlayan bir iç denetimdir. Kuralı bir değere dönüştürmüş sürücü, gece yarısı bomboş bir kavşakta bile kırmızıda durur; çünkü artık kuraldan değil, kendi değerinden hareket etmektedir. Adabın olgunluğu buradadır.',
+      'Kurala yalnızca görüldüğümüz için uyuyorsak, denetim kalktığında kural da kalkar. Oysa vicdan, kimsenin görmediği yerde bile bizi doğruya bağlayan bir iç denetimdir. Kuralı bir değere dönüştürmüş sürücü, gece yarısı bomboş bir kavşakta bile kırmızıda durur; çünkü artık kuraldan değil, kendi değerinden hareket etmektedir. Adabın olgunluğu buradadır. Kuralı bir değere dönüştürüp içselleştirdiği için dış denetim olmasa da doğru davranır ve bu, adabın en olgun hâlidir.',
     whyWrong: [
       'Kimse yokken de kurala uyan sürücü, tam da ceza korkusunu aşmış olandır.',
       'Denetimsiz anda kurala uymak anlamsız değildir; asıl karakteri o an belli eder.',

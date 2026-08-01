@@ -90,13 +90,13 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     stem: 'İlk yardımcı olay yerinde önce kimin güvenliğini sağlamalıdır?',
     options: [
       'Önce çevredeki izleyicilerin güvenliğini',
-      'Önce kendi güvenliğini; kendisi tehlikeye girerse kimseye yardım edemez',
+      'Önce kendi güvenliğini',
       'Önce araçların güvenliğini',
       'Güvenlik sırası önemli değildir; hemen yaralıya koşulur',
     ],
     answerIndex: 1,
     explanation:
-      'İlk yardımın temel ilkesi, ilk yardımcının önce kendi güvenliğini sağlamasıdır. Tehlikeyi değerlendirmeden yaralıya koşan kişi kendisi de yaralanırsa hem yardım edemez hem de kurtarılması gereken kişi sayısını artırır.',
+      'İlk yardımın temel ilkesi, ilk yardımcının önce kendi güvenliğini sağlamasıdır. Tehlikeyi değerlendirmeden yaralıya koşan kişi kendisi de yaralanırsa hem yardım edemez hem de kurtarılması gereken kişi sayısını artırır. Kendisi tehlikeye girerse kimseye yardım edemez.',
     whyWrong: [
       'İzleyiciler ve araçlar, ilk yardımcı kendi güvenliğini aldıktan sonra düzenlenir.',
       'Düşünmeden yaralıya koşmak ikinci bir kazaya davetiye çıkarır.',
@@ -116,12 +116,12 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Nefesini tutup hızla içeri dalarak kişiyi sürüklemek',
       'Ortama girip önce pencereleri tek tek kapatmak',
-      'Korunmasız içeri girmemek; kapı ve pencereleri dışarıdan açtırmak, 112 ve itfaiyeye haber vermek',
+      'Korunmasız içeri girmemek',
       'Kişi kendiliğinden çıkana kadar hiçbir şey yapmamak',
     ],
     answerIndex: 2,
     explanation:
-      'Gazla dolu ortama korunmasız giren kişi birkaç solukta kendisi de etkilenip bayılabilir. Doğru olan, korunmasız içeri girmemek, mümkünse ortamı dışarıdan havalandırmak ve 112 ile itfaiye gibi donanımlı ekipleri çağırmaktır.',
+      'Gazla dolu ortama korunmasız giren kişi birkaç solukta kendisi de etkilenip bayılabilir. Doğru olan, korunmasız içeri girmemek, mümkünse ortamı dışarıdan havalandırmak ve 112 ile itfaiye gibi donanımlı ekipleri çağırmaktır. Kapı ve pencereleri dışarıdan açtırmak, 112 ve itfaiyeye haber vermek.',
     whyWrong: [
       'Nefes tutmak koruma sağlamaz; gazlar cilt ve gözleri de etkileyebilir, kişi içeride bayılabilir.',
       'Pencereleri kapatmak gaz yoğunluğunu artırır; hiçbir şey yapmamak da yardımı geciktirir.',
@@ -189,14 +189,14 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Bacakları aracın ezilen bölümü altında sıkışmış, bilinci açık ve solunumu düzenli bir yaralı için doğru yaklaşım hangisidir?',
     options: [
-      'Yaralı zorla çekilmez; itfaiye ve 112 çağrılır, ekipler gelene kadar yaralının durumu izlenir ve sakinleştirilir',
+      'Yaralı zorla çekilmez',
       'Yaralı iki kişi tarafından kollarından kuvvetle çekilerek kurtarılır',
       'Sıkışan bölüm yolculardan biri tarafından levyeyle rastgele kaldırılır',
       'Yaralı kendi çabasıyla çıkması için yalnız bırakılır',
     ],
     answerIndex: 0,
     explanation:
-      'Sıkışmış yaralıyı zorla çekmek; kırıkları, damar ve doku hasarını ağırlaştırabilir. Yaşamsal bir zorunluluk yoksa kurtarma işi donanımlı ekiplere bırakılır; ilk yardımcı bu sürede yaralının bilincini ve solunumunu izler, onu sakinleştirir.',
+      'Sıkışmış yaralıyı zorla çekmek; kırıkları, damar ve doku hasarını ağırlaştırabilir. Yaşamsal bir zorunluluk yoksa kurtarma işi donanımlı ekiplere bırakılır; ilk yardımcı bu sürede yaralının bilincini ve solunumunu izler, onu sakinleştirir. İtfaiye ve 112 çağrılır, ekipler gelene kadar yaralının durumu izlenir ve sakinleştirilir.',
     whyWrong: [
       'Kuvvetle çekmek ve kontrolsüz kaldırma girişimleri yaralanmayı derinleştirebilir.',
       'Yaralıyı yalnız bırakmak, durumu kötüleşirse müdahalesiz kalmasına yol açar.',
@@ -267,7 +267,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
       'Cisim görünmese bile parmak boğaza sokularak körlemesine taranır',
       'Ağza bol su dökülerek cismin yumuşaması beklenir',
       'Cismi itmek için kişiye ekmek yedirilir',
-      'Yalnızca ağızda açıkça görülen ve kolayca ulaşılabilen cisim dikkatle çıkarılır; körlemesine parmak sokulmaz',
+      'Yalnızca ağızda açıkça görülen ve kolayca ulaşılabilen cisim dikkatle çıkarılır',
     ],
     answerIndex: 3,
     explanation:
@@ -289,10 +289,10 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Havalimanı ve alışveriş merkezi gibi kalabalık yerlerde bulundurulan OED (otomatik dış defibrilatör) cihazının işlevi nedir?',
     options: [
-      'Kalbi duran kişinin kalp ritmini çözümleyip gerekirse elektrik şoku vermek ve kullanıcıyı sesli komutlarla yönlendirmek',
-      'Yaralının ateşini ölçmek',
-      'Tansiyonu düşen kişiye ilaç vermek',
-      'Yaralıyı hastaneye taşımak',
+      'Kalp ritmini çözümleyip gerekirse elektrik şoku vermek',
+      'Solunumu duran kişiye basınçlı oksijen vermek',
+      'Kandaki şeker düzeyini ölçüp sonucu bildirmek',
+      'Kanamayı basınçla durdurup yarayı kapatmak',
     ],
     answerIndex: 0,
     explanation:
@@ -340,13 +340,13 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     stem: 'Canlandırma sırasında olay yerine OED getirildiğinde göğüs basılarıyla ilgili doğru davranış hangisidir?',
     options: [
       'Cihaz görülür görülmez basılar tamamen bırakılır ve yalnız cihaz beklenir',
-      'Cihaz hazırlanırken basılara olabildiğince devam edilir; cihaz ritmi çözümlerken yaralıya dokunulmaz',
+      'Cihaz hazırlanırken basılara olabildiğince devam edilir',
       'Cihaz çalışırken basılara daha hızlı devam edilir',
       'OED geldiyse göğüs basısına artık hiç gerek kalmaz',
     ],
     answerIndex: 1,
     explanation:
-      'Pedler yapıştırılırken göğüs basılarına mümkün olduğunca ara vermeden devam edilir. Cihaz "çözümleme yapılıyor, dokunmayın" uyarısı verdiğinde yaralıdan el çekilir; cihaz yönlendirdiğinde basılar sürdürülür.',
+      'Pedler yapıştırılırken göğüs basılarına mümkün olduğunca ara vermeden devam edilir. Cihaz "çözümleme yapılıyor, dokunmayın" uyarısı verdiğinde yaralıdan el çekilir; cihaz yönlendirdiğinde basılar sürdürülür. Cihaz ritmi çözümlerken yaralıya dokunulmaz.',
     whyWrong: [
       'Basıları erkenden bırakmak dolaşım desteğini gereksiz yere keser.',
       'Çözümleme sırasında dokunmak cihazın ritmi doğru okumasını engeller; OED tek başına canlandırmanın yerini tutmaz.',
@@ -367,11 +367,11 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
       'Yalnızca hastane çalışanları',
       'Yalnızca itfaiye personeli',
       'Yalnızca cihazın bulunduğu binanın güvenlik görevlileri',
-      'Sesli komutları izleyerek halktan kişiler de kullanabilir; cihaz kullanıcıyı adım adım yönlendirir',
+      'Sesli komutları izleyerek halktan kişiler de kullanabilir',
     ],
     answerIndex: 3,
     explanation:
-      'OED, sağlık eğitimi olmayan kişilerin de kullanabilmesi için tasarlanmıştır; açıldığında her adımı sesli olarak anlatır ve şoku ancak gerçekten gerekli görürse önerir. Bu sayede halka açık yerlerde erken müdahale mümkün olur.',
+      'OED, sağlık eğitimi olmayan kişilerin de kullanabilmesi için tasarlanmıştır; açıldığında her adımı sesli olarak anlatır ve şoku ancak gerçekten gerekli görürse önerir. Bu sayede halka açık yerlerde erken müdahale mümkün olur. Cihaz kullanıcıyı adım adım yönlendirir.',
     whyWrong: [
       'Cihazın amacı profesyonel ekip gelmeden önce sıradan kişilerin müdahale edebilmesidir.',
       'Kullanımı belirli meslek gruplarıyla sınırlamak, erken şok şansını ortadan kaldırır.',
@@ -589,14 +589,14 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Kanayan yaranın üzerine konan sargı bezi kanla tamamen ıslanırsa ne yapılır?',
     options: [
-      'Islanan sargı çıkarılmaz; üzerine yeni bir sargı eklenerek baskıya devam edilir',
+      'Islanan sargı çıkarılmaz',
       'Islanan sargı çekip atılır ve yara açık bırakılır',
       'Sargı ıslandıysa baskıya son verilir',
       'Yara sabunlu suyla ovularak yıkanır',
     ],
     answerIndex: 0,
     explanation:
-      'Islanan sargıyı kaldırmak, yeni oluşmaya başlayan pıhtıyı koparıp kanamayı yeniden şiddetlendirebilir. Bu nedenle ilk sargı yerinde bırakılır ve üzerine ikinci bir sargı konarak baskı sürdürülür.',
+      'Islanan sargıyı kaldırmak, yeni oluşmaya başlayan pıhtıyı koparıp kanamayı yeniden şiddetlendirebilir. Bu nedenle ilk sargı yerinde bırakılır ve üzerine ikinci bir sargı konarak baskı sürdürülür. Üzerine yeni bir sargı eklenerek baskıya devam edilir.',
     whyWrong: [
       'Sargıyı çıkarmak pıhtılaşmayı bozar.',
       'Baskıyı bırakmak veya yarayı ovmak kan kaybını artırır.',
@@ -640,13 +640,13 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     stem: 'Bacağı uzun süredir enkaz altında sıkışmış bir kişiyi ilk yardımcının kendi başına çekip çıkarmaya çalışmaması neden önerilir?',
     options: [
       'Kurtarma işlemi için ücret gerektiği için',
-      'Uzun süreli sıkışmada dokular ağır hasar görmüştür; bilinçsiz kurtarma girişimi durumu ağırlaştırabilir ve kurtarma donanımlı ekiplerin işidir',
+      'Uzun süreli sıkışmada dokular ağır hasar görmüştür',
       'Kişinin enkaz altında daha rahat ettiği için',
       'Sıkışan bölgenin kendiliğinden iyileşeceği için',
     ],
     answerIndex: 1,
     explanation:
-      'Uzun süre baskı altında kalan dokularda ciddi iç hasar gelişir ve bu durum dışarıdan görünmez. Eğitimsiz ve donanımsız bir kurtarma girişimi hem yaralıya zarar verebilir hem de enkazın oynamasına yol açabilir; bu nedenle 112 ve itfaiye beklenir, yaralı bu sürede yalnız bırakılmaz.',
+      'Uzun süre baskı altında kalan dokularda ciddi iç hasar gelişir ve bu durum dışarıdan görünmez. Eğitimsiz ve donanımsız bir kurtarma girişimi hem yaralıya zarar verebilir hem de enkazın oynamasına yol açabilir; bu nedenle 112 ve itfaiye beklenir, yaralı bu sürede yalnız bırakılmaz. Bilinçsiz kurtarma girişimi durumu ağırlaştırabilir ve kurtarma donanımlı ekiplerin işidir.',
     whyWrong: [
       'Ücret veya konfor gibi gerekçelerin ilk yardımla ilgisi yoktur.',
       'Ezilme yaralanması kendiliğinden iyileşen bir durum değildir.',
@@ -667,11 +667,11 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
       'Cismin daha sonra delil olarak incelenecek olması',
       'Cismi çıkarmanın çok uzun sürmesi',
       'Cismin pas bırakma ihtimali',
-      'Saplı cismin yaralanan damarları tıkaç gibi kapatıyor olabilmesi; çıkarılırsa kanamanın şiddetlenebilmesi',
+      'Saplı cismin yaralanan damarları tıkaç gibi kapatıyor olabilmesi',
     ],
     answerIndex: 3,
     explanation:
-      'Saplanan cisim, kestiği damarların üzerinde doğal bir tıkaç görevi görebilir. Cisim çekildiğinde bu tıkaç ortadan kalkar, kanama birden şiddetlenebilir ve iç organ hasarı büyüyebilir; bu yüzden cisim yerinde bırakılır.',
+      'Saplanan cisim, kestiği damarların üzerinde doğal bir tıkaç görevi görebilir. Cisim çekildiğinde bu tıkaç ortadan kalkar, kanama birden şiddetlenebilir ve iç organ hasarı büyüyebilir; bu yüzden cisim yerinde bırakılır. Çıkarılırsa kanamanın şiddetlenebilmesi.',
     whyWrong: [
       'Delil veya pas gibi gerekçeler tıbbi neden değildir.',
       'Sorun sürede değil, çıkarma işleminin kendisinin yarattığı tehlikededir.',
@@ -716,12 +716,12 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Cismi bantla doğrudan cilde yapıştırır',
       'Cismi hafifçe gevşetip yeniden yerleştirir',
-      'Cismin iki yanına rulo yapılmış temiz bezler koyup bunları sargıyla sabitler; cisme yük bindirmez',
+      'Cismin iki yanına rulo yapılmış temiz bezler koyup bunları sargıyla sabitler',
       'Cismin görünen bölümünü keserek kısaltır',
     ],
     answerIndex: 2,
     explanation:
-      'Saplı cismin çevresi, iki yanına yerleştirilen rulo bez veya bandajlarla desteklenir ve bu destekler sargıyla tespit edilir. Amaç, taşıma sırasında cismin kıpırdayıp dokularda yeni hasar açmasını önlemektir; cismin üzerine baskı uygulanmaz.',
+      'Saplı cismin çevresi, iki yanına yerleştirilen rulo bez veya bandajlarla desteklenir ve bu destekler sargıyla tespit edilir. Amaç, taşıma sırasında cismin kıpırdayıp dokularda yeni hasar açmasını önlemektir; cismin üzerine baskı uygulanmaz. Cisme yük bindirmez.',
     whyWrong: [
       'Cismi oynatmak, gevşetmek veya kesmeye çalışmak titreşimle iç hasarı artırabilir.',
       'Yalnızca banda güvenmek cismi devrilmeye karşı korumaz.',
@@ -789,14 +789,14 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Bayıldıktan kısa süre sonra kendine gelen kişiyle ilgili doğru davranış hangisidir?',
     options: [
-      'Hemen ayağa kaldırılmaz; bir süre dinlendirilir ve kendini iyi hissedene kadar yavaş hareket etmesi sağlanır',
+      'Hemen ayağa kaldırılmaz',
       'Kendine gelir gelmez ayağa kaldırılıp yürütülür',
       'Hemen araç kullanmasına izin verilir',
       'Koşturularak kan dolaşımı hızlandırılır',
     ],
     answerIndex: 0,
     explanation:
-      'Bayılma sonrasında dolaşım henüz tam dengelenmemiştir; kişi hemen ayağa kaldırılırsa yeniden bayılabilir. Bir süre yatarak veya oturarak dinlenmesi sağlanır, ayağa yavaş kaldırılır.',
+      'Bayılma sonrasında dolaşım henüz tam dengelenmemiştir; kişi hemen ayağa kaldırılırsa yeniden bayılabilir. Bir süre yatarak veya oturarak dinlenmesi sağlanır, ayağa yavaş kaldırılır. Bir süre dinlendirilir ve kendini iyi hissedene kadar yavaş hareket etmesi sağlanır.',
     whyWrong: [
       'Erken ayağa kaldırmak ve yürütmek tekrar bayılmaya yol açabilir.',
       'Yeni bayılmış kişinin araç kullanması kendisi ve trafik için tehlikelidir.',
@@ -867,7 +867,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
       'Hemen ayağa kaldırılıp yürütülür',
       'Ağzına şekerli su verilir',
       'Sırtüstü bırakılıp yalnız başına terk edilir',
-      'Yan (derlenme) pozisyonuna alınır ve kendine gelene kadar yanında kalınır',
+      'Yan (derlenme)',
     ],
     answerIndex: 3,
     explanation:
@@ -989,14 +989,14 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Soğuk uygulamada buz neden doğrudan cilde konmaz?',
     options: [
-      'Çıplak cilde değen buz, dokuda soğuk yanığına (donmaya benzer hasara) yol açabileceği için',
+      'Çıplak cilde değen buz, dokuda soğuk yanığına (donmaya benzer hasara)',
       'Buzun cilde yapışıp kaybolacağı için',
       'Buzun etkisini tamamen yitireceği için',
       'Cildin buzu eritmesinin uzun sürmesi nedeniyle',
     ],
     answerIndex: 0,
     explanation:
-      'Buz doğrudan cilde uygulanırsa aşırı soğuk, dokularda donmaya benzer hasar oluşturabilir. Bu nedenle buz bir beze veya havluya sarılarak uygulanır.',
+      'Buz doğrudan cilde uygulanırsa aşırı soğuk, dokularda donmaya benzer hasar oluşturabilir. Bu nedenle buz bir beze veya havluya sarılarak uygulanır. Yol açabileceği için.',
     whyWrong: [
       'Buzun yapışması veya erime hızı temel gerekçe değildir.',
       'Beze sarılan buz etkisini yitirmez; tam tersine güvenli biçimde soğutur.',
@@ -1289,7 +1289,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'OED pedleri yapıştırılmadan önce yaralının göğsüyle ilgili nelere dikkat edilir?',
     options: [
-      'Göğsün çıplak ve kuru olmasına; ıslaksa hızla kurulanmasına',
+      'Göğsün çıplak ve kuru olmasına',
       'Göğsün bir battaniyeyle örtülü kalmasına',
       'Pedlerin giysilerin üzerine yapıştırılmasına',
       'Pedlerin ikisinin de aynı noktaya üst üste konmasına',
@@ -1340,13 +1340,13 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     stem: 'Kaza yerinde yaralının üzerinin battaniye veya montla örtülmesinin ilk yardım açısından amacı nedir?',
     options: [
       'Yaralının kim olduğunun gizlenmesi',
-      'Vücut ısısının korunması; ısı kaybının şok tablosunu ağırlaştırabilmesi',
+      'Vücut ısısının korunması',
       'Battaniyenin kanamayı kendiliğinden durdurması',
       'Yaralının uyumasının sağlanması',
     ],
     answerIndex: 1,
     explanation:
-      'Yaralılar, özellikle kan kaybı olanlar, hızla ısı kaybeder ve üşüme şok tablosunu derinleştirir. Üzerinin örtülmesi vücut ısısını korumaya yardım eder; bu, şok önleminin basit ama önemli bir parçasıdır.',
+      'Yaralılar, özellikle kan kaybı olanlar, hızla ısı kaybeder ve üşüme şok tablosunu derinleştirir. Üzerinin örtülmesi vücut ısısını korumaya yardım eder; bu, şok önleminin basit ama önemli bir parçasıdır. Isı kaybının şok tablosunu ağırlaştırabilmesi.',
     whyWrong: [
       'Amaç gizlilik ya da uyku değildir.',
       'Örtünün kanama üzerinde doğrudan durdurucu etkisi yoktur; kanamaya ayrıca müdahale edilir.',

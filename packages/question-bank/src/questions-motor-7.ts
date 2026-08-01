@@ -17,12 +17,12 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     options: [
       'Elektrik enerjisini doğrudan sese çevirir',
       'Havayı sıkıştırarak yalnızca ısı üretir, hareket üretmez',
-      'Yakıttaki kimyasal enerjiyi yanmayla ısıya, ısıyı da parçaların hareketiyle mekanik (hareket) enerjisine dönüştürür',
+      'Yakıttaki kimyasal enerjiyi yanmayla ısıya, ısıyı da parçaların hareketiyle mekanik (hareket)',
       'Suyun buharını elektriğe çevirip aküyü doldurur',
     ],
     answerIndex: 2,
     explanation:
-      'Motorun görevi, yakıtın içinde depolanmış kimyasal enerjiyi kullanılabilir harekete çevirmektir. Silindir içinde yanan yakıt yüksek ısı ve basınç oluşturur; bu basınç pistonu iter, pistonun doğrusal hareketi krank mili aracılığıyla dönme hareketine çevrilir ve sonunda tekerleklere iletilir. Yani sıralama kimyasal → ısı → mekanik enerji biçimindedir.',
+      'Motorun görevi, yakıtın içinde depolanmış kimyasal enerjiyi kullanılabilir harekete çevirmektir. Silindir içinde yanan yakıt yüksek ısı ve basınç oluşturur; bu basınç pistonu iter, pistonun doğrusal hareketi krank mili aracılığıyla dönme hareketine çevrilir ve sonunda tekerleklere iletilir. Yani sıralama kimyasal → ısı → mekanik enerji biçimindedir. Enerjisine dönüştürür.',
     whyWrong: [
       'Motor sesi üretebilir ama amacı bu değildir; enerjiyi harekete çevirir.',
       'Havanın sıkıştırılması sürecin bir parçasıdır; tek başına aracı yürüten şey değildir. Elektrik üretimi ise alternatörün işidir, motorun asıl amacı değil.',
@@ -39,7 +39,7 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Benzinli ve dizel motorları birbirinden ayıran temel çalışma farkı, özet olarak aşağıdakilerden hangisidir?',
     options: [
-      'Benzinlide karışım bujinin kıvılcımıyla ateşlenir; dizelde ise yakıt, yüksek oranda sıkıştırılıp ısınan havada kendiliğinden tutuşar (bu yüzden dizelin sıkıştırma oranı daha yüksektir)',
+      'Benzinlide karışım bujinin kıvılcımıyla ateşlenir',
       'Benzinli motor elektrikle, dizel motor yakıtla çalışır',
       'Dizel motorda yanma olmaz, yalnızca havanın sıkışması aracı yürütür',
       'İkisi de aynı biçimde bujiyle ateşlenir, aralarında çalışma farkı yoktur',
@@ -67,7 +67,7 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
       'İki zamanlı motorlarda yakıt kullanılmaz, dört zamanlıda kullanılır',
       'İki zamanlı motorlar yalnızca dizel, dört zamanlılar yalnızca benzinli olur',
       'İki zamanlı motorda soğutma yoktur, dört zamanlıda vardır',
-      'Dört zamanlı motorda çevrim (emme-sıkıştırma-ateşleme/güç-egzoz) krank milinin iki turunda tamamlanır; iki zamanlıda ise aynı işler krank milinin bir turunda (iki strokta) tamamlanır',
+      'Dört zamanlı motorda çevrim (emme-sıkıştırma-ateşleme/güç-egzoz) krank milinin iki turunda tamamlanır',
     ],
     answerIndex: 3,
     explanation:
@@ -109,7 +109,7 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     stem: 'Yağ karteri, yağ pompası ve yağ filtresi bir araya gelerek aracın hangi sistemini oluşturur ve bu sistemin temel amacı nedir?',
     options: [
       'Soğutma sistemini; motoru soğutmak',
-      'Yağlama sistemini; hareketli parçalar arasında yağ filmi oluşturup sürtünmeyi ve aşınmayı azaltmak',
+      'Yağlama sistemini',
       'Yakıt sistemini; motora yakıt taşımak',
       'Şarj sistemini; aküyü doldurmak',
     ],
@@ -208,7 +208,7 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
       'Akü, çünkü elektriği sürekli kendisi üretir',
       'Marş motoru, çünkü motor döndükçe elektrik üretir',
       'Termostat, çünkü sıcaklığı elektriğe çevirir',
-      'Alternatör; motorun döndürdüğü bu eleman elektrik üretir, hem donanımları besler hem aküyü şarj eder',
+      'Alternatör',
     ],
     answerIndex: 3,
     explanation:
@@ -278,7 +278,7 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     stem: 'Hidrolik direksiyon ile elektrikli direksiyon (EPS) sisteminin sürücüye direksiyonu çevirmede yardımcı olma biçimi arasındaki fark nedir?',
     options: [
       'İkisi de yalnızca kas gücüyle çalışır, hiçbir destek sağlamaz',
-      'Hidrolik direksiyon motorla dönen bir pompanın oluşturduğu yağ basıncıyla destek verir; elektrikli direksiyon ise bir elektrik motoruyla destek sağlar (pompa ve hidrolik yağ gerektirmez)',
+      'Hidrolik direksiyon motorla dönen bir pompanın oluşturduğu yağ basıncıyla destek verir',
       'Elektrikli direksiyon aracı frenler, hidrolik direksiyon farları yakar',
       'Hidrolik direksiyon yalnızca yüksek hızda, elektrikli direksiyon yalnızca dururken çalışır',
     ],
@@ -301,10 +301,10 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Yay ve amortisörlerden oluşan süspansiyon sisteminin araçtaki temel görevi aşağıdakilerden hangisidir?',
     options: [
-      'Motorun yakıtını süzmek',
-      'Aracın hızını sınırlamak',
-      'Egzoz gazını temizlemek',
-      'Yoldan gelen darbeleri yumuşatmak, tekerleklerin yola temasını sürdürmek ve böylece hem sürüş konforunu hem yol tutuşunu sağlamak',
+      'Motorun ürettiği gücü tekerleklere kayıpsız biçimde aktarmak',
+      'Fren balatalarını soğutup fren mesafesini kısaltmak',
+      'Direksiyon kutusuna basınçlı hidrolik yağı göndermek',
+      'Yoldan gelen darbeleri yumuşatıp tekerleğin yola temasını sürdürmek',
     ],
     answerIndex: 3,
     explanation:
@@ -325,7 +325,7 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Gösterge panelinde YEŞİL (ya da mavi) renkli bir sembolün (örneğin yanıp sönen sinyal oku ya da yanan kısa far işareti) yanması genellikle neyi anlatır?',
     options: [
-      'Bir donanımın o an çalışır/aktif olduğunu bildiren bilgi ışığıdır; bir arıza uyarısı değildir',
+      'Bir donanımın o an çalışır/aktif olduğunu bildiren bilgi ışığıdır',
       'Her zaman ciddi bir arıza olduğunu ve derhâl durulması gerektiğini',
       'Motorun aşırı ısındığını',
       'Frenlerin tamamen boşaldığını',
@@ -349,14 +349,14 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Birçok aracın yakıt göstergesindeki pompa sembolünün yanında küçük bir ok bulunur. Bu okun pratik işlevi nedir?',
     options: [
-      'Aracın yakıt dolum kapağının (deponun) aracın hangi tarafında olduğunu gösterir; istasyonda hangi yöne yanaşılacağını anlamayı kolaylaştırır',
+      'Aracın yakıt dolum kapağının (deponun) aracın hangi tarafında olduğunu gösterir',
       'Motor yağının seviyesini gösterir',
       'Aracın gittiği yönü (kuzey-güney) gösteren pusuladır',
       'Lastik hava basıncının düştüğünü bildirir',
     ],
     answerIndex: 0,
     explanation:
-      'Yakıt göstergesindeki pompa simgesinin yanındaki küçük ok (veya pompa hortumunun çizildiği taraf), yakıt dolum kapağının aracın sağ mı sol tarafında olduğunu gösterir. Özellikle yabancı olduğunuz bir araçla istasyona girerken hangi yöne yanaşmanız gerektiğini bu okla kolayca anlayabilirsiniz. Yakıt seviyesini ise ibrenin E (boş) ile F (dolu) arasındaki konumu gösterir.',
+      'Yakıt göstergesindeki pompa simgesinin yanındaki küçük ok (veya pompa hortumunun çizildiği taraf), yakıt dolum kapağının aracın sağ mı sol tarafında olduğunu gösterir. Özellikle yabancı olduğunuz bir araçla istasyona girerken hangi yöne yanaşmanız gerektiğini bu okla kolayca anlayabilirsiniz. Yakıt seviyesini ise ibrenin E (boş) ile F (dolu) arasındaki konumu gösterir. İstasyonda hangi yöne yanaşılacağını anlamayı kolaylaştırır.',
     whyWrong: [
       'Yağ seviyesi yağ çubuğuyla veya ayrı bir göstergeyle takip edilir; bu okla değil.',
       'Ok bir pusula değildir ve lastik basıncını da bildirmez; yalnızca depo kapağının yönünü gösterir.',
@@ -400,12 +400,12 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     options: [
       'İkisi de aynı bilgiyi gösterir, aralarında hiçbir fark yoktur',
       'Toplam sayaç yalnızca hızı, trip sayaç yalnızca yakıtı gösterir',
-      'Toplam sayaç aracın kullanım ömrü boyunca yaptığı toplam mesafeyi (sıfırlanamaz) gösterir; trip sayaç ise sürücünün istediğinde sıfırlayabildiği, örneğin bir yolculuğun mesafesini ölçen bölümdür',
+      'Toplam sayaç aracın kullanım ömrü boyunca yaptığı toplam mesafeyi (sıfırlanamaz) gösterir',
       'Trip sayaç aracın toplam yaşını yıl olarak gösterir',
     ],
     answerIndex: 2,
     explanation:
-      'Toplam kilometre sayacı, aracın fabrikadan çıktığından beri katettiği tüm mesafeyi gösterir ve normalde sıfırlanamaz; bu değer aracın yaşını, değerini ve periyodik bakım zamanını takip etmede kullanılır. Trip (yol) sayacı ise sürücünün dilediğinde sıfırlayabildiği bir sayaçtır; iki dolum arası mesafeyi veya belli bir yolculuğun uzunluğunu ölçmeye yarar. Bakım takibinde asıl ölçüt toplam kilometredir.',
+      'Toplam kilometre sayacı, aracın fabrikadan çıktığından beri katettiği tüm mesafeyi gösterir ve normalde sıfırlanamaz; bu değer aracın yaşını, değerini ve periyodik bakım zamanını takip etmede kullanılır. Trip (yol) sayacı ise sürücünün dilediğinde sıfırlayabildiği bir sayaçtır; iki dolum arası mesafeyi veya belli bir yolculuğun uzunluğunu ölçmeye yarar. Bakım takibinde asıl ölçüt toplam kilometredir. Trip sayaç ise sürücünün istediğinde sıfırlayabildiği, örneğin bir yolculuğun mesafesini ölçen bölümdür.',
     whyWrong: [
       'İki sayaç farklı amaçlıdır; biri toplam mesafeyi, diğeri sıfırlanabilir kısmi mesafeyi gösterir.',
       'Hız ayrı bir göstergeyle okunur; trip sayaç aracın yaşını yıl olarak vermez, mesafe ölçer.',
@@ -424,13 +424,13 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     stem: 'Aracın dış sıcaklık göstergesi düşük bir değer (örneğin +3°C ve altı) gösterip ekranda kar tanesi/buzlanma sembolü belirdiğinde bu sürücüye ne anlatır?',
     options: [
       'Motorun aşırı ısındığını ve hemen durulması gerektiğini',
-      'Yol yüzeyinde buzlanma riski oluşabileceğini; sürücünün hızını azaltıp takip mesafesini artırarak dikkatli sürmesi gerektiğini',
+      'Yol yüzeyinde buzlanma riski oluşabileceğini',
       'Klimanın arızalandığını',
       'Yakıtın bittiğini',
     ],
     answerIndex: 1,
     explanation:
-      'Birçok araç dış hava sıcaklığını gösterir ve sıcaklık donma noktasına yaklaştığında (genellikle +3°C ile 0°C civarı) bir buzlanma/kar tanesi uyarısı verir. Bu uyarı, özellikle köprü, viyadük ve gölgeli kesimlerde yolun buzlanmış olabileceğini hatırlatır. Sürücü bu durumda hızını düşürmeli, ani direksiyon ve fren hareketlerinden kaçınmalı ve takip mesafesini artırmalıdır. Uyarı bir zorunluluk değil, dikkat çağrısıdır.',
+      'Birçok araç dış hava sıcaklığını gösterir ve sıcaklık donma noktasına yaklaştığında (genellikle +3°C ile 0°C civarı) bir buzlanma/kar tanesi uyarısı verir. Bu uyarı, özellikle köprü, viyadük ve gölgeli kesimlerde yolun buzlanmış olabileceğini hatırlatır. Sürücü bu durumda hızını düşürmeli, ani direksiyon ve fren hareketlerinden kaçınmalı ve takip mesafesini artırmalıdır. Uyarı bir zorunluluk değil, dikkat çağrısıdır. Sürücünün hızını azaltıp takip mesafesini artırarak dikkatli sürmesi gerektiğini.',
     whyWrong: [
       'Motor sıcaklığı ayrı bir göstergeyle izlenir; bu uyarı dış hava ve yol koşuluyla ilgilidir.',
       'Sembol klima arızasını ya da yakıt bitişini değil, olası buzlanmayı bildirir.',
@@ -499,7 +499,7 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     stem: 'Motor sıcaklık (hararet) göstergesinde "C" ve "H" harfleri ile ibrenin normal konumu neyi ifade eder?',
     options: [
       'C yakıtı, H havayı gösterir; ibre ortadayken depo yarı doludur',
-      'C soğuk (cold), H sıcak/hararet (hot) ucudur; motor çalışma sıcaklığına gelince ibre genellikle ortalarda durur, H tarafına dayanması aşırı ısınmayı (hararet) gösterir',
+      'C soğuk (cold), H sıcak/hararet (hot) ucudur',
       'C ve H frenlerin durumunu gösterir',
       'İbre daima H tarafında durmalı, orta konum arıza demektir',
     ],
@@ -523,13 +523,13 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     stem: 'Devir göstergesinde (takometre) yüksek devirlerde başlayan kırmızı bölge (redline) neyi ifade eder?',
     options: [
       'Motorun ısındığı sıcaklık bölgesini',
-      'Motorun güvenle çıkabileceği en yüksek devir sınırını; bu bölgeye girmek ve orada sürekli kullanmak motora aşırı yük bindirip zarar verebilir',
+      'Motorun güvenle çıkabileceği en yüksek devir sınırını',
       'Yakıtın bittiği bölgeyi',
       'En verimli ve tasarruflu sürüş bölgesini',
     ],
     answerIndex: 1,
     explanation:
-      'Takometre, motorun dakikadaki devir sayısını (rpm) gösterir. Yüksek devirlerde başlayan kırmızı bölge, üreticinin belirlediği güvenli üst devir sınırını işaret eder. Motoru bu bölgeye zorlamak ve orada tutmak, parçalara aşırı yük bindirerek yıpranmayı ve hasar riskini artırır. Verimli ve motoru koruyan sürüş, devri bu kırmızı bölgeye sokmadan, orta devir aralığında zamanında vites değiştirerek yapılır.',
+      'Takometre, motorun dakikadaki devir sayısını (rpm) gösterir. Yüksek devirlerde başlayan kırmızı bölge, üreticinin belirlediği güvenli üst devir sınırını işaret eder. Motoru bu bölgeye zorlamak ve orada tutmak, parçalara aşırı yük bindirerek yıpranmayı ve hasar riskini artırır. Verimli ve motoru koruyan sürüş, devri bu kırmızı bölgeye sokmadan, orta devir aralığında zamanında vites değiştirerek yapılır. Bu bölgeye girmek ve orada sürekli kullanmak motora aşırı yük bindirip zarar verebilir.',
     whyWrong: [
       'Kırmızı bölge sıcaklık ya da yakıt seviyesiyle ilgili değildir; onların ayrı göstergeleri vardır.',
       'Kırmızı bölge verimli sürüş değil, tersine kaçınılması gereken en yüksek devir alanıdır.',
@@ -546,7 +546,7 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Otomatik vitesli bir araçta vites selektöründeki/göstergesindeki "P - R - N - D" harfleri sırasıyla neyi ifade eder?',
     options: [
-      'Park - Geri (Reverse) - Boş (Neutral) - İleri Sürüş (Drive)',
+      'Park - Geri (Reverse)',
       'Pompa - Radyatör - Motor - Debriyaj',
       'Benzin - Rölanti - Nötr - Dizel',
       'Park - Rölanti - Normal - Direksiyon',
@@ -571,13 +571,13 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     stem: 'Gösterge panelinde kırmızı renkli emniyet kemeri sembolü yanıp aynı anda kısa aralıklarla uyarı sesi geliyorsa bu ne anlama gelir?',
     options: [
       'Motor yağının bittiğini',
-      'Araçtaki bir yolcunun veya sürücünün emniyet kemerinin takılı olmadığını; kemerin takılması gerektiğini',
+      'Araçtaki bir yolcunun veya sürücünün emniyet kemerinin takılı olmadığını',
       'Lastiklerin patladığını',
       'Yakıt deposunun dolduğunu',
     ],
     answerIndex: 1,
     explanation:
-      'Emniyet kemeri sembolü, sürücü ya da yolcu koltuğundaki kemerin takılı olmadığını bildiren bir uyarıdır; çoğu araçta bir de uyarı sesiyle desteklenir. Kemer takıldığında ışık ve ses söner. Emniyet kemeri, kaza anında sürücü ve yolcuları koltukta tutarak yaralanmayı büyük ölçüde azaltan temel bir güvenlik donanımıdır; bu yüzden araç hareket etmeden takılmalıdır.',
+      'Emniyet kemeri sembolü, sürücü ya da yolcu koltuğundaki kemerin takılı olmadığını bildiren bir uyarıdır; çoğu araçta bir de uyarı sesiyle desteklenir. Kemer takıldığında ışık ve ses söner. Emniyet kemeri, kaza anında sürücü ve yolcuları koltukta tutarak yaralanmayı büyük ölçüde azaltan temel bir güvenlik donanımıdır; bu yüzden araç hareket etmeden takılmalıdır. Kemerin takılması gerektiğini.',
     whyWrong: [
       'Yağ seviyesi, lastik ve yakıt durumu için ayrı gösterge ve semboller vardır.',
       'Bu sembol yalnızca kemerin takılı olmadığını hatırlatır; başka bir sistemin arızasını göstermez.',
@@ -595,7 +595,7 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     stem: 'Sürüş sırasında gösterge panelinde daire içinde ünlem işareti bulunan kırmızı fren ikaz sembolü yanarsa akla gelmesi gereken olasılıklar ve doğru davranış nedir?',
     options: [
       'Yalnızca farların açık kaldığını gösterir, önemsizdir',
-      'El freninin (park freni) çekili kalmış olabileceği, fren hidroliği seviyesinin düşük olabileceği ya da fren sisteminde bir sorun bulunabileceği; önce el freni kontrol edilmeli, sorun sürerse fren sistemi güvenli şekilde kontrol ettirilmelidir',
+      'El freninin (park freni) çekili kalmış olabileceği, fren hidroliği seviyesinin düşük olabileceği ya da fren sisteminde bir sorun bulunabileceği',
       'Motorun soğuk olduğunu ve ısınması gerektiğini',
       'Yakıtın rezerve düştüğünü',
     ],
@@ -621,12 +621,12 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     options: [
       'Motorun içinde su kaynadığı için',
       'Motorun kabinin içinde bulunduğu için',
-      'Yakıtın bir dış kazanda değil, doğrudan motorun içinde (silindir/yanma odasında) yakılıp gücün orada üretildiği için',
+      'Yakıtın bir dış kazanda değil, doğrudan motorun içinde (silindir/yanma odasında)',
       'Motorun yalnızca kapalı garajda çalıştığı için',
     ],
     answerIndex: 2,
     explanation:
-      '"İçten yanmalı" ifadesi, yakıtın nerede yandığını anlatır. Bu motorlarda yakıt, ayrı bir dış kazanda değil, doğrudan motorun içindeki silindirde (yanma odasında) yakılır; oluşan yüksek basınçlı gaz pistonu iterek gücü aynı yerde üretir. Buhar makinesi gibi yakıtın dışarıda yakıldığı sistemlere ise "dıştan yanmalı" denir. Otomobil motorları bu yüzden içten yanmalı sınıfındadır.',
+      '"İçten yanmalı" ifadesi, yakıtın nerede yandığını anlatır. Bu motorlarda yakıt, ayrı bir dış kazanda değil, doğrudan motorun içindeki silindirde (yanma odasında) yakılır; oluşan yüksek basınçlı gaz pistonu iterek gücü aynı yerde üretir. Buhar makinesi gibi yakıtın dışarıda yakıldığı sistemlere ise "dıştan yanmalı" denir. Otomobil motorları bu yüzden içten yanmalı sınıfındadır. Yakılıp gücün orada üretildiği için.',
     whyWrong: [
       'İsmin su kaynamasıyla, motorun kabin içinde olmasıyla ya da garajla ilgisi yoktur.',
       'Belirleyici olan yakıtın motorun içinde yanmasıdır; bu, dıştan yanmalı sistemlerden farkını ortaya koyar.',
@@ -644,7 +644,7 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Bir aracın tanıtımında geçen "1.6 litre motor hacmi" ifadesi teknik olarak neyi anlatır?',
     options: [
-      'Silindirlerin toplam süpürme (kurs) hacmini; yani tüm pistonların bir çevrimde süpürdüğü havanın toplam hacmini',
+      'Silindirlerin toplam süpürme (kurs) hacmini',
       'Yakıt deposunun 1,6 litre olduğunu',
       'Motor yağı kapasitesinin 1,6 litre olduğunu',
       'Soğutma suyunun 1,6 litre olduğunu',
@@ -670,12 +670,12 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     options: [
       'Yay motoru soğutur, amortisör yakıtı süzer',
       'İkisi de aynı işi yapar, aralarında görev farkı yoktur',
-      'Yay yoldan gelen darbeyi esneyerek karşılar ve enerjiyi geçici depolar; amortisör ise yayın oluşturduğu zıplama/salınımı sönümleyerek aracın sürekli inip çıkmasını engeller',
+      'Yay yoldan gelen darbeyi esneyerek karşılar ve enerjiyi geçici depolar',
       'Amortisör aracı yaylandırır, yay ise sesi keser',
     ],
     answerIndex: 2,
     explanation:
-      'Yay ve amortisör süspansiyonda birbirini tamamlar ama farklı iş yapar. Yay, yoldan gelen darbeyi esneyerek karşılar; sıkışıp açılarak sarsıntının gövdeye iletilmesini yumuşatır, ancak kendi başına bırakılırsa aracı bir süre zıplatmaya devam eder. Amortisör bu zıplamayı (salınımı) sönümler; yayın hareketini yavaşlatıp söndürerek tekerleğin yola çabuk oturmasını ve aracın kararlı kalmasını sağlar. Amortisör zayıfsa araç darbe sonrası uzun süre yaylanır.',
+      'Yay ve amortisör süspansiyonda birbirini tamamlar ama farklı iş yapar. Yay, yoldan gelen darbeyi esneyerek karşılar; sıkışıp açılarak sarsıntının gövdeye iletilmesini yumuşatır, ancak kendi başına bırakılırsa aracı bir süre zıplatmaya devam eder. Amortisör bu zıplamayı (salınımı) sönümler; yayın hareketini yavaşlatıp söndürerek tekerleğin yola çabuk oturmasını ve aracın kararlı kalmasını sağlar. Amortisör zayıfsa araç darbe sonrası uzun süre yaylanır. Amortisör ise yayın oluşturduğu zıplama/salınımı sönümleyerek aracın sürekli inip çıkmasını engeller.',
     whyWrong: [
       'Yay ve amortisörün soğutma, yakıt süzme gibi görevleri yoktur; ikisi de süspansiyon parçasıdır.',
       'İki parça aynı işi yapmaz; biri darbeyi karşılar, diğeri salınımı sönümler. Ses kesmek de asıl görevleri değildir.',
@@ -695,12 +695,12 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     options: [
       'Yakıt seviyesinin azaldığını',
       'Lastik desenlerinin aşındığını',
-      'Direksiyon destek (hidrolik/elektrikli direksiyon) sisteminde bir sorun olabileceğini; direksiyon ağırlaşabileceği için sistemin kontrol ettirilmesi gerektiğini',
+      'Direksiyon destek (hidrolik/elektrikli direksiyon) sisteminde bir sorun olabileceğini',
       'Farların açık kaldığını',
     ],
     answerIndex: 2,
     explanation:
-      'Direksiyon simgesi biçimindeki ikaz, direksiyon destek sisteminde (elektrikli ya da hidrolik) bir sorun algılandığını bildirir. Böyle bir arızada destek azalabilir veya kesilebilir; direksiyon özellikle düşük hızda ve manevrada belirgin şekilde ağırlaşır. Araç yine yönlendirilebilir ama kontrol zorlaşacağı için sistem en kısa sürede kontrol ettirilmelidir. Renk ne kadar acil olduğuna dair ipucu verir; kırmızı daha ivedi bir uyarıdır.',
+      'Direksiyon simgesi biçimindeki ikaz, direksiyon destek sisteminde (elektrikli ya da hidrolik) bir sorun algılandığını bildirir. Böyle bir arızada destek azalabilir veya kesilebilir; direksiyon özellikle düşük hızda ve manevrada belirgin şekilde ağırlaşır. Araç yine yönlendirilebilir ama kontrol zorlaşacağı için sistem en kısa sürede kontrol ettirilmelidir. Renk ne kadar acil olduğuna dair ipucu verir; kırmızı daha ivedi bir uyarıdır. Direksiyon ağırlaşabileceği için sistemin kontrol ettirilmesi gerektiğini.',
     whyWrong: [
       'Yakıt seviyesi, lastik aşınması ve farlar için ayrı gösterge ve semboller vardır.',
       'Bu sembol doğrudan direksiyon destek sistemiyle ilgilidir; diğer sistemlerin uyarısı değildir.',
@@ -718,13 +718,13 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     stem: 'Kontak açıldığında gösterge panelindeki birçok ikaz lambasının hep birlikte yanıp, motor çalıştıktan kısa süre sonra sönmesi neyi anlatır?',
     options: [
       'Araçta ciddi bir arıza olduğunu ve kesinlikle çalıştırılmaması gerektiğini',
-      'Sistemlerin kontak açılınca kendi kendini test etmesini (ön kontrol); lambaların yanması normaldir, motor çalışınca sönmeleri sistemlerin sağlıklı olduğunu gösterir, sönmeyen lamba ise ilgili sistemde bir uyarı/arıza demektir',
+      'Sistemlerin kontak açılınca kendi kendini test etmesini (ön kontrol)',
       'Akünün tamamen bittiğini',
       'Farların otomatik yandığını',
     ],
     answerIndex: 1,
     explanation:
-      'Kontak açıldığında araç, ikaz lambalarını kısa süre yakarak hem ampullerin çalıştığını hem de sistemlerin kendini denetlediğini gösterir; buna bir tür ön kontrol (öz test) denir. Motor çalışıp sistemler sorunsuz bulununca bu lambaların çoğu söner. Eğer bir lamba (örneğin yağ basıncı, şarj, ABS veya motor arıza lambası) sönmeyip yanık kalırsa, o sistemde dikkat edilmesi gereken bir durum var demektir ve ilgili uyarı değerlendirilmelidir.',
+      'Kontak açıldığında araç, ikaz lambalarını kısa süre yakarak hem ampullerin çalıştığını hem de sistemlerin kendini denetlediğini gösterir; buna bir tür ön kontrol (öz test) denir. Motor çalışıp sistemler sorunsuz bulununca bu lambaların çoğu söner. Eğer bir lamba (örneğin yağ basıncı, şarj, ABS veya motor arıza lambası) sönmeyip yanık kalırsa, o sistemde dikkat edilmesi gereken bir durum var demektir ve ilgili uyarı değerlendirilmelidir. Lambaların yanması normaldir, motor çalışınca sönmeleri sistemlerin sağlıklı olduğunu gösterir, sönmeyen lamba ise ilgili sistemde bir uyarı/arıza demektir.',
     whyWrong: [
       'Lambaların açılışta topluca yanması arıza değil, normal öz testtir.',
       'Bu davranışın akünün bitmesiyle ya da farların yanmasıyla ilgisi yoktur; sönmeyen lamba asıl uyarıdır.',

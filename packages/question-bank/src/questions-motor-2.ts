@@ -14,10 +14,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Hava filtresinin motor açısından temel görevi aşağıdakilerden hangisidir?',
     options: [
-      'Yakıtı ateşlemek',
-      'Aküyü şarj etmek',
-      'Motora giren havadaki toz ve kiri süzerek temiz hava sağlamak',
-      'Frenleri soğutmak',
+      'Kabine giren havadaki polen ve kokuyu tutmak',
+      'Yakıttaki su ve tortu parçacıklarını ayırmak',
+      'Motora giren havadaki toz ve kiri süzmek',
+      'Yağdaki kurum ve metal talaşını temizlemek',
     ],
     answerIndex: 2,
     explanation:
@@ -39,9 +39,9 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Yakıt filtresinin tıkanması durumunda motorda hangi belirti görülmesi beklenir?',
     options: [
-      'Farların daha parlak yanması',
-      'Lastik basıncının artması',
-      'Akünün daha hızlı şarj olması',
+      'Farların daha parlak yanması ve gece görüşün artması',
+      'Lastik basıncının artması ve yol tutuşun sertleşmesi',
+      'Akünün daha hızlı şarj olması ve marşın güçlenmesi',
       'Motor gücünde düşme, tekleme ve zor çalışma',
     ],
     answerIndex: 3,
@@ -64,10 +64,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Motorda yağ filtresinin görevi aşağıdakilerden hangisidir?',
     options: [
-      'Egzoz gazını temizlemek',
+      'Egzoz gazındaki zararlı maddeleri temizleyip salınımı azaltmak',
       'Dolaşan motor yağındaki metal partikül ve kirleri süzmek',
-      'Yakıt basıncını yükseltmek',
-      'Soğutma suyunu ısıtmak',
+      'Yakıt basıncını yükseltip enjektörlere iletmek',
+      'Soğutma suyunu ısıtıp motorun çabuk ısınmasını sağlamak',
     ],
     answerIndex: 1,
     explanation:
@@ -89,10 +89,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Benzinli motorlarda bujilerin zamanla aşınması veya kirlenmesi hangi soruna yol açar?',
     options: [
-      'Ateşlemenin zayıflaması, teklemeye ve zor çalışmaya neden olması',
-      'Lastiklerin erken aşınması',
-      'Fren hidroliğinin azalması',
-      'Direksiyonun kilitlenmesi',
+      'Ateşlemenin zayıflaması, tekleme ve zor çalışma',
+      'Lastiklerin erken aşınması ve tekerlek balansının bozulması',
+      'Fren hidroliğinin azalması ve pedalın boşa gitmesi',
+      'Direksiyonun kilitlenmesi ve manevranın imkânsızlaşması',
     ],
     answerIndex: 0,
     explanation:
@@ -114,10 +114,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Dizel motorlarda soğuk havada ilk çalıştırmayı kolaylaştırmak için kullanılan eleman aşağıdakilerden hangisidir?',
     options: [
-      'Ateşleme bujisi',
+      'Ateşleme bujisi (kıvılcım bujisi)',
       'Katalitik konvertör',
       'Kızdırma bujisi (ısıtma bujisi)',
-      'Alternatör',
+      'Alternatör (dinamo)',
     ],
     answerIndex: 2,
     explanation:
@@ -139,10 +139,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Marş motorunun (marş dinamosu) temel görevi aşağıdakilerden hangisidir?',
     options: [
-      'Aküyü şarj etmek',
+      'Aküyü şarj edip elektrik sistemini beslemek',
       'Motoru ilk hareketle döndürüp çalışmasını başlatmak',
-      'Fren yapmak',
-      'Egzoz gazını temizlemek',
+      'Fren basıncını üretip tekerlekleri yavaşlatmak',
+      'Egzoz gazını temizleyip zararlı salınımı azaltmak ve sesi kısmak',
     ],
     answerIndex: 1,
     explanation:
@@ -164,10 +164,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Kontak açıldığında marş motoru motoru çeviremiyorsa (marş zayıf/basmıyor) en olası nedenlerden biri hangisidir?',
     options: [
-      'Lastik dişlerinin aşınması',
-      'Egzoz susturucusunun paslanması',
-      'Akünün zayıf/boşalmış olması ya da kutup başlarının gevşek olması',
-      'Silecek lastiğinin eskimesi',
+      'Lastik dişlerinin aşınıp yol tutuşunun zayıflaması',
+      'Egzoz susturucusunun paslanıp delinmesi',
+      'Akünün zayıf ya da kutup başlarının gevşek olması',
+      'Silecek lastiğinin eskiyip camda iz bırakması',
     ],
     answerIndex: 2,
     explanation:
@@ -192,11 +192,11 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
       'Lastik basıncının kendiliğinden artması',
       'Fren pedalının sertleşmesi',
       'Klimanın daha iyi soğutması',
-      'Gösterge panelinde şarj (akü) ikazının yanması ve zamanla akünün boşalması',
+      'Gösterge panelinde şarj (akü)',
     ],
     answerIndex: 3,
     explanation:
-      'Alternatör motor çalışırken elektrik üretip aküyü şarj eder ve sistemi besler. Arızalandığında şarj sağlanamaz; panelde akü ikazı yanar ve zamanla akü boşalarak araç stop edebilir.',
+      'Alternatör motor çalışırken elektrik üretip aküyü şarj eder ve sistemi besler. Arızalandığında şarj sağlanamaz; panelde akü ikazı yanar ve zamanla akü boşalarak araç stop edebilir. İkazının yanması ve zamanla akünün boşalması.',
     whyWrong: [
       'Lastik basıncı ve fren pedalı alternatör arızasından böyle etkilenmez.',
       'Alternatör arızası klimanın soğutmasını iyileştirmez, tersine elektrik yetersizliğine yol açar.',
@@ -214,8 +214,8 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Alternatörü döndürerek şarj üretilmesini sağlayan ve gevşerse/koparsa şarj sorununa yol açan parça hangisidir?',
     options: [
-      'Triger kayışı',
-      'Vantilatör/alternatör (V) kayışı',
+      'Triger (zaman) kayışı',
+      'Vantilatör (V) kayışı',
       'Fren balatası',
       'Debriyaj teli',
     ],
@@ -239,10 +239,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Soğutma sistemindeki antifriz seviyesi ve karışımının kontrol edilmesi neden önemlidir?',
     options: [
-      'Yeterli antifriz kışın donmayı, yazın erken kaynamayı önleyerek motoru korur',
-      'Antifriz farların parlaklığını artırır',
-      'Antifriz lastik ömrünü uzatır',
-      'Antifriz fren mesafesini kısaltır',
+      'Yeterli antifriz kışın donmayı, yazın kaynamayı önler',
+      'Antifriz farların parlaklığını artırıp gece görüşü iyileştirir',
+      'Antifriz lastik ömrünü uzatıp diş aşınmasını yavaşlatır',
+      'Antifriz fren mesafesini kısaltıp güvenliği artırır',
     ],
     answerIndex: 0,
     explanation:
@@ -265,7 +265,7 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     stem: 'Soğutma suyu seviyesi kontrol edilirken doğru davranış aşağıdakilerden hangisidir?',
     options: [
       'Motor çok sıcakken radyatör kapağını hemen açıp bakmak',
-      'Motor soğukken genleşme (yedek su) deposundaki seviyeyi min-maks arasında tutmak',
+      'Motor soğukken genleşme (yedek su)',
       'Su seviyesini hiç kontrol etmemek',
       'Suyun yerine yağ eklemek',
     ],
@@ -289,10 +289,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Aracın amortisörlerinin (süspansiyon) temel görevi aşağıdakilerden hangisidir?',
     options: [
-      'Motoru soğutmak',
-      'Yakıt tüketimini ölçmek',
-      'Aküyü şarj etmek',
-      'Yol düzensizliklerinden gelen sarsıntıları söndürüp tekerleğin yola tutunmasını sağlamak',
+      'Motorun titreşimini keserek kabine iletilen gürültüyü azaltmak',
+      'Aracın yüksekliğini yük durumuna göre kendiliğinden ayarlamak',
+      'Direksiyon hareketini tekerleklere kayıpsız biçimde aktarmak',
+      'Yoldan gelen sarsıntıları söndürüp yola tutunmayı sağlamak',
     ],
     answerIndex: 3,
     explanation:
@@ -314,10 +314,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Amortisörleri arızalı bir araçta hangi olumsuzluk beklenir?',
     options: [
-      'Yakıt deposunun hızlı dolması',
-      'Frenlemede ve virajda yol tutuşun azalması, aracın zıplaması ve savrulmaya yatkınlığı',
-      'Motor sesinin tamamen kesilmesi',
-      'Akünün aşırı şarj olması',
+      'Yakıt deposunun beklenenden hızlı boşalması ve tüketimin artması',
+      'Yol tutuşun azalması, aracın zıplaması ve savrulmaya yatkınlığı',
+      'Motor sesinin tamamen kesilmesi ve titreşimin yok olması',
+      'Akünün aşırı şarj olup kısa sürede bitmesi',
     ],
     answerIndex: 1,
     explanation:
@@ -340,9 +340,9 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     stem: 'Direksiyon belirli bir hızda titriyorsa (özellikle yüksek hızda) en olası neden aşağıdakilerden hangisidir?',
     options: [
       'Tekerlek balans ayarının bozuk olması',
-      'Akünün yeni olması',
-      'Depoda az yakıt bulunması',
-      'Farların açık olması',
+      'Akünün yeni takılmış ve tam şarjlı olması',
+      'Depoda çok az yakıt kalmış olması',
+      'Farların gündüz açık bırakılmış olması',
     ],
     answerIndex: 0,
     explanation:
@@ -364,14 +364,14 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Otomatik şanzımanlı bir aracın manuel şanzımanlıdan temel farkı aşağıdakilerden hangisidir?',
     options: [
-      'Otomatik şanzımanlı araç yakıt kullanmaz',
-      'Otomatik şanzımanda motor bulunmaz',
-      'Otomatik şanzımanda debriyaj pedalı yoktur; vites geçişleri kendiliğinden yapılır',
-      'Otomatik şanzımanlı araçta fren gerekmez',
+      'Otomatik şanzımanlı araçta yakıt kullanılmaz',
+      'Otomatik şanzımanlı araçta motor bulunmaz',
+      'Otomatik şanzımanda debriyaj pedalı yoktur',
+      'Otomatik şanzımanlı araçta fren pedalı gerekmez',
     ],
     answerIndex: 2,
     explanation:
-      'Otomatik şanzıman, vites kademelerini hıza ve yüke göre kendiliğinden değiştirir; sürücü ayrı bir debriyaj pedalı kullanmaz. Manuel şanzımanda ise vites, debriyaja basılarak elle değiştirilir.',
+      'Otomatik şanzıman, vites kademelerini hıza ve yüke göre kendiliğinden değiştirir; sürücü ayrı bir debriyaj pedalı kullanmaz. Manuel şanzımanda ise vites, debriyaja basılarak elle değiştirilir. Vites geçişleri kendiliğinden yapılır.',
     whyWrong: [
       'Her iki tür de yakıtla çalışan bir motora sahiptir.',
       'Fren her araçta gereklidir; şanzıman türüne bağlı değildir.',
@@ -390,13 +390,13 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     stem: 'Kalkışta ve yüklenmede motor devri yükseldiği hâlde araç yeterince hızlanmıyor ve yanık kokusu geliyorsa bu en çok neyi düşündürür?',
     options: [
       'Lastik basıncının yüksek olduğunu',
-      'Debriyaj (kavrama) balatasının aşınıp kaydığını',
+      'Debriyaj (kavrama)',
       'Radyatörün yeni olduğunu',
       'Akünün tam şarjlı olduğunu',
     ],
     answerIndex: 1,
     explanation:
-      'Debriyaj balatası aşındığında baskı yeterli olmaz ve kavrama kayar; motor devri artsa da güç tekerleğe tam iletilemez, sürtünmeden yanık kokusu gelir. Bu durumda debriyaj kontrol/onarım gerektirir.',
+      'Debriyaj balatası aşındığında baskı yeterli olmaz ve kavrama kayar; motor devri artsa da güç tekerleğe tam iletilemez, sürtünmeden yanık kokusu gelir. Bu durumda debriyaj kontrol/onarım gerektirir. Balatasının aşınıp kaydığını.',
     whyWrong: [
       'Yüksek lastik basıncı bu belirtileri vermez.',
       'Yeni radyatör ve tam şarjlı akü debriyaj kaymasıyla ilgili değildir.',
@@ -414,10 +414,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Triger (zaman) kayışının üretici tarafından belirtilen periyotta değiştirilmesi neden önemlidir?',
     options: [
-      'Kayışın kopması hâlinde supap ve pistonlar çarpışarak motor ağır hasar görebilir',
-      'Kayış değişimi lastik basıncını ayarlar',
-      'Kayış değişimi yakıt deposunu temizler',
-      'Kayış değişimi far ayarını yapar',
+      'Kopması hâlinde supap ve pistonlar çarpışıp motor hasar görür',
+      'Kayış değişimi lastik basıncını da ayarladığı için gereklidir',
+      'Kayış değişimi yakıt deposunu temizleyip tortuyu alır',
+      'Kayış değişimi far ayarını yapıp ışık menzilini düzeltir',
     ],
     answerIndex: 0,
     explanation:
@@ -439,10 +439,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Modern motorlarda enjektörün görevi aşağıdakilerden hangisidir?',
     options: [
-      'Yakıtı ince zerreler hâlinde ve doğru miktarda yanma odasına/emme kanalına püskürtmek',
-      'Yanma odasında kıvılcım oluşturmak',
-      'Aküyü şarj etmek',
-      'Direksiyonu yönlendirmek',
+      'Yakıtı ince zerreler hâlinde yanma odasına püskürtmek',
+      'Yanma odasında kıvılcım oluşturup karışımı tutuşturmak',
+      'Aküyü şarj edip elektrik sistemine akım sağlamak',
+      'Direksiyonu yönlendirip tekerleklere hareket vermek',
     ],
     answerIndex: 0,
     explanation:
@@ -464,10 +464,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Yakıt pompasının temel görevi aşağıdakilerden hangisidir?',
     options: [
-      'Motoru soğutmak',
-      'Fren yapmak',
-      'Depodaki yakıtı motora/enjeksiyon sistemine basınçla iletmek',
-      'Elektrik üretmek',
+      'Yakıttaki su ve tortuyu tutup ayırmak',
+      'Yakıt buharını depoya geri yoğuşturmak',
+      'Depodaki yakıtı motora basınçla iletmek',
+      'Yakıt-hava karışımını ateşleyip yakmak ve gücü üretmek',
     ],
     answerIndex: 2,
     explanation:
@@ -489,9 +489,9 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Dört zamanlı içten yanmalı bir motorun çalışma zamanları hangi sırayla gerçekleşir?',
     options: [
-      'Egzoz - Emme - Ateşleme - Sıkıştırma',
-      'Sıkıştırma - Emme - Egzoz - Ateşleme',
-      'Emme - Egzoz - Sıkıştırma - Ateşleme',
+      'Egzoz - Emme - Ateşleme - Sıkıştırma sırasıyla',
+      'Sıkıştırma - Emme - Egzoz - Ateşleme sırasıyla',
+      'Emme - Egzoz - Sıkıştırma - Ateşleme sırasıyla',
       'Emme - Sıkıştırma - Ateşleme (iş) - Egzoz',
     ],
     answerIndex: 3,
@@ -514,10 +514,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'İçten yanmalı bir motorda güç nasıl üretilir?',
     options: [
-      'Yalnızca akünün elektriğiyle',
-      'Yakıt-hava karışımının silindir içinde yanmasıyla oluşan basıncın pistonu itmesiyle',
-      'Rüzgar gücüyle',
-      'Fren sürtünmesiyle',
+      'Yalnızca akünün depoladığı elektrik enerjisiyle üretilir',
+      'Yanma basıncının pistonu itmesiyle üretilir',
+      'Aracın üzerine düşen rüzgârın gücüyle üretilir',
+      'Fren balatalarının sürtünme ısısıyla üretilir',
     ],
     answerIndex: 1,
     explanation:
@@ -539,9 +539,9 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Egzoz sistemindeki susturucunun (egzoz susturucusu) temel işlevi nedir?',
     options: [
-      'Motora hava basmak',
-      'Aküyü soğutmak',
-      'Vites değiştirmek',
+      'Motora basınçlı hava basmak',
+      'Aküyü soğutup ısınmasını önlemek',
+      'Vites değiştirip gücü tekerleğe iletmek',
       'Yanmış gazların çıkış sesini azaltmak',
     ],
     answerIndex: 3,
@@ -564,10 +564,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Egzozdan sürekli koyu siyah duman gelmesi genellikle neyi gösterir?',
     options: [
-      'Lastiklerin yeni olduğunu',
-      'Akünün tam şarjlı olduğunu',
-      'Yakıtın fazla/eksik yanması, karışımın zengin olması gibi bir yakıt-yanma sorununu',
-      'Direksiyonun hafiflediğini',
+      'Lastiklerin yeni takıldığını ve dişlerin derin olduğunu',
+      'Akünün tam şarjlı olduğunu ve marşın güçlü olduğunu',
+      'Karışımın zengin olduğu bir yakıt-yanma sorununu',
+      'Direksiyonun hafiflediğini ve manevranın kolaylaştığını',
     ],
     answerIndex: 2,
     explanation:
@@ -589,10 +589,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Radyatör önündeki soğutma fanının (vantilatör) görevi aşağıdakilerden hangisidir?',
     options: [
-      'Yakıtı depolamak',
-      'Özellikle düşük hızda ve rölantide radyatöre hava çekerek soğutmayı desteklemek',
-      'Fren balatasını sıkıştırmak',
-      'Aküyü şarj etmek',
+      'Yakıtı depolayıp motora düzenli ve basınçlı biçimde göndermek',
+      'Düşük hızda radyatöre hava çekerek soğutmayı desteklemek',
+      'Fren balatasını sıkıştırıp tekerleği yavaşlatmak',
+      'Aküyü şarj edip elektrik sistemine akım sağlamak',
     ],
     answerIndex: 1,
     explanation:
@@ -664,10 +664,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Kış lastiklerinin yaz lastiklerine göre soğuk ve karlı-buzlu yolda sağladığı temel avantaj nedir?',
     options: [
-      'Yakıtı ateşlemesi',
-      'Düşük sıcaklıkta sertleşmeyen yapısı ve diş deseni ile daha iyi yol tutuş ve frenleme sağlaması',
-      'Aküyü şarj etmesi',
-      'Motoru soğutması',
+      'Sıcak asfaltta yaz lastiğinden daha kısa fren mesafesi vermesi',
+      'Soğukta sertleşmeyen yapısıyla daha iyi yol tutuş sağlaması',
+      'Yakıt tüketimini yaz lastiğine göre belirgin biçimde düşürmesi',
+      'Lastik basıncını kendiliğinden dengede tutabilmesi',
     ],
     answerIndex: 1,
     explanation:
@@ -810,13 +810,13 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     stem: 'Boşalmış bir aküye başka araçtan takviye (çapraz kablo) yapılırken doğru yaklaşım aşağıdakilerden hangisidir?',
     options: [
       'Kabloların bağlanma sırasına ve kutuplara dikkat edilmeden rastgele bağlanabilir',
-      'Kablolar doğru kutuplara (artı-artı, eksi-eksi) bağlanır ve kıvılcım/patlama riskine karşı dikkatli olunur',
+      'Kablolar doğru kutuplara (artı-artı, eksi-eksi)',
       'Kablolar çalışan motora hiç bağlanmaz, yalnızca boş aküye takılır',
       'Takviye yaparken kutupların ters bağlanması sorun yaratmaz',
     ],
     answerIndex: 1,
     explanation:
-      'Takviyede kablolar doğru kutuplara (artı-artı, eksi-eksi) bağlanmalıdır; ters bağlantı elektronik aksama zarar verir. Akü çevresinde patlayıcı gaz bulunabileceğinden kıvılcıma karşı dikkatli olunmalı ve sıralamaya uyulmalıdır.',
+      'Takviyede kablolar doğru kutuplara (artı-artı, eksi-eksi) bağlanmalıdır; ters bağlantı elektronik aksama zarar verir. Akü çevresinde patlayıcı gaz bulunabileceğinden kıvılcıma karşı dikkatli olunmalı ve sıralamaya uyulmalıdır. Bağlanır ve kıvılcım/patlama riskine karşı dikkatli olunur.',
     whyWrong: [
       'Kutupların rastgele ya da ters bağlanması kısa devre, hasar ve patlama riski oluşturur.',
       'Takviye, kaynak araçtan kabloyla yapılır; su ile takviye mümkün değildir.',
@@ -910,13 +910,13 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     stem: 'Gösterge panelindeki devir saati (takometre) sürücüye hangi bilgiyi verir?',
     options: [
       'Kalan yakıt miktarını',
-      'Motorun dakikadaki devir sayısını (rpm), böylece uygun vites/gaz kullanımına yardımcı olur',
+      'Motorun dakikadaki devir sayısını (rpm)',
       'Dış hava sıcaklığını',
       'Lastik basıncını',
     ],
     answerIndex: 1,
     explanation:
-      'Devir saati, motorun dakikadaki dönüş sayısını (devir/rpm) gösterir. Sürücü bu bilgiyle motoru aşırı yükleme veya yüksek devirde zorlamadan uygun vitesi ve gaz seviyesini seçerek verimli ve güvenli sürüş yapabilir.',
+      'Devir saati, motorun dakikadaki dönüş sayısını (devir/rpm) gösterir. Sürücü bu bilgiyle motoru aşırı yükleme veya yüksek devirde zorlamadan uygun vitesi ve gaz seviyesini seçerek verimli ve güvenli sürüş yapabilir. Böylece uygun vites/gaz kullanımına yardımcı olur.',
     whyWrong: [
       'Kalan yakıt ayrı yakıt göstergesiyle takip edilir.',
       'Dış sıcaklık ve lastik basıncı için farklı göstergeler bulunur.',
@@ -934,10 +934,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Diferansiyelin araçtaki temel görevi aşağıdakilerden hangisidir?',
     options: [
-      'Motoru soğutmak',
-      'Yakıtı ateşlemek',
-      'Virajda dış ve iç tekerleğin farklı hızlarda dönebilmesini sağlarken gücü tekerleklere iletmek',
-      'Egzoz gazını temizlemek',
+      'Motorun devrini düşürüp tekerleğe giden torku çoğaltmak',
+      'Aracın ağırlığını dört tekerleğe eşit biçimde dağıtmak',
+      'Virajda tekerleklerin farklı hızlarda dönebilmesini sağlamak',
+      'Egzoz gazını süzüp zararlı salınımı azaltmak',
     ],
     answerIndex: 2,
     explanation:
@@ -987,11 +987,11 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
       'Motorun aşırı güçlenmesi',
       'Farların sönmesi',
       'Lastiklerin şişmesi',
-      'Suyun donarak genleşmesi; radyatör, hortum ve motor bloğunda çatlama/hasar riski',
+      'Suyun donarak genleşmesi',
     ],
     answerIndex: 3,
     explanation:
-      'Saf su 0 derecede donar ve donarken hacmi artar. Antifrizsiz sistemde soğukta donan su genleşerek radyatörü, hortumları ve hatta motor bloğunu çatlatabilir. Bu yüzden uygun oranda antifriz kullanılmalıdır.',
+      'Saf su 0 derecede donar ve donarken hacmi artar. Antifrizsiz sistemde soğukta donan su genleşerek radyatörü, hortumları ve hatta motor bloğunu çatlatabilir. Bu yüzden uygun oranda antifriz kullanılmalıdır. Radyatör, hortum ve motor bloğunda çatlama/hasar riski.',
     whyWrong: [
       'Antifrizsiz su motoru güçlendirmez.',
       'Far sönmesi ve lastik şişmesiyle soğutma suyunun donması arasında ilişki yoktur.',

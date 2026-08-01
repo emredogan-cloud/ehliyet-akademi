@@ -16,12 +16,12 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     options: [
       'Öndeki araca iyice yaklaşıp boşluk bırakmadan girişleri engellemek',
       'Korna çalarak onların en baştan sıraya girmeleri gerektiğini anlatmaya çalışmak',
-      'Fermuar (bir sen, bir ben) düzeniyle her seferinde bir aracın önünüze katılmasına izin vermek',
+      'Fermuar (bir sen, bir ben)',
       'Siz de kapanacak şeride geçip daha önden katılmaya çalışmak',
     ],
     answerIndex: 2,
     explanation:
-      'Fermuar yöntemi, her iki şeridin daralma noktasına kadar kullanılmasını ve araçların sırayla birleşmesini öngörür; bu düzen hem adil hem de trafiği en akıcı tutan yöntemdir.',
+      'Fermuar yöntemi, her iki şeridin daralma noktasına kadar kullanılmasını ve araçların sırayla birleşmesini öngörür; bu düzen hem adil hem de trafiği en akıcı tutan yöntemdir. Düzeniyle her seferinde bir aracın önünüze katılmasına izin vermek.',
     whyWrong: [
       'Boşluk bırakmadan girişleri engellemek katılmak isteyen aracı riskli manevralara zorlar ve akışı bozar.',
       'Kapanacak şeridi sonuna kadar kullanan sürücü kural ihlali yapmış olmaz; ona kızmak fermuar mantığını yanlış anlamaktır.',
@@ -39,14 +39,14 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Şehirler arası bölünmüş yolda sollamanızı tamamladınız; sağ şerit tamamen boş. Şerit izleme adabına göre ne yapmalısınız?',
     options: [
-      'Sinyal verip sağ şeride dönmek; sol şeridi yalnızca sollama için kullanmak',
+      'Sinyal verip sağ şeride dönmek',
       'Hız sınırında gittiğiniz sürece sol şeritte kalmaya devam etmek',
       'Arkadan hızlı bir araç görünene kadar sol şeridi kullanmak',
       'Hangi şeridin daha rahat olduğuna göre canınızın istediği şeritte gitmek',
     ],
     answerIndex: 0,
     explanation:
-      'Sol şerit sürekli işgal edilecek bir seyir şeridi değil, sollama şerididir; geçiş bitince sağa dönmek hem kuraldır hem de arkadan gelenlerin güvenli geçişine saygıdır.',
+      'Sol şerit sürekli işgal edilecek bir seyir şeridi değil, sollama şerididir; geçiş bitince sağa dönmek hem kuraldır hem de arkadan gelenlerin güvenli geçişine saygıdır. Sol şeridi yalnızca sollama için kullanmak.',
     whyWrong: [
       'Hız sınırında olmak sol şeridi kalıcı olarak kullanma hakkı vermez; arkadaki akışı tıkar.',
       'Birinin görünmesini beklemek geç kalmaktır; hızlı gelen araç sizi tehlikeli biçimde sağdan geçmeye yönelebilir.',
@@ -117,12 +117,12 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     options: [
       'Ani fren yapıp arkadaki sürücüye ders vermek',
       'Fren lambalarını arka arkaya yakıp söndürerek gözdağı vermek',
-      'İç aynayı gece (kamaşma önleyici) konumuna alıp sakin kalmak ve uygun yerde geçmesine imkân tanımak',
+      'İç aynayı gece (kamaşma önleyici)',
       'Hızlanarak aracın ışık alanından çıkmaya çalışmak',
     ],
     answerIndex: 2,
     explanation:
-      'Kamaşmayı aynanın gece konumu çözer; gerginliği ise tepki değil, sakin kalıp uygun yerde yol vermek çözer. Böylece hem görüşünüzü hem huzurunuzu korursunuz.',
+      'Kamaşmayı aynanın gece konumu çözer; gerginliği ise tepki değil, sakin kalıp uygun yerde yol vermek çözer. Böylece hem görüşünüzü hem huzurunuzu korursunuz. Konumuna alıp sakin kalmak ve uygun yerde geçmesine imkân tanımak.',
     whyWrong: [
       'Ani fren, arkadan çarpmayla sonuçlanabilecek kasıtlı ve tehlikeli bir misillemedir.',
       'Hızlanmak sizi kendi güvenli hızınızın üstüne çıkarır; sorunu başka bir riske dönüştürür.',
@@ -141,14 +141,14 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Gece şehir dışında önünüzdeki aracı bir süredir takip ediyorsunuz. Far görgüsü açısından doğru olan hangisidir?',
     options: [
-      'Kısa fara geçmek; uzun far öndeki sürücüyü aynalarından kamaştırır',
+      'Kısa fara geçmek',
       'Yolu daha iyi görmek için uzun farla takibe devam etmek',
       'Uzun ve kısa far arasında sürekli geçiş yapmak',
       'Farları tamamen kapatıp öndeki aracın ışığıyla ilerlemek',
     ],
     answerIndex: 0,
     explanation:
-      'Uzun far, öndeki sürücünün aynalarından yansıyarak gözünü alır ve görüşünü bozar; bir aracı takip ederken kısa fara geçmek hem kural hem görgü gereğidir.',
+      'Uzun far, öndeki sürücünün aynalarından yansıyarak gözünü alır ve görüşünü bozar; bir aracı takip ederken kısa fara geçmek hem kural hem görgü gereğidir. Uzun far öndeki sürücüyü aynalarından kamaştırır.',
     whyWrong: [
       'Kendi görüşünüz için öndekinin görüşünü feda etmek bencilce ve tehlikelidir.',
       'Farları kapatmak sizi hem görünmez hem görüşsüz bırakır; asla yapılmaz.',
@@ -169,11 +169,11 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
       'Sinyal verip yanından dikkatlice geçmek',
       'Korna çalarak neden durduğunu sormak',
       'Arıza yaptığını varsayıp beklemeden sollamak',
-      'Bir yayaya yol veriyor olabileceğini düşünüp arkasında durmak; kesinlikle yanından geçmeye çalışmamak',
+      'Bir yayaya yol veriyor olabileceğini düşünüp arkasında durmak',
     ],
     answerIndex: 3,
     explanation:
-      'Geçit önünde duran araç çoğu zaman sizin göremediğiniz bir yayaya yol veriyordur; onu sollamak, tam o anda geçide adım atan yayaya çarpmakla sonuçlanabilecek en tehlikeli hatalardan biridir.',
+      'Geçit önünde duran araç çoğu zaman sizin göremediğiniz bir yayaya yol veriyordur; onu sollamak, tam o anda geçide adım atan yayaya çarpmakla sonuçlanabilecek en tehlikeli hatalardan biridir. Kesinlikle yanından geçmeye çalışmamak.',
     whyWrong: [
       'Yanından geçmek, duran aracın gövdesinin gizlediği yayayı son anda karşınızda bulmanız demektir.',
       'Korna, geçitteki yayayı telaşlandırır ve duran sürücüyü baskılar; hiçbir sorunu çözmez.',
@@ -192,13 +192,13 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     stem: 'Kırmızı ışığa yaklaşıyorsunuz; önünüzde yaya geçidi ve ondan önce duruş çizgisi var. Nerede durmalısınız?',
     options: [
       'Yaya geçidinin üzerinde, ışığa en yakın noktada',
-      'Duruş çizgisinin gerisinde; yaya geçidini yayaların kullanımına tamamen açık bırakarak',
+      'Duruş çizgisinin gerisinde',
       'Geçidin yarısına kadar sokulup beklemek',
       'Öndeki araca değecek kadar yaklaşarak yer kazanmak',
     ],
     answerIndex: 1,
     explanation:
-      'Duruş çizgisi tam da bunun için çizilir: aracınız çizginin gerisindeyken yayalar geçidi rahat ve güvenle kullanır; zebra üzerinde duran araç yayaları taşıt yoluna dolaşmaya zorlar.',
+      'Duruş çizgisi tam da bunun için çizilir: aracınız çizginin gerisindeyken yayalar geçidi rahat ve güvenle kullanır; zebra üzerinde duran araç yayaları taşıt yoluna dolaşmaya zorlar. Yaya geçidini yayaların kullanımına tamamen açık bırakarak.',
     whyWrong: [
       'Zebranın üzerinde durmak yayaları araçların arasından geçmeye mecbur bırakır.',
       'Öne sokulmak size zaman kazandırmaz; yalnızca yayaların alanını işgal eder.',
@@ -271,11 +271,11 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
       'Bulunduğunuz yerden, araçların arasından hızlıca geçmek',
       'Araçlara el edip oldukları yerde durmalarını sağlamak',
       'Koşarak geçip süreyi kısaltmak',
-      'Birkaç adım fazla yürüyüp geçidi kullanmak; sürücülerin sizi beklediği yerden geçmek',
+      'Birkaç adım fazla yürüyüp geçidi kullanmak',
     ],
     answerIndex: 3,
     explanation:
-      'Trafik adabı yalnız sürücüler için değildir; yaya geçidi, sürücülerin yaya beklediği ve yavaşladığı yerdir. Otuz metrelik yürüyüş, öngörülemeyen bir noktada yola çıkmanın riskiyle kıyaslanamaz.',
+      'Trafik adabı yalnız sürücüler için değildir; yaya geçidi, sürücülerin yaya beklediği ve yavaşladığı yerdir. Otuz metrelik yürüyüş, öngörülemeyen bir noktada yola çıkmanın riskiyle kıyaslanamaz. Sürücülerin sizi beklediği yerden geçmek.',
     whyWrong: [
       'Araç aralarından çıkan yaya, sürücülerin en geç fark ettiği yayadır.',
       'Koşmak görüşü ve dengeyi bozar; riski azaltmaz, artırır.',
@@ -319,14 +319,14 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Yol kenarına park ettiniz; kapıyı açıp ineceksiniz ve bu yoldan bisikletliler geçiyor. En güvenli alışkanlık hangisidir?',
     options: [
-      'Kapıyı açmadan önce aynadan ve omuz üzerinden arkayı kontrol etmek; kapıya uzak elinizle açarak gövdenizi arkaya döndürmek',
+      'Kapıyı açmadan önce aynadan ve omuz üzerinden arkayı kontrol etmek',
       'Kapıyı hızla açıp hızla inmek; süre kısalırsa risk de azalır',
       'Önce kapıyı aralayıp bisikletlinin sizi görüp yavaşlamasını beklemek',
       'İnerken dörtlüleri yakmak; ışık yanıyorsa kontrol gerekmez',
     ],
     answerIndex: 0,
     explanation:
-      'Aniden açılan kapı, bisikletlinin kaçamayacağı görünmez bir engeldir. Kapıya uzak elle açmak gövdeyi doğal olarak arkaya döndürür ve kör noktadaki bisikletliyi görmenizi sağlar.',
+      'Aniden açılan kapı, bisikletlinin kaçamayacağı görünmez bir engeldir. Kapıya uzak elle açmak gövdeyi doğal olarak arkaya döndürür ve kör noktadaki bisikletliyi görmenizi sağlar. Kapıya uzak elinizle açarak gövdenizi arkaya döndürmek.',
     whyWrong: [
       'Hızlı açmak riski kısaltmaz; bisikletlinin tepki süresini sıfırlar.',
       'Sorumluluğu bisikletliye atmak (görsün, yavaşlasın) kapıyı açanın yükümlülüğünü ortadan kaldırmaz.',
@@ -371,13 +371,13 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     stem: 'Kavşakta sağa dönüş sinyali veren uzun bir kamyonun sağında, dar bir boşluk var ve siz de sağa döneceksiniz. Bu boşluğa girmek neden yanlıştır?',
     options: [
       'Kamyonlar kavşakta her zaman sola döndüğü için',
-      'Kamyon dönüşte uzunluğu nedeniyle sağa doğru yer kaplar ve sağ yanı sürücünün göremediği kör noktadır; araya giren araç ezilme riski altındadır',
+      'Kamyon dönüşte uzunluğu nedeniyle sağa doğru yer kaplar ve sağ yanı sürücünün göremediği kör noktadır',
       'Kamyonun yanından geçmek yalnızca yakıt israfına yol açtığı için',
       'Dar boşluktan geçmek aynaları çizebileceği için',
     ],
     answerIndex: 1,
     explanation:
-      'Uzun araçlar dönüşe geniş başlar ve dönerken arka kısımları içeri süpürür; üstelik sağ yanları en derin kör noktalarıdır. Sinyal veren kamyonun sağına sokulmak, görünmeden ezilme riskinin ta kendisidir.',
+      'Uzun araçlar dönüşe geniş başlar ve dönerken arka kısımları içeri süpürür; üstelik sağ yanları en derin kör noktalarıdır. Sinyal veren kamyonun sağına sokulmak, görünmeden ezilme riskinin ta kendisidir. Araya giren araç ezilme riski altındadır.',
     whyWrong: [
       'Sorun ayna çizmek gibi maddi bir detay değil, sürücünün sizi hiç görememesi ve dönüşte üzerinize gelmesidir.',
       'Kamyonun ne yöne döneceğini sinyali söyler; varsayımlarla değil işaretle hareket edilir.',
@@ -420,7 +420,7 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Üç şeritli tek yönlü bir yolda trafik tamamen durdu ve arkadan ambulans sireni duyuluyor. Yaşam koridoru nasıl oluşturulmalıdır?',
     options: [
-      'En soldaki şerit sola, diğer şeritlerdekiler sağa yanaşır; koridor en sol ile ortanca şerit arasında açılır',
+      'En soldaki şerit sola, diğer şeritlerdekiler sağa yanaşır',
       'Bütün araçlar olduğu yerde bekler; ambulans boşluk bulur',
       'Bütün araçlar en sağdaki emniyet şeridine geçer',
       'Sadece en arkadaki araçlar kenara çekilir',
@@ -447,12 +447,12 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     options: [
       'Karşı yöndeki araç sizi ilgilendirmediği için hiçbir şey yapmamak',
       'Hızlanıp ambulans gelmeden önce o bölgeden uzaklaşmak',
-      'Hızı azaltıp sağa yanaşmak; ambulansın gerektiğinde sizin şeridinizi kullanarak geçebilmesine alan bırakmak',
+      'Hızı azaltıp sağa yanaşmak',
       'Uzun far yakarak ambulansı kendi şeridinde kalması için uyarmak',
     ],
     answerIndex: 2,
     explanation:
-      'Bölünmemiş yolda sıkışan ambulans çoğu kez karşı şeride taşarak ilerler; sizin sağa yanaşmanız ona bu manevra için güvenli alan açar. Geçiş üstünlüğü yönden bağımsız bir sorumluluktur.',
+      'Bölünmemiş yolda sıkışan ambulans çoğu kez karşı şeride taşarak ilerler; sizin sağa yanaşmanız ona bu manevra için güvenli alan açar. Geçiş üstünlüğü yönden bağımsız bir sorumluluktur. Ambulansın gerektiğinde sizin şeridinizi kullanarak geçebilmesine alan bırakmak.',
     whyWrong: [
       '"Karşı yön beni ilgilendirmez" yaklaşımı, ambulansın tek geçiş seçeneğini kapatabilir.',
       'Hızlanmak hem tehlikelidir hem de ambulansla aynı noktada buluşma riskinizi artırır.',
@@ -472,13 +472,13 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     stem: 'Engelli park yerine, engelli kartı olmayan bir aracın park ettiğini gördünüz. En uygun davranış hangisidir?',
     options: [
       'Aracın önünü kendi aracınızla kapatıp sahibine ders vermek',
-      'Durumu otopark görevlisine veya yetkililere bildirmek; kavga ve cezalandırma işini üstlenmemek',
+      'Durumu otopark görevlisine veya yetkililere bildirmek',
       'Aracın camına hakaret içeren bir not bırakmak',
       'Madem yer işgal edilmiş, siz de başka bir engelli yerine park etmek',
     ],
     answerIndex: 1,
     explanation:
-      'Haksızlığa tepkiniz haklı olabilir; ancak yaptırım uygulamak vatandaşın değil yetkilinin işidir. Bildirmek sorunu çözer, kavga ise yeni bir sorun yaratır.',
+      'Haksızlığa tepkiniz haklı olabilir; ancak yaptırım uygulamak vatandaşın değil yetkilinin işidir. Bildirmek sorunu çözer, kavga ise yeni bir sorun yaratır. Kavga ve cezalandırma işini üstlenmemek.',
     whyWrong: [
       'Aracın önünü kesmek sizi de ihlalci yapar ve gerginliği fiziksel çatışmaya taşıyabilir.',
       'Bir ihlale başka bir ihlalle karşılık vermek, engelli bireylerin hakkını iki kez gasbeder.',
@@ -572,13 +572,13 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     stem: 'Market önünde boş yer yok; aracınızı kısa süreliğine otobüs durağının cebine bırakmayı düşünüyorsunuz. Doğru değerlendirme hangisidir?',
     options: [
       'Otobüs gelmeden dönerseniz sakıncası yoktur',
-      'Durağı işgal etmek otobüsü yolun ortasında durmaya zorlar; yolcular taşıt yoluna iner ve trafik tıkanır — durağa park edilmez',
+      'Durağı işgal etmek otobüsü yolun ortasında durmaya zorlar',
       'Dörtlü yakılırsa durakta beklemek serbesttir',
       'Duraklar geceleri park yeri olarak kullanılabilir',
     ],
     answerIndex: 1,
     explanation:
-      'Durak cebi, otobüsün yoldan çekilip yolcularını güvenle indirebilmesi için tasarlanmıştır; orayı işgal eden araç, inen yaşlıyı da bebek arabalı yolcuyu da taşıt yolunun ortasına mecbur eder.',
+      'Durak cebi, otobüsün yoldan çekilip yolcularını güvenle indirebilmesi için tasarlanmıştır; orayı işgal eden araç, inen yaşlıyı da bebek arabalı yolcuyu da taşıt yolunun ortasına mecbur eder. Yolcular taşıt yoluna iner ve trafik tıkanır — durağa park edilmez.',
     whyWrong: [
       '"Otobüs gelmeden dönerim" hesabı çoğu zaman tutmaz; otobüs tarifesi size göre işlemez.',
       'Dörtlü lambalar işgale meşruiyet kazandıran bir sihirli düğme değildir.',
@@ -650,12 +650,12 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     options: [
       'Ses, aracın fark edilmesini sağladığı için güvenliğe katkıdır',
       'Gece kullanılmadığı sürece sorun yoktur',
-      'Bu egzozlar gürültü kirliliği yaratır; hastaları, yaşlıları, bebekleri ve tüm çevreyi rahatsız eder — hem kural ihlali hem görgüsüzlüktür',
+      'Bu egzozlar gürültü kirliliği yaratır',
       'Şehir dışında serbest olduğu için sakıncası yoktur',
     ],
     answerIndex: 2,
     explanation:
-      'Egzoz gürültüsü, dinlemek istemeyen binlerce insana zorla dinletilen bir sestir; uyuyan bebekten hastanedeki hastaya kadar herkesi etkiler. Araçların gürültü sınırları bu yüzden mevzuatla belirlenmiştir.',
+      'Egzoz gürültüsü, dinlemek istemeyen binlerce insana zorla dinletilen bir sestir; uyuyan bebekten hastanedeki hastaya kadar herkesi etkiler. Araçların gürültü sınırları bu yüzden mevzuatla belirlenmiştir. Hastaları, yaşlıları, bebekleri ve tüm çevreyi rahatsız eder — hem kural ihlali hem görgüsüzlüktür.',
     whyWrong: [
       '"Fark edilme" bahanesi, sürekli ve rahatsız edici gürültünün mazereti olamaz.',
       'Gürültü kirliliği saat ve yer ayrımı olmaksızın çevre hakkı ihlalidir.',
@@ -674,13 +674,13 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     stem: 'Kar yağışının ardından yola çıkacaksınız; aracınızın camlarında ve tavanında kalın bir kar tabakası var. Doğru davranış hangisidir?',
     options: [
       'Sadece ön camda küçük bir görüş deliği açıp yola çıkmak',
-      'Yola çıkmadan önce tüm camları, farları, plakayı ve tavandaki karı temizlemek; seyirde savrulan kar arkadakilerin görüşünü kapatabilir',
+      'Yola çıkmadan önce tüm camları, farları, plakayı ve tavandaki karı temizlemek',
       'Kar nasılsa rüzgârla uçar; hiçbir şey yapmadan çıkmak',
       'Silecekleri çalıştırıp gerisini yola bırakmak',
     ],
     answerIndex: 1,
     explanation:
-      'Tavandaki kar, fren anında ön cama kayarak sizi kör edebilir; seyir hâlinde savrulan kütleler ise arkadaki araçların camına iner. Birkaç dakikalık temizlik, hem sizin hem başkalarının görüşünü korur.',
+      'Tavandaki kar, fren anında ön cama kayarak sizi kör edebilir; seyir hâlinde savrulan kütleler ise arkadaki araçların camına iner. Birkaç dakikalık temizlik, hem sizin hem başkalarının görüşünü korur. Seyirde savrulan kar arkadakilerin görüşünü kapatabilir.',
     whyWrong: [
       'Küçük bir delikten bakmak, yanlardan ve aynalardan gelen tüm bilgiyi yok sayar.',
       'Uçan kar rastgele değil, tam arkanızdaki aracın üstüne gider; sorumluluk sizindir.',
@@ -702,11 +702,11 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
       'Refleksler güçlendiği için daha iyi araç kullanılır',
       'Öfke yalnızca ses tonunu etkiler; sürüş becerisi değişmez',
       'Vücut birkaç saniyede eski hâline döner; kalıcı etkisi yoktur',
-      'Dikkat daralır, riskler olduğundan küçük görünür ve karar kalitesi düşer; sakinleşmeden önemli manevra kararı verilmemelidir',
+      'Dikkat daralır, riskler olduğundan küçük görünür ve karar kalitesi düşer',
     ],
     answerIndex: 3,
     explanation:
-      'Öfke anında beden "savaş" moduna geçer: bakış açısı daralır, sabır azalır ve riskli seçenekler cazip görünür. Bu yüzden soğuma teknikleri — derin nefes, mesafe açma, gerekirse mola — öfke geçmeden karar almayı erteler.',
+      'Öfke anında beden "savaş" moduna geçer: bakış açısı daralır, sabır azalır ve riskli seçenekler cazip görünür. Bu yüzden soğuma teknikleri — derin nefes, mesafe açma, gerekirse mola — öfke geçmeden karar almayı erteler. Sakinleşmeden önemli manevra kararı verilmemelidir.',
     whyWrong: [
       'Hızlanan refleks, bozulan muhakemeyi telafi etmez; yanlış karara daha hızlı ulaşırsınız.',
       'Stres hormonlarının etkisi dakikalarca sürer; "bir saniyede geçti" hissi yanıltıcıdır.',
@@ -724,14 +724,14 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Evde yaşadığınız büyük bir tartışmanın hemen ardından öfkeyle çıktınız ve direksiyona geçmek üzeresiniz. En doğru davranış nedir?',
     options: [
-      'Yola çıkmayı erteleyip birkaç dakika yürüyerek veya derin nefes alarak sakinleşmek; öfkeliyken direksiyona geçmemek',
+      'Yola çıkmayı erteleyip birkaç dakika yürüyerek veya derin nefes alarak sakinleşmek',
       'Hemen yola çıkmak; araç kullanmak sinir boşaltmanın iyi bir yoludur',
       'Müziği sonuna kadar açıp hızlanarak kafa dağıtmak',
       'Öfkeyi bastırmak için bir an önce trafiğe karışıp meşgul olmak',
     ],
     answerIndex: 0,
     explanation:
-      'Trafiğe taşınan öfke, yoldaki en küçük aksaklığı bile kavga sebebine çevirir. Direksiyona ancak zihin sakinleştikten sonra geçmek, kendinize ve başkalarına karşı temel bir sorumluluktur.',
+      'Trafiğe taşınan öfke, yoldaki en küçük aksaklığı bile kavga sebebine çevirir. Direksiyona ancak zihin sakinleştikten sonra geçmek, kendinize ve başkalarına karşı temel bir sorumluluktur. Öfkeliyken direksiyona geçmemek.',
     whyWrong: [
       'Aracı sinir boşaltma aracı olarak kullanmak, gaz pedalını öfkenin emrine vermektir.',
       'Yüksek müzik ve hız öfkeyi bastırmaz; riskli davranışı besler.',
@@ -751,12 +751,12 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     options: [
       'Şerit değiştirmesini engelleyerek ona bir ders vermek',
       'Peşine takılıp plakasını okumaya çalışmak',
-      'Onunla hiç etkileşime girmeden hızınızı ve şeridinizi koruyup aranızdaki mesafeyi açmak; gerekirse yol vermek',
+      'Onunla hiç etkileşime girmeden hızınızı ve şeridinizi koruyup aranızdaki mesafeyi açmak',
       'Aynı manevraları yaparak ondan uzaklaşmak',
     ],
     answerIndex: 2,
     explanation:
-      'Agresif sürücüyle mücadele etmek, onun riskini kendi üzerinize almaktır. En güvenli strateji görünmez olmaktır: mesafe açın, öngörülebilir seyredin ve tehlikenin uzaklaşmasına izin verin.',
+      'Agresif sürücüyle mücadele etmek, onun riskini kendi üzerinize almaktır. En güvenli strateji görünmez olmaktır: mesafe açın, öngörülebilir seyredin ve tehlikenin uzaklaşmasına izin verin. Gerekirse yol vermek.',
     whyWrong: [
       'Engelleme ve ders verme girişimleri, agresif sürücünün hedefini siz yaparsınız.',
       'Onun tarzını taklit etmek, yoldaki tehlikeli araç sayısını bire değil ikiye çıkarır.',
@@ -802,11 +802,11 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
       'Bir daha kimseye yol vermemeye karar vermek',
       'Peşinden gidip neden teşekkür etmediğini sormak',
       'Arkasından korna çalarak sitem etmek',
-      'Nezaketin karşılık beklemeden yapıldığını hatırlayıp durumu dert etmemek; doğru davranış kendi başına değerlidir',
+      'Nezaketin karşılık beklemeden yapıldığını hatırlayıp durumu dert etmemek',
     ],
     answerIndex: 3,
     explanation:
-      'Trafik adabı bir alışveriş değildir; yol vermenin amacı teşekkür toplamak değil, trafiği güvenli ve insani kılmaktır. Karşılık gelmediğinde bozulmak, iyiliği pazarlığa çevirir.',
+      'Trafik adabı bir alışveriş değildir; yol vermenin amacı teşekkür toplamak değil, trafiği güvenli ve insani kılmaktır. Karşılık gelmediğinde bozulmak, iyiliği pazarlığa çevirir. Doğru davranış kendi başına değerlidir.',
     whyWrong: [
       'Tek bir nezaketsizlik yüzünden herkesi cezalandırmak, sizi de kaba sürücülerden birine dönüştürür.',
       'Sitem kornası ve takip, küçük bir kırgınlığı gereksiz bir gerginliğe büyütür.',
@@ -824,14 +824,14 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Arkadaşınız sizi aracıyla bırakıyor ve tam kapınızın önünde, dönemecin üzerinde durmayı teklif ediyor. İyi bir yolcu olarak ne yaparsınız?',
     options: [
-      'Trafiği ve görüşü engellemeyecek güvenli bir yerde inmeyi önermek; birkaç adım yürümeyi göze almak',
+      'Trafiği ve görüşü engellemeyecek güvenli bir yerde inmeyi önermek',
       'Kapının önünde inmekte ısrar etmek; yolculuğun amacı budur',
       'Dönemecin üzerinde dörtlü yaktırarak inmek',
       'Araç yavaşlamışken hareket hâlinde atlamak',
     ],
     answerIndex: 0,
     explanation:
-      'İniş noktasını seçmek de yolcunun sorumluluğudur: dönemeç üzerinde duran araç, arkadan gelenlerin göremeyeceği bir engeldir. Birkaç adımlık yürüyüş, herkes için güvenli bir vedadır.',
+      'İniş noktasını seçmek de yolcunun sorumluluğudur: dönemeç üzerinde duran araç, arkadan gelenlerin göremeyeceği bir engeldir. Birkaç adımlık yürüyüş, herkes için güvenli bir vedadır. Birkaç adım yürümeyi göze almak.',
     whyWrong: [
       'Konfor için ısrar etmek, sürücüyü tehlikeli bir noktada durmaya zorlar.',
       'Dörtlü lamba, görüşe kapalı yerde durmanın riskini ortadan kaldırmaz.',
@@ -851,12 +851,12 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     options: [
       'Karışmamak; araç ve ehliyet onun',
       'Telefonu elinden çekip almak',
-      'Kırıcı olmadan telefonu bırakmasını rica etmek; mesaj acilse onun yerine sizin yazmayı teklif etmek',
+      'Kırıcı olmadan telefonu bırakmasını rica etmek',
       'Siz de telefonunuza gömülüp görmezden gelmek',
     ],
     answerIndex: 2,
     explanation:
-      'O araçtaki yaşamlardan biri de sizinki; sessiz kalmak riske ortak olmaktır. Yardım teklifiyle birleşen nazik bir uyarı, sürücüyü savunmaya itmeden sorunu çözer.',
+      'O araçtaki yaşamlardan biri de sizinki; sessiz kalmak riske ortak olmaktır. Yardım teklifiyle birleşen nazik bir uyarı, sürücüyü savunmaya itmeden sorunu çözer. Mesaj acilse onun yerine sizin yazmayı teklif etmek.',
     whyWrong: [
       '"Araç onun" düşüncesi, kazanın sonuçlarının herkese ait olduğunu unutturur.',
       'Telefonu çekip almak ani bir irkilme ve direksiyon hatası yaratabilir.',
@@ -876,13 +876,13 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     stem: 'Araçtaki arkadaşlarınız, yan şeritteki tanıdıkla "yarışmanız" için sizi gaza getirmeye çalışıyor. Ne yaparsınız?',
     options: [
       'Kısa bir hızlanmayla gönüllerini alıp sonra yavaşlamak',
-      'Teklifi kesin bir dille reddedip hız sınırında sürmeye devam etmek; direksiyondayken kararların yalnız sürücüye ait olduğunu hatırlatmak',
+      'Teklifi kesin bir dille reddedip hız sınırında sürmeye devam etmek',
       'Trafiğin boş olduğu bir yerde denemek',
       'Arkadaşlarınız bozulmasın diye isteklerine uymak',
     ],
     answerIndex: 1,
     explanation:
-      'Direksiyondaki kişi, araçtaki herkesin hayatının emanetçisidir; bu emanet alkışla ya da ısrarla devredilemez. Akran baskısına verilecek en olgun yanıt, net ve tartışmasız bir "hayır"dır.',
+      'Direksiyondaki kişi, araçtaki herkesin hayatının emanetçisidir; bu emanet alkışla ya da ısrarla devredilemez. Akran baskısına verilecek en olgun yanıt, net ve tartışmasız bir "hayır"dır. Direksiyondayken kararların yalnız sürücüye ait olduğunu hatırlatmak.',
     whyWrong: [
       '"Kısa bir hızlanma" da yarıştır; kaza için tek bir an yeterlidir.',
       'Boş yol yanılsaması, yarış kazalarının en sık kurulduğu tuzaktır.',
@@ -903,11 +903,11 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
       'Çoğunluk yapıyorsa artık kural fiilen değişmiş demektir',
       'Kısa mesafede kullanmak ihlal sayılmaz',
       'Cezadan korkmuyorsanız kullanabilirsiniz',
-      'Çoğunluğun ihlali kuralı değiştirmez; emniyet şeridi acil durumlar ve acil araçlar içindir, boş bırakılmalıdır',
+      'Çoğunluğun ihlali kuralı değiştirmez',
     ],
     answerIndex: 3,
     explanation:
-      'Emniyet şeridi, o anda göremediğiniz bir kazazedenin ambulans yoludur. Kaç kişinin ihlal ettiği önemli değildir; şeridi boş tutan her sürücü, o koridoru bir başkasının hayatı için korur.',
+      'Emniyet şeridi, o anda göremediğiniz bir kazazedenin ambulans yoludur. Kaç kişinin ihlal ettiği önemli değildir; şeridi boş tutan her sürücü, o koridoru bir başkasının hayatı için korur. Emniyet şeridi acil durumlar ve acil araçlar içindir, boş bırakılmalıdır.',
     whyWrong: [
       '"Herkes yapıyor" sürü psikolojisidir; ihlalin yaygınlığı onu haklı çıkarmaz.',
       'Meselenin özü ceza değil, tıkanan şeridin geciktirdiği yardımdır.',
@@ -952,12 +952,12 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     options: [
       'Gaza basıp sarı bitmeden kavşağı geçmek',
       'Ani fren yapıp olduğunuz yerde durmak',
-      'Hızlanmak yerine yavaşlayıp duruş çizgisinde durmak; sarı ışık durmaya hazırlanma ve kavşağı boşaltma uyarısıdır',
+      'Hızlanmak yerine yavaşlayıp duruş çizgisinde durmak',
       'Kavşağa girip ortasında ışığın dönmesini beklemek',
     ],
     answerIndex: 2,
     explanation:
-      'Sarı ışık bir yarış başlatma tabancası değil, "duruşa hazırlan" uyarısıdır. Sarıda gaza basan sürücü, kırmızıya kalan kavşakta yan yönden erken kalkan araçla buluşma riskini satın alır.',
+      'Sarı ışık bir yarış başlatma tabancası değil, "duruşa hazırlan" uyarısıdır. Sarıda gaza basan sürücü, kırmızıya kalan kavşakta yan yönden erken kalkan araçla buluşma riskini satın alır. Sarı ışık durmaya hazırlanma ve kavşağı boşaltma uyarısıdır.',
     whyWrong: [
       'Sarıda hızlanmak, kavşak kazalarının en klasik senaryosudur.',
       'Güvenle durulabilecekken ani fren de gereksizdir; kontrollü yavaşlama esastır.',
@@ -1003,11 +1003,11 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
       'Araçları yan yana durdurup sohbeti kısa tutmak',
       'Dörtlüleri yakıp arkadakilerin beklemesinde sakınca görmemek',
       'Arkadan gelen olursa el sallayıp beklemesini istemek',
-      'Selamlaşıp geçmek; sohbet gerekiyorsa uygun bir yere park ederek görüşmek',
+      'Selamlaşıp geçmek',
     ],
     answerIndex: 3,
     explanation:
-      'Yol, sohbet salonu değil ortak geçiş alanıdır; yan yana duran iki araç sokağı tamamen kilitler. Gerçek nezaket tanıdığa değil, arkada bekleyen herkese gösterilendir.',
+      'Yol, sohbet salonu değil ortak geçiş alanıdır; yan yana duran iki araç sokağı tamamen kilitler. Gerçek nezaket tanıdığa değil, arkada bekleyen herkese gösterilendir. Sohbet gerekiyorsa uygun bir yere park ederek görüşmek.',
     whyWrong: [
       '"Kısa sohbet" bile arkada kuyruk oluşturur; kısalığın ölçüsü bekleyene göre değişir.',
       'Dörtlü yakmak veya el sallamak, yolu işgal etme hakkı vermez.',
@@ -1025,14 +1025,14 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Gece yerleşim yerinde önünüze aniden bir kedi çıktı; arkanızda da bir araç var. En doğru tepki hangisidir?',
     options: [
-      'Direksiyonu ani kırmadan kontrollü şekilde yavaşlamak; aynadan arkayı kontrol edip güvenliyse durmak',
+      'Direksiyonu ani kırmadan kontrollü şekilde yavaşlamak',
       'Direksiyonu sert kırıp karşı şeride kaçmak',
       'Gözlerinizi kapatıp hızı korumak',
       'Korna çalıp hız kesmeden devam etmek',
     ],
     answerIndex: 0,
     explanation:
-      'Hayvana duyarlılık ile trafik güvenliği birlikte düşünülür: kontrollü yavaşlama çoğu zaman canlıyı kurtarır; ani direksiyon ise arkadaki ve karşıdaki insanları tehlikeye atar. Önce kontrol, sonra merhamet — ikisi bir arada mümkündür.',
+      'Hayvana duyarlılık ile trafik güvenliği birlikte düşünülür: kontrollü yavaşlama çoğu zaman canlıyı kurtarır; ani direksiyon ise arkadaki ve karşıdaki insanları tehlikeye atar. Önce kontrol, sonra merhamet — ikisi bir arada mümkündür. Aynadan arkayı kontrol edip güvenliyse durmak.',
     whyWrong: [
       'Sert direksiyon manevrası, bir hayvanı kurtarırken bir insanı kaybettirebilir.',
       'Hiç tepki vermemek de duyarsızlıktır; kontrollü yavaşlamak çoğu durumda yeterlidir.',
@@ -1052,12 +1052,12 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     options: [
       'Siz kurtulduğunuza göre yola devam etmek',
       'Sosyal medyada paylaşmak üzere seyir hâlinde video çekmek',
-      'Güvenli bir yerde durup durumu acil çağrı merkezine (112) bildirmek; arkadan gelenler için ciddi tehlike oluşturur',
+      'Güvenli bir yerde durup durumu acil çağrı merkezine (112) bildirmek',
       'Geri geri gidip cismi kendiniz kaldırmaya çalışmak',
     ],
     answerIndex: 2,
     explanation:
-      'Sizin atlattığınız tehlike, arkadan gelen ve daha az şanslı olan sürücüyü bekliyor. Güvenli yerden yapılan bir bildirim, ekiplerin cismi kaldırmasını sağlar ve görmediğiniz bir kazayı önler.',
+      'Sizin atlattığınız tehlike, arkadan gelen ve daha az şanslı olan sürücüyü bekliyor. Güvenli yerden yapılan bir bildirim, ekiplerin cismi kaldırmasını sağlar ve görmediğiniz bir kazayı önler. Arkadan gelenler için ciddi tehlike oluşturur.',
     whyWrong: [
       '"Ben kurtuldum" deyip gitmek, tehlikeyi arkadakilere miras bırakmaktır.',
       'Akan trafikte geri gitmek veya yola inmek, bir tehlikeyi ikiye katlar.',
@@ -1103,11 +1103,11 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
       'Aranıza girip taraflardan birini haklı çıkarmak',
       'Kenara çekilip olayı telefonla çekmek',
       'Korna çalarak tartışmayı bastırmak',
-      'Fiziksel olarak araya girmeden güvenli mesafede kalmak; olay büyüyorsa yetkililere haber vermek',
+      'Fiziksel olarak araya girmeden güvenli mesafede kalmak',
     ],
     answerIndex: 3,
     explanation:
-      'Öfkeli bir tartışmaya taraf olarak katılmak ateşe odun taşımaktır. Güvenli mesafeden durumu izlemek ve tehlike büyüyorsa yetkilileri aramak, hem size hem taraflara yapılabilecek en gerçek yardımdır.',
+      'Öfkeli bir tartışmaya taraf olarak katılmak ateşe odun taşımaktır. Güvenli mesafeden durumu izlemek ve tehlike büyüyorsa yetkilileri aramak, hem size hem taraflara yapılabilecek en gerçek yardımdır. Olay büyüyorsa yetkililere haber vermek.',
     whyWrong: [
       'Taraf tutmak tartışmayı üç kişilik kavgaya çevirebilir.',
       'Çekim yapmak veya korna çalmak gerginliği düşürmez; tahrik unsuru ekler.',
@@ -1153,12 +1153,12 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     options: [
       'Motoru gaza basarak hazırlanması gerektiğini hissettirmek',
       'Camı açıp "acele et" diye seslenmek',
-      'Korna çalmadan, baskı hissettirmeden sabırla beklemek; herkesin hazırlanma süresi aynı değildir',
+      'Korna çalmadan, baskı hissettirmeden sabırla beklemek',
       'Aracınızı iyice yaklaştırıp beklediğinizi göstermek',
     ],
     answerIndex: 2,
     explanation:
-      'Sizin için sıradan olan biniş, onun için çok adımlı bir işlemdir. Sessizce beklemek yalnızca sabır değil, karşınızdakinin gündelik çabasına duyulan saygıdır; hissettirilen baskı ise o çabayı zorlaştırır.',
+      'Sizin için sıradan olan biniş, onun için çok adımlı bir işlemdir. Sessizce beklemek yalnızca sabır değil, karşınızdakinin gündelik çabasına duyulan saygıdır; hissettirilen baskı ise o çabayı zorlaştırır. Herkesin hazırlanma süresi aynı değildir.',
     whyWrong: [
       'Gaz, korna ve seslenme, aceleyle yapılan yüklemede düşme ve yaralanma riski doğurur.',
       'Aracı yaklaştırmak, manevra alanına ihtiyaç duyan kişiyi sıkıştırır.',
@@ -1177,13 +1177,13 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     stem: 'Önünüzdeki minibüs (dolmuş), yolcu indirip bindirmek için sık sık ve kısa aralıklarla duruyor. En doğru davranış hangisidir?',
     options: [
       'Her duruşunda korna çalarak tepkinizi göstermek',
-      'Takip mesafesini artırıp duruşlarını öngörerek sakin sürmek; uygun ve güvenli bir yerde kurallı şekilde geçmek',
+      'Takip mesafesini artırıp duruşlarını öngörerek sakin sürmek',
       'Dibine yapışarak durmasına fırsat vermemek',
       'Her duruşunda ani şerit değiştirip önüne geçmeye çalışmak',
     ],
     answerIndex: 1,
     explanation:
-      'Toplu taşıma aracının sık durması işinin doğasıdır; buna öfkelenmek trafiğin gerçeğiyle kavga etmektir. Mesafeyi açan sürücü hem ani duruşlara hazırlıklı olur hem de sakinliğini korur.',
+      'Toplu taşıma aracının sık durması işinin doğasıdır; buna öfkelenmek trafiğin gerçeğiyle kavga etmektir. Mesafeyi açan sürücü hem ani duruşlara hazırlıklı olur hem de sakinliğini korur. Uygun ve güvenli bir yerde kurallı şekilde geçmek.',
     whyWrong: [
       'Korna ve yakın takip, inen-binen yolcular için tehlike yaratır.',
       'Her duruşta ani şerit değiştirmek, yan şeritlerdeki akışı sürekli riske sokar.',
@@ -1255,12 +1255,12 @@ export const ADAB_QUESTIONS_4: QuestionInput[] = [
     options: [
       'İlişkisi yoktur; adap yalnızca nezaket kurallarını kapsar',
       'Defansif sürüş hakkından vazgeçmek anlamına geldiği için adaba aykırıdır',
-      'Haklı olmayı değil güvenliği önceleyen bu tutum, empati ve sorumluluğun birleşimidir; trafik adabının özünü oluşturur',
+      'Haklı olmayı değil güvenliği önceleyen bu tutum, empati ve sorumluluğun birleşimidir',
       'Sadece acemi sürücülerin başvurduğu geçici bir yöntemdir',
     ],
     answerIndex: 2,
     explanation:
-      'Kaza istatistikleri "haklıydı" notuyla teselli vermez. Başkasının hatasına alan bırakan sürücü, hem kendi canını hem hata yapanın canını korur; adap tam da bu öngörülü hoşgörüdür.',
+      'Kaza istatistikleri "haklıydı" notuyla teselli vermez. Başkasının hatasına alan bırakan sürücü, hem kendi canını hem hata yapanın canını korur; adap tam da bu öngörülü hoşgörüdür. Trafik adabının özünü oluşturur.',
     whyWrong: [
       'Adap yalnız selamlaşma nezaketi değildir; güvenliği gözeten her davranış adabın parçasıdır.',
       'Önlem almak haktan vazgeçmek değil, hakkı kazasız kullanmaktır.',

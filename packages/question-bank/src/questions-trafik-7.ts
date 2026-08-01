@@ -15,14 +15,14 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Kenarları kırmızı üçgen bir levhada, tekerlekten sıçrayan taş taneleri sembolü (gevşek malzeme) bulunması sürücüye neyi bildirir?',
     options: [
-      'Yol yüzeyinde tekerleklerin fırlatabileceği gevşek malzeme (mıcır) bulunduğunu; hızı azaltıp araya mesafe koyması gerektiğini',
+      'Yol yüzeyinde tekerleklerin fırlatabileceği gevşek malzeme (mıcır) bulunduğunu',
       'İleride ücretsiz park yeri bulunduğunu',
       'Bu yolun tamamen trafiğe kapalı olduğunu',
       'Yolda yalnızca kamyonların geçebileceğini',
     ],
     answerIndex: 0,
     explanation:
-      'Kırmızı kenarlı üçgen levhalar tehlike-uyarı işaretidir. Gevşek malzeme sembolü, kaplamada sabitlenmemiş taş ve çakıl bulunduğunu bildirir; yüksek hızda bu taneler tekerlekten fırlayıp araçlara zarar verebilir ve zemin kaygan olabilir. Sürücü hızını azaltıp öndeki araçla mesafeyi açar.',
+      'Kırmızı kenarlı üçgen levhalar tehlike-uyarı işaretidir. Gevşek malzeme sembolü, kaplamada sabitlenmemiş taş ve çakıl bulunduğunu bildirir; yüksek hızda bu taneler tekerlekten fırlayıp araçlara zarar verebilir ve zemin kaygan olabilir. Sürücü hızını azaltıp öndeki araçla mesafeyi açar. Hızı azaltıp araya mesafe koyması gerektiğini.',
     whyWrong: [
       'Park yeri, tehlike üçgeniyle değil mavi bilgi levhasıyla gösterilir.',
       'Yol kapalı bilgisi kırmızı yasak işaretiyle verilir.',
@@ -42,13 +42,13 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     stem: 'Kırmızı kenarlı üçgen bir levhada, bir yamaçtan yola doğru düşen kaya parçaları sembolü gören sürücü ne anlamalıdır?',
     options: [
       'İleride kamp alanı bulunduğunu',
-      'Yamaçtan yola taş ve kaya düşebileceğini; dikkatli olup hızı azaltması gerektiğini',
+      'Yamaçtan yola taş ve kaya düşebileceğini',
       'Bu kesimde madencilik yapıldığı için geçişin yasak olduğunu',
       'Yolun bittiğini',
     ],
     answerIndex: 1,
     explanation:
-      'Düşen kaya uyarı levhası, dik yamaç veya kaya yarması bulunan kesimlerde yola taş ve kaya parçalarının düşebileceğini bildirir. Sürücü hızını azaltmalı, yol yüzeyindeki parçalara karşı uyanık olmalı ve yamaç dibinde gereksiz yere durmamalıdır.',
+      'Düşen kaya uyarı levhası, dik yamaç veya kaya yarması bulunan kesimlerde yola taş ve kaya parçalarının düşebileceğini bildirir. Sürücü hızını azaltmalı, yol yüzeyindeki parçalara karşı uyanık olmalı ve yamaç dibinde gereksiz yere durmamalıdır. Dikkatli olup hızı azaltması gerektiğini.',
     whyWrong: [
       'Kamp alanı bir hizmet-bilgi levhasıyla gösterilir, tehlike üçgeniyle değil.',
       'Geçiş yasağı kırmızı yasaklayıcı işaretle bildirilir.',
@@ -96,11 +96,11 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
       'İleride yüzme havuzu bulunduğunu',
       'Yolun bu kesimde genişlediğini',
       'Bu noktada balık satışı yapıldığını',
-      'Yolun rıhtım, iskele veya su kıyısında son bulduğunu; dikkatsiz sürüşte araçla suya girme tehlikesi olduğunu',
+      'Yolun rıhtım, iskele veya su kıyısında son bulduğunu',
     ],
     answerIndex: 3,
     explanation:
-      'Bu tehlike-uyarı levhası, taşıt yolunun bir rıhtım, iskele ya da su kenarında sona erdiğini bildirir. Özellikle gece ve sisli havada su kenarı geç fark edilir; sürücü hızını iyice azaltıp durabilecek şekilde ilerlemeli, araçla suya girme tehlikesini göz önünde tutmalıdır.',
+      'Bu tehlike-uyarı levhası, taşıt yolunun bir rıhtım, iskele ya da su kenarında sona erdiğini bildirir. Özellikle gece ve sisli havada su kenarı geç fark edilir; sürücü hızını iyice azaltıp durabilecek şekilde ilerlemeli, araçla suya girme tehlikesini göz önünde tutmalıdır. Dikkatsiz sürüşte araçla suya girme tehlikesi olduğunu.',
     whyWrong: [
       'Yüzme havuzu bir tesis bilgisidir; tehlike üçgeniyle gösterilmez.',
       'Yol genişlemesi bu sembolle değil, ilgili yol işaretiyle bildirilir.',
@@ -173,12 +173,12 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     options: [
       'İleride tren garı lokantası bulunduğunu',
       'Demir yolu taşımacılığının yasak olduğunu',
-      'İleride bariyersiz (bekçisiz) bir demir yolu geçidi olduğunu; sürücünün yavaşlayıp iki tarafı kontrol etmesi gerektiğini',
+      'İleride bariyersiz (bekçisiz) bir demir yolu geçidi olduğunu',
       'Bu yolda hız sınırının kalktığını',
     ],
     answerIndex: 2,
     explanation:
-      'Lokomotif sembollü uyarı levhası, ileride bariyeri ve bekçisi bulunmayan bir demir yolu geçidi olduğunu bildirir. Bu geçitlerde koruma olmadığı için sürücü hızını iyice azaltmalı, geçide yaklaşırken her iki yönü dikkatle kontrol edip tren gelmediğinden emin olduktan sonra geçmelidir.',
+      'Lokomotif sembollü uyarı levhası, ileride bariyeri ve bekçisi bulunmayan bir demir yolu geçidi olduğunu bildirir. Bu geçitlerde koruma olmadığı için sürücü hızını iyice azaltmalı, geçide yaklaşırken her iki yönü dikkatle kontrol edip tren gelmediğinden emin olduktan sonra geçmelidir. Sürücünün yavaşlayıp iki tarafı kontrol etmesi gerektiğini.',
     whyWrong: [
       'Levha bir tesis tanıtımı değil, geçit tehlikesi uyarısıdır.',
       'Taşımacılık yasağı bu işaretle bildirilmez.',
@@ -197,14 +197,14 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Tek yönlü ilerlediği bir yolda sürücü, kırmızı kenarlı üçgen levhada yukarı-aşağı bakan iki ok (iki yönlü trafik) sembolünü gördü. Bu ne anlama gelir?',
     options: [
-      'İleride yolun iki yönlü hâle geleceğini; karşıdan araç gelebileceği için sola geçmeden dikkatli olması gerektiğini',
+      'İleride yolun iki yönlü hâle geleceğini',
       'Yolun çift katlı köprüye dönüştüğünü',
       'İleride yalnızca sağa dönülebileceğini',
       'Bu kesimde park etmenin serbest olduğunu',
     ],
     answerIndex: 0,
     explanation:
-      'İki yönlü trafik uyarı levhası, o ana kadar tek yönlü olan yolun ileride karşılıklı iki yönlü akışa döneceğini bildirir. Sürücü, artık karşıdan araç gelebileceğini bilerek kendi şeridinde kalmalı, sollama ve sol şeride geçişte çok daha dikkatli davranmalıdır.',
+      'İki yönlü trafik uyarı levhası, o ana kadar tek yönlü olan yolun ileride karşılıklı iki yönlü akışa döneceğini bildirir. Sürücü, artık karşıdan araç gelebileceğini bilerek kendi şeridinde kalmalı, sollama ve sol şeride geçişte çok daha dikkatli davranmalıdır. Karşıdan araç gelebileceği için sola geçmeden dikkatli olması gerektiğini.',
     whyWrong: [
       'Levha bir köprü yapısını değil, trafik yönünün değiştiğini bildirir.',
       'Dönüş zorunluluğu mavi mecburi işaretle verilir, bu üçgenle değil.',
@@ -224,13 +224,13 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     stem: 'Kırmızı kenarlı üçgen bir levhada, yolun her iki kenardan içe doğru daraldığını gösteren sembol sürücüye neyi bildirir?',
     options: [
       'İleride yolun genişleyeceğini',
-      'İleride taşıt yolunun daralacağını; hızı azaltıp şerit düzenine dikkat etmesi gerektiğini',
+      'İleride taşıt yolunun daralacağını',
       'Bu kesimde iki şeridin ayrılacağını',
       'Yalnızca yayaların geçebileceğini',
     ],
     answerIndex: 1,
     explanation:
-      'Yol daralması uyarı levhası, taşıt yolunun ileride daraldığını bildirir. Daralan kesimde araçlar birbirine yaklaşacağından sürücü hızını azaltmalı, şerit düzenine uymalı ve gerekirse karşıdan veya yandan gelene kolaylık göstererek geçmelidir.',
+      'Yol daralması uyarı levhası, taşıt yolunun ileride daraldığını bildirir. Daralan kesimde araçlar birbirine yaklaşacağından sürücü hızını azaltmalı, şerit düzenine uymalı ve gerekirse karşıdan veya yandan gelene kolaylık göstererek geçmelidir. Hızı azaltıp şerit düzenine dikkat etmesi gerektiğini.',
     whyWrong: [
       'Sembol daralmayı gösterir; genişleme değil.',
       'Şeritlerin ayrılması ayrı bir işaretle bildirilir.',
@@ -249,14 +249,14 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Kırmızı kenarlı üçgen bir levhada trafik ışığı (üç renkli işaret cihazı) sembolü bulunması ne anlama gelir?',
     options: [
-      'İleride ışıklı işaret cihazı (trafik lambası) bulunduğunu; sürücünün yavaşlayıp ışığın durumuna göre durmaya hazır olması gerektiğini',
+      'İleride ışıklı işaret cihazı (trafik lambası) bulunduğunu',
       'Işıkların arızalı olduğunu',
       'Bu yolda ışıklara uyulmayabileceğini',
       'İleride elektrik santrali olduğunu',
     ],
     answerIndex: 0,
     explanation:
-      'Işıklı işaret cihazı uyarı levhası, sürücünün henüz göremediği bir noktada trafik lambası bulunduğunu önceden bildirir. Böylece sürücü yavaşlar ve ışık kırmızıya döndüğünde durabilecek hıza iner; ani frenle yakalanmaz.',
+      'Işıklı işaret cihazı uyarı levhası, sürücünün henüz göremediği bir noktada trafik lambası bulunduğunu önceden bildirir. Böylece sürücü yavaşlar ve ışık kırmızıya döndüğünde durabilecek hıza iner; ani frenle yakalanmaz. Sürücünün yavaşlayıp ışığın durumuna göre durmaya hazır olması gerektiğini.',
     whyWrong: [
       'Levha arıza bilgisi vermez; cihazın varlığını haber verir.',
       'Işıklara uymama diye bir izin yoktur; aksine hazırlıklı olmak gerekir.',
@@ -276,13 +276,13 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     stem: 'Kırmızı kenarlı üçgen levhadaki dairesel ok düzeni (dönel kavşak uyarısı) ile mavi zeminli daire içinde dönen oklar (ada etrafında dönünüz) işareti arasındaki temel fark nedir?',
     options: [
       'İkisi de aynı anlama gelir ve birbirinin yerine kullanılır',
-      'Üçgen levha ileride dönel kavşak olduğunu haber veren uyarıdır; mavi daireli işaret ise adanın etrafından hangi yönde dönüleceğini gösteren mecburiyet işaretidir',
+      'Üçgen levha ileride dönel kavşak olduğunu haber veren uyarıdır',
       'Üçgen levha park yeri, mavi işaret benzin istasyonu gösterir',
       'Üçgen levha dönüşü yasaklar, mavi işaret dönüşe izin verir',
     ],
     answerIndex: 1,
     explanation:
-      'Kırmızı kenarlı üçgen, tehlike-uyarı grubundandır ve ileride bir dönel kavşak (ada) bulunduğunu önceden haber verir. Mavi zeminli daire ise mecburiyet grubundandır ve ada çevresinde hangi yönde dönüleceğini bildirir. Renk ve şekil, işaretin görevini belirler.',
+      'Kırmızı kenarlı üçgen, tehlike-uyarı grubundandır ve ileride bir dönel kavşak (ada) bulunduğunu önceden haber verir. Mavi zeminli daire ise mecburiyet grubundandır ve ada çevresinde hangi yönde dönüleceğini bildirir. Renk ve şekil, işaretin görevini belirler. Mavi daireli işaret ise adanın etrafından hangi yönde dönüleceğini gösteren mecburiyet işaretidir.',
     whyWrong: [
       'İki işaret farklı gruptandır; anlamları ve görevleri aynı değildir.',
       'Hiçbiri park veya benzin bilgisi vermez.',
@@ -303,12 +303,12 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     options: [
       'Ana yolda olduğum için hız kesmeden geçmek',
       'Korna çalıp tali yoldakilerin durmasını beklemek',
-      'Hızı azaltıp tali yoldan çıkabilecek araçları kollamak; öncelik bende olsa da tedbiri elden bırakmamak',
+      'Hızı azaltıp tali yoldan çıkabilecek araçları kollamak',
       'Tali yola girmek için hemen sağa yönelmek',
     ],
     answerIndex: 2,
     explanation:
-      'Kontrolsüz kavşak uyarısı, ışık veya görevliyle düzenlenmemiş bir kesişime yaklaşıldığını bildirir. Ana yolda öncelik sizde olsa bile, tali yoldan kural tanımadan çıkabilecek bir araç olabilir; bu yüzden hızı azaltıp yan yolları kollamak, savunmacı sürüşün gereğidir.',
+      'Kontrolsüz kavşak uyarısı, ışık veya görevliyle düzenlenmemiş bir kesişime yaklaşıldığını bildirir. Ana yolda öncelik sizde olsa bile, tali yoldan kural tanımadan çıkabilecek bir araç olabilir; bu yüzden hızı azaltıp yan yolları kollamak, savunmacı sürüşün gereğidir. Öncelik bende olsa da tedbiri elden bırakmamak.',
     whyWrong: [
       'Önceliğe güvenip hız kesmemek, kural tanımayan bir araçla çarpışma doğurabilir.',
       'Korna, yan yoldan çıkanı durduracağının garantisi değildir.',
@@ -327,7 +327,7 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Beyaz zeminli, kırmızı çember içinde bir kamyon sembolü bulunan işaret sürücüye neyi bildirir?',
     options: [
-      'O yola kamyonların (yük taşıtlarının) girmesinin yasak olduğunu',
+      'O yola kamyonların (yük taşıtlarının)',
       'İleride kamyon garajı bulunduğunu',
       'Yalnızca kamyonların geçebileceğini',
       'Kamyonların park edebileceği yeri',
@@ -380,13 +380,13 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     stem: 'Kırmızı çember içinde lastik tekerlekli traktör sembolü bulunan işaretin bulunduğu yol için hangisi doğrudur?',
     options: [
       'Bu yolda yalnızca traktörler ilerleyebilir',
-      'Traktörler bu yola giremez; genellikle hızlı ve yoğun trafiğin olduğu yollarda kullanılır',
+      'Traktörler bu yola giremez',
       'Traktörler bu yolda park edebilir',
       'İleride tarım fuarı bulunmaktadır',
     ],
     answerIndex: 1,
     explanation:
-      'Kırmızı çember içindeki lastik tekerlekli traktör sembolü, bu araçların o yola girmesinin yasak olduğunu bildirir. Çok yavaş olan traktörler, hızlı akan yollarda büyük hız farkı ve tehlike yarattığından bu tür kesimlere alınmaz.',
+      'Kırmızı çember içindeki lastik tekerlekli traktör sembolü, bu araçların o yola girmesinin yasak olduğunu bildirir. Çok yavaş olan traktörler, hızlı akan yollarda büyük hız farkı ve tehlike yarattığından bu tür kesimlere alınmaz. Genellikle hızlı ve yoğun trafiğin olduğu yollarda kullanılır.',
     whyWrong: [
       'İşaret izin değil yasak bildirir; yalnızca traktör geçer demek yanlıştır.',
       'Park bilgisi bu işaretle verilmez.',
@@ -408,7 +408,7 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
       'Bu yolda ata binmenin serbest olduğunu',
       'İleride hayvan pazarı bulunduğunu',
       'Bütün araçların bu yolda çok yavaş gitmesi gerektiğini',
-      'Hayvanla çekilen taşıtların (at arabası, fayton vb.) bu yola girmesinin yasak olduğunu',
+      'Hayvanla çekilen taşıtların (at arabası, fayton vb.)',
     ],
     answerIndex: 3,
     explanation:
@@ -485,7 +485,7 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     options: [
       'Sağa dönemez',
       'Öndeki aracı geçemez',
-      'U dönüşü (geri dönüş) yaparak karşı yöne geçemez',
+      'U dönüşü (geri dönüş)',
       'Şerit değiştiremez',
     ],
     answerIndex: 2,
@@ -512,7 +512,7 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
       'Yol yalnızca kamyonlara kapalıdır',
       'Yol yalnızca gece kapalıdır',
       'Yalnızca yayaların girmesi yasaktır',
-      'Bu yola bütün taşıtların girmesi yasaktır; sürücü o yola giremez',
+      'Bu yola bütün taşıtların girmesi yasaktır',
     ],
     answerIndex: 3,
     explanation:
@@ -613,14 +613,14 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Kırmızı çember içinde, üzeri çizili bir korna (sesli ikaz cihazı) sembolü bulunan işaret neyi bildirir ve bu aynı zamanda hangi çevre sorununu önlemeye yöneliktir?',
     options: [
-      'Sesli ikaz cihazı (korna) çalmanın yasak olduğunu; gürültü kirliliğini önlemeye yönelik olduğunu',
+      'Sesli ikaz cihazı (korna) çalmanın yasak olduğunu',
       'Radyonun kapatılması gerektiğini',
       'Bu yolda müzik yayını yapıldığını',
       'Kornanın sürekli çalınması gerektiğini',
     ],
     answerIndex: 0,
     explanation:
-      'Üzeri çizili korna sembolü, o kesimde sesli ikaz cihazı çalmanın yasak olduğunu bildirir. Genellikle hastane, okul ve yerleşim çevresi gibi yerlerde konulur; hem trafik düzenini hem de gürültü kirliliğine karşı çevre ve insan sağlığını korumayı amaçlar.',
+      'Üzeri çizili korna sembolü, o kesimde sesli ikaz cihazı çalmanın yasak olduğunu bildirir. Genellikle hastane, okul ve yerleşim çevresi gibi yerlerde konulur; hem trafik düzenini hem de gürültü kirliliğine karşı çevre ve insan sağlığını korumayı amaçlar. Gürültü kirliliğini önlemeye yönelik olduğunu.',
     whyWrong: [
       'İşaret radyo veya müzik cihazıyla değil, korna kullanımıyla ilgilidir.',
       'Levha bir yayın bilgisi değildir.',
@@ -719,12 +719,12 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     options: [
       'Bu kesimde 60 km/saat üstüne çıkmak yasaktır',
       'Levha yalnızca kamyonlar içindir',
-      'Yol ve trafik uygunsa sürücü en az 60 km/saat hızla gitmelidir; bu hızın çok altında giderek akışı engelleyemez',
+      'Yol ve trafik uygunsa sürücü en az 60 km/saat hızla gitmelidir',
       'Bu kesimde durmak zorunludur',
     ],
     answerIndex: 2,
     explanation:
-      'Mavi zeminli asgari hız işareti, o kesimde belirtilen değerin altına düşmemeyi bildiren bir mecburiyet işaretidir. Sürücü, yol ve trafik durumu elverdiği sürece en az bu hızda gitmeli; çok yavaş sürerek arkadan gelenlere engel olup tehlike yaratmamalıdır.',
+      'Mavi zeminli asgari hız işareti, o kesimde belirtilen değerin altına düşmemeyi bildiren bir mecburiyet işaretidir. Sürücü, yol ve trafik durumu elverdiği sürece en az bu hızda gitmeli; çok yavaş sürerek arkadan gelenlere engel olup tehlike yaratmamalıdır. Bu hızın çok altında giderek akışı engelleyemez.',
     whyWrong: [
       'Bu bir azami hız sınırı değildir; alt sınır bildirir.',
       'Kural belirli bir araç türüne değil, o kesimdeki tüm uygun araçlara yöneliktir.',
@@ -797,12 +797,12 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     options: [
       'Yalnızca geri dönmesini',
       'Yalnızca sola dönmesini',
-      'İleri gitmek ile sağa dönmekten birini seçmesini; bu iki yön dışında hareket edememesini',
+      'İleri gitmek ile sağa dönmekten birini seçmesini',
       'Kavşakta durup beklemesini',
     ],
     answerIndex: 2,
     explanation:
-      'İleri ve sağa bakan iki oklu mecburi yön işareti, sürücünün ya ileri gidebileceğini ya da sağa dönebileceğini bildirir. Sola dönüş ve geri dönüş bu işaretle yasaklanmış olur; sürücü izin verilen iki yönden birini seçer.',
+      'İleri ve sağa bakan iki oklu mecburi yön işareti, sürücünün ya ileri gidebileceğini ya da sağa dönebileceğini bildirir. Sola dönüş ve geri dönüş bu işaretle yasaklanmış olur; sürücü izin verilen iki yönden birini seçer. Bu iki yön dışında hareket edememesini.',
     whyWrong: [
       'Geri dönüş bu işaretin izin vermediği hareketlerdendir.',
       'Sola dönüş de bu işaretle yasaklanmıştır.',
@@ -901,7 +901,7 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     options: [
       'İleride akaryakıt istasyonu bulunduğunu',
       'Kan bağışı yasağını',
-      'İleride ilk yardım (sağlık) hizmeti verilen bir yer bulunduğunu',
+      'İleride ilk yardım (sağlık)',
       'Yolun buzlu olduğunu',
     ],
     answerIndex: 2,
@@ -978,7 +978,7 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     stem: 'Mavi zeminli bir bilgi işareti üzerinde telefon ahizesi sembolü bulunması neyi tanıtır?',
     options: [
       'Telefonla konuşmanın serbest olduğunu',
-      'Yakında kullanılabilecek bir telefon (acil çağrı) noktası bulunduğunu',
+      'Yakında kullanılabilecek bir telefon (acil çağrı)',
       'Bu yolda telefon çekmediğini',
       'İleride elektronik mağazası bulunduğunu',
     ],
@@ -1005,12 +1005,12 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     options: [
       'İleride hastane bulunduğunu',
       'Bu kesimde durmanın yasak olduğunu',
-      'Yakında konaklama yeri (otel, motel) bulunduğunu; yorulan sürücünün dinlenebileceğini',
+      'Yakında konaklama yeri (otel, motel) bulunduğunu',
       'İleride mobilya satışı yapıldığını',
     ],
     answerIndex: 2,
     explanation:
-      'Yatak sembollü mavi bilgi işareti, yakında konaklanabilecek bir tesis bulunduğunu tanıtır. Uzun yolda yorgunluk hisseden sürücü için dinlenip uyku ihtiyacını gidereceği yeri gösterir; yorgun sürüşün önlenmesine katkı sağlar.',
+      'Yatak sembollü mavi bilgi işareti, yakında konaklanabilecek bir tesis bulunduğunu tanıtır. Uzun yolda yorgunluk hisseden sürücü için dinlenip uyku ihtiyacını gidereceği yeri gösterir; yorgun sürüşün önlenmesine katkı sağlar. Yorulan sürücünün dinlenebileceğini.',
     whyWrong: [
       'Hastane bilgisi "H" sembollü ayrı bir işaretle verilir.',
       'İşaret bir yasak değil, konaklama hizmetini tanıtır.',
@@ -1055,14 +1055,14 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Yol kenarındaki çadır resimli mavi levha, sürücüye hangi tesisin yakında olduğunu haber verir?',
     options: [
-      'Yakında kamp (çadırlı konaklama) alanı bulunduğunu',
+      'Yakında kamp (çadırlı konaklama)',
       'Bu yolda çadır kurmanın yasak olduğunu',
       'İleride asker uygulaması olduğunu',
       'Yolun toprak olduğunu',
     ],
     answerIndex: 0,
     explanation:
-      'Çadır sembollü mavi bilgi işareti, yakında kamp yapılabilecek bir alan bulunduğunu tanıtır. Yol boyunca konaklama ve dinlenme seçeneklerini gösteren bilgi işaretlerindendir.',
+      'Çadır sembollü mavi bilgi işareti, yakında kamp yapılabilecek bir alan bulunduğunu tanıtır. Yol boyunca konaklama ve dinlenme seçeneklerini gösteren bilgi işaretlerindendir. Alanı bulunduğunu.',
     whyWrong: [
       'İşaret bir yasak değil, kamp alanını tanıtır.',
       'İşaret bir uygulama noktası bildirmez.',
@@ -1109,7 +1109,7 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     options: [
       'Yolun ileride ikiye ayrılacağını',
       'İleride otoyol başladığını',
-      'Girilen yolun çıkışı olmayan bir çıkmaz yol olduğunu; buradan devam edilemeyeceğini',
+      'Girilen yolun çıkışı olmayan bir çıkmaz yol olduğunu',
       'Bu yolda park etmenin yasak olduğunu',
     ],
     answerIndex: 2,
@@ -1159,14 +1159,14 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Taşıt yolunun ortasındaki şerit çizgisi devamlı (kesiksiz) ise sürücü için hangisi doğrudur?',
     options: [
-      'Devamlı çizgi geçilemez; sürücü bu çizgiyi aşarak karşı şeride geçemez ve öndeki aracı sollayamaz',
+      'Devamlı çizgi geçilemez',
       'Devamlı çizgi istenildiği zaman geçilebilir',
       'Devamlı çizgi yalnızca gece geçerlidir',
       'Devamlı çizgi park yerini gösterir',
     ],
     answerIndex: 0,
     explanation:
-      'Yol yüzeyindeki devamlı (kesiksiz) boyuna çizgi, o kesimde şerit değiştirmenin ve karşı şeride geçmenin yasak olduğunu bildirir. Genellikle görüşün kapalı olduğu viraj ve tepe kesimlerinde çizilir; sürücü bu çizgiyi aşamaz ve sollama yapamaz.',
+      'Yol yüzeyindeki devamlı (kesiksiz) boyuna çizgi, o kesimde şerit değiştirmenin ve karşı şeride geçmenin yasak olduğunu bildirir. Genellikle görüşün kapalı olduğu viraj ve tepe kesimlerinde çizilir; sürücü bu çizgiyi aşamaz ve sollama yapamaz. Sürücü bu çizgiyi aşarak karşı şeride geçemez ve öndeki aracı sollayamaz.',
     whyWrong: [
       'Serbest geçiş kesik çizgide mümkündür; devamlı çizgide değil.',
       'Çizginin geçerliliği gece-gündüz ayrımına bağlı değildir.',
@@ -1212,13 +1212,13 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     stem: 'Taşıt yolu üzerine enine çizilmiş kalın beyaz şeritler (yaya geçidi çizgileri) sürücüye neyi bildirir ve buna nasıl davranılır?',
     options: [
       'Aracın park edeceği yeri; üzerine park edilebilir',
-      'Yayaların karşıdan karşıya geçtiği yeri; sürücü yavaşlar, geçen veya geçmek üzere olan yayaya yol verir',
+      'Yayaların karşıdan karşıya geçtiği yeri',
       'Sollama yapılacak yeri',
       'Hız denemesi yapılacak yeri',
     ],
     answerIndex: 1,
     explanation:
-      'Taşıt yoluna enine çizilmiş kalın beyaz şeritler yaya geçidini gösterir. Sürücü bu çizgilere yaklaşırken hızını azaltır; geçitte bulunan veya geçmek üzere olan yayalara yol verir ve geçit üzerine park etmez.',
+      'Taşıt yoluna enine çizilmiş kalın beyaz şeritler yaya geçidini gösterir. Sürücü bu çizgilere yaklaşırken hızını azaltır; geçitte bulunan veya geçmek üzere olan yayalara yol verir ve geçit üzerine park etmez. Sürücü yavaşlar, geçen veya geçmek üzere olan yayaya yol verir.',
     whyWrong: [
       'Yaya geçidi çizgileri park yeri değildir; üzerine park etmek yasaktır.',
       'Yaya geçidinde sollama yapmak yasaktır.',
@@ -1237,14 +1237,14 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Kavşağa yaklaşırken bulunduğunuz şeridin zeminine boyanmış ok yalnızca sola dönüşü gösteriyorsa doğru davranış hangisidir?',
     options: [
-      'Yer okunun gösterdiği yönde, yani sola dönmek; başka yöne gitmek istiyorsam önceden uygun şeride geçmek',
+      'Yer okunun gösterdiği yönde, yani sola dönmek',
       'Okları dikkate almadan istediğim yöne gitmek',
       'Bu şeritte düz devam etmek',
       'Şeridin üzerinde durup beklemek',
     ],
     answerIndex: 0,
     explanation:
-      'Şerit zeminine boyanmış yönlendirme okları, o şeridin kavşakta hangi yön için ayrıldığını bildirir. Yalnızca sola dönüş oku bulunan şeritte sürücü sola dönmek zorundadır; başka yöne gidecekse kavşağa girmeden önce doğru şeride geçmelidir.',
+      'Şerit zeminine boyanmış yönlendirme okları, o şeridin kavşakta hangi yön için ayrıldığını bildirir. Yalnızca sola dönüş oku bulunan şeritte sürücü sola dönmek zorundadır; başka yöne gidecekse kavşağa girmeden önce doğru şeride geçmelidir. Başka yöne gitmek istiyorsam önceden uygun şeride geçmek.',
     whyWrong: [
       'Yer oklarını yok saymak, yanlış şeritten dönerek trafik düzenini bozar ve kaza doğurur.',
       'Yalnızca sola dönüş oku bulunan şeritte düz devam edilemez.',
@@ -1290,13 +1290,13 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     stem: 'Yeşil zeminli bir levhada, üzerinden yol geçen köprü benzeri otoyol sembolü bulunması sürücüye neyi bildirir?',
     options: [
       'Yolun toprak yola dönüştüğünü',
-      'Otoyolun başladığını; bu kesimde otoyol kurallarının (asgari-azami hız, yayaların ve yavaş araçların giremeyeceği vb.) geçerli olduğunu',
+      'Otoyolun başladığını',
       'Yolun kapandığını',
       'İleride yalnızca yaya yolu bulunduğunu',
     ],
     answerIndex: 1,
     explanation:
-      'Otoyol başlangıç işareti, yeşil zeminli otoyol sembolüyle gösterilir ve bu noktadan itibaren otoyol kurallarının başladığını bildirir. Otoyolda yayalar, hayvanlar, motorsuz ve çok yavaş araçlar giremez; hız ve şerit kurallarına uyulması zorunludur.',
+      'Otoyol başlangıç işareti, yeşil zeminli otoyol sembolüyle gösterilir ve bu noktadan itibaren otoyol kurallarının başladığını bildirir. Otoyolda yayalar, hayvanlar, motorsuz ve çok yavaş araçlar giremez; hız ve şerit kurallarına uyulması zorunludur. Bu kesimde otoyol kurallarının (asgari-azami hız, yayaların ve yavaş araçların giremeyeceği vb.) geçerli olduğunu.',
     whyWrong: [
       'İşaret yol yüzeyinin türünü değil, otoyolun başladığını bildirir.',
       'İşaret bir yol kapanması değildir.',
@@ -1317,12 +1317,12 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     options: [
       'Otoyolun tamamen kapandığını',
       'Bu noktada geri dönüş yapılabileceğini',
-      'Belirtilen mesafe sonra o yer için otoyoldan ayrılış (çıkış) olduğunu; ayrılacaksanız şeridinizi önceden hazırlamanız gerektiğini',
+      'Belirtilen mesafe sonra o yer için otoyoldan ayrılış (çıkış) olduğunu',
       'Hız sınırının kalktığını',
     ],
     answerIndex: 2,
     explanation:
-      'Otoyol çıkış (ayrılma) levhaları yeşil zeminlidir ve belirtilen mesafe sonra hangi yer için otoyoldan ayrılınacağını bildirir. Ayrılacak sürücü, ani manevra yapmamak için önceden en sağ (ayrılma) şeridine geçip hızını çıkışa uygun ayarlamalıdır.',
+      'Otoyol çıkış (ayrılma) levhaları yeşil zeminlidir ve belirtilen mesafe sonra hangi yer için otoyoldan ayrılınacağını bildirir. Ayrılacak sürücü, ani manevra yapmamak için önceden en sağ (ayrılma) şeridine geçip hızını çıkışa uygun ayarlamalıdır. Ayrılacaksanız şeridinizi önceden hazırlamanız gerektiğini.',
     whyWrong: [
       'Levha otoyolun kapandığını değil, bir çıkış olduğunu bildirir.',
       'Otoyolda geri dönüş yasaktır; levha bunu göstermez.',
@@ -1367,14 +1367,14 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Aracın düzenli bakımının (hava filtresi, buji, motor ayarı vb.) çevre açısından temel faydası nedir?',
     options: [
-      'Bakımlı motorun yakıtı daha verimli yakması, böylece yakıt tüketiminin ve zararlı egzoz gazı salımının azalması',
+      'Bakımlı motorun yakıtı daha verimli yakması',
       'Aracın renginin korunması',
       'Egzoz sesinin daha yüksek çıkması',
       'Yakıt tüketiminin artması',
     ],
     answerIndex: 0,
     explanation:
-      'Bakımsız bir motor yakıtı eksik ve verimsiz yakar; bu da hem yakıt tüketimini hem de zararlı egzoz gazı salımını artırır. Düzenli bakımı yapılan motor yakıtı tam yakar, daha az kirletici üretir; çevreye ve bütçeye katkı sağlar.',
+      'Bakımsız bir motor yakıtı eksik ve verimsiz yakar; bu da hem yakıt tüketimini hem de zararlı egzoz gazı salımını artırır. Düzenli bakımı yapılan motor yakıtı tam yakar, daha az kirletici üretir; çevreye ve bütçeye katkı sağlar. Böylece yakıt tüketiminin ve zararlı egzoz gazı salımının azalması.',
     whyWrong: [
       'Bakımın amacı estetik değil, verimli ve temiz çalışmadır.',
       'Bakım, egzoz sesini artırmak için değil, verimi yükseltmek içindir.',
@@ -1422,7 +1422,7 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
       'Toprağa veya kanalizasyona dökmek',
       'Bahçeyi sulamak için kullanmak',
       'Ağaç diplerine dökerek ot bitmesini önlemek',
-      'Toprağa, suya veya kanalizasyona dökmemek; sızdırmaz kapta toplayıp yetkili toplama noktalarına (geri dönüşüme) teslim etmek',
+      'Toprağa, suya veya kanalizasyona dökmemek',
     ],
     answerIndex: 3,
     explanation:
@@ -1471,14 +1471,14 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Ömrünü tamamlamış araç aküsünün çevreye ve doğaya rastgele atılması neden özellikle sakıncalıdır?',
     options: [
-      'İçinde bulunan asit ve kurşun gibi maddeler toprağı ve su kaynaklarını kirletip canlılara zarar verdiği için; akü yetkili noktalara teslim edilmelidir',
+      'İçinde bulunan asit ve kurşun gibi maddeler toprağı ve su kaynaklarını kirletip canlılara zarar verdiği için',
       'Aküler çok hafif olduğu için',
       'Aküler tamamen zararsız olduğu için sorun olmaz',
       'Aküler yeniden kullanılamadığı için',
     ],
     answerIndex: 0,
     explanation:
-      'Araç aküleri asit ve kurşun gibi zararlı maddeler içerir; doğaya atıldığında bu maddeler toprağa ve yer altı suyuna karışarak uzun süreli kirlilik ve sağlık riski oluşturur. Bu yüzden atık aküler doğaya atılmaz, yetkili toplama noktalarına teslim edilir.',
+      'Araç aküleri asit ve kurşun gibi zararlı maddeler içerir; doğaya atıldığında bu maddeler toprağa ve yer altı suyuna karışarak uzun süreli kirlilik ve sağlık riski oluşturur. Bu yüzden atık aküler doğaya atılmaz, yetkili toplama noktalarına teslim edilir. Akü yetkili noktalara teslim edilmelidir.',
     whyWrong: [
       'Sorun ağırlıkla değil, içerdiği tehlikeli maddelerle ilgilidir.',
       'Aküler zararsız değildir; ağır kirletici içerir.',
@@ -1523,14 +1523,14 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Araç kullanırken cam açıp yola izmarit, ambalaj veya benzeri çöp atmak nasıl değerlendirilir?',
     options: [
-      'Yanlış ve zararlıdır; çevreyi kirletir, yangına yol açabilir ve arkadan gelenler için tehlike oluşturur',
+      'Yanlış ve zararlıdır',
       'Cam açıkken sorun değildir',
       'Küçük çöpler için serbesttir',
       'Şehir dışında serbesttir',
     ],
     answerIndex: 0,
     explanation:
-      'Araçtan yola çöp atmak hem görüntü ve çevre kirliliği yaratır hem de yanan izmarit kuru bitki örtüsünde yangın başlatabilir; atılan cisimler arkadan gelen sürücüler için tehlike oluşturur. Atıklar araçta biriktirilip uygun çöp kutularına atılmalıdır.',
+      'Araçtan yola çöp atmak hem görüntü ve çevre kirliliği yaratır hem de yanan izmarit kuru bitki örtüsünde yangın başlatabilir; atılan cisimler arkadan gelen sürücüler için tehlike oluşturur. Atıklar araçta biriktirilip uygun çöp kutularına atılmalıdır. Çevreyi kirletir, yangına yol açabilir ve arkadan gelenler için tehlike oluşturur.',
     whyWrong: [
       'Camın açık olması çöp atmayı meşru kılmaz.',
       'Çöpün küçük olması kirletici ve tehlikeli olmasını değiştirmez.',
@@ -1575,10 +1575,10 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Benzinli araçların egzoz sistemine takılan katalitik konvertörün (katalizörün) temel çevresel görevi nedir?',
     options: [
-      'Egzozdan çıkan zararlı gazları kimyasal olarak daha az zararlı gazlara dönüştürerek hava kirliliğini azaltmak',
-      'Aracın sesini yükseltmek',
-      'Yakıt deposunu büyütmek',
-      'Motorun gücünü sınırsız artırmak',
+      'Zararlı egzoz gazlarını daha az zararlı gazlara dönüştürmek',
+      'Egzoz sesini düşürüp gürültü kirliliğinin önüne geçmek',
+      'Egzoz gazındaki ısıyı geri kazanıp yakıt tüketimini azaltmak',
+      'Egzoz gazındaki kurumu tutup belirli aralıklarla yakmak',
     ],
     answerIndex: 0,
     explanation:
@@ -1603,12 +1603,12 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     options: [
       'Aracın çok verimli çalıştığını',
       'Yakıtın tam yandığını',
-      'Yakıtın verimsiz ve eksik yandığını; motorun ayar veya bakıma ihtiyacı olduğunu ve havayı fazladan kirlettiğini',
+      'Yakıtın verimsiz ve eksik yandığını',
       'Aracın yeni olduğunu',
     ],
     answerIndex: 2,
     explanation:
-      'Egzozdan çıkan yoğun siyah duman, yakıtın tam yanmadığını ve motorun ayar ya da bakıma ihtiyaç duyduğunu gösterir. Bu durum hem yakıt israfına yol açar hem de havaya fazladan partikül ve kirletici salarak çevreyi ve insan sağlığını olumsuz etkiler; araç bakıma alınmalıdır.',
+      'Egzozdan çıkan yoğun siyah duman, yakıtın tam yanmadığını ve motorun ayar ya da bakıma ihtiyaç duyduğunu gösterir. Bu durum hem yakıt israfına yol açar hem de havaya fazladan partikül ve kirletici salarak çevreyi ve insan sağlığını olumsuz etkiler; araç bakıma alınmalıdır. Motorun ayar veya bakıma ihtiyacı olduğunu ve havayı fazladan kirlettiğini.',
     whyWrong: [
       'Yoğun siyah duman verimli çalışmanın değil, verimsizliğin işaretidir.',
       'Tam yanmada bu tür yoğun siyah duman oluşmaz.',

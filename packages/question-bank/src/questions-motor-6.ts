@@ -16,12 +16,12 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Silecek motorunun bozulması',
       'Polen filtresinin kirlenmesi',
-      'Aküde yeterli enerji kalmaması (zayıf/yaşlı akü); soğukta akünün gücü daha da düştüğü için marş, far ve kornaya yetecek akımı sağlayamaması',
+      'Aküde yeterli enerji kalmaması (zayıf/yaşlı akü)',
       'Egzoz susturucusunun delinmesi',
     ],
     answerIndex: 2,
     explanation:
-      'Marş, far ve korna aynı akü kaynağından beslenir. Zayıf bir akü soğukta iyice güçsüzleşir; marş çekilirken gerilim düştüğü için tüm tüketiciler birden zayıflar. Marşın ağır dönmesiyle ışıkların sönükleşmesinin birlikte görülmesi tipik olarak akü/şarj zayıflığını işaret eder.',
+      'Marş, far ve korna aynı akü kaynağından beslenir. Zayıf bir akü soğukta iyice güçsüzleşir; marş çekilirken gerilim düştüğü için tüm tüketiciler birden zayıflar. Marşın ağır dönmesiyle ışıkların sönükleşmesinin birlikte görülmesi tipik olarak akü/şarj zayıflığını işaret eder. Soğukta akünün gücü daha da düştüğü için marş, far ve kornaya yetecek akımı sağlayamaması.',
     whyWrong: [
       'Silecek ve polen filtresi motorun dönüş gücüyle ve aydınlatmayla ilgisizdir.',
       'Delik susturucu bir ses/kaçak sorunudur; marş gücünü ve far parlaklığını etkilemez.',
@@ -40,13 +40,13 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Manuel vitesli bir araçta debriyaj pedalına sonuna kadar basıldığı hâlde vitesler zor giriyor ve geçişlerde çıtırtı/sürtme sesi duyuluyorsa en olası neden hangisidir?',
     options: [
       'Far ampullerinin ömrünü doldurması',
-      'Debriyajın kavramayı tam ayıramaması (balata, hidrolik/tel ayarı veya baskı sorunu); dönmeye devam eden dişlilerin senkronu zorlaması',
+      'Debriyajın kavramayı tam ayıramaması (balata, hidrolik/tel ayarı veya baskı sorunu)',
       'Lastik hava basıncının yükselmesi',
       'Ön cam suyunun bitmesi',
     ],
     answerIndex: 1,
     explanation:
-      'Vitesin rahat girmesi için debriyaja basıldığında motorla şanzıman bağlantısının tamamen kesilmesi gerekir. Ayarı bozulan, havası kaçan hidrolik veya aşınmış debriyaj kavramayı tam ayıramaz; dişliler dönmeye devam ettiği için senkromeçler zorlanır, vites zor girer ve ses çıkar.',
+      'Vitesin rahat girmesi için debriyaja basıldığında motorla şanzıman bağlantısının tamamen kesilmesi gerekir. Ayarı bozulan, havası kaçan hidrolik veya aşınmış debriyaj kavramayı tam ayıramaz; dişliler dönmeye devam ettiği için senkromeçler zorlanır, vites zor girer ve ses çıkar. Dönmeye devam eden dişlilerin senkronu zorlaması.',
     whyWrong: [
       'Far, lastik basıncı ve cam suyu güç aktarım hattından bağımsızdır; vites geçişini etkilemez.',
       'Belirti mekanik kavrama sorununa işaret eder, elektrik veya konfor donanımına değil.',
@@ -66,11 +66,11 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
       'Lastik balansının bozulduğunu',
       'Amortisörlerin aşındığını',
       'Direksiyon rotunun ayarsız olduğunu',
-      'Yanmanın silindir içinde tam zamanında tamamlanmadığını; yanmamış yakıtın sıcak egzozda geç tutuşarak patladığını (ateşleme/yakıt karışımı veya zamanlama sorunu)',
+      'Yanmanın silindir içinde tam zamanında tamamlanmadığını',
     ],
     answerIndex: 3,
     explanation:
-      'Egzozdan gelen patlama (geri tepme), silindirde tam yanmayan yakıtın egzoz hattında geç tutuşmasıyla oluşur. Bozuk buji/bobin, zengin-fakir karışım veya ateşleme zamanlaması sorunları bunun tipik nedenleridir. Sistem servise kontrol ettirilmelidir; ihmal edilirse katalizör de zarar görebilir.',
+      'Egzozdan gelen patlama (geri tepme), silindirde tam yanmayan yakıtın egzoz hattında geç tutuşmasıyla oluşur. Bozuk buji/bobin, zengin-fakir karışım veya ateşleme zamanlaması sorunları bunun tipik nedenleridir. Sistem servise kontrol ettirilmelidir; ihmal edilirse katalizör de zarar görebilir. Yanmamış yakıtın sıcak egzozda geç tutuşarak patladığını (ateşleme/yakıt karışımı veya zamanlama sorunu).',
     whyWrong: [
       'Balans ve amortisör titreşim/salınım sorunudur; egzoz patlamasıyla ilgisi yoktur.',
       'Rot ayarsızlığı aracın yana çekmesine yol açar, egzozdan ses gelmesine değil.',
@@ -113,7 +113,7 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Sürüş sırasında akü/şarj ikaz lambası (akü şekli) yanıp sönmeden yolda kalırsa doğru değerlendirme hangisidir?',
     options: [
       'Lamba yanmasının hiçbir önemi yoktur, sürekli göz ardı edilebilir',
-      'Şarj sistemi (alternatör veya kayış) artık aküyü doldurmuyor olabilir; araç bir süre akünün kalan enerjisiyle gider, bu yüzden gereksiz tüketiciler kapatılıp en kısa sürede servise gidilmelidir',
+      'Şarj sistemi (alternatör veya kayış) artık aküyü doldurmuyor olabilir',
       'Derhâl motor durdurulmazsa motor patlar',
       'Lamba yalnızca yakıtın azaldığını gösterir',
     ],
@@ -138,12 +138,12 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Hava yastığının o an açıldığını',
       'Aracın hızının sınırlandığını',
-      'Hava yastığı sisteminde bir arıza bulunduğunu; sistemin bir kazada beklenen şekilde açılmayabileceğini, bu yüzden vakit kaybetmeden kontrol ettirilmesi gerektiğini',
+      'Hava yastığı sisteminde bir arıza bulunduğunu',
       'Motor yağının azaldığını',
     ],
     answerIndex: 2,
     explanation:
-      'Kontak açıldığında kısa süre yanıp sönen airbag lambası normaldir; ancak sürekli yanık kalması sistemin kendi kendini denetlerken bir arıza (sensör, kablo, tokalık veya kumanda ünitesi) bulduğunu gösterir. Bu durumda yastık kazada açılmayabilir; sistem yetkili serviste kontrol ettirilmelidir.',
+      'Kontak açıldığında kısa süre yanıp sönen airbag lambası normaldir; ancak sürekli yanık kalması sistemin kendi kendini denetlerken bir arıza (sensör, kablo, tokalık veya kumanda ünitesi) bulduğunu gösterir. Bu durumda yastık kazada açılmayabilir; sistem yetkili serviste kontrol ettirilmelidir. Sistemin bir kazada beklenen şekilde açılmayabileceğini, bu yüzden vakit kaybetmeden kontrol ettirilmesi gerektiğini.',
     whyWrong: [
       'Lamba yastığın açıldığını değil, denetimde arıza bulunduğunu bildirir.',
       'Hız sınırı ve yağ seviyesi bu lambanın konusu değildir; onların ayrı uyarıları vardır.',
@@ -163,7 +163,7 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
       'Motor yağının markasını değiştirmek',
       'Silecek lastiklerini yenilemek',
       'Polen filtresini temizlemek',
-      'İki taraftaki lastiklerin hava basınçlarını ölçüp karşılaştırmak; bir taraftaki lastik sönükse araç o yöne çeker',
+      'İki taraftaki lastiklerin hava basınçlarını ölçüp karşılaştırmak',
     ],
     answerIndex: 3,
     explanation:
@@ -184,14 +184,14 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Hız arttıkça yükselen, sürekli bir uğultu/uğuldama duyuluyor; ses viraj dönerken bir tarafta artıp diğer tarafta azalıyorsa en olası neden hangisidir?',
     options: [
-      'Tekerlek göbeğindeki (aks) rulmanın aşınması; yük yön değiştirdikçe sesin şiddetlenip hafiflemesi rulman arızasının tipik belirtisidir',
+      'Tekerlek göbeğindeki (aks) rulmanın aşınması',
       'Bujilerin kirlenmesi',
       'Yakıt filtresinin tıkanması',
       'Termostatın açık takılması',
     ],
     answerIndex: 0,
     explanation:
-      'Aşınan tekerlek rulmanı, hızla orantılı sürekli bir uğultu üretir. Virajda aracın ağırlığı bir tarafa aktarıldığında o taraftaki rulmanın yükü değişir; bu yüzden ses sağa-sola dönüşte belirgin biçimde artıp azalır. Rulman gecikmeden değiştirilmelidir, aksi hâlde tekerlek boşluk yapabilir.',
+      'Aşınan tekerlek rulmanı, hızla orantılı sürekli bir uğultu üretir. Virajda aracın ağırlığı bir tarafa aktarıldığında o taraftaki rulmanın yükü değişir; bu yüzden ses sağa-sola dönüşte belirgin biçimde artıp azalır. Rulman gecikmeden değiştirilmelidir, aksi hâlde tekerlek boşluk yapabilir. Yük yön değiştirdikçe sesin şiddetlenip hafiflemesi rulman arızasının tipik belirtisidir.',
     whyWrong: [
       'Kirli buji ve tıkalı yakıt filtresi motor çalışmasını bozar; hıza bağlı uğultu ve virajla değişen ses üretmez.',
       'Termostat sorunu soğutma/ısınma ile ilgilidir, tekerlekten gelen sesle değil.',
@@ -209,13 +209,13 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Direksiyonda hissedilen boşluğun yanı sıra bozuk/engebeli yolda ön taraftan "tık tık" sesleri geliyorsa öncelikle hangi grup kontrol ettirilmelidir?',
     options: [
       'Egzoz susturucusu ve katalizör',
-      'Direksiyon-ön düzen bağlantı parçaları (rot başı, rotil gibi mafsallar); boşluk yapan bu parçalar hem sesin hem direksiyon boşluğunun kaynağı olabilir',
+      'Direksiyon-ön düzen bağlantı parçaları (rot başı, rotil gibi mafsallar)',
       'Polen filtresi ve klima gazı',
       'Silecek kolu ve fıskiyeler',
     ],
     answerIndex: 1,
     explanation:
-      'Rot başı ve rotil gibi mafsallar, direksiyon hareketini tekerleklere iletir ve tekerleği araca bağlar. Zamanla boşluk yaparlar; bu boşluk direksiyonda oynama olarak hissedilir ve bozuk yolda mafsalın vurmasıyla "tık tık" ses çıkar. Aşınan bu parçalar güvenlik açısından ihmal edilmemelidir.',
+      'Rot başı ve rotil gibi mafsallar, direksiyon hareketini tekerleklere iletir ve tekerleği araca bağlar. Zamanla boşluk yaparlar; bu boşluk direksiyonda oynama olarak hissedilir ve bozuk yolda mafsalın vurmasıyla "tık tık" ses çıkar. Aşınan bu parçalar güvenlik açısından ihmal edilmemelidir. Boşluk yapan bu parçalar hem sesin hem direksiyon boşluğunun kaynağı olabilir.',
     whyWrong: [
       'Egzoz ve katalizör güç/ses sistemidir; direksiyon boşluğuyla ilgisi yoktur.',
       'Polen filtresi, klima, silecek gibi donanımlar yön kontrolü ve mafsallarla ilgili değildir.',
@@ -234,12 +234,12 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Yakıt pompasının zayıflaması',
       'Buji kablosunun gevşemesi',
-      'O tekerlekteki fren kaliperinin (fren pistonunun) sıkışıp balatayı diske sürekli bastırması; sürekli sürtünme ısı, koku ve tek yöne çekme üretir',
+      'O tekerlekteki fren kaliperinin (fren pistonunun) sıkışıp balatayı diske sürekli bastırması',
       'Ön cam suyunun donması',
     ],
     answerIndex: 2,
     explanation:
-      'Kaliperi sıkışan tekerlekte balata, pedala basılmasa bile diske sürtmeye devam eder. Bu sürekli sürtünme o tekerleği aşırı ısıtır, yanık kokusu yayar, yakıt tüketimini artırır ve aracı sürtünen tarafa çeker. Sıkışan kaliper/piston zaman geçirmeden onarılmalıdır.',
+      'Kaliperi sıkışan tekerlekte balata, pedala basılmasa bile diske sürtmeye devam eder. Bu sürekli sürtünme o tekerleği aşırı ısıtır, yanık kokusu yayar, yakıt tüketimini artırır ve aracı sürtünen tarafa çeker. Sıkışan kaliper/piston zaman geçirmeden onarılmalıdır. Sürekli sürtünme ısı, koku ve tek yöne çekme üretir.',
     whyWrong: [
       'Yakıt pompası ve buji kablosu motor çalışmasıyla ilgilidir; tek tekerlek ısınmasına yol açmaz.',
       'Cam suyunun donması jant sıcaklığıyla ve fren sürtünmesiyle ilgisizdir.',
@@ -282,14 +282,14 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Karlı/buzlu bir gecede araç dışarıda park edilecekse silecekler ve cam için önerilen kış önlemi hangisidir?',
     options: [
-      'Silecekleri camdan yukarı kaldırıp havada bırakmak veya araya bez koymak; sabah camdaki buzu silecekle değil, uygun kazıyıcı/buz çözücüyle temizlemek',
+      'Silecekleri camdan yukarı kaldırıp havada bırakmak veya araya bez koymak',
       'Sabah donmuş camı silecekleri çalıştırarak temizlemek',
       'Cam suyu haznesine kaynar su koymak',
       'Silecekleri en hızlı kademede bırakıp kontağı öyle kapatmak',
     ],
     answerIndex: 0,
     explanation:
-      'Buzlu cama yapışan silecek lastikleri, çalıştırıldığında yırtılabilir ya da silecek motoru zorlanıp yanabilir. Bu yüzden gece silecekler camdan kaldırılır veya araya bez konur; sabah cam, silecekle değil kazıyıcı ve buz çözücüyle temizlenir. Buz çözülmeden sileceği çalıştırmak lastiği ve motoru yıpratır.',
+      'Buzlu cama yapışan silecek lastikleri, çalıştırıldığında yırtılabilir ya da silecek motoru zorlanıp yanabilir. Bu yüzden gece silecekler camdan kaldırılır veya araya bez konur; sabah cam, silecekle değil kazıyıcı ve buz çözücüyle temizlenir. Buz çözülmeden sileceği çalıştırmak lastiği ve motoru yıpratır. Sabah camdaki buzu silecekle değil, uygun kazıyıcı/buz çözücüyle temizlemek.',
     whyWrong: [
       'Donmuş camı silecekle temizlemek lastiği yırtar, motoru zorlar.',
       'Cama/hazneye kaynar su dökmek cam gerilimini bozup çatlatabilir; hazneye donmayan cam suyu konur.',
@@ -310,11 +310,11 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
       'Lastik basıncının düştüğü',
       'Polen filtresinin tıkandığı',
       'Ön cam suyunun bittiği',
-      'Egzoz hattının kesildiği; örneğin katalitik konvertörün çalınmak için kesilmiş olabileceği veya egzozda kopma/delik oluştuğu',
+      'Egzoz hattının kesildiği',
     ],
     answerIndex: 3,
     explanation:
-      'Egzoz sistemi, gazları hem yönlendirir hem de susturur. Katalitik konvertör hırsızlık amacıyla kesildiğinde ya da egzoz borusu koptuğunda hat açık kalır; motor sesi hiç boğulmadan dışarı çıktığı için araç son derece gürültülü çalışır. Böyle bir durumda araç kullanılmadan kontrol ettirilmelidir; ayrıca kaçak gaz riski de vardır.',
+      'Egzoz sistemi, gazları hem yönlendirir hem de susturur. Katalitik konvertör hırsızlık amacıyla kesildiğinde ya da egzoz borusu koptuğunda hat açık kalır; motor sesi hiç boğulmadan dışarı çıktığı için araç son derece gürültülü çalışır. Böyle bir durumda araç kullanılmadan kontrol ettirilmelidir; ayrıca kaçak gaz riski de vardır. Örneğin katalitik konvertörün çalınmak için kesilmiş olabileceği veya egzozda kopma/delik oluştuğu.',
     whyWrong: [
       'Lastik basıncı, polen filtresi ve cam suyu egzoz sesiyle ilgili değildir.',
       'Bu belirtiler egzoz hattındaki bir kopma/kesilmeye işaret eder, başka sistemlere değil.',
@@ -332,7 +332,7 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Aracın şasi (VIN) numarasıyla ilgili doğru ifade aşağıdakilerden hangisidir?',
     options: [
-      'Her araca özgü bir kimlik numarasıdır; ruhsatta yazar ve genellikle motor bölmesi, ön cam alt köşesi ya da kapı eşiği gibi bir yere de basılıdır',
+      'Her araca özgü bir kimlik numarasıdır',
       'Yalnızca aracın rengini belirtir',
       'Lastik basıncını gösteren bir sayıdır',
       'Yakıt deposunun hacmini bildirir',
@@ -357,13 +357,13 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Far camının içinde buğu/nem toplandığı görülüyorsa bunun tipik nedeni ve doğru değerlendirme nedir?',
     options: [
       'Motorun aşırı ısındığı; derhâl durulmalıdır',
-      'Far muhafazasının sızdırmazlığının/havalandırmasının bozulup içeri nem girmesi; hafif buğu bir süre sonra kaybolabilir, ancak su birikiyorsa ampule ve elektriğe zarar vermeden önce müdahale edilmelidir',
+      'Far muhafazasının sızdırmazlığının/havalandırmasının bozulup içeri nem girmesi',
       'Akünün şarj olmadığı',
       'Fren balatalarının bittiği',
     ],
     answerIndex: 1,
     explanation:
-      'Far muhafazaları, ısı farkıyla oluşan nemin dışarı atılması için küçük havalandırma kanallarına sahiptir. Sızdırmazlık contası ya da bu kanallar bozulunca içeri nem girer ve cam içten buğulanır. Sıcaklık değişimiyle geçen hafif buğu sorun değildir; ancak içeride su damlacıkları/birikinti varsa ampul ve bağlantılar zarar görmeden onarılmalıdır.',
+      'Far muhafazaları, ısı farkıyla oluşan nemin dışarı atılması için küçük havalandırma kanallarına sahiptir. Sızdırmazlık contası ya da bu kanallar bozulunca içeri nem girer ve cam içten buğulanır. Sıcaklık değişimiyle geçen hafif buğu sorun değildir; ancak içeride su damlacıkları/birikinti varsa ampul ve bağlantılar zarar görmeden onarılmalıdır. Hafif buğu bir süre sonra kaybolabilir, ancak su birikiyorsa ampule ve elektriğe zarar vermeden önce müdahale edilmelidir.',
     whyWrong: [
       'Motor sıcaklığı, akü şarjı ve fren balatası far içindeki nemle ilgili değildir.',
       'Bu belirti far muhafazasının sızdırmazlık/havalandırma sorunudur, motor arızası değildir.',
@@ -380,10 +380,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Otomatik dur-kalk (start-stop) sistemi olan bir araçta, sistem beklenen durumlarda motoru durdurmuyorsa bunun makul nedenlerinden biri hangisidir?',
     options: [
-      'Aracın rengi',
-      'Silecek suyunun dolu olması',
-      'Akünün yeterince şarjlı olmaması, kabinin ısıtılıp/soğutulması için klima yükünün yüksek olması ya da motorun henüz çalışma sıcaklığına ulaşmamış olması gibi sistemin motoru durdurmayı uygun bulmadığı koşulların bulunması',
-      'Lastiklerin yeni olması',
+      'Kabin sıcaklığının ayarlanan değere ulaşması ve klima yükünün düşmüş olması',
+      'Vitesin boşa alınmış ve debriyaj pedalının tümüyle bırakılmış olması',
+      'Akü şarjının yetersiz olması ya da motorun çalışma sıcaklığına ulaşmamış olması',
+      'Yakıt deposunun dolu ve lastik basınçlarının önerilen değerde olması',
     ],
     answerIndex: 2,
     explanation:
@@ -404,14 +404,14 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'LPG sistemi bulunan bir araçla ilgili doğru ifade aşağıdakilerden hangisidir?',
     options: [
-      'LPG tüpü genellikle bagaj bölümüne/stepne yuvasına yerleştirilir; ısıyla genleşmeye pay bırakmak için tüp tam dolu değil, belirli bir sınıra (yaklaşık dörtte üçü/gövdesinin çoğu) kadar doldurulur ve tüpün periyodik testi/muayenesi gerekir',
+      'LPG tüpü genellikle bagaj bölümüne/stepne yuvasına yerleştirilir',
       'LPG tüpü motorun içine takılır',
       'LPG tüpü tavana kadar, ağzına kadar doldurulmalıdır',
       'LPG sistemi hiçbir kontrol veya muayene gerektirmez',
     ],
     answerIndex: 0,
     explanation:
-      'LPG dönüşümlü araçlarda gaz tüpü genellikle bagajda ya da stepne yuvasında bulunur. Sıvı LPG sıcaklıkla genleştiği için tüp tam dolu değil, güvenli bir doluluk sınırına kadar doldurulur; böylece genleşmeye yer kalır. Ayrıca tüpün belirli aralıklarla test/muayenesi ve sistemin sızdırmazlık kontrolü gerekir.',
+      'LPG dönüşümlü araçlarda gaz tüpü genellikle bagajda ya da stepne yuvasında bulunur. Sıvı LPG sıcaklıkla genleştiği için tüp tam dolu değil, güvenli bir doluluk sınırına kadar doldurulur; böylece genleşmeye yer kalır. Ayrıca tüpün belirli aralıklarla test/muayenesi ve sistemin sızdırmazlık kontrolü gerekir. Isıyla genleşmeye pay bırakmak için tüp tam dolu değil, belirli bir sınıra (yaklaşık dörtte üçü/gövdesinin çoğu) kadar doldurulur ve tüpün periyodik testi/muayenesi gerekir.',
     whyWrong: [
       'Tüp motorun içine değil, ayrı bir bölmeye (çoğunlukla bagaja) yerleştirilir.',
       'Ağzına kadar doldurmak genleşme payı bırakmaz ve tehlikelidir; sistem düzenli kontrol gerektirir.',
@@ -428,10 +428,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Hibrit (benzin + elektrik) araçlarda "rejeneratif frenleme" ne anlama gelir?',
     options: [
-      'Fren yaparken ve yavaşlarken normalde ısı olarak boşa giden hareket enerjisinin bir bölümünün elektrik motoru aracılığıyla elektriğe çevrilip aküyü şarj etmesi',
-      'Frenlerin kendi kendini onarması',
-      'Motorun frene basınca daha çok yakıt yakması',
-      'El freninin otomatik olarak çekilmesi',
+      'Yavaşlarken boşa giden enerjinin bir bölümünün aküyü şarj etmesi',
+      'Fren balatalarının aşındıkça kendini ayarlayıp ömrünü uzatması',
+      'Elektrik motorunun frene basınca yakıt pompasını devre dışı bırakması',
+      'El freninin araç durduğunda kendiliğinden devreye girmesi',
     ],
     answerIndex: 0,
     explanation:
@@ -453,13 +453,13 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Elektrikli bir araçla ilgili aşağıdaki ifadelerden hangisi doğrudur?',
     options: [
       'Elektrikli araçlar yakıt deposu taşıdığı için istasyondan benzin alır',
-      'Enerjisini şarj edilebilir yüksek voltajlı bir bataryadan alır; menzil planlaması ve şarj süresi önemlidir, yüksek voltaj nedeniyle şarj/onarım işlemlerinde güvenlik kurallarına uyulmalıdır',
+      'Enerjisini şarj edilebilir yüksek voltajlı bir bataryadan alır',
       'Yüksek voltaj bulunmadığı için hiçbir güvenlik önlemi gerekmez',
       'Elektrikli araçlarda fren sistemi yoktur',
     ],
     answerIndex: 1,
     explanation:
-      'Elektrikli araçlar, gücünü şarj edilebilir yüksek voltajlı bir bataryadan alan elektrik motoruyla hareket eder. Sürücünün kalan menzili ve şarj olanaklarını (süre, istasyon) önceden planlaması gerekir. Sistemde yüksek voltaj bulunduğu için şarj sırasında ve özellikle onarımlarda üreticinin güvenlik kurallarına uyulması zorunludur.',
+      'Elektrikli araçlar, gücünü şarj edilebilir yüksek voltajlı bir bataryadan alan elektrik motoruyla hareket eder. Sürücünün kalan menzili ve şarj olanaklarını (süre, istasyon) önceden planlaması gerekir. Sistemde yüksek voltaj bulunduğu için şarj sırasında ve özellikle onarımlarda üreticinin güvenlik kurallarına uyulması zorunludur. Menzil planlaması ve şarj süresi önemlidir, yüksek voltaj nedeniyle şarj/onarım işlemlerinde güvenlik kurallarına uyulmalıdır.',
     whyWrong: [
       'Elektrikli araçta benzin deposu ve yakıt yoktur; enerji bataryadan gelir.',
       'Yüksek voltaj ciddi bir tehlike kaynağıdır; güvenlik önlemleri gereklidir. Ayrıca bu araçlarda da fren sistemi vardır.',
@@ -502,10 +502,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Soğutma sistemindeki genleşme (yedek su) deposunun görevi aşağıdakilerden hangisidir?',
     options: [
-      'Fren hidroliğini depolamak',
-      'Yakıtı süzmek',
-      'Motor yağını soğutmak',
-      'Isınıp genleşen soğutma suyunun fazlasını geçici olarak barındırmak, soğuyunca geri vermek ve seviyenin gözle kolayca kontrol edilebildiği bir tampon hazne olmak',
+      'Fren hidroliğini depolayıp fren devresindeki basınç kayıplarını karşılamak',
+      'Yakıtı süzerek motora temiz yakıt gitmesini sağlamak',
+      'Motor yağını soğutup yağ basıncını sabit tutmak',
+      'Isınıp genleşen soğutma suyunun fazlasını barındırıp soğuyunca geri vermek',
     ],
     answerIndex: 3,
     explanation:
@@ -526,10 +526,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Radyatörün ön yüzünün yaprak, böcek, çamur veya poşet gibi maddelerle örtülmesi neye yol açar?',
     options: [
-      'Radyatörden geçen havanın azalması nedeniyle soğutmanın zayıflaması ve motorun daha kolay hararet yapması',
-      'Farların daha parlak yanması',
-      'Direksiyonun hafiflemesi',
-      'Yakıt tüketiminin düşmesi',
+      'Soğutmanın zayıflaması ve motorun kolay hararet yapması',
+      'Kabin havalandırmasının kapanıp camların buğulanması',
+      'Silecek fıskiyelerinin tıkanıp cam suyunun akmaması',
+      'Ön farların menzilinin kısalıp gece görüşün azalması',
     ],
     answerIndex: 0,
     explanation:
@@ -550,14 +550,14 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Yakıt deposu kapağının gevşek bırakılması veya iyi kapatılmaması bazı araçlarda hangi belirtiye yol açabilir?',
     options: [
-      'ABS lambasının yanmasına',
-      'Yakıt buharı sisteminin (kaçak kontrolü) düzgün mühürlenememesi nedeniyle motor arıza (check engine) lambasının yanmasına; kapak düzgün kapatıldığında uyarı çoğu zaman kendiliğinden kaybolur',
-      'Direksiyonun kilitlenmesine',
-      'Kornanın çalmamasına',
+      'ABS uyarı lambasının sürekli yanık kalmasına',
+      'Motor arıza (check engine) lambasının yanmasına',
+      'Direksiyonun kontak kapalıyken kilitlenmesine',
+      'Korna ve sinyal devresinin çalışmamasına',
     ],
     answerIndex: 1,
     explanation:
-      'Modern araçlarda yakıt buharlarının çevreye kaçmasını önleyen bir sistem vardır ve bu sistemin mühürlenmesi için depo kapağının tam kapalı olması gerekir. Kapak gevşek kalırsa mühür bozulur; kendini denetleyen sistem bunu bir kaçak gibi algılar ve motor arıza lambasını yakabilir. Kapak doğru kapatılınca uyarı genellikle bir süre sonra söner.',
+      'Modern araçlarda yakıt buharlarının çevreye kaçmasını önleyen bir sistem vardır ve bu sistemin mühürlenmesi için depo kapağının tam kapalı olması gerekir. Kapak gevşek kalırsa mühür bozulur; kendini denetleyen sistem bunu bir kaçak gibi algılar ve motor arıza lambasını yakabilir. Kapak doğru kapatılınca uyarı genellikle bir süre sonra söner. Kapak düzgün kapatıldığında uyarı çoğu zaman kendiliğinden kaybolur.',
     whyWrong: [
       'ABS ve korna, yakıt buharı sistemiyle ilgili değildir; ayrı devrelerdir.',
       'Direksiyon kilidi kontak/anahtarla ilgilidir, depo kapağıyla değil.',
@@ -601,7 +601,7 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
       'Farların sönmesine yol açtığı için',
       'Yakıt deposunu boşalttığı için',
       'Lastik desenini değiştirdiği için',
-      'Direksiyon sonuna dayandığında hidrolik direksiyon sistemi en yüksek basınçta zorlanır; bu konumda uzun süre beklemek pompayı, hortumları ve sızdırmazlıkları ısıtıp yıpratır',
+      'Direksiyon sonuna dayandığında hidrolik direksiyon sistemi en yüksek basınçta zorlanır',
     ],
     answerIndex: 3,
     explanation:
@@ -623,14 +623,14 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Duran bir aracın bir köşesine bastırıp bıraktığınızda araç bir kez alçalıp yükseldikten sonra durmayıp birkaç kez zıplayarak salınmaya devam ediyorsa bu neyi gösterir?',
     options: [
-      'O taraftaki amortisörün zayıfladığını; sağlam amortisör salınımı hızla sönümlerken, aşınmış amortisör aracı zıplatmaya devam eder',
+      'O taraftaki amortisörün zayıfladığını',
       'Motor yağının fazla olduğunu',
       'Bujilerin kirlendiğini',
       'Radyatörün tıkandığını',
     ],
     answerIndex: 0,
     explanation:
-      'Amortisörün görevi, yaydan gelen salınımı sönümleyerek tekerleğin yola sürekli basmasını sağlamaktır. Sağlam bir amortisörde araç bastırılıp bırakıldığında bir-iki harekette durulur. Salınım uzun sürerse amortisör görevini yapamıyor demektir; bu, hem sürüş konforunu hem yol tutuşunu ve fren mesafesini olumsuz etkiler.',
+      'Amortisörün görevi, yaydan gelen salınımı sönümleyerek tekerleğin yola sürekli basmasını sağlamaktır. Sağlam bir amortisörde araç bastırılıp bırakıldığında bir-iki harekette durulur. Salınım uzun sürerse amortisör görevini yapamıyor demektir; bu, hem sürüş konforunu hem yol tutuşunu ve fren mesafesini olumsuz etkiler. Sağlam amortisör salınımı hızla sönümlerken, aşınmış amortisör aracı zıplatmaya devam eder.',
     whyWrong: [
       'Yağ fazlalığı ve kirli buji motor çalışmasıyla ilgilidir; süspansiyon salınımını açıklamaz.',
       'Radyatör tıkanması soğutma sorunudur; aracın zıplamasıyla ilgisi yoktur.',
@@ -647,10 +647,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Motor yağı kabında görülen "10W-40" gibi bir gösterim neyi ifade eder?',
     options: [
-      'Yağın kaç litre olduğunu',
-      'Yağın hangi renkte olduğunu',
-      "Yağın akışkanlık (vizkozite) sınıfını; baştaki W'li sayı soğuktaki akışkanlığı, sondaki sayı yüksek sıcaklıktaki kıvamını belirtir. Araca daima üreticinin önerdiği vizkozite seçilmelidir",
-      'Yağın kaç kilometrede bittiğini',
+      'Yağın depoya sığan hacmini litre cinsinden',
+      'Yağın değişim aralığını kilometre cinsinden',
+      'Yağın akışkanlık (vizkozite) sınıfını',
+      'Yağın üretildiği tesisin kalite belgesi kodunu',
     ],
     answerIndex: 2,
     explanation:
@@ -672,13 +672,13 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Benzinde belirtilen oktan sayısı temel olarak neyi ifade eder?',
     options: [
       'Benzinin kaç litre olduğunu',
-      'Benzinin, sıkıştırma sırasında kendiliğinden erken tutuşmaya (vuruntuya) karşı direncini; araca üreticinin önerdiği oktandaki yakıt konmalıdır',
+      'Benzinin, sıkıştırma sırasında kendiliğinden erken tutuşmaya (vuruntuya) karşı direncini',
       'Benzinin donma sıcaklığını',
       'Benzinin rengini',
     ],
     answerIndex: 1,
     explanation:
-      'Oktan sayısı, benzinin sıkıştırma sırasında zamanından önce, kendiliğinden tutuşmaya (vuruntu/"knock") karşı ne kadar dayanıklı olduğunu gösterir. Yüksek oktanlı yakıt vuruntuya daha dirençlidir. Her motor belirli bir oktan için tasarlanır; bu yüzden araca, üreticinin el kitabında belirttiği oktan değerine uygun yakıt konması gerekir.',
+      'Oktan sayısı, benzinin sıkıştırma sırasında zamanından önce, kendiliğinden tutuşmaya (vuruntu/"knock") karşı ne kadar dayanıklı olduğunu gösterir. Yüksek oktanlı yakıt vuruntuya daha dirençlidir. Her motor belirli bir oktan için tasarlanır; bu yüzden araca, üreticinin el kitabında belirttiği oktan değerine uygun yakıt konması gerekir. Araca üreticinin önerdiği oktandaki yakıt konmalıdır.',
     whyWrong: [
       'Oktan; miktar (litre), donma sıcaklığı ya da renk bilgisi değildir.',
       'Bunlar yakıtın ayrı özellikleridir; vuruntu direnciyle karıştırılmamalıdır.',
@@ -695,14 +695,14 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Klima açıldığında hava üflüyor ama eskisi gibi soğutmuyorsa olası nedenlerden biri ve doğru yaklaşım hangisidir?',
     options: [
-      'Klima gazının zamanla azalmış olabileceği veya polen filtresinin/kondansatörün kirlenmiş olabileceği; sistemin serviste kontrol ettirilip gerekiyorsa gazının tamamlanması',
+      'Klima gazının zamanla azalmış olabileceği veya polen filtresinin/kondansatörün kirlenmiş olabileceği',
       'Motor yağının bittiği; hemen yağ eklenmesi',
       'Lastik basıncının düştüğü; lastiklerin şişirilmesi',
       'Akünün bittiği; akünün değiştirilmesi',
     ],
     answerIndex: 0,
     explanation:
-      'Klimanın soğutması, kapalı devredeki soğutucu gaza bağlıdır. Zamanla azalan gaz, tıkanan polen filtresi ya da kirlenip hava alamayan kondansatör soğutmayı zayıflatır. Doğru yaklaşım sistemi serviste kontrol ettirmek; gaz eksikse tamamlatmak, filtreyi değiştirmek ve kondansatörü temizletmektir.',
+      'Klimanın soğutması, kapalı devredeki soğutucu gaza bağlıdır. Zamanla azalan gaz, tıkanan polen filtresi ya da kirlenip hava alamayan kondansatör soğutmayı zayıflatır. Doğru yaklaşım sistemi serviste kontrol ettirmek; gaz eksikse tamamlatmak, filtreyi değiştirmek ve kondansatörü temizletmektir. Sistemin serviste kontrol ettirilip gerekiyorsa gazının tamamlanması.',
     whyWrong: [
       'Motor yağı, lastik basıncı ve akü klimanın soğutma performansıyla doğrudan ilgili değildir.',
       'Bu parçaların değişimi soğutma zayıflığını gidermez.',
@@ -719,14 +719,14 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Silecek lastikleri eskidiğinde tipik olarak hangi belirti görülür ve bu neden önemlidir?',
     options: [
-      'Cam üzerinde iz, çizgi ve silinmeyen bölgeler bırakır, ötme/takırdama sesi çıkarır; görüşü bozduğu için özellikle yağmurda tehlikelidir, bu yüzden zamanında değiştirilmelidir',
-      'Motorun gücünü artırır',
-      'Yakıt tüketimini düşürür',
-      'Fren mesafesini kısaltır',
+      'Camda iz ve silinmeyen bölgeler bırakması',
+      'Silecek motorunun daha sessiz çalışması',
+      'Cam suyu tüketiminin belirgin azalması',
+      'Silecek kolunun cama daha sıkı yaslanması',
     ],
     answerIndex: 0,
     explanation:
-      'Sertleşen, çatlayan veya kenarı bozulan silecek lastiği camı düzgün temizleyemez; su izleri, çizgiler ve silinmeyen alanlar bırakır, kimi zaman ötme sesi çıkarır. Yağmurlu havada görüşü doğrudan bozduğu için bu bir güvenlik sorunudur; lastikler belirli aralıklarla ve bozulunca hemen değiştirilmelidir.',
+      'Sertleşen, çatlayan veya kenarı bozulan silecek lastiği camı düzgün temizleyemez; su izleri, çizgiler ve silinmeyen alanlar bırakır, kimi zaman ötme sesi çıkarır. Yağmurlu havada görüşü doğrudan bozduğu için bu bir güvenlik sorunudur; lastikler belirli aralıklarla ve bozulunca hemen değiştirilmelidir. Görüşü bozduğu için özellikle yağmurda tehlikelidir, bu yüzden zamanında değiştirilmelidir.',
     whyWrong: [
       'Silecek lastiğinin motor gücü ve yakıt tüketimiyle ilgisi yoktur.',
       'Fren mesafesini frenler ve lastikler belirler; silecek lastiği değil.',
@@ -744,7 +744,7 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Bir lastiğin yanağında yazan "205/55 R16" ifadesindeki değerler sırasıyla neyi gösterir?',
     options: [
       'Lastiğin fiyatını, rengini ve ağırlığını',
-      'Lastik genişliğini (mm), kesit yükseklik oranını (%) ve uyduğu jant çapını (inç)',
+      'Lastik genişliğini (mm)',
       'Lastiğin üretim yılını, ayını ve gününü',
       'Lastik basıncını, diş derinliğini ve hızını',
     ],
@@ -793,12 +793,12 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Stepnenin hiç kontrol edilmesine gerek yoktur',
       'Stepne bir kez şişirilince yıllarca hiç bakılmadan aynı basınçta kalır',
-      'Stepnenin hava basıncı da düzenli aralıklarla kontrol edilmelidir; çünkü zamanla kendiliğinden basınç kaybeden bir stepne, tam ihtiyaç anında sönük çıkabilir',
+      'Stepnenin hava basıncı da düzenli aralıklarla kontrol edilmelidir',
       'Stepne yalnızca kışın kontrol edilir',
     ],
     answerIndex: 2,
     explanation:
-      'Yedek lastik uzun süre kullanılmadan beklese de zamanla yavaşça hava kaybeder. Basıncı düzenli kontrol edilmezse, bir lastik patladığında takılan stepnenin de sönük olduğu ancak o an fark edilir. Bu yüzden diğer lastiklerle birlikte stepnenin basıncı ve durumu da periyodik olarak kontrol edilmelidir.',
+      'Yedek lastik uzun süre kullanılmadan beklese de zamanla yavaşça hava kaybeder. Basıncı düzenli kontrol edilmezse, bir lastik patladığında takılan stepnenin de sönük olduğu ancak o an fark edilir. Bu yüzden diğer lastiklerle birlikte stepnenin basıncı ve durumu da periyodik olarak kontrol edilmelidir. Çünkü zamanla kendiliğinden basınç kaybeden bir stepne, tam ihtiyaç anında sönük çıkabilir.',
     whyWrong: [
       'Stepne kontrolsüz bırakılmamalıdır; zamanla basınç kaybeder.',
       'Bir kez şişirmek yıllarca yetmez; kontrol yalnızca kışa özgü de değildir.',
@@ -816,13 +816,13 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Koltuk baş desteğinin (kafalık) doğru ayarlanmasının güvenlik açısından önemi nedir?',
     options: [
       'Yalnızca yolculuğu daha konforlu yapmak için vardır, güvenlikle ilgisi yoktur',
-      'Baş desteğinin üst kenarı yaklaşık baş hizasında olduğunda, özellikle arkadan çarpmalarda başın geriye savrulmasını sınırlayarak boyun (kamçı/whiplash) yaralanması riskini azaltır',
+      'Baş desteğinin üst kenarı yaklaşık baş hizasında olduğunda, özellikle arkadan çarpmalarda başın geriye savrulmasını sınırlayarak boyun (kamçı/whiplash)',
       'Baş desteği yükseğe alındığında yakıt tüketimini düşürür',
       'Baş desteği ne kadar aşağıda olursa o kadar iyi korur',
     ],
     answerIndex: 1,
     explanation:
-      'Baş desteği bir konfor parçası gibi görünse de temel görevi güvenliktir. Özellikle arkadan çarpmada gövde öne itilirken baş geride kalıp ani şekilde geriye savrulur; bu, boyunda "kamçı" tipi yaralanmaya yol açar. Baş desteğinin üst kenarı baş hizasına ayarlandığında başın bu savrulması sınırlanır ve boyun daha iyi korunur.',
+      'Baş desteği bir konfor parçası gibi görünse de temel görevi güvenliktir. Özellikle arkadan çarpmada gövde öne itilirken baş geride kalıp ani şekilde geriye savrulur; bu, boyunda "kamçı" tipi yaralanmaya yol açar. Baş desteğinin üst kenarı baş hizasına ayarlandığında başın bu savrulması sınırlanır ve boyun daha iyi korunur. Yaralanması riskini azaltır.',
     whyWrong: [
       'Baş desteği yalnızca konfor için değil, boyun koruması içindir.',
       'Yakıt tüketimiyle ilgisi yoktur ve çok alçak ayar başı desteklemediği için korumayı azaltır.',
@@ -841,13 +841,13 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Modern araçlardaki emniyet kemeri gerdiricisinin (ön gerdirici) işlevi nedir?',
     options: [
       'Kemeri sürüş boyunca gevşek tutmak',
-      'Şiddetli bir çarpışma anında kemerdeki boşluğu anında toplayarak gövdeyi koltuğa daha sıkı ve erken kavramak; böylece vücudun ileri savrulmasını azaltıp hava yastığıyla uyumlu koruma sağlamak',
+      'Şiddetli bir çarpışma anında kemerdeki boşluğu anında toplayarak gövdeyi koltuğa daha sıkı ve erken kavramak',
       'Kemeri kaza anında tamamen serbest bırakmak',
       'Kemeri yalnızca park hâlinde germek',
     ],
     answerIndex: 1,
     explanation:
-      'Kemer gerdiricisi, çarpışma sensörleri şiddetli darbeyi algıladığında devreye girer ve kemerdeki gevşekliği bir anda toplar. Böylece gövde daha erken ve sıkı biçimde koltuğa oturur; ileri savrulma azalır ve hava yastığı vücudu doğru konumda karşılar. Kemer ile hava yastığı birbirini tamamlayan bir bütün olarak çalışır.',
+      'Kemer gerdiricisi, çarpışma sensörleri şiddetli darbeyi algıladığında devreye girer ve kemerdeki gevşekliği bir anda toplar. Böylece gövde daha erken ve sıkı biçimde koltuğa oturur; ileri savrulma azalır ve hava yastığı vücudu doğru konumda karşılar. Kemer ile hava yastığı birbirini tamamlayan bir bütün olarak çalışır. Böylece vücudun ileri savrulmasını azaltıp hava yastığıyla uyumlu koruma sağlamak.',
     whyWrong: [
       'Gerdiricinin amacı kemeri gevşetmek değil, kaza anında germektir.',
       'Kemeri kaza anında serbest bırakmak korumayı ortadan kaldırırdı; sistem park hâlinde değil çarpışmada çalışır.',
@@ -865,7 +865,7 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Hız sabitleyici (cruise control) sistemi ile ilgili doğru ifade hangisidir?',
     options: [
       'Aracın direksiyonunu da otomatik çevirir',
-      'Sürücünün ayarladığı sabit hızı gaz pedalına basmadan korur; ancak kaygan zeminde, yoğun trafikte ve keskin virajlı yollarda kullanımı uygun değildir',
+      'Sürücünün ayarladığı sabit hızı gaz pedalına basmadan korur',
       'Frene basma ihtiyacını tamamen ortadan kaldırır',
       'Yalnızca şehir içi dur-kalk trafik için tasarlanmıştır',
     ],
@@ -891,11 +891,11 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
       'Bu donanımlar varsa aynalara ve dönüp bakmaya artık hiç gerek kalmaz',
       'Kamera görüntüsü her koşulda gerçek mesafeyi birebir verir, tam güvenilir',
       'Sensör sesi olmadıkça kesinlikle engel yoktur',
-      'Bu sistemler sürücüye yardımcıdır; ancak kör noktaları ve alçak/ince engelleri kaçırabildikleri için aynalarla ve gerektiğinde dönüp bakarak kontrol etmenin yerini tutmazlar',
+      'Bu sistemler sürücüye yardımcıdır',
     ],
     answerIndex: 3,
     explanation:
-      'Park sensörü ve geri görüş kamerası manevrayı kolaylaştıran yardımcı donanımlardır. Ancak sensörler çok alçak, ince veya belirli açılardaki engelleri algılamayabilir; kamera görüşü de kirlenme, açı ve mesafe algısı nedeniyle yanıltabilir. Bu yüzden sorumluluk sürücüdedir: aynalar kullanılmalı ve gerektiğinde dönüp bakılmalıdır.',
+      'Park sensörü ve geri görüş kamerası manevrayı kolaylaştıran yardımcı donanımlardır. Ancak sensörler çok alçak, ince veya belirli açılardaki engelleri algılamayabilir; kamera görüşü de kirlenme, açı ve mesafe algısı nedeniyle yanıltabilir. Bu yüzden sorumluluk sürücüdedir: aynalar kullanılmalı ve gerektiğinde dönüp bakılmalıdır. Ancak kör noktaları ve alçak/ince engelleri kaçırabildikleri için aynalarla ve gerektiğinde dönüp bakarak kontrol etmenin yerini tutmazlar.',
     whyWrong: [
       'Bu donanımlar ayna ve dönüp bakmanın yerini almaz; yardımcıdır.',
       'Kamera her koşulda birebir mesafe vermez ve sensörün susması her zaman "engel yok" anlamına gelmez.',
@@ -912,7 +912,7 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Kör nokta uyarı sistemi sürücüye nasıl bir yardım sağlar?',
     options: [
-      'Aynalarda görünmeyen kör noktada yandan gelen/seyreden bir araç bulunduğunda sürücüyü (genellikle ayna kenarındaki ışık ve/veya sesle) uyarır; yine de şerit değiştirmeden önce dönüp bakmak gerekir',
+      'Aynalarda görünmeyen kör noktada yandan gelen/seyreden bir araç bulunduğunda sürücüyü (genellikle ayna kenarındaki ışık ve/veya sesle) uyarır',
       'Aracı otomatik olarak durdurur',
       'Direksiyonu kilitleyerek şerit değiştirmeyi tamamen engeller',
       'Yalnızca gece çalışır ve farları yönetir',
@@ -937,13 +937,13 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Dizel araçlardaki partikül filtresi (DPF) ile ilgili doğru ifade aşağıdakilerden hangisidir?',
     options: [
       'Motor yağını süzen bir filtredir',
-      'Egzozdaki kurum (is) parçacıklarını tutarak çevreye salınan zararlı partikülleri azaltır; sürekli çok kısa/düşük hızlı yollarda motor yeterince ısınmadığından filtre zamanla dolabilir ve uyarı verebilir',
+      'Egzozdaki kurum (is) parçacıklarını tutarak çevreye salınan zararlı partikülleri azaltır',
       'Yakıt deposunun içindedir ve yakıtı soğutur',
       'Yalnızca benzinli araçlarda bulunur',
     ],
     answerIndex: 1,
     explanation:
-      'Dizel partikül filtresi, egzozdaki kurum parçacıklarını tutup çevreye salınan partikül miktarını azaltan bir emisyon donanımıdır. Tuttuğu kurumun yakılıp temizlenmesi (rejenerasyon) için egzozun yeterince ısınması gerekir; sürekli çok kısa ve düşük hızlı sürüşlerde bu ısınma gerçekleşemeyeceği için filtre zamanla dolar ve uyarı verebilir. Bu durumda üreticinin önerdiği koşullarda sürüş ya da servis müdahalesi gerekir.',
+      'Dizel partikül filtresi, egzozdaki kurum parçacıklarını tutup çevreye salınan partikül miktarını azaltan bir emisyon donanımıdır. Tuttuğu kurumun yakılıp temizlenmesi (rejenerasyon) için egzozun yeterince ısınması gerekir; sürekli çok kısa ve düşük hızlı sürüşlerde bu ısınma gerçekleşemeyeceği için filtre zamanla dolar ve uyarı verebilir. Bu durumda üreticinin önerdiği koşullarda sürüş ya da servis müdahalesi gerekir. Sürekli çok kısa/düşük hızlı yollarda motor yeterince ısınmadığından filtre zamanla dolabilir ve uyarı verebilir.',
     whyWrong: [
       'DPF motor yağını değil, egzoz kurumunu süzer; depoyla ve yakıt soğutmayla ilgisi yoktur.',
       'Bu donanım dizel araçların emisyon sistemine aittir, yalnızca benzinlilere özgü değildir.',
@@ -962,7 +962,7 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Radyatör fanı',
       'Yakıt pompası',
-      'Debriyaj baskı rulmanı (bilyası); yalnızca pedala basıldığında yük altına girdiği için aşındığında sesi bu anlarda duyulur',
+      'Debriyaj baskı rulmanı (bilyası)',
       'Ön cam sileceği',
     ],
     answerIndex: 2,
@@ -986,7 +986,7 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Sıcak parçalara çıplak elle dokunmak sakıncasızdır',
       'Radyatör kapağı sıcakken rahatça açılabilir',
-      'Motor durmuş olsa bile fan aniden dönebilir ve parçalar çok sıcak olabilir; bu yüzden dönen kısımlardan, sıcak yüzeylerden ve basınçlı sıcak sudan uzak durulmalı, gerekiyorsa motorun soğuması beklenmelidir',
+      'Motor durmuş olsa bile fan aniden dönebilir ve parçalar çok sıcak olabilir',
       'Elektrik bağlantılarına ıslak elle dokunmak güvenlidir',
     ],
     answerIndex: 2,
@@ -1009,14 +1009,14 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Yağ dolum kapağının altında ya da yağ çubuğunda açık kahverengi/sütlü, köpüklü bir bulaşık görülüyor ve soğutma suyu açıklanamayan şekilde eksiliyorsa akla gelmesi gereken ciddi ihtimal nedir?',
     options: [
-      'Silindir kapağı contasının (kafa contası) yanmış/kaçırıyor olabileceği; soğutma suyu ile yağın karışması bu köpüklü görüntüyü oluşturur ve bu, vakit kaybetmeden kontrol gerektiren ağır bir sorundur',
+      'Silindir kapağı contasının (kafa contası) yanmış/kaçırıyor olabileceği',
       'Silecek suyunun bittiği',
       'Polen filtresinin kirlendiği',
       'Lastik dişlerinin aşındığı',
     ],
     answerIndex: 0,
     explanation:
-      'Silindir kapağı contası yağ ve soğutma suyu kanallarını birbirinden ayırır. Conta kaçırdığında su ile yağ karışır; yağ kapağının altında ya da çubukta açık kahverengi/sütlü, köpüklü bir bulaşık (mayonez görünümü) oluşur ve soğutma suyu açıklanamayan biçimde eksilir. Bu ağır bir arızadır; motor zarar görmeden servise götürülmelidir.',
+      'Silindir kapağı contası yağ ve soğutma suyu kanallarını birbirinden ayırır. Conta kaçırdığında su ile yağ karışır; yağ kapağının altında ya da çubukta açık kahverengi/sütlü, köpüklü bir bulaşık (mayonez görünümü) oluşur ve soğutma suyu açıklanamayan biçimde eksilir. Bu ağır bir arızadır; motor zarar görmeden servise götürülmelidir. Soğutma suyu ile yağın karışması bu köpüklü görüntüyü oluşturur ve bu, vakit kaybetmeden kontrol gerektiren ağır bir sorundur.',
     whyWrong: [
       'Silecek suyu ve polen filtresi yağ-su karışımıyla ilgili değildir.',
       'Lastik aşınması bu belirtilerle ilgisizdir; sorun motorun iç sızdırmazlığındadır.',
@@ -1035,7 +1035,7 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Aracın park edildiği yerin altında yeşilimsi/pembemsi, hafif tatlı kokan bir sıvı lekesi görülüyor ve soğutma suyu azalıyorsa en olası neden nedir?',
     options: [
       'Fren hidroliğinin kaçırması',
-      'Soğutma sisteminde (antifrizli su) bir kaçak bulunması; renkli ve tatlımsı kokulu bu sıvı genellikle antifrizdir ve kaçak bulunup giderilmelidir',
+      'Soğutma sisteminde (antifrizli su) bir kaçak bulunması',
       'Motor yağının kaçırması',
       'Ön cam suyunun taşması',
     ],
@@ -1060,13 +1060,13 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Otomatik şanzımanlı bir araçta pedalların kullanımıyla ilgili doğru ifade hangisidir?',
     options: [
       'Sağ ayakla gaz, sol ayakla fren yapmak en doğru yöntemdir',
-      'Debriyaj pedalı olmadığından hem gaz hem fren tek ayakla (sağ ayakla) kullanılır; sol ayağı fren pedalına yerleştirme alışkanlığı, ani durumda iki pedala birden basma hatasına yol açabilir',
+      'Debriyaj pedalı olmadığından hem gaz hem fren tek ayakla (sağ ayakla) kullanılır',
       'Otomatik viteste fren pedalına hiç gerek yoktur',
       'Otomatik araçta sol ayak sürekli fren pedalında tutulmalıdır',
     ],
     answerIndex: 1,
     explanation:
-      'Otomatik şanzımanlı araçta debriyaj pedalı yoktur; bu yüzden gaz ve fren tek ayakla, sağ ayakla kullanılır. Sol ayağı sürekli fren pedalında tutmak, refleksle iki pedala birden basma ya da yanlış pedala basma riskini artırır. Sol ayak, kullanılmadığı zamanlarda uygun dinlenme alanında tutulur.',
+      'Otomatik şanzımanlı araçta debriyaj pedalı yoktur; bu yüzden gaz ve fren tek ayakla, sağ ayakla kullanılır. Sol ayağı sürekli fren pedalında tutmak, refleksle iki pedala birden basma ya da yanlış pedala basma riskini artırır. Sol ayak, kullanılmadığı zamanlarda uygun dinlenme alanında tutulur. Sol ayağı fren pedalına yerleştirme alışkanlığı, ani durumda iki pedala birden basma hatasına yol açabilir.',
     whyWrong: [
       'İki ayrı ayakla gaz-fren kullanmak otomatikte önerilen yöntem değildir; hata riskini artırır.',
       'Fren pedalı elbette gereklidir; ayrıca sol ayak sürekli fren pedalında tutulmaz.',
@@ -1085,7 +1085,7 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Park hâlinde vites herhangi bir konumda kalabilir',
       'Motor yalnızca "D" konumunda çalıştırılır',
-      'Park ederken vites "P" konumuna alınır ve ek güvenlik için el freni de çekilir; motor genellikle "P" (ya da "N") konumunda çalıştırılır',
+      'Park ederken vites "P" konumuna alınır ve ek güvenlik için el freni de çekilir',
       'El freni otomatik araçlarda hiç kullanılmaz',
     ],
     answerIndex: 2,
@@ -1107,14 +1107,14 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Motor çalışırken devir saatinin (takometre) rölantide belirli bir düşük değerde durması ve klima devreye girince devrin bir miktar yükselmesi hakkında doğru değerlendirme nedir?',
     options: [
-      'Rölanti devrinin belirli bir aralıkta olması normaldir; klima gibi ek yükler devreye girince motorun rölantiyi koruyabilmek için devri biraz yükseltmesi de olağandır',
+      'Rölanti devrinin belirli bir aralıkta olması normaldir',
       'Rölantide devrin yükselmesi her zaman ciddi arıza demektir',
       'Rölanti devrinin sıfır olması gerekir',
       'Klima açıldığında devrin değişmesi motorun bozulduğunu gösterir',
     ],
     answerIndex: 0,
     explanation:
-      'Motor, boştayken (rölanti) belirli bir düşük devirde dengeli çalışacak şekilde ayarlanır. Klima kompresörü gibi bir yük devreye girip motora ek direnç bindirdiğinde, motor stop etmemek için devrini bir miktar yükseltir. Bu, arıza değil, motor yönetiminin rölantiyi koruma davranışıdır. Devrin sürekli dalgalanması ya da anormal düşüp yükselmesi ise ayrı bir konudur.',
+      'Motor, boştayken (rölanti) belirli bir düşük devirde dengeli çalışacak şekilde ayarlanır. Klima kompresörü gibi bir yük devreye girip motora ek direnç bindirdiğinde, motor stop etmemek için devrini bir miktar yükseltir. Bu, arıza değil, motor yönetiminin rölantiyi koruma davranışıdır. Devrin sürekli dalgalanması ya da anormal düşüp yükselmesi ise ayrı bir konudur. Klima gibi ek yükler devreye girince motorun rölantiyi koruyabilmek için devri biraz yükseltmesi de olağandır.',
     whyWrong: [
       'Klimayla devrin bir miktar yükselmesi normaldir; her zaman arıza demek değildir.',
       'Motor çalışırken rölanti devri sıfır olmaz; ayrıca klima açılınca hafif değişim bozulma göstergesi değildir.',
@@ -1132,7 +1132,7 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Motor yağı değişiminde yağ filtresinin de birlikte değiştirilmesi neden önerilir?',
     options: [
       'Yağ filtresi hiçbir zaman değiştirilmez',
-      'Eski filtre içindeki kirli yağ ve tuttuğu tortular, yeni konan temiz yağı hemen kirletir; ayrıca dolmuş filtre yağın geçişini zorlaştırır. Bu yüzden yağla birlikte filtre de yenilenir',
+      'Eski filtre içindeki kirli yağ ve tuttuğu tortular, yeni konan temiz yağı hemen kirletir',
       'Filtre yalnızca dizel araçlarda değiştirilir',
       'Filtre değişimi yakıt tüketimini artırır',
     ],
@@ -1157,12 +1157,12 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Benzinle yıkayıp güneşte kurutmak',
       'Suyla yıkayıp tekrar takmak',
-      'Süresi/kilometresi geldiğinde ya da aşırı kirlendiğinde yenisiyle değiştirmek; kâğıt filtre sınırlı hafif temizlik dışında yıkanarak kalıcı biçimde temizlenemez',
+      'Süresi/kilometresi geldiğinde ya da aşırı kirlendiğinde yenisiyle değiştirmek',
       'Hiç değiştirmemek, ömür boyu aynı filtreyi kullanmak',
     ],
     answerIndex: 2,
     explanation:
-      'Kâğıt hava filtresi, motora giren havadaki toz ve parçacıkları tutan gözenekli bir elemandır. Zamanla gözenekleri dolar ve hava akışını kısıtlar; bu da yanmayı bozup güç kaybına ve tüketim artışına yol açar. Kâğıt filtre benzin/suyla yıkanarak kalıcı temizlenemez, yapısı bozulur; bu yüzden süresi geldiğinde ya da aşırı kirlendiğinde yenisiyle değiştirilir.',
+      'Kâğıt hava filtresi, motora giren havadaki toz ve parçacıkları tutan gözenekli bir elemandır. Zamanla gözenekleri dolar ve hava akışını kısıtlar; bu da yanmayı bozup güç kaybına ve tüketim artışına yol açar. Kâğıt filtre benzin/suyla yıkanarak kalıcı temizlenemez, yapısı bozulur; bu yüzden süresi geldiğinde ya da aşırı kirlendiğinde yenisiyle değiştirilir. Kâğıt filtre sınırlı hafif temizlik dışında yıkanarak kalıcı biçimde temizlenemez.',
     whyWrong: [
       'Benzinle veya suyla yıkamak kâğıt filtrenin yapısını bozar; doğru yöntem değildir.',
       'Filtre ömür boyu kullanılamaz; belirli aralıklarla değiştirilmesi gerekir.',
@@ -1182,11 +1182,11 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
       'Lambayı bant çekerek kapatmak',
       'Lamba sabit yanıyorsa hiçbir şey yapmaya gerek yoktur',
       'Aracı hemen terk edip çektirmek gerekir',
-      'Motor yönetiminde kayıtlı bir arıza olduğunu kabul edip, ağır hızlanma/yüksek devirden kaçınarak yakın zamanda arıza kodunu okutup kontrol ettirmek; belirti ağırlaşır ya da lamba yanıp sönmeye başlarsa daha acil davranmak',
+      'Motor yönetiminde kayıtlı bir arıza olduğunu kabul edip, ağır hızlanma/yüksek devirden kaçınarak yakın zamanda arıza kodunu okutup kontrol ettirmek',
     ],
     answerIndex: 3,
     explanation:
-      'Sabit yanan motor arıza lambası, motor yönetim sisteminin bir arıza (emisyon, sensör, yakıt/ateşleme vb.) kaydettiğini gösterir. Araç normale yakın gidiyorsa genellikle bir süre dikkatli sürülebilir; ancak ağır hızlanma ve yüksek devirden kaçınıp yakın zamanda arıza kodları okutulmalıdır. Lamba yanıp sönmeye dönerse (ör. ciddi tekleme) durum acildir ve daha temkinli davranmak gerekir.',
+      'Sabit yanan motor arıza lambası, motor yönetim sisteminin bir arıza (emisyon, sensör, yakıt/ateşleme vb.) kaydettiğini gösterir. Araç normale yakın gidiyorsa genellikle bir süre dikkatli sürülebilir; ancak ağır hızlanma ve yüksek devirden kaçınıp yakın zamanda arıza kodları okutulmalıdır. Lamba yanıp sönmeye dönerse (ör. ciddi tekleme) durum acildir ve daha temkinli davranmak gerekir. Belirti ağırlaşır ya da lamba yanıp sönmeye başlarsa daha acil davranmak.',
     whyWrong: [
       'Lambayı örtmek arızayı gizler, çözmez ve daha büyük hasara yol açabilir.',
       'Sabit yanan lamba önemsiz değildir; ancak araç normal gidiyorken hemen çektirmeyi de gerektirmez, kontrol ettirmek yeterlidir.',
@@ -1203,14 +1203,14 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Aşağıdaki gösterge ikazlarından hangisi, yandığında en kısa sürede güvenli bir yerde durup motoru durdurmayı gerektiren, "beklemeye gelmeyen" nitelikte bir uyarıdır?',
     options: [
-      'Kırmızı yağ basıncı (yağdanlık) ikazı; yağlama basıncı düştüğünde motor kısa sürede ağır hasar görebileceğinden derhâl durulup motor durdurulmalıdır',
+      'Kırmızı yağ basıncı (yağdanlık) ikazı',
       'Yakıtın azaldığını bildiren rezerv göstergesi',
       'Cam suyunun azaldığını bildiren uyarı',
       'Kapının tam kapanmadığını bildiren uyarı',
     ],
     answerIndex: 0,
     explanation:
-      'İkaz lambalarının aciliyeti aynı değildir. Kırmızı yağ basıncı ikazı, yağlama basıncının tehlikeli biçimde düştüğünü bildirir; yağsız kalan yataklar dakikalar içinde sarabileceği için bu uyarıda derhâl güvenli bir yerde durup motor durdurulmalıdır. Yakıt rezervi, cam suyu ya da kapı uyarıları önemli olsa da motoru anında durdurmayı gerektiren aciliyette değildir.',
+      'İkaz lambalarının aciliyeti aynı değildir. Kırmızı yağ basıncı ikazı, yağlama basıncının tehlikeli biçimde düştüğünü bildirir; yağsız kalan yataklar dakikalar içinde sarabileceği için bu uyarıda derhâl güvenli bir yerde durup motor durdurulmalıdır. Yakıt rezervi, cam suyu ya da kapı uyarıları önemli olsa da motoru anında durdurmayı gerektiren aciliyette değildir. Yağlama basıncı düştüğünde motor kısa sürede ağır hasar görebileceğinden derhâl durulup motor durdurulmalıdır.',
     whyWrong: [
       'Yakıt rezervi yakında yakıt almayı gerektirir ama anında motor durdurmayı değil.',
       'Cam suyu ve kapı uyarıları motorun ömrünü tehdit eden acil durumlar değildir.',
@@ -1228,14 +1228,14 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Bir araç sürüşte iyi çalışıyor ama durur/rölantiye düşer düşmez motor sık sık kendiliğinden stop ediyorsa (özellikle klima açıkken) olası nedenlerden biri hangisidir?',
     options: [
-      'Lastik dişlerinin aşınması',
-      'Far ayarının bozulması',
-      'Rölanti hava/yakıt dengesini etkileyen bir sorun (kirli gaz kelebeği, rölanti hava kaçağı ya da yakıt/ateşleme dengesizliği); ek yük binince zayıf rölantinin motoru boğması',
-      'Plaka lambasının yanmaması',
+      'Lastik dişlerinin aşınıp yol tutuşun zayıflamış olması',
+      'Far ayarının bozulup ışığın yukarı kaçıyor olması',
+      'Rölanti hava/yakıt dengesini bozan bir sorun bulunması',
+      'Amortisörlerin eskiyip gövde salınımının artmış olması',
     ],
     answerIndex: 2,
     explanation:
-      'Rölanti, motorun boştayken düşük devirde dengede kaldığı hassas bir durumdur. Kirlenmiş gaz kelebeği, emme hattındaki hava kaçağı ya da yakıt/ateşleme dengesizliği rölanti devrini zayıflatır. Klima gibi bir yük devreye girip motora ek direnç bindirdiğinde, zaten zayıf olan rölanti bunu karşılayamaz ve motor stop eder. Sorun sürüşte belirgin olmayabilir çünkü o an motor yük altında daha kararlı çalışır.',
+      'Rölanti, motorun boştayken düşük devirde dengede kaldığı hassas bir durumdur. Kirlenmiş gaz kelebeği, emme hattındaki hava kaçağı ya da yakıt/ateşleme dengesizliği rölanti devrini zayıflatır. Klima gibi bir yük devreye girip motora ek direnç bindirdiğinde, zaten zayıf olan rölanti bunu karşılayamaz ve motor stop eder. Sorun sürüşte belirgin olmayabilir çünkü o an motor yük altında daha kararlı çalışır. Ek yük binince zayıf rölantinin motoru boğması.',
     whyWrong: [
       'Lastik, far ve plaka lambası motorun rölantide çalışmasıyla ilgili değildir.',
       'Bu donanımların motorun stop etmesine yol açması beklenmez.',
@@ -1254,7 +1254,7 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Aracın park edildiği zeminde sızıntı lekeleri görüldüğünde, sıvının rengi olası kaynak hakkında ipucu verir. Aşağıdaki eşleştirmelerden hangisi doğrudur?',
     options: [
       'Berrak su lekesi her zaman ciddi bir motor yağı kaçağıdır',
-      'Koyu siyah/kahverengi yağlı leke motor yağını, yeşil/pembe renkli leke antifrizli soğutma suyunu düşündürür; klima çalışırken damlayan berrak su ise çoğunlukla yoğuşma suyudur ve normaldir',
+      'Koyu siyah/kahverengi yağlı leke motor yağını, yeşil/pembe renkli leke antifrizli soğutma suyunu düşündürür',
       'Yeşil renkli leke fren hidroliğidir',
       'Sıvının rengi kaynağı hakkında hiçbir bilgi vermez',
     ],
@@ -1278,13 +1278,13 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Araç camlarıyla ilgili doğru ifade aşağıdakilerden hangisidir?',
     options: [
       'Tüm camlar aynı tip normal cam olduğundan çarpınca keskin büyük parçalara ayrılır',
-      'Ön cam, iki cam arasına yapıştırıcı katman konan lamine (katmanlı) yapıdadır; darbede dağılmayıp çatlar. Yan/arka camlar ise kırıldığında keskin olmayan küçük tanelere ayrılan temperli camdan yapılır',
+      'Ön cam, iki cam arasına yapıştırıcı katman konan lamine (katmanlı) yapıdadır',
       'Ön cam kırıldığında toz gibi dağılır',
       'Camların türünün güvenlikle bir ilgisi yoktur',
     ],
     answerIndex: 1,
     explanation:
-      'Araçlarda güvenlik için farklı cam türleri kullanılır. Ön cam, iki cam tabakası arasına esnek bir ara katman yerleştirilen lamine yapıdadır; darbe aldığında dağılıp fırlamaz, çatlayarak yerinde kalır ve yolcuların dışarı savrulmasını da güçleştirir. Yan ve arka camlar ise temperlidir; kırıldığında keskin kenarlı büyük parçalar yerine küçük, nispeten zararsız tanelere ayrılır.',
+      'Araçlarda güvenlik için farklı cam türleri kullanılır. Ön cam, iki cam tabakası arasına esnek bir ara katman yerleştirilen lamine yapıdadır; darbe aldığında dağılıp fırlamaz, çatlayarak yerinde kalır ve yolcuların dışarı savrulmasını da güçleştirir. Yan ve arka camlar ise temperlidir; kırıldığında keskin kenarlı büyük parçalar yerine küçük, nispeten zararsız tanelere ayrılır. Darbede dağılmayıp çatlar. Yan/arka camlar ise kırıldığında keskin olmayan küçük tanelere ayrılan temperli camdan yapılır.',
     whyWrong: [
       'Araç camları normal cam değildir ve büyük keskin parçalara ayrılmaz; güvenlik için özel üretilir.',
       'Ön cam toz gibi dağılmaz; katmanlı yapısı sayesinde çatlayarak yerinde kalır. Cam türü doğrudan güvenlikle ilgilidir.',
@@ -1326,13 +1326,13 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Aracın periyodik bakım zamanının belirlenmesiyle ilgili doğru ilke hangisidir?',
     options: [
       'Bakım yalnızca bir arıza ortaya çıkınca yapılır',
-      'Üretici genellikle bir kilometre değeri ile bir süre (ör. belirli ay/yıl) belirtir; bunlardan hangisi önce dolarsa bakım o zaman yapılmalıdır. Böylece az kullanılan araç da zamana bağlı yaşlanan yağ/sıvılar nedeniyle ihmal edilmemiş olur',
+      'Üretici genellikle bir kilometre değeri ile bir süre (ör. belirli ay/yıl) belirtir',
       'Bakım aralığı sadece kilometreye bakılarak belirlenir, süre önemsizdir',
       'Bakım aralığı yalnızca aracın rengine göre değişir',
     ],
     answerIndex: 1,
     explanation:
-      'Üreticiler bakım aralığını hem bir kilometre hem de bir süre (ay/yıl) olarak verir; kural, bu ikisinden hangisi önce dolarsa bakımın o zaman yapılmasıdır. Çünkü yağ ve sıvılar yalnızca kullanımla değil, zamanla da özelliğini yitirir. Böylece çok az kilometre yapan bir araç bile, süresi geldiğinde bakıma alınarak korunur. Bakımı arıza çıkmasını beklemek yerine düzenli yaptırmak esastır.',
+      'Üreticiler bakım aralığını hem bir kilometre hem de bir süre (ay/yıl) olarak verir; kural, bu ikisinden hangisi önce dolarsa bakımın o zaman yapılmasıdır. Çünkü yağ ve sıvılar yalnızca kullanımla değil, zamanla da özelliğini yitirir. Böylece çok az kilometre yapan bir araç bile, süresi geldiğinde bakıma alınarak korunur. Bakımı arıza çıkmasını beklemek yerine düzenli yaptırmak esastır. Bunlardan hangisi önce dolarsa bakım o zaman yapılmalıdır. Böylece az kullanılan araç da zamana bağlı yaşlanan yağ/sıvılar nedeniyle ihmal edilmemiş olur.',
     whyWrong: [
       'Bakımı arıza çıkınca yapmak, önlenebilir hasarların oluşmasına yol açar.',
       'Yalnızca kilometreye bakmak, az kullanılan araçta zamana bağlı yaşlanmayı göz ardı eder; aracın rengiyle ise hiçbir ilgisi yoktur.',

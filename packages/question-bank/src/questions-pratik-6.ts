@@ -40,14 +40,14 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Sınav aracına oturan adayın hareketten önceki hazırlığında öğretilen mantıklı sıralama hangisidir?',
     options: [
-      'Önce koltuk ve direksiyon mesafesi ayarlanır, sonra aynalar düzenlenir, en son emniyet kemeri takılır; sıra bu yönde ilerler çünkü oturuş değişince ayna açısı da değişir',
+      'Önce koltuk ve direksiyon mesafesi ayarlanır, sonra aynalar düzenlenir, en son emniyet kemeri takılır',
       'Önce kemer takılır, sonra koltuk ileri çekilir, en son aynalara bakılır',
       'Önce aynalar ayarlanır, sonra koltuk konumu değiştirilir',
       'Sıralamanın hiçbir önemi yoktur; hepsi rastgele yapılabilir',
     ],
     answerIndex: 0,
     explanation:
-      'Ayna açısı, sürücünün gövde ve baş konumuna göre belirlenir; bu yüzden önce koltuk ile direksiyon mesafesi oturur, ardından aynalar bu son konuma göre ayarlanır, en son emniyet kemeri takılır. Ters sırada yapılırsa koltuğu sonradan oynatan aday aynalarını yeniden bozar. Görevli bu hazırlığın yapıldığını ve mantıklı bir düzende ilerlediğini gözlemler.',
+      'Ayna açısı, sürücünün gövde ve baş konumuna göre belirlenir; bu yüzden önce koltuk ile direksiyon mesafesi oturur, ardından aynalar bu son konuma göre ayarlanır, en son emniyet kemeri takılır. Ters sırada yapılırsa koltuğu sonradan oynatan aday aynalarını yeniden bozar. Görevli bu hazırlığın yapıldığını ve mantıklı bir düzende ilerlediğini gözlemler. Sıra bu yönde ilerler çünkü oturuş değişince ayna açısı da değişir.',
     whyWrong: [
       'Koltuğu aynalardan sonra ayarlamak, ayarlanmış ayna açısını yeniden bozar ve iş iki kez yapılır.',
       'Sıralamayı önemsiz saymak, hazırlığın eksik ya da dağınık yapılmasına yol açar.',
@@ -66,13 +66,13 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Sınav sırasında kalkışta motoru bir kez stop ettiren adayın en doğru davranışı nedir?',
     options: [
       'Telaşlanıp arka arkaya marşa basarak aracı zorlamak',
-      'El frenini çekip vitesi boşa alarak sakince yeniden çalıştırmak, sonra düzgün bir kalkış yapmak; tek seferlik stop tek başına elemeli sayılmaz, asıl bakılan toparlanabilmektir',
+      'El frenini çekip vitesi boşa alarak sakince yeniden çalıştırmak, sonra düzgün bir kalkış yapmak',
       'Aracı stop hâlinde bırakıp görevliyi beklemek',
       'Motoru çalıştırmadan debriyaja basıp aracın kendiliğinden yürümesini beklemek',
     ],
     answerIndex: 1,
     explanation:
-      'Tek bir stop çoğunlukla heyecana bağlıdır ve başlı başına adayı elemez; görevlinin izlediği, adayın soğukkanlılıkla toparlanıp güvenli bir kalkış yapabilmesidir. Doğru refleks vitesi boşa alıp aracı emniyete almak, sakince yeniden çalıştırmak ve düzgün kalkıştır. Panikle tekrar tekrar stop ettirmek ise araç hâkimiyeti zafiyetine dönüşerek asıl sorunu büyütür.',
+      'Tek bir stop çoğunlukla heyecana bağlıdır ve başlı başına adayı elemez; görevlinin izlediği, adayın soğukkanlılıkla toparlanıp güvenli bir kalkış yapabilmesidir. Doğru refleks vitesi boşa alıp aracı emniyete almak, sakince yeniden çalıştırmak ve düzgün kalkıştır. Panikle tekrar tekrar stop ettirmek ise araç hâkimiyeti zafiyetine dönüşerek asıl sorunu büyütür. Tek seferlik stop tek başına elemeli sayılmaz, asıl bakılan toparlanabilmektir.',
     whyWrong: [
       'Panikle üst üste marşa yüklenmek yeni stopları ve hâkimiyet kaybını davet eder.',
       'Aracı öylece bırakmak ya da motorsuz yürüme beklemek, kalkış problemini hiç çözmez.',
@@ -93,11 +93,11 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
       'Yokuşta her türlü geri hareket serbesttir, hiç puan etkilemez',
       'Aracın geriye kayması yalnızca arkada araç varsa dikkate alınır',
       'Kalkışta motor teklerse geri kayma otomatik olarak görmezden gelinir',
-      'Fark edilmeyecek kadar küçük, kontrollü ve tehlike doğurmayan bir kayma genelde tolere edilebilir; belirgin, sürüklenen ya da arkadaki mesafeyi tehdit eden geri kayma ise ağır hata olarak not edilir',
+      'Fark edilmeyecek kadar küçük, kontrollü ve tehlike doğurmayan bir kayma genelde tolere edilebilir',
     ],
     answerIndex: 3,
     explanation:
-      'Manuel araçta rampa kalkışında bir an tereddüt kaçınılmaz olabilir; bu yüzden gözle zor seçilen, kontrollü ve kimseyi tehlikeye atmayan çok küçük bir kayma çoğu zaman hoş görülür. Ancak aracın belirgin biçimde geriye sürüklenmesi, arkadaki araca ya da bordüre yaklaşması araç hâkimiyeti eksikliği sayılıp ağır hata olarak değerlendirilir. Bu yüzden kalkış el freni desteğiyle ya da hızlı ve dengeli debriyaj-gaz uyumuyla yapılır.',
+      'Manuel araçta rampa kalkışında bir an tereddüt kaçınılmaz olabilir; bu yüzden gözle zor seçilen, kontrollü ve kimseyi tehlikeye atmayan çok küçük bir kayma çoğu zaman hoş görülür. Ancak aracın belirgin biçimde geriye sürüklenmesi, arkadaki araca ya da bordüre yaklaşması araç hâkimiyeti eksikliği sayılıp ağır hata olarak değerlendirilir. Bu yüzden kalkış el freni desteğiyle ya da hızlı ve dengeli debriyaj-gaz uyumuyla yapılır. Belirgin, sürüklenen ya da arkadaki mesafeyi tehdit eden geri kayma ise ağır hata olarak not edilir.',
     whyWrong: [
       'Geri kaymayı tümüyle serbest saymak, rampa kalkışının en kritik güvenlik ölçütünü yok saymaktır.',
       'Motor teklemesi ya da arkada araç olmaması, sürüklenen bir kaymanın hâkimiyet eksikliği olduğu gerçeğini değiştirmez.',
@@ -118,12 +118,12 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Aracın orta ve sağ şeritler arasında serbestçe salınması',
       'Sürekli şerit çizgisinin üzerinde giderek iki şeridi birden kullanma',
-      'Aracın şeridin ortasında, çizgilere eşit uzaklıkta ve salınmadan tutulması; şerit değişimleri yalnızca gerektiğinde ve sinyalle yapılır',
+      'Aracın şeridin ortasında, çizgilere eşit uzaklıkta ve salınmadan tutulması',
       'Şeritten şeride sık geçerek trafiğe hâkim olunduğunu göstermek',
     ],
     answerIndex: 2,
     explanation:
-      'Düzgün şerit takibi, aracın şeridin ortasında iki çizgiye de yaklaşık eşit uzaklıkta ve titremeden tutulmasıdır. Bu, bakışın yeterince ileriye taşındığının ve direksiyonun küçük düzeltmelerle kullanıldığının işaretidir. Şerit içinde sağa sola salınmak ya da gereksiz yere şerit değiştirmek, hem hâkimiyet eksikliği hem öngörüsüzlük olarak not edilir.',
+      'Düzgün şerit takibi, aracın şeridin ortasında iki çizgiye de yaklaşık eşit uzaklıkta ve titremeden tutulmasıdır. Bu, bakışın yeterince ileriye taşındığının ve direksiyonun küçük düzeltmelerle kullanıldığının işaretidir. Şerit içinde sağa sola salınmak ya da gereksiz yere şerit değiştirmek, hem hâkimiyet eksikliği hem öngörüsüzlük olarak not edilir. Şerit değişimleri yalnızca gerektiğinde ve sinyalle yapılır.',
     whyWrong: [
       'Şeritler arası salınma, bakışın araca fazla yakına düştüğünü ve direksiyonun geç düzeltildiğini gösterir.',
       'Gereksiz sık şerit değişimi hâkimiyet değil, plansızlık ve çevredekileri şaşırtma olarak değerlendirilir.',
@@ -142,13 +142,13 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Sınav boyunca yanındaki görevliyle sohbet başlatmaya çalışan adayın bu davranışı neden sakıncalıdır?',
     options: [
       'Görevli konuşmayı kesinlikle yanıtlayamayacağı için',
-      'Sohbet dikkati yoldan ve gözlemden koparır; ayrıca gelecek yön talimatının kaçırılmasına yol açabilir, oysa aday sürüşe ve komutları dinlemeye odaklanmalıdır',
+      'Sohbet dikkati yoldan ve gözlemden koparır',
       'Konuşmak yakıt tüketimini artırdığı için',
       'Görevlinin ismini öğrenmek yasak olduğu için',
     ],
     answerIndex: 1,
     explanation:
-      'Sürüş, bölünmemiş dikkat ister; görevliyle sohbet gözü ve zihni yoldan alıp gözlem ile karar arasındaki bağı zayıflatır. Dahası konuşma sırasında gelecek bir yön talimatı ya da bir tehlike gözden kaçabilir. Aday nazik ama kısa yanıtlarla yetinip dikkatini sürüşe ve komutları dinlemeye ayırmalıdır.',
+      'Sürüş, bölünmemiş dikkat ister; görevliyle sohbet gözü ve zihni yoldan alıp gözlem ile karar arasındaki bağı zayıflatır. Dahası konuşma sırasında gelecek bir yön talimatı ya da bir tehlike gözden kaçabilir. Aday nazik ama kısa yanıtlarla yetinip dikkatini sürüşe ve komutları dinlemeye ayırmalıdır. Ayrıca gelecek yön talimatının kaçırılmasına yol açabilir, oysa aday sürüşe ve komutları dinlemeye odaklanmalıdır.',
     whyWrong: [
       'Görevlinin yanıt verip vermemesi mesele değildir; asıl sorun adayın dikkatinin dağılmasıdır.',
       'Yakıt ya da isim öğrenme konuyla ilgisizdir; sakıncanın kaynağı dikkat kaybıdır.',
@@ -169,11 +169,11 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
       'Motoru hemen kapatıp sonra frene basmak',
       'Kemeri açıp aracı boşta bırakarak inmek',
       'El frenini çekmeden vitesi boşa alıp inmek',
-      'Aracı güvenli ve düz biçimde durdurmak, vitesi boşa (ya da rampada uygun vitese) almak, el frenini çekmek, motoru kapatmak ve ancak sonra kemeri çözüp inmek',
+      'Aracı güvenli ve düz biçimde durdurmak, vitesi boşa (ya da rampada uygun vitese)',
     ],
     answerIndex: 3,
     explanation:
-      'Bitiş de sürüşün bir parçasıdır ve düzeni görevli izler. Doğru sıra; aracı sarsıntısız durdurmak, el frenini çekip aracı emniyete almak, motoru kapatmak ve en son emniyet kemerini çözmektir. Rampada ise vites ve tekerlek yönü önlemleri de eklenir. Bu düzen, aracı tam güvenceye almadan araçtan kopmayı önler.',
+      'Bitiş de sürüşün bir parçasıdır ve düzeni görevli izler. Doğru sıra; aracı sarsıntısız durdurmak, el frenini çekip aracı emniyete almak, motoru kapatmak ve en son emniyet kemerini çözmektir. Rampada ise vites ve tekerlek yönü önlemleri de eklenir. Bu düzen, aracı tam güvenceye almadan araçtan kopmayı önler. Almak, el frenini çekmek, motoru kapatmak ve ancak sonra kemeri çözüp inmek.',
     whyWrong: [
       'Motoru frene basmadan ya da aracı emniyete almadan kapatmak, düzensiz ve riskli bir bitiştir.',
       'El freni çekilmeden boşta bırakılan araç, özellikle en küçük eğimde bile kayabilir.',
@@ -191,14 +191,14 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Sınav sırasında güzergâhtaki diğer araçlar hız sınırının üzerinde akıyorsa aday ne yapmalıdır?',
     options: [
-      'Yürürlükteki hız sınırına ve yol koşullarına uygun hızda kalmalı; trafiğe ayak uydurmak için sınırı aşmamalıdır, akışa uymak sınırı çiğnemeyi haklı çıkarmaz',
+      'Yürürlükteki hız sınırına ve yol koşullarına uygun hızda kalmalı',
       'Geride kalmamak için akan trafikle aynı hıza çıkmalı',
       'Diğerlerinden hızlı giderek kendine güvenini göstermeli',
       'Hız sınırını yalnızca radar varsa dikkate almalı',
     ],
     answerIndex: 0,
     explanation:
-      'Hız sınırı, çevredeki araçların davranışına göre değişmeyen bir kuraldır; başkalarının aşması adaya aşma izni vermez. Aday yürürlükteki sınırın ve yol-görüş koşullarının elverdiği güvenli hızda kalmalı, gereksiz yavaşlıktan da kaçınıp akışı tıkamamalıdır. Sınırı aşmak, trafiğe uymak gerekçesiyle bile ağır hata sayılır.',
+      'Hız sınırı, çevredeki araçların davranışına göre değişmeyen bir kuraldır; başkalarının aşması adaya aşma izni vermez. Aday yürürlükteki sınırın ve yol-görüş koşullarının elverdiği güvenli hızda kalmalı, gereksiz yavaşlıktan da kaçınıp akışı tıkamamalıdır. Sınırı aşmak, trafiğe uymak gerekçesiyle bile ağır hata sayılır. Trafiğe ayak uydurmak için sınırı aşmamalıdır, akışa uymak sınırı çiğnemeyi haklı çıkarmaz.',
     whyWrong: [
       'Akan trafiğe uymak için sınırı aşmak, kuralı çiğneyen çoğunluğu örnek almaktır.',
       'Diğerlerini geçmeye çalışmak ya da sınırı yalnızca radara bağlamak, hız kuralının amacını yok sayar.',
@@ -218,7 +218,7 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Yol boşsa yavaşlayıp durmadan geçmek',
       'Yalnızca sağ-sol araç görürse durmak',
-      'Dur çizgisinde tekerlekler tamamen durana kadar araç durdurulur, ardından sağ-sol güvenli görülünce hareket edilir; yuvarlanarak geçmek ağır hata sayılır',
+      'Dur çizgisinde tekerlekler tamamen durana kadar araç durdurulur, ardından sağ-sol güvenli görülünce hareket edilir',
       'Kornaya basıp yavaşça geçmek',
     ],
     answerIndex: 2,
@@ -242,7 +242,7 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Sınavda ayna kontrollerinin yalnızca göz ucuyla değil, hafif bir baş hareketiyle yapılması neden önerilir?',
     options: [
       'Baş hareketi boynu dinlendirdiği için',
-      'Ayna kontrolünün gerçekten yapıldığı görevli tarafından görülebilsin ve aday da geniş açıyı daha iyi tarayabilsin diye; sadece göz ucuyla bakış hem yetersiz kalır hem fark edilmez',
+      'Ayna kontrolünün gerçekten yapıldığı görevli tarafından görülebilsin ve aday da geniş açıyı daha iyi tarayabilsin diye',
       'Baş çevirmek aracı otomatik yavaşlattığı için',
       'Aynalar ancak baş hareketiyle çalıştığı için',
     ],
@@ -269,11 +269,11 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
       'Fark ettiği anda direksiyonu sert kırıp doğru yöne ani manevra yapmak',
       'Hiç aldırmadan yanlış yöne dönüşü tamamlamak',
       'Aniden durup geri geri gelerek doğru sokağa girmek',
-      'Şeridini ve hızını korumak, güvenli değilse yanlış dönüşü zorlamamak; durumu kısaca görevliye belirtip bir sonraki uygun yerden güvenle düzeltmek, ani ve tehlikeli düzeltmeden kaçınmaktır',
+      'Şeridini ve hızını korumak, güvenli değilse yanlış dönüşü zorlamamak',
     ],
     answerIndex: 3,
     explanation:
-      'Bir yön hatasını düzeltmek için yapılan ani direksiyon ya da ani duruş, arkadan gelen ve yandaki trafiği hazırlıksız yakalayarak asıl tehlikeyi yaratır. Doğru davranış, güvenliği bozacak bir düzeltmeyi zorlamamak, şeridi korumak ve durumu görevliye kısaca söyleyip ilk uygun ve güvenli noktadan yolu düzeltmektir. Sınavda tek başına bir yön şaşırması, güvenli sürüşten daha az önemlidir.',
+      'Bir yön hatasını düzeltmek için yapılan ani direksiyon ya da ani duruş, arkadan gelen ve yandaki trafiği hazırlıksız yakalayarak asıl tehlikeyi yaratır. Doğru davranış, güvenliği bozacak bir düzeltmeyi zorlamamak, şeridi korumak ve durumu görevliye kısaca söyleyip ilk uygun ve güvenli noktadan yolu düzeltmektir. Sınavda tek başına bir yön şaşırması, güvenli sürüşten daha az önemlidir. Durumu kısaca görevliye belirtip bir sonraki uygun yerden güvenle düzeltmek, ani ve tehlikeli düzeltmeden kaçınmaktır.',
     whyWrong: [
       'Son anda sert kırış ya da ani duruş, küçük bir yön hatasını ciddi bir kaza riskine çevirir.',
       'Trafikte geri gelmek çoğu yerde yasak ve tehlikelidir; yanlış dönüşü inatla tamamlamak da güvenliği bozabilir.',
@@ -294,12 +294,12 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Yaya kendi dikkat etmesi gerektiği için önemsiz sayılır',
       'Yalnızca yayaya çarpılırsa dikkate alınır',
-      'Yaya önceliğinin çiğnenmesi güvenlik açısından ağır (elemeli) hata olarak değerlendirilir; sürücü geçide yaklaşırken hızını azaltıp gerekiyorsa durup yol vermelidir',
+      'Yaya önceliğinin çiğnenmesi güvenlik açısından ağır (elemeli) hata olarak değerlendirilir',
       'Sadece okul bölgesindeki geçitlerde önemlidir',
     ],
     answerIndex: 2,
     explanation:
-      'Yaya geçidinde öncelik yayanındır ve bu önceliğin çiğnenmesi doğrudan can güvenliğini ilgilendirir; bu yüzden sınavda ağır, çoğunlukla elemeli bir hata olarak değerlendirilir. Aday geçide yaklaşırken hızını erkenden düşürmeli, yaya varsa durup güvenle geçmesini beklemelidir. Yalnızca çarpma anını ölçüt saymak, önceliğin amacını yok saymaktır.',
+      'Yaya geçidinde öncelik yayanındır ve bu önceliğin çiğnenmesi doğrudan can güvenliğini ilgilendirir; bu yüzden sınavda ağır, çoğunlukla elemeli bir hata olarak değerlendirilir. Aday geçide yaklaşırken hızını erkenden düşürmeli, yaya varsa durup güvenle geçmesini beklemelidir. Yalnızca çarpma anını ölçüt saymak, önceliğin amacını yok saymaktır. Sürücü geçide yaklaşırken hızını azaltıp gerekiyorsa durup yol vermelidir.',
     whyWrong: [
       'Yayanın dikkatli olmasını beklemek, sürücüye tanınan yol verme yükümlülüğünü ortadan kaldırmaz.',
       'Riski çarpmaya ya da tek bir bölgeye indirgemek, yaya önceliği kuralının kapsamını daraltır.',
@@ -317,14 +317,14 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Sınavda düşük hızda yüksek viteste (örneğin 20 km/s hızda dördüncü vitesle) ilerleyip motoru zorlayan aday nasıl değerlendirilir?',
     options: [
-      'Vites ile hız uyumsuzluğu, araç hâkimiyeti ve teknik zafiyet olarak not edilir; hıza uygun vitese inilmesi, motorun ne zorlanması ne de aşırı devirde çalışması beklenir',
+      'Vites ile hız uyumsuzluğu, araç hâkimiyeti ve teknik zafiyet olarak not edilir',
       'Yakıt tasarrufu sağladığı için olumlu puan alır',
       'Vites seçimi sınavda hiç değerlendirilmez',
       'Yalnızca motor stop ederse dikkate alınır',
     ],
     answerIndex: 0,
     explanation:
-      'Hıza uygun vites seçmek, aracı doğru kullanmanın temel göstergesidir. Düşük hızda yüksek viteste gitmek motoru tıkır tıkır zorlayıp titreştirir ve gaza gerektiği anda ani yanıt alınamaz; bu, teknik hâkimiyet eksikliği olarak not edilir. Aday hız düştükçe uygun vitese inmeli, motoru ne boğmalı ne de gereksiz yüksek devirde tutmalıdır.',
+      'Hıza uygun vites seçmek, aracı doğru kullanmanın temel göstergesidir. Düşük hızda yüksek viteste gitmek motoru tıkır tıkır zorlayıp titreştirir ve gaza gerektiği anda ani yanıt alınamaz; bu, teknik hâkimiyet eksikliği olarak not edilir. Aday hız düştükçe uygun vitese inmeli, motoru ne boğmalı ne de gereksiz yüksek devirde tutmalıdır. Hıza uygun vitese inilmesi, motorun ne zorlanması ne de aşırı devirde çalışması beklenir.',
     whyWrong: [
       'Motoru zorlamak yakıt tasarrufu değil, düzensiz ve verimsiz sürüş anlamına gelir.',
       'Vites seçimi sürüş becerisinin parçasıdır; yalnızca motor stopuyla sınırlı değildir.',
@@ -344,7 +344,7 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Komuta odaklanmak her zaman en doğru davranıştır, sorun olmaz',
       'Komuta uymak yeterli görülür, gözlem gerekmez',
-      'Görevli komutu yerine getirmek kadar sağ-sol-yaya gözlemini de bekler; komuta kilitlenip taramayı atlamak, yol verme ve güvenlik hatalarına yol açarak olumsuz değerlendirilir',
+      'Görevli komutu yerine getirmek kadar sağ-sol-yaya gözlemini de bekler',
       'Kavşakta gözlem yalnızca ışık kırmızıysa gereklidir',
     ],
     answerIndex: 2,
@@ -368,13 +368,13 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Sınavın park bölümünde aday, aracı cebe ilk hamlede tam oturtamayıp bir düzeltme hamlesi yaparsa bu nasıl değerlendirilir?',
     options: [
       'Her düzeltme hamlesi otomatik olarak elemeli hata sayılır',
-      'Kontrollü ve güvenli yapılan makul sayıda düzeltme kabul edilir; asıl olumsuzluk çok sayıda deneme, bordüre/dubaya çarpma ya da aracı çarpık ve tehlikeli bırakmaktır',
+      'Kontrollü ve güvenli yapılan makul sayıda düzeltme kabul edilir',
       'Park sırasında hiçbir düzeltmeye izin verilmez',
       'Düzeltme yapmak yerine aracı olduğu gibi bırakmak daha iyidir',
     ],
     answerIndex: 1,
     explanation:
-      'Park manevrasında araç ilk hamlede tam oturmayabilir; kontrollü ve güvenli yapılan makul bir düzeltme hâkimiyet göstergesidir, ceza konusu değildir. Değerlendirmeyi olumsuza çeviren, çok sayıda tekrarlı deneme, bordüre veya dubaya temas ve aracın çarpık, taşan ya da tehlikeli konumda bırakılmasıdır. Yani ölçüt hamle sayısından çok, sonucun güvenli ve düzgün olmasıdır.',
+      'Park manevrasında araç ilk hamlede tam oturmayabilir; kontrollü ve güvenli yapılan makul bir düzeltme hâkimiyet göstergesidir, ceza konusu değildir. Değerlendirmeyi olumsuza çeviren, çok sayıda tekrarlı deneme, bordüre veya dubaya temas ve aracın çarpık, taşan ya da tehlikeli konumda bırakılmasıdır. Yani ölçüt hamle sayısından çok, sonucun güvenli ve düzgün olmasıdır. Asıl olumsuzluk çok sayıda deneme, bordüre/dubaya çarpma ya da aracı çarpık ve tehlikeli bırakmaktır.',
     whyWrong: [
       'Tek bir düzeltmeyi bile elemeli saymak, gerçekçi park pratiğine aykırıdır.',
       'Aracı çarpık ve düzeltmeden bırakmak, hatalı park olarak zaten olumsuz değerlendirilir.',
@@ -392,7 +392,7 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Görüşü kısıtlı bir dönemece güvenli girişte "geniş gir, dar çık" ilkesi ne anlama gelir?',
     options: [
-      'Viraja şeridin dış tarafından girip görüş açısını uzatmak, tepe/apeks noktasına doğru içe yaklaşmak ve çıkışta yeniden şerit içinde konumlanmak; bu, dönüşü yumuşatır ve daha erken görmeyi sağlar',
+      'Viraja şeridin dış tarafından girip görüş açısını uzatmak, tepe/apeks noktasına doğru içe yaklaşmak ve çıkışta yeniden şerit içinde konumlanmak',
       'Viraja tam gaz girip fren yaparak dar çıkmak',
       'Virajı her zaman karşı şeridi kullanarak kesmek',
       'Viraj boyunca sürekli iç şeride yaslanıp çıkışta dışa savrulmak',
@@ -419,12 +419,12 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Yakıt tüketimini artırdığı için',
       'Kamyonun lastikleri daha çok ısındığı için',
-      'Bu kadar yakın takipte önü göremezsiniz, kamyon ani frende sizin durma payınızı bırakmaz ve savrulan bir taş ya da patlayan lastik parçası doğrudan sizi bulur; kazanılan yakıt, kaybedilen güvenlik payının yanında hiçtir',
+      'Bu kadar yakın takipte önü göremezsiniz, kamyon ani frende sizin durma payınızı bırakmaz ve savrulan bir taş ya da patlayan lastik parçası doğrudan sizi bulur',
       'Kamyon şoförü sizi hiç göremediği için yalnızca korna gerekir',
     ],
     answerIndex: 2,
     explanation:
-      'Büyük aracın hemen arkasındaki rüzgâr boşluğu hava direncini biraz azaltsa da, bu yakınlıkta öndeki aracın ötesini görmek imkânsızdır ve kamyon aniden yavaşladığında durma mesafeniz kalmaz. Ayrıca kamyonun lastiğinden fırlayan taş ya da patlayan sırt parçası doğrudan camınıza gelir. Kazanılan cüzi yakıt, feda edilen görüş ve fren payının yanında anlamsızdır; takip mesafesi büyük araçlarda daha da açılmalıdır.',
+      'Büyük aracın hemen arkasındaki rüzgâr boşluğu hava direncini biraz azaltsa da, bu yakınlıkta öndeki aracın ötesini görmek imkânsızdır ve kamyon aniden yavaşladığında durma mesafeniz kalmaz. Ayrıca kamyonun lastiğinden fırlayan taş ya da patlayan sırt parçası doğrudan camınıza gelir. Kazanılan cüzi yakıt, feda edilen görüş ve fren payının yanında anlamsızdır; takip mesafesi büyük araçlarda daha da açılmalıdır. Kazanılan yakıt, kaybedilen güvenlik payının yanında hiçtir.',
     whyWrong: [
       'Asıl tehlike yakıt ya da lastik ısınması değil, yok olan görüş ve fren mesafesidir.',
       'Kör noktada kalmak sorunun bir parçasıdır ama çözüm korna değil, mesafeyi açmaktır.',
@@ -445,11 +445,11 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
       'Araçların alarmının çalması',
       'Araçların üzerine kar yağması',
       'Park etmiş araçların farlarının yanması',
-      'Bir kapının aniden açılması ya da araçların arasından bir yolcunun/yayanın çıkması; bu yüzden park sırasına yan mesafe bırakılır ve hız azaltılarak açılabilecek kapı payı korunur',
+      'Bir kapının aniden açılması ya da araçların arasından bir yolcunun/yayanın çıkması',
     ],
     answerIndex: 3,
     explanation:
-      'Park etmiş araçların yanı, en sık kapı açılması ve araç arasından çıkan yaya sürprizlerinin yaşandığı yerdir; inen bir yolcu ya da bisikletli kapısını kontrol etmeden açabilir. Bu şeridin yanından geçerken hız düşürülür ve mümkünse bir kapı genişliği kadar yan mesafe bırakılır. Böylece aniden açılan kapı ya da çıkan yaya için tepki payı korunur.',
+      'Park etmiş araçların yanı, en sık kapı açılması ve araç arasından çıkan yaya sürprizlerinin yaşandığı yerdir; inen bir yolcu ya da bisikletli kapısını kontrol etmeden açabilir. Bu şeridin yanından geçerken hız düşürülür ve mümkünse bir kapı genişliği kadar yan mesafe bırakılır. Böylece aniden açılan kapı ya da çıkan yaya için tepki payı korunur. Bu yüzden park sırasına yan mesafe bırakılır ve hız azaltılarak açılabilecek kapı payı korunur.',
     whyWrong: [
       'Alarm, far ya da kar birikmesi burada sürücüyü tehdit eden ani hareketler değildir.',
       'Asıl risk aniden açılan kapı ve araç arasından çıkan yaya olduğu için, hazırlık yan mesafe ve düşük hızdır.',
@@ -467,7 +467,7 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Bir bisikletliyi sollarken yan mesafe kadar hız da neden önemlidir?',
     options: [
-      'Yüksek hızla ve yakından geçen aracın yarattığı ani hava basıncı bisikletliyi sarsıp dengesini bozabilir; hız düşürülüp geniş yan mesafe bırakıldığında bu emme-itme etkisi azalır',
+      'Yüksek hızla ve yakından geçen aracın yarattığı ani hava basıncı bisikletliyi sarsıp dengesini bozabilir',
       'Hızlı geçmek bisikletliyi daha çabuk geride bırakıp daha güvenli olur',
       'Bisikletlinin hızını ölçmek için yavaşlamak gerekir',
       'Hızın bisikletliyle hiçbir ilgisi yoktur, yalnızca mesafe önemlidir',
@@ -495,11 +495,11 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
       'Farları yakıp hızlanarak kafa kafaya gelmeden önce onu geçmeye çalışmak',
       'Şeridinizi koruyup hiç yavaşlamamak, sollama yapanın geri dönmesini beklemek',
       'Kornaya basıp olduğunuz yerde durmak ve gözleri kapatmak',
-      'Hızınızı azaltıp mümkün olduğunca sağa, banket ya da yol kenarına yanaşmak; böylece karşı araca dönüş için yer açar ve olası çarpışmanın şiddetini düşürürsünüz',
+      'Hızınızı azaltıp mümkün olduğunca sağa, banket ya da yol kenarına yanaşmak',
     ],
     answerIndex: 3,
     explanation:
-      'Karşıdan sollamaya çıkıp şeridinize giren araç kafa kafaya çarpışma riski yaratır; bu anda amaç ona kendi şeridine dönebileceği yeri ve zamanı açmaktır. Doğru davranış hızı kesip mümkün olduğunca sağa, gerekirse bankete yanaşmaktır; hem ona boşluk açılır hem olası temasın kapanma hızı düşer. Hızlanarak yarışmak ya da hiç önlem almamak, çarpışmayı neredeyse kaçınılmaz kılar.',
+      'Karşıdan sollamaya çıkıp şeridinize giren araç kafa kafaya çarpışma riski yaratır; bu anda amaç ona kendi şeridine dönebileceği yeri ve zamanı açmaktır. Doğru davranış hızı kesip mümkün olduğunca sağa, gerekirse bankete yanaşmaktır; hem ona boşluk açılır hem olası temasın kapanma hızı düşer. Hızlanarak yarışmak ya da hiç önlem almamak, çarpışmayı neredeyse kaçınılmaz kılar. Böylece karşı araca dönüş için yer açar ve olası çarpışmanın şiddetini düşürürsünüz.',
     whyWrong: [
       'Hızlanmak kapanma hızını artırır ve iki aracı daha sert bir çarpışmaya taşır.',
       'Şeridi koruyup hiç yavaşlamamak ya da olduğu yerde donup kalmak, karşı araca kaçış alanı bırakmaz.',
@@ -519,13 +519,13 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Bölünmüş yolda arkanızdan sizden hızlı gelen bir araç sizi geçmek istiyorsa doğru davranış nedir?',
     options: [
       'Hızı biraz artırıp geçmesine izin vermemek',
-      'Güvenliyse sağ şeride geçerek ya da sağda kalarak yol vermek; sol şeridi geçiş için boşaltmak, inatla önünde yavaş gitmemek',
+      'Güvenliyse sağ şeride geçerek ya da sağda kalarak yol vermek',
       'Fren yapıp arkadaki aracı uyarmak',
       'Sola geçip önünü kesmek',
     ],
     answerIndex: 1,
     explanation:
-      'Sol şeritler sollama içindir; arkadan gelen daha hızlı araç geçmek istediğinde ona yol açmak hem kural hem güvenlik gereğidir. Güvenli olduğunda sağ şeride geçilir ya da zaten sağda kalınır ve sol şerit boşaltılır. Önünde inatla yavaş gitmek ya da fren yaparak "ders vermeye" çalışmak, öfke ve tehlikeli manevraları körükler.',
+      'Sol şeritler sollama içindir; arkadan gelen daha hızlı araç geçmek istediğinde ona yol açmak hem kural hem güvenlik gereğidir. Güvenli olduğunda sağ şeride geçilir ya da zaten sağda kalınır ve sol şerit boşaltılır. Önünde inatla yavaş gitmek ya da fren yaparak "ders vermeye" çalışmak, öfke ve tehlikeli manevraları körükler. Sol şeridi geçiş için boşaltmak, inatla önünde yavaş gitmemek.',
     whyWrong: [
       'Hızlanıp geçişi engellemek, gereksiz gerginlik ve riskli sollama denemelerine yol açar.',
       'Fren yaparak uyarmak ya da önünü kesmek, arkadan çarpma ve çatışma riskini büyütür.',
@@ -543,14 +543,14 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Yoğun şehir trafiğinde şerit değiştirecek sürücü, motosikletlerin şeritler arasından ilerleyebildiğini neden özellikle hesaba katmalıdır?',
     options: [
-      'Motosiklet dar olduğundan araç sıraları arasından hızla yaklaşabilir ve son anda kör noktaya girebilir; bu yüzden şerit değiştirmeden önce ayna kontrolüne ek olarak omuz üzerinden bakış şarttır',
+      'Motosiklet dar olduğundan araç sıraları arasından hızla yaklaşabilir ve son anda kör noktaya girebilir',
       'Motosikletler sadece en sağ şeritte gidebildiği için',
       'Motosikletler trafik kurallarına tabi olmadığı için',
       'Motosikletlerin farı gündüz görünmediği için',
     ],
     answerIndex: 0,
     explanation:
-      'Motosiklet dar profili sayesinde duran ya da yavaş araç sıralarının arasından beklenmedik biçimde hızla yaklaşabilir; bu, aynada geç görülür ve kör noktaya son anda girebilir. Bu yüzden yoğun trafikte şerit değiştirmeden önce ayna kontrolü tek başına yeterli değildir; mutlaka omuz üzerinden dönülüp bakılmalıdır. Motosikletlinin varlığı görülmeden yapılan şerit değişimi, en sık motosiklet kazalarından biridir.',
+      'Motosiklet dar profili sayesinde duran ya da yavaş araç sıralarının arasından beklenmedik biçimde hızla yaklaşabilir; bu, aynada geç görülür ve kör noktaya son anda girebilir. Bu yüzden yoğun trafikte şerit değiştirmeden önce ayna kontrolü tek başına yeterli değildir; mutlaka omuz üzerinden dönülüp bakılmalıdır. Motosikletlinin varlığı görülmeden yapılan şerit değişimi, en sık motosiklet kazalarından biridir. Bu yüzden şerit değiştirmeden önce ayna kontrolüne ek olarak omuz üzerinden bakış şarttır.',
     whyWrong: [
       'Motosikletler yalnız sağ şeritle sınırlı değildir; şeritler arasından ilerleyebilirler.',
       'Motosikletler de kurallara tabidir ve farları görünür; sorun onların değil, sürücünün kör nokta ihmalidir.',
@@ -569,14 +569,14 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Yol kenarındaki keskin bir seti ya da tek taraflı çıkıntıyı (örneğin garaj girişindeki yüksek bordür geçişini) aşarken hangi teknik jant ve lastiği en iyi korur?',
     options: [
-      'Engebeye mümkün olduğunca dik yerine hafif çapraz (açılı) yaklaşıp tekerlekleri sırayla, düşük hızda ve engel anında frenden ayağı çekerek geçirmek; böylece darbe iki tekerleğe aynı anda binmez ve yumuşar',
+      'Engebeye mümkün olduğunca dik yerine hafif çapraz (açılı) yaklaşıp tekerlekleri sırayla, düşük hızda ve engel anında frenden ayağı çekerek geçirmek',
       'Sete tam gazla ve iki tekerlekle aynı anda çarparak hızla aşmak',
       'Set üzerinde frene basılı tutarak yavaş yavaş sürtmek',
       'Tekerleklerden yalnızca birini havaya kaldırıp diğerini sürterek geçmek',
     ],
     answerIndex: 0,
     explanation:
-      'Keskin bir sete iki ön tekerlek aynı anda dik olarak çarparsa darbe ani ve tek yükte gelir; jant ezilmesi ve lastik patlaması riski artar. Hafif açılı yaklaşıldığında tekerlekler seti sırayla aşar, darbe zamana yayılır ve süspansiyon her tekerleği ayrı ayrı yumuşatır. Hız düşük tutulur ve engel anında frenden ayak çekilir; böylece çökmüş süspansiyon yerine açık süspansiyonla temas edilir.',
+      'Keskin bir sete iki ön tekerlek aynı anda dik olarak çarparsa darbe ani ve tek yükte gelir; jant ezilmesi ve lastik patlaması riski artar. Hafif açılı yaklaşıldığında tekerlekler seti sırayla aşar, darbe zamana yayılır ve süspansiyon her tekerleği ayrı ayrı yumuşatır. Hız düşük tutulur ve engel anında frenden ayak çekilir; böylece çökmüş süspansiyon yerine açık süspansiyonla temas edilir. Böylece darbe iki tekerleğe aynı anda binmez ve yumuşar.',
     whyWrong: [
       'Tam gazla ve iki tekerlekle aynı anda çarpmak, darbeyi en sert ve en yıkıcı hâline getirir.',
       'Set üzerinde fren basılı sürtmek ya da bir tekerleği havada tutmak, hem aracı hem lastiği zorlar ve dengeyi bozar.',
@@ -598,7 +598,7 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
       'Ani direksiyon her zaman en hızlı çözümdür',
       'Fren yapmak lastiği patlatacağı için yalnızca direksiyon kullanılmalıdır',
       'Çukurlar zaten araca zarar vermez',
-      'Yüksek hızda yapılan ani direksiyon, aracı karşı şeride ya da yan şeritteki araca savurabilir; hız düşürüldüğünde hem çukurun vereceği darbe azalır hem güvenli bir yön düzeltmesi için zaman ve tutunma payı kalır',
+      'Yüksek hızda yapılan ani direksiyon, aracı karşı şeride ya da yan şeritteki araca savurabilir',
     ],
     answerIndex: 3,
     explanation:
@@ -622,7 +622,7 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Tünelde dilediğince şerit değiştirilebilir',
       'Tünelde yalnızca sağdan sollama yapılır',
-      'Aksi bir işaretleme yoksa tünel içinde şerit değiştirmekten ve sollamadan kaçınılır; şerit korunur, öndeki araçla güvenli mesafe bırakılıp sabit hızla ilerlenir',
+      'Aksi bir işaretleme yoksa tünel içinde şerit değiştirmekten ve sollamadan kaçınılır',
       'Tünelde farlar kapatılıp hızlanılır',
     ],
     answerIndex: 2,
@@ -646,13 +646,13 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Soğuk bir günde yolun büyük bölümü kuru olsa bile, ağaçlık ya da yüksek duvar gölgesinde kalan virajlara girerken neden ekstra dikkatli olunmalıdır?',
     options: [
       'Gölgeli kesimlerde far otomatik yandığı için',
-      'Gölgeli bölümler güneş görmediğinden zemindeki nem ya da kırağı buza dönüşüp gizli bir buzlanma oluşturabilir; kuru yola alışmış sürücü, viraj ortasında beklenmedik kayganlıkla karşılaşabilir',
+      'Gölgeli bölümler güneş görmediğinden zemindeki nem ya da kırağı buza dönüşüp gizli bir buzlanma oluşturabilir',
       'Gölgede yol her zaman daha pürüzlü olduğu için',
       'Gölgeli virajlarda rüzgâr her zaman daha güçlü olduğu için',
     ],
     answerIndex: 1,
     explanation:
-      'Güneş gören kesimler kurusa da, gün boyu gölgede kalan viraj ve orman altı bölümler nemi ve kırağıyı koruyup ince, çoğu zaman fark edilmeyen bir buz tabakası oluşturabilir. Kuru asfalta güvenip virajı hızlı alan sürücü, tam dönüş ortasında ani tutunma kaybıyla karşılaşır. Bu yüzden gölgeli virajlara girmeden hız düşürülür, viraj içinde ani fren ve direksiyondan kaçınılıp sabit gazla geçilir.',
+      'Güneş gören kesimler kurusa da, gün boyu gölgede kalan viraj ve orman altı bölümler nemi ve kırağıyı koruyup ince, çoğu zaman fark edilmeyen bir buz tabakası oluşturabilir. Kuru asfalta güvenip virajı hızlı alan sürücü, tam dönüş ortasında ani tutunma kaybıyla karşılaşır. Bu yüzden gölgeli virajlara girmeden hız düşürülür, viraj içinde ani fren ve direksiyondan kaçınılıp sabit gazla geçilir. Kuru yola alışmış sürücü, viraj ortasında beklenmedik kayganlıkla karşılaşabilir.',
     whyWrong: [
       'Farın yanması ya da yolun pürüzü, buradaki asıl tehlike olan gizli buzlanmayı açıklamaz.',
       'Rüzgâr her gölgeli virajda güçlü değildir; belirleyici etken güneş görmeyen zeminin buz tutmasıdır.',
@@ -670,14 +670,14 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Şerit çizgileri silinmiş ya da hiç bulunmayan çift yönlü bir yolda sürücü aracını nasıl konumlandırmalıdır?',
     options: [
-      'Yolun sağ yarısında, kendi tarafında kalarak; karşıdan araç geldiğinde biraz daha sağa yanaşıp yeterli açıklık bırakarak ve gerektiğinde hızı azaltarak ilerlemelidir',
+      'Yolun sağ yarısında, kendi tarafında kalarak',
       'Yolun tam ortasından giderek karşıdan gelene göre karar vermelidir',
       'Sol yarıyı kullanıp karşı aracı sağdan geçmelidir',
       'Çizgi olmadığından konumun bir önemi kalmaz, dilediği yerden gidebilir',
     ],
     answerIndex: 0,
     explanation:
-      'Çizgi olmasa da yolun mantığı değişmez: sürücü kendi sağ yarısında kalır ve karşıdan gelenle güvenli açıklığı korur. Karşı araç yaklaştığında biraz daha sağa yanaşılır, görüş ya da genişlik dardır diye hız azaltılır. Yolun ortasından gitmek ya da sol yarıyı kullanmak, çizgi yokluğunu bir serbestlik sanmaktır ve kafa kafaya karşılaşma riskini doğurur.',
+      'Çizgi olmasa da yolun mantığı değişmez: sürücü kendi sağ yarısında kalır ve karşıdan gelenle güvenli açıklığı korur. Karşı araç yaklaştığında biraz daha sağa yanaşılır, görüş ya da genişlik dardır diye hız azaltılır. Yolun ortasından gitmek ya da sol yarıyı kullanmak, çizgi yokluğunu bir serbestlik sanmaktır ve kafa kafaya karşılaşma riskini doğurur. Karşıdan araç geldiğinde biraz daha sağa yanaşıp yeterli açıklık bırakarak ve gerektiğinde hızı azaltarak ilerlemelidir.',
     whyWrong: [
       'Ortadan gitmek, karşıdan araç çıktığında iki tarafı da hazırlıksız yakalar.',
       'Sol yarıyı kullanmak ya da konumu önemsiz saymak, çift yönlü yolun temel güvenlik ilkesini çiğner.',
@@ -696,13 +696,13 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Karlı bir yokuşta durduktan sonra yeniden kalkarken patinajı önlemek için doğru yaklaşım nedir?',
     options: [
       'Bol gaz verip tekerleği döndürerek karı ezmeye çalışmak',
-      'Gazı ölçülü ve yumuşak vermek, debriyajı sabırla kavratmak, mümkünse durmadan ağır tempoda süreklilik korumak; çünkü karlı yokuşta bir kez durup patinaja girmek yeniden kalkışı çok zorlaştırır',
+      'Gazı ölçülü ve yumuşak vermek, debriyajı sabırla kavratmak, mümkünse durmadan ağır tempoda süreklilik korumak',
       'Debriyajı aniden bırakıp motoru zorlamak',
       'El frenini çekili bırakıp gaza yüklenmek',
     ],
     answerIndex: 1,
     explanation:
-      'Karlı yokuşun en zor anı, tutunmanın zaten düşük olduğu yerde yeniden kalkıştır; bu yüzden en iyisi mümkünse hiç durmadan ağır ve düzenli bir tempoyla ilerlemeyi sürdürmektir. Durmak zorunlu ise kalkışta gaz ölçülü ve yumuşak verilir, debriyaj sabırla kavratılır; ani güç tekerleği boşa döndürüp patinaja sokar. Bir kez patinaja girildiğinde lastik karı cilalar ve kalkış iyice imkânsızlaşır.',
+      'Karlı yokuşun en zor anı, tutunmanın zaten düşük olduğu yerde yeniden kalkıştır; bu yüzden en iyisi mümkünse hiç durmadan ağır ve düzenli bir tempoyla ilerlemeyi sürdürmektir. Durmak zorunlu ise kalkışta gaz ölçülü ve yumuşak verilir, debriyaj sabırla kavratılır; ani güç tekerleği boşa döndürüp patinaja sokar. Bir kez patinaja girildiğinde lastik karı cilalar ve kalkış iyice imkânsızlaşır. Çünkü karlı yokuşta bir kez durup patinaja girmek yeniden kalkışı çok zorlaştırır.',
     whyWrong: [
       'Bol gaz karı ezmez; tekerleği boşa döndürüp altını buzlaştırarak tutunmayı büsbütün bitirir.',
       'Debriyajı fırlatmak ya da el freni çekiliyken gaza yüklenmek, kalkışı hem sarsıntılı hem tutunmasız yapar.',
@@ -722,12 +722,12 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Zincir viraj içinde, hızlıca takılmalıdır',
       'Zincir yalnızca yol ortasında takılabilir',
-      'Mümkün olduğunca düz, güvenli ve trafiği aksatmayan bir yere (geniş banket, park cebi) çekilip dörtlü flaşör yakılarak takılır; dar, dönemeç ya da görüşün kısıtlı olduğu noktalarda durulmaz',
+      'Mümkün olduğunca düz, güvenli ve trafiği aksatmayan bir yere (geniş banket, park cebi) çekilip dörtlü flaşör yakılarak takılır',
       'Zincir hareket hâlindeyken takılmalıdır',
     ],
     answerIndex: 2,
     explanation:
-      'Zincir takmak zaman alır ve sürücü araç dışında, yol seviyesinde çalışır; bu yüzden durulacak yerin güvenliği hayatidir. Düz, geniş ve trafiği aksatmayan bir banket ya da park cebi seçilir, dörtlü flaşör yakılır ve gerekiyorsa reflektör konur. Dönemeç, tepe altı ya da dar kesimde durmak, arkadan gelen için görülmeyen bir engel yaratır.',
+      'Zincir takmak zaman alır ve sürücü araç dışında, yol seviyesinde çalışır; bu yüzden durulacak yerin güvenliği hayatidir. Düz, geniş ve trafiği aksatmayan bir banket ya da park cebi seçilir, dörtlü flaşör yakılır ve gerekiyorsa reflektör konur. Dönemeç, tepe altı ya da dar kesimde durmak, arkadan gelen için görülmeyen bir engel yaratır. Dar, dönemeç ya da görüşün kısıtlı olduğu noktalarda durulmaz.',
     whyWrong: [
       'Viraj içi ya da yol ortası, hem çalışanı hem trafiği tehlikeye atan en riskli yerlerdir.',
       'Zincir araç dururken takılır; hareket hâlinde takmak diye bir yöntem yoktur.',
@@ -748,7 +748,7 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
       'Kontak tümüyle kapatılmalı ve anahtar çıkarılmalıdır; direksiyon zaten kilitli kaldığından güvenli olur',
       'Kontak marş konumunda bırakılıp motor sürekli çalıştırılmaya çalışılmalıdır',
       'Kontağın açık ya da kapalı olması hiç fark etmez',
-      'Kontak açık (direksiyon kilidi çözülmüş) konumda tutulmalıdır; kontak kapatılıp anahtar çıkarılırsa direksiyon kilitlenir ve çekilen araç virajda yön veremez',
+      'Kontak açık (direksiyon kilidi çözülmüş) konumda tutulmalıdır',
     ],
     answerIndex: 3,
     explanation:
@@ -772,13 +772,13 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Kış sürüşünde yol yüzeyine bakıp buzlu (kaygan) kesimi önceden sezmek için hangi ipuçları işe yarar?',
     options: [
       'Yalnızca hava sıcaklığı sıfırın çok altındaysa buz olabilir',
-      'Yolun rengi ve parlaklığı okunur: mat-beyazımsı ya da ıslakmış gibi parlayan koyu kesimler (siyah buz), köprü/gölge/gölet kenarları buzlu olabilir; buralara girmeden hız düşürülür',
+      'Yolun rengi ve parlaklığı okunur: mat-beyazımsı ya da ıslakmış gibi parlayan koyu kesimler (siyah buz), köprü/gölge/gölet kenarları buzlu olabilir',
       'Buz yalnızca kar yağarken oluşur, kuru havada olmaz',
       'Buzlu zemin her zaman gözle net görüldüğü için ayrıca dikkat gerekmez',
     ],
     answerIndex: 1,
     explanation:
-      'Buzlu zemin çoğu zaman ıslak asfalt gibi görünür; koyu ve camsı parlayan kesimler ("siyah buz") ya da mat-beyaz lekeler kayganlığın habercisidir. Köprü üstleri, gölge alanlar, nehir-gölet kenarları ve tünel ağızları erken donar. Bu işaretler görülünce daha üzerine gelmeden hız düşürülür; ani fren, gaz ve direksiyondan kaçınılır. Sıcaklık sıfır dolayındayken kuru görünen yol bile buzlu olabilir.',
+      'Buzlu zemin çoğu zaman ıslak asfalt gibi görünür; koyu ve camsı parlayan kesimler ("siyah buz") ya da mat-beyaz lekeler kayganlığın habercisidir. Köprü üstleri, gölge alanlar, nehir-gölet kenarları ve tünel ağızları erken donar. Bu işaretler görülünce daha üzerine gelmeden hız düşürülür; ani fren, gaz ve direksiyondan kaçınılır. Sıcaklık sıfır dolayındayken kuru görünen yol bile buzlu olabilir. Buralara girmeden hız düşürülür.',
     whyWrong: [
       'Buz için havanın çok soğuk olması şart değildir; sıfır dolayında ve nemli zeminde de oluşur.',
       'Siyah buz çoğu kez ıslak asfalttan ayırt edilemez; "her zaman net görülür" varsayımı tehlikelidir.',
@@ -797,13 +797,13 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Bölünmüş çok şeritli bir yolda sürekli orta ya da sol şeritte yavaşça seyretmek neden yanlıştır?',
     options: [
       'Sol ve orta şeritte yakıt tüketimi arttığı için',
-      'Sağ şerit esas seyir şerididir; sol şeritler sollama ve daha hızlı akış içindir. Boşken solda kalmak arkadan gelenleri sağdan geçmeye zorlar, trafik akışını bozar ve tehlikeli sollamaları körükler',
+      'Sağ şerit esas seyir şerididir',
       'Orta şeritte aynalar daha az kullanıldığı için',
       'Sol şeritte hız sınırı olmadığı için',
     ],
     answerIndex: 1,
     explanation:
-      'Çok şeritli yollarda esas olan sağ şeritten seyretmek, sol şeritleri sollama ve daha hızlı akış için boş bırakmaktır. Sağ şerit boşken solda yavaş gitmek, arkadan gelenleri sağdan geçmeye ve gereksiz şerit değişimlerine iter; bu, akışı bozup çarpışma riskini artırır. Sollama bittiğinde ya da arkadan hızlı araç geldiğinde sağa dönülür.',
+      'Çok şeritli yollarda esas olan sağ şeritten seyretmek, sol şeritleri sollama ve daha hızlı akış için boş bırakmaktır. Sağ şerit boşken solda yavaş gitmek, arkadan gelenleri sağdan geçmeye ve gereksiz şerit değişimlerine iter; bu, akışı bozup çarpışma riskini artırır. Sollama bittiğinde ya da arkadan hızlı araç geldiğinde sağa dönülür. Sol şeritler sollama ve daha hızlı akış içindir. Boşken solda kalmak arkadan gelenleri sağdan geçmeye zorlar, trafik akışını bozar ve tehlikeli sollamaları körükler.',
     whyWrong: [
       'Sorun yakıt ya da ayna kullanımı değil, akış düzeninin ve şerit mantığının bozulmasıdır.',
       'Sol şeritte de hız sınırı geçerlidir; şerit seçimi hız sınırını ortadan kaldırmaz.',
@@ -823,13 +823,13 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Seyir hâlinde navigasyon ekranını kullanırken güvenli bakış disiplini nasıl olmalıdır?',
     options: [
       'Ekrana istenildiği kadar uzun bakılabilir, önemli olan yolu ara ara kontrol etmektir',
-      'Navigasyon yalnızca durunca kurulmalı, hareket hâlinde ekrana ise en fazla bir-iki saniyelik kısa bakışlarla göz atılmalı; asıl güven sesli yönergelere verilmeli ve karmaşık ekran işlemleri güvenli bir yerde durulup yapılmalıdır',
+      'Navigasyon yalnızca durunca kurulmalı, hareket hâlinde ekrana ise en fazla bir-iki saniyelik kısa bakışlarla göz atılmalı',
       'Ekran sürücünün kucağında tutulup sürekli izlenmelidir',
       'Adres, direksiyondayken ve seyir hâlindeyken yazılmalıdır',
     ],
     answerIndex: 1,
     explanation:
-      'Bir-iki saniyelik bir ekran bakışı bile şehir hızında onlarca metre kör sürüş demektir; bu yüzden hedef seyir hâlinde durmadan yönergeyi almaktır. Navigasyon araç dururken kurulur, hareket hâlinde ekrana yalnızca çok kısa göz atılır ve asıl olarak sesli yönergelere güvenilir. Adres girme gibi karmaşık işlemler kesinlikle güvenli bir yere durularak yapılır.',
+      'Bir-iki saniyelik bir ekran bakışı bile şehir hızında onlarca metre kör sürüş demektir; bu yüzden hedef seyir hâlinde durmadan yönergeyi almaktır. Navigasyon araç dururken kurulur, hareket hâlinde ekrana yalnızca çok kısa göz atılır ve asıl olarak sesli yönergelere güvenilir. Adres girme gibi karmaşık işlemler kesinlikle güvenli bir yere durularak yapılır. Asıl güven sesli yönergelere verilmeli ve karmaşık ekran işlemleri güvenli bir yerde durulup yapılmalıdır.',
     whyWrong: [
       'Ekrana uzun bakmak, arada yola bakmak onu telafi etmez; kör kalınan an tehlikeyi çoktan doğurur.',
       'Ekranı kucakta izlemek ya da seyir hâlinde adres yazmak, dikkatin en tehlikeli biçimde dağılmasıdır.',
@@ -847,14 +847,14 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Çift yönlü tek şeritli bir yolda öndeki aracı sollamaya karar vermeden önce sürücünün yapması gereken temel değerlendirme nedir?',
     options: [
-      'Karşı yönün yeterince uzağa kadar boş ve görüşün açık olduğundan emin olmak, sollamanın izinli olduğunu (kesik çizgi, işaretleme) doğrulamak ve manevrayı bitirip güvenle dönebilecek mesafeyi hesaplamak; kuşku varsa sollamaktan vazgeçmek',
+      'Karşı yönün yeterince uzağa kadar boş ve görüşün açık olduğundan emin olmak, sollamanın izinli olduğunu (kesik çizgi, işaretleme) doğrulamak ve manevrayı bitirip güvenle dönebilecek mesafeyi hesaplamak',
       'Öndeki araç yavaşsa görüşe bakmadan hemen geçmek',
       'Sadece sinyal verip karşı yönü kontrol etmeden çıkmak',
       'Sollamayı virajda ya da tepe üstünde, görüş kapalıyken denemek',
     ],
     answerIndex: 0,
     explanation:
-      'Sollama, karşı yönü bir süreliğine işgal ettiği için en riskli manevralardan biridir. Çıkmadan önce karşı yönün yeterince uzağa kadar boş ve görüşün açık olduğu, sollamanın izinli olduğu ve manevrayı tamamlayıp güvenle geri dönecek mesafenin bulunduğu birlikte değerlendirilir. En küçük kuşkuda sollamadan vazgeçilir; kaybedilen birkaç saniye, alınan riskin yanında önemsizdir.',
+      'Sollama, karşı yönü bir süreliğine işgal ettiği için en riskli manevralardan biridir. Çıkmadan önce karşı yönün yeterince uzağa kadar boş ve görüşün açık olduğu, sollamanın izinli olduğu ve manevrayı tamamlayıp güvenle geri dönecek mesafenin bulunduğu birlikte değerlendirilir. En küçük kuşkuda sollamadan vazgeçilir; kaybedilen birkaç saniye, alınan riskin yanında önemsizdir. Kuşku varsa sollamaktan vazgeçmek.',
     whyWrong: [
       'Öndeki yavaş diye görüşe bakmadan geçmek, kafa kafaya çarpışmanın en sık nedenidir.',
       'Görüş kapalı virajda ya da tepe üstünde sollamak, karşıdan geleni göremeden şerit işgal etmektir.',
@@ -900,11 +900,11 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
       'Düz tekerlek yakıt tükettirmediği için',
       'Sola kırık tekerlek motoru zorladığı için',
       'Tekerlek düzken sinyal daha iyi görüldüğü için',
-      'Beklerken tekerlekler sola kırılı olursa ve arkadan bir araç çarparsa, araç doğrudan karşı şeride, gelen trafiğin içine itilir; tekerlekler düzken ise ileri, kendi şeridi yönünde gider',
+      'Beklerken tekerlekler sola kırılı olursa ve arkadan bir araç çarparsa, araç doğrudan karşı şeride, gelen trafiğin içine itilir',
     ],
     answerIndex: 3,
     explanation:
-      'Sola dönüş için beklerken tekerlekleri şimdiden sola kırmak sıradan bir alışkanlık gibi görünür ama tehlikelidir: arkadan çarpılırsa kırılı tekerlekler aracı doğrudan karşıdan gelen trafiğin içine sürükler. Tekerlekler düz tutulduğunda aynı darbe aracı ileri, kendi şeridi doğrultusunda iter ve kafa kafaya çarpışma önlenir. Direksiyon ancak dönüşe geçileceği anda kırılır.',
+      'Sola dönüş için beklerken tekerlekleri şimdiden sola kırmak sıradan bir alışkanlık gibi görünür ama tehlikelidir: arkadan çarpılırsa kırılı tekerlekler aracı doğrudan karşıdan gelen trafiğin içine sürükler. Tekerlekler düz tutulduğunda aynı darbe aracı ileri, kendi şeridi doğrultusunda iter ve kafa kafaya çarpışma önlenir. Direksiyon ancak dönüşe geçileceği anda kırılır. Tekerlekler düzken ise ileri, kendi şeridi yönünde gider.',
     whyWrong: [
       'Yakıt, sinyal görünürlüğü ya da motor zorlanması bu kuralın gerekçesi değildir.',
       'Asıl mesele arkadan çarpma anında aracın hangi yöne savrulacağıdır; düz tekerlek karşı şeride itilmeyi önler.',
@@ -923,7 +923,7 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Yol kenarında geçmek için bekleyen bir yayaya yaklaşırken, onun niyetini anlamak için sürücünün başvurabileceği pratik yöntem nedir?',
     options: [
       'Yayanın mutlaka geçmeyeceğini varsayıp hızlanmak',
-      'Yayayla göz teması kurmaya çalışmak ve baş-vücut yönü ile ayak hareketinden geçme niyetini okumak; temas kurulamıyorsa yayanın her an adım atabileceği varsayılıp hız düşürülür',
+      'Yayayla göz teması kurmaya çalışmak ve baş-vücut yönü ile ayak hareketinden geçme niyetini okumak',
       'Farları sürekli yakıp söndürerek yayayı hızlıca geçirmeye zorlamak',
       'Yaya yaşlıysa durmak, gençse durmamak',
     ],
@@ -947,14 +947,14 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Uzun bir yolculukta sürüş yorgunluğunu yönetmek için önerilen temel yaklaşım nedir?',
     options: [
-      'Ortalama iki saatte bir ya da yorgunluk belirtileri başladığında (esneme, ağırlaşan göz kapağı, dikkat dağınıklığı) güvenli bir yerde mola verip kısa süre dinlenmek; uykusuzken direksiyona geçmemek',
+      'Ortalama iki saatte bir ya da yorgunluk belirtileri başladığında (esneme, ağırlaşan göz kapağı, dikkat dağınıklığı) güvenli bir yerde mola verip kısa süre dinlenmek',
       'Yorgunluk hissedilse de mümkün olduğunca durmadan devam etmek',
       'Pencereyi açıp yüksek sesle müzik dinlemenin uykuyu tümüyle önlediğine güvenmek',
       'Yorulunca hızı artırıp yolculuğu bir an önce bitirmek',
     ],
     answerIndex: 0,
     explanation:
-      'Yorgunluk, tepki süresini uzatıp dikkati böldüğü için alkol kadar tehlikeli olabilir; en etkili önlem, yorgunluk birikmeden yaklaşık iki saatte bir ve ilk belirtilerde (esneme, göz kapaklarının ağırlaşması, şerit sapması) mola vermektir. Kısa bir dinlenme, hava alma ve gerekiyorsa kısa bir uyku tazeler. Cam açmak ya da müzik geçici bir uyarıdır; uykuyu yenmez, bu yüzden uykuluyken sürüşe hiç başlanmamalıdır.',
+      'Yorgunluk, tepki süresini uzatıp dikkati böldüğü için alkol kadar tehlikeli olabilir; en etkili önlem, yorgunluk birikmeden yaklaşık iki saatte bir ve ilk belirtilerde (esneme, göz kapaklarının ağırlaşması, şerit sapması) mola vermektir. Kısa bir dinlenme, hava alma ve gerekiyorsa kısa bir uyku tazeler. Cam açmak ya da müzik geçici bir uyarıdır; uykuyu yenmez, bu yüzden uykuluyken sürüşe hiç başlanmamalıdır. Uykusuzken direksiyona geçmemek.',
     whyWrong: [
       'Durmadan devam etmek yorgunluğu biriktirir ve mikro uykulara (bir anlık dalıp gitme) yol açar.',
       'Cam açmak, müzik ya da hızlanmak yorgunluğun çözümü değildir; uykuyu maskeleyip riski büyütür.',
@@ -974,7 +974,7 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Yalnızca yol ortasındaki çizgiye bakmak yeterlidir',
       'Bakış yalnız şerit içinde tutulur, kenarlara hiç bakılmaz',
-      'Farın aydınlattığı alanla birlikte yol kenarları ve hendekler de taranır; karanlıkta parlayan iki nokta (hayvan gözlerinin yansıması) görülürse hız hemen azaltılır, çünkü bir hayvanın ardından sürünün gelebileceği düşünülür',
+      'Farın aydınlattığı alanla birlikte yol kenarları ve hendekler de taranır',
       'Uzun far sürekli kapalı tutulup yavaş gidilir',
     ],
     answerIndex: 2,
@@ -998,14 +998,14 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'İki şeridin tek şeride düştüğü bir yol çalışması ya da daralmada trafiğin en akıcı ve güvenli ilerlemesini sağlayan yöntem hangisidir?',
     options: [
-      'Her aracın daralma noktasına kadar kendi şeridinde ilerleyip birleşme yerinde sırayla, dönüşümlü olarak (fermuar gibi) tek şeride katılması',
+      'Her aracın daralma noktasına kadar kendi şeridinde ilerleyip birleşme yerinde sırayla, dönüşümlü olarak (fermuar gibi)',
       'Kapanan şeritteki herkesin çok önceden diğer şeride geçip tek sıra olması',
       'Kapanan şeridi kullananların hızlanıp öndekilerin önüne zorla girmesi',
       'İki şeridin de daralmayı görmezden gelip yan yana sıkışarak devam etmesi',
     ],
     answerIndex: 0,
     explanation:
-      'Şerit daralmasında en verimli düzen, araçların birleşme noktasına kadar iki şeridi de kullanıp tam daralma yerinde sırayla, bir o şeritten bir bu şeritten dönüşümlü olarak katılmasıdır; buna fermuar sistemi denir. Bu yöntem her iki şeridin kapasitesini kullandığı için kuyruğu kısaltır ve ani şerit değişimlerini azaltır. Katılan araca yer açmak, birleşme yerinde nezaket değil, akışın gereğidir.',
+      'Şerit daralmasında en verimli düzen, araçların birleşme noktasına kadar iki şeridi de kullanıp tam daralma yerinde sırayla, bir o şeritten bir bu şeritten dönüşümlü olarak katılmasıdır; buna fermuar sistemi denir. Bu yöntem her iki şeridin kapasitesini kullandığı için kuyruğu kısaltır ve ani şerit değişimlerini azaltır. Katılan araca yer açmak, birleşme yerinde nezaket değil, akışın gereğidir. Tek şeride katılması.',
     whyWrong: [
       'Herkesin çok önceden tek şeride yığılması, bir şeridi boş bırakıp kuyruğu gereksiz uzatır.',
       'Zorla öne girmek ya da yan yana sıkışmak, sürtüşme ve tıkanma yaratıp akışı büsbütün bozar.',
@@ -1024,13 +1024,13 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Sağa dönmek üzere yavaşlayan bir kamyon ya da otobüsün sağ tarafından geçmeye çalışmak neden çok tehlikelidir?',
     options: [
       'Büyük araçlar dönerken korna çaldığı için',
-      'Uzun araçlar sağa dönerken önce sola doğru genişçe açılıp geniş bir yay çizer; sağda kalan boşluğa giren araç ya da bisikletli, dönüşü tamamlayan aracın arka tekerlekleri tarafından kaldırıma sıkıştırılıp ezilebilir (kör nokta ve iz farkı)',
+      'Uzun araçlar sağa dönerken önce sola doğru genişçe açılıp geniş bir yay çizer',
       'Büyük araçların freni daha yavaş tuttuğu için',
       'Kamyonların egzozu görüşü kapattığı için',
     ],
     answerIndex: 1,
     explanation:
-      'Uzun araçlar dar bir köşeyi dönebilmek için sağa dönmeden önce sola doğru genişçe açılır; bu, sağ tarafta geçici bir boşluk yanılsaması yaratır. Bu boşluğa giren araç ya da bisikletli, dönüş tamamlanırken içeriden dönen arka tekerleklerin ve şoförün göremediği kör noktanın arasında kaldırıma sıkışabilir. Bu yüzden dönüş sinyali veren büyük aracın sağından asla geçilmez; arkasında güvenli mesafede beklenir.',
+      'Uzun araçlar dar bir köşeyi dönebilmek için sağa dönmeden önce sola doğru genişçe açılır; bu, sağ tarafta geçici bir boşluk yanılsaması yaratır. Bu boşluğa giren araç ya da bisikletli, dönüş tamamlanırken içeriden dönen arka tekerleklerin ve şoförün göremediği kör noktanın arasında kaldırıma sıkışabilir. Bu yüzden dönüş sinyali veren büyük aracın sağından asla geçilmez; arkasında güvenli mesafede beklenir. Sağda kalan boşluğa giren araç ya da bisikletli, dönüşü tamamlayan aracın arka tekerlekleri tarafından kaldırıma sıkıştırılıp ezilebilir (kör nokta ve iz farkı).',
     whyWrong: [
       'Korna ya da egzoz değil, aracın çizdiği geniş yay ile iz farkı ve kör nokta tehlikeyi yaratır.',
       'Fren süresi burada belirleyici değildir; asıl mesele dönüş geometrisi ve sıkışma riskidir.',
@@ -1051,7 +1051,7 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
       'Frene viraj ortasında, en keskin noktada basmak',
       'Viraja hızlı girip içeride gaz kesmeden dönmek',
       'Viraj boyunca frene basılı gitmek',
-      'Yavaşlama viraja girmeden düz kesimde tamamlanır; virajın içinde ise sabit ya da hafifçe artan gazla, ani fren yapmadan geçilir. Çıkışta yol düzeldikçe kademeli hızlanılır',
+      'Yavaşlama viraja girmeden düz kesimde tamamlanır',
     ],
     answerIndex: 3,
     explanation:
@@ -1075,12 +1075,12 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Çalışma alanında hız serbesttir, normal hızla geçilir',
       'İşçilere yakın geçmek için sağa iyice yanaşıp hızlanmak',
-      'Uyarı levhalarına ve varsa işaretçinin (flamacı) yönlendirmesine uyulur, hız belirgin biçimde düşürülür, işçilere ve makinelere yan mesafe bırakılır; ani fren ve manevradan kaçınılıp çalışanların aniden öne çıkabileceği düşünülür',
+      'Uyarı levhalarına ve varsa işaretçinin (flamacı) yönlendirmesine uyulur, hız belirgin biçimde düşürülür, işçilere ve makinelere yan mesafe bırakılır',
       'Konilerin arasından kestirme yaparak geçmek',
     ],
     answerIndex: 2,
     explanation:
-      'Yol çalışması alanı; yeri değişen işçiler, hareket eden makineler ve daralan şeritler nedeniyle öngörülemez bir bölgedir. Uyarı levhalarına ve varsa işaretçinin talimatına uyulur, hız erkenden düşürülür ve çalışanlarla makinelere olabildiğince yan mesafe bırakılır. Bir işçinin aniden öne çıkabileceği ya da bir aracın manevra yapabileceği hesaba katılarak hazır olunur; koniler bir sınır değil, uyulması gereken bir güzergâhtır.',
+      'Yol çalışması alanı; yeri değişen işçiler, hareket eden makineler ve daralan şeritler nedeniyle öngörülemez bir bölgedir. Uyarı levhalarına ve varsa işaretçinin talimatına uyulur, hız erkenden düşürülür ve çalışanlarla makinelere olabildiğince yan mesafe bırakılır. Bir işçinin aniden öne çıkabileceği ya da bir aracın manevra yapabileceği hesaba katılarak hazır olunur; koniler bir sınır değil, uyulması gereken bir güzergâhtır. Ani fren ve manevradan kaçınılıp çalışanların aniden öne çıkabileceği düşünülür.',
     whyWrong: [
       'Çalışma alanında hız çoğu zaman özel olarak sınırlandırılır; serbest saymak kural ihlali ve tehlikedir.',
       'İşçilere yakın hızlanmak ya da konilerin arasından kestirmek, doğrudan can güvenliğini tehdit eder.',
@@ -1101,11 +1101,11 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
       'Yağmurda görünürlük artsın diye seyir hâlinde sürekli yakılabilir',
       'Sollama yaparken flaşör yakmak yeterlidir, sinyal gerekmez',
       'Park yasağı olan yerde flaşör yakınca durmak serbest olur',
-      'Flaşör seyir hâlinde sinyalin yerini tutmaz; yanıkken sağa-sola dönüş sinyali verilemez ve niyet belirsizleşir. Doğru kullanım; arıza, kaza, aracın durması ya da ani tehlikeli yavaşlama gibi durumlarda diğerlerini uyarmaktır',
+      'Flaşör seyir hâlinde sinyalin yerini tutmaz',
     ],
     answerIndex: 3,
     explanation:
-      'Dörtlü flaşör bir "duruyorum ya da tehlikedeyim" uyarısıdır; arıza, kaza, zorunlu durma ya da ani ve beklenmedik yavaşlamada çevreyi uyarmak için kullanılır. Seyir hâlinde sürekli yakmak yanlıştır, çünkü flaşör yanıkken dönüş sinyali verilemez ve aracın niyeti okunamaz hâle gelir. Ayrıca flaşör yakmak park ya da duraklama yasağını kaldırmaz.',
+      'Dörtlü flaşör bir "duruyorum ya da tehlikedeyim" uyarısıdır; arıza, kaza, zorunlu durma ya da ani ve beklenmedik yavaşlamada çevreyi uyarmak için kullanılır. Seyir hâlinde sürekli yakmak yanlıştır, çünkü flaşör yanıkken dönüş sinyali verilemez ve aracın niyeti okunamaz hâle gelir. Ayrıca flaşör yakmak park ya da duraklama yasağını kaldırmaz. Yanıkken sağa-sola dönüş sinyali verilemez ve niyet belirsizleşir. Doğru kullanım; arıza, kaza, aracın durması ya da ani tehlikeli yavaşlama gibi durumlarda diğerlerini uyarmaktır.',
     whyWrong: [
       'Yağmurda sürekli flaşör, dönüş ve şerit sinyalini işlevsiz bırakıp diğer sürücüleri yanıltır.',
       'Sollamada sinyalin yerini tutmaz ve flaşör yakmak hiçbir duraklama-park yasağını geçersiz kılmaz.',
@@ -1125,7 +1125,7 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Yol tutuşunu ve fren performansını iyileştirir',
       'Yalnızca lastik ömrünü uzatır, sürüşü etkilemez',
-      'Direksiyon ağırlaşır, yakıt tüketimi ve lastik ısınması artar, viraj ve frende yol tutuşu bozulur; aşırı düşük basınçta lastik yüksek hızda ısınıp patlayabilir',
+      'Direksiyon ağırlaşır, yakıt tüketimi ve lastik ısınması artar, viraj ve frende yol tutuşu bozulur',
       'Aracı daha hızlı ve dengeli yapar',
     ],
     answerIndex: 2,
@@ -1148,14 +1148,14 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Yandaki şeritten bir aracın sinyal vermeden ve mesafe bırakmadan aniden önünüze girmesi durumunda en doğru tepki nedir?',
     options: [
-      'Bakışı gidilecek boşlukta tutup ayağı gazdan çekmek ve kontrollü frenle mesafeyi yeniden açmak; gerekiyorsa kısa kornayla uyarmak, ancak refleksle ani ve kontrolsüz şerit değişiminden kaçınmaktır',
+      'Bakışı gidilecek boşlukta tutup ayağı gazdan çekmek ve kontrollü frenle mesafeyi yeniden açmak',
       'Direksiyonu bakmadan yan şeride kırıp hemen kaçmak',
       'Öfkeyle hızlanıp aracın hemen arkasına yapışmak',
       'Gözleri kapatıp frene sonuna kadar tek hamlede basmak',
     ],
     answerIndex: 0,
     explanation:
-      'Aniden önünüze giren araca karşı en büyük ikincil tehlike, düşünmeden yapılan sert şerit kaçışıdır; yan şeritte araç ya da kör noktada başka bir tehlike olabilir. Doğrusu bakışı ilerideki güvenli boşlukta tutmak, gazı bırakıp kontrollü frenle takip mesafesini yeniden açmaktır; gerekiyorsa kısa bir kornayla uyarılır. Panikle direksiyon kırmak ya da öfkeyle yapışmak, tek bir kabalığı çok araçlı bir kazaya çevirebilir.',
+      'Aniden önünüze giren araca karşı en büyük ikincil tehlike, düşünmeden yapılan sert şerit kaçışıdır; yan şeritte araç ya da kör noktada başka bir tehlike olabilir. Doğrusu bakışı ilerideki güvenli boşlukta tutmak, gazı bırakıp kontrollü frenle takip mesafesini yeniden açmaktır; gerekiyorsa kısa bir kornayla uyarılır. Panikle direksiyon kırmak ya da öfkeyle yapışmak, tek bir kabalığı çok araçlı bir kazaya çevirebilir. Gerekiyorsa kısa kornayla uyarmak, ancak refleksle ani ve kontrolsüz şerit değişiminden kaçınmaktır.',
     whyWrong: [
       'Bakmadan yan şeride kaçmak, oradaki bir aracın üzerine gitme riskini doğurur.',
       'Hızlanıp arkasına yapışmak ya da gözleri kapatıp panik fren yapmak, kontrolü ve güvenliği birlikte kaybettirir.',
@@ -1175,13 +1175,13 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Tepe üstüne yaklaşırken ya da görüşün kapandığı bir viraj öncesinde sollama neden yapılmaz?',
     options: [
       'Tepe ve virajda motor gücü düştüğü için',
-      'Bu kesimlerde karşı yönün yeterince ilerisi görülemez; tam sollama sırasında tepenin ardından ya da virajın devamından çıkan bir araçla kafa kafaya çarpışma kaçınılmaz olabilir, çünkü geri dönecek ne mesafe ne zaman kalır',
+      'Bu kesimlerde karşı yönün yeterince ilerisi görülemez',
       'Tepe üstünde lastikler yere değmediği için',
       'Virajda sinyal ışıkları çalışmadığı için',
     ],
     answerIndex: 1,
     explanation:
-      'Sollama, karşı yönü bir süre işgal ettiği için ancak yeterince ileriye kadar boş ve görüşün açık olduğu yerlerde güvenlidir. Tepe üstü ve kapalı viraj öncesinde karşı yönün ilerisi görülemez; tam siz karşı şeritteyken tepenin ardından ya da virajın devamından bir araç çıkarsa geri dönecek mesafe de zaman da kalmaz. Bu yüzden bu kesimler sollamanın yasak olduğu, en tehlikeli noktalardır ve genelde işaretlerle de belirtilir.',
+      'Sollama, karşı yönü bir süre işgal ettiği için ancak yeterince ileriye kadar boş ve görüşün açık olduğu yerlerde güvenlidir. Tepe üstü ve kapalı viraj öncesinde karşı yönün ilerisi görülemez; tam siz karşı şeritteyken tepenin ardından ya da virajın devamından bir araç çıkarsa geri dönecek mesafe de zaman da kalmaz. Bu yüzden bu kesimler sollamanın yasak olduğu, en tehlikeli noktalardır ve genelde işaretlerle de belirtilir. Tam sollama sırasında tepenin ardından ya da virajın devamından çıkan bir araçla kafa kafaya çarpışma kaçınılmaz olabilir, çünkü geri dönecek ne mesafe ne zaman kalır.',
     whyWrong: [
       'Motor gücü ya da lastik teması değil, görüş yokluğu ve geri dönüş payının olmaması belirleyicidir.',
       'Sinyal ışıklarının çalışması bu tehlikeyle ilgili değildir; sorun karşı yönü görememektir.',
@@ -1202,12 +1202,12 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Yaya görülmediği için normal hızda devam etmek',
       'Yalnızca uzun far açıksa yavaşlamak',
-      'Koyu giyimli ve yansıtıcısız yayaların son anda görülebileceği düşünülerek hız düşük tutulur, görüş mesafesi içinde durabilecek şekilde sürülür; yayaya yaklaşırken karşıdan araç yoksa uzun far, varsa kısa far kullanılır',
+      'Koyu giyimli ve yansıtıcısız yayaların son anda görülebileceği düşünülerek hız düşük tutulur, görüş mesafesi içinde durabilecek şekilde sürülür',
       'Kornaya sürekli basarak ilerlemek',
     ],
     answerIndex: 2,
     explanation:
-      'Aydınlatmasız kırsal yolda koyu giyimli, yansıtıcısız yayalar farın aydınlattığı alana ancak son anda girer; bu yüzden hız, görüş mesafesi içinde durabilecek kadar düşük tutulmalıdır. Karşıdan araç yokken uzun far kenarları daha erken gösterir, araç geldiğinde kısa fara geçilir. Yaya, bisikletli ya da hayvanın her an belirebileceği varsayılarak hazır sürülür.',
+      'Aydınlatmasız kırsal yolda koyu giyimli, yansıtıcısız yayalar farın aydınlattığı alana ancak son anda girer; bu yüzden hız, görüş mesafesi içinde durabilecek kadar düşük tutulmalıdır. Karşıdan araç yokken uzun far kenarları daha erken gösterir, araç geldiğinde kısa fara geçilir. Yaya, bisikletli ya da hayvanın her an belirebileceği varsayılarak hazır sürülür. Yayaya yaklaşırken karşıdan araç yoksa uzun far, varsa kısa far kullanılır.',
     whyWrong: [
       'Yaya görülmedi diye normal hızla gitmek, görüş mesafesinden uzun bir fren yolu bırakır.',
       'Sürekli korna çözüm değildir; belirleyici olan hızın görüşe uydurulması ve doğru far kullanımıdır.',
@@ -1225,14 +1225,14 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Yağmurdan sonra kaldırım kenarındaki su birikintisinin yanında yaya varken sürücünün doğru davranışı nedir?',
     options: [
-      'Birikintiye gelmeden hızını azaltıp mümkünse birikintiden biraz uzak bir hat izlemek; böylece hem yayanın üzerine su sıçratılmaz hem de ıslak zeminde araç dengesi korunur',
+      'Birikintiye gelmeden hızını azaltıp mümkünse birikintiden biraz uzak bir hat izlemek',
       'Normal hızla geçip suyun sıçramasını önemsememek',
       'Hızlanarak birikintiyi bir an önce geride bırakmak',
       'Kornaya basıp yayayı uzaklaşması için uyararak hızla geçmek',
     ],
     answerIndex: 0,
     explanation:
-      'Su birikintisine hızla girmek hem yayanın üzerine su sıçratarak rahatsızlık ve haksızlık yaratır hem de tek taraflı su direnciyle aracı o yöne çekip dengeyi bozabilir. Doğrusu birikintiye gelmeden hızı azaltmak ve mümkünse şerit içinde birikintiden biraz uzak bir hat tutmaktır. Bu, hem trafik adabının hem sürüş güvenliğinin gereğidir.',
+      'Su birikintisine hızla girmek hem yayanın üzerine su sıçratarak rahatsızlık ve haksızlık yaratır hem de tek taraflı su direnciyle aracı o yöne çekip dengeyi bozabilir. Doğrusu birikintiye gelmeden hızı azaltmak ve mümkünse şerit içinde birikintiden biraz uzak bir hat tutmaktır. Bu, hem trafik adabının hem sürüş güvenliğinin gereğidir. Böylece hem yayanın üzerine su sıçratılmaz hem de ıslak zeminde araç dengesi korunur.',
     whyWrong: [
       'Su sıçratmayı önemsememek, kaçınılabilir bir rahatsızlığı ve saygısızlığı görmezden gelmektir.',
       'Hızlanmak sıçramayı ve dengesizliği artırır; korna, yavaşlamanın yerini tutmaz.',
@@ -1251,14 +1251,14 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Önünüzde giden uzun bir kamyonun ya da otobüsün arkasında takip mesafesini normalden daha fazla açmanın en önemli nedeni nedir?',
     options: [
-      'Büyük aracın egzoz gazından etkilenmemek için',
-      'Kamyonların stop lambaları küçük olduğu için',
-      'Büyük araçlar her zaman daha yavaş gittiği için',
-      'Uzun aracın gerisinde çok yakın durursanız hem onun ötesindeki trafiği ve tehlikeleri göremezsiniz hem de o ani frende ya da bir şey düşürdüğünde tepki veremezsiniz; mesafeyi açmak ileriyi görmenizi ve sollama için de daha iyi karar vermenizi sağlar',
+      'Büyük araçların egzoz gazının görüşü ve kabin havasını bozması',
+      'Kamyonların stop lambalarının küçük ve zor görülür olması',
+      'Büyük araçların yokuşlarda beklenenden yavaş çıkması',
+      'Uzun aracın ötesindeki trafiği ve tehlikeleri görememeniz',
     ],
     answerIndex: 3,
     explanation:
-      'Uzun bir araç, önündeki trafiği ve yoldaki tehlikeleri bir duvar gibi kapatır; onun hemen arkasında durursanız ileriyi hiç göremez, yalnızca kamyonun stoplarına tepki verebilirsiniz. Mesafeyi açtığınızda hem aracın yanından ilerisini görüp erken karar verebilir hem de ani frene ya da düşen bir yüke tepki için pay bırakırsınız. Bu görüş payı, güvenli sollama kararı için de gereklidir.',
+      'Uzun bir araç, önündeki trafiği ve yoldaki tehlikeleri bir duvar gibi kapatır; onun hemen arkasında durursanız ileriyi hiç göremez, yalnızca kamyonun stoplarına tepki verebilirsiniz. Mesafeyi açtığınızda hem aracın yanından ilerisini görüp erken karar verebilir hem de ani frene ya da düşen bir yüke tepki için pay bırakırsınız. Bu görüş payı, güvenli sollama kararı için de gereklidir. Mesafeyi açmak ileriyi görmenizi ve sollama için de daha iyi karar vermenizi sağlar.',
     whyWrong: [
       'Egzoz gazı bir konfor meselesidir; asıl neden görüşün kapanması ve fren payının kalmamasıdır.',
       'Büyük araç her zaman yavaş değildir ve stop lambası boyutu da temel sorun değildir; sorun ileriyi görememektir.',
@@ -1278,12 +1278,12 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Orta çizgiye siz de yaklaşıp geçiş hakkınızı korumak',
       'Farları yakıp aynı hızla devam etmek',
-      'Hızı azaltıp mümkün olduğunca kendi şeridinizin sağına yanaşmak, gerekirse durmak; karşı aracın taşmasına karşı yan mesafe yaratıp temas riskini düşürmek',
+      'Hızı azaltıp mümkün olduğunca kendi şeridinizin sağına yanaşmak, gerekirse durmak',
       'Sola kırıp karşı aracın arkasından dolaşmak',
     ],
     answerIndex: 2,
     explanation:
-      'Dar virajda karşıdan gelen bir aracın orta çizgiye taşması sık görülür ve kafa kafaya temas riski yaratır. Bu durumda haklılık aramak yerine güvenlik önceliklidir: hız azaltılır, kendi şeridinin en sağına yanaşılır ve gerekirse durulur. Böylece taşan araca yan mesafe açılır ve olası bir temasın hızı da düşürülmüş olur.',
+      'Dar virajda karşıdan gelen bir aracın orta çizgiye taşması sık görülür ve kafa kafaya temas riski yaratır. Bu durumda haklılık aramak yerine güvenlik önceliklidir: hız azaltılır, kendi şeridinin en sağına yanaşılır ve gerekirse durulur. Böylece taşan araca yan mesafe açılır ve olası bir temasın hızı da düşürülmüş olur. Karşı aracın taşmasına karşı yan mesafe yaratıp temas riskini düşürmek.',
     whyWrong: [
       'Orta çizgiye yaklaşıp hak aramak, iki aracı da tam karşılaşma noktasına iter.',
       'Aynı hızla devam etmek ya da sola kırmak, mesafeyi kapatıp çarpışmayı olası kılar.',
@@ -1304,7 +1304,7 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
       'Olduğunuz yerde ani fren yapıp durmak',
       'Aracı hızlandırıp acil aracın önünde gitmeye çalışmak',
       'Kavşağın tam ortasında durup beklemek',
-      'Sakin biçimde sağa yanaşıp gerekiyorsa durarak yol açmak; kavşak içindeyseniz kavşağı boşaltıp uygun yerde beklemek, kırmızı ışıkta bile önce güvenliği sağlayıp geçiş için yer açmak',
+      'Sakin biçimde sağa yanaşıp gerekiyorsa durarak yol açmak',
     ],
     answerIndex: 3,
     explanation:
@@ -1354,7 +1354,7 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
       'Islak zeminde far daha iyi yansıdığı için görüş artar, önlem gerekmez',
       'Görüş sorunu yalnızca silecek eskiyse yaşanır, hızın önemi yoktur',
       'Gece yağmurda en doğrusu uzun farı sürekli açık tutmaktır',
-      'Islak asfalt far ışığını yansıtıp dağıttığından çizgiler ve kenar zor seçilir, karşıdan gelen farlar daha çok kamaştırır; hız düşürülür, takip mesafesi artırılır ve gerektiğinde öndeki aracın güvenli izi referans alınır',
+      'Islak asfalt far ışığını yansıtıp dağıttığından çizgiler ve kenar zor seçilir, karşıdan gelen farlar daha çok kamaştırır',
     ],
     answerIndex: 3,
     explanation:
@@ -1377,13 +1377,13 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Uzun bir inişin sonunda kırmızı ışıklı bir kavşak ya da kesin duruş gerektiren bir nokta varsa sürücü hızını nasıl yönetmelidir?',
     options: [
       'İnişin son metrelerine bırakıp orada sert fren yapmak',
-      'Hızı inişin başından itibaren vitesle ve kademeli frenle kontrol altında tutmak; kavşağa kadar aracın enerjisini erkenden düşürüp son duruşu rahat ve kontrollü yapmak, çünkü inişte biriken hız son anda sert frenle zor durdurulur',
+      'Hızı inişin başından itibaren vitesle ve kademeli frenle kontrol altında tutmak',
       'İnişte hızlanıp kavşağa gelince motoru stop ettirmek',
       'Boş viteste inip yalnızca ışığa yakınken frene basmak',
     ],
     answerIndex: 1,
     explanation:
-      'İnişte yer çekimi aracı sürekli hızlandırır; hız kontrolü sona bırakılırsa biriken enerjiyi son metrelerde sert frenle durdurmak hem güç hem risklidir, ıslak-kaygan zeminde kayma getirebilir. Doğrusu inişin başından itibaren uygun vites ve motor freniyle hızı sınırlamak, gerektiğinde kademeli frenle desteklemektir; böylece kavşağa yaklaşırken araç zaten yavaşlamış olur ve duruş rahat, kontrollü yapılır. Boş viteste inmek motor frenini yok edip bu kontrolü ortadan kaldırır.',
+      'İnişte yer çekimi aracı sürekli hızlandırır; hız kontrolü sona bırakılırsa biriken enerjiyi son metrelerde sert frenle durdurmak hem güç hem risklidir, ıslak-kaygan zeminde kayma getirebilir. Doğrusu inişin başından itibaren uygun vites ve motor freniyle hızı sınırlamak, gerektiğinde kademeli frenle desteklemektir; böylece kavşağa yaklaşırken araç zaten yavaşlamış olur ve duruş rahat, kontrollü yapılır. Boş viteste inmek motor frenini yok edip bu kontrolü ortadan kaldırır. Kavşağa kadar aracın enerjisini erkenden düşürüp son duruşu rahat ve kontrollü yapmak, çünkü inişte biriken hız son anda sert frenle zor durdurulur.',
     whyWrong: [
       'Frenlemeyi son metrelere bırakmak, biriken hızı ağır ve kayma riskli bir sert frene zorlar.',
       'İnişte hızlanmak ya da boş viteste inmek, kavşağa yüksek ve zor kontrol edilen bir hızla varmak demektir.',

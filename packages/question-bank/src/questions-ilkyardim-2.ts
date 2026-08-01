@@ -74,7 +74,7 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     options: [
       'Yüzüne su dökülür',
       'Omzundan hafifçe sarsılıp yüksek sesle seslenilir',
-      'Ayağa kaldırılmaya çalışılır',
+      'Ayağa kaldırılmaya çalışılıp destekle yürütülmesi',
       'Ağzına ilaç verilir',
     ],
     answerIndex: 1,
@@ -98,7 +98,7 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     stem: 'Koma (yan yatış / kurtarma) pozisyonu öncelikle hangi yaralıya uygulanır?',
     options: [
       'Solunumu ve nabzı durmuş yaralıya',
-      'Kol kırığı olan bilinci açık yaralıya',
+      'Kol kırığı olan, bilinci tümüyle açık yaralıya',
       'Bilinci kapalı fakat solunumu olan yaralıya',
       'Yalnızca burnu kanayan yaralıya',
     ],
@@ -124,7 +124,7 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     options: [
       'Yaralı bölgeyi ovmak',
       'Yaraya toz şeker dökmek',
-      'Yaralıyı ayağa kaldırıp yürütmek',
+      'Yaralıyı ayağa kaldırıp bir süre dolaştırarak yürütmek',
       'Kanayan yere doğrudan temiz bezle baskı uygulamak',
     ],
     answerIndex: 3,
@@ -172,10 +172,10 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Şok belirtileri gösteren (soluk, soğuk ve terli ciltli) bir yaralıya hangi pozisyon ve önlem uygundur?',
     options: [
-      'Oturtulup soğuk su içirilir',
+      'Oturtulup soğuk su içirilerek dinlenmesi sağlanır',
       'Yüzüstü yatırılıp beklenir',
       'Ayağa kaldırılıp yürütülür',
-      'Ayaklar yukarı kaldırılıp üzeri örtülerek sıcak tutulur',
+      'Ayaklar kaldırılıp üzeri örtülerek sıcak tutulur',
     ],
     answerIndex: 3,
     explanation:
@@ -199,7 +199,7 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     options: [
       'Ciltte kızarıklık ve sıcaklık',
       'Yavaş ve derin soluk alıp verme',
-      'Belirgin şekilde yükselen tansiyon',
+      'Belirgin biçimde yükselen tansiyon ve kızarıklık',
       'Soluk, soğuk ve nemli cilt ile hızlı zayıf nabız',
     ],
     answerIndex: 3,
@@ -223,13 +223,13 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     stem: 'Kaynar su ile haşlanan bir kişinin yanık bölgesine ilk yardım olarak ne yapılmalıdır?',
     options: [
       'Yanık üzerine buz konulmalı',
-      'Yanık bölgesi bol soğuk (akan) su altında bir süre tutulmalı',
+      'Yanık bölgesi bol soğuk (akan)',
       'Yanığa diş macunu sürülmeli',
       'Yanık bölgesi sıcak suyla yıkanmalı',
     ],
     answerIndex: 1,
     explanation:
-      'Yanıkta öncelikle bölge bol ve akan soğuk suyla soğutulur; bu, ısının derine ilerlemesini yavaşlatır ve ağrıyı azaltır. Yara temiz bezle örtülür.',
+      'Yanıkta öncelikle bölge bol ve akan soğuk suyla soğutulur; bu, ısının derine ilerlemesini yavaşlatır ve ağrıyı azaltır. Yara temiz bezle örtülür. Su altında bir süre tutulmalı.',
     whyWrong: [
       'Doğrudan buz koymak dokuyu ayrıca hasarlar.',
       'Diş macunu, yoğurt gibi maddeler enfeksiyona ve iyileşme güçlüğüne yol açar.',
@@ -250,7 +250,7 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
       'Yanık üzerine macun, yağ veya salça sürmek',
       'Bölgeyi soğuk su ile soğutmak',
       'Yarayı temiz bir bezle örtmek',
-      'Yaralıyı sağlık kuruluşuna yönlendirmek',
+      'Yaralıyı en yakın sağlık kuruluşuna yönlendirmek',
     ],
     answerIndex: 0,
     explanation:
@@ -273,13 +273,13 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     stem: 'Yemek yerken boğazına yabancı cisim kaçan, konuşamayan ve öksüremeyen bilinci açık erişkine hangi manevra uygulanır?',
     options: [
       'Sırtına sürekli yumruk atılır',
-      'Karın üstü basma (Heimlich) manevrası uygulanır',
+      'Karın üstü basma (Heimlich)',
       'Bol su içirilir',
       'Sırtüstü yatırılıp beklenir',
     ],
     answerIndex: 1,
     explanation:
-      'Tam tıkanmada kişi konuşamaz ve öksüremez; arkasına geçilip göbek ile göğüs kemiği arasına içe-yukarı bası (Heimlich manevrası) uygulanarak cismin çıkması sağlanmaya çalışılır.',
+      'Tam tıkanmada kişi konuşamaz ve öksüremez; arkasına geçilip göbek ile göğüs kemiği arasına içe-yukarı bası (Heimlich manevrası) uygulanarak cismin çıkması sağlanmaya çalışılır. Manevrası uygulanır.',
     whyWrong: [
       'Kişiye su içirmek tıkanıklığı artırır.',
       'Hiçbir şey yapmadan beklemek hava yolunun kapalı kalmasına yol açar.',
@@ -298,7 +298,7 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     stem: 'Hava yolunun yabancı cisimle tam tıkandığını gösteren en belirgin bulgu hangisidir?',
     options: [
       'Kişinin rahatça öksürebilmesi',
-      'Kişinin yüksek sesle bağırabilmesi',
+      'Kişinin yüksek sesle rahatça bağırabilmesi',
       'Kişinin konuşamaması ve öksürememesi',
       'Kişinin normal nefes alabilmesi',
     ],
@@ -322,9 +322,9 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Kolunda kırık şüphesi olan bilinci açık bir yaralıya ilk yardımda ne yapılır?',
     options: [
-      'Kemik zorla düzeltilmeye çalışılır',
+      'Kemik elle zorla düzeltilmeye çalışılır ve sarılır',
       'Kol defalarca hareket ettirilir',
-      'Kırık bölge bulunduğu şekilde hareketsiz tespit edilir (atellenir)',
+      'Kırık bölge bulunduğu şekilde tespit edilir',
       'Yaralıya kırık bölgeyi kullandırılır',
     ],
     answerIndex: 2,
@@ -347,8 +347,8 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Kemiğin cildi delerek dışarı çıktığı açık kırıkta ilk yardımcının öncelikli tutumu ne olmalıdır?',
     options: [
-      'Çıkan kemiği içeri itmeye çalışmak',
-      'Kanamayı kontrol edip bölgeyi temiz bezle örterek sabitlemek',
+      'Çıkan kemik ucu içeri itilip yerine oturtulmaya çalışılır',
+      'Kanamayı kontrol edip bölgeyi örterek sabitlemek',
       'Kemiği elle yerine oturtmak',
       'Yaralıyı koşarak taşımak',
     ],
@@ -373,7 +373,7 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     stem: '112 Acil Sağlık hattını ararken bildirilmesi gereken bilgilerden biri aşağıdakilerden hangisidir?',
     options: [
       'Yaralının en sevdiği yemek',
-      'Yakındaki dükkânların isimleri',
+      'Yakındaki dükkânların isim ve numaraları',
       'Olayın kesin yeri, türü ve yaralı sayısı',
       'Hava durumu tahmini',
     ],
@@ -398,9 +398,9 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     stem: 'Trafik kazasında omurga yaralanması şüphesi olan yaralı için genel kural nedir?',
     options: [
       'Yaralı hemen ayağa kaldırılır',
-      'Yaşamı tehdit eden bir tehlike yoksa yaralı yerinden oynatılmaz',
+      'Hayati tehlike yoksa yaralı yerinden oynatılmaz',
       'Yaralı sürüklenerek taşınır',
-      'Yaralının başı geriye doğru bükülür',
+      'Yaralının başı geriye doğru bükülüp öyle bekletilir',
     ],
     answerIndex: 1,
     explanation:
@@ -423,8 +423,8 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     stem: 'Yangın gibi hayati bir tehlike nedeniyle yaralının acilen araçtan çıkarılması gerektiğinde uygun teknik hangisidir?',
     options: [
       'Kolundan asılıp hızla çekmek',
-      'Baş-boyun-gövde ekseni korunarak (Rentek benzeri kavrama ile) çıkarmak',
-      'Yaralıyı tek koldan sürüklemek',
+      'Baş-boyun-gövde ekseni korunarak çıkarmak',
+      'Yaralıyı tek koldan tutup yerde sürüklemek',
       'Ayaklarından tutup çekmek',
     ],
     answerIndex: 1,
@@ -448,9 +448,9 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     stem: 'Karayolunda meydana gelen bir kazada ikinci bir kazayı önlemek için ilk yapılması gerekenlerden biri hangisidir?',
     options: [
       'Yaralıların üzerini örtmek',
-      'Aracın dörtlü flaşörünü yakıp uygun mesafeye reflektör (üçgen) koymak',
+      'Dörtlü flaşörü yakıp uygun mesafeye reflektör koymak',
       'Kaza yerini terk etmek',
-      'Trafiği hızlandırmaya çalışmak',
+      'Trafiği hızlandırmaya çalışıp yolu bir an önce boşaltmak',
     ],
     answerIndex: 1,
     explanation:
@@ -472,7 +472,7 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Bilinci kapalı bir yaralıda ilk yardımcının kontrol etmesi gereken en öncelikli hayati işlev hangisidir?',
     options: [
-      'Vücut ısısının kaç derece olduğu',
+      'Vücut ısısının kaç derece olduğu bilgisi',
       'Cilt renginin tonu',
       'Yaralının yaşı',
       'Solunumun (nefes alıp vermenin) olup olmadığı',
@@ -497,7 +497,7 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Bilinci kapalı bir yaralıda hava yolunu açmak için genellikle uygulanan temel yöntem hangisidir?',
     options: [
-      'Baş öne, çeneye doğru bükülür',
+      'Baş öne, çeneye doğru bükülüp sabitlenir',
       'Ağza sürekli üflenir',
       'Baş hafifçe geriye itilip çene yukarı kaldırılır',
       'Boyun sağa sola çevrilir',
@@ -522,7 +522,7 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Aniden bayılıp yere düşen ancak solunumu düzgün olan bir kişiye ilk yardım olarak ne yapılır?',
     options: [
-      'Hemen ayağa kaldırılıp yürütülür',
+      'Hemen ayağa kaldırılıp destekle yürütülür',
       'Yüzüne tokat atılır',
       'Ağzına yiyecek verilir',
       'Sırtüstü yatırılıp bacakları hafifçe yukarı kaldırılır',
@@ -568,7 +568,7 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     stem: 'Kalp krizi geçirdiğinden şüphelenilen bilinci açık bir kişiye ilk yardımda ne yapılır?',
     options: [
       'Koşturularak hastaneye götürülür',
-      'Rahat edeceği (yarı oturur) pozisyonda hareketsiz tutulup 112 aranır',
+      'Rahat edeceği (yarı oturur)',
       'Ağır egzersiz yaptırılır',
       'Sırtüstü düz yatırılıp bekletilerek hiçbir yere haber verilmez',
     ],
@@ -593,9 +593,9 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     stem: 'Yüzünün bir yanı kayan, bir kolunu kaldıramayan ve konuşması bozulan bir kişide öncelikle hangisinden şüphelenilmelidir?',
     options: [
       'Beyin damar tıkanıklığı (inme/felç)',
-      'Basit baş ağrısı',
-      'Kas krampı',
-      'Diş ağrısı',
+      'Uykusuzluğa bağlı basit baş ağrısı',
+      'Boyun kaslarında ani kramp',
+      'Diş kaynaklı yüz ağrısı',
     ],
     answerIndex: 0,
     explanation:
@@ -617,7 +617,7 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Darbe olmaksızın başlayan bir burun kanamasında ilk yardım olarak ne yapılır?',
     options: [
-      'Baş iyice geriye atılır',
+      'Baş iyice geriye atılıp burun sıkılmadan beklenir',
       'Buruna sürekli su verilir',
       'Kişi hızlıca koşturulur',
       'Baş öne eğilip burun kanatları birkaç dakika parmakla sıkılır',
@@ -642,7 +642,7 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Soğukta uzun süre kalmış, el ve ayakları donma belirtisi gösteren bir kişide hangisi yapılmamalıdır?',
     options: [
-      'Kişiyi ılık bir ortama almak',
+      'Kişiyi ılık bir ortama alıp dinlendirmek',
       'Islak giysilerini çıkarmak',
       'Donmuş bölgeyi kar veya elle sertçe ovmak',
       'Üzerini kuru örtülerle örtmek',
@@ -667,7 +667,7 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Vücut ısısının tehlikeli biçimde düştüğü hipotermide sık görülen belirtilerden biri hangisidir?',
     options: [
-      'Ateşin yükselip ciltte kızarıklık',
+      'Ateşin yükselip ciltte kızarıklık oluşması',
       'Yoğun terleme ve susuzluk',
       'İştahın belirgin artması',
       'Titreme, hâlsizlik ve giderek uyuklama hâli',
@@ -692,7 +692,7 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Kapalı bir garajda egzoz gazından (karbonmonoksit) etkilenmiş bir kişiye ilk yapılması gereken nedir?',
     options: [
-      'Kişiye bol su içirilir',
+      'Kişiye bol su içirilip kusması sağlanır',
       'Kişi olduğu yerde bekletilir',
       'Kişi hemen temiz havaya / açık alana çıkarılır',
       'Kişiye kusturucu verilir',
@@ -717,9 +717,9 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Bir maddeyle zehirlendiğinden şüphelenilen kişide ilk yardımcının 112 için hazırlaması gereken bilgi hangisidir?',
     options: [
-      'Kişinin en sevdiği renk',
-      'Evin kaç odalı olduğu',
-      'Kişinin ayakkabı numarası',
+      'Kişinin en sevdiği rengin ne olduğu',
+      'Evin kaç odalı olduğu ve kaç kişi yaşadığı',
+      'Kişinin ayakkabı numarası ve boyu',
       'Alınan maddenin ne olduğu, miktarı ve ne zaman alındığı',
     ],
     answerIndex: 3,
@@ -742,8 +742,8 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Elektrik akımına kapılmış ve hâlâ akımla temas hâlinde olan bir kişiye müdahaleden önce ne yapılmalıdır?',
     options: [
-      'Kişiye çıplak elle dokunulur',
-      'Önce elektrik akımı kesilir veya güvenli şekilde temas sonlandırılır',
+      'Kişiye çıplak elle dokunulup çekilmeye çalışılır',
+      'Önce elektrik akımı kesilir veya temas sonlandırılır',
       'Kişinin üzerine su dökülür',
       'Kişi hemen sarsılır',
     ],
@@ -767,7 +767,7 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Yere düşmüş yüksek gerilim hattının yakınında yaralı bulunduğunda ilk yardımcının tutumu ne olmalıdır?',
     options: [
-      'Hemen hatta ve yaralıya koşarak yaklaşmak',
+      'Hemen hatta ve yaralıya koşarak yaklaşıp müdahale etmek',
       'Hattı elle kenara itmek',
       'Yaralıyı ıslak bir bezle çekmek',
       'Güvenli mesafede kalıp yetkililere ve 112ye haber vermek',
@@ -794,8 +794,8 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     options: [
       'Yara hiç yıkanmadan kapatılır',
       'Yaraya toprak sürülür',
-      'Yara bol su ve sabunla yıkanıp temiz bezle örtülür, sağlık kuruluşuna başvurulur',
-      'Yara emilerek temizlenmeye çalışılır',
+      'Yara su ve sabunla yıkanıp temiz bezle örtülür',
+      'Yara ağızla emilerek temizlenmeye çalışılır',
     ],
     answerIndex: 2,
     explanation:
@@ -819,8 +819,8 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     options: [
       'Isırık bölgesini kesip zehri emmek',
       'Isırılan kolu bol bol hareket ettirmek',
-      'Kişiyi sakinleştirip ısırılan bölgeyi hareketsiz tutmak ve 112yi aramak',
-      'Bölgeye çok sıkı turnike bağlayıp koşturmak',
+      'Kişiyi sakinleştirip ısırılan bölgeyi hareketsiz tutmak',
+      'Bölgeye çok sıkı turnike bağlayıp koşturarak taşımak',
     ],
     answerIndex: 2,
     explanation:
@@ -867,7 +867,7 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Gözüne metal bir cisim batıp saplanmış bir yaralıya ilk yardımda ne yapılmalıdır?',
     options: [
-      'Cisim yerinde bırakılır, göz sabitlenip yaralı sağlık kuruluşuna götürülür',
+      'Cisim yerinde bırakılır, göz sabitlenip hastaneye götürülür',
       'Batan cisim elle çekilip çıkarılır',
       'Göz bastırılarak cisim içeri itilir',
       'Göze soğuk su tutularak cisim akıtılmaya çalışılır',
@@ -892,10 +892,10 @@ export const ILKYARDIM_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Ayak bileğini burkan ve şişme başlayan bir kişide ilk yardım olarak hangisi uygundur?',
     options: [
-      'Bölge hemen sıcak suya sokulur',
+      'Bölge hemen sıcak suya sokulup ovulur',
       'Kişi burkulan ayağıyla yürütülür',
       'Bölge kuvvetlice ovulur',
-      'Bölge dinlendirilip üzerine soğuk uygulama yapılır ve ayak yükseltilir',
+      'Bölge dinlendirilip soğuk uygulama yapılır ve yükseltilir',
     ],
     answerIndex: 3,
     explanation:

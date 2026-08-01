@@ -166,7 +166,7 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Kask hemen çıkarılır; başın rahat etmesi gerekir',
       'Kask yalnızca yaralı istediğinde çıkarılır',
-      'Kask kural olarak çıkarılmaz; baş ve boyun kaskla birlikte hareketsiz tutulur',
+      'Kask kural olarak çıkarılmaz',
       'Kaskın çenelik kayışı sıkılır',
     ],
     answerIndex: 2,
@@ -414,14 +414,14 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Ağır yaralı ve susadığını söyleyen bir kazazede ısrarla su isterse ilk yardımcı ne yapmalıdır?',
     options: [
-      'Ağızdan su vermez; gerekirse yalnızca dudaklarını ıslak bir bezle nemlendirebilir',
+      'Ağızdan su vermez',
       'Bol miktarda soğuk su içirmelidir',
       'Su yerine meyve suyu içirmelidir',
       'İstediği kadar su içmesine izin vermelidir',
     ],
     answerIndex: 0,
     explanation:
-      'Ağır yaralıya ağızdan sıvı vermek; olası bir ameliyatı geciktirebilir, kusmaya ve bilinç bulanıksa boğulmaya yol açabilir. Susuzluk hissini hafifletmek için en fazla dudaklar nemli bir bezle ıslatılır; su içirilmez.',
+      'Ağır yaralıya ağızdan sıvı vermek; olası bir ameliyatı geciktirebilir, kusmaya ve bilinç bulanıksa boğulmaya yol açabilir. Susuzluk hissini hafifletmek için en fazla dudaklar nemli bir bezle ıslatılır; su içirilmez. Gerekirse yalnızca dudaklarını ıslak bir bezle nemlendirebilir.',
     whyWrong: [
       'Bol su veya meyve suyu içirmek kusma ve tıbbi girişimi geciktirme riski taşır.',
       'Yaralının istediği kadar içmesine izin vermek bu riskleri daha da büyütür.',
@@ -514,14 +514,14 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Kapalı bir mekânda bulunan birden fazla kişide aynı anda baş ağrısı, baş dönmesi ve bulantı başlarsa ilk yardımcı öncelikle neyden şüphelenmeli ve ne yapmalıdır?',
     options: [
-      'Ortak bir karbonmonoksit kaynağından; kişileri hızla temiz havaya çıkarıp ortamı havalandırmaktan ve 112’yi aramaktan',
+      'Ortak bir karbonmonoksit kaynağından',
       'Yiyecek zehirlenmesinden; herkese su içirmekten',
       'Grip salgınından; kişileri aynı odada dinlendirmekten',
       'Uykusuzluktan; perdeleri kapatıp odayı karartmaktan',
     ],
     answerIndex: 0,
     explanation:
-      'Aynı kapalı ortamdaki birden çok kişinin eş zamanlı olarak baş ağrısı, baş dönmesi ve bulantı yaşaması karbonmonoksit zehirlenmesini akla getirmelidir. Kişiler derhâl temiz havaya çıkarılır, ortam havalandırılır ve 112 aranır.',
+      'Aynı kapalı ortamdaki birden çok kişinin eş zamanlı olarak baş ağrısı, baş dönmesi ve bulantı yaşaması karbonmonoksit zehirlenmesini akla getirmelidir. Kişiler derhâl temiz havaya çıkarılır, ortam havalandırılır ve 112 aranır. Kişileri hızla temiz havaya çıkarıp ortamı havalandırmaktan ve 112’yi aramaktan.',
     whyWrong: [
       'Ortak ve ani belirtiler yiyecek zehirlenmesi ya da gribe göre çok daha çok gaz kaynağını düşündürür.',
       'Kişileri aynı ortamda tutmak veya odayı karartmak gaz solumaya devam etmelerine yol açar.',
@@ -614,14 +614,14 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Başta öksürebilen bir kişide öksürük giderek zayıflar, sesi kesilir ve nefes alamaz duruma gelirse bu değişiklik neyi gösterir ve ne yapılır?',
     options: [
-      'Kısmi tıkanmanın tam tıkanmaya dönüştüğünü; artık etkili müdahaleye (sırt vuruları ve karına bası) geçilmesi gerektiğini',
+      'Kısmi tıkanmanın tam tıkanmaya dönüştüğünü',
       'Kişinin iyileştiğini; müdahaleye gerek olmadığını',
       'Kişinin yorulduğunu; oturtup dinlendirmek gerektiğini',
       'Sadece heyecanlandığını; su içirmek gerektiğini',
     ],
     answerIndex: 0,
     explanation:
-      'Öksürüğün zayıflaması, sesin kesilmesi ve nefes alamama, hava yolunun artık tam tıkandığını gösterir. Bu noktada kişi cismi kendi çabasıyla çıkaramaz; etkili müdahale olan sırt vuruları ve karına bası uygulamasına geçilir, gerekirse 112 aranır.',
+      'Öksürüğün zayıflaması, sesin kesilmesi ve nefes alamama, hava yolunun artık tam tıkandığını gösterir. Bu noktada kişi cismi kendi çabasıyla çıkaramaz; etkili müdahale olan sırt vuruları ve karına bası uygulamasına geçilir, gerekirse 112 aranır. Artık etkili müdahaleye (sırt vuruları ve karına bası) geçilmesi gerektiğini.',
     whyWrong: [
       'Belirtiler iyileşmeyi değil, tablonun ağırlaştığını gösterir.',
       'Su içirmek veya yalnızca dinlendirmek tam tıkanmada hayatı tehlikeye atar.',
@@ -766,12 +766,12 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Kimseye söylemeden aklında tutmalıdır',
       'Turnikenin altına gizlemelidir',
-      'Yaralının görünür bir yerine (örneğin alnına) yazarak veya bir kâğıtla yaralının üzerine iliştirerek belirtmelidir',
+      'Yaralının görünür bir yerine (örneğin alnına)',
       'Yalnızca kendi telefonuna kaydetmelidir',
     ],
     answerIndex: 2,
     explanation:
-      'Turnikenin ne zaman uygulandığı, uzvun ne kadar süredir kansız kaldığını gösteren hayati bir bilgidir. Bu saat, yaralıyı devralacak ekibin kolayca görebileceği bir yere (örneğin alına) yazılır veya üzerine iliştirilir; böylece bilgi yaralıyla birlikte taşınır.',
+      'Turnikenin ne zaman uygulandığı, uzvun ne kadar süredir kansız kaldığını gösteren hayati bir bilgidir. Bu saat, yaralıyı devralacak ekibin kolayca görebileceği bir yere (örneğin alına) yazılır veya üzerine iliştirilir; böylece bilgi yaralıyla birlikte taşınır. Yazarak veya bir kâğıtla yaralının üzerine iliştirerek belirtmelidir.',
     whyWrong: [
       'Bilgiyi yalnızca akılda tutmak veya telefona kaydetmek, ilk yardımcı ayrıldığında saatin kaybolmasına yol açar.',
       'Turnikenin altına gizlenen bir not, devralan ekip tarafından görülmez.',
@@ -839,10 +839,10 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Kopan bir uzvun doğrudan buza ya da suya değdirilmemesinin nedeni nedir?',
     options: [
-      'Uzvun ağırlaşacağı için',
-      'Doğrudan buzun soğuk hasarına, suyun ise şişme ve doku bozulmasına yol açarak dokunun yeniden dikilme şansını azaltabilmesi',
-      'Buzun uzvu görünmez kılması nedeniyle',
-      'Suyun uzvu ısıtması nedeniyle',
+      'Uzvun ağırlaşıp taşınmasını güçleştirebilmesi',
+      'Soğuk hasarına ve doku bozulmasına yol açabilmesi',
+      'Kanamanın yeniden başlamasına yol açabilmesi',
+      'Uzvun renginin değişip tanınmasını zorlaştırması',
     ],
     answerIndex: 1,
     explanation:
@@ -866,12 +866,12 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Yapışan giysi zorla çekilerek çıkarılır',
       'Yapışan giysi makasla kesilerek yanık üzerinden sıyrılır',
-      'Yapışan giysi yerinde bırakılır; yalnızca gevşek olan ve yanık bölgesine yapışmamış giysiler çıkarılır',
+      'Yapışan giysi yerinde bırakılır',
       'Yapışan giysi ıslatılıp ovularak çıkarılır',
     ],
     answerIndex: 2,
     explanation:
-      'Yanığa yapışmış giysiyi çekmek, alttaki hasarlı cildi de koparıp yarayı derinleştirir ve enfeksiyon riskini artırır. Bu yüzden yapışan kısım yerinde bırakılır; yalnızca yaraya yapışmamış gevşek giysiler dikkatlice uzaklaştırılır.',
+      'Yanığa yapışmış giysiyi çekmek, alttaki hasarlı cildi de koparıp yarayı derinleştirir ve enfeksiyon riskini artırır. Bu yüzden yapışan kısım yerinde bırakılır; yalnızca yaraya yapışmamış gevşek giysiler dikkatlice uzaklaştırılır. Yalnızca gevşek olan ve yanık bölgesine yapışmamış giysiler çıkarılır.',
     whyWrong: [
       'Yapışan giysiyi çekmek, kesmek veya ovarak sıyırmak cilt hasarını büyütür.',
       'Islatıp ovmak da yapışan dokuyu zedeleyebilir; giysi yerinde bırakılmalıdır.',
@@ -892,7 +892,7 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
       'Bül iğneyle delinip suyu boşaltılır',
       'Bül sıkılarak söndürülür',
       'Bülün üzeri diş macunuyla kapatılır',
-      'Bül patlatılmadan olduğu gibi bırakılır; üzeri temiz ve gevşek bir örtüyle korunur',
+      'Bül patlatılmadan olduğu gibi bırakılır',
     ],
     answerIndex: 3,
     explanation:
@@ -940,13 +940,13 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
     stem: 'Vücudun geniş bir bölümünü kaplayan büyük bir yanıkta ilk yardımcının dikkat etmesi gereken önemli bir risk nedir?',
     options: [
       'Yaralının hemen acıkacağı',
-      'Sıvı kaybı ve ısı kaybının şok tablosuna yol açabilmesi; bu nedenle bölgenin temiz bezle örtülüp yaralının 112’ye yönlendirilmesi',
+      'Sıvı kaybı ve ısı kaybının şok tablosuna yol açabilmesi',
       'Yanığın kendiliğinden geçeceği',
       'Yalnızca cildin renginin değişeceği',
     ],
     answerIndex: 1,
     explanation:
-      'Geniş yanıklarda vücut, hasarlı cilt yüzeyinden hem sıvı hem de ısı kaybeder; bu da şok gelişimine zemin hazırlar. İlk yardımcı yanık bölgesini temiz bir bezle örterek ısı ve sıvı kaybını sınırlar, yaralıyı hareketsiz tutar ve hızla 112’ye yönlendirir.',
+      'Geniş yanıklarda vücut, hasarlı cilt yüzeyinden hem sıvı hem de ısı kaybeder; bu da şok gelişimine zemin hazırlar. İlk yardımcı yanık bölgesini temiz bir bezle örterek ısı ve sıvı kaybını sınırlar, yaralıyı hareketsiz tutar ve hızla 112’ye yönlendirir. Bu nedenle bölgenin temiz bezle örtülüp yaralının 112’ye yönlendirilmesi.',
     whyWrong: [
       'Geniş yanık kendiliğinden geçmez; ciddi ve acil bir durumdur.',
       'Sorun yalnızca cilt rengi ya da açlık değil, sıvı-ısı kaybına bağlı şok riskidir.',
@@ -992,7 +992,7 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
       'Bilinci nasıl olursa olsun bol ve hızlı su içirilir',
       'Su yerine yalnızca gazlı içecek verilir',
       'Kişi bilincini yitirse bile ağzına su dökülür',
-      'Kişinin bilinci açık ve güvenle yutabiliyorsa küçük yudumlarla su verilebilir; bilinci bulanıksa ağızdan sıvı verilmez',
+      'Kişinin bilinci açık ve güvenle yutabiliyorsa küçük yudumlarla su verilebilir',
     ],
     answerIndex: 3,
     explanation:
@@ -1092,7 +1092,7 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
       'Karanlıkta fark edilmemek için hareketsiz kalmak',
       'Yol ortasında telefonuyla ışık tutup beklemek',
       'Aracın farlarını söndürüp karanlıkta çalışmak',
-      'Varsa reflektörlü (ışığı yansıtan) yelek giymek ve uygun mesafeye uyarı üçgeni/reflektör koyarak yaklaşan araçları uyarmak',
+      'Varsa reflektörlü (ışığı yansıtan)',
     ],
     answerIndex: 3,
     explanation:
@@ -1192,11 +1192,11 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
       'İstediği yiyecek ve içeceği vermelidir',
       'Ağrı kesici bir hap vermelidir',
       'Karnına bastırarak ağrısını gidermeye çalışmalıdır',
-      'Ağızdan hiçbir şey vermemeli; olası bir ameliyat ve kusma riski nedeniyle yaralıyı aç-susuz izleyip 112’ye bildirmelidir',
+      'Ağızdan hiçbir şey vermemeli',
     ],
     answerIndex: 3,
     explanation:
-      'Karın yaralanmasında ağızdan verilen yiyecek-içecek, gerekebilecek acil ameliyatı geciktirir ve kusmaya yol açabilir. Bu nedenle yaralıya ağızdan bir şey verilmez; rahat bir pozisyonda izlenir ve 112 aranır.',
+      'Karın yaralanmasında ağızdan verilen yiyecek-içecek, gerekebilecek acil ameliyatı geciktirir ve kusmaya yol açabilir. Bu nedenle yaralıya ağızdan bir şey verilmez; rahat bir pozisyonda izlenir ve 112 aranır. Olası bir ameliyat ve kusma riski nedeniyle yaralıyı aç-susuz izleyip 112’ye bildirmelidir.',
     whyWrong: [
       'Yiyecek, içecek veya ağızdan ilaç vermek ameliyat ve kusma açısından risklidir.',
       'Karna bastırmak iç yaralanmayı ağırlaştırabilir.',
@@ -1266,7 +1266,7 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Hepsini görmezden gelip beklemelidir',
       'Ağza parmağını sokup körlemesine tarar',
-      'Ağızda açıkça görülen ve kolay ulaşılabilen gevşek engeli dikkatle uzaklaştırır; görünmeyen bir cismi körlemesine aramaz',
+      'Ağızda açıkça görülen ve kolay ulaşılabilen gevşek engeli dikkatle uzaklaştırır',
       'Yaralının ağzına su dökerek temizler',
     ],
     answerIndex: 2,
@@ -1292,11 +1292,11 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
       'Durumları hiçbir zaman değişmez',
       'İlk yardıma hiç ihtiyaç duymazlar',
       'Yalnızca uykuya ihtiyaçları vardır',
-      'Genel durumları erişkinlere göre daha hızlı bozulabilir; bu nedenle yakın izlenmeli ve gecikmeden 112 aranmalıdır',
+      'Genel durumları erişkinlere göre daha hızlı bozulabilir',
     ],
     answerIndex: 3,
     explanation:
-      'Bebek ve küçük çocuklarda vücut daha küçük olduğundan durum erişkinlere kıyasla daha hızlı ağırlaşabilir. Bu yüzden yaşam bulguları yakından izlenir, gecikmeden 112 aranır ve çocuk mümkünse ebeveyniyle birlikte, sakin biçimde tutulur.',
+      'Bebek ve küçük çocuklarda vücut daha küçük olduğundan durum erişkinlere kıyasla daha hızlı ağırlaşabilir. Bu yüzden yaşam bulguları yakından izlenir, gecikmeden 112 aranır ve çocuk mümkünse ebeveyniyle birlikte, sakin biçimde tutulur. Bu nedenle yakın izlenmeli ve gecikmeden 112 aranmalıdır.',
     whyWrong: [
       'Çocukların durumu değişmez veya ilk yardım gerektirmez demek yanlıştır.',
       'İhtiyaçları uykuyla sınırlı değildir; hızlı değerlendirme ve gözlem gerekir.',
@@ -1314,10 +1314,10 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Bilinci açık bir yaralıdan sağlık ekibine iletmek üzere bilgi alırken ilk yardımcının sorması en yararlı olan sorulardan biri hangisidir?',
     options: [
-      'Nerede ağrısı olduğu, nasıl bir kaza geçirdiği ve bilinen bir hastalığı ya da alerjisi olup olmadığı',
-      'Kaç yıldır araç kullandığı',
-      'En sevdiği rengin ne olduğu',
-      'Hangi takımı tuttuğu',
+      'Nerede ağrısı olduğu ve bilinen bir hastalığı bulunup bulunmadığı',
+      'Kaç yıldır araç kullandığı ve kaç kez kaza yaptığı bilgisi',
+      'Kaza yerine en yakın hastanenin adı ve uzaklığı bilgisi',
+      'Aracının markası, modeli ve sigortasının bulunup bulunmadığı',
     ],
     answerIndex: 0,
     explanation:

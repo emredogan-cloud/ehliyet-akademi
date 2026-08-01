@@ -17,7 +17,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
       'Öndeki aracın stop lambalarını takip ederek hızlı ilerlemek',
       'Uzun farları açıp normal hızda devam etmek',
       'Dörtlüleri yakıp aynı hızı korumak',
-      'Hızı görüş mesafesine göre iyice düşürüp takip mesafesini artırmak ve sis farlarını kullanmak',
+      'Hızı görüş mesafesine indirip sis farlarını kullanmak',
     ],
     answerIndex: 3,
     explanation:
@@ -39,10 +39,10 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Göbekli (döner) bir kavşağa girmek üzeresiniz ve kavşağın içinde dönmekte olan araçlar var. Kurallara uygun davranış nedir?',
     options: [
-      'Sinyal vermeden hızla kavşağa dalmak',
+      'Sinyal vermeden hızla kavşağa dalıp yerini almak',
       'Kavşak içinde dönen araçlara yol verip uygun boşlukta katılmak',
       'İçerideki araçlar dursun diye korna çalmak',
-      '"Hakkım" diyerek onlardan önce girmeye çalışmak',
+      'Hakkınızın olduğunu düşünüp onlardan önce kavşağa girmeye çalışmak',
     ],
     answerIndex: 1,
     explanation:
@@ -64,9 +64,9 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Araç içinde bir ambalaj ve izmarit birikti. Çevre bilinci açısından doğru davranış hangisidir?',
     options: [
-      'Camdan dışarı atmak, nasılsa küçük bir çöp',
-      'Kırmızı ışıkta yola bırakmak',
-      'İzmariti yola, ambalajı ise çöp kutusuna atmak',
+      'Camdan dışarı atmak, nasılsa küçük bir çöp olduğunu düşünmek',
+      'Kırmızı ışıkta beklerken yola bırakmak',
+      'İzmariti yola, ambalajı çöp kutusuna atmak',
       'Çöpleri araçta biriktirip uygun bir çöp kutusuna atmak',
     ],
     answerIndex: 3,
@@ -91,12 +91,12 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     options: [
       'Olduğunuz yerde hiç kımıldamadan beklemek',
       'Emniyet şeridinden ilerleyip trafiği aşmaya çalışmak',
-      'Şeritler arasında yaşam koridoru (acil durum koridoru) oluşacak şekilde araçların kenarlara yanaşması',
+      'Şeritler arasında yaşam koridoru (acil durum koridoru)',
       'Sirenli araçlar gelene kadar araçtan inip beklemek',
     ],
     answerIndex: 2,
     explanation:
-      'Trafik durduğunda araçların kenarlara yanaşarak orta bölümde bir yaşam koridoru bırakması, sirenli araçların olay yerine hızla ulaşmasını sağlar ve hayat kurtarır.',
+      'Trafik durduğunda araçların kenarlara yanaşarak orta bölümde bir yaşam koridoru bırakması, sirenli araçların olay yerine hızla ulaşmasını sağlar ve hayat kurtarır. Oluşacak şekilde araçların kenarlara yanaşması.',
     whyWrong: [
       'Herkesin olduğu yerde kalması, ortada geçiş için boşluk bırakmaz.',
       'Emniyet şeridini kişisel çıkar için kullanmak hem yasak hem de tehlikelidir; araçtan inmek ise trafiğe çıkma riski doğurur.',
@@ -468,14 +468,14 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Çok şeritli bir yolda durup bir yayayı karşıya geçmesi için el işaretiyle çağırmak istiyorsunuz. Bu davranışın en önemli sakıncası nedir?',
     options: [
-      'Yan şeritteki başka bir aracı göremeyebilirsiniz; yayayı çağırmak, onu göremeyen sürücünün önüne itebilir',
+      'Yan şeritteki başka bir aracı göremeyebilirsiniz',
       'Yayayı çağırmak her zaman en güvenli davranıştır',
       'El işareti trafiği hızlandırdığı için sorun yoktur',
       'Yaya zaten kendi güvenliğinden sorumludur, sizin için sakıncası yoktur',
     ],
     answerIndex: 0,
     explanation:
-      'Çok şeritli yolda siz durup yol verseniz de yan şeritteki araç yayayı görmeyebilir; onu "geç" diye çağırmak, hiç beklemediği bir aracın önüne çıkmasına neden olabilir. Doğrusu, kendi şeridinizde durup yayanın kendi kararıyla ve tüm şeritleri görerek geçmesine izin vermektir.',
+      'Çok şeritli yolda siz durup yol verseniz de yan şeritteki araç yayayı görmeyebilir; onu "geç" diye çağırmak, hiç beklemediği bir aracın önüne çıkmasına neden olabilir. Doğrusu, kendi şeridinizde durup yayanın kendi kararıyla ve tüm şeritleri görerek geçmesine izin vermektir. Yayayı çağırmak, onu göremeyen sürücünün önüne itebilir.',
     whyWrong: [
       'Yayayı çağırmak, göremediğiniz diğer şeritler yüzünden her zaman güvenli değildir.',
       '"Sorumluluk yayada" veya "trafiği hızlandırır" mantığı, oluşabilecek ölümcül riski görmezden gelir.',
@@ -777,12 +777,12 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     options: [
       'Hiçbir şey yapmadan devam etmek',
       'Uzun uzun korna çalmak',
-      'Kısa süre dörtlüleri (flaşör) yakıp teşekkür ettiğinizi belirtmek',
+      'Kısa süre dörtlüleri (flaşör)',
       'Hızlanıp önünden hemen uzaklaşmak',
     ],
     answerIndex: 2,
     explanation:
-      'Otoyolda size yol veren bir sürücüye kısa süre dörtlü yakarak teşekkür etmek yaygın ve nazik bir işarettir; bu jest, trafikte olumlu bir iletişim kültürünü besler.',
+      'Otoyolda size yol veren bir sürücüye kısa süre dörtlü yakarak teşekkür etmek yaygın ve nazik bir işarettir; bu jest, trafikte olumlu bir iletişim kültürünü besler. Yakıp teşekkür ettiğinizi belirtmek.',
     whyWrong: [
       'Karşılık vermemek, gösterilen inceliği görmezden gelmektir.',
       'Uzun korna teşekkür yerine rahatsızlık izlenimi verir; hemen uzaklaşmak da jesti değersiz kılar.',
@@ -980,7 +980,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     options: [
       'Molasız gidip bir an önce varmaya çalışmak',
       'Yorulunca kahve içip devam etmek yeterlidir',
-      'Düzenli aralıklarla (yaklaşık her iki saatte bir) mola vermek ve mümkünse sürüşü paylaşmak',
+      'Düzenli aralıklarla (yaklaşık her iki saatte bir)',
       'Yorgunluk hissedince hızlanıp yolu kısaltmak',
     ],
     answerIndex: 2,
@@ -1006,11 +1006,11 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
       'Daha hızlı olan araç önce geçer',
       'Daha büyük olan araç önce geçer',
       'Korna çalan araç önce geçer',
-      'Sağdan gelen araca yol verilir; yani kendi sağınızdaki araca öncelik tanınır',
+      'Sağdan gelen araca yol verilir',
     ],
     answerIndex: 3,
     explanation:
-      'Kontrolsüz ve eşdeğer kavşaklarda öncelik sağdan gelenindir; bu kurala uymak, herkesin aynı anda geçmeye çalışmasından doğacak karmaşayı ve kazayı önler.',
+      'Kontrolsüz ve eşdeğer kavşaklarda öncelik sağdan gelenindir; bu kurala uymak, herkesin aynı anda geçmeye çalışmasından doğacak karmaşayı ve kazayı önler. Yani kendi sağınızdaki araca öncelik tanınır.',
     whyWrong: [
       'Hız, büyüklük veya korna öncelik kazandırmaz; bunlar kişisel dayatmalardır.',
       'Bu yanlış ölçütlere göre davranmak kavşakta çarpışmaya yol açar.',
@@ -1029,7 +1029,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     stem: 'Otoyolda büyük bir kamyonun (TIR) hemen önüne geçip ardından hızlıca yavaşlamak üzeresiniz. Bu neden tehlikelidir ve ne yapmalısınız?',
     options: [
       'Kamyonlar çok hızlı durabildiği için sakıncası yoktur',
-      'Kamyonların fren mesafesi uzundur; önlerine ani girip kesmemeli, yeterli boşluk bırakmalısınız',
+      'Kamyonların fren mesafesi uzundur',
       'Kamyonun önünde yavaşlamak onu uyarır, bu yüzden faydalıdır',
       'Kamyonun kör noktasında kalıp beklemek en güvenlisidir',
     ],

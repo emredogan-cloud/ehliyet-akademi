@@ -39,7 +39,7 @@ export const PRATIK_QUESTIONS: Question[] = [
     difficulty: 'kolay',
     stem: 'Manuel vitesli bir aracı çalıştırırken vites kolu ve debriyaj için doğru olan nedir?',
     options: [
-      'Vites boşta (nötr) ve debriyaj basılı iken çalıştır',
+      'Vites boşta (nötr)',
       'Vites 1. konumdayken debriyaja basmadan çalıştır',
       'Vites geri konumdayken çalıştır',
       'Debriyaja hiç basmadan, vites 2. konumdayken çalıştır',
@@ -265,14 +265,14 @@ export const PRATIK_QUESTIONS: Question[] = [
     difficulty: 'orta',
     stem: 'Düz yolda seyir hâlindeyken ayağı sürekli debriyaj pedalının üzerinde yarı basılı tutmak neden yanlıştır?',
     options: [
-      'Debriyaj balatalarının sürekli sürtünüp aşınmasına (patinaj) ve güç kaybına yol açtığı için yanlıştır',
+      'Debriyaj balatalarının sürekli sürtünüp aşınmasına (patinaj)',
       'Yakıt tüketimini azalttığı için doğrudur',
       'Motoru soğuttuğu için tercih edilir',
       'Frenleme mesafesini kısalttığı için önerilir',
     ],
     answerIndex: 0,
     explanation:
-      'Seyir sırasında ayağın debriyaj üzerinde yarı basılı kalması balataları sürekli kaydırır (patinaj); bu, erken aşınma, güç kaybı ve ısınma demektir. Ayak, kullanılmadığında debriyajdan çekilmelidir.',
+      'Seyir sırasında ayağın debriyaj üzerinde yarı basılı kalması balataları sürekli kaydırır (patinaj); bu, erken aşınma, güç kaybı ve ısınma demektir. Ayak, kullanılmadığında debriyajdan çekilmelidir. Ve güç kaybına yol açtığı için yanlıştır.',
     whyWrong: [
       'Patinaj yakıtı azaltmaz; güç kaybı yüzünden tüketimi artırabilir.',
       'Debriyajı yarı basılı tutmanın frenlemeyle ilgisi yoktur.',
@@ -292,12 +292,12 @@ export const PRATIK_QUESTIONS: Question[] = [
     options: [
       'Tek elle, dirseği pencereye dayayarak tutmak',
       'Dizlerle yönlendirmek',
-      'İki elle, saat kadranında 9 ve 3 (ya da 10-2) konumlarında dengeli tutmak',
+      'İki elle, saat kadranında 9 ve 3 (ya da 10-2)',
       'Direksiyonu iç kısmından, iki parmakla tutmak',
     ],
     answerIndex: 2,
     explanation:
-      'Direksiyon iki elle, dengeli konumlarda tutulduğunda ani bir manevra veya bozuk zeminde araca hâkimiyet korunur. Tek el veya dizle yönlendirme kontrolü kaybettirir.',
+      'Direksiyon iki elle, dengeli konumlarda tutulduğunda ani bir manevra veya bozuk zeminde araca hâkimiyet korunur. Tek el veya dizle yönlendirme kontrolü kaybettirir. Konumlarında dengeli tutmak.',
     whyWrong: [
       'Tek elle tutmak ani durumlarda tepki süresini uzatır.',
       'Dizle yönlendirmek araç hâkimiyetini tamamen tehlikeye atar.',
@@ -343,11 +343,11 @@ export const PRATIK_QUESTIONS: Question[] = [
       'Her hata mutlaka sınavı bitirir',
       'Hiçbir hata değerlendirmeyi etkilemez',
       'Yalnızca hız aşımı sınavı bitirir',
-      'Bazı hatalar (güvenliği ciddi tehlikeye atanlar) sınavı doğrudan sonlandırırken, daha hafif hatalar puan kaybı olarak işlenir',
+      'Bazı hatalar (güvenliği ciddi tehlikeye atanlar)',
     ],
     answerIndex: 3,
     explanation:
-      'Uygulama sınavında hataların ağırlığı farklıdır: can güvenliğini ciddi tehlikeye atan veya hakemin müdahalesini gerektiren durumlar sınavı doğrudan sonlandırabilir; daha küçük eksikler ise puan düşümü olarak kaydedilir.',
+      'Uygulama sınavında hataların ağırlığı farklıdır: can güvenliğini ciddi tehlikeye atan veya hakemin müdahalesini gerektiren durumlar sınavı doğrudan sonlandırabilir; daha küçük eksikler ise puan düşümü olarak kaydedilir. Sınavı doğrudan sonlandırırken, daha hafif hatalar puan kaybı olarak işlenir.',
     whyWrong: [
       'Her hatanın sınavı bitirmesi gerçekçi değildir; hafif hatalar puan kırar.',
       'Hataların hiç değerlendirilmemesi de doğru değildir.',
@@ -390,10 +390,10 @@ export const PRATIK_QUESTIONS: Question[] = [
     difficulty: 'kolay',
     stem: 'Frenleyip yavaşlamaya başlamadan önce sürücünün alışkanlık hâline getirmesi gereken kontrol nedir?',
     options: [
-      'Radyoyu açmak',
-      'Camı açmak',
-      'Dikiz aynasından arkadan gelen aracın mesafesini kontrol etmek',
-      'Vitesi boşa almak',
+      'Vitesi bir kademe küçültüp motor frenine geçmek',
+      'Dörtlü flaşörü yakıp arkadakileri uyarmak',
+      'Aynadan arkadan gelen aracın mesafesini kontrol etmek',
+      'El frenini yarıya kadar çekip yavaşlamaya başlamak',
     ],
     answerIndex: 2,
     explanation:
@@ -492,12 +492,12 @@ export const PRATIK_QUESTIONS: Question[] = [
     options: [
       'Küçük bir puan kırılır ve sınav sürer',
       'Hiçbir etkisi olmaz',
-      'Aday güvenliği sağlayamamış sayılır; bu tür müdahale gerektiren durum genellikle sınavın olumsuz sonuçlanmasına yol açar',
+      'Aday güvenliği sağlayamamış sayılır',
       'Adaya avantaj sağlar',
     ],
     answerIndex: 2,
     explanation:
-      'Görevlinin fiziksel müdahalesi, adayın kendi başına güvenliği sağlayamadığı ciddi bir durumu gösterir; bu nitelikteki hatalar genellikle sınavı doğrudan olumsuz sonuçlandıran ağır hatalar sınıfındadır.',
+      'Görevlinin fiziksel müdahalesi, adayın kendi başına güvenliği sağlayamadığı ciddi bir durumu gösterir; bu nitelikteki hatalar genellikle sınavı doğrudan olumsuz sonuçlandıran ağır hatalar sınıfındadır. Bu tür müdahale gerektiren durum genellikle sınavın olumsuz sonuçlanmasına yol açar.',
     whyWrong: [
       'Böyle bir müdahale küçük puan kaybı değildir; ağır hata sayılır.',
       'Etkisiz olması veya avantaj sağlaması söz konusu değildir.',

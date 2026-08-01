@@ -513,3 +513,19 @@ export function validatePayload(type: string, payload: unknown): { ok: boolean; 
     ? { ok: true, errors: [] }
     : { ok: false, errors: r.error.issues.map((e) => `${e.path.join('.')}: ${e.message}`) };
 }
+
+/* ——— Soru kalite ölçümü (Ürün Evrimi v1.1 · Faz 1) ——— */
+export {
+  longestOptionWins,
+  answerLengthRatio,
+  hasParallelOptions,
+  measureBank,
+  checkQualityGate,
+  formatQualityReport,
+  PARALLEL_RATIO_LIMIT,
+  QUALITY_GATE,
+  QUALITY_RATCHET,
+  type ScorableQuestion,
+  type BankQualityReport,
+  type GateFailure,
+} from './quality';

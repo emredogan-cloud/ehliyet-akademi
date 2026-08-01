@@ -99,13 +99,13 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     stem: 'Trafik ışığında kırmızı ile birlikte sarının da yandığı safha ne anlama gelir?',
     options: [
       'Hemen geç',
-      'Birazdan yeşil yanacak; harekete hazırlan ama henüz geçme',
+      'Birazdan yeşil yanacak',
       'Dur ve motoru durdur',
       'Kavşakta geri git',
     ],
     answerIndex: 1,
     explanation:
-      'Kırmızı+sarı safhası, yeşilin yanmak üzere olduğunu bildirir; sürücü hareket için hazırlanır ancak yeşil yanmadan geçmez.',
+      'Kırmızı+sarı safhası, yeşilin yanmak üzere olduğunu bildirir; sürücü hareket için hazırlanır ancak yeşil yanmadan geçmez. Harekete hazırlan ama henüz geçme.',
     whyWrong: [
       'Bu safhada geçiş hakkı henüz doğmamıştır.',
       'Motoru durdurmak gerekmez.',
@@ -152,10 +152,10 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'orta',
     stem: 'Sürüş sırasında kırmızı yağ basıncı ikaz lambası yanarsa sürücü ne yapmalıdır?',
     options: [
-      'Yola devam eder',
-      'Aracı güvenli yerde durdurup motoru derhal durdurur ve kontrol ettirir',
-      'Klimayı kapatır',
-      'Camları açar',
+      'Hızını azaltarak en yakın servise kadar yoluna devam eder',
+      'Aracı güvenli yerde durdurup motoru derhal durdurur',
+      'Klimayı kapatıp motor yükünü azaltarak sürüşü sürdürür',
+      'Camları açıp motorun kendiliğinden soğumasını bekler',
     ],
     answerIndex: 1,
     explanation:
@@ -179,13 +179,13 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     stem: 'Gösterge panelinde akü/şarj (kırmızı akü sembolü) ikaz lambasının yanması neyi işaret eder?',
     options: [
       'Lastik basıncının düştüğünü',
-      'Şarj sisteminde (alternatör/kayış) arıza olabileceğini',
+      'Şarj sisteminde (alternatör/kayış)',
       'Yakıtın bittiğini',
       'Kapının açık olduğunu',
     ],
     answerIndex: 1,
     explanation:
-      'Akü sembollü ikaz, şarj sisteminin aküyü doldurmadığını gösterir (alternatör veya kayış arızası olabilir); kısa sürede kontrol ettirilmelidir.',
+      'Akü sembollü ikaz, şarj sisteminin aküyü doldurmadığını gösterir (alternatör veya kayış arızası olabilir); kısa sürede kontrol ettirilmelidir. Arıza olabileceğini.',
     whyWrong: [
       'Lastik basıncının ayrı bir ikaz sembolü vardır.',
       'Yakıt için ayrı gösterge vardır.',
@@ -364,10 +364,10 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'orta',
     stem: 'Açık kırıkta (kemik ucu dışarıda/yara var) ilk yardım sırası nasıl olmalıdır?',
     options: [
-      'Kemiği içeri itmek',
-      'Önce kanamayı kontrol etmek, yarayı temiz bezle örtmek, sonra atelle tespit etmek',
-      'Yalnızca soğuk uygulamak',
-      'Yaralıyı yürütmek',
+      'Kemik ucunu yerine yerleştirip üzerine soğuk uygulama yapmak',
+      'Kanamayı durdurup yarayı örtmek, sonra atelle tespit etmek',
+      'Önce atelle tespit edip sonra yarayı su ile yıkayarak temizlemek',
+      'Yaralıyı ayağa kaldırıp destekle en yakın sağlık kuruluşuna yürütmek',
     ],
     answerIndex: 1,
     explanation:
@@ -631,7 +631,7 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     stem: 'Fren pedalına basıldığında direksiyonda/pedalda titreme hissediliyorsa muhtemel neden ve doğru davranış nedir?',
     options: [
       'Normaldir, önemsenmez',
-      'Disk/balata aşınması olabilir; fren sistemi kontrol ettirilmelidir',
+      'Disk/balata aşınması olabilir',
       'Lastik havası fazladır, indirilmelidir',
       'Yakıt biter, depo doldurulur',
     ],
@@ -738,10 +738,10 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'orta',
     stem: 'Sis (arka/ön sis) lambaları ne zaman kullanılmalıdır?',
     options: [
-      'Her sürüşte sürekli',
-      'Yalnızca yoğun sis, kar veya şiddetli yağış gibi görüşün ciddi azaldığı durumlarda',
-      'Gündüz açık havada',
-      'Şehir içi normal sürüşte',
+      'Gece şehir dışı yollarda uzun farla birlikte sürekli olarak',
+      'Görüşün ciddi biçimde azaldığı yoğun sis, kar veya şiddetli yağışta',
+      'Yağmurlu havada gündüz görüşü artırmak amacıyla her zaman',
+      'Yerleşim yeri içinde sokak aydınlatması yetersiz olduğunda',
     ],
     answerIndex: 1,
     explanation:

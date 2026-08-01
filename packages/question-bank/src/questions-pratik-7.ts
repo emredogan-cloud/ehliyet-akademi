@@ -14,14 +14,14 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Doğru sürüş pozisyonunda koltuğun ileri-geri mesafesi hangi ölçüte göre ayarlanır?',
     options: [
-      'Debriyaj (kavrama) pedalına sonuna kadar basıldığında bacak tam gerilip kilitlenmeyecek, dizde hafif bir kıvrım kalacak ve sırt koltuğa yaslı olacak biçimde ayarlanır',
+      'Debriyaj (kavrama)',
       'Bacak pedala ancak zar zor yetişecek kadar koltuk mümkün olduğunca geriye alınır',
       'Göğüs neredeyse direksiyona değecek kadar koltuk öne çekilir',
       'Koltuk her sürücü için aynı orta konumda bırakılır; kişinin boyuna göre değişmesine gerek yoktur',
     ],
     answerIndex: 0,
     explanation:
-      'Koltuk mesafesi, debriyaja sonuna kadar basıldığında bacağın tam gerilmediği, dizde hafif bir kıvrımın kaldığı konuma göre ayarlanır. Bu, hem pedallara tam güç aktarmayı hem uzun sürüşte yorulmamayı sağlar. Sırt koltuğa yaslı kalmalı; böylece ani frende ve manevrada gövde desteklenir.',
+      'Koltuk mesafesi, debriyaja sonuna kadar basıldığında bacağın tam gerilmediği, dizde hafif bir kıvrımın kaldığı konuma göre ayarlanır. Bu, hem pedallara tam güç aktarmayı hem uzun sürüşte yorulmamayı sağlar. Sırt koltuğa yaslı kalmalı; böylece ani frende ve manevrada gövde desteklenir. Pedalına sonuna kadar basıldığında bacak tam gerilip kilitlenmeyecek, dizde hafif bir kıvrım kalacak ve sırt koltuğa yaslı olacak biçimde ayarlanır.',
     whyWrong: [
       'Bacak pedala zar zor yetişiyorsa debriyaj sonuna kadar basılamaz; acil frende de yeterli güç uygulanamaz.',
       'Göğsün direksiyona çok yakın olması, hava yastığı açıldığında yaralanma riski yaratır ve kol hareketini kısıtlar.',
@@ -42,12 +42,12 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     options: [
       'Kafalık yalnızca konfor içindir; ayarının güvenlikle bir ilgisi yoktur',
       'Kafalık mümkün olduğunca aşağıda, ense hizasının altında tutulmalıdır',
-      'Kafalığın üst kenarı başın üst hizasına yakın, arkası başa olabildiğince yakın olmalı; böylece arkadan çarpmada baş geriye savrulmaz ve boyun incinmesi (kamçı etkisi) azalır',
+      'Kafalığın üst kenarı başın üst hizasına yakın, arkası başa olabildiğince yakın olmalı',
       'Görüş artsın diye kafalık tamamen çıkarılırsa daha güvenli olur',
     ],
     answerIndex: 2,
     explanation:
-      'Arkadan çarpma anında gövde koltukla birlikte ileri iterken baş bir an geride kalır; bu ani zıtlık boyunda kamçı (whiplash) yaralanmasına yol açar. Doğru ayarlı kafalık, üst kenarı baş hizasında ve başa yakın durarak başı destekler ve bu savrulmayı sınırlar. Kafalık bir konfor parçası değil, pasif güvenlik donanımıdır.',
+      'Arkadan çarpma anında gövde koltukla birlikte ileri iterken baş bir an geride kalır; bu ani zıtlık boyunda kamçı (whiplash) yaralanmasına yol açar. Doğru ayarlı kafalık, üst kenarı baş hizasında ve başa yakın durarak başı destekler ve bu savrulmayı sınırlar. Kafalık bir konfor parçası değil, pasif güvenlik donanımıdır. Böylece arkadan çarpmada baş geriye savrulmaz ve boyun incinmesi (kamçı etkisi) azalır.',
     whyWrong: [
       'Kafalık ayarı doğrudan boyun güvenliğini ilgilendirir; yalnızca konfor amacı taşımaz.',
       'Çok aşağıdaki bir kafalık başı destekleyemez, hatta bir dayanak noktası oluşturup zararı artırabilir.',
@@ -69,11 +69,11 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
       'Kollar dirsekten hiç kıvrılmayacak, tamamen düz ve kilitli uzanacak biçimde ayarlandığında ideal olur',
       'Direksiyon göğse dayanacak kadar yakına alındığında en iyi hâkimiyet sağlanır',
       'Direksiyon, gösterge panelini tümüyle örtecek kadar yukarı kaldırılır',
-      'Kol uzatıldığında bilek direksiyonun üst kenarına düz biçimde yaslanıyor ve bu sırada omuz/sırt koltuktan ayrılmıyorsa mesafe uygundur; direksiyon, göstergeleri kapatmayacak yükseklikte tutulur',
+      'Kol uzatıldığında bilek direksiyonun üst kenarına düz biçimde yaslanıyor ve bu sırada omuz/sırt koltuktan ayrılmıyorsa mesafe uygundur',
     ],
     answerIndex: 3,
     explanation:
-      'Bilek testi basit ve güvenilirdir: kol düz uzatıldığında bilek direksiyonun üst kenarına yaslanmalı ve bu sırada omuz koltuktan kalkmamalıdır. Bu konumda direksiyonu tuttuğunuzda dirsekler hafifçe kıvrık kalır; hem geniş açılı dönüşler rahat yapılır hem de omuz koltuğa yaslı kalarak kontrol korunur. Yükseklik ise gösterge ve ikaz lambalarını görmeyi engellemeyecek biçimde ayarlanır.',
+      'Bilek testi basit ve güvenilirdir: kol düz uzatıldığında bilek direksiyonun üst kenarına yaslanmalı ve bu sırada omuz koltuktan kalkmamalıdır. Bu konumda direksiyonu tuttuğunuzda dirsekler hafifçe kıvrık kalır; hem geniş açılı dönüşler rahat yapılır hem de omuz koltuğa yaslı kalarak kontrol korunur. Yükseklik ise gösterge ve ikaz lambalarını görmeyi engellemeyecek biçimde ayarlanır. Direksiyon, göstergeleri kapatmayacak yükseklikte tutulur.',
     whyWrong: [
       'Kolların tümüyle düz ve kilitli olması, dönüşte omzun koltuktan kalkmasına ve tepkinin gecikmesine yol açar.',
       'Direksiyonu göğse dayamak, hava yastığı riskini artırır ve serbest manevra alanını daraltır.',
@@ -120,7 +120,7 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     options: [
       'Dış aynaları içe çevirip kendi aracın yan gövdesini bolca görecek biçimde ayarlamak kör noktayı kapatır',
       'Kör nokta ayna ayarıyla hiç değişmez; yalnızca omuz üstü bakış işe yarar',
-      'Dış aynalar biraz daha dışa açılarak aracın yalnızca kenar ucu görünecek kadar bırakılır; böylece iç aynayla dış aynanın gördüğü alanlar üst üste binmez, yan taraf daha geniş taranır ve kör nokta küçülür (yine de şerit değişiminde omuz kontrolü yapılır)',
+      'Dış aynalar biraz daha dışa açılarak aracın yalnızca kenar ucu görünecek kadar bırakılır',
       'Dış aynaları aşağı eğip yalnızca yakındaki asfaltı görecek biçimde ayarlamak en güvenlisidir',
     ],
     answerIndex: 2,
@@ -144,14 +144,14 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Emniyet kemeri doğru biçimde nasıl takılır?',
     options: [
-      'Omuz kayışı boyundan değil omuz üzerinden göğse çapraz geçmeli, alt kayış karın üzerinden değil kalça kemiği üzerinden oturmalı; kemer bükülmemeli ve gevşek bırakılmamalıdır',
+      'Omuz kayışı boyundan değil omuz üzerinden göğse çapraz geçmeli, alt kayış karın üzerinden değil kalça kemiği üzerinden oturmalı',
       'Rahat olsun diye kemer koltuk arkasından ya da kol altından geçirilerek takılır',
       'Omuz kayışı sürekli boyna değdiği için başın arkasından dolandırılır',
       'Kısa mesafelerde ve şehir içinde kemer takmaya gerek yoktur',
     ],
     answerIndex: 0,
     explanation:
-      'Emniyet kemeri, çarpışma kuvvetini iskeletin en güçlü noktalarına, yani omuz ve kalça kemiğine aktaracak biçimde takılmalıdır. Omuz kayışı boyundan değil omuz üzerinden geçmeli, alt kayış yumuşak karın yerine kalça kemiğine oturmalıdır. Bükülmüş ya da gevşek bir kemer, darbe anında koruma yüzeyini azaltır ve iç organ yaralanması riskini artırır.',
+      'Emniyet kemeri, çarpışma kuvvetini iskeletin en güçlü noktalarına, yani omuz ve kalça kemiğine aktaracak biçimde takılmalıdır. Omuz kayışı boyundan değil omuz üzerinden geçmeli, alt kayış yumuşak karın yerine kalça kemiğine oturmalıdır. Bükülmüş ya da gevşek bir kemer, darbe anında koruma yüzeyini azaltır ve iç organ yaralanması riskini artırır. Kemer bükülmemeli ve gevşek bırakılmamalıdır.',
     whyWrong: [
       'Kemeri koltuk arkasından ya da kol altından geçirmek, çarpışmada onu işlevsiz bırakır.',
       'Kemeri başın arkasından dolamak koruma sağlamaz; kayış doğru yol üzerinde durmalıdır.',
@@ -173,7 +173,7 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
       'Her üç pedal da tek elle, yani yalnızca sağ ayakla kullanılır',
       'Debriyaj sağda, gaz solda yer alır',
       'Fren pedalı hem sol hem sağ ayakla dönüşümlü basılır',
-      'Soldan sağa debriyaj-fren-gaz sırasıyla dizilir; debriyaj sol ayakla, fren ve gaz ise sağ ayakla kullanılır (sağ ayak fren ile gaz arasında gidip gelir)',
+      'Soldan sağa debriyaj-fren-gaz sırasıyla dizilir',
     ],
     answerIndex: 3,
     explanation:
@@ -197,7 +197,7 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     stem: 'Kontak açıldığında gösterge panelindeki ikaz (uyarı) lambalarıyla ilgili doğru davranış nedir?',
     options: [
       'İkaz lambalarına bakmaya gerek yoktur; önemli olan motoru bir an önce çalıştırmaktır',
-      'Kontak açıldığında lambalar bir an yanıp test yapar; motor çalışınca yağ basıncı, akü şarj, ABS ve motor arıza gibi lambaların sönmesi beklenir. Sönmeyen kırmızı bir ikaz varsa yola çıkmadan nedeni araştırılır',
+      'Kontak açıldığında lambalar bir an yanıp test yapar',
       'Panelde yanan tüm lambalar normaldir ve sürüşü hiçbir biçimde etkilemez',
       'Yalnızca yakıt lambası önemlidir; diğer ikazlar göz ardı edilebilir',
     ],
@@ -224,7 +224,7 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     options: [
       'Yalnızca saat ve dış hava sıcaklığı göstergesi',
       'Yalnızca radyo frekansı ve ses seviyesi',
-      'Yakıt seviyesi, motor hararet (sıcaklık) göstergesi, hız ve devir (rpm) göstergeleri ile ikaz lambaları',
+      'Yakıt seviyesi, motor hararet (sıcaklık)',
       'Göstergeler hiçbir zaman okunmaz; sürücü yalnızca yolu izler',
     ],
     answerIndex: 2,
@@ -251,11 +251,11 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
       'Yalnızca aküyü korumak için yapılan bir işlemdir',
       'Sadece yakıt tasarrufu sağlamak amacıyla önerilir',
       'Yerleşmiş bir gelenektir; somut bir güvenlik gerekçesi yoktur',
-      'Vites boştayken ve debriyaj basılıyken çalıştırmak, motor devreye girdiğinde aracın istem dışı ileri sıçramasını önler; el freni ise araç herhangi bir eğimde tutulu kalsın diye çekili bırakılır',
+      'Vites boştayken ve debriyaj basılıyken çalıştırmak, motor devreye girdiğinde aracın istem dışı ileri sıçramasını önler',
     ],
     answerIndex: 3,
     explanation:
-      'Vites takılıyken ve debriyaja basmadan çalıştırılan araç, motor devreye girdiği an öne fırlayabilir; bu yüzden vites boşta tutulur ve ek güvence olarak debriyaja basılır. El freninin çekili olması ise, aracın fark edilmeyen bir eğimde kaymadan sabit durmasını sağlar. Bu üç adım birlikte, çalıştırma anını güvenli kılar.',
+      'Vites takılıyken ve debriyaja basmadan çalıştırılan araç, motor devreye girdiği an öne fırlayabilir; bu yüzden vites boşta tutulur ve ek güvence olarak debriyaja basılır. El freninin çekili olması ise, aracın fark edilmeyen bir eğimde kaymadan sabit durmasını sağlar. Bu üç adım birlikte, çalıştırma anını güvenli kılar. El freni ise araç herhangi bir eğimde tutulu kalsın diye çekili bırakılır.',
     whyWrong: [
       'Akünün korunması bu dizinin amacı değildir; asıl neden güvenliktir.',
       'Yakıt tasarrufu ile ilgisi yoktur; amaç kontrolsüz hareketi önlemektir.',
@@ -275,14 +275,14 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Manuel vitesli araçta düz zeminde kalkışın temel adım sırası hangisidir?',
     options: [
-      'Debriyaja bas, 1. vitese al, sinyal ver ve aynalarla çevreyi kontrol et; el frenini indirirken debriyajı kavrama noktasına getirip gazı yumuşakça ver',
+      'Debriyaja bas, 1. vitese al, sinyal ver ve aynalarla çevreyi kontrol et',
       'Önce gaza sonuna kadar bas, sonra vitesi tak',
       'El frenini indirmeden ve debriyaja basmadan 3. vitesle doğrudan kalkış yap',
       'Debriyaja hiç basmadan vites takıp hemen hareket et',
     ],
     answerIndex: 0,
     explanation:
-      'Düzgün bir kalkış sırayla ilerler: debriyaja basılır, 1. vitese alınır, niyet sinyalle bildirilir ve aynalarla çevre kontrol edilir. Ardından el freni indirilirken debriyaj kavrama noktasına getirilip gaz yumuşakça verilir; araç yüklendikçe debriyaj tam bırakılır. Bu düzen, sarsıntısız ve güvenli bir kalkış sağlar.',
+      'Düzgün bir kalkış sırayla ilerler: debriyaja basılır, 1. vitese alınır, niyet sinyalle bildirilir ve aynalarla çevre kontrol edilir. Ardından el freni indirilirken debriyaj kavrama noktasına getirilip gaz yumuşakça verilir; araç yüklendikçe debriyaj tam bırakılır. Bu düzen, sarsıntısız ve güvenli bir kalkış sağlar. El frenini indirirken debriyajı kavrama noktasına getirip gazı yumuşakça ver.',
     whyWrong: [
       'Önce sonuna kadar gaz vermek motoru yükseltir ve kavrama anında araç sarsılır ya da fırlar.',
       '3. vitesle kalkış motoru boğar; debriyaj ve el freni adımlarının atlanması kalkışı bozar.',
@@ -302,13 +302,13 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     stem: 'Düz yolda hız arttıkça bir üst vitese ne zaman geçilir?',
     options: [
       'Vites hiç değiştirilmez; tüm yol tek viteste gidilir',
-      'Motor devri (ve sesi) yükselip araç o vitese göre yeterli hıza ulaştığında bir üst vitese geçilir; motor zorlanmadan uygun devir aralığında tutulur',
+      'Motor devri (ve sesi) yükselip araç o vitese göre yeterli hıza ulaştığında bir üst vitese geçilir',
       'Hız ne olursa olsun her zaman en yüksek viteste gidilir',
       'Vites yalnızca yokuş çıkarken değiştirilir; düz yolda değişmez',
     ],
     answerIndex: 1,
     explanation:
-      'Vites yükseltmenin ölçütü motor devri ve sesidir: araç o viteste yeterli hıza ulaşıp devir yükseldiğinde bir üst vitese geçilir. Amaç, motoru ne boğacak kadar düşük ne de gereksiz yüksek devirde tutmadan uygun aralıkta çalıştırmaktır. Kulakla motorun zorlandığını duymak da doğru vites zamanının işaretidir.',
+      'Vites yükseltmenin ölçütü motor devri ve sesidir: araç o viteste yeterli hıza ulaşıp devir yükseldiğinde bir üst vitese geçilir. Amaç, motoru ne boğacak kadar düşük ne de gereksiz yüksek devirde tutmadan uygun aralıkta çalıştırmaktır. Kulakla motorun zorlandığını duymak da doğru vites zamanının işaretidir. Motor zorlanmadan uygun devir aralığında tutulur.',
     whyWrong: [
       'Tek viteste gitmek, motoru ya boğar ya da sürekli yüksek devirde tutup zorlar.',
       'Düşük hızda en yüksek viteste gitmek motoru titretir ve stop ettirebilir.',
@@ -329,7 +329,7 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     options: [
       'Durulacak yere iyice gelince tek hamlede ve sert biçimde frene basılır',
       'Fren yalnızca acil durumda kullanılır; normal yavaşlama motor freniyle yapılır',
-      'Durulacak yer önceden görülüp frene erken ve kademeli (önce hafif, gerektikçe artan) basılır; böylece araç yumuşak durur, arkadaki sürücü uyarılmış olur ve kaygan zeminde kayma riski azalır',
+      'Durulacak yer önceden görülüp frene erken ve kademeli (önce hafif, gerektikçe artan) basılır',
       'Motor boşa alınıp yalnızca yolun eğimiyle yavaşlanır',
     ],
     answerIndex: 2,
@@ -356,11 +356,11 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
       'Her viraj aynı hızda alınır; virajın özelliği fark etmez',
       'Viraja mümkün olduğunca hızlı girip hız ayarını içeride fren yaparak yapmak en doğrusudur',
       'Hız yalnızca yol ıslaksa düşürülür; kuru yolda virajda hızın önemi yoktur',
-      'Virajın keskinliği, görüş mesafesi ve zemin durumu birlikte değerlendirilir; keskin, görüşü kapalı veya kaygan virajda daha çok yavaşlanır ve hız düz kesimdeyken ayarlanıp viraja uygun hızda girilir',
+      'Virajın keskinliği, görüş mesafesi ve zemin durumu birlikte değerlendirilir',
     ],
     answerIndex: 3,
     explanation:
-      'Viraj giriş hızı tek bir kurala değil, üç etkenin birleşimine göre seçilir: virajın keskinliği, önün ne kadar görülebildiği ve zeminin tutunma durumu. Keskin, görüşün kapalı olduğu ya da ıslak-kaygan bir virajda hız daha çok düşürülür. Hız ayarı tekerlekler düzken, yani viraja girmeden yapılır; böylece viraj içinde ani frene gerek kalmaz ve araç dengede kalır.',
+      'Viraj giriş hızı tek bir kurala değil, üç etkenin birleşimine göre seçilir: virajın keskinliği, önün ne kadar görülebildiği ve zeminin tutunma durumu. Keskin, görüşün kapalı olduğu ya da ıslak-kaygan bir virajda hız daha çok düşürülür. Hız ayarı tekerlekler düzken, yani viraja girmeden yapılır; böylece viraj içinde ani frene gerek kalmaz ve araç dengede kalır. Keskin, görüşü kapalı veya kaygan virajda daha çok yavaşlanır ve hız düz kesimdeyken ayarlanıp viraja uygun hızda girilir.',
     whyWrong: [
       'Her viraj aynı değildir; keskinlik ve görüş değiştikçe güvenli hız da değişir.',
       'Hızlı girip içeride fren yapmak, tutunmayı bölerek savrulmaya yol açar.',
@@ -407,7 +407,7 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     options: [
       'Yalnızca dikiz aynasına bakmak yeterlidir',
       'Manevra çabuk bitsin diye geri gidiş mümkün olduğunca hızlı yapılır',
-      'Geri gitmeden önce araç çevresi (özellikle arkada çocuk/engel) kontrol edilir; manevra sırasında gövde sağa dönülüp arka camdan bakılır, aynalar da kullanılır ve araç çok düşük hızda hareket ettirilir',
+      'Geri gitmeden önce araç çevresi (özellikle arkada çocuk/engel) kontrol edilir',
       'Geri giderken korna çalmak, gözlem yapmanın yerini tutar',
     ],
     answerIndex: 2,
@@ -432,13 +432,13 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     stem: 'Dar bir alanda çok düşük hızda direksiyon hâkimiyeti nasıl sağlanır?',
     options: [
       'Araç tamamen dururken direksiyonu zorlayarak çevirmek en doğru yöntemdir',
-      'Debriyaj yarım (kavrama noktası) tutularak hız çok düşük ve sabit tutulur, direksiyon araç hafifçe hareket hâlindeyken çevrilir; böylece hem hıza hem yöne aynı anda hâkim olunur',
+      'Debriyaj yarım (kavrama noktası) tutularak hız çok düşük ve sabit tutulur, direksiyon araç hafifçe hareket hâlindeyken çevrilir',
       'Gaz sonuna kadar verilip direksiyon hızla çevrilir',
       'Manevra boyunca gözler yalnızca ön tekerleğe sabitlenir',
     ],
     answerIndex: 1,
     explanation:
-      'Dar manevralarda hız düşük ama kontrollü olmalıdır: debriyaj kavrama noktasında tutularak araç çok yavaş ve sabit ilerletilir, direksiyon ise araç hafifçe hareket hâlindeyken çevrilir. Böylece hem hız hem yön aynı anda yönetilir ve araç istenen yere oturur. Bakış, gidilecek yöne ve çevreye taşınır; yalnız ön tekere odaklanmak manevrayı bozar.',
+      'Dar manevralarda hız düşük ama kontrollü olmalıdır: debriyaj kavrama noktasında tutularak araç çok yavaş ve sabit ilerletilir, direksiyon ise araç hafifçe hareket hâlindeyken çevrilir. Böylece hem hız hem yön aynı anda yönetilir ve araç istenen yere oturur. Bakış, gidilecek yöne ve çevreye taşınır; yalnız ön tekere odaklanmak manevrayı bozar. Böylece hem hıza hem yöne aynı anda hâkim olunur.',
     whyWrong: [
       'Araç dururken direksiyonu zorlamak lastik ve direksiyon mekanizmasını yıpratır; doğrusu hareket hâlinde çevirmektir.',
       'Sonuna kadar gaz vermek düşük hız hâkimiyetini bozar ve aracı fırlatır.',
@@ -460,7 +460,7 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
       'Üçü de aynıdır; yalnızca isimleri farklıdır',
       'Paralel park yalnızca geniş otoparklarda yapılabilir',
       'Dik park, aracı kaldırıma paralel biçimde tek hamlede ileri sürerek yapılan parktır',
-      'Paralel parkta araç yola/kaldırıma paralel olarak genelde geri manevrayla iki araç arasına yerleştirilir; dik parkta araç yol kenarına dik açıyla (90 derece), açılı parkta ise eğik (örneğin 45 derece) konumlanır',
+      'Paralel parkta araç yola/kaldırıma paralel olarak genelde geri manevrayla iki araç arasına yerleştirilir',
     ],
     answerIndex: 3,
     explanation:
@@ -483,7 +483,7 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Aracı park edip terk ederken güvenliği sağlamak için hangi işlemler bir bütün olarak yapılır?',
     options: [
-      'Araç düzgün durdurulur, el freni (park freni) çekilir, manuel araçta uygun vites takılır (yokuşta yönüne göre 1. ya da geri vites), eğimliyse ön tekerlekler bordüre doğru çevrilir ve kontak kapatılır',
+      'Araç düzgün durdurulur, el freni (park freni)',
       'Yalnızca kontak kapatılır; el freni ve vites gereksizdir',
       'Vites boşta bırakılıp el freni indirilir',
       'Motor çalışır bırakılıp araçtan inilir',
@@ -511,7 +511,7 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     options: [
       'Gece her koşulda uzun far açık tutulur',
       'Karşıdan araç gelince, sürücüyü uyarmak için uzun far açılır',
-      'Yerleşim yeri dışında yol boş ve karşıda/önde araç yokken uzun far kullanılabilir; karşıdan araç geldiğinde, öndeki araca yaklaşıldığında ve yerleşim yeri içinde kısa fara geçilir',
+      'Yerleşim yeri dışında yol boş ve karşıda/önde araç yokken uzun far kullanılabilir',
       'Gece yalnızca park (gabari) lambalarıyla, farlar kapalı gidilir',
     ],
     answerIndex: 2,
@@ -564,11 +564,11 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
       'Öndeki aracın plakasını rahatça okuyabilecek kadar yakın durmayı',
       'Hızdan bağımsız olarak her zaman sabit birkaç metreyi',
       'Yalnızca otoyolda bırakılması gereken bir boşluğu',
-      'Öndeki araç aniden yavaşladığında sürücünün durumu fark edip fren yapması için gereken tepki ve fren payını; bu yüzden hız arttıkça ve hava kötüleştikçe mesafe de artırılır',
+      'Öndeki araç aniden yavaşladığında sürücünün durumu fark edip fren yapması için gereken tepki ve fren payını',
     ],
     answerIndex: 3,
     explanation:
-      'Takip mesafesi, öndeki araç aniden yavaşladığında tehlikeyi fark etme (tepki) ve durabilme (fren) için gereken boşluktur. Hız arttıkça hem tepki sırasında alınan yol hem fren mesafesi uzadığı için bırakılacak mesafe de büyür. Yağmur, buz ya da sis gibi koşullarda bu pay daha da açılır. Yakın takip, en sık arkadan çarpma nedenidir.',
+      'Takip mesafesi, öndeki araç aniden yavaşladığında tehlikeyi fark etme (tepki) ve durabilme (fren) için gereken boşluktur. Hız arttıkça hem tepki sırasında alınan yol hem fren mesafesi uzadığı için bırakılacak mesafe de büyür. Yağmur, buz ya da sis gibi koşullarda bu pay daha da açılır. Yakın takip, en sık arkadan çarpma nedenidir. Bu yüzden hız arttıkça ve hava kötüleştikçe mesafe de artırılır.',
     whyWrong: [
       'Plakayı okuyacak kadar yakın durmak, tehlikeli derecede kısa bir mesafedir.',
       'Mesafe sabit değildir; hızla birlikte artar.',
@@ -587,14 +587,14 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Direksiyon sınavında ya da yabancı bir araca binerken aracı teslim alırken hangi ön kontrol yararlıdır?',
     options: [
-      'Araç çevresinde kısa bir göz gezdirmesi (lastikler, farlar, cam ve aynalar), ardından içeride koltuk-ayna-kemer ayarı ile vites şeması ve pedal yerleşimini tanımak',
+      'Araç çevresinde kısa bir göz gezdirmesi (lastikler, farlar, cam ve aynalar)',
       'Doğrudan gaza basıp aracı deneyerek yola çıkmak',
       'Yalnızca yakıt seviyesine bakmak yeterlidir',
       'Hiçbir kontrol yapmadan hemen hareket etmek',
     ],
     answerIndex: 0,
     explanation:
-      'Bir aracı teslim alırken önce çevresinde kısa bir göz gezdirmek (lastikler, farlar, cam ve aynalar) belirgin bir eksikliği daha yola çıkmadan gösterir. Sonra içeride koltuk, ayna ve kemer kişiye göre ayarlanır; vites şeması ve pedal yerleşimi tanınır. Özellikle yabancı bir araçta geri vitesin nasıl takıldığını bilmek, manevra anındaki şaşkınlığı önler.',
+      'Bir aracı teslim alırken önce çevresinde kısa bir göz gezdirmek (lastikler, farlar, cam ve aynalar) belirgin bir eksikliği daha yola çıkmadan gösterir. Sonra içeride koltuk, ayna ve kemer kişiye göre ayarlanır; vites şeması ve pedal yerleşimi tanınır. Özellikle yabancı bir araçta geri vitesin nasıl takıldığını bilmek, manevra anındaki şaşkınlığı önler. Ardından içeride koltuk-ayna-kemer ayarı ile vites şeması ve pedal yerleşimini tanımak.',
     whyWrong: [
       'Gaza basıp denemek kontrolsüz ve tehlikelidir; aracı tanımanın yerini tutmaz.',
       'Yalnız yakıt seviyesine bakmak, lastik ve ayar gibi kritik ayrıntıları atlar.',
@@ -640,7 +640,7 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     stem: 'Akaryakıt istasyonunda yakıt ikmali yapılırken güvenlik için doğru davranış nedir?',
     options: [
       'Motor çalışır hâlde ve sigara içilerek ikmal yapılabilir',
-      'Motor durdurulur ve kontak kapatılır, sigara içilmez ve açık ateşten uzak durulur; ikmal boyunca telefonla oyalanılmaz ve yakıt tabancası statik elektriğe karşı dikkatle tutulur',
+      'Motor durdurulur ve kontak kapatılır, sigara içilmez ve açık ateşten uzak durulur',
       'İkmal sırasında motor çalışır bırakılırsa yakıt daha hızlı alınır',
       'Yakıt yere ya da araca taşsa bile önemli değildir, silmeye gerek yoktur',
     ],
@@ -665,14 +665,14 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Sürüş öncesi lastiklerin gözle kontrolünde nelere bakılmalıdır?',
     options: [
-      'Yalnızca lastiğin markasına ve modeline bakmak yeterlidir',
-      'Lastiğin rengi solmuş mu diye bakmak en önemli kontroldür',
-      'Yalnızca ön lastikler kontrol edilir; arka lastikler önemsizdir',
-      'Diş (sırt) derinliğinin yeterli olup olmadığı, yanaklarda çatlak ya da şişkinlik bulunup bulunmadığı, saplanmış yabancı cisim (çivi vb.) olup olmadığı ve gözle belli olan iniklik (düşük basınç) kontrol edilir; dört lastik de gözden geçirilir',
+      'Lastiğin markası, üretim yılı ve jant kapağının takılı olup olmadığı',
+      'Lastiğin rengindeki solma ile üzerindeki yazıların okunaklı olması',
+      'Yalnızca ön lastiklerin durumu ile stepnenin bagajda bulunması',
+      'Diş derinliği, yanaktaki çatlak ve şişkinlik ile saplanmış cisim',
     ],
     answerIndex: 3,
     explanation:
-      'Lastiğin gözle kontrolü birkaç noktada toplanır: sırt (diş) derinliği yeterli mi, yanaklarda çatlak ya da balon gibi şişkinlik var mı, sırtına çivi benzeri bir cisim saplanmış mı ve lastik gözle belli olacak kadar inik mi. Bu belirtiler yol tutuşunu ve patlama riskini doğrudan etkiler. Kontrol yalnız ön değil, dört lastiği de kapsamalıdır.',
+      'Lastiğin gözle kontrolü birkaç noktada toplanır: sırt (diş) derinliği yeterli mi, yanaklarda çatlak ya da balon gibi şişkinlik var mı, sırtına çivi benzeri bir cisim saplanmış mı ve lastik gözle belli olacak kadar inik mi. Bu belirtiler yol tutuşunu ve patlama riskini doğrudan etkiler. Kontrol yalnız ön değil, dört lastiği de kapsamalıdır. Dört lastik de gözden geçirilir.',
     whyWrong: [
       'Marka ve model, lastiğin o anki güvenliği hakkında bilgi vermez.',
       'Lastiğin rengi bir güvenlik ölçütü değildir; diş, yanak ve basınç önemlidir.',
@@ -692,14 +692,14 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Sürüşe başlamadan önce görüşü açık tutmak için camlar ve aynalarla ilgili ne yapılmalıdır?',
     options: [
-      'Ön cam, arka cam ve aynalar temiz ve buğusuz olmalı; kar, buz veya çiy varsa tamamen temizlenmeli, cam yıkama suyu yeterli olmalı ve gerekirse buğu giderici (defrost) çalıştırılmalıdır',
+      'Ön cam, arka cam ve aynalar temiz ve buğusuz olmalı',
       'Yalnızca sürücünün önündeki küçük bir alanın açılması yeterlidir',
       'Buğulu camla sürüşe başlanabilir; cam nasılsa yolda kendiliğinden açılır',
       'Aynaların kirli olması görüşü etkilemez',
     ],
     answerIndex: 0,
     explanation:
-      'Güvenli sürüş açık bir görüşle başlar: ön cam, arka cam ve tüm aynalar temiz ve buğusuz olmalıdır. Kar, buz ya da çiy varsa camın tamamı temizlenir; yalnız küçük bir alan açmak yan ve arka görüşü kapalı bırakır. Cam yıkama suyunun yeterli olması ve gerektiğinde buğu gidericinin çalıştırılması, yolda görüşün bozulmasını önler.',
+      'Güvenli sürüş açık bir görüşle başlar: ön cam, arka cam ve tüm aynalar temiz ve buğusuz olmalıdır. Kar, buz ya da çiy varsa camın tamamı temizlenir; yalnız küçük bir alan açmak yan ve arka görüşü kapalı bırakır. Cam yıkama suyunun yeterli olması ve gerektiğinde buğu gidericinin çalıştırılması, yolda görüşün bozulmasını önler. Kar, buz veya çiy varsa tamamen temizlenmeli, cam yıkama suyu yeterli olmalı ve gerekirse buğu giderici (defrost) çalıştırılmalıdır.',
     whyWrong: [
       'Yalnız küçük bir alanı açmak, yan ve arka görüşü kapalı bırakarak tehlike yaratır.',
       'Buğulu camla yola çıkmak, görüşü en zayıf anda hareket etmek demektir.',
@@ -720,12 +720,12 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     options: [
       'Sürekli olarak aracın hemen önündeki asfalta bakılır',
       'Bakış yalnızca hız göstergesinde tutulur',
-      'Bakış olabildiğince ileriye taşınıp yolun genişçe bir kesiti taranır; uzağı görmek tehlikeleri erken fark ettirir ve şeritte salınmadan gitmeyi kolaylaştırır, arada aynalar ve göstergeler de kontrol edilir',
+      'Bakış olabildiğince ileriye taşınıp yolun genişçe bir kesiti taranır',
       'Gözler kapatılıp yalnız direksiyon hissiyle sürülür',
     ],
     answerIndex: 2,
     explanation:
-      'Bakışı olabildiğince ileriye taşımak, tehlikeleri henüz uzaktayken fark ettirir ve tepki için zaman kazandırır. Uzağa bakan sürücü aracını şeridin ortasında daha kararlı tutar, çünkü küçük yön düzeltmeleri erkenden yapılır. İleri bakış esas alınırken aynalar ve göstergeler de göz ucuyla ara ara taranır. Yalnız yakına bakmak ise geç tepkiye ve salınmaya yol açar.',
+      'Bakışı olabildiğince ileriye taşımak, tehlikeleri henüz uzaktayken fark ettirir ve tepki için zaman kazandırır. Uzağa bakan sürücü aracını şeridin ortasında daha kararlı tutar, çünkü küçük yön düzeltmeleri erkenden yapılır. İleri bakış esas alınırken aynalar ve göstergeler de göz ucuyla ara ara taranır. Yalnız yakına bakmak ise geç tepkiye ve salınmaya yol açar. Uzağı görmek tehlikeleri erken fark ettirir ve şeritte salınmadan gitmeyi kolaylaştırır, arada aynalar ve göstergeler de kontrol edilir.',
     whyWrong: [
       'Hemen öne bakmak, tehlikeyi geç fark ettirir ve araç şeritte salınır.',
       'Yalnız hız göstergesine bakmak, yolu ve trafiği tümüyle gözden kaçırır.',
@@ -745,13 +745,13 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     stem: 'Sürüş boyunca aynaların kullanımıyla ilgili doğru alışkanlık nedir?',
     options: [
       'Aynalara yalnızca sürüşün başında bir kez bakmak yeterlidir',
-      'Aynalar düzenli aralıklarla (birkaç saniyede bir) ve özellikle şerit değiştirme, dönüş, yavaşlama ile fren öncesinde taranır; böylece arkadaki ve yandaki trafik sürekli bilinir',
+      'Aynalar düzenli aralıklarla (birkaç saniyede bir) ve özellikle şerit değiştirme, dönüş, yavaşlama ile fren öncesinde taranır',
       'Aynalara yalnızca geri manevra yaparken bakılır',
       'Aynalar dikkati dağıttığı için mümkün olduğunca az kullanılır',
     ],
     answerIndex: 1,
     explanation:
-      'Ayna kullanımı bir alışkanlık hâline gelmelidir: aynalar düzenli aralıklarla, birkaç saniyede bir taranır ve özellikle şerit değiştirme, dönüş, yavaşlama ile fren öncesinde mutlaka kontrol edilir. Bu düzenli tarama, arkadan ve yandan gelen trafiğin sürekli bilinmesini sağlar. Ayna kontrolü bir kerelik değil, sürekli bir gözlem alışkanlığıdır.',
+      'Ayna kullanımı bir alışkanlık hâline gelmelidir: aynalar düzenli aralıklarla, birkaç saniyede bir taranır ve özellikle şerit değiştirme, dönüş, yavaşlama ile fren öncesinde mutlaka kontrol edilir. Bu düzenli tarama, arkadan ve yandan gelen trafiğin sürekli bilinmesini sağlar. Ayna kontrolü bir kerelik değil, sürekli bir gözlem alışkanlığıdır. Böylece arkadaki ve yandaki trafik sürekli bilinir.',
     whyWrong: [
       'Sürüşün başında bir kez bakmak, trafiğin sürekli değiştiği yolda güncel bilgi vermez.',
       'Yalnız geri manevrada bakmak, seyir hâlindeki arka ve yan trafiği gözden kaçırır.',

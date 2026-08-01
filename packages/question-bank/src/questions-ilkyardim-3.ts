@@ -90,13 +90,13 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     stem: 'Erişkinde göğüs basıları uygulanırken her basının ardından nelere dikkat edilmelidir?',
     options: [
       'Elleri göğüsten tamamen kaldırıp yerini değiştirmeye',
-      'Göğsün eski hâline (tam olarak) geri gelmesine izin vermeye',
+      'Göğsün eski hâline (tam olarak)',
       'Basıyı olabildiğince yavaşlatmaya',
       'Her basıda bir soluk vermeye',
     ],
     answerIndex: 1,
     explanation:
-      'Her göğüs basısından sonra ellerin teması kesilmeden göğsün tam olarak eski hâline gelmesine (geri dönmesine) izin verilir; böylece kalp yeniden kanla dolar. Bası ve gevşeme süreleri dengeli tutulur.',
+      'Her göğüs basısından sonra ellerin teması kesilmeden göğsün tam olarak eski hâline gelmesine (geri dönmesine) izin verilir; böylece kalp yeniden kanla dolar. Bası ve gevşeme süreleri dengeli tutulur. Geri gelmesine izin vermeye.',
     whyWrong: [
       'Elleri her seferinde kaldırıp yeniden yerleştirmek basının yerini şaşırtır ve zaman kaybettirir.',
       'Basıyı yavaşlatmak veya her basıda soluk vermek etkili dolaşımı bozar.',
@@ -190,13 +190,13 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     stem: 'Şok belirtileri gösteren bir yaralıya ağızdan su veya yiyecek verilmemesinin başlıca nedeni nedir?',
     options: [
       'Yaralının iştahını kapatmamak için',
-      'Bilinci bozulabileceğinden kusma ve soluk borusuna kaçma (boğulma) riski bulunduğu için',
+      'Bilinci bozulabileceğinden kusma ve soluk borusuna kaçma (boğulma)',
       'Su yaralıya lezzetsiz geleceği için',
       'Su kanamayı doğrudan artıracağı için',
     ],
     answerIndex: 1,
     explanation:
-      'Şoktaki yaralının bilinci her an bozulabilir; ağızdan verilen sıvı veya besin kusmaya ve soluk borusuna kaçarak boğulmaya yol açabilir. Ayrıca gerekebilecek acil işlemler için midenin boş olması önemlidir. Bu nedenle ağızdan bir şey verilmez.',
+      'Şoktaki yaralının bilinci her an bozulabilir; ağızdan verilen sıvı veya besin kusmaya ve soluk borusuna kaçarak boğulmaya yol açabilir. Ayrıca gerekebilecek acil işlemler için midenin boş olması önemlidir. Bu nedenle ağızdan bir şey verilmez. Riski bulunduğu için.',
     whyWrong: [
       'Sakınca iştah veya lezzetle ilgili değildir.',
       'Su içmek kanamayı doğrudan artırmaz; asıl tehlike boğulma ve kusma riskidir.',
@@ -416,12 +416,12 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     options: [
       'Yüzme bilse de bilmese de hemen suya atlamak',
       'Kişiye uzaktan bağırıp beklemek',
-      'Önce kendi güvenliğini düşünmek; mümkünse kıyıdan ip, sırık uzatmak veya yüzdürücü bir nesne atmak',
+      'Önce kendi güvenliğini düşünmek',
       'Suya taş atarak kişiyi uyarmak',
     ],
     answerIndex: 2,
     explanation:
-      'Boğulmakta olan kişi panik hâlinde kurtarıcıyı da suya çekebilir; bu yüzden ilk yardımcı önce kendi güvenliğini sağlar. Mümkünse suya girmeden kıyıdan bir ip, sırık veya yüzdürücü bir cisim uzatılıp atılarak kişi kıyıya çekilmeye çalışılır ve 112 aranır.',
+      'Boğulmakta olan kişi panik hâlinde kurtarıcıyı da suya çekebilir; bu yüzden ilk yardımcı önce kendi güvenliğini sağlar. Mümkünse suya girmeden kıyıdan bir ip, sırık veya yüzdürücü bir cisim uzatılıp atılarak kişi kıyıya çekilmeye çalışılır ve 112 aranır. Mümkünse kıyıdan ip, sırık uzatmak veya yüzdürücü bir nesne atmak.',
     whyWrong: [
       'Bilinçsizce suya atlamak, ilk yardımcının da boğulmasına yol açabilir.',
       'Yalnızca bağırıp beklemek ya da taş atmak kişiye yardımcı olmaz.',
@@ -439,14 +439,14 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Bir yaş altı bir bebekte hava yolu yabancı cisimle tıkandığında, erişkindeki karına bası (Heimlich) yerine hangi yöntem uygulanır?',
     options: [
-      'Sırtına (kürek kemikleri arasına) vurma ile göğse bası dönüşümlü olarak uygulanır',
+      'Sırtına (kürek kemikleri arasına)',
       'Bebeğin karnına kuvvetle bastırılır',
       'Bebek ayaklarından tutulup sallanır',
       'Bebeğe bol su içirilir',
     ],
     answerIndex: 0,
     explanation:
-      'Bebeklerde karına bası iç organlara zarar verebileceğinden uygulanmaz; bunun yerine bebek yüzüstü kol üzerine alınıp başı gövdesinden aşağıda tutularak sırtına (kürek kemikleri arasına) vurulur ve gerektiğinde göğse bası ile dönüşümlü sürdürülür.',
+      'Bebeklerde karına bası iç organlara zarar verebileceğinden uygulanmaz; bunun yerine bebek yüzüstü kol üzerine alınıp başı gövdesinden aşağıda tutularak sırtına (kürek kemikleri arasına) vurulur ve gerektiğinde göğse bası ile dönüşümlü sürdürülür. Vurma ile göğse bası dönüşümlü olarak uygulanır.',
     whyWrong: [
       'Bebeğin karnına bası uygulamak iç organ yaralanmasına yol açabilir.',
       'Bebeği ayaklarından sallamak veya su içirmek tehlikeli ve etkisizdir.',
@@ -539,14 +539,14 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Kalp krizi geçirdiğinden şüphelenilen bir kişinin bilinci kapanır ve solunumu durursa ilk yardımcı ne yapmalıdır?',
     options: [
-      'Derhal temel yaşam desteğine (göğüs basısına) başlamak ve 112 ile iletişimi sürdürmek',
+      'Derhal temel yaşam desteğine (göğüs basısına)',
       'Kişiyi oturtup su içirmeye çalışmak',
       'Ağrı geçene kadar beklemek',
       'Kişiyi ayağa kaldırıp yürütmek',
     ],
     answerIndex: 0,
     explanation:
-      'Kalp krizi, kalbin tümüyle durmasına (kalp durması) ilerleyebilir. Bilinç kapanır ve solunum durursa vakit kaybetmeden temel yaşam desteğine başlanır; göğüs basıları uygulanır ve 112 çağrısı sürdürülür. Erken başlanan kalp masajı yaşam şansını artırır.',
+      'Kalp krizi, kalbin tümüyle durmasına (kalp durması) ilerleyebilir. Bilinç kapanır ve solunum durursa vakit kaybetmeden temel yaşam desteğine başlanır; göğüs basıları uygulanır ve 112 çağrısı sürdürülür. Erken başlanan kalp masajı yaşam şansını artırır. Başlamak ve 112 ile iletişimi sürdürmek.',
     whyWrong: [
       'Solunumu durmuş kişiye su içirmeye çalışmak ya da onu yürütmek hayati zaman kaybettirir.',
       'Ağrının geçmesini beklemek, kalp durmasında geri dönüşü zorlaştırır.',

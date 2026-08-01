@@ -91,10 +91,10 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Aracın hava yastığının (airbag) temel görevi aşağıdakilerden hangisidir?',
     options: [
-      'Çarpışma anında açılarak sürücü ve yolcunun sert yüzeylere çarpma etkisini azaltmak',
-      'Motoru soğutmak',
-      'Yakıt tüketimini düşürmek',
-      'Aküyü şarj etmek',
+      'Çarpışmada açılıp sert yüzeye çarpma etkisini azaltmak',
+      'Çarpışmada kemeri gerip yolcuyu koltuğa sabitlemek',
+      'Ani frende tekerleklerin kilitlenmesini önlemek',
+      'Devrilme anında tavan direklerini yukarı kaldırmak',
     ],
     answerIndex: 0,
     explanation:
@@ -116,10 +116,10 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Elektronik denge (kayma önleyici) kontrol sistemi olan ESP sürücüye hangi temel faydayı sağlar?',
     options: [
-      'Yakıt deposunu büyütmek',
-      'Farları otomatik açmak',
-      'Motor yağını değiştirmek',
-      'Savrulma/kayma anında tekerlekleri ayrı ayrı frenleyip aracın kontrolde kalmasına yardımcı olmak',
+      'Ani frende tekerleklerin kilitlenmesini önleyip direksiyon hâkimiyetini korumak',
+      'Yokuşta kalkarken aracın geriye kaymasını birkaç saniye engellemek',
+      'Takip mesafesini ölçüp öndeki araca göre hızı kendiliğinden ayarlamak',
+      'Kayma anında tekerlekleri ayrı ayrı frenleyip aracı kontrolde tutmak',
     ],
     answerIndex: 3,
     explanation:
@@ -142,7 +142,7 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     stem: 'Gösterge panelindeki ikaz lambalarının renkleriyle ilgili genel kural aşağıdakilerden hangisidir?',
     options: [
       'Tüm renkler aynı anlama gelir',
-      'Kırmızı ikaz acil/tehlike ve genellikle durmayı; sarı (turuncu) ikaz ise kontrol/dikkat gerektirir',
+      'Kırmızı ikaz acil/tehlike ve genellikle durmayı',
       'Yeşil ikaz her zaman ağır bir arıza demektir',
       'Sarı ikaz motoru hemen durdurmayı gerektirir',
     ],
@@ -191,10 +191,10 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Motor yağlama sisteminde yağ pompasının görevi aşağıdakilerden hangisidir?',
     options: [
-      'Yağı basınçla alıp motorun yağlanması gereken parçalarına dolaştırmak',
-      'Yakıtı ateşlemek',
-      'Egzoz gazını süzmek',
-      'Aküyü şarj etmek',
+      'Yağı basınçla alıp yağlanması gereken parçalara dolaştırmak',
+      'Yağdaki metal parçacıklarını ve kurumu süzüp tutmak',
+      'Yağın sıcaklığını ölçüp gösterge paneline bildirmek',
+      'Yağın soğuduğunda kıvamının artmasını önlemek',
     ],
     answerIndex: 0,
     explanation:
@@ -304,11 +304,11 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
       'Lastik yaşlandıkça daha güçlü tutunur',
       'Eski lastik yakıt üretir',
       'Lastik markası her yıl değişir',
-      'Kauçuk zamanla sertleşip çatlar; esnekliğini yitirdiği için yol tutuşu ve güvenliği azalır',
+      'Kauçuk zamanla sertleşip çatlar',
     ],
     answerIndex: 3,
     explanation:
-      'Lastiğin kauçuk yapısı yıllar içinde hava, ısı ve güneşin etkisiyle sertleşir; yanaklarında çatlaklar oluşur. Diş derinliği yeterli olsa bile yaşlanmış lastik esnekliğini kaybederek yol tutuşunu ve frenlemeyi olumsuz etkiler; bu yüzden üretim tarihi de dikkate alınır.',
+      'Lastiğin kauçuk yapısı yıllar içinde hava, ısı ve güneşin etkisiyle sertleşir; yanaklarında çatlaklar oluşur. Diş derinliği yeterli olsa bile yaşlanmış lastik esnekliğini kaybederek yol tutuşunu ve frenlemeyi olumsuz etkiler; bu yüzden üretim tarihi de dikkate alınır. Esnekliğini yitirdiği için yol tutuşu ve güvenliği azalır.',
     whyWrong: [
       'Lastik yaşlandıkça tutuşu artmaz, tersine azalır.',
       'Lastik yakıt üretmez; markanın her yıl değişmesi bir güvenlik ölçütü değildir.',
@@ -327,7 +327,7 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     stem: 'Islak yolda yüksek hızda lastik ile zemin arasına su tabakası girip aracın tutuşunu kaybetmesine ne ad verilir ve bu risk nasıl azaltılır?',
     options: [
       'Buna hararet denir; klima açılarak azalır',
-      'Buna su kızağı (aquaplaning) denir; hızı düşürmek ve yeterli diş derinliğine sahip lastik kullanmak riski azaltır',
+      'Buna su kızağı (aquaplaning) denir',
       'Buna balans denir; akü değişimiyle azalır',
       'Buna rölanti denir; far açarak azalır',
     ],
@@ -374,7 +374,7 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     topic: 'aku-elektrik',
     difficulty: 'orta',
     stem: 'Bakım gerektiren (kapaklı) bir akünün sıvı seviyesi düştüğünde eklenmesi gereken nedir?',
-    options: ['Musluk suyu', 'Saf/distile su (üretici sınırına kadar)', 'Motor yağı', 'Antifriz'],
+    options: ['Şebeke suyu', 'Saf (distile) su', 'Motor yağı', 'Antifriz'],
     answerIndex: 1,
     explanation:
       'Kapaklı (bakımlı) akülerde elektrolit seviyesi zamanla düşebilir; plakaların üstünü örtecek şekilde yalnızca saf/distile su eklenir. Musluk suyundaki kireç ve mineraller plakalara zarar verir. Bakımsız (kapalı) akülerde ise dışarıdan su eklenmez.',
@@ -397,11 +397,11 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
       'Farlar tamamen söner',
       'Motor yağı azalır',
       'Lastik basıncı düşer',
-      'Devre aşırı akıma karşı korunmaz; kablolar aşırı ısınıp erime ve yangın riski doğar',
+      'Devre aşırı akıma karşı korunmaz',
     ],
     answerIndex: 3,
     explanation:
-      'Sigorta, devreyi belirli bir akım sınırında koruyacak şekilde seçilir. Daha yüksek amperajlı sigorta takılırsa aşırı akımda atmaz; kablolar aşırı ısınabilir, yalıtım erir ve yangın çıkabilir. Sigorta her zaman üreticinin belirttiği değerde kullanılmalıdır.',
+      'Sigorta, devreyi belirli bir akım sınırında koruyacak şekilde seçilir. Daha yüksek amperajlı sigorta takılırsa aşırı akımda atmaz; kablolar aşırı ısınabilir, yalıtım erir ve yangın çıkabilir. Sigorta her zaman üreticinin belirttiği değerde kullanılmalıdır. Kablolar aşırı ısınıp erime ve yangın riski doğar.',
     whyWrong: [
       'Yüksek amperajlı sigorta farları söndürmez; asıl sorun korumanın ortadan kalkmasıdır.',
       'Sigorta değeri motor yağı ya da lastik basıncıyla ilgili değildir.',
@@ -444,10 +444,10 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Farların, stop ve sinyal lambalarının düzenli kontrol edilip temiz tutulmasının temel nedeni nedir?',
     options: [
-      'Yolu iyi aydınlatıp aracın niyetini diğer sürücülere doğru göstererek görüş ve görünürlük güvenliğini sağlamak',
-      'Motor gücünü artırmak',
-      'Yakıt deposunu büyütmek',
-      'Lastik ömrünü uzatmak',
+      'Yolu iyi aydınlatıp aracın niyetini diğer sürücülere doğru göstermek',
+      'Aracın elektrik tüketimini düşürüp akünün ömrünü uzatmak',
+      'Motorun ısınma süresini kısaltıp yakıt tüketimini azaltmak',
+      'Kaportanın boyasını güneşin soldurucu etkisinden korumak',
     ],
     answerIndex: 0,
     explanation:
@@ -470,10 +470,10 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Marş motoru motoru çevirdiği (marş dönüyor) hâlde motor bir türlü çalışmıyorsa olası neden aşağıdakilerden hangisidir?',
     options: [
-      'Lastik basıncının yüksek olması',
-      'Farların açık kalması',
-      'Motora yakıt gelmemesi veya ateşleme sisteminde arıza olması (yakıt bitmiş, buji/enjeksiyon sorunu vb.)',
-      'Amortisörlerin eskimesi',
+      'Akünün tümüyle boşalıp marş motorunu döndürememesi',
+      'Direksiyon kilidinin kontak anahtarını bloke etmiş olması',
+      'Motora yakıt gelmemesi veya ateşleme sisteminde arıza olması',
+      'Vitesin boşta olmaması ve debriyaja basılmamış olması',
     ],
     answerIndex: 2,
     explanation:
@@ -495,10 +495,10 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Kontak anahtarı dönmüyor ve araç çalışmıyorsa, direksiyonun hafifçe sağa-sola oynatılması hangi durumu çözebilir?',
     options: [
-      'Lastik patlağını',
-      'Yakıtın bitmesini',
-      'Motor hararetini',
-      'Anahtarla birlikte devreye giren direksiyon kilidinin anahtarı bloke etmesini',
+      'Akü kutup başlarının gevşemiş olmasını',
+      'Marş motorunun dişlisinin sıkışmasını',
+      'Yakıt filtresinin tıkanmış olmasını',
+      'Direksiyon kilidinin anahtarı bloke etmesini',
     ],
     answerIndex: 3,
     explanation:

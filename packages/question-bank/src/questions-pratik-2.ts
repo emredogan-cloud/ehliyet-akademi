@@ -724,12 +724,12 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     options: [
       'Her koşulda önemsiz sayılır',
       'Sadece hız yüksekse dikkate alınır',
-      'Trafiği kontrol etmeden yapılan şerit değişimi güvenlik ihmali olarak değerlendirilir; bir tehlike doğurursa ağır hataya dönüşür',
+      'Trafiği kontrol etmeden yapılan şerit değişimi güvenlik ihmali olarak değerlendirilir',
       'Aracın rengi değerlendirmeyi belirler',
     ],
     answerIndex: 2,
     explanation:
-      'Ayna kontrolü yapmadan şerit değiştirmek, arkadaki trafiği görmeden yön değiştirmek anlamına gelir ve bir güvenlik ihmalidir. Değerlendirmede bu bir eksiklik olarak kaydedilir; yandan gelen bir araçla çarpışma ya da ani fren gerektiren bir durum doğarsa hata ağırlaşır ve elemeli hâle gelebilir. Ölçüt oluşan tehlikedir.',
+      'Ayna kontrolü yapmadan şerit değiştirmek, arkadaki trafiği görmeden yön değiştirmek anlamına gelir ve bir güvenlik ihmalidir. Değerlendirmede bu bir eksiklik olarak kaydedilir; yandan gelen bir araçla çarpışma ya da ani fren gerektiren bir durum doğarsa hata ağırlaşır ve elemeli hâle gelebilir. Ölçüt oluşan tehlikedir. Bir tehlike doğurursa ağır hataya dönüşür.',
     whyWrong: [
       'Trafiği kontrol etmeden yön değiştirmek önemsiz değildir; her hâlde bir eksiklik olarak değerlendirilir.',
       'Değerlendirme aracın rengi gibi ölçütlere değil, davranışın güvenlik üzerindeki etkisine dayanır.',

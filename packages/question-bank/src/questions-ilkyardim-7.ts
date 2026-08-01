@@ -66,7 +66,7 @@ export const ILKYARDIM_QUESTIONS_7: QuestionInput[] = [
     options: [
       'İkisi de yalnızca hastanede ve aynı kişiler tarafından yapılır',
       'İlk yardım ilaç ve tıbbi araçlarla yapılırken acil tedavi çıplak elle yapılır',
-      'İlk yardım herhangi bir eğitimli kişinin olay yerinde ilaçsız yaptığı destek; acil tedavi ise sağlık personelinin araç, gereç ve ilaçla yaptığı tıbbi müdahaledir',
+      'İlk yardım herhangi bir eğitimli kişinin olay yerinde ilaçsız yaptığı destek',
       'Aralarında hiçbir fark yoktur; iki kavram aynı şeyi anlatır',
     ],
     answerIndex: 2,
@@ -349,10 +349,10 @@ export const ILKYARDIM_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Bir erişkinde nabız değerlendirilirken en sık kullanılan bölgelerden biri hangisidir?',
     options: [
-      'Alın derisi',
-      'Kulak memesi',
-      'Ayak tırnağı',
-      'Bilekteki atardamar (el bileği iç kısmı) veya boyundaki şah damarı',
+      'Alnın yan bölgesi',
+      'Kulak arkası çukur',
+      'Ayak bileği dışı',
+      'El bileğinin iç kısmı',
     ],
     answerIndex: 3,
     explanation:
@@ -400,13 +400,13 @@ export const ILKYARDIM_QUESTIONS_7: QuestionInput[] = [
     stem: 'Dolaşım sistemi temel olarak hangi yapılardan oluşur ve görevi nedir?',
     options: [
       'Yalnızca akciğerlerden oluşur; nefes almayı sağlar',
-      'Kalp ve damarlardan oluşur; kanı vücuda pompalayıp dolaştırır',
+      'Kalp ve damarlardan oluşur',
       'Yalnızca kemiklerden oluşur; vücuda destek verir',
       'Yalnızca mide ve bağırsaklardan oluşur; besinleri sindirir',
     ],
     answerIndex: 1,
     explanation:
-      'Dolaşım sistemi kalp ve damarlardan (atardamar, toplardamar, kılcal damar) oluşur. Kalp bir pompa gibi çalışarak kanı damarlar aracılığıyla tüm vücuda gönderir; böylece oksijen ve besin dokulara ulaşır, atıklar uzaklaştırılır.',
+      'Dolaşım sistemi kalp ve damarlardan (atardamar, toplardamar, kılcal damar) oluşur. Kalp bir pompa gibi çalışarak kanı damarlar aracılığıyla tüm vücuda gönderir; böylece oksijen ve besin dokulara ulaşır, atıklar uzaklaştırılır. Kanı vücuda pompalayıp dolaştırır.',
     whyWrong: [
       'Akciğerler solunum sisteminin, kemikler iskelet sisteminin, mide-bağırsaklar sindirim sisteminin parçasıdır.',
       'Dolaşımın merkezinde kanı pompalayan kalp ve onu taşıyan damarlar vardır.',
@@ -424,7 +424,7 @@ export const ILKYARDIM_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Atardamar, toplardamar ve kılcal damarın görevleriyle ilgili aşağıdakilerden hangisi doğrudur?',
     options: [
-      'Atardamarlar kanı kalpten dokulara taşır; toplardamarlar kanı dokulardan kalbe geri getirir; kılcal damarlarda ise dokuyla alışveriş olur',
+      'Atardamarlar kanı kalpten dokulara taşır',
       'Atardamarlar kanı kalbe getirir; toplardamarlar kanı kalpten uzaklaştırır',
       'Kılcal damarlar kanı yalnızca depolar, hiç akış olmaz',
       'Üç damar türü de aynı görevi yapar, aralarında fark yoktur',
@@ -450,13 +450,13 @@ export const ILKYARDIM_QUESTIONS_7: QuestionInput[] = [
     stem: 'Solunum sistemiyle ilgili aşağıdakilerden hangisi doğrudur?',
     options: [
       'Kalp ve damarlardan oluşur; kanı pompalar',
-      'Burun, soluk (nefes) borusu ve akciğerlerden oluşur; havadaki oksijenin alınıp karbondioksitin verilmesini sağlar',
+      'Burun, soluk (nefes) borusu ve akciğerlerden oluşur',
       'Yalnızca mideden oluşur; besinleri parçalar',
       'Yalnızca kemik ve kaslardan oluşur; hareketi sağlar',
     ],
     answerIndex: 1,
     explanation:
-      'Solunum sistemi başlıca burun, soluk borusu ve akciğerlerden oluşur. Bu sistem, soluk alırken havadaki oksijeni vücuda alır ve soluk verirken kandaki karbondioksiti dışarı atar; böylece dokuların oksijen ihtiyacı karşılanır.',
+      'Solunum sistemi başlıca burun, soluk borusu ve akciğerlerden oluşur. Bu sistem, soluk alırken havadaki oksijeni vücuda alır ve soluk verirken kandaki karbondioksiti dışarı atar; böylece dokuların oksijen ihtiyacı karşılanır. Havadaki oksijenin alınıp karbondioksitin verilmesini sağlar.',
     whyWrong: [
       'Kalp ve damarlar dolaşım sistemine, mide sindirime, kemik-kas ise iskelet-kas sistemine aittir.',
       'Solunumun temel işlevi oksijen almak ve karbondioksit vermektir.',
@@ -524,14 +524,14 @@ export const ILKYARDIM_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Sindirim ve boşaltım sistemleriyle ilgili aşağıdakilerden hangisi doğrudur?',
     options: [
-      'Sindirim sistemi besinleri parçalayıp vücuda yararlı hâle getirir; boşaltım sistemi ise atık maddeleri (örneğin idrarı) vücuttan uzaklaştırır',
+      'Sindirim sistemi besinleri parçalayıp vücuda yararlı hâle getirir',
       'Sindirim sistemi kanı pompalar; boşaltım sistemi nefes aldırır',
       'İki sistem de yalnızca kemik yapımından sorumludur',
       'Sindirim sistemi görme, boşaltım sistemi işitmeyi sağlar',
     ],
     answerIndex: 0,
     explanation:
-      'Sindirim sistemi; ağız, mide ve bağırsaklar yardımıyla besinleri parçalayıp emilebilir hâle getirir. Boşaltım sistemi ise başta böbrekler olmak üzere organlarla, vücutta oluşan atık maddeleri idrar biçiminde dışarı atar.',
+      'Sindirim sistemi; ağız, mide ve bağırsaklar yardımıyla besinleri parçalayıp emilebilir hâle getirir. Boşaltım sistemi ise başta böbrekler olmak üzere organlarla, vücutta oluşan atık maddeleri idrar biçiminde dışarı atar. Boşaltım sistemi ise atık maddeleri (örneğin idrarı) vücuttan uzaklaştırır.',
     whyWrong: [
       'Kan pompalamak dolaşımın, nefes aldırmak solunumun görevidir.',
       'Bu sistemler kemik yapımından, görme veya işitmeden sorumlu değildir.',
@@ -575,7 +575,7 @@ export const ILKYARDIM_QUESTIONS_7: QuestionInput[] = [
     stem: 'Üçgen sargı ilk yardımda en çok hangi amaçla kullanılır?',
     options: [
       'Yaralıya içecek taşımak için',
-      'Kırık şüphesi olan kolu göğse asarak desteklemek (kol askısı) ve geniş bölgeleri sarıp sabitlemek için',
+      'Kırık şüphesi olan kolu göğse asarak desteklemek (kol askısı)',
       'Olay yerini işaretlemek için',
       'Yaralının yüzünü tamamen kapatmak için',
     ],
@@ -626,12 +626,12 @@ export const ILKYARDIM_QUESTIONS_7: QuestionInput[] = [
     options: [
       'Kanamayı görmezden gelip yalnızca su içirmek',
       'Yaraya çıplak elle bastırıp beklemek dışında hiçbir şey yapmamak',
-      'Kanayan yere temiz bir bezle hemen ve kuvvetle doğrudan baskı uygulamak, kırık yoksa bölgeyi kalp seviyesinin üstüne kaldırmak ve 112’yi aramak; durdurulamıyorsa son çare olarak turnikeyi düşünmek',
+      'Kanayan yere temiz bir bezle hemen ve kuvvetle doğrudan baskı uygulamak, kırık yoksa bölgeyi kalp seviyesinin üstüne kaldırmak ve 112’yi aramak',
       'Yaraya diş macunu sürüp sıkıca kapatmak',
     ],
     answerIndex: 2,
     explanation:
-      'Atardamar kanaması hızlı kan kaybı riski taşıdığından acildir. Öncelik, temiz bir bezle kanayan bölgeye kuvvetli ve kesintisiz doğrudan baskı uygulamak, kırık yoksa bölgeyi kalp seviyesinin üstüne kaldırmak ve 112’yi aramaktır. Baskıyla durmayan, hayatı tehdit eden kanamada son çare olarak turnike düşünülür.',
+      'Atardamar kanaması hızlı kan kaybı riski taşıdığından acildir. Öncelik, temiz bir bezle kanayan bölgeye kuvvetli ve kesintisiz doğrudan baskı uygulamak, kırık yoksa bölgeyi kalp seviyesinin üstüne kaldırmak ve 112’yi aramaktır. Baskıyla durmayan, hayatı tehdit eden kanamada son çare olarak turnike düşünülür. Durdurulamıyorsa son çare olarak turnikeyi düşünmek.',
     whyWrong: [
       'Kanamayı görmezden gelmek veya su içirmek hızlı kan kaybını durdurmaz.',
       'Yaraya diş macunu gibi maddeler sürmek kanamayı durdurmaz, enfeksiyon riskini artırır; çıplak elle temas yerine mümkünse eldiven/temiz bez kullanılmalıdır.',
@@ -650,7 +650,7 @@ export const ILKYARDIM_QUESTIONS_7: QuestionInput[] = [
     stem: 'Bilinç düzeyiyle ilgili aşağıdaki sıralamalardan hangisi, en iyiden en ağıra doğru doğru verilmiştir?',
     options: [
       'Bilinçsiz → uykuya meyilli → uyanık (bilinci açık)',
-      'Uyanık (bilinci açık) → uykuya meyilli (uyaranla yanıt veren) → bilinçsiz (yanıt vermeyen)',
+      'Uyanık (bilinci açık)',
       'Uykuya meyilli → uyanık → bilinçsiz',
       'Bilinç düzeyleri arasında bir sıralama yapılamaz',
     ],

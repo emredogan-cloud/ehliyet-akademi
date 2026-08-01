@@ -41,13 +41,13 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Işıklı işaret cihazında kırmızı ışıkla birlikte sarı ışık da yanıyorsa bu sürücüye ne bildirir?',
     options: [
       'Kavşağın tamamen trafiğe kapatıldığını',
-      'Yolun az sonra trafiğe açılacağını; harekete hazırlanılması gerektiğini',
+      'Yolun az sonra trafiğe açılacağını',
       'Sürücünün beklemeden geçebileceğini',
       'Yalnızca yayaların geçebileceğini',
     ],
     answerIndex: 1,
     explanation:
-      'Kırmızı ile birlikte yanan sarı, ışığın az sonra yeşile döneceğini haber verir. Sürücü kalkışa hazırlanır; ancak yeşil yanmadan harekete geçmek yine de ihlaldir.',
+      'Kırmızı ile birlikte yanan sarı, ışığın az sonra yeşile döneceğini haber verir. Sürücü kalkışa hazırlanır; ancak yeşil yanmadan harekete geçmek yine de ihlaldir. Harekete hazırlanılması gerektiğini.',
     whyWrong: [
       'Bu birleşim kapanışı değil, açılışın yaklaştığını bildirir.',
       'Yeşil yanmadan geçmek kırmızı ışık ihlali sayılır.',
@@ -334,12 +334,12 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
     options: [
       'O yerleşim yerine girişin yasak olduğunu',
       'Yolun trafiğe kapatıldığını',
-      'Yerleşim yerinin sona erdiğini; hız düzeninin yerleşim yeri dışı kurallarına döndüğünü',
+      'Yerleşim yerinin sona erdiğini',
       'Şehir merkezine yaklaşıldığını',
     ],
     answerIndex: 2,
     explanation:
-      'Adı çizilmiş levha yerleşim biriminin çıkışını gösterir. Bu noktadan sonra, aksine işaret yoksa yol tipine göre yerleşim yeri dışı hız sınırları uygulanır.',
+      'Adı çizilmiş levha yerleşim biriminin çıkışını gösterir. Bu noktadan sonra, aksine işaret yoksa yol tipine göre yerleşim yeri dışı hız sınırları uygulanır. Hız düzeninin yerleşim yeri dışı kurallarına döndüğünü.',
     whyWrong: [
       'Levha giriş yasağı koymaz; sınırın bittiğini bildirir.',
       'Yol açıktır; kapatma bildirimi başka işaretlerle yapılır.',
@@ -504,11 +504,11 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
       'Yavaş sürülmesi şartıyla serbesttir',
       'Yalnızca gece serbesttir',
       'Trafik sıkışıksa serbesttir',
-      'Yasaktır; varsa bisiklet yolu veya şeridi, yoksa kurallara uygun biçimde taşıt yolu kullanılır',
+      'Yasaktır',
     ],
     answerIndex: 3,
     explanation:
-      'Kaldırım yayaların alanıdır; e-skuterle yaya yolunda sürmek yasaktır. Sürüş, öncelikle bisiklet yolu veya şeridinde, bunlar yoksa kurallar çerçevesinde taşıt yolunda yapılır.',
+      'Kaldırım yayaların alanıdır; e-skuterle yaya yolunda sürmek yasaktır. Sürüş, öncelikle bisiklet yolu veya şeridinde, bunlar yoksa kurallar çerçevesinde taşıt yolunda yapılır. Varsa bisiklet yolu veya şeridi, yoksa kurallara uygun biçimde taşıt yolu kullanılır.',
     whyWrong: [
       'Düşük hız bile yayalarla çarpışma riskini ortadan kaldırmaz; yasak hıza bağlı değildir.',
       'Gece ayrıcalığı yoktur; görüşün azaldığı saatlerde risk daha da büyür.',
@@ -527,14 +527,14 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Elektrikli skuterde ikinci bir kişi taşımak ile ilgili kural nedir?',
     options: [
-      'Yasaktır; e-skuter tek kişilik bir araçtır',
+      'Yasaktır',
       'Çocuklar taşınabilir',
       'Kask takan ikinci kişi taşınabilir',
       'Kısa mesafede serbesttir',
     ],
     answerIndex: 0,
     explanation:
-      'E-skuter tek kişinin kullanımı için tasarlanmıştır; ikinci kişi taşımak dengeyi ve fren performansını bozduğu için yasaktır. Ayrıca sırt çantası dışında yük de taşınamaz.',
+      'E-skuter tek kişinin kullanımı için tasarlanmıştır; ikinci kişi taşımak dengeyi ve fren performansını bozduğu için yasaktır. Ayrıca sırt çantası dışında yük de taşınamaz. E-skuter tek kişilik bir araçtır.',
     whyWrong: [
       'Çocuk taşımak da aynı yasağın kapsamındadır ve daha da tehlikelidir.',
       'Kask, taşıma yasağını ortadan kaldırmaz.',
@@ -607,7 +607,7 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
       'Araç içinde emniyet kemerleri takılı olarak',
       'Emniyet şeridinde aracın hemen arkasında ayakta',
       'Taşıt yolunun kenarında yürüyerek',
-      'Araçtan inerek oto korkuluğun (bariyerin) arkasındaki güvenli alanda',
+      'Araçtan inerek oto korkuluğun (bariyerin)',
     ],
     answerIndex: 3,
     explanation:
@@ -658,12 +658,12 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Tanıklık için gereklidir',
       'Trafik kültürünün doğal bir parçasıdır',
-      'Yanlıştır; trafiği tıkar, yardım araçlarını geciktirir ve yeni kazalara zemin hazırlar',
+      'Yanlıştır',
       'Sürücünün yasal hakkıdır',
     ],
     answerIndex: 2,
     explanation:
-      'Kaza yerinde meraklı yığılması, ambulans ve itfaiyenin ulaşmasını geciktirir; ani yavaşlamalar zincirleme kazalara yol açar. Yardım gerekmiyorsa yol boşaltılıp geçilmelidir.',
+      'Kaza yerinde meraklı yığılması, ambulans ve itfaiyenin ulaşmasını geciktirir; ani yavaşlamalar zincirleme kazalara yol açar. Yardım gerekmiyorsa yol boşaltılıp geçilmelidir. Trafiği tıkar, yardım araçlarını geciktirir ve yeni kazalara zemin hazırlar.',
     whyWrong: [
       'Tanıklık, olayı görenlerin bilgi vermesiyle olur; sonradan durup izlemek tanıklık değildir.',
       'Bu davranış kültür değil, yardım zincirini kıran bir alışkanlıktır.',
@@ -785,14 +785,14 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Tek yönlü bir yola ters yönden girmek ile ilgili hangisi doğrudur?',
     options: [
-      'Yasaktır; karşıdan gelen trafikle çarpışma riski yaratır ve cezai yaptırımı vardır',
+      'Yasaktır',
       'Kısa mesafede serbesttir',
       'Yalnızca gece yasaktır',
       'Dörtlü ikaz yakılırsa serbest hâle gelir',
     ],
     answerIndex: 0,
     explanation:
-      'Tek yönlü yolda bütün trafik aynı yöne akar; ters giren araç, kendisini beklemeyen sürücülerin tam karşısına çıkar. Bu ihlal hem yasaktır hem de ağır kaza riskinin en kısa yoludur.',
+      'Tek yönlü yolda bütün trafik aynı yöne akar; ters giren araç, kendisini beklemeyen sürücülerin tam karşısına çıkar. Bu ihlal hem yasaktır hem de ağır kaza riskinin en kısa yoludur. Karşıdan gelen trafikle çarpışma riski yaratır ve cezai yaptırımı vardır.',
     whyWrong: [
       'Birkaç metre bile ters gitmek karşılaşma riskini doğurur; mesafe istisnası yoktur.',
       'Yasak günün her saatinde geçerlidir.',
@@ -944,11 +944,11 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
       'Kısa konuşmalarda serbesttir',
       'Şehir dışında serbesttir',
       'Yalnızca düşük hızda serbesttir',
-      'Yasaktır; ancak eller serbest (handsfree) sistemle görüşme yapılabilir',
+      'Yasaktır',
     ],
     answerIndex: 3,
     explanation:
-      'Araç kullanırken telefonu elde tutmak yasaktır; elin direksiyondan, gözün ve dikkatin yoldan ayrılmasına yol açar. Yalnızca eller serbest donanımla görüşme yapılabilir.',
+      'Araç kullanırken telefonu elde tutmak yasaktır; elin direksiyondan, gözün ve dikkatin yoldan ayrılmasına yol açar. Yalnızca eller serbest donanımla görüşme yapılabilir. Ancak eller serbest (handsfree) sistemle görüşme yapılabilir.',
     whyWrong: [
       'Konuşmanın kısalığı dalgınlık riskini ortadan kaldırmaz.',
       'Yasak şehir içi-dışı ayrımı yapmaz.',
@@ -1162,14 +1162,14 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Trafikte "banket" ne anlama gelir?',
     options: [
-      'Taşıt yolu kenarı ile yol sınırı arasında kalan; yayaların yararlandığı, zorunlu hâllerde araçların da kullanabildiği bölüm',
+      'Taşıt yolu kenarı ile yol sınırı arasında kalan',
       'Yolun ortasındaki yükseltilmiş ada',
       'Kavşaklardaki dönüş şeridi',
       'Otoyoldaki ücret toplama alanı',
     ],
     answerIndex: 0,
     explanation:
-      'Banket, taşıt yolunun hemen kenarındaki bölümdür; yaya yolu olmayan yerlerde yayalar ve hayvanlar buradan yararlanır, araçlar ancak zorunlu hâllerde kullanır.',
+      'Banket, taşıt yolunun hemen kenarındaki bölümdür; yaya yolu olmayan yerlerde yayalar ve hayvanlar buradan yararlanır, araçlar ancak zorunlu hâllerde kullanır. Yayaların yararlandığı, zorunlu hâllerde araçların da kullanabildiği bölüm.',
     whyWrong: [
       'Ortadaki yükseltilmiş alan "ada" olarak adlandırılır.',
       'Dönüş şeritleri taşıt yolunun işaretlenmiş bölümleridir.',
@@ -1213,10 +1213,10 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Trafik mevzuatındaki "gabari" kavramı neyi ifade eder?',
     options: [
-      'Aracın yakıt tüketim değerini',
-      'Yolun asfalt kalınlığını',
-      'Motorun silindir hacmini',
-      'Araçların yüklü veya yüksüz olarak güvenli seyri için belirlenen uzunluk, genişlik ve yükseklik ölçülerini',
+      'Araçların taşıyabileceği azami yük ağırlığının sınırını',
+      'Aracın motor hacmi ve beygir gücü değerlerinin sınıfını',
+      'Yolun taşıyabileceği azami dingil yükünün ölçüsünü',
+      'Araçların izin verilen uzunluk, genişlik ve yükseklik ölçülerini',
     ],
     answerIndex: 3,
     explanation:
@@ -1241,7 +1241,7 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
     options: [
       'En sol şeridi sürekli kullanabilirler',
       'Diledikleri şeridi seçebilirler',
-      'En sol şeride giremezler; seyir ve geçişlerini diğer şeritlerden yaparlar',
+      'En sol şeride giremezler',
       'Yalnızca orta şeridi kullanmak zorundadırlar',
     ],
     answerIndex: 2,
@@ -1292,7 +1292,7 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Eğimli ve dar bir yolda, çıkan araç ile inen araç karşılaştığında geçiş kolaylığını hangisi sağlamalıdır?',
     options: [
       'Çıkan araç geri geri inerek yol vermelidir',
-      'İnen araç, çıkan araca yol vermelidir; gerekirse uygun bir yere çekilir veya geri gider',
+      'İnen araç, çıkan araca yol vermelidir',
       'Hangisinin aracı büyükse o yol vermelidir',
       'İki araç aynı anda geçmeyi denemelidir',
     ],
@@ -1395,13 +1395,13 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Trafik işaret levhalarını sökmek, yerini değiştirmek veya üzerini yazı ve afişle kapatmak nasıl değerlendirilir?',
     options: [
       'Belediyeden izin alınırsa serbesttir',
-      'Yasaktır; trafik güvenliğini bozan bu davranışlar cezai sorumluluk ve zararın tazminini gerektirir',
+      'Yasaktır',
       'Yalnızca büyükşehirlerde yasaktır',
       'Reklam amaçlıysa serbesttir',
     ],
     answerIndex: 1,
     explanation:
-      'İşaret levhaları trafik düzeninin dilidir; okunamaz hâle getirilen bir levha kazaya davetiye çıkarır. Levhalara müdahale yasaktır, verilen zarar ayrıca tazmin ettirilir.',
+      'İşaret levhaları trafik düzeninin dilidir; okunamaz hâle getirilen bir levha kazaya davetiye çıkarır. Levhalara müdahale yasaktır, verilen zarar ayrıca tazmin ettirilir. Trafik güvenliğini bozan bu davranışlar cezai sorumluluk ve zararın tazminini gerektirir.',
     whyWrong: [
       'Levhalar üzerinde tasarruf yetkisi yalnızca yetkili kuruluşlardadır; keyfî izin verilmez.',
       'Yasak ülke genelinde tüm yollarda geçerlidir.',
@@ -1423,7 +1423,7 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
       'Kapıyı hızla ve sonuna kadar açmalıdır',
       'Önce kornaya basmalıdır',
       'Dörtlü ikazı yakıp beklemeden inmelidir',
-      'Arkadan araç, motosiklet veya bisiklet gelmediğini kontrol etmeli; kapıyı trafiği tehlikeye düşürmeyecek şekilde açmalıdır',
+      'Arkadan araç, motosiklet veya bisiklet gelmediğini kontrol etmeli',
     ],
     answerIndex: 3,
     explanation:
@@ -1474,12 +1474,12 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Küçük atıklar için serbesttir',
       'Yalnızca orman bölgelerinde yasaktır',
-      'Yasaktır; çevre kirliliğine ve yangın gibi tehlikelere yol açar, cezai yaptırımı vardır',
+      'Yasaktır',
       'Doğada çözünen atıklar için serbesttir',
     ],
     answerIndex: 2,
     explanation:
-      'Araçtan atılan her atık çevreyi kirletir; yanan izmarit yol kenarındaki kuru otları tutuşturabilir, savrulan cisimler arkadaki sürücüleri şaşırtabilir. Bu davranış yasaktır ve cezalandırılır.',
+      'Araçtan atılan her atık çevreyi kirletir; yanan izmarit yol kenarındaki kuru otları tutuşturabilir, savrulan cisimler arkadaki sürücüleri şaşırtabilir. Bu davranış yasaktır ve cezalandırılır. Çevre kirliliğine ve yangın gibi tehlikelere yol açar, cezai yaptırımı vardır.',
     whyWrong: [
       'Atığın küçüklüğü kirletme ve tehlike niteliğini değiştirmez.',
       'Yasak yalnız ormanla sınırlı değildir; tüm karayollarında geçerlidir.',

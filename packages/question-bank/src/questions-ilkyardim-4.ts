@@ -142,7 +142,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
       'Sette bol miktarda ağrı kesici ve antibiyotik bulunmalıdır',
       'Setteki malzemelerin son kullanma tarihine bakılmasına gerek yoktur',
       'Set, aracın dış tamponuna bağlanarak taşınmalıdır',
-      'Sette ilaç bulunmaz; sargı bezi, üçgen bandaj, flaster gibi malzemeler bulunur',
+      'Sette ilaç bulunmaz',
     ],
     answerIndex: 3,
     explanation:
@@ -241,7 +241,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     options: [
       'Sessiz yaralıyla iletişim kurmanın daha kolay olması',
       'Bağıran yaralının kesinlikle yarasız olduğunun bilinmesi',
-      'Bağırabilen kişinin bilinci ve solunumu var demektir; sessiz kişinin ise solunumu durmuş olabilir',
+      'Bağırabilen kişinin bilinci ve solunumu var demektir',
       'Sessiz yaralının kimlik bilgilerine daha hızlı ulaşılması',
     ],
     answerIndex: 2,
@@ -264,14 +264,14 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Bir kazada, birinde şiddetli kanama diğerinde küçük bir sıyrık bulunan iki yaralıdan hangisine öncelik verilir ve neden?',
     options: [
-      'Şiddetli kanaması olana; çünkü hızlı kan kaybı kısa sürede yaşamı tehdit eder',
+      'Şiddetli kanaması olana',
       'Sıyrığı olana; çünkü tedavisi daha kısa sürer',
       'Hiçbirine; ambulans gelene kadar müdahale edilmez',
       'Sıyrığı olana; çünkü daha az ağrısı vardır',
     ],
     answerIndex: 0,
     explanation:
-      'Şiddetli kanama kısa sürede şoka ve ölüme yol açabileceğinden önce kanamalı yaralıya müdahale edilir; küçük sıyrık yaşamsal tehlike oluşturmaz ve bekleyebilir.',
+      'Şiddetli kanama kısa sürede şoka ve ölüme yol açabileceğinden önce kanamalı yaralıya müdahale edilir; küçük sıyrık yaşamsal tehlike oluşturmaz ve bekleyebilir. Çünkü hızlı kan kaybı kısa sürede yaşamı tehdit eder.',
     whyWrong: [
       'Tedavi süresi veya ağrı azlığı öncelik ölçütü değildir.',
       'Yaşamı tehdit eden kanamada ambulansı eli boş beklemek zaman kaybettirir.',
@@ -510,13 +510,13 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     stem: 'Bebeklerde göğüs basısının derinliği yaklaşık ne kadar olmalıdır?',
     options: [
       'Erişkinle aynı, yaklaşık 5 cm',
-      'Göğüs yüksekliğinin (ön-arka çapının) yaklaşık üçte biri kadar',
+      'Göğüs yüksekliğinin (ön-arka çapının)',
       'Göğüs tamamen çökecek kadar',
       'Belli belirsiz, yarım santimetreden az',
     ],
     answerIndex: 1,
     explanation:
-      'Bebekte göğüs basısı, göğsün ön-arka yüksekliğinin yaklaşık üçte biri çökecek derinlikte ve iki parmakla uygulanır; erişkin derinliği bebeğin küçük gövdesi için fazladır.',
+      'Bebekte göğüs basısı, göğsün ön-arka yüksekliğinin yaklaşık üçte biri çökecek derinlikte ve iki parmakla uygulanır; erişkin derinliği bebeğin küçük gövdesi için fazladır. Yaklaşık üçte biri kadar.',
     whyWrong: [
       '5 cm derinlik bebekte organ yaralanmasına yol açabilir.',
       'Çok sığ bası ise dolaşımı desteklemez.',
@@ -686,7 +686,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     options: [
       'Kulak pamukla sıkıca tıkanır',
       'Kulağın içi suyla yıkanır',
-      'Kanama engellenmez; omurga şüphesi yoksa yaralı kanayan kulağı alta gelecek şekilde yatırılır ve 112 aranır',
+      'Kanama engellenmez',
       'Baş geriye itilerek kanamanın içeri akması sağlanır',
     ],
     answerIndex: 2,
@@ -912,11 +912,11 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
       'Koşarak alevlerden uzaklaşmasını söylemek',
       'Üzerine kolonya dökmek',
       'Alevleri çıplak elle söndürmeye çalışmak',
-      'Koşmasını engelleyip yere yatırmak; battaniye gibi bir örtüyle alevi boğmak ya da yerde yuvarlanmasını sağlamak',
+      'Koşmasını engelleyip yere yatırmak',
     ],
     answerIndex: 3,
     explanation:
-      'Koşmak alevleri rüzgârla büyütür; tutuşan kişi durdurulup yere yatırılır ve alev, battaniye gibi hava geçirmeyen bir örtüyle boğulur ya da kişinin yerde yuvarlanması sağlanır. Ardından yanık bölge soğutulur.',
+      'Koşmak alevleri rüzgârla büyütür; tutuşan kişi durdurulup yere yatırılır ve alev, battaniye gibi hava geçirmeyen bir örtüyle boğulur ya da kişinin yerde yuvarlanması sağlanır. Ardından yanık bölge soğutulur. Battaniye gibi bir örtüyle alevi boğmak ya da yerde yuvarlanmasını sağlamak.',
     whyWrong: [
       'Koşmak alevin büyümesine neden olur.',
       'Kolonya alkollü ve yanıcıdır; çıplak elle müdahale ilk yardımcıyı da yakar.',
@@ -1209,7 +1209,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Göze toz ya da kirpik gibi serbest bir yabancı cisim kaçtığında ilk yardım olarak ne yapılır?',
     options: [
-      'Göz ovulmaz; bol temiz suyla yıkanır, cisim çıkmazsa göz kapatılıp sağlık kuruluşuna gidilir',
+      'Göz ovulmaz',
       'Göz rahatlayana kadar kuvvetlice ovulur',
       'Cisim sivri bir aletle alınmaya çalışılır',
       'Göze sıcak hava tutulur',
@@ -1260,7 +1260,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     stem: 'Karın bölgesindeki derin yaralanmada organlar dışarı çıkmışsa ilk yardımda ne yapılır?',
     options: [
       'Organlar elle yavaşça içeri itilir',
-      'Organlar içeri itilmez; üzerleri nemli ve temiz bir bezle örtülüp 112 beklenir',
+      'Organlar içeri itilmez',
       'Organların üzerine kuru pamuk bastırılır',
       'Yaralı oturtulup su içirilir',
     ],
@@ -1286,7 +1286,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     options: [
       'Doğrudan buzun içine gömülerek',
       'Sıcak su dolu bir kapta bekletilerek',
-      'Temiz nemli beze sarılıp su geçirmez torbaya konarak; bu torba da buzlu su bulunan bir kabın içinde yaralıyla birlikte gönderilerek',
+      'Temiz nemli beze sarılıp su geçirmez torbaya konarak',
       'Açık hâlde, gölge bir yerde taşınarak',
     ],
     answerIndex: 2,
@@ -1337,7 +1337,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
       'Hızlı adımlarla yürümesi',
       'Ayakta durup derin nefes alması',
       'Araç kullanıyorsa yola devam etmesi',
-      'Güvenli bir yerde oturması ya da sırtüstü uzanması; oturuyorsa başını öne eğmesi',
+      'Güvenli bir yerde oturması ya da sırtüstü uzanması',
     ],
     answerIndex: 3,
     explanation:

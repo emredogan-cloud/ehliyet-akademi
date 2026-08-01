@@ -7,6 +7,7 @@ import '../../core/analytics/analytics_event.dart';
 import '../../core/analytics/analytics_ref.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/practice/progress_repository.dart';
+import '../../design/living_mascot.dart';
 import '../../design/brand.dart';
 import '../../design/primitives.dart';
 import '../../design/coach_marks.dart';
@@ -440,7 +441,7 @@ class _CoachHero extends StatelessWidget {
               ],
             ),
           ),
-          MascotImage(AppImages.owlWheel, height: 150, semanticLabel: 'AI Koç'),
+          LivingMascot(AppImages.owlWheel, height: 150, semanticLabel: 'AI Koç'),
         ],
       ),
     );

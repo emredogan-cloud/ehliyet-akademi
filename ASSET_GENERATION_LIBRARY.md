@@ -472,3 +472,72 @@ eklendi**. Görsel klasöre konduğu an uygulama onu kullanır; kod değişikli�
 
 Doğrulama: `flutter test test/official_signs_test.dart` — eşlemesi olup dosyası olmayan işaret
 varsa test bunu söyler ve prosedürel çizime düşüldüğünü belgeler.
+
+---
+
+## 8. Maskot KATMANLARI — göz kırpma ve bakış takibi için (Ürün Evrimi v1.1 · Faz 6)
+
+### 8.1 Neden bu katmanlar gerekiyor
+
+Faz 6'da koç canlandırıldı: nefes, süzülme, mikro eğim ve konuşurken öne yaklaşma —
+hepsi yerel Flutter dönüşümleriyle, sıfır bağımlılıkla (`design/living_mascot.dart`).
+
+**Göz kırpma ve bakış takibi YAPILMADI.** İkisi de gözün nerede olduğunu bilmeyi gerektirir;
+elimizdeki maskot tek parça bir raster. Göz konumunu tahmin edip üstüne kapak çizmek, gözün
+yanına siyah bir çubuk koymak olurdu. Olmayan bir şey taklit edilmedi.
+
+Aşağıdaki katmanlar üretildiğinde ikisi de eklenebilir — `LivingMascot` tek değiştirme noktası.
+
+### 8.2 Rive / Lottie neden seçilmedi
+
+| Seçenek | Durum |
+|---|---|
+| **Rive** | En güçlüsü (durum makinesi, etkileşim). `.riv` dosyası ister — elimizde yok, durağan `.webp`den üretilemez. |
+| **Lottie** | Yaygın, After Effects çıktısı. `.json` ister — aynı sorun. |
+| **Yerel Flutter dönüşümleri** | **Seçilen.** Bağımlılık yok, dış varlık yok, bugün çalışıyor. |
+
+Bağımlılık eklemek, dosya gelene kadar hiçbir şey çalıştırmazdı: bugün sıfır kazanç, kalıcı
+bakım yükü. Katmanlı varlıklar geldiğinde Rive'a geçmek hâlâ mümkün.
+
+### 8.3 İstenen katmanlar — `owl_teacher` için 5 dosya
+
+Hepsi **aynı tuval**, **aynı hizada**, **şeffaf** — üst üste bindirildiğinde tam maskotu vermeli.
+Kayma olursa göz gövdenin dışında kalır.
+
+| Alan | Değer |
+|---|---|
+| Kayıt dizini | `apps/mobile/assets/img/` |
+| Uzantı | `.webp` (şeffaflık korunmalı → kayıpsız ya da yüksek kalite) |
+| Çözünürlük | **1080×1080**, hepsi birebir aynı |
+| Arka plan | şeffaf |
+| Stil ailesi | **Maskot (baykuş)** — §2: yumuşak 3B, teal tüy, gözlük, sıcak/öğretici |
+| Negatif (hepsinde) | `metin yok, filigran yok, marka/logo yok, arka plan yok, gölge yok` |
+
+| Dosya adı | Katman | İçerik |
+|---|---|---|
+| `owl_layer_body.webp` | Gövde | Baş ve gözler HARİÇ her şey: gövde, kanatlar, ayaklar, gözlük çerçevesi |
+| `owl_layer_head.webp` | Baş | Yalnız baş (gözler hariç); gövdeden ayrı döndürülebilsin diye |
+| `owl_layer_eyes_open.webp` | Göz akı | Yalnız iki göz akı, göz bebeği YOK |
+| `owl_layer_pupils.webp` | Göz bebeği | Yalnız iki göz bebeği, ortalanmış — kaydırılarak bakış yönü verilir |
+| `owl_layer_eyelids.webp` | Göz kapağı | Kapalı göz kapakları; opaklığı 0↔1 arasında değiştirilerek kırpma yapılır |
+
+**İstem şablonu** (§3 standardına uygun):
+
+```
+[KATMAN İÇERİĞİ]. Maskot (baykuş) ailesi tarzında: yumuşak 3B, teal tüy, yuvarlak gözlük,
+sıcak ve öğretici ifade.
+Kompozisyon: kareye ortalanmış, diğer katmanlarla BİREBİR hizalı, kenar boşluğu %8.
+Renk paleti: #14b8a6, #0b7268, #F59E0B.
+Arka plan: şeffaf.
+En-boy: 1:1 · Çözünürlük: 1080×1080.
+Negatif: metin yok, filigran yok, marka/logo yok, arka plan yok, gölge yok, diğer katmanların
+parçaları yok.
+```
+
+### 8.4 Katmanlar geldiğinde yapılacak
+
+1. `LivingMascot`'a `layers` seçeneği: verilirse `Stack` ile beş katman çizilir.
+2. **Göz kırpma** — `owl_layer_eyelids` opaklığı; 90 ms kapanma, 4–7 sn arası rastgele aralık.
+   Aralık SABİT OLMAMALI: sabit aralıklı kırpma robot gibi görünür.
+3. **Bakış takibi** — `owl_layer_pupils` en fazla ±%4 kaydırılır; daha fazlası şaşı görünür.
+4. Testler: kırpma aralığının sabit olmadığı ve hareket azaltıldığında hiç kırpılmadığı.

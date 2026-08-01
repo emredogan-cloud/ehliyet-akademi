@@ -16,8 +16,8 @@ export const TRAFIK_QUESTIONS: Question[] = [
     stem: 'Yağışlı, sisli veya buzlanma olan bir yolda sürücü hızını nasıl ayarlamalıdır?',
     options: [
       'Yasal hız sınırında sabit olarak devam eder',
-      'Hızını yol ve hava koşullarına göre yasal sınırın da altına düşürür',
-      'Trafiği aksatmamak için hızını artırır',
+      'Hızını yasal sınırın da altına düşürür',
+      'Trafiği aksatmamak için hızını biraz artırır',
       'Yalnızca sisli havada yavaşlar, yağmurda gerek yoktur',
     ],
     answerIndex: 1,
@@ -128,9 +128,9 @@ export const TRAFIK_QUESTIONS: Question[] = [
     stem: 'Ana yol ile tali yolun kesiştiği bir kavşakta tali yoldan gelen sürücü ne yapmalıdır?',
     options: [
       'Ana yoldaki araçlara geçiş hakkı verir',
-      'Korna çalarak önce geçer',
-      'Her durumda önce kendisi geçer',
-      'Hızlanarak kavşağı hızlıca boşaltır',
+      'Korna çalarak ana yoldakilerden önce geçer',
+      'Her durumda kendisi önce geçer ve yol vermez',
+      'Hızlanarak kavşağı bir an önce boşaltır',
     ],
     answerIndex: 0,
     explanation:
@@ -152,10 +152,10 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'kolay',
     stem: "Sekiz kenarlı, kırmızı zeminli 'DUR' levhası sürücüden ne yapmasını ister?",
     options: [
-      'Yalnızca yavaşlamasını',
+      'Yalnızca yavaşlamasını ve dikkatli geçmesini',
       'Mutlaka tam durup yol vermesini',
-      'Korna çalıp geçmesini',
-      'Sağa dönmesini',
+      'Korna çalıp uyararak geçmesini',
+      'Sağa dönüş yapıp yolu terk etmesini',
     ],
     answerIndex: 1,
     explanation:
@@ -177,10 +177,10 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'orta',
     stem: 'Mavi zemin üzerine beyaz sembollü, daire biçimindeki trafik işaretleri genel olarak neyi bildirir?',
     options: [
-      'Yasaklama ve kısıtlamayı',
-      'Tehlike uyarısını',
-      'Mecburiyeti (yapılması zorunlu davranışı)',
-      'Sadece bilgilendirmeyi',
+      'Yasaklama ve kısıtlamayı bildirir',
+      'Tehlikeye karşı uyarıyı',
+      'Mecburiyeti (zorunlu davranışı)',
+      'Yalnızca bilgilendirmeyi',
     ],
     answerIndex: 2,
     explanation:
@@ -222,10 +222,10 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'zor',
     stem: 'Bir kavşakta trafik görevlisi, ışıklı işaret ve levha birbiriyle çelişirse sürücü hangi öncelik sırasına uyar?',
     options: [
-      'Trafik görevlisi > ışıklı işaret > levha > yer işaretlemeleri',
-      'Yer çizgileri > levha > ışık > görevli',
-      'Levha > görevli > ışık > yer çizgileri',
-      'Işıklı işaret > görevli > levha',
+      'Trafik görevlisi > ışık > levha > yer işaretlemeleri',
+      'Yer işaretlemeleri > levha > ışık > trafik görevlisi',
+      'Levha > trafik görevlisi > ışık > yer işaretlemeleri',
+      'Işıklı işaret > trafik görevlisi > levha > yer çizgileri',
     ],
     answerIndex: 0,
     explanation:
@@ -292,9 +292,9 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'kolay',
     stem: 'İki saniye kuralı neyi ayarlamak için kullanılır?',
     options: [
-      'Aracın azami hızını',
-      'Fren balatasının ömrünü',
-      'Motor devir sayısını',
+      'Aracın çıkabileceği azami hızı',
+      'Fren balatasının kalan kullanım ömrünü',
+      'Motorun dakikadaki devir sayısını',
       'Öndeki araçla güvenli takip mesafesini',
     ],
     answerIndex: 3,
@@ -337,10 +337,10 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'kolay',
     stem: 'Dönel kavşakta (göbekli kavşak) geçiş önceliği kime aittir?',
     options: [
-      'Kavşağa yeni girecek araçlara',
+      'Kavşağa yeni girmek üzere olan araçlara',
       'Ada etrafında dönmekte olan araçlara',
-      'Sağdaki araca',
-      'Daha büyük araca',
+      'Sağdan yaklaşan araca',
+      'Daha büyük ve ağır araca',
     ],
     answerIndex: 1,
     explanation:
@@ -407,10 +407,10 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'orta',
     stem: 'Çok şeritli bölünmüş bir yolda en sol şerit esas olarak ne için kullanılır?',
     options: [
-      'Sürekli seyir için',
+      'Sürekli seyir ve normal ilerleme için',
       'Sollama, geçiş ve sola dönüş için',
-      'Duraklama için',
-      'Yavaş araçların gitmesi için',
+      'Kısa süreli duraklama için',
+      'Yavaş giden araçların kullanması için',
     ],
     answerIndex: 1,
     explanation:
@@ -452,10 +452,10 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'kolay',
     stem: "Trafikte 'duraklama' ile 'park etme' arasındaki temel fark nedir?",
     options: [
-      'Duraklama, yolcu indirip bindirmek gibi nedenlerle yapılan kısa süreli durmadır',
-      'Duraklama ile park tamamen aynı şeydir',
-      'Park, duraklamadan daha kısa süreli durmadır',
-      'Duraklama yalnızca gece yapılabilir',
+      'Yolcu indirip bindirmek gibi kısa süreli durmadır',
+      'Duraklama ile park etme tamamen aynı şeydir',
+      'Park etme, duraklamadan daha kısa süreli durmadır',
+      'Duraklama yalnızca gece saatlerinde yapılabilir',
     ],
     answerIndex: 0,
     explanation:
@@ -497,9 +497,9 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'kolay',
     stem: 'Işıklı işaret bulunmayan bir yaya geçidine yaklaşan sürücü, geçide girmek üzere olan yaya varsa ne yapmalıdır?',
     options: [
-      'Korna çalıp geçmeli',
-      'Hızlanarak geçmeli',
-      'Yayadan önce geçmeli',
+      'Korna çalıp yayadan önce geçmeli',
+      'Hızlanarak geçitten hızlıca geçmeli',
+      'Yaya girmeden önce geçip yoluna devam etmeli',
       'Yavaşlayıp yayaya geçiş hakkı vermeli',
     ],
     answerIndex: 3,
@@ -522,10 +522,10 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'orta',
     stem: 'Yaya geçidi önünde durmuş bir aracın yanından geçerken ne yapmalısınız?',
     options: [
-      'Hızlanarak geçmek',
-      'Durmadan sollayarak geçmek',
+      'Hızlanarak duran aracın yanından geçmek',
+      'Durmadan sollayarak geçip yoluna hızla devam etmek',
       'Yavaşlayıp gerekirse durarak geçidi kontrol etmek',
-      'Korna çalarak devam etmek',
+      'Korna çalarak duran aracı uyarıp devam etmek',
     ],
     answerIndex: 2,
     explanation:
@@ -547,10 +547,10 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'orta',
     stem: 'Okul geçidi görevlisi elindeki DUR işaretini yola doğru tuttuğunda sürücü ne yapar?',
     options: [
-      'Yavaşlayıp geçer',
+      'Yavaşlayıp öğrencilerin arasından geçer',
       'Durur ve öğrencilerin karşıya geçmesini bekler',
-      'Korna çalar',
-      'Şerit değiştirerek devam eder',
+      'Korna çalıp geçmek istediğini bildirir',
+      'Şerit değiştirerek geçidin yanından devam eder',
     ],
     answerIndex: 1,
     explanation:
@@ -574,8 +574,8 @@ export const TRAFIK_QUESTIONS: Question[] = [
     options: [
       'Sürekli ani hızlanıp ani fren yapmalı',
       'Mümkün olduğunca sabit ve dengeli hızda seyretmeli',
-      'Motoru sürekli yüksek devirde tutmalı',
-      'Lastikleri düşük basınçta kullanmalı',
+      'Motoru sürekli yüksek devirde çalıştırmalı',
+      'Lastikleri önerilenden çok düşük basınçta kullanmalı',
     ],
     answerIndex: 1,
     explanation:
@@ -623,9 +623,9 @@ export const TRAFIK_QUESTIONS: Question[] = [
     stem: 'Lastiklerin olması gerekenden düşük basınçta kullanılması çevre açısından neye yol açar?',
     options: [
       'Yakıt tüketimini ve egzoz salımını artırır',
-      'Yakıt tüketimini azaltır',
-      'Çevreye hiçbir etkisi olmaz',
-      'Motorun daha az ısınmasını sağlar',
+      'Yakıt tüketimini ve salımı azaltır',
+      'Çevre üzerinde hiçbir etkisi olmaz',
+      'Motorun daha az ısınmasını sağlar ve verimi artırır',
     ],
     answerIndex: 0,
     explanation:
@@ -647,10 +647,10 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'kolay',
     stem: 'Gece karşı yönden araç gelirken göz kamaştırmamak için hangi far kullanılır?',
     options: [
-      'Uzağı gösteren (uzun huzme) far',
+      'Uzağı gösteren (uzun huzme) farlar',
       'Yakını gösteren (kısa huzme) far',
-      'Dörtlü flaşör',
-      'Sadece sinyal lambası',
+      'Dörtlü flaşör ve sinyal',
+      'Yalnızca arka sis lambası',
     ],
     answerIndex: 1,
     explanation:
@@ -672,10 +672,10 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'orta',
     stem: 'Yeterince aydınlatılmış yerleşim yeri içindeki yollarda hangi farın kullanılması kuraldır?',
     options: [
-      'Uzağı gösteren (uzun huzme) far',
+      'Uzağı gösteren (uzun huzme) farlar',
       'Yakını gösteren (kısa huzme) far',
-      'Yalnızca sis farı',
-      'Hiç far kullanılmaması',
+      'Yalnızca ön ve arka sis farı',
+      'Hiç far kullanılmaması gerekir',
     ],
     answerIndex: 1,
     explanation:
@@ -697,10 +697,10 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'zor',
     stem: 'Sisli havada uzağı gösteren (uzun huzme) farın kullanılması neden sakıncalıdır?',
     options: [
-      'Işık sis damlacıklarından geri yansıyıp sürücünün görüşünü daha da bozar',
-      'Ampulü daha çabuk yakar',
-      'Aküyü aniden bitirir',
-      'Motoru gereğinden fazla ısıtır',
+      'Işık sis damlacıklarından yansıyıp görüşü bozar',
+      'Far ampulünü normalden çabuk yakıp bitirir',
+      'Aküyü aniden boşaltıp marş sorunu yaratır',
+      'Motoru gereğinden fazla ısıtıp hararete yol açar',
     ],
     answerIndex: 0,
     explanation:
@@ -722,10 +722,10 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'kolay',
     stem: 'Emniyet kemeri kullanımı hangi durumda zorunludur?',
     options: [
-      'Yalnızca şehirlerarası yolda',
-      'Yalnızca ön koltukta',
-      'Yalnızca otoyolda',
-      'Hem yerleşim yeri içinde hem dışında, ön ve arka tüm koltuklarda',
+      'Yalnızca şehirlerarası yollarda ve otoyollarda',
+      'Yalnızca ön koltukta oturanlar için',
+      'Yalnızca otoyolda ilerlerken',
+      'Yerleşim yeri içinde ve dışında, her koltukta',
     ],
     answerIndex: 3,
     explanation:
@@ -747,9 +747,9 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'orta',
     stem: 'Emniyet kemerinin temel güvenlik işlevi nedir?',
     options: [
-      'Çarpışma anında sürücü ve yolcunun ileri savrulmasını önlemek',
-      'Yakıt tasarrufu sağlamak',
-      'Direksiyon hakimiyetini artırmak',
+      'Çarpışmada ileri savrulmayı önlemek',
+      'Yakıt tasarrufu sağlayıp tüketimi düşürmek',
+      'Direksiyon hakimiyetini artırıp manevrayı kolaylaştırmak',
       'Motoru aşırı ısınmadan korumak',
     ],
     answerIndex: 0,
@@ -772,10 +772,10 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'kolay',
     stem: 'Sağa dönüş yapacak sürücü dönüşten önce ne yapmalıdır?',
     options: [
-      'Sol şeride geçmeli',
+      'Sol şeride geçip geniş kavis almalı',
       'En sağ şeride yaklaşıp sağ sinyal vermeli',
-      'Hızını artırmalı',
-      'Geniş kavis için önce sola yönelmeli',
+      'Hızını artırıp dönüşü çabuk tamamlamalı',
+      'Geniş kavis almak için önce sola yönelmeli',
     ],
     answerIndex: 1,
     explanation:
@@ -797,10 +797,10 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'orta',
     stem: 'İki yönlü bir yolda sola dönüş yapacak sürücü genel olarak ne yapar?',
     options: [
-      'En sağ şeride yaklaşır',
-      'Yolun/şeridin soluna yaklaşır, sinyal verir ve karşıdan gelen trafiğe yol verir',
-      'Hiç sinyal vermeden döner',
-      'Kavşakta durup geri manevra yapar',
+      'En sağ şeride yaklaşıp oradan döner',
+      'Şeridin soluna yaklaşır, sinyal verir ve yol verir',
+      'Hiç sinyal vermeden doğrudan sola döner',
+      'Kavşakta durup geri manevrayla yönünü tersine çevirir',
     ],
     answerIndex: 1,
     explanation:
@@ -822,10 +822,10 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'orta',
     stem: 'Bir araç otoyola nasıl katılır?',
     options: [
-      'Doğrudan seyir şeridine çıkarak',
-      'Emniyet şeridinden yavaşça girerek',
-      'Katılım noktasında durup bekleyerek',
-      'Hızlanma şeridinde yeterli hıza ulaşıp uygun aralıkta katılarak',
+      'Doğrudan seyir şeridine çıkarak katılır',
+      'Emniyet şeridinden yavaşça ilerleyerek girer',
+      'Katılım noktasında durup uygun boşluğu bekleyerek',
+      'Hızlanma şeridinde hıza ulaşıp uygun aralıkta',
     ],
     answerIndex: 3,
     explanation:
@@ -847,10 +847,10 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'orta',
     stem: 'Otoyoldaki emniyet şeridi (banket) esas olarak ne amaçla kullanılır?',
     options: [
-      'Normal seyir ve sollama için',
+      'Normal seyir ve sollama yapmak için',
       'Yalnızca arıza, kaza ve acil durumlar için',
-      'Daha hızlı gitmek için',
-      'Serbestçe park etmek için',
+      'Trafik yoğunken daha hızlı gitmek için',
+      'İhtiyaç duyulduğunda serbestçe park etmek için',
     ],
     answerIndex: 1,
     explanation:
@@ -872,10 +872,10 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'zor',
     stem: 'Otoyolda seyir hâlindeyken aracınız arızalanırsa öncelikli olarak ne yaparsınız?',
     options: [
-      'Bulunduğunuz şeritte durup beklersiniz',
-      'Aracı emniyet şeridine çekip dörtlüleri yakar ve reflektörü uygun mesafeye koyarsınız',
-      'Geri geri en yakın çıkışa gidersiniz',
-      'Aracı olduğu yerde bırakıp yola yürürsünüz',
+      'Bulunduğunuz şeritte durup yardım gelmesini beklersiniz',
+      'Emniyet şeridine çekip dörtlüleri yakar, reflektör koyarsınız',
+      'Geri geri giderek en yakın çıkışa ulaşmaya çalışırsınız',
+      'Aracı olduğu yerde bırakıp yaya olarak yoldan uzaklaşırsınız hemen',
     ],
     answerIndex: 1,
     explanation:
@@ -917,10 +917,10 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'zor',
     stem: 'Sesli ve ışıklı uyarı cihazlarını çalıştırmış bir ambulans arkanızdan yaklaşırsa ne yaparsınız?',
     options: [
-      'Hızlanıp ambulansın önünden gidersiniz',
-      'Yavaşlayıp uygun şekilde yol verir, gerekirse durursunuz',
-      'Bulunduğunuz yerde hiç hareket etmezsiniz',
-      'Korna çalarak devam edersiniz',
+      'Hızlanıp ambulansın önünden gitmeyi sürdürürsünüz',
+      'Yavaşlayıp yol verir, gerekirse durursunuz',
+      'Bulunduğunuz yerde hiç hareket etmeden beklersiniz',
+      'Korna çalarak yolunuza devam edersiniz',
     ],
     answerIndex: 1,
     explanation:
@@ -942,9 +942,9 @@ export const TRAFIK_QUESTIONS: Question[] = [
     difficulty: 'kolay',
     stem: 'Kavşakta kırmızı ışıkla karşılaşan sürücü ne yapmalıdır?',
     options: [
-      'Dikkatli biçimde geçmeli',
-      'Sağa dönerek devam etmeli',
-      'Korna çalıp geçmeli',
+      'Dikkatli biçimde yavaşlayıp geçmeli',
+      'Sağa dönüş yaparak yoluna devam etmeli',
+      'Korna çalıp kavşağı hızla boşaltmalı',
       'Durma çizgisinin gerisinde durmalı',
     ],
     answerIndex: 3,

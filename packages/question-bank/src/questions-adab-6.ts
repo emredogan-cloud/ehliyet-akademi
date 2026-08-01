@@ -16,12 +16,12 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Sürücülerin karakteri yayalardan tümüyle farklıdır',
       'Araç içinde insanın sabrı doğal ve kaçınılmaz biçimde azalır',
-      'Araç, kişiye bir tür anonimlik ve zırh duygusu verir; yüz yüze olmadığı için insan kendini davranışlarından daha az sorumlu hisseder',
+      'Araç, kişiye bir tür anonimlik ve zırh duygusu verir',
       'Yayaların trafikte hiçbir hakkı olmadığı içindir',
     ],
     answerIndex: 2,
     explanation:
-      'Cam ve metalin arkasında insan, karşısındakini bir yüz değil bir "araç" olarak görür; göz göze gelme, tanınma ve utanç kaybolunca öfkenin freni de gevşer. Oysa o aracın içinde de bir insan vardır.',
+      'Cam ve metalin arkasında insan, karşısındakini bir yüz değil bir "araç" olarak görür; göz göze gelme, tanınma ve utanç kaybolunca öfkenin freni de gevşer. Oysa o aracın içinde de bir insan vardır. Yüz yüze olmadığı için insan kendini davranışlarından daha az sorumlu hisseder.',
     whyWrong: [
       'Aynı kişi hem yaya hem sürücü olduğuna göre değişen şey karakter değil, içinde bulunulan durumdur.',
       'Sabrın azalması kaçınılmaz değildir; anonimlik duygusunun farkına varan sürücü öfkesini yönetebilir.',
@@ -39,14 +39,14 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Bir sürücü tıkalı trafikte camını açıp yandaki sürücüye ağır sözler söylüyor; aynı kişi markette sıra beklerken böyle davranmayı asla düşünmez. Bu çelişkiyi aşmanın en doğru yolu nedir?',
     options: [
-      'Direksiyondaki kişinin de karşısındakinin de birer insan olduğunu hatırlamak; "onu tanısaydım, yüz yüze olsaydım böyle davranır mıydım?" diye kendine sormak',
+      'Direksiyondaki kişinin de karşısındakinin de birer insan olduğunu hatırlamak',
       'Trafikte farklı kurallar geçerli olduğu için bu davranışı normal saymak',
       'Camları kapalı tutup sesin dışarı çıkmamasını sağlamayı yeterli görmek',
       'Nezaketi yalnızca tanıdık biriyle karşılaşma ihtimali olduğunda göstermek',
     ],
     answerIndex: 0,
     explanation:
-      'Markette sıra beklerken devreye giren nezaket, aslında karşımızdakini bir yüz olarak görmemizden doğar. Direksiyondaki insanı bir engel değil de bir birey olarak görmeyi hatırlamak, anonimliğin ürettiği kabalığı çözer.',
+      'Markette sıra beklerken devreye giren nezaket, aslında karşımızdakini bir yüz olarak görmemizden doğar. Direksiyondaki insanı bir engel değil de bir birey olarak görmeyi hatırlamak, anonimliğin ürettiği kabalığı çözer. "onu tanısaydım, yüz yüze olsaydım böyle davranır mıydım?" diye kendine sormak.',
     whyWrong: [
       'Trafik ayrı bir ahlak alanı değildir; aynı değerler yolda da geçerlidir.',
       'Sesi içeride tutmak öfkeyi gizler ama gerçek çözüm, öfkenin kaynağındaki "muhatabı yok sayma" tutumunu değiştirmektir.',
@@ -68,11 +68,11 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
       'Stres dikkati artırdığı için kararlar daha isabetli olur',
       'Stresin sürüş kararlarına hiçbir etkisi yoktur',
       'Stres yalnızca acemi sürücülerin kararlarını bozar',
-      'Stres, görüş alanını daraltır ve aceleci kararlara yol açar; sürücü riskleri olduğundan küçük, kendi becerisini olduğundan büyük görmeye başlar',
+      'Stres, görüş alanını daraltır ve aceleci kararlara yol açar',
     ],
     answerIndex: 3,
     explanation:
-      'Stres altında beyin "hayatta kalma" moduna geçer; çevreyi tarama yeteneği daralır, sabır yerini dürtüye bırakır. Bu yüzden gergin bir sürücü, sakinken asla yapmayacağı riskli hamleleri mantıklı sanabilir.',
+      'Stres altında beyin "hayatta kalma" moduna geçer; çevreyi tarama yeteneği daralır, sabır yerini dürtüye bırakır. Bu yüzden gergin bir sürücü, sakinken asla yapmayacağı riskli hamleleri mantıklı sanabilir. Sürücü riskleri olduğundan küçük, kendi becerisini olduğundan büyük görmeye başlar.',
     whyWrong: [
       'Ölçülü bir uyarılma faydalı olsa da yoğun stres dikkati daraltır, keskinleştirmez.',
       'Stresin etkisi deneyimden bağımsızdır; usta sürücünün de yargısını bozar.',
@@ -119,7 +119,7 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Trafikte daha atik ve hızlı sürerek zamanı yolda kazanmak',
       'Kestirme ama riskli ara yolları tercih etmek',
-      'Yola birkaç dakika erken çıkmak; zaman baskısını yolda değil, evden çıkış saatinde çözmek',
+      'Yola birkaç dakika erken çıkmak',
       'Sarı ışıklarda hızlanıp mümkün olduğunca çok kavşağı geçmek',
     ],
     answerIndex: 2,
@@ -143,13 +143,13 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     stem: 'Önemli bir randevunuza geç kaldınız ve trafikte her kırmızı ışık sizi daha da geriyor. Hem bugünü kurtaracak hem de bu durumun tekrarını önleyecek en olgun yaklaşım hangisidir?',
     options: [
       'Kaybedilen zamanı telafi etmek için ilk fırsatta hız sınırını aşmak',
-      'Bugün için gecikmeyi kabullenip güvenli sürmek, gerekirse haber vermek; bundan sonrası için de çıkış saatini öne almayı alışkanlık hâline getirmek',
+      'Bugün için gecikmeyi kabullenip güvenli sürmek, gerekirse haber vermek',
       'Randevu sahibini arayıp trafiği bahane ederek sorumluluğu tümüyle trafiğe yüklemek',
       'Şerit şerit dolaşıp en hızlı ilerleyen kuyruğu kollamak',
     ],
     answerIndex: 1,
     explanation:
-      'Geç kalmışlık artık değiştirilemez; değiştirilebilecek tek şey, o gecikmeye verilen tepkidir. Bir telefonla haber vermek karşı tarafa saygıdır; asıl çözüm ise yarın aynı stresi yaşamamak için erken çıkmayı huy edinmektir.',
+      'Geç kalmışlık artık değiştirilemez; değiştirilebilecek tek şey, o gecikmeye verilen tepkidir. Bir telefonla haber vermek karşı tarafa saygıdır; asıl çözüm ise yarın aynı stresi yaşamamak için erken çıkmayı huy edinmektir. Bundan sonrası için de çıkış saatini öne almayı alışkanlık hâline getirmek.',
     whyWrong: [
       'Hız sınırını aşmak birkaç dakika kazandırır ama kaybı ölümcül olabilir; geç kalmak bunun yanında küçük kalır.',
       'Sürekli şerit değiştirmek ortalamada zaman kazandırmaz; yalnızca gerginliği ve riski artırır.',
@@ -167,14 +167,14 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Arkanızdaki sürücü sürekli dibinize girip selektör yapıyor, agresif biçimde geçmek istiyor. En güvenli ve olgun davranış hangisidir?',
     options: [
-      'Uygun olan ilk yerde sağa geçip yol vermek; agresif sürücüyle inatlaşmak yerine onu güvenle önünüzden göndermek',
+      'Uygun olan ilk yerde sağa geçip yol vermek',
       'Hızınızı iyice düşürüp ona ders vermek',
       'Siz de hızlanıp aranızdaki mesafeyi zorlayarak korumaya çalışmak',
       'Fren lambasını birkaç kez yakıp onu tehditkâr biçimde uyarmak',
     ],
     answerIndex: 0,
     explanation:
-      'Agresif sürücüyle kazanılacak bir yarış yoktur; kazanç, onu bir an önce hayatınızdan çıkarmaktır. Yol verip geçmesini sağlamak zayıflık değil, tehlikeyi arkanızda bırakmanın en akıllı yoludur.',
+      'Agresif sürücüyle kazanılacak bir yarış yoktur; kazanç, onu bir an önce hayatınızdan çıkarmaktır. Yol verip geçmesini sağlamak zayıflık değil, tehlikeyi arkanızda bırakmanın en akıllı yoludur. Agresif sürücüyle inatlaşmak yerine onu güvenle önünüzden göndermek.',
     whyWrong: [
       'Hızı düşürerek "ders vermek", öfkeli sürücüyü daha da tehlikeli hamlelere kışkırtır.',
       'Onunla birlikte hızlanmak, agresif sürücünün temposuna ortak olup riski paylaşmaktır.',
@@ -218,13 +218,13 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     stem: 'Kırmızı ışıkta yanınızdaki sürücü motorunu gaza basarak sizi bir "kalkış yarışına" davet ediyor. Olgun bir sürücü ne yapar?',
     options: [
       'Yeşil yanınca hızlıca kalkıp yarışı kazanmaya çalışmak',
-      'Daveti görmezden gelip normal ve sakin biçimde kalkmak; trafikte kazanılacak bir yarış olmadığını bilmek',
+      'Daveti görmezden gelip normal ve sakin biçimde kalkmak',
       'Ondan biraz önde kalabilmek için ışığa yakın hafifçe ilerlemek',
       'Aynı şekilde motoru gazlayıp kararlılığınızı göstermek',
     ],
     answerIndex: 1,
     explanation:
-      'Trafikteki yarışın ödülü yoktur; bir sonraki kırmızı ışıkta yine yan yana gelirsiniz. Daveti reddetmek geri adım değil, anlamsız bir riski en baştan elemektir. Gerçek üstünlük, oyuna hiç girmemektir.',
+      'Trafikteki yarışın ödülü yoktur; bir sonraki kırmızı ışıkta yine yan yana gelirsiniz. Daveti reddetmek geri adım değil, anlamsız bir riski en baştan elemektir. Gerçek üstünlük, oyuna hiç girmemektir. Trafikte kazanılacak bir yarış olmadığını bilmek.',
     whyWrong: [
       'Yarışı kazanmak, birkaç saniyelik bir gurur için kavşağı riskli bir alana çevirir.',
       'Motoru gazlayıp karşılık vermek, çocukça bir meydan okumaya ortak olmaktır.',
@@ -245,11 +245,11 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
       'Öne geçmek haklı bir tepkidir; kimse geçilmeyi kabul etmek zorunda değildir',
       'Bu duygu yalnızca genç sürücülerde görülür ve zararsızdır',
       'Trafikte konum, gerçek bir üstünlük göstergesidir',
-      'Trafik bir yarış değil, ortak bir yolculuktur; geçilme duygusu egodan doğar ve gereksiz risk almaya yol açar — kimin önde olduğunun varış açısından bir önemi yoktur',
+      'Trafik bir yarış değil, ortak bir yolculuktur',
     ],
     answerIndex: 3,
     explanation:
-      'Yol, sıralamanın tutulduğu bir pist değildir; sizi geçen araç birkaç kilometre sonra bir ışıkta yine yanınızdadır. Geçildim duygusu tümüyle egonun ürettiği bir yanılsamadır ve bu yanılsama için can riske atılmaz.',
+      'Yol, sıralamanın tutulduğu bir pist değildir; sizi geçen araç birkaç kilometre sonra bir ışıkta yine yanınızdadır. Geçildim duygusu tümüyle egonun ürettiği bir yanılsamadır ve bu yanılsama için can riske atılmaz. Geçilme duygusu egodan doğar ve gereksiz risk almaya yol açar — kimin önde olduğunun varış açısından bir önemi yoktur.',
     whyWrong: [
       'Öne geçme ihtiyacı haklı tepki değil, kontrol edilmesi gereken bir dürtüdür.',
       'Bu duygu her yaştan sürücüde görülebilir ve risk aldırdığı için hiç de zararsız değildir.',
@@ -293,14 +293,14 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Bir tartışmada "ama önce o hata yaptı" demek kolaydır. Trafikte kendi hatasını kabullenmenin, savunmaya geçip başkasını suçlamaya göre en önemli üstünlüğü nedir?',
     options: [
-      'Hatasını gören sürücü aynı hatayı tekrarlamamayı öğrenir ve gelişir; suçu dışarı atan ise hatasını hiç fark etmediği için onu sürekli tekrarlar',
+      'Hatasını gören sürücü aynı hatayı tekrarlamamayı öğrenir ve gelişir',
       'Kabullenmek, karşı tarafa her koşulda tazminat ödememeyi sağlar',
       'Kabullenen sürücü her zaman haklı çıkar',
       'Hata kabul edildiğinde ceza tümüyle ortadan kalkar',
     ],
     answerIndex: 0,
     explanation:
-      'Hatayı kabullenmek yalnızca ahlaki bir erdem değil, öğrenmenin ön koşuludur. "Ben yaptım" diyebilen sürücü nedenini görür ve düzeltir; "o başlattı" diyen ise aynı yanlışı ömür boyu taşır. Gelişimin kapısı, itiraf edebilmektir.',
+      'Hatayı kabullenmek yalnızca ahlaki bir erdem değil, öğrenmenin ön koşuludur. "Ben yaptım" diyebilen sürücü nedenini görür ve düzeltir; "o başlattı" diyen ise aynı yanlışı ömür boyu taşır. Gelişimin kapısı, itiraf edebilmektir. Suçu dışarı atan ise hatasını hiç fark etmediği için onu sürekli tekrarlar.',
     whyWrong: [
       'Kabullenmenin değeri tazminat hesabı değildir; kusurun paylaşımı hukuken ayrıca değerlendirilir.',
       'Kabullenmek her zaman haklı çıkarmaz; amacı haklılık değil, doğruyu görebilmektir.',
@@ -319,13 +319,13 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     stem: 'Maddi hasarlı bir kaza yaptınız; kimse yaralanmadı ama çok gerginsiniz. Süreci sağlıklı yürütmek için ilk yapmanız gereken nedir?',
     options: [
       'Karşı sürücüyle kimin haklı olduğunu yüksek sesle tartışmaya başlamak',
-      'Önce sakinleşmek; ardından güvenliği sağlayıp (dörtlüler, gerekiyorsa araçların fotoğrafı) olay yerinin ve hasarın verilerini soğukkanlılıkla toplamak',
+      'Önce sakinleşmek',
       'Bir an önce oradan ayrılmak için karşı tarafın söylediği her şeyi düşünmeden kabul etmek',
       'Öfkeyle karşı sürücüyü suçlayıp olayı büyütmek',
     ],
     answerIndex: 1,
     explanation:
-      'Kaza anındaki en değerli araç sakinliktir. Panik ve öfke, hem yanlış kararlar aldırır hem de tutanağa geçecek verileri gözden kaçırtır. Önce derin bir nefes, sonra güvenlik, sonra sakin veri toplama: bu sıra hem sizi hem hakkınızı korur.',
+      'Kaza anındaki en değerli araç sakinliktir. Panik ve öfke, hem yanlış kararlar aldırır hem de tutanağa geçecek verileri gözden kaçırtır. Önce derin bir nefes, sonra güvenlik, sonra sakin veri toplama: bu sıra hem sizi hem hakkınızı korur. Ardından güvenliği sağlayıp (dörtlüler, gerekiyorsa araçların fotoğrafı) olay yerinin ve hasarın verilerini soğukkanlılıkla toplamak.',
     whyWrong: [
       'Kimin haklı olduğunu bağırarak tartışmak hiçbir veri üretmez, yalnızca gerginliği tırmandırır.',
       'Sakinleşmeden her şeyi kabul etmek ya da karşı tarafı suçlamak, ikisi de doğru tespiti imkânsız kılar.',
@@ -373,11 +373,11 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
       'Fark edilmediğine göre kendi payını hiç dile getirmemek',
       'Bütün kusuru karşı tarafa yıkacak biçimde olayı anlatmak',
       'Tutanağı eksik bırakıp işi tümüyle şansa bırakmak',
-      'Olayı olduğu gibi, kendi payını da saklamadan dürüstçe aktarmak; dürüstlük, kimse görmese de vazgeçilmez bir ilkedir',
+      'Olayı olduğu gibi, kendi payını da saklamadan dürüstçe aktarmak',
     ],
     answerIndex: 3,
     explanation:
-      'Tutanak, bir kâğıt parçası değil; sonradan hakların, sigortanın ve adaletin dayanacağı bir beyandır. Kendi payını gizlemek anlık bir kazanç gibi görünse de bir yalanın üzerine kurulur. Dürüstlük, tam da kimsenin fark etmediği yerde sınanır.',
+      'Tutanak, bir kâğıt parçası değil; sonradan hakların, sigortanın ve adaletin dayanacağı bir beyandır. Kendi payını gizlemek anlık bir kazanç gibi görünse de bir yalanın üzerine kurulur. Dürüstlük, tam da kimsenin fark etmediği yerde sınanır. Dürüstlük, kimse görmese de vazgeçilmez bir ilkedir.',
     whyWrong: [
       'Fark edilmemek, gerçeği çarpıtmayı haklı kılmaz; dürüstlük tanığa değil vicdana bağlıdır.',
       'Bütün kusuru karşıya yıkmak, hem haksızlık hem de sonradan ortaya çıkabilecek bir yalandır.',
@@ -395,14 +395,14 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Kaza sonrası karşı sürücü "tutanağı kendi aramızda halledelim, sen kusuru üstlen, ben sana biraz para vereyim" diyor. Doğru yaklaşım hangisidir?',
     options: [
-      'Gerçekte olan neyse onu yansıtan bir tutanak tutmak; kusuru para karşılığında çarpıtmayı kabul etmemek',
+      'Gerçekte olan neyse onu yansıtan bir tutanak tutmak',
       'Teklif cazipse gerçeği değiştirip anlaşmayı kabul etmek',
       'Karşı taraf ne isterse düşünmeden imzalamak',
       'Kim daha çok ısrar ederse onun dediğini yazmak',
     ],
     answerIndex: 0,
     explanation:
-      'Kusuru para karşılığı satın almak ya da satmak, tutanağı bir pazarlık aracına çevirir. Oysa tutanak gerçeğin kaydıdır; çarpıtılan her satır, ileride sigortadan mahkemeye kadar herkesi yanıltır. Dürüst kayıt, kısa vadede zor ama uzun vadede en güvenli yoldur.',
+      'Kusuru para karşılığı satın almak ya da satmak, tutanağı bir pazarlık aracına çevirir. Oysa tutanak gerçeğin kaydıdır; çarpıtılan her satır, ileride sigortadan mahkemeye kadar herkesi yanıltır. Dürüst kayıt, kısa vadede zor ama uzun vadede en güvenli yoldur. Kusuru para karşılığında çarpıtmayı kabul etmemek.',
     whyWrong: [
       'Parayla gerçeği değiştirmek, hem etik dışıdır hem de sonradan çok daha büyük sorunlar doğurabilir.',
       'Karşı taraf ne derse imzalamak, kendi hakkınızı bilmeden teslim etmektir.',
@@ -421,13 +421,13 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     stem: 'Önünüzde net bir kaza oldu; kusurlu tarafı açıkça gördünüz ancak yaralı yok ve acele bir işiniz var. Trafik adabı açısından en doğru davranış hangisidir?',
     options: [
       'İşiniz olduğu için hiç durmadan geçip gitmek; tanıklık başkalarının işidir',
-      'Güvenli bir yerde durup gördüklerinizi taraflara veya yetkililere aktarmayı önermek, en azından iletişim bilginizi bırakmak; dürüst bir tanıklık, haksızlığın önlenmesine katkıdır',
+      'Güvenli bir yerde durup gördüklerinizi taraflara veya yetkililere aktarmayı önermek, en azından iletişim bilginizi bırakmak',
       'Yalnızca tanıdığınız taraf haklıysa tanıklık etmek',
       'Olayı sosyal medyada paylaşıp orada tanıklık ettiğinizi düşünmek',
     ],
     answerIndex: 1,
     explanation:
-      'Adil bir sonuç çoğu zaman tarafsız bir tanığa bağlıdır. Gördüğünü dürüstçe aktaran biri, haksız yere suçlanacak birinin hakkını kurtarabilir. Birkaç dakikanızı ayırıp iletişim bilginizi bırakmak, toplumsal vicdanın küçük ama gerçek bir katkısıdır.',
+      'Adil bir sonuç çoğu zaman tarafsız bir tanığa bağlıdır. Gördüğünü dürüstçe aktaran biri, haksız yere suçlanacak birinin hakkını kurtarabilir. Birkaç dakikanızı ayırıp iletişim bilginizi bırakmak, toplumsal vicdanın küçük ama gerçek bir katkısıdır. Dürüst bir tanıklık, haksızlığın önlenmesine katkıdır.',
     whyWrong: [
       'Tanıklıktan kaçmak, elinizdeki gerçeğin bir haksızlığı düzeltmesini engeller.',
       'Tanıklığı tanıdıklığa göre seçmek adaleti değil tarafgirliği besler; sosyal medya ise resmi bir tanıklık zemini değildir.',
@@ -473,11 +473,11 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
       'Önce olayın nasıl olduğunu anlamak için etrafı uzun uzun incelemek',
       'Yaralıyı hemen kaldırıp aracınıza taşımaya çalışmak',
       'Başka birinin arayacağını düşünüp beklemek',
-      'Vakit kaybetmeden acil yardım hattını arayıp yeri ve durumu net biçimde bildirmek; profesyonel yardımı en hızlı şekilde harekete geçirmek',
+      'Vakit kaybetmeden acil yardım hattını arayıp yeri ve durumu net biçimde bildirmek',
     ],
     answerIndex: 3,
     explanation:
-      'Ağır yaralanmalarda hayatta kalma şansı ilk dakikalara bağlıdır. En değerli katkı, çoğu zaman doğru bir ilk müdahaleden önce gelen hızlı ve net bir yardım çağrısıdır. Geciken her saniye, ekiplerin ulaşımını da geciktirir.',
+      'Ağır yaralanmalarda hayatta kalma şansı ilk dakikalara bağlıdır. En değerli katkı, çoğu zaman doğru bir ilk müdahaleden önce gelen hızlı ve net bir yardım çağrısıdır. Geciken her saniye, ekiplerin ulaşımını da geciktirir. Profesyonel yardımı en hızlı şekilde harekete geçirmek.',
     whyWrong: [
       'Yaralıyı bilinçsizce kaldırmak, özellikle omurga yaralanmalarında kalıcı hasara yol açabilir.',
       'Başkası arar düşüncesi, herkes aynı şeyi düşündüğünde kimsenin aramamasına yol açar.',
@@ -495,14 +495,14 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Bir kazaya ilk ulaşan sürücüsünüz; kalabalık henüz toplanmadı. Acil yardım hattını ararken en doğru tutum hangisidir?',
     options: [
-      'Sakin kalıp yerin adresini, kaza türünü ve yaralı sayısını mümkün olduğunca net aktarmak; hattı kapatmadan operatörün yönlendirmesini dinlemek',
+      'Sakin kalıp yerin adresini, kaza türünü ve yaralı sayısını mümkün olduğunca net aktarmak',
       'Panikle bağırıp yalnızca "kaza var, gelin" deyip telefonu kapatmak',
       'Adres yerine "buralarda bir yerde" gibi belirsiz tarifler vermek',
       'Önce olayı videoya çekip sonra aramak',
     ],
     answerIndex: 0,
     explanation:
-      'Yardım çağrısının hızı kadar netliği de önemlidir: doğru adres ve durum bilgisi, ekiplerin doğru donanımla ve doğru yere gelmesini sağlar. Panikle verilen eksik bilgi, kurtarmayı hızlandırmak yerine geciktirir. Operatörle bağlantıyı korumak da bu yüzden değerlidir.',
+      'Yardım çağrısının hızı kadar netliği de önemlidir: doğru adres ve durum bilgisi, ekiplerin doğru donanımla ve doğru yere gelmesini sağlar. Panikle verilen eksik bilgi, kurtarmayı hızlandırmak yerine geciktirir. Operatörle bağlantıyı korumak da bu yüzden değerlidir. Hattı kapatmadan operatörün yönlendirmesini dinlemek.',
     whyWrong: [
       'Bağırıp kapatmak, ekiplerin ihtiyaç duyduğu bilgileri alamadan yola çıkmasına yol açar.',
       'Belirsiz adres ekipleri yanlış yönlendirir; video çekmek ise hayat kurtaracak dakikaları harcar.',
@@ -521,13 +521,13 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     stem: 'Genç bir sürücü, arkadaşlarını etkilemek için yerleşim yerinde lastik yaktırıp yüksek sesle hızlanıyor. Bu "gösteriş sürüşü" için en doğru değerlendirme hangisidir?',
     options: [
       'Gençliğe özgü, zararsız bir heyecan biçimidir',
-      'Ne kendine ne çevresine bir değer katan, yalnızca herkesi tehlikeye atan bir ego gösterisidir; gerçek özgüven kural tanımaktan geçer',
+      'Ne kendine ne çevresine bir değer katan, yalnızca herkesi tehlikeye atan bir ego gösterisidir',
       'Araç güçlüyse ve sürücü yetenekliyse sakıncası yoktur',
       'Yalnızca gece yapılırsa tehlikelidir',
     ],
     answerIndex: 1,
     explanation:
-      'Gösteriş sürüşü, alkışlanmak istenen ama aslında yalnızca risk üreten bir davranıştır. Etkilenmesi umulan arkadaşlar bir kaza anında oradan kaçar; geriye yalnızca sürücünün ve mağdurların bedeli kalır. Asıl saygı duyulan sürüş, sessiz ve kurallıdır.',
+      'Gösteriş sürüşü, alkışlanmak istenen ama aslında yalnızca risk üreten bir davranıştır. Etkilenmesi umulan arkadaşlar bir kaza anında oradan kaçar; geriye yalnızca sürücünün ve mağdurların bedeli kalır. Asıl saygı duyulan sürüş, sessiz ve kurallıdır. Gerçek özgüven kural tanımaktan geçer.',
     whyWrong: [
       'Heyecanı zararsız saymak, o heyecanın bedelini ödeyecek yayaları ve yolcuları görmezden gelmektir.',
       'Aracın gücü ya da saatin geç olması, fizik kurallarını ve başkalarının canını değiştirmez.',
@@ -547,12 +547,12 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Arkadaşlarınızı kırmamak için bir süreliğine hızlanıp sonra normale dönmek',
       'Onların cesaretlendirmesini haklı bulup temkini bırakmak',
-      'Direksiyondaki tek sorumlunun siz olduğunu net biçimde hatırlatıp güvenli sürüşe devam etmek; "hayır" diyebilmek en büyük olgunluktur',
+      'Direksiyondaki tek sorumlunun siz olduğunu net biçimde hatırlatıp güvenli sürüşe devam etmek',
       'Cesaretinizi kanıtlamak için tek bir riskli manevra yapmak',
     ],
     answerIndex: 2,
     explanation:
-      'Araçtaki herkesin canı, o an direksiyonu tutan kişinin kararına emanettir. Arkadaş baskısına hayır demek popülerliği azaltabilir ama bir hayatı kurtarabilir. Gerçek cesaret, riskli manevrada değil; kalabalığa karşı ilkeni koruyabilmektedir.',
+      'Araçtaki herkesin canı, o an direksiyonu tutan kişinin kararına emanettir. Arkadaş baskısına hayır demek popülerliği azaltabilir ama bir hayatı kurtarabilir. Gerçek cesaret, riskli manevrada değil; kalabalığa karşı ilkeni koruyabilmektedir. "hayır" diyebilmek en büyük olgunluktur.',
     whyWrong: [
       'Bir süreliğine hızlanmak da riski kabul etmektir; kaza için bir anlık dikkatsizlik yeter.',
       'Cesareti tek bir riskli manevrayla kanıtlamaya çalışmak, olgunluğu değil toyluğu gösterir.',
@@ -570,14 +570,14 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Önünüzdeki araçta yaşlı bir sürücü var; temkinli, yavaş ve zaman zaman tereddütlü ilerliyor. Saygılı ve empatik davranış hangisidir?',
     options: [
-      'Takip mesafesini artırıp sabırla, baskı yapmadan ilerlemek; onun da güvenle seyahat etme hakkı olduğunu unutmamak',
+      'Takip mesafesini artırıp sabırla, baskı yapmadan ilerlemek',
       'Korna ve selektörle hızlanması için baskı yapmak',
       'Dibine sokulup tedirgin ederek yol açmasını sağlamak',
       'Yanına gelip pencereden uyarıda bulunmak',
     ],
     answerIndex: 0,
     explanation:
-      'Yaşlı sürücü de yolun eşit bir ortağıdır; temkinli sürüşü bir kusur değil, çoğu zaman bir sorumluluk göstergesidir. Baskı, onun tereddüdünü artırıp hata yaptırır. Sabırla mesafe bırakmak, bir gün kendimizin de ihtiyaç duyacağı saygıdır.',
+      'Yaşlı sürücü de yolun eşit bir ortağıdır; temkinli sürüşü bir kusur değil, çoğu zaman bir sorumluluk göstergesidir. Baskı, onun tereddüdünü artırıp hata yaptırır. Sabırla mesafe bırakmak, bir gün kendimizin de ihtiyaç duyacağı saygıdır. Onun da güvenle seyahat etme hakkı olduğunu unutmamak.',
     whyWrong: [
       'Korna ve selektörle baskı, temkinli sürücüyü paniğe sürükleyip riski büyütür.',
       'Dibine sokulmak ya da pencereden uyarmak, hem dikkat dağıtır hem de saygısızlıktır.',
@@ -596,13 +596,13 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     stem: '"Yaşlılar trafikte yavaşlatıyor, hiç direksiyona geçmemeliler" diyen bir arkadaşınıza trafik adabı açısından verilecek en doğru cevap nedir?',
     options: [
       '"Haklısın, belli bir yaştan sonra araç kullanmak tümüyle yasaklanmalı"',
-      '"Yavaş ve temkinli sürmek çoğu zaman bir güvenlik tercihidir; herkesin yolda bulunma hakkı vardır, bize düşen sabır ve saygı göstermektir"',
+      '"Yavaş ve temkinli sürmek çoğu zaman bir güvenlik tercihidir',
       '"Sadece şehir dışında sürmelerine izin verilmeli"',
       '"Yaşlı sürücülerin arkasında hiç kalmamak için farklı güzergâhlar seçmeli"',
     ],
     answerIndex: 1,
     explanation:
-      'Trafik, toplumun her kesiminin ortak alanıdır; yalnızca hızlıların değil, temkinlilerin de yeri vardır. Yaşa dayalı dışlama, bir gün herkesin karşılaşacağı bir haksızlığa kapı aralar. Adap, farklı tempolara tahammül edip yolu paylaşmayı gerektirir.',
+      'Trafik, toplumun her kesiminin ortak alanıdır; yalnızca hızlıların değil, temkinlilerin de yeri vardır. Yaşa dayalı dışlama, bir gün herkesin karşılaşacağı bir haksızlığa kapı aralar. Adap, farklı tempolara tahammül edip yolu paylaşmayı gerektirir. Herkesin yolda bulunma hakkı vardır, bize düşen sabır ve saygı göstermektir".',
     whyWrong: [
       'Yaşa göre toptan yasak, bireysel durumları yok sayan bir önyargıdır.',
       'Yaşlı sürücüden kaçmak için güzergâh değiştirmek sorunu çözmez; asıl gereken tutum değişikliğidir.',
@@ -623,11 +623,11 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
       'Zararı yoktur; tecrübe zaten insanı böyle genellemelere götürür',
       'Yalnızca o sürücünün ruh hâlini bozar, başka etkisi olmaz',
       'Önyargı, dikkati keskinleştirdiği için aslında faydalıdır',
-      'Önyargı, karşıdaki bireyi olduğu gibi görmeyi engeller; sürücüyü gereksiz yere gerginleştirir, haksız saldırganlığa ve yanlış değerlendirmelere yol açar',
+      'Önyargı, karşıdaki bireyi olduğu gibi görmeyi engeller',
     ],
     answerIndex: 3,
     explanation:
-      'Trafikte her sürücü bir bireydir; plakası, aracı ya da görünüşü davranışını belirlemez. Önyargı, insana o an gerçekte ne yaptığını değil, kafamızdaki kalıbı gösterir. Bu da hem haksız öfke hem de gerçek riski gözden kaçırma anlamına gelir.',
+      'Trafikte her sürücü bir bireydir; plakası, aracı ya da görünüşü davranışını belirlemez. Önyargı, insana o an gerçekte ne yaptığını değil, kafamızdaki kalıbı gösterir. Bu da hem haksız öfke hem de gerçek riski gözden kaçırma anlamına gelir. Sürücüyü gereksiz yere gerginleştirir, haksız saldırganlığa ve yanlış değerlendirmelere yol açar.',
     whyWrong: [
       'Genellemeleri tecrübe saymak, önyargıyı meşrulaştıran bir yanılgıdır.',
       'Önyargının etkisi kişisel ruh hâliyle sınırlı kalmaz; davranışa ve trafiğe yansır, dikkati keskinleştirmez, çarpıtır.',
@@ -645,14 +645,14 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Genç bir sürücü sizi düzgün biçimde solladı; siz ise "gençler zaten hep dikkatsiz" diye baştan sinirlisiniz ve manevrayı olduğundan tehlikeli algılıyorsunuz. Bu durum önyargı ile ilgili neyi gösterir?',
     options: [
-      'Önyargı, gerçekte kurallı olan bir davranışı bile çarpıtarak algılamamıza yol açabilir; adil olmak için sürücüyü etiketiyle değil, o anki davranışıyla değerlendirmek gerekir',
+      'Önyargı, gerçekte kurallı olan bir davranışı bile çarpıtarak algılamamıza yol açabilir',
       'Genç sürücülere karşı temkin her zaman ve koşulsuz haklıdır',
       'Algı hiçbir zaman önyargıdan etkilenmez',
       'Sollama kurallı bile olsa gençler yaptığında yanlıştır',
     ],
     answerIndex: 0,
     explanation:
-      'Önyargı yalnızca duygularımızı değil, algımızı da boyar: beklentimize uyan şeyi büyütür, uymayanı görmezden geliriz. Kurallı bir sollamayı tehlikeli sanmak, karşımızdaki gence değil, kafamızdaki etikete tepki verdiğimizi gösterir. Adalet, etiketi değil davranışı görmeyi gerektirir.',
+      'Önyargı yalnızca duygularımızı değil, algımızı da boyar: beklentimize uyan şeyi büyütür, uymayanı görmezden geliriz. Kurallı bir sollamayı tehlikeli sanmak, karşımızdaki gence değil, kafamızdaki etikete tepki verdiğimizi gösterir. Adalet, etiketi değil davranışı görmeyi gerektirir. Adil olmak için sürücüyü etiketiyle değil, o anki davranışıyla değerlendirmek gerekir.',
     whyWrong: [
       'Bir yaş grubuna karşı koşulsuz temkin, tanımı gereği önyargıdır.',
       'Algının önyargıdan etkilenmediğini sanmak, bu tuzağa düşmenin ilk adımıdır; kurallı davranış, kimin yaptığından bağımsız olarak kurallıdır.',
@@ -673,7 +673,7 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Kısa bir korna ile hatırlatma yapmak',
       'Uzun uzun korna çalıp acele ettirmek',
-      'Sabırla beklemek; öndeki sürücü büyük olasılıkla sizin göremediğiniz bir yayaya yol veriyordur',
+      'Sabırla beklemek',
       'Yandan sıkışıp geçmeye çalışmak',
     ],
     answerIndex: 2,
@@ -697,13 +697,13 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     stem: 'Bazı sürücüler en küçük gecikmede refleks olarak kornaya basar. Kornayı bir "sabırsızlık aracı" olmaktan çıkarıp doğru kullanmanın ölçüsü nedir?',
     options: [
       'Korna, öndekini uyarmanın en pratik yolu olduğu için sık kullanılmalıdır',
-      'Korna yalnızca bir tehlikeyi önlemek için, kısa ve gerektiğinde çalınmalı; sabırsızlığı, öfkeyi ya da selamlaşmayı ifade etmek için kullanılmamalıdır',
+      'Korna yalnızca bir tehlikeyi önlemek için, kısa ve gerektiğinde çalınmalı',
       'Kornanın uzunluğu, gecikmenin süresine göre ayarlanmalıdır',
       'Korna, haklı olduğumuzu karşı tarafa duyurmanın meşru bir yoludur',
     ],
     answerIndex: 1,
     explanation:
-      'Korna bir iletişim aracıdır, bir duygu boşaltma valfi değil. Amacı, bir tehlikeyi önlemek için karşı tarafı uyarmaktır. Sabırsızlığın, öfkenin ya da "geçtim işte" demenin sesi olduğunda ise yalnızca gürültü ve gerginlik üretir.',
+      'Korna bir iletişim aracıdır, bir duygu boşaltma valfi değil. Amacı, bir tehlikeyi önlemek için karşı tarafı uyarmaktır. Sabırsızlığın, öfkenin ya da "geçtim işte" demenin sesi olduğunda ise yalnızca gürültü ve gerginlik üretir. Sabırsızlığı, öfkeyi ya da selamlaşmayı ifade etmek için kullanılmamalıdır.',
     whyWrong: [
       'Kornayı pratik diye sık kullanmak, onu bir tehlike uyarısı olmaktan çıkarıp gürültüye çevirir.',
       'Kornanın süresini gecikmeye göre ayarlamak ya da onu haklılık ilanı yapmak, sabırsızlığı meşrulaştırmaktır.',
@@ -725,11 +725,11 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
       'Uykusuzluk, alkolden çok daha az risklidir; sürüşe engel değildir',
       'Uykusuzluğun etkisi yalnızca gece sürüşünde önemlidir',
       'Pencereyi açıp müzik dinlemek uykusuzluğu tümüyle giderir',
-      'Uykusuzluk da tıpkı alkol gibi tepki süresini uzatır, dikkati ve karar yeteneğini bozar; yorgunken direksiyona geçmemek gerekir',
+      'Uykusuzluk da tıpkı alkol gibi tepki süresini uzatır, dikkati ve karar yeteneğini bozar',
     ],
     answerIndex: 3,
     explanation:
-      'Uzun süre uyanık kalmanın beyin üzerindeki etkisi, belli bir alkol düzeyininkine benzetilir: refleksler yavaşlar, dikkat kesintiye uğrar ve mikro uykular başlar. "İdare ederim" demek, tam da yorgunluğun yargıyı bozduğunun ilk işaretidir.',
+      'Uzun süre uyanık kalmanın beyin üzerindeki etkisi, belli bir alkol düzeyininkine benzetilir: refleksler yavaşlar, dikkat kesintiye uğrar ve mikro uykular başlar. "İdare ederim" demek, tam da yorgunluğun yargıyı bozduğunun ilk işaretidir. Yorgunken direksiyona geçmemek gerekir.',
     whyWrong: [
       'Uykusuzluğu alkolden daha az riskli saymak, bilimsel olarak yanlış ve tehlikeli bir küçümsemedir.',
       'Pencere ve müzik uyanıklığı yalnızca birkaç dakika taklit eder; uyku ihtiyacını gidermez ve gündüz de risk sürer.',
@@ -749,12 +749,12 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Yakıtın erken bitmesi',
       'Aracın motorunun ısınması',
-      'Uykulu sürücünün, uyuyakaldığı o birkaç saniyeyi genellikle hiç fark etmemesi; "mikro uyku" sırasında araç kontrolsüz biçimde yol alır ve sürücü tehlikeyi ancak iş işten geçtikten sonra anlar',
+      'Uykulu sürücünün, uyuyakaldığı o birkaç saniyeyi genellikle hiç fark etmemesi',
       'Sürücünün fazla temkinli davranıp trafiği yavaşlatması',
     ],
     answerIndex: 2,
     explanation:
-      'Uykunun en tehlikeli yanı, geldiğini haber vermemesidir. Mikro uyku denen birkaç saniyelik dalmalar sırasında gözler açık olabilir ama beyin kapalıdır; bu saniyelerde araç şeridinden çıkabilir. Sürücü çoğu zaman ne olduğunu ancak kaza anında fark eder.',
+      'Uykunun en tehlikeli yanı, geldiğini haber vermemesidir. Mikro uyku denen birkaç saniyelik dalmalar sırasında gözler açık olabilir ama beyin kapalıdır; bu saniyelerde araç şeridinden çıkabilir. Sürücü çoğu zaman ne olduğunu ancak kaza anında fark eder. "mikro uyku" sırasında araç kontrolsüz biçimde yol alır ve sürücü tehlikeyi ancak iş işten geçtikten sonra anlar.',
     whyWrong: [
       'Yakıt ve motor teknik ayrıntılardır; buradaki tehlike sürücünün bilincinin geçici olarak kaybolmasıdır.',
       'Uykulu sürücü fazla temkinli değil, tam tersine kontrolsüzdür; yavaşlığı değil, dalıp gitmesi öldürücüdür.',
@@ -773,13 +773,13 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     stem: 'Doktorunuzun yazdığı bir ilacın kutusunda "uyku yapabilir, araç kullanmayınız" uyarısı var ama kendinizi iyi hissediyorsunuz. Sorumlu bir sürücü ne yapar?',
     options: [
       'Kendini iyi hissettiği için uyarıyı dikkate almadan araç kullanmak',
-      'Uyarıyı ciddiye alıp o ilacı kullandığı sürece direksiyona geçmemek; gerekirse doktoruna veya eczacısına danışmak',
+      'Uyarıyı ciddiye alıp o ilacı kullandığı sürece direksiyona geçmemek',
       'İlaç dozunu kendi kararıyla yarıya indirip araç kullanmak',
       'Yalnızca kısa mesafelerde araç kullanmak',
     ],
     answerIndex: 1,
     explanation:
-      'Bazı ilaçlar reflekslerinizi ve dikkatinizi, siz fark etmeden yavaşlatabilir; iyi hissetmek bu etkinin olmadığı anlamına gelmez. Kutudaki uyarı bir öneri değil, bir güvenlik bilgisidir. Emin değilseniz, doğru adres doktor ya da eczacıdır.',
+      'Bazı ilaçlar reflekslerinizi ve dikkatinizi, siz fark etmeden yavaşlatabilir; iyi hissetmek bu etkinin olmadığı anlamına gelmez. Kutudaki uyarı bir öneri değil, bir güvenlik bilgisidir. Emin değilseniz, doğru adres doktor ya da eczacıdır. Gerekirse doktoruna veya eczacısına danışmak.',
     whyWrong: [
       'İyi hissetmek, ilacın tepki süresi üzerindeki etkisini ortadan kaldırmaz.',
       'Dozu kendi başına değiştirmek hem tedaviyi bozar hem de riski gidermez; kısa mesafe de olsa kaza riski sürer.',
@@ -797,14 +797,14 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Uzun bir yolculuk öncesi alerji ilacı almanız gerekiyor ama bu ilaçların bazılarının uyku yaptığını biliyorsunuz. En doğru yaklaşım hangisidir?',
     options: [
-      'Yola çıkmadan önce eczacınıza ya da doktorunuza danışıp uyku yapmayan bir alternatif olup olmadığını sormak; yoksa sürüş planını buna göre ayarlamak',
+      'Yola çıkmadan önce eczacınıza ya da doktorunuza danışıp uyku yapmayan bir alternatif olup olmadığını sormak',
       'İlacı alıp etkisini yolda görmeyi beklemek',
       'İlacı hiç almayıp sağlığınızı riske atmak',
       'Uyku bastırırsa kahveyle dengelemeyi planlamak',
     ],
     answerIndex: 0,
     explanation:
-      'Sağlık ile güvenliği karşı karşıya getirmek yerine, ikisini birlikte gözeten yol aramak en olgun tutumdur. Eczacıya danışmak, çoğu zaman uyku yapmayan bir alternatif ya da doğru zamanlama sunar. Böylece hem tedaviden hem de güvenli sürüşten vazgeçmemiş olursunuz.',
+      'Sağlık ile güvenliği karşı karşıya getirmek yerine, ikisini birlikte gözeten yol aramak en olgun tutumdur. Eczacıya danışmak, çoğu zaman uyku yapmayan bir alternatif ya da doğru zamanlama sunar. Böylece hem tedaviden hem de güvenli sürüşten vazgeçmemiş olursunuz. Yoksa sürüş planını buna göre ayarlamak.',
     whyWrong: [
       'Etkiyi yolda görmeyi beklemek, uyku bastırdığında geri dönüşü olmayan bir riske girmektir.',
       'İlacı hiç almamak sağlığı, kahveyle dengelemeye çalışmak ise güvenliği riske atar; ikisi de çözüm değildir.',
@@ -824,12 +824,12 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Dikkatinizi dağıtmamak için hiç durmadan yola çıkmak',
       'Üzüntüyü bastırmak için hızlı sürüp adrenalinle rahatlamak',
-      'Birkaç dakika bekleyip biraz sakinleşmek; yoğun duygular dikkatinizi ve karar yeteneğinizi bozacağı için mümkünse hemen direksiyona geçmemek',
+      'Birkaç dakika bekleyip biraz sakinleşmek',
       'Yola çıkıp telefondan yakınlarınızla uzun uzun konuşarak rahatlamaya çalışmak',
     ],
     answerIndex: 2,
     explanation:
-      'Yoğun üzüntü, öfke ya da heyecan; tıpkı yorgunluk gibi zihni yoldan çeker. İçi altüst olmuşken direksiyona geçmek, dikkati büyük ölçüde olayın kendisine bırakır. Birkaç dakikalık bir mola, hem sizi hem yoldaki herkesi korur.',
+      'Yoğun üzüntü, öfke ya da heyecan; tıpkı yorgunluk gibi zihni yoldan çeker. İçi altüst olmuşken direksiyona geçmek, dikkati büyük ölçüde olayın kendisine bırakır. Birkaç dakikalık bir mola, hem sizi hem yoldaki herkesi korur. Yoğun duygular dikkatinizi ve karar yeteneğinizi bozacağı için mümkünse hemen direksiyona geçmemek.',
     whyWrong: [
       'Duyguyu dağıtmak için hemen yola çıkmak işe yaramaz; duygu bedende ve zihinde sürmeye devam eder.',
       'Hızlı sürmek ya da telefonla konuşmak, zaten dağınık olan dikkati daha da böler.',
@@ -850,11 +850,11 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
       'Risk yoktur; öfke sürüşü etkilemez, hatta insanı daha uyanık tutar',
       'Öfkeyi gaza yükleyerek boşaltmak en sağlıklı yoldur',
       'Yalnızca uzun yolda risklidir, şehir içinde sorun olmaz',
-      'Öfke, saldırgan ve aceleci sürüşe yol açıp riskleri küçük gösterir; birkaç dakika bekleyip sakinleşmek, gerekirse kısa bir yürüyüşle öfkeyi düşürmek en doğrusudur',
+      'Öfke, saldırgan ve aceleci sürüşe yol açıp riskleri küçük gösterir',
     ],
     answerIndex: 3,
     explanation:
-      'Öfke, beyni kavga moduna sokar; bu modda sabır azalır, riskler küçük görünür ve direksiyon adeta bir boşaltma alanına dönüşür. Sinirliyken beklenen o birkaç dakika ya da kısa bir yürüyüş, kararların yeniden akla dönmesini sağlar.',
+      'Öfke, beyni kavga moduna sokar; bu modda sabır azalır, riskler küçük görünür ve direksiyon adeta bir boşaltma alanına dönüşür. Sinirliyken beklenen o birkaç dakika ya da kısa bir yürüyüş, kararların yeniden akla dönmesini sağlar. Birkaç dakika bekleyip sakinleşmek, gerekirse kısa bir yürüyüşle öfkeyi düşürmek en doğrusudur.',
     whyWrong: [
       'Öfkenin uyanık tuttuğu düşüncesi bir yanılgıdır; dikkati keskinleştirmez, daraltır ve dürtüselleştirir.',
       'Öfkeyi gaza yüklemek onu boşaltmaz, trafiğe taşır; risk yalnızca uzun yolda değil, her yerde geçerlidir.',
@@ -898,13 +898,13 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     stem: 'Bir sürücü aldığı her cezanın ardından "devlet para topluyor" diyerek öfkeleniyor ama davranışını hiç değiştirmiyor. Bu tutumun temel yanlışı nedir?',
     options: [
       'Öfkelenmesi doğaldır; cezaların hiçbir eğitici yönü yoktur',
-      'Cezanın amacını, yani davranışı düzelterek can güvenliğini korumayı görmezden gelip yalnızca maddi tarafına takılması; bu yüzden aynı riskli davranışı sürdürür ve hiçbir ders çıkarmaz',
+      'Cezanın amacını, yani davranışı düzelterek can güvenliğini korumayı görmezden gelip yalnızca maddi tarafına takılması',
       'Cezaya öfkelenmek, bir daha ihlal yapmamayı garanti eder',
       'Sorun cezanın miktarındadır; ücretsiz olsa davranış kendiliğinden değişirdi',
     ],
     answerIndex: 1,
     explanation:
-      'Cezaya yalnızca cebimden çıkan para olarak bakan sürücü, onun asıl mesajını kaçırır: bu davranış bir kazaya yol açabilirdi. Öfkeyle savunmaya geçmek, hatayı görmeyi engeller; böylece ceza tekrarlanır ama davranış hiç değişmez.',
+      'Cezaya yalnızca cebimden çıkan para olarak bakan sürücü, onun asıl mesajını kaçırır: bu davranış bir kazaya yol açabilirdi. Öfkeyle savunmaya geçmek, hatayı görmeyi engeller; böylece ceza tekrarlanır ama davranış hiç değişmez. Bu yüzden aynı riskli davranışı sürdürür ve hiçbir ders çıkarmaz.',
     whyWrong: [
       'Cezaların eğitici yönü vardır; sorun cezada değil, ondan ders çıkarmamaktadır.',
       'Öfke tek başına davranışı değiştirmez; değişim, hatayı kabul etmekle başlar. Mesele miktarda değil, tutumdadır.',
@@ -924,12 +924,12 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Navigasyon daha günceldir diye levhaya rağmen sokağa girmek',
       'Emin olmak için sokağın ortasında durup haritayı incelemek',
-      'Yol levhalarına ve gerçek trafik işaretlerine uymak; navigasyon bir yardımcıdır, trafik kurallarının yerini almaz',
+      'Yol levhalarına ve gerçek trafik işaretlerine uymak',
       'Ters yönde ama çok yavaş girerek riski azaltmaya çalışmak',
     ],
     answerIndex: 2,
     explanation:
-      'Navigasyon güncel olmayabilir, hata yapabilir ya da geçici düzenlemeleri bilmeyebilir. Yolda asıl bağlayıcı olan, gözünüzün önündeki levhalar ve işaretlerdir. Ekranı gerçeğin önüne koymak, tek yön ihlali gibi ölümcül hatalara yol açabilir.',
+      'Navigasyon güncel olmayabilir, hata yapabilir ya da geçici düzenlemeleri bilmeyebilir. Yolda asıl bağlayıcı olan, gözünüzün önündeki levhalar ve işaretlerdir. Ekranı gerçeğin önüne koymak, tek yön ihlali gibi ölümcül hatalara yol açabilir. Navigasyon bir yardımcıdır, trafik kurallarının yerini almaz.',
     whyWrong: [
       'Navigasyonun güncel olduğunu varsaymak, levhaya rağmen ters yöne girmeyi haklı çıkarmaz.',
       'Sokak ortasında durmak trafiği tehlikeye atar; yavaş da olsa ters yöne girmek yine ihlaldir ve kaza riski taşır.',
@@ -949,13 +949,13 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     stem: 'Navigasyon uygulaması, trafiği azaltmak için sizi dar bir yerleşim içi sokağa yönlendiriyor; sokakta çocuklar oynuyor ve yol çok dar. Bilinçli bir sürücü ne yapar?',
     options: [
       'Uygulama en kısa yolu bildiği için tereddütsüz o sokağa girmek',
-      'Sokağın koşullarını kendi gözüyle değerlendirmek; çocukların olduğu dar bir sokakta hızını iyice düşürmek ya da uygunsa daha güvenli bir güzergâhı tercih etmek — son kararı ekran değil sürücü verir',
+      'Sokağın koşullarını kendi gözüyle değerlendirmek',
       'Zaman kazandırdığı için sokaktan normal hızda geçmek',
       'Çocuklara korna çalarak yolu açmalarını sağlamak',
     ],
     answerIndex: 1,
     explanation:
-      'Navigasyon yalnızca mesafe ve süreyi hesaplar; sokaktaki çocuğu, dar geçişi ya da o anki riski göremez. Bu değerlendirmeyi yapacak olan sürücüdür. Ekranın en kısa dediği yol, her zaman en güvenli ya da en uygun yol değildir.',
+      'Navigasyon yalnızca mesafe ve süreyi hesaplar; sokaktaki çocuğu, dar geçişi ya da o anki riski göremez. Bu değerlendirmeyi yapacak olan sürücüdür. Ekranın en kısa dediği yol, her zaman en güvenli ya da en uygun yol değildir. Çocukların olduğu dar bir sokakta hızını iyice düşürmek ya da uygunsa daha güvenli bir güzergâhı tercih etmek — son kararı ekran değil sürücü verir.',
     whyWrong: [
       'Uygulamanın önerisini sorgusuzca izlemek, sürüşün sorumluluğunu bir algoritmaya devretmektir.',
       'Çocukların olduğu dar sokakta normal hızla geçmek ya da korna çalmak, riski görmezden gelen tehlikeli tutumlardır.',
@@ -977,11 +977,11 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
       'Araç sahibinin kendi aracında istediği değişikliği yapma hakkı vardır, kimseyi ilgilendirmez',
       'Yalnızca gündüz gazlarsa sorun olmaz',
       'Ses güçlü olduğu sürece bu bir başarı ve prestij göstergesidir',
-      'Bu gürültü, uyuyan komşuların, hastaların ve çocukların dinlenme hakkını ihlal eder; kişisel zevk, başkalarının huzur hakkının önüne geçemez',
+      'Bu gürültü, uyuyan komşuların, hastaların ve çocukların dinlenme hakkını ihlal eder',
     ],
     answerIndex: 3,
     explanation:
-      'Bir aracın çıkardığı ses, sahibinin özel alanında kalmaz; pencerelerden içeri girip uyuyan bir bebeği, dinlenen bir hastayı rahatsız eder. Benim aracım özgürlüğü, komşunun huzur hakkının başladığı yerde biter. Gürültü, görünmez ama gerçek bir zarardır.',
+      'Bir aracın çıkardığı ses, sahibinin özel alanında kalmaz; pencerelerden içeri girip uyuyan bir bebeği, dinlenen bir hastayı rahatsız eder. Benim aracım özgürlüğü, komşunun huzur hakkının başladığı yerde biter. Gürültü, görünmez ama gerçek bir zarardır. Kişisel zevk, başkalarının huzur hakkının önüne geçemez.',
     whyWrong: [
       'Kendi aracım düşüncesi, çıkardığı sesin başkalarının evine girdiği gerçeğini görmezden gelir.',
       'Gündüz de olsa gereksiz gürültü rahatsızlık verir; sesin gücünü prestij saymak, başkalarının hakkını yok saymaktır.',
@@ -999,14 +999,14 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Apartmanınızın önünde bazı sürücüler modifiyeli egzozlarıyla gece geç saatlerde gaz veriyor ve komşular şikâyetçi. Bu durumun temel sorunu nedir?',
     options: [
-      'Gürültü, park hâlinde ya da geçerken fark etmeksizin komşuların dinlenme ve uyku hakkını ihlal eder; bir kişinin araç zevki, bir mahallenin huzurundan daha önemli olamaz',
+      'Gürültü, park hâlinde ya da geçerken fark etmeksizin komşuların dinlenme ve uyku hakkını ihlal eder',
       'Sorun yalnızca aracın hızındadır, sesin bir önemi yoktur',
       'Komşular pencerelerini kapatarak çözebilir, sürücülere düşen bir şey yoktur',
       'Egzoz sesi güçlüyse araç daha güvenlidir, bu yüzden hoş görülmelidir',
     ],
     answerIndex: 0,
     explanation:
-      'Araç gürültüsü yalnızca yolda değil, park hâlinde gaz verilirken de çevreye yayılır ve evlerin içine girer. Uyku ve huzur, korunması gereken haklardır. Kişisel bir zevk uğruna bütün bir mahallenin gecesini bölmek, komşu hakkının açık bir ihlalidir.',
+      'Araç gürültüsü yalnızca yolda değil, park hâlinde gaz verilirken de çevreye yayılır ve evlerin içine girer. Uyku ve huzur, korunması gereken haklardır. Kişisel bir zevk uğruna bütün bir mahallenin gecesini bölmek, komşu hakkının açık bir ihlalidir. Bir kişinin araç zevki, bir mahallenin huzurundan daha önemli olamaz.',
     whyWrong: [
       'Sorun hız değil, doğrudan gereksiz ve aşırı gürültüdür.',
       'Çözümü komşulardan beklemek sorumluluğu tersine çevirir; güçlü egzoz sesi güvenlikle değil yalnızca gösterişle ilgilidir.',
@@ -1025,13 +1025,13 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     stem: 'Oturduğunuz sitenin içinde çocukların bisiklete bindiği, yayaların yürüdüğü dar yollar var. Site içi sürüşte en doğru davranış hangisidir?',
     options: [
       'Site özel alan olduğu için trafik kurallarının geçerli olmadığını düşünmek',
-      'Adım hızında, çok yavaş ve her an durabilecek şekilde ilerlemek; çocukların ansızın önünüze çıkabileceğini hesaba katmak',
+      'Adım hızında, çok yavaş ve her an durabilecek şekilde ilerlemek',
       'Yol boşsa normal şehir içi hızıyla geçmek',
       'Kimse yoksa hızlanıp bir an önce park yerine ulaşmak',
     ],
     answerIndex: 1,
     explanation:
-      'Site içi yollar, çocukların oyun alanı gibidir; bir top ya da bir bisiklet her an köşeden çıkabilir. Burada güvenliğin tek güvencesi, her an durabilecek kadar yavaş gitmektir. Boş görünmek ile boş olmak aynı şey değildir.',
+      'Site içi yollar, çocukların oyun alanı gibidir; bir top ya da bir bisiklet her an köşeden çıkabilir. Burada güvenliğin tek güvencesi, her an durabilecek kadar yavaş gitmektir. Boş görünmek ile boş olmak aynı şey değildir. Çocukların ansızın önünüze çıkabileceğini hesaba katmak.',
     whyWrong: [
       'Sitenin özel alan olması sorumluluğu azaltmaz; tam tersine yayaların yoğunluğu daha da dikkatli olmayı gerektirir.',
       'Normal şehir hızı ya da kimse yok diye hızlanmak, çocukların öngörülemez hareketleri karşısında ölümcül olabilir.',
@@ -1051,12 +1051,12 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Kendi sitesi olduğu için istediği hızda gitme hakkı vardır',
       'Site içinde kural olmadığından herkes kendi kararını verir',
-      'Ortak yaşam alanında herkesin, özellikle çocukların güvenliği kişisel konfordan önce gelir; kendi mahallende yavaş sürmek, komşularına ve çocuklarına duyduğun saygının göstergesidir',
+      'Ortak yaşam alanında herkesin, özellikle çocukların güvenliği kişisel konfordan önce gelir',
       'Yalnızca misafirler yavaş sürmeli, siteyi tanıyanlar hızlı gidebilir',
     ],
     answerIndex: 2,
     explanation:
-      'Burada ben de yaşıyorum düşüncesi aslında tam tersini gerektirir: kendi çocuklarının, komşularının yürüdüğü yolda daha da dikkatli olmayı. Ortak alan, herkesin güvenliğinin ortak sorumluluk olduğu yerdir. Tanıdık olmak, hız yapma değil, daha çok özen gösterme nedenidir.',
+      'Burada ben de yaşıyorum düşüncesi aslında tam tersini gerektirir: kendi çocuklarının, komşularının yürüdüğü yolda daha da dikkatli olmayı. Ortak alan, herkesin güvenliğinin ortak sorumluluk olduğu yerdir. Tanıdık olmak, hız yapma değil, daha çok özen gösterme nedenidir. Kendi mahallende yavaş sürmek, komşularına ve çocuklarına duyduğun saygının göstergesidir.',
     whyWrong: [
       'Kendi sitem düşüncesi, o yolu paylaşan diğer sakinlerin güvenlik hakkını yok sayar.',
       'Siteyi tanımak riski azaltmaz; çocuklar her an beklenmedik biçimde hareket edebilir, kural yokluğu sorumsuzluğa izin vermez.',
@@ -1074,14 +1074,14 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Sürüş sırasında yayaların kurallara uymasını bekleyen bir kişinin, kendisi yaya olduğunda da kırmızı ışıkta beklemesi neden önemlidir?',
     options: [
-      'Tutarlılık gerektiği için; kurallara yalnızca direksiyondayken değil, yaya olarak da uymak trafik kültürünün bütünlüğünü sağlar',
+      'Tutarlılık gerektiği için',
       'Yaya olarak kurallara uymak gereksizdir; sorumluluk yalnızca sürücülere aittir',
       'Yaya kuralları yalnızca çocuklar için geçerlidir',
       'Trafik yoğunsa yaya kurallarına uymaya gerek yoktur',
     ],
     answerIndex: 0,
     explanation:
-      'Trafik kültürü, rol değiştikçe değişmeyen bir tutarlılık ister. Sürücüyken yayadan kurala uymasını bekleyip yayayken ışığı ihlal etmek çifte standarttır. Üstelik kural tanıyan bir yaya, hem kendi güvenliğini sağlar hem de çocuklara doğru örnek olur.',
+      'Trafik kültürü, rol değiştikçe değişmeyen bir tutarlılık ister. Sürücüyken yayadan kurala uymasını bekleyip yayayken ışığı ihlal etmek çifte standarttır. Üstelik kural tanıyan bir yaya, hem kendi güvenliğini sağlar hem de çocuklara doğru örnek olur. Kurallara yalnızca direksiyondayken değil, yaya olarak da uymak trafik kültürünün bütünlüğünü sağlar.',
     whyWrong: [
       'Sorumluluğu yalnızca sürücülere yüklemek, yayanın da trafiğin bir parçası olduğunu unutmaktır.',
       'Yaya kuralları herkes için geçerlidir; trafiğin yoğunluğu ya da yaş, kırmızı ışığı ihlal etmeyi haklı çıkarmaz.',
@@ -1100,13 +1100,13 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     stem: 'Bir kişi araç kullanırken tüm kurallara titizlikle uyuyor, ama yaya olduğunda gelişigüzel yerden, koşarak karşıya geçiyor. Bu tutarsızlığın en doğru değerlendirmesi hangisidir?',
     options: [
       'Yaya olarak kural ihlali kimseye zarar vermez, bu yüzden sorun değildir',
-      'Güvenlik ve kural bilinci role göre açılıp kapanmaz; yaya olarak yapılan ihlaller de hem kişinin kendi canını hem de ani fren yapmak zorunda kalan sürücüleri riske atar',
+      'Güvenlik ve kural bilinci role göre açılıp kapanmaz',
       'Sürücüyken kurallı olması, yayayken serbest olmasını hak ettirir',
       'Yaya ihlalleri yalnızca gece tehlikelidir',
     ],
     answerIndex: 1,
     explanation:
-      'Kural bilinci bir kişilik özelliğidir; role göre açılıp kapanan bir düğme değil. Gelişigüzel yerden geçen bir yaya, kendini tehlikeye attığı gibi, onu son anda fark eden sürücüyü de ani frene ve olası bir kazaya zorlar. Tutarlılık, güvenliğin temelidir.',
+      'Kural bilinci bir kişilik özelliğidir; role göre açılıp kapanan bir düğme değil. Gelişigüzel yerden geçen bir yaya, kendini tehlikeye attığı gibi, onu son anda fark eden sürücüyü de ani frene ve olası bir kazaya zorlar. Tutarlılık, güvenliğin temelidir. Yaya olarak yapılan ihlaller de hem kişinin kendi canını hem de ani fren yapmak zorunda kalan sürücüleri riske atar.',
     whyWrong: [
       'Yaya ihlali kimseye zarar vermez değildir; ani fren zincirleme kazalara yol açabilir.',
       'Sürücüyken kurallı olmak, yayayken ihlali hak ettirmez; tehlike yalnızca geceyle de sınırlı değildir.',
@@ -1126,12 +1126,12 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Çocuk küçük olduğu için hiçbir şey hatırlamaz, etkilenmez',
       'Çocuk yalnızca o an korkar, sonra tümüyle unutur',
-      'Çocuk, trafikte öfke ve saldırganlığı normal bir tepki olarak öğrenir; ileride kendi davranışını bugün gördüğü örneğe göre şekillendirir',
+      'Çocuk, trafikte öfke ve saldırganlığı normal bir tepki olarak öğrenir',
       'Çocuk sözlerin anlamını bilmediği için hiç etkilenmez',
     ],
     answerIndex: 2,
     explanation:
-      'Çocuklar, ebeveynlerini bir davranış modeli olarak izler. Direksiyonda duyduğu öfkeli sözler, ona trafikte böyle davranılır mesajını verir. Bugün arka koltukta tanık olduğu saldırganlık, yıllar sonra kendi direksiyonunda yeniden hayat bulabilir.',
+      'Çocuklar, ebeveynlerini bir davranış modeli olarak izler. Direksiyonda duyduğu öfkeli sözler, ona trafikte böyle davranılır mesajını verir. Bugün arka koltukta tanık olduğu saldırganlık, yıllar sonra kendi direksiyonunda yeniden hayat bulabilir. İleride kendi davranışını bugün gördüğü örneğe göre şekillendirir.',
     whyWrong: [
       'Çocukların gözlem ve taklit gücü, yetişkinlerin sandığından çok daha güçlüdür; unutur varsayımı yanıltıcıdır.',
       'Çocuk sözlerin tam anlamını bilmese de tonu, öfkeyi ve tepkiyi kaydeder; bunları model alır.',
@@ -1152,11 +1152,11 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
       'Sözlü öğüt yeterlidir; çocuk ne söylendiğine bakar, ne yapıldığına değil',
       'Çocuk büyüyünce kendisi doğrusunu nasılsa öğrenir, örneğin önemi yoktur',
       'Ebeveyn kurallara uymasa da çocuk okulda öğrendiği için sorun olmaz',
-      'Söz ile davranış çeliştiğinde çocuk çoğu zaman davranışı örnek alır; yap dediğimi, yapma yaptığımı yaklaşımı işe yaramaz, tutarlı bir örneklik gerekir',
+      'Söz ile davranış çeliştiğinde çocuk çoğu zaman davranışı örnek alır',
     ],
     answerIndex: 3,
     explanation:
-      'Çocuk için en güçlü ders, söylenen değil yapılandır. Kurala uy deyip kendi kemerini takmayan bir ebeveyn, farkında olmadan asıl davranışı öğretir. Değerler öğütle değil, tutarlı örneklikle aktarılır; çelişki olduğunda kazanan hep görülen davranıştır.',
+      'Çocuk için en güçlü ders, söylenen değil yapılandır. Kurala uy deyip kendi kemerini takmayan bir ebeveyn, farkında olmadan asıl davranışı öğretir. Değerler öğütle değil, tutarlı örneklikle aktarılır; çelişki olduğunda kazanan hep görülen davranıştır. Yap dediğimi, yapma yaptığımı yaklaşımı işe yaramaz, tutarlı bir örneklik gerekir.',
     whyWrong: [
       'Sözlü öğüt, ona aykırı bir davranışla birlikte verildiğinde etkisini yitirir.',
       'Nasılsa sonra öğrenir ya da okulda öğrenir varsayımları, evdeki günlük örnekliğin belirleyici gücünü küçümser.',
@@ -1175,13 +1175,13 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     stem: 'Yol kenarında yaralı bir sokak hayvanı görüyorsunuz ve trafik uygun. Merhametli ve sorumlu bir sürücü ne yapar?',
     options: [
       'Hayvanları ilgilendirmez diye hiç yavaşlamadan geçmek',
-      'Güvenliği sağlayarak durup mümkünse yetkililere (belediye, hayvan barınağı ya da ilgili birim) haber vermek; kendi güvenliğini de riske atmadan yardımcı olmaya çalışmak',
+      'Güvenliği sağlayarak durup mümkünse yetkililere (belediye, hayvan barınağı ya da ilgili birim) haber vermek',
       'Kornaya basıp hayvanı yoldan kaçırmaya çalışmak',
       'Sosyal medyada paylaşmak için fotoğrafını çekip yola devam etmek',
     ],
     answerIndex: 1,
     explanation:
-      'Trafik adabı yalnızca insanlara değil, yoldaki tüm canlılara karşı bir duyarlılığı içerir. Yaralı bir hayvan için güvenli biçimde durup yetkiliye haber vermek, hem o canlıya yardım eder hem de arkadan gelen araçların bir kazaya karışmasını önler. Merhamet, küçük bir çabayla gösterilir.',
+      'Trafik adabı yalnızca insanlara değil, yoldaki tüm canlılara karşı bir duyarlılığı içerir. Yaralı bir hayvan için güvenli biçimde durup yetkiliye haber vermek, hem o canlıya yardım eder hem de arkadan gelen araçların bir kazaya karışmasını önler. Merhamet, küçük bir çabayla gösterilir. Kendi güvenliğini de riske atmadan yardımcı olmaya çalışmak.',
     whyWrong: [
       'Hiç yavaşlamadan geçmek, hem merhametsizlik hem de yoldaki hayvanın başka kazalara yol açma ihtimalini görmezden gelmektir.',
       'Kornayla ürkütmek yaralı hayvanı trafiğin ortasına sürükleyebilir; yalnızca fotoğraf çekip geçmek ise hiçbir çözüm üretmez.',
@@ -1199,14 +1199,14 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Gece şehirlerarası yolda, ilerideki şeride bir hayvanın çıktığını gördünüz; arkanızda da yakın takipte bir araç var. Hem merhamet hem güvenlik açısından en doğru tepki nedir?',
     options: [
-      'Direksiyonu ani kırmadan, kontrolü kaybetmeden hızı azaltmak ve mümkünse fren yaparak yavaşlamak; arkadaki aracı da hesaba katıp savrulmaya yol açacak sert manevralardan kaçınmak',
+      'Direksiyonu ani kırmadan, kontrolü kaybetmeden hızı azaltmak ve mümkünse fren yaparak yavaşlamak',
       'Hayvana çarpmamak için direksiyonu sertçe kırıp karşı şeride geçmek',
       'Hiç yavaşlamadan hızla geçip gitmek',
       'Aniden sert fren yapıp tam olduğunuz yerde durmak',
     ],
     answerIndex: 0,
     explanation:
-      'Hayvana zarar vermek istemezsiniz ama ani ve sert bir manevra, hem sizi hem arkadaki aracı çok daha büyük bir tehlikeye atabilir. Doğru tepki, kontrolü koruyarak hızı azaltmaktır; direksiyonu sertçe kırmak ya da apar topar durmak, karşı şeritte ya da arkadan çarpışmalı bir kazayla sonuçlanabilir. Merhamet, kendini ve başkalarını riske atmadan gösterilir.',
+      'Hayvana zarar vermek istemezsiniz ama ani ve sert bir manevra, hem sizi hem arkadaki aracı çok daha büyük bir tehlikeye atabilir. Doğru tepki, kontrolü koruyarak hızı azaltmaktır; direksiyonu sertçe kırmak ya da apar topar durmak, karşı şeritte ya da arkadan çarpışmalı bir kazayla sonuçlanabilir. Merhamet, kendini ve başkalarını riske atmadan gösterilir. Arkadaki aracı da hesaba katıp savrulmaya yol açacak sert manevralardan kaçınmak.',
     whyWrong: [
       'Direksiyonu sertçe kırıp karşı şeride geçmek, kafa kafaya çarpışma riski doğurur; bu, olası bir hayvan çarpışmasından çok daha ölümcüldür.',
       'Hiç yavaşlamamak merhametsizce, tam olduğunuz yerde ani duruş ise arkadan çarpılmaya davetiye çıkaran bir tepkidir.',
@@ -1253,11 +1253,11 @@ export const ADAB_QUESTIONS_6: QuestionInput[] = [
       '"Haklısın, herkes yalnızca kendinden sorumludur"',
       '"Kurallara uyman yeterli, başkalarının davranışını hiç düşünme"',
       '"Trafik güvenliği yalnızca bireysel bir konudur, ortak bir sorumluluk yoktur"',
-      '"Kurallara uyman çok değerli; ama trafik ortak bir alandır — çevrene iyi örnek olmak, gençleri bilinçlendirmek ve güvenli bir kültürü yaymak da hepimizin katkısıyla mümkün olur"',
+      '"Kurallara uyman çok değerli',
     ],
     answerIndex: 3,
     explanation:
-      'Kişisel kural uyumu değerli bir başlangıçtır ama tek başına yeterli değildir. Trafik, hepimizin paylaştığı bir alan; güvenli bir kültür ancak insanlar birbirine örnek olduğunda ve farkındalığı yaydığında oluşur. Gönüllülük, yalnızca ben demekten hepimiz demeye geçmektir.',
+      'Kişisel kural uyumu değerli bir başlangıçtır ama tek başına yeterli değildir. Trafik, hepimizin paylaştığı bir alan; güvenli bir kültür ancak insanlar birbirine örnek olduğunda ve farkındalığı yaydığında oluşur. Gönüllülük, yalnızca ben demekten hepimiz demeye geçmektir. Ama trafik ortak bir alandır — çevrene iyi örnek olmak, gençleri bilinçlendirmek ve güvenli bir kültürü yaymak da hepimizin katkısıyla mümkün olur".',
     whyWrong: [
       'Herkes yalnızca kendinden sorumlu bakışı, trafiğin ortak ve etkileşimli doğasını görmezden gelir.',
       'Başkalarının davranışını hiç düşünmemek ya da güvenliği tümüyle bireysel saymak, toplumsal bir sorun olan trafik güvenliğini eksik kavramaktır.',

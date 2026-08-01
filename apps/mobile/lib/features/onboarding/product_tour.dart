@@ -60,10 +60,10 @@ const List<CoachMarkStep> productTourSteps = [
   CoachMarkStep(
     anchorId: ProductTourAnchors.realExam,
     icon: Icons.history_edu_rounded,
-    title: 'Çıkmış Sınavlar',
+    title: 'Sınav Arşivi',
     body:
-        'Geçmiş dönemlerde sorulmuş gerçek sınavları olduğu gibi çöz. Nelerin sorulduğunu görmek, '
-        'neyi çalışacağını da söyler.',
+        'Her tarih için, o dönemin soru dağılımına ve zorluğuna göre hazırlanmış özgün bir '
+        'deneme çöz. Aynı tarih hep aynı sınavı verir.',
     radius: AppRadii.base,
   ),
   CoachMarkStep(

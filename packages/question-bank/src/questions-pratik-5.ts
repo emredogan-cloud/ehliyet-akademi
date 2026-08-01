@@ -15,13 +15,13 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Direksiyon çevirmede öğretilen "itme-çekme" yöntemi nasıl uygulanır?',
     options: [
       'İki el direksiyonda çaprazlanarak tek hamlede sonuna kadar çevrilir',
-      'Bir el direksiyonu dönüş yönünde yukarıdan aşağı çekerken diğer el aşağıdan yukarı iter; eller çaprazlanmadan, simidin üzerinde kayarak sırayla çalışır',
+      'Bir el direksiyonu dönüş yönünde yukarıdan aşağı çekerken diğer el aşağıdan yukarı iter',
       'Direksiyon tek elin bileğiyle döndürülür, diğer el vites üzerinde bekler',
       'Eller simitten kaldırılıp direksiyonun kendi kendine dönmesi beklenir',
     ],
     answerIndex: 1,
     explanation:
-      'İtme-çekme yönteminde bir el simidi dönüş yönüne doğru çekerken diğer el karşı taraftan iter; eller hiçbir anda çaprazlanmaz ve simit üzerindeki tutuş sürekli korunur. Böylece dönüşün her anında direksiyona tam hâkim kalınır ve gerektiğinde hareket anında durdurulabilir.',
+      'İtme-çekme yönteminde bir el simidi dönüş yönüne doğru çekerken diğer el karşı taraftan iter; eller hiçbir anda çaprazlanmaz ve simit üzerindeki tutuş sürekli korunur. Böylece dönüşün her anında direksiyona tam hâkim kalınır ve gerektiğinde hareket anında durdurulabilir. Eller çaprazlanmadan, simidin üzerinde kayarak sırayla çalışır.',
     whyWrong: [
       'Kolları çaprazlayarak tek hamlede çevirmek, kolların kilitlendiği anda düzeltme yapmayı zorlaştırır.',
       'Tek bilekle döndürmek veya simidi serbest bırakmak, direksiyon üzerindeki kontrolü tümüyle şansa bırakır.',
@@ -42,11 +42,11 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
       'Direksiyon simidinin yüzeyini zamanla parlattığı için',
       'Yalnızca yakıt tüketimini artırdığı için',
       'Sinyal kolunun yanlışlıkla açılmasına yol açtığı için',
-      'Simit kavranmadığı için ani bir düzeltme gerektiğinde el tutamak bulamaz; çukur veya darbeyle geri tepen direksiyon avuçtan kurtulur ve hâkimiyet kaybolur',
+      'Simit kavranmadığı için ani bir düzeltme gerektiğinde el tutamak bulamaz',
     ],
     answerIndex: 3,
     explanation:
-      'Ayayla çevirmede parmaklar simidi kavramaz; direksiyon yalnızca sürtünmeyle döndürülür. Tekerlek bir çukura girip simit geri teptiğinde ya da ani düzeltme gerektiğinde el simidi yakalayamaz ve araç kısa süreliğine yönsüz kalır. Manevralarda bile en az bir elin simidi gerçekten kavraması gerekir.',
+      'Ayayla çevirmede parmaklar simidi kavramaz; direksiyon yalnızca sürtünmeyle döndürülür. Tekerlek bir çukura girip simit geri teptiğinde ya da ani düzeltme gerektiğinde el simidi yakalayamaz ve araç kısa süreliğine yönsüz kalır. Manevralarda bile en az bir elin simidi gerçekten kavraması gerekir. Çukur veya darbeyle geri tepen direksiyon avuçtan kurtulur ve hâkimiyet kaybolur.',
     whyWrong: [
       'Sorun simidin parlaması ya da yakıt değil, kavramasız tutuşun ani durumda boşa çıkmasıdır.',
       'Sinyal kolu ihtimali ikincil bir ayrıntıdır; asıl risk direksiyonun elden kurtulmasıdır.',
@@ -64,14 +64,14 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Gövde sağa dönük hâlde geri geri düz giderken direksiyon hangi elle ve nereden tutulur?',
     options: [
-      'Sol el, direksiyonun üst orta noktasını kavrar; böylece küçük el hareketleri aracın yönüne kolayca çevrilebilir',
+      'Sol el, direksiyonun üst orta noktasını kavrar',
       'İki el simidin en altında birleştirilir',
       'Sağ el direksiyonun altından, sol el vitesten tutar',
       'Direksiyon dizle desteklenir, eller serbest kalır',
     ],
     answerIndex: 0,
     explanation:
-      'Geri düz giderken gövde sağa döndüğü için sağ el genellikle yolcu koltuğuna destek olur; direksiyonu sol el üst orta noktadan kavrar. Üst noktadan tutuş, elin hangi yöne kayarsa aracın arkasının da o yöne gideceğini hissettirir ve küçük düzeltmeleri kolaylaştırır.',
+      'Geri düz giderken gövde sağa döndüğü için sağ el genellikle yolcu koltuğuna destek olur; direksiyonu sol el üst orta noktadan kavrar. Üst noktadan tutuş, elin hangi yöne kayarsa aracın arkasının da o yöne gideceğini hissettirir ve küçük düzeltmeleri kolaylaştırır. Böylece küçük el hareketleri aracın yönüne kolayca çevrilebilir.',
     whyWrong: [
       'Simidin altından ya da iki elle alttan tutmak, dönüş yönünü ters algılatır ve düzeltmeleri karıştırır.',
       'Direksiyonu dizle desteklemek hiçbir manevrada kabul edilebilir bir tutuş değildir.',
@@ -91,12 +91,12 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Aracın hemen önündeki asfalta',
       'Hız göstergesine',
-      'Virajın çıkışına, yani gidilmek istenen noktaya; araç bakışın yöneldiği hattı izler',
+      'Virajın çıkışına, yani gidilmek istenen noktaya',
       'Karşı şeritteki araçların tekerleklerine',
     ],
     answerIndex: 2,
     explanation:
-      'Direksiyon elin değil, gözün gittiği yere kırılır: sürücü viraj boyunca çıkış noktasına baktığında eller dönüş açısını kendiliğinden ve akıcı biçimde ayarlar. Burnunun önüne bakan sürücü virajı parça parça, ani düzeltmelerle döner ve şeridinden taşar.',
+      'Direksiyon elin değil, gözün gittiği yere kırılır: sürücü viraj boyunca çıkış noktasına baktığında eller dönüş açısını kendiliğinden ve akıcı biçimde ayarlar. Burnunun önüne bakan sürücü virajı parça parça, ani düzeltmelerle döner ve şeridinden taşar. Araç bakışın yöneldiği hattı izler.',
     whyWrong: [
       'Aracın hemen önüne bakmak dönüş hattını görmeyi engeller; düzeltmeler hep gecikir.',
       'Gösterge ya da karşı araçların tekerleklerine kilitlenmek, aracı bakılan yöne sürükleme eğilimi doğurur.',
@@ -114,14 +114,14 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Yolda bir engel (çukur, duran araç) fark eden sürücünün gözlerini engele kilitlemesi neden tehlikelidir?',
     options: [
-      'Bakış hedefe kilitlenince eller de aracı istemsizce o hedefe yöneltir; kaçınmak için engele değil, geçilecek boş alana bakılmalıdır',
+      'Bakış hedefe kilitlenince eller de aracı istemsizce o hedefe yöneltir',
       'Engele bakmak göz yorgunluğu yaptığı için',
       'Engel uzaktan olduğundan küçük görünüp yanılttığı için',
       'Bakış sabitlenince silecekler otomatik çalıştığı için',
     ],
     answerIndex: 0,
     explanation:
-      'Buna hedef kilitlenmesi denir: sürücü neye bakarsa aracı oraya sürme eğilimindedir. Engele kilitlenen bakış, kaçınma manevrasını tam da engelin üzerine yöneltir. Doğru teknik, engeli çevresel görüşte tutup bakışı geçilecek boşluğa taşımaktır; direksiyon bakışı izler.',
+      'Buna hedef kilitlenmesi denir: sürücü neye bakarsa aracı oraya sürme eğilimindedir. Engele kilitlenen bakış, kaçınma manevrasını tam da engelin üzerine yöneltir. Doğru teknik, engeli çevresel görüşte tutup bakışı geçilecek boşluğa taşımaktır; direksiyon bakışı izler. Kaçınmak için engele değil, geçilecek boş alana bakılmalıdır.',
     whyWrong: [
       'Göz yorgunluğu ya da boyut yanılgısı buradaki asıl sorun değildir.',
       'Sileceklerle bakış arasında hiçbir bağlantı yoktur; seçenek konuyla ilgisizdir.',
@@ -165,7 +165,7 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Takip mesafesi için gereken iki saniye, saat kullanmadan pratik olarak nasıl sayılır?',
     options: [
       'Motorun devir sesindeki değişiklik dinlenerek',
-      'Öndeki araç sabit bir noktayı geçince normal tempoda "seksen sekiz, seksen dokuz" denir; sayı bitmeden o noktaya varılıyorsa mesafe kısadır',
+      'Öndeki araç sabit bir noktayı geçince normal tempoda "seksen sekiz, seksen dokuz" denir',
       'Kilometre saatine bakıp hız ikiye bölünerek',
       'Öndeki aracın plakası okunabiliyorsa mesafe yeterli sayılır',
     ],
@@ -191,12 +191,12 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Islak zeminde de iki saniye aynen yeterlidir',
       'Islakta bir saniyeye indirilebilir, çünkü herkes yavaşlar',
-      'Süre en az iki katına (yaklaşık dört saniyeye) çıkarılır; kar ve buzda daha da artırılır',
+      'Süre en az iki katına (yaklaşık dört saniyeye) çıkarılır',
       'Takip payı süreyle değil, korna sesiyle ayarlanır',
     ],
     answerIndex: 2,
     explanation:
-      'Islak zeminde lastiğin tutunması azalır ve durma mesafesi belirgin uzar; iki saniyelik pay bu uzamayı karşılamaz. Bu yüzden süre en az dört saniyeye çıkarılır; kar ve buzda çok daha büyük pay bırakılır. Zemin kötüleştikçe mesafe kuralı da büyür.',
+      'Islak zeminde lastiğin tutunması azalır ve durma mesafesi belirgin uzar; iki saniyelik pay bu uzamayı karşılamaz. Bu yüzden süre en az dört saniyeye çıkarılır; kar ve buzda çok daha büyük pay bırakılır. Zemin kötüleştikçe mesafe kuralı da büyür. Kar ve buzda daha da artırılır.',
     whyWrong: [
       'İki saniyeyi ıslakta korumak, uzayan fren mesafesini hesaba katmamaktır.',
       'Payı kısaltmak ya da kornayla ölçmeye çalışmak, fizik gerçeğini tersine çevirmeye çalışmaktır.',
@@ -214,14 +214,14 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Uzun bir inişte hangi vitesin kullanılacağına karar vermek için öğretilen pratik kural nedir?',
     options: [
-      'Aynı yokuşu çıkarken hangi vites gerekiyorsa, inerken de yaklaşık o vites seçilir; motor freni ancak böyle yeterli direnç üretir',
+      'Aynı yokuşu çıkarken hangi vites gerekiyorsa, inerken de yaklaşık o vites seçilir',
       'İnişte daima en yüksek vites kullanılır',
       'İnişte vites seçimi önemsizdir, fren her şeyi çözer',
       'İnişe her zaman birinci vitesle başlanır',
     ],
     answerIndex: 0,
     explanation:
-      'Eğim ne kadar dikse motor freninin de o kadar güçlü olması gerekir. Pratik ölçü şudur: bu yokuş tırmanılıyor olsaydı hangi vites gerekecekse, inişte de o civarda bir vites seçilir. Böylece hız, frene yaslanmadan motor direnciyle dengede tutulur.',
+      'Eğim ne kadar dikse motor freninin de o kadar güçlü olması gerekir. Pratik ölçü şudur: bu yokuş tırmanılıyor olsaydı hangi vites gerekecekse, inişte de o civarda bir vites seçilir. Böylece hız, frene yaslanmadan motor direnciyle dengede tutulur. Motor freni ancak böyle yeterli direnç üretir.',
     whyWrong: [
       'Yüksek vites neredeyse hiç motor freni üretmez; bütün yük ayak frenine biner.',
       'Her inişe birinci vitesle başlamak ise motoru gereksiz yere aşırı devre zorlar; ölçü eğimin dikliğidir.',
@@ -242,11 +242,11 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
       'Motor daha çok yakıt harcadığı için',
       'Vites göstergesi bozulacağı için',
       'Araç daha yavaş ineceği için',
-      'Motor freni tamamen devreden çıkar; araç serbest kütle gibi hızlanır ve hız kontrolü tek başına ısınacak olan frene kalır',
+      'Motor freni tamamen devreden çıkar',
     ],
     answerIndex: 3,
     explanation:
-      'Boş viteste ya da debriyaj basılıyken motorla tekerlek arasındaki bağ kopar; motor freni sıfırlanır. Araç eğimle serbestçe hızlanır, tüm yavaşlatma işi ayak frenine yüklenir ve uzun inişte fren ısınıp zayıflayabilir. İniş boyunca vites takılı, debriyaj serbest kalmalıdır.',
+      'Boş viteste ya da debriyaj basılıyken motorla tekerlek arasındaki bağ kopar; motor freni sıfırlanır. Araç eğimle serbestçe hızlanır, tüm yavaşlatma işi ayak frenine yüklenir ve uzun inişte fren ısınıp zayıflayabilir. İniş boyunca vites takılı, debriyaj serbest kalmalıdır. Araç serbest kütle gibi hızlanır ve hız kontrolü tek başına ısınacak olan frene kalır.',
     whyWrong: [
       'Boşta inmek yakıt kazandırmaz; modern araçlarda vites takılıyken gazsız iniş daha az yakar.',
       'Araç yavaşlamaz, tam tersine bağ koptuğu için giderek hızlanır.',
@@ -265,13 +265,13 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Uzun bir inişte fren pedalı derinleşmeye başlamış, araçtan yanık benzeri bir koku geliyorsa bu neyin işaretidir ve ne yapılmalıdır?',
     options: [
       'Lastik havası düşmüştür; hızlanıp inişi kısa sürede bitirmek gerekir',
-      'Frenler aşırı ısınıp zayıflamaya (fading) başlamıştır; vites düşürülüp motor frenine geçilir ve ilk güvenli yerde durup frenlerin soğuması beklenir',
+      'Frenler aşırı ısınıp zayıflamaya (fading) başlamıştır',
       'Klima gazı eksilmiştir; camlar açılır',
       'Bu durum normaldir, pedala daha sert basarak devam edilir',
     ],
     answerIndex: 1,
     explanation:
-      'Sürekli frenlemeyle balata ve diskler aşırı ısınınca sürtünme kuvveti düşer; pedal derinleşir, koku yayılır ve fren giderek tutmaz olur. Buna fading denir. İlk yapılacak iş vites düşürüp hız kontrolünü motor frenine devretmek, ardından güvenli bir yerde durup frenleri soğutmaktır; ısınmış frenle inişe devam edilmez.',
+      'Sürekli frenlemeyle balata ve diskler aşırı ısınınca sürtünme kuvveti düşer; pedal derinleşir, koku yayılır ve fren giderek tutmaz olur. Buna fading denir. İlk yapılacak iş vites düşürüp hız kontrolünü motor frenine devretmek, ardından güvenli bir yerde durup frenleri soğutmaktır; ısınmış frenle inişe devam edilmez. Vites düşürülüp motor frenine geçilir ve ilk güvenli yerde durup frenlerin soğuması beklenir.',
     whyWrong: [
       'Belirtiler lastik ya da klimayla ilgili değildir; hızlanmak riski büyütür.',
       'Pedala daha sert yüklenmek ısıyı daha da artırır ve freni tamamen bitirebilir.',
@@ -316,12 +316,12 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Pedala tek seferde sonuna kadar basılır ve öyle tutulur',
       'Fren yerine yalnızca korna kullanılır',
-      'Hız arttığında pedala belirgin biçimde basılıp hız istenen düzeye inince pedal tamamen bırakılır; serbest aralıklarda frenler soğur, sürekli sürtmede ise ısı kesintisiz birikir',
+      'Hız arttığında pedala belirgin biçimde basılıp hız istenen düzeye inince pedal tamamen bırakılır',
       'Fren yalnızca viraj ortalarında kullanılır',
     ],
     answerIndex: 2,
     explanation:
-      'Kademeli frende hız belli bir eşiğe çıkınca pedala kararlı basılır, hız düşünce pedal tümüyle serbest bırakılır ve bu döngü tekrarlanır. Pedalın boşta kaldığı aralıklar disk ve balatanın soğumasını sağlar; iniş boyunca hafifçe sürtmeye devam eden frende ise soğuma anı hiç olmaz ve ısı zayıflamaya götürür.',
+      'Kademeli frende hız belli bir eşiğe çıkınca pedala kararlı basılır, hız düşünce pedal tümüyle serbest bırakılır ve bu döngü tekrarlanır. Pedalın boşta kaldığı aralıklar disk ve balatanın soğumasını sağlar; iniş boyunca hafifçe sürtmeye devam eden frende ise soğuma anı hiç olmaz ve ısı zayıflamaya götürür. Serbest aralıklarda frenler soğur, sürekli sürtmede ise ısı kesintisiz birikir.',
     whyWrong: [
       'Pedalı sonuna kadar basılı tutmak hem yolcuları sarsar hem freni kesintisiz ısıtır.',
       'Korna hız kesmez; viraj ortası ise frenin en istenmediği yerdir.',
@@ -340,13 +340,13 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Duracağınız yeri önceden görüp frene erken ve hafif başlamanın arkadaki sürücü açısından yararı nedir?',
     options: [
       'Arkadaki sürücü sizi daha kolay sollayabilir',
-      'Fren lambası erken yanarak arkadakine yavaşlayacağınızı önceden bildirir; arkadaki de kademeli yavaşlar ve zincirleme çarpma riski azalır',
+      'Fren lambası erken yanarak arkadakine yavaşlayacağınızı önceden bildirir',
       'Arkadaki aracın yakıt tüketimi düşer',
       'Hiçbir yararı yoktur; fren yalnızca sürücünün kendisini ilgilendirir',
     ],
     answerIndex: 1,
     explanation:
-      'Erken başlayan hafif fren, lambayı erken yakarak arkadaki sürücüye zaman kazandırır; herkes kademeli yavaşlar. Son anda yapılan sert fren ise arkadakini hazırlıksız yakalar ve arkadan çarpmaların başlıca nedenidir. Fren, aynı zamanda arkaya verilen bir mesajdır.',
+      'Erken başlayan hafif fren, lambayı erken yakarak arkadaki sürücüye zaman kazandırır; herkes kademeli yavaşlar. Son anda yapılan sert fren ise arkadakini hazırlıksız yakalar ve arkadan çarpmaların başlıca nedenidir. Fren, aynı zamanda arkaya verilen bir mesajdır. Arkadaki de kademeli yavaşlar ve zincirleme çarpma riski azalır.',
     whyWrong: [
       'Amaç sollanmak ya da yakıt değil, arkadaki trafiğe erken haber vermektir.',
       'Freni yalnız kendi işi saymak, arkadan çarpılma riskini görmezden gelmektir.',
@@ -389,14 +389,14 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Sağanak altında seyrederken direksiyonun aniden hafifleyip boşalmış gibi hissedilmesi neyin belirtisidir?',
     options: [
-      'Lastiklerin su tabakası üzerine binip yolla temasını kaybetmeye başladığının; hız kesilmez ve düzeltme yapılmazsa araç tümüyle yüzmeye geçer',
+      'Lastiklerin su tabakası üzerine binip yolla temasını kaybetmeye başladığının',
       'Direksiyon pompasının arızalandığının',
       'Yolun yeni asfaltlandığının',
       'Rüzgârın tamamen durduğunun',
     ],
     answerIndex: 0,
     explanation:
-      'Direksiyondaki his, ön lastiklerin yolla temasından gelir. Su birikmiş şeritte direksiyonun aniden hafiflemesi, lastiğin suyu atamayıp tabakanın üzerine binmeye başladığını gösterir. Bu ilk uyarıda gazdan çekilip hız düşürülmezse araç tam su yastığına geçer.',
+      'Direksiyondaki his, ön lastiklerin yolla temasından gelir. Su birikmiş şeritte direksiyonun aniden hafiflemesi, lastiğin suyu atamayıp tabakanın üzerine binmeye başladığını gösterir. Bu ilk uyarıda gazdan çekilip hız düşürülmezse araç tam su yastığına geçer. Hız kesilmez ve düzeltme yapılmazsa araç tümüyle yüzmeye geçer.',
     whyWrong: [
       'Pompa arızası genellikle direksiyonu ağırlaştırır, hafifletmez; belirti tam tersidir.',
       'Asfaltın yaşı ya da rüzgâr, sağanakta gelen bu ani hafifleme hissini açıklamaz.',
@@ -416,12 +416,12 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Gaza sonuna kadar basıp tekerleği zorla tutundurmak',
       'Debriyajı aniden bırakmak',
-      'Gaz hafifçe azaltılır; tekerleğe giden güç düşünce lastik zemini yeniden yakalar ve araç yürümeye başlar',
+      'Gaz hafifçe azaltılır',
       'Direksiyonu iki yana hızla sallamak',
     ],
     answerIndex: 2,
     explanation:
-      'Patinaj, tekerleğe zeminin taşıyabileceğinden fazla güç gitmesidir. Çözüm gücü artırmak değil azaltmaktır: gaz hafifçe kesildiğinde dönüş yavaşlar, lastik zemini yakalar ve araç ilerler. Kaygan kalkışın anahtarı az gaz ve sabırlı debriyajdır.',
+      'Patinaj, tekerleğe zeminin taşıyabileceğinden fazla güç gitmesidir. Çözüm gücü artırmak değil azaltmaktır: gaz hafifçe kesildiğinde dönüş yavaşlar, lastik zemini yakalar ve araç ilerler. Kaygan kalkışın anahtarı az gaz ve sabırlı debriyajdır. Tekerleğe giden güç düşünce lastik zemini yeniden yakalar ve araç yürümeye başlar.',
     whyWrong: [
       'Daha çok gaz tekerleği yalnızca daha hızlı boşa döndürür, zemini de cilalar.',
       'Debriyajı fırlatmak ya da direksiyon sallamak, zaten zayıf olan tutunmayı büsbütün bozar.',
@@ -440,13 +440,13 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Karlı-buzlu düz zeminde bazı sürücülerin kalkışı birinci yerine ikinci vitesle yapmasının nedeni nedir?',
     options: [
       'İkinci vites debriyajı hiç aşındırmadığı için',
-      'İkinci viteste tekerleğe daha az ve daha yumuşak tork gittiği için patinaj eğilimi azalır; kalkış debriyajı biraz daha uzun kavratılarak yapılır',
+      'İkinci viteste tekerleğe daha az ve daha yumuşak tork gittiği için patinaj eğilimi azalır',
       'İkinci vites motoru daha çabuk ısıttığı için',
       'Birinci vites karda tamamen devre dışı kaldığı için',
     ],
     answerIndex: 1,
     explanation:
-      'Birinci vitesin güçlü tork iletimi kaygan zeminde tekerleği kolayca boşa döndürür. İkinci vites aynı gaz açıklığında tekerleğe daha yumuşak güç ilettiği için lastik kopma noktasına daha zor ulaşır. Debriyajın biraz daha uzun ve sabırlı kavratılmasıyla araç patinajsız yürütülür.',
+      'Birinci vitesin güçlü tork iletimi kaygan zeminde tekerleği kolayca boşa döndürür. İkinci vites aynı gaz açıklığında tekerleğe daha yumuşak güç ilettiği için lastik kopma noktasına daha zor ulaşır. Debriyajın biraz daha uzun ve sabırlı kavratılmasıyla araç patinajsız yürütülür. Kalkış debriyajı biraz daha uzun kavratılarak yapılır.',
     whyWrong: [
       'Debriyaj ikinci viteste de aşınır; kalkış biraz daha uzun kavramayla yapıldığı için özen ister.',
       'Motor ısısı ya da birinci vitesin devre dışı kalması diye bir durum söz konusu değildir.',
@@ -464,14 +464,14 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Kaygan yolda aracın arkası sola doğru kaymaya (savrulmaya) başladığında direksiyon hangi yöne çevrilmelidir?',
     options: [
-      'Arkanın kaydığı yöne, yani sola doğru yumuşakça çevrilir; ön tekerlekler gidiş hattıyla yeniden hizalanınca düzeltme geri alınır',
+      'Arkanın kaydığı yöne, yani sola doğru yumuşakça çevrilir',
       'Kaymanın tersine, sonuna kadar sağa kırılır',
       'Direksiyon hiç oynatılmaz, sıkıca düz tutulur',
       'Direksiyon bırakılıp iki elle el frenine sarılır',
     ],
     answerIndex: 0,
     explanation:
-      'Arka sola kayarken aracın burnu sağa döner; sürücü direksiyonu kayma yönüne (sola) yumuşakça çevirirse ön tekerlekler gitmek istenen hatla yeniden hizalanır ve araç toparlanır. Düzeltme abartılmadan yapılır ve araç toparlanırken kademeli geri alınır; aksi hâlde savrulma bu kez öbür yöne sıçrar.',
+      'Arka sola kayarken aracın burnu sağa döner; sürücü direksiyonu kayma yönüne (sola) yumuşakça çevirirse ön tekerlekler gitmek istenen hatla yeniden hizalanır ve araç toparlanır. Düzeltme abartılmadan yapılır ve araç toparlanırken kademeli geri alınır; aksi hâlde savrulma bu kez öbür yöne sıçrar. Ön tekerlekler gidiş hattıyla yeniden hizalanınca düzeltme geri alınır.',
     whyWrong: [
       'Ters yöne sert kırmak savrulmayı büyütür ve aracı karşı yöne fırlatır.',
       'Direksiyonu donuk tutmak ya da el frenine sarılmak, dönmeye başlamış aracı tümüyle kontrolsüz bırakır.',
@@ -491,12 +491,12 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Frene sonuna kadar basılır',
       'Gaza köklenerek araç savrulmadan çekip çıkarılır',
-      'Ani fren yapılmaz; gaz yumuşakça azaltılır ve bakış gidilmek istenen yöne taşınarak direksiyon düzeltmesiyle birlikte aracın toparlanması beklenir',
+      'Ani fren yapılmaz',
       'Debriyaja basıp gözler kapatılır',
     ],
     answerIndex: 2,
     explanation:
-      'Savrulan araçta lastiklerin sınırlı tutunması yön düzeltmesine ayrılmalıdır; ani fren ya da ani gaz bu tutunmayı çalar ve savrulmayı derinleştirir. Doğrusu gazı yumuşakça azaltmak, sert pedal girdilerinden kaçınmak ve bakışı gidilmek istenen noktada tutarak direksiyon düzeltmesini desteklemektir.',
+      'Savrulan araçta lastiklerin sınırlı tutunması yön düzeltmesine ayrılmalıdır; ani fren ya da ani gaz bu tutunmayı çalar ve savrulmayı derinleştirir. Doğrusu gazı yumuşakça azaltmak, sert pedal girdilerinden kaçınmak ve bakışı gidilmek istenen noktada tutarak direksiyon düzeltmesini desteklemektir. Gaz yumuşakça azaltılır ve bakış gidilmek istenen yöne taşınarak direksiyon düzeltmesiyle birlikte aracın toparlanması beklenir.',
     whyWrong: [
       'Tam fren, kayan tekerlekleri kilitleyip aracı büsbütün döndürür.',
       'Gaza köklemek arka tekerleklerin son tutunma payını da koparır.',
@@ -517,7 +517,7 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
       'Her zeminde durma mesafesini yarıya indirmesi',
       'Fren balatalarının hiç aşınmamasını sağlaması',
       'Frene basılıyken bile korna sesini güçlendirmesi',
-      'Tekerlek kilitlenmesini önleyerek tam frende bile direksiyonla yön verebilmeyi koruması; durma mesafesi ise gevşek kar ve çakıl gibi zeminlerde kısalmayabilir, hatta uzayabilir',
+      'Tekerlek kilitlenmesini önleyerek tam frende bile direksiyonla yön verebilmeyi koruması',
     ],
     answerIndex: 3,
     explanation:
@@ -540,13 +540,13 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Uzun süren kuraklıktan sonra başlayan yağmurun ilk dakikalarında yol neden en kaygan hâlindedir?',
     options: [
       'İlk damlalar asfaltı soğutup büzdüğü için',
-      'Yol yüzeyinde birikmiş toz, lastik kalıntısı ve yağ ilk suyla kaygan bir film oluşturur; bu tabaka ancak bir süre yağıştan sonra yıkanıp akar',
+      'Yol yüzeyinde birikmiş toz, lastik kalıntısı ve yağ ilk suyla kaygan bir film oluşturur',
       'Silecekler ilk dakikalarda çalışmadığı için',
       'İlk dakikalarda lastik basıncı düştüğü için',
     ],
     answerIndex: 1,
     explanation:
-      'Kuru günlerde asfaltta toz, egzoz kalıntısı, lastik tozu ve yağ birikir. Yağmurun ilk damlaları bu birikintiyi çözerek yüzeye ince, sabunumsu bir film serer; yol en kaygan bu evrede olur. Sağanak sürüp yüzeyi yıkadıkça tutunma kısmen geri gelir. Bu yüzden yağışın ilk dakikalarında hız ve takip payı hemen ayarlanmalıdır.',
+      'Kuru günlerde asfaltta toz, egzoz kalıntısı, lastik tozu ve yağ birikir. Yağmurun ilk damlaları bu birikintiyi çözerek yüzeye ince, sabunumsu bir film serer; yol en kaygan bu evrede olur. Sağanak sürüp yüzeyi yıkadıkça tutunma kısmen geri gelir. Bu yüzden yağışın ilk dakikalarında hız ve takip payı hemen ayarlanmalıdır. Bu tabaka ancak bir süre yağıştan sonra yıkanıp akar.',
     whyWrong: [
       'Asfaltın soğuması ya da lastik basıncı bu ani kayganlığı yaratan etken değildir.',
       'Sileceklerin çalışması cam içindir; yolun tutunmasıyla ilgisi yoktur.',
@@ -564,14 +564,14 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Islak havada şehir içinde özellikle hangi yüzeylerin üzerinde frenlemekten ve ani manevradan kaçınılmalıdır?',
     options: [
-      'Metal mazgal ve rögar kapakları, boyalı yol çizgileri ve yaya geçidi boyaları, ıslak yapraklar ile ray geçişleri; bunlar ıslakken asfalttan çok daha kaygandır',
+      'Metal mazgal ve rögar kapakları, boyalı yol çizgileri ve yaya geçidi boyaları, ıslak yapraklar ile ray geçişleri',
       'Yeni dökülmüş kumlu asfalt dışında her yüzey aynıdır',
       'Yalnızca köprü altları',
       'Beton zeminler; asfalt ıslakken hiç kaymaz',
     ],
     answerIndex: 0,
     explanation:
-      'Metal kapaklar, yol boyaları, ezilmiş ıslak yapraklar ve raylar suyla birleşince buz kadar kayganlaşabilir. Bu yüzeyler görüldüğünde fren ve dönüş girişleri mümkünse öncesinde tamamlanır; üzerlerinden düz direksiyonla, sabit hızla geçilir. Şehir içi kaymaların çoğu bu küçük yüzeylerde başlar.',
+      'Metal kapaklar, yol boyaları, ezilmiş ıslak yapraklar ve raylar suyla birleşince buz kadar kayganlaşabilir. Bu yüzeyler görüldüğünde fren ve dönüş girişleri mümkünse öncesinde tamamlanır; üzerlerinden düz direksiyonla, sabit hızla geçilir. Şehir içi kaymaların çoğu bu küçük yüzeylerde başlar. Bunlar ıslakken asfalttan çok daha kaygandır.',
     whyWrong: [
       'Islak asfalt da kayar; ama sayılan yüzeyler ondan belirgin biçimde daha risklidir.',
       'Riski köprü altı ya da betonla sınırlamak, en sık karşılaşılan mazgal ve boya tuzağını gözden kaçırır.',
@@ -591,12 +591,12 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Aynayı tavana doğru çevirip hiç kullanmamak',
       'Arkadaki araca fren yaparak gözdağı vermek',
-      'İç aynanın gece (kamaşma önleyici) konumuna alınması; ayna altındaki mandalla veya otomatik kararan aynayla yansıma söndürülür, arkadaki araç görünmeye devam eder',
+      'İç aynanın gece (kamaşma önleyici) konumuna alınması',
       'Gözleri kısıp aynaya bakmamaya çalışmak',
     ],
     answerIndex: 2,
     explanation:
-      'İç dikiz aynalarının altındaki küçük mandal, aynayı gece konumuna alır; yansıyan far ışığı sönükleşir ama arkadaki aracın konumu izlenebilir kalır. Otomatik kararan aynalar bunu kendiliğinden yapar. Aynayı devre dışı bırakmak yerine kamaşmayı söndürmek doğru çözümdür.',
+      'İç dikiz aynalarının altındaki küçük mandal, aynayı gece konumuna alır; yansıyan far ışığı sönükleşir ama arkadaki aracın konumu izlenebilir kalır. Otomatik kararan aynalar bunu kendiliğinden yapar. Aynayı devre dışı bırakmak yerine kamaşmayı söndürmek doğru çözümdür. Ayna altındaki mandalla veya otomatik kararan aynayla yansıma söndürülür, arkadaki araç görünmeye devam eder.',
     whyWrong: [
       'Aynayı tavana çevirmek arka görüşü tümüyle kapatır; kamaşmadan da tehlikelidir.',
       'Fren yaparak ceza kesmeye kalkmak, kamaşan gözlerle yapılabilecek en riskli harekettir.',
@@ -617,11 +617,11 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
       'Rampaya normal seyir hızıyla girip içeride yavaşlamak',
       'Uzun farları yakıp kornaya basmak',
       'Güneş gözlüğünü takılı bırakıp hızlanmak',
-      'Kısa farları yakmak, güneş gözlüğünü çıkarmak ve rampaya adım hızında girmek; gözler loşluğa birkaç saniyede alışana kadar görüş zayıftır',
+      'Kısa farları yakmak, güneş gözlüğünü çıkarmak ve rampaya adım hızında girmek',
     ],
     answerIndex: 3,
     explanation:
-      'Parlak dış ortamdan loş rampaya geçişte gözlerin uyumu birkaç saniye alır ve bu sürede rampadaki yaya ya da araç görülmeyebilir. Girişten önce kısa farlar yakılır, güneş gözlüğü çıkarılır ve rampaya sürünme hızında girilir; varsa köşe aynaları kontrol edilir.',
+      'Parlak dış ortamdan loş rampaya geçişte gözlerin uyumu birkaç saniye alır ve bu sürede rampadaki yaya ya da araç görülmeyebilir. Girişten önce kısa farlar yakılır, güneş gözlüğü çıkarılır ve rampaya sürünme hızında girilir; varsa köşe aynaları kontrol edilir. Gözler loşluğa birkaç saniyede alışana kadar görüş zayıftır.',
     whyWrong: [
       'Normal hızla girmek, gözün kör olduğu ilk saniyeleri en dar ve dik alanda geçirmek demektir.',
       'Uzun far kapalı alanda yansıyıp kamaştırır; gözlüğü takılı bırakmak loşluğu koyulaştırır.',
@@ -639,14 +639,14 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Kapalı otoparkın içinde ilerlerken hız ve gözlem nasıl olmalıdır?',
     options: [
-      'Yürüyüş hızında sürülür; kolon araları ve araç aralarından çıkabilecek yayalar ile geri çıkmakta olan araçların geri vites lambaları sürekli taranır',
+      'Yürüyüş hızında sürülür',
       'Otoparkta trafik kuralı geçerli olmadığı için serbest hızla gidilir',
       'Yalnızca boş park yeri aranır, çevre gözlenmez',
       'Dörtlü flaşör yakılıp hızlıca tur atılır',
     ],
     answerIndex: 0,
     explanation:
-      'Otopark, yayalarla araçların iç içe olduğu ve görüşün kolonlarla bölündüğü dar bir alandır. Hız yürüyüş temposuna indirilir; araçların arasından çıkabilecek yayalar ve cebinden geri çıkmaya hazırlanan araçların beyaz geri vites lambaları özellikle izlenir. Boş yer arayışı gözlemin önüne geçmemelidir.',
+      'Otopark, yayalarla araçların iç içe olduğu ve görüşün kolonlarla bölündüğü dar bir alandır. Hız yürüyüş temposuna indirilir; araçların arasından çıkabilecek yayalar ve cebinden geri çıkmaya hazırlanan araçların beyaz geri vites lambaları özellikle izlenir. Boş yer arayışı gözlemin önüne geçmemelidir. Kolon araları ve araç aralarından çıkabilecek yayalar ile geri çıkmakta olan araçların geri vites lambaları sürekli taranır.',
     whyWrong: [
       'Otopark kuralsız bölge değildir; düşük hız ve yol verme ilkeleri burada da geçerlidir.',
       'Bakışı yalnızca boş cebe kilitleyen sürücü, önünden çıkan yayayı en son fark eden kişidir.',
@@ -665,13 +665,13 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Bagajı ve koltukları tam dolu bir araçla seyrederken fren davranışı neden değişir ve sürücü ne yapmalıdır?',
     options: [
       'Yüklü araç daha çabuk durur; mesafe kısaltılabilir',
-      'Artan kütle nedeniyle durma mesafesi uzar ve araç frende daha geç yanıt verir; takip mesafesi artırılmalı, frene daha erken başlanmalıdır',
+      'Artan kütle nedeniyle durma mesafesi uzar ve araç frende daha geç yanıt verir',
       'Yük yalnızca yakıtı etkiler, freni etkilemez',
       'Yüklüyken fren hiç kullanılmaz, yalnız motor freniyle gidilir',
     ],
     answerIndex: 1,
     explanation:
-      'Fren, aracın hareket enerjisini ısıya çevirir; kütle arttıkça sönümlenecek enerji de artar ve aynı pedal kuvvetiyle araç daha uzun mesafede durur. Yüklü araçta takip payı büyütülür, frenlemeye boş araca göre daha erken başlanır ve inişlerde motor freni daha önemli hâle gelir.',
+      'Fren, aracın hareket enerjisini ısıya çevirir; kütle arttıkça sönümlenecek enerji de artar ve aynı pedal kuvvetiyle araç daha uzun mesafede durur. Yüklü araçta takip payı büyütülür, frenlemeye boş araca göre daha erken başlanır ve inişlerde motor freni daha önemli hâle gelir. Takip mesafesi artırılmalı, frene daha erken başlanmalıdır.',
     whyWrong: [
       'Yüklü aracın daha çabuk durduğu inanışı fiziğe aykırıdır; tam tersi geçerlidir.',
       'Yükün etkisini yakıtla sınırlamak, uzayan fren mesafesini hesaba katmamaktır.',
@@ -691,12 +691,12 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Zincir taktıktan sonra normal seyir hızına dönülür',
       'Zincirliyken en az 90 km/s ile gidilir',
-      'Hız belirgin biçimde düşük tutulur, zincir üreticisinin sınırı (genellikle 50 km/s dolayı) aşılmaz; ani kalkış ve sert frenden kaçınılır, karsız asfalta çıkınca zincir sökülür',
+      'Hız belirgin biçimde düşük tutulur, zincir üreticisinin sınırı (genellikle 50 km/s dolayı) aşılmaz',
       'Zincirliyken hız yalnızca inişlerde önemlidir',
     ],
     answerIndex: 2,
     explanation:
-      'Zincir, karda tutunma içindir; yüksek hızda hem kopup araca ve çevreye zarar verir hem sürüşü sarsıntılı yapar. Hız düşük tutulur ve üreticinin belirttiği sınır (çoğunlukla 50 km/s civarı) aşılmaz. Zincirle kuru asfaltta sürmek de hem zinciri hem yolu ve lastiği yıpratır; kar bitince sökülür.',
+      'Zincir, karda tutunma içindir; yüksek hızda hem kopup araca ve çevreye zarar verir hem sürüşü sarsıntılı yapar. Hız düşük tutulur ve üreticinin belirttiği sınır (çoğunlukla 50 km/s civarı) aşılmaz. Zincirle kuru asfaltta sürmek de hem zinciri hem yolu ve lastiği yıpratır; kar bitince sökülür. Ani kalkış ve sert frenden kaçınılır, karsız asfalta çıkınca zincir sökülür.',
     whyWrong: [
       'Zincir hız serbestisi vermez; tam tersine hız tavanı getirir.',
       'Riski inişle sınırlamak, düz yolda kopan zincirin verdiği zararı görmezden gelmektir.',
@@ -714,14 +714,14 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Kar zinciri hangi tekerleklere takılmalıdır?',
     options: [
-      'Motordan güç alan (çekiş yapan) akstaki tekerleklere; önden çekişli araçta öne, arkadan itişli araçta arkaya',
+      'Motordan güç alan (çekiş yapan) akstaki tekerleklere',
       'Her araçta yalnızca arka tekerleklere',
       'Yalnızca sol taraftaki tekerleklere',
       'Stepneye',
     ],
     answerIndex: 0,
     explanation:
-      'Zincirin görevi çekiş gücünü kara aktarmaktır; bu yüzden motorun döndürdüğü aksa takılır. Önden çekişli araçlarda ön, arkadan itişli araçlarda arka tekerleklere takılır; dört çekerlerde üretici talimatına bakılır. Yanlış aksa takılan zincir kalkışta işe yaramaz.',
+      'Zincirin görevi çekiş gücünü kara aktarmaktır; bu yüzden motorun döndürdüğü aksa takılır. Önden çekişli araçlarda ön, arkadan itişli araçlarda arka tekerleklere takılır; dört çekerlerde üretici talimatına bakılır. Yanlış aksa takılan zincir kalkışta işe yaramaz. Önden çekişli araçta öne, arkadan itişli araçta arkaya.',
     whyWrong: [
       'Her aracı arkadan itişli saymak, bugün yaygın olan önden çekişlilerde zinciri boşa takmaktır.',
       'Tek tarafa ya da stepneye zincir takmanın çekişe hiçbir katkısı olmaz.',
@@ -740,13 +740,13 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Soğuk havalarda köprü ve viyadük üstlerinin yolun diğer bölümlerinden önce buzlanmasının nedeni nedir ve sürücü ne yapmalıdır?',
     options: [
       'Köprüler daha çok tuzlandığı için buzlanmaz; önlem gerekmez',
-      'Köprü zemini alttan da soğuk havayla temas ettiğinden yol gövdesinden önce donar; köprü ve viyadük girişlerinde hız önceden düşürülür, üzerinde ani fren ve manevradan kaçınılır',
+      'Köprü zemini alttan da soğuk havayla temas ettiğinden yol gövdesinden önce donar',
       'Köprülerde rüzgâr olmadığı için buz erimez',
       'Köprü asfaltı farklı renkte olduğu için',
     ],
     answerIndex: 1,
     explanation:
-      'Yol gövdesi altındaki toprak ısıyı bir süre tutar; köprü tabliyesinin ise hem üstü hem altı soğuk havayla sarılıdır ve önce donar. Hava sıcaklığı sıfıra yaklaştığında yol kuru görünse bile köprü üstü buzlu olabilir. Köprüye girmeden hız düşürülür, üstünde düz direksiyon ve sabit gazla geçilir.',
+      'Yol gövdesi altındaki toprak ısıyı bir süre tutar; köprü tabliyesinin ise hem üstü hem altı soğuk havayla sarılıdır ve önce donar. Hava sıcaklığı sıfıra yaklaştığında yol kuru görünse bile köprü üstü buzlu olabilir. Köprüye girmeden hız düşürülür, üstünde düz direksiyon ve sabit gazla geçilir. Köprü ve viyadük girişlerinde hız önceden düşürülür, üzerinde ani fren ve manevradan kaçınılır.',
     whyWrong: [
       'Tuzlama garantisi yoktur ve köprüde rüzgâr çoğu zaman daha da şiddetlidir.',
       'Asfalt rengi buzlanma sırasını belirlemez; belirleyen alttan soğumadır.',
@@ -765,13 +765,13 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Arızalı bir araç halatla çekilirken çekilen aracın direksiyonunda neden mutlaka sürücü belgesi olan biri oturmalıdır?',
     options: [
       'Halatın düğümünü izlemek için',
-      'Çekilen aracın direksiyonunu doğrultmak ve gerektiğinde frenlemek gerekir; bu işi ancak araç kullanmayı bilen belgeli bir sürücü yapabilir',
+      'Çekilen aracın direksiyonunu doğrultmak ve gerektiğinde frenlemek gerekir',
       'Radyoyu açık tutmak için',
       'Sadece kapıların kilitli kalması için',
     ],
     answerIndex: 1,
     explanation:
-      'Çekilen araç kendi başına yön tutmaz: virajlarda direksiyonun çevrilmesi, duruşlarda halat gerginliğine göre fren yapılması gerekir. Bu nedenle çekilen aracın başında sürücü belgesi olan biri bulunmalıdır. Motoru çalışmayan araçta fren ve direksiyon desteğinin zayıfladığı, pedal ile simidin sertleşeceği de bilinmelidir.',
+      'Çekilen araç kendi başına yön tutmaz: virajlarda direksiyonun çevrilmesi, duruşlarda halat gerginliğine göre fren yapılması gerekir. Bu nedenle çekilen aracın başında sürücü belgesi olan biri bulunmalıdır. Motoru çalışmayan araçta fren ve direksiyon desteğinin zayıfladığı, pedal ile simidin sertleşeceği de bilinmelidir. Bu işi ancak araç kullanmayı bilen belgeli bir sürücü yapabilir.',
     whyWrong: [
       'Halat gözlemek yolcunun da yapabileceği bir iştir; direksiyon ve fren ise sürücülük gerektirir.',
       'Radyo ya da kilit, çekilen aracın yön ve fren ihtiyacıyla ilgisizdir.',
@@ -791,7 +791,7 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Çeken araç hızla kalkar, halatın kendiliğinden gerilmesi beklenir',
       'Halat bol bırakılır; ara sıra gerilip boşalması normaldir',
-      'Çeken araç halat gerilene kadar sürünme hızında ilerler, gerginlik oluşunca yumuşakça hızlanır; çekilen araç hafif fren baskısıyla halatı sürekli gergin tutar ve ani boşalıp kasılmaları önler',
+      'Çeken araç halat gerilene kadar sürünme hızında ilerler, gerginlik oluşunca yumuşakça hızlanır',
       'Çekilen araç sık sık sert fren yaparak halatı test eder',
     ],
     answerIndex: 2,
@@ -814,10 +814,10 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Direksiyon sınavında görevliler adayın "araç hâkimiyetini" hangi gözlemlerden değerlendirir?',
     options: [
-      'Şerit içinde salınmadan gitme, direksiyonu kontrollü kullanma, manevralarda az sayıda düzeltmeyle sonuca ulaşma ve kaldırıma sürtmeme gibi gözlemlerden',
-      'Yalnızca adayın kıyafetinden',
-      'Aracın markasından ve renginden',
-      'Sınavın hangi saatte yapıldığından',
+      'Şerit içinde salınmadan gitme ve manevraları az düzeltmeyle bitirme',
+      'Sınav güzergâhındaki levhaları sözlü olarak sayabilme becerisi',
+      'Aracın vites kutusunun otomatik ya da manuel olması durumu',
+      'Adayın sınav öncesinde kaç saat direksiyon dersi aldığı bilgisi',
     ],
     answerIndex: 0,
     explanation:
@@ -842,7 +842,7 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
       'Rahatlık işareti sayılıp olumlu puan getirir',
       'Görevli bunu hiç fark etmez',
       'Sınav aracında serbesttir, özel araçta yasaktır',
-      'Araç hâkimiyeti zafiyeti olarak not edilir; vites ve kumanda kullanımı dışında iki elin direksiyonda olması beklenir',
+      'Araç hâkimiyeti zafiyeti olarak not edilir',
     ],
     answerIndex: 3,
     explanation:
@@ -865,13 +865,13 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Sınav boyunca gereksiz ani gaz ve ani frenlerle sarsıntılı araç kullanan adayın durumu nasıl değerlendirilir?',
     options: [
       'Dinamik sürüş sayılıp övgü alır',
-      'Akıcılık ve araç hâkimiyeti yönünden olumsuz not edilir; hız ve pedal geçişlerinin yumuşak, sürüşün öngörülü olması beklenir',
+      'Akıcılık ve araç hâkimiyeti yönünden olumsuz not edilir',
       'Yakıt tüketimi arttığı için yalnızca uyarı yapılır',
       'Sarsıntı yalnızca yolcu konforu meselesidir, sınavı ilgilendirmez',
     ],
     answerIndex: 1,
     explanation:
-      'Sarsıntılı pedal kullanımı, trafiği geç okuyup son anda tepki vermenin dışa vurumudur; görevli bunu öngörü ve hâkimiyet eksikliği olarak değerlendirir. Beklenen, duraklamaları erken görüp yumuşak geçişlerle hız ayarlamaktır. Akıcı sürüş hem konfor hem güvenlik göstergesidir.',
+      'Sarsıntılı pedal kullanımı, trafiği geç okuyup son anda tepki vermenin dışa vurumudur; görevli bunu öngörü ve hâkimiyet eksikliği olarak değerlendirir. Beklenen, duraklamaları erken görüp yumuşak geçişlerle hız ayarlamaktır. Akıcı sürüş hem konfor hem güvenlik göstergesidir. Hız ve pedal geçişlerinin yumuşak, sürüşün öngörülü olması beklenir.',
     whyWrong: [
       'Ani gaz-fren dinamiklik değil, plansızlık işaretidir.',
       'Konfor gerekçesi tek başına değil; sarsıntı, sürüş planlamasındaki eksikliği gösterdiği için not edilir.',
@@ -891,12 +891,12 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     options: [
       'İki sokaktan da çok önce, en erken noktada verilir',
       'Sinyal hiç verilmez, dönüş sürpriz yapılır',
-      'Aradaki sokağın hizası geçildikten sonra verilir; daha erken verilen sinyal, çevredekilere ilk sokağa dönüleceği izlenimi vererek yanıltır',
+      'Aradaki sokağın hizası geçildikten sonra verilir',
       'Dönüş tamamlandıktan sonra verilir',
     ],
     answerIndex: 2,
     explanation:
-      'Sinyalin değeri doğru bilgi vermesindedir. Ara sokaktan önce yakılan sinyal, oradan çıkmaya hazırlanan sürücüye "bu araç benden önce dönüyor" dedirtebilir ve onu yola çıkartabilir. Doğru zamanlama, yanıltıcı sapağın hizası geçilir geçilmez sinyali verip hazırlığı sürdürmektir: erken ama yanıltmayacak kadar.',
+      'Sinyalin değeri doğru bilgi vermesindedir. Ara sokaktan önce yakılan sinyal, oradan çıkmaya hazırlanan sürücüye "bu araç benden önce dönüyor" dedirtebilir ve onu yola çıkartabilir. Doğru zamanlama, yanıltıcı sapağın hizası geçilir geçilmez sinyali verip hazırlığı sürdürmektir: erken ama yanıltmayacak kadar. Daha erken verilen sinyal, çevredekilere ilk sokağa dönüleceği izlenimi vererek yanıltır.',
     whyWrong: [
       'En erken nokta her zaman en doğru nokta değildir; yanlış sokağa işaret eden sinyal tehlike üretir.',
       'Sinyalsiz ya da dönüşten sonra sinyal, bildirimin amacını tümüyle ortadan kaldırır.',
@@ -914,14 +914,14 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Yönünüzü tersine çevirmek için U dönüşü mü üç nokta dönüşü mü yapılacağına neyle karar verilir?',
     options: [
-      'Yolun genişliği, görüş uzunluğu ve trafik yoğunluğuyla: araç tek hamlede karşı yöne dönebilecek genişlik ve güvenli boşluk varsa U dönüşü; yol darsa ve tek hamle yetmiyorsa üç nokta dönüşü seçilir',
-      'Aracın rengiyle',
-      'Her zaman üç nokta dönüşü zorunludur',
-      'Yakıt göstergesinin durumuyla',
+      'Yolun genişliği, görüş uzunluğu ve trafik yoğunluğuyla',
+      'Aracın vites kutusunun otomatik ya da manuel oluşuyla',
+      'Yakıt göstergesinin gösterdiği kalan menzil değeriyle',
+      'Sürücünün ehliyetini kaç yıl önce almış olduğuyla',
     ],
     answerIndex: 0,
     explanation:
-      'Seçimin ölçüsü yol kesitidir: dönüş yasak değilse, yol aracın dönüş çapına yetiyorsa ve iki yönden de yeterli görüş ile boşluk varsa tek hamlelik U dönüşü hem kısa hem akıcıdır. Yol dar kaldığında dönüş zorlanmaz; ileri-geri hamleli üç nokta dönüşüne geçilir. Yanlış olan, dar yolda U dönüşünü zorlayıp yolu kapatmaktır.',
+      'Seçimin ölçüsü yol kesitidir: dönüş yasak değilse, yol aracın dönüş çapına yetiyorsa ve iki yönden de yeterli görüş ile boşluk varsa tek hamlelik U dönüşü hem kısa hem akıcıdır. Yol dar kaldığında dönüş zorlanmaz; ileri-geri hamleli üç nokta dönüşüne geçilir. Yanlış olan, dar yolda U dönüşünü zorlayıp yolu kapatmaktır. Yol darsa ve tek hamle yetmiyorsa üç nokta dönüşü seçilir.',
     whyWrong: [
       'Araç rengi ya da yakıt durumu manevra seçimiyle ilgisizdir.',
       'Üç nokta dönüşü zorunluluk değil, dar kesit için tasarlanmış alternatiftir.',
@@ -942,11 +942,11 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
       'Sağ şeritten geniş kavis alarak döner ve önceliği kendisinde sayar',
       'Dönüşe kavşak ortasında karar verip anında direksiyon kırar',
       'U dönüşü yapan araç her zaman geçiş üstünlüğüne sahiptir',
-      'Dönüşe en soldaki uygun şeritten, sol sinyalle hazırlanır; karşıdan gelenlere ve arkadan gelen trafiğe yol verdikten sonra döner, çünkü öncelik dönüş yapanda değildir',
+      'Dönüşe en soldaki uygun şeritten, sol sinyalle hazırlanır',
     ],
     answerIndex: 3,
     explanation:
-      'U dönüşü akan trafiği kesen bir manevradır; öncelik dönüş yapanda değil, yoluna devam edenlerdedir. Sürücü sol sinyalle en soldaki uygun konuma yerleşir, karşı yönden ve arkadan gelenleri kontrol eder, güvenli boşluk oluşunca tek hamlede döner. Sağdan geniş kavis almak, sağ şeritteki trafiği hazırlıksız yakalar.',
+      'U dönüşü akan trafiği kesen bir manevradır; öncelik dönüş yapanda değil, yoluna devam edenlerdedir. Sürücü sol sinyalle en soldaki uygun konuma yerleşir, karşı yönden ve arkadan gelenleri kontrol eder, güvenli boşluk oluşunca tek hamlede döner. Sağdan geniş kavis almak, sağ şeritteki trafiği hazırlıksız yakalar. Karşıdan gelenlere ve arkadan gelen trafiğe yol verdikten sonra döner, çünkü öncelik dönüş yapanda değildir.',
     whyWrong: [
       'Sağ şeritten dönüş, aradaki şeritlerde seyredenlerin yolunu keser.',
       'U dönüşü yapana öncelik tanıyan bir kural yoktur; ani kararla dönmek trafiği kilitleyebilir.',
@@ -965,13 +965,13 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Köprü çıkışı, viyadük ve açık ova kesimlerinde aniden bastıran yan rüzgâra karşı sürücü nasıl hazırlanır?',
     options: [
       'Camlar açılarak rüzgârın içeri alınmasıyla',
-      'Direksiyon iki elle kavranır, hız düşürülür ve aracın rüzgârla itilmesi küçük, sakin düzeltmelerle karşılanır; büyük araçların yanından geçerken ek itki beklenir',
+      'Direksiyon iki elle kavranır, hız düşürülür ve aracın rüzgârla itilmesi küçük, sakin düzeltmelerle karşılanır',
       'Rüzgâra karşı sürekli korna çalınarak',
       'Hızlanıp rüzgârlı bölgeden bir an önce çıkılarak',
     ],
     answerIndex: 1,
     explanation:
-      'Yan rüzgâr, kesitin açıldığı köprü ve viyadük çıkışlarında aracı bir anda şeritten itebilir. Hazırlık: iki elle dengeli tutuş, düşürülmüş hız ve itmeyi abartısız küçük düzeltmelerle karşılamak. Kamyon-otobüs sollarken önce rüzgâr kesilir, aracın önünden çıkınca yeniden vurur; bu ikili itki de beklenerek karşılanır.',
+      'Yan rüzgâr, kesitin açıldığı köprü ve viyadük çıkışlarında aracı bir anda şeritten itebilir. Hazırlık: iki elle dengeli tutuş, düşürülmüş hız ve itmeyi abartısız küçük düzeltmelerle karşılamak. Kamyon-otobüs sollarken önce rüzgâr kesilir, aracın önünden çıkınca yeniden vurur; bu ikili itki de beklenerek karşılanır. Büyük araçların yanından geçerken ek itki beklenir.',
     whyWrong: [
       'Cam açmak ya da korna, aracın rüzgârla itilmesini etkilemez.',
       'Hızlanmak, aynı itkinin daha büyük şerit sapmasına dönüşmesi demektir.',
@@ -991,12 +991,12 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Yalnızca ön camın sürücü hizasında küçük bir bölme açmak',
       'Karın sürüş sırasında rüzgârla uçmasını beklemek',
-      'Tüm camları, aynaları ve farları temizlemek; tavan ve kaputtaki karı da almak, çünkü frende öne kayarak camı kapatabilir veya arkadaki araçların üzerine savrulabilir',
+      'Tüm camları, aynaları ve farları temizlemek',
       'Sadece silecekleri çalıştırıp yola çıkmak',
     ],
     answerIndex: 2,
     explanation:
-      'Görüş, camın tamamından sağlanır; küçük bir delikten sürüş kör sürüştür. Aynalar, farlar ve stop lambaları da görünürlük için temizlenir. Tavandaki kar ilk frende öne kayıp ön camı bir anda örtebilir, seyirde ise arkadaki araçlara savrulur; bu yüzden kaput ve tavan da karlardan arındırılır.',
+      'Görüş, camın tamamından sağlanır; küçük bir delikten sürüş kör sürüştür. Aynalar, farlar ve stop lambaları da görünürlük için temizlenir. Tavandaki kar ilk frende öne kayıp ön camı bir anda örtebilir, seyirde ise arkadaki araçlara savrulur; bu yüzden kaput ve tavan da karlardan arındırılır. Tavan ve kaputtaki karı da almak, çünkü frende öne kayarak camı kapatabilir veya arkadaki araçların üzerine savrulabilir.',
     whyWrong: [
       'Küçük bölme ya da yalnız silecek, yan ve arka görüşü tamamen kapalı bırakır.',
       'Uçmasını beklemek, karın en kritik anda (frende) cama inmesine davetiye çıkarır.',
@@ -1014,7 +1014,7 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Dondurucu soğukta gece dışarıda kalacak manuel vitesli araç düz zeminde park edilirken bazı sürücüler el frenini neden çekmez?',
     options: [
-      'Nemli fren mekanizması gece çekili konumda donarak sabah bırakılamayabilir; bunun yerine araç düz zeminde vites takılı bırakılır, tekerleklere gerekirse takoz konur',
+      'Nemli fren mekanizması gece çekili konumda donarak sabah bırakılamayabilir',
       'El freni soğukta kendiliğinden boşaldığı için',
       'Kışın el freni kullanmak yasak olduğu için',
       'El freni çekilirse motor çalışmayacağı için',
@@ -1065,13 +1065,13 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Tanımadığı büyük bir kavşağa yaklaşan sürücü, doğru şeride son anda değil erkenden yerleşmeyi nasıl başarır?',
     options: [
       'Kavşağa girdikten sonra diğer araçlara sorarak',
-      'Kavşak üstü yön levhalarını ve asfalttaki şerit oklarını uzaktan okuyup gideceği yöne ayrılan şeridi önceden seçerek; böylece son metrelerde şerit kesme zorunluluğu doğmaz',
+      'Kavşak üstü yön levhalarını ve asfalttaki şerit oklarını uzaktan okuyup gideceği yöne ayrılan şeridi önceden seçerek',
       'Hep en soldaki şeridi kullanarak',
       'Navigasyon sesini kapatarak',
     ],
     answerIndex: 1,
     explanation:
-      'Büyük kavşaklarda yön bilgisi metrelerce önceden levhalarla ve asfalt oklarıyla verilir. Bunları uzaktan okuyan sürücü şeridini sakin bir S-D-Ş dizisiyle erkenden değiştirir; okumayı geciktiren sürücü ise kavşak ağzında ya şerit kesmek ya yanlış yöne gitmek arasında sıkışır. Erken okuma, son anda manevrayı önler.',
+      'Büyük kavşaklarda yön bilgisi metrelerce önceden levhalarla ve asfalt oklarıyla verilir. Bunları uzaktan okuyan sürücü şeridini sakin bir S-D-Ş dizisiyle erkenden değiştirir; okumayı geciktiren sürücü ise kavşak ağzında ya şerit kesmek ya yanlış yöne gitmek arasında sıkışır. Erken okuma, son anda manevrayı önler. Böylece son metrelerde şerit kesme zorunluluğu doğmaz.',
     whyWrong: [
       'Kavşak içinde soru sorulmaz, plan kavşaktan önce yapılır.',
       'Her yönde sol şeridi tutmak, sağa ayrılan yönlerde yine son anda kesmeye götürür.',
@@ -1091,12 +1091,12 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Şehirde gösterge daha doğru çalıştığı için',
       'Otoyolda gösterge kilitlendiği için',
-      'Göz uzun süre yüksek hıza alışınca hız algısı körelir; 70-80 km/s bile yavaş hissedilir ve sürücü fark etmeden şehir sınırının çok üzerinde seyredebilir',
+      'Göz uzun süre yüksek hıza alışınca hız algısı körelir',
       'Şehirde hız zaten önemsiz olduğu için',
     ],
     answerIndex: 2,
     explanation:
-      'Hız algısı göreceli çalışır: saatlerce 120 km/s gören göz, 80 km/s hızı yürüme temposu gibi algılar. Buna hız körlüğü denir. Otoyoldan çıkışlarda ve şehir girişlerinde his değil gösterge esas alınmalı, hız bilinçli olarak birkaç kez kontrol edilip düşürülmelidir.',
+      'Hız algısı göreceli çalışır: saatlerce 120 km/s gören göz, 80 km/s hızı yürüme temposu gibi algılar. Buna hız körlüğü denir. Otoyoldan çıkışlarda ve şehir girişlerinde his değil gösterge esas alınmalı, hız bilinçli olarak birkaç kez kontrol edilip düşürülmelidir. 70-80 km/s bile yavaş hissedilir ve sürücü fark etmeden şehir sınırının çok üzerinde seyredebilir.',
     whyWrong: [
       'Göstergenin doğruluğu yol tipine göre değişmez; değişen sürücünün algısıdır.',
       'Şehirde hız önemsiz değil, tam tersine yayalar nedeniyle en kritik değişkendir.',
@@ -1114,14 +1114,14 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Trafikte öndeki aracın arkasında dururken bırakılacak boşluk için öğretilen pratik referans nedir?',
     options: [
-      'Öndeki aracın arka lastiklerinin yere değdiği nokta kaputun üzerinden görülebiliyorsa boşluk yeterlidir; bu pay, öndeki araç arızalanırsa direksiyon kırıp çıkmaya da yeter',
+      'Öndeki aracın arka lastiklerinin yere değdiği nokta kaputun üzerinden görülebiliyorsa boşluk yeterlidir',
       'Öndeki aracın tamponuna değecek kadar yaklaşmak',
       'İki araç boyu geride durmak her koşulda zorunludur',
       'Boşluğun hiçbir önemi yoktur',
     ],
     answerIndex: 0,
     explanation:
-      'Duruşta öndeki aracın arka lastiklerinin asfalta değdiği çizgi görülebiliyorsa araçlar arasında birkaç metrelik sağlıklı bir pay var demektir. Bu boşluk, öndeki araç stop ederse manevrayla çıkmaya, arkadan yaklaşan araç görüldüğünde ise öne kaçış payı yaratmaya yeter. Tampona yapışan sürücü kendini kilitler.',
+      'Duruşta öndeki aracın arka lastiklerinin asfalta değdiği çizgi görülebiliyorsa araçlar arasında birkaç metrelik sağlıklı bir pay var demektir. Bu boşluk, öndeki araç stop ederse manevrayla çıkmaya, arkadan yaklaşan araç görüldüğünde ise öne kaçış payı yaratmaya yeter. Tampona yapışan sürücü kendini kilitler. Bu pay, öndeki araç arızalanırsa direksiyon kırıp çıkmaya da yeter.',
     whyWrong: [
       'Tampona yaklaşmak, öndeki araç kalkamazsa sizi de o şeride hapseder.',
       'İki araç boyu düz yolda gereksiz uzundur; ölçü görülebilir lastik temas çizgisidir.',
@@ -1140,13 +1140,13 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Yüksek hızda seyrederken aniden çok düşük bir vitese (örneğin beşinciden ikinciye) geçmek neden risklidir?',
     options: [
       'Vites kolu kırılacağı için',
-      'Debriyaj bırakıldığında motor devri aniden fırlar ve çekiş tekerlekleri sert motor freniyle âdeta kilitlenme etkisi yaşar; kaygan zeminde bu, savrulmayı tetikleyebilir ve mekanik zorlanma yaratır',
+      'Debriyaj bırakıldığında motor devri aniden fırlar ve çekiş tekerlekleri sert motor freniyle âdeta kilitlenme etkisi yaşar',
       'Yakıt göstergesi sıfırlanacağı için',
       'Hiçbir riski yoktur, en hızlı yavaşlama böyle yapılır',
     ],
     answerIndex: 1,
     explanation:
-      'Vites atlanarak sert düşüşte debriyaj bırakıldığı anda motor devri sıçrar ve güçlü motor freni çekiş tekerleklerini bir anda yavaşlatır; bu, özellikle ıslak-kaygan zeminde frenle kilitlenmeye benzer bir kayma başlatabilir. Doğrusu, hızın önce frenle düşürülüp vitesin hıza uygun kademeye sırayla indirilmesidir.',
+      'Vites atlanarak sert düşüşte debriyaj bırakıldığı anda motor devri sıçrar ve güçlü motor freni çekiş tekerleklerini bir anda yavaşlatır; bu, özellikle ıslak-kaygan zeminde frenle kilitlenmeye benzer bir kayma başlatabilir. Doğrusu, hızın önce frenle düşürülüp vitesin hıza uygun kademeye sırayla indirilmesidir. Kaygan zeminde bu, savrulmayı tetikleyebilir ve mekanik zorlanma yaratır.',
     whyWrong: [
       'Risk kol ya da göstergede değil, tekerleğe binen ani motor freni darbesindedir.',
       'En hızlı ve dengeli yavaşlama frenle yapılır; vites sıçratmak fren yerine geçmez.',
@@ -1168,11 +1168,11 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
       'El işareti trafikte kaba sayıldığı için',
       'Yaya işareti anlamayabileceği için',
       'Yayanın geçişi zaten yasak olduğu için',
-      'Siz yalnızca kendi şeridinizi güvenceye alabilirsiniz; işaretle yüreklendirilen yaya, yandaki şeritten gelen ve durmayan aracın önüne sizin güvencenizle adım atabilir',
+      'Siz yalnızca kendi şeridinizi güvenceye alabilirsiniz',
     ],
     answerIndex: 3,
     explanation:
-      'Sürücünün verebileceği tek garanti kendi aracının durduğudur. "Geç" işareti yaya tarafından tüm yolun güvenli olduğu biçiminde okunur; oysa yan şeritten gelen sürücü durmayabilir. Doğrusu durup beklemek ve yayanın tüm şeritleri kendi gözüyle kontrol ederek geçmesine alan bırakmaktır.',
+      'Sürücünün verebileceği tek garanti kendi aracının durduğudur. "Geç" işareti yaya tarafından tüm yolun güvenli olduğu biçiminde okunur; oysa yan şeritten gelen sürücü durmayabilir. Doğrusu durup beklemek ve yayanın tüm şeritleri kendi gözüyle kontrol ederek geçmesine alan bırakmaktır. İşaretle yüreklendirilen yaya, yandaki şeritten gelen ve durmayan aracın önüne sizin güvencenizle adım atabilir.',
     whyWrong: [
       'Sorun nezaket ya da işaretin anlaşılması değil, verilemeyecek bir güvencenin verilmesidir.',
       'Yaya geçidinde geçiş yasak değildir; tersine öncelik çoğu durumda yayanındır.',
@@ -1190,14 +1190,14 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Park sensörü ve geri görüş kamerası bulunan araçta omuz ve ayna kontrolleri için doğru yaklaşım nedir?',
     options: [
-      'Sensör ve kamera yardımcıdır; alçak nesneleri, ince direkleri ve aniden giren yayayı kaçırabildikleri için omuz, ayna ve cam kontrolleri aynen sürdürülür',
+      'Sensör ve kamera yardımcıdır',
       'Sensör varsa başka hiçbir kontrol gerekmez',
       'Kamera açıkken aynalara bakmak yasaktır',
       'Sensör sesi kapatılırsa manevra daha güvenli olur',
     ],
     answerIndex: 0,
     explanation:
-      'Sensor ve kamera görüşü tamamlar, yerine geçmez: kameranın açısı sınırlıdır, sensörler alçak bordürü ya da ince demiri geç algılayabilir, hareketli yaya ekrana son anda girer. Bu yüzden manevrada omuz üzerinden bakış, aynalar ve doğrudan cam gözlemi teknoloji varken de sürer; ekran yalnızca ek bilgidir.',
+      'Sensor ve kamera görüşü tamamlar, yerine geçmez: kameranın açısı sınırlıdır, sensörler alçak bordürü ya da ince demiri geç algılayabilir, hareketli yaya ekrana son anda girer. Bu yüzden manevrada omuz üzerinden bakış, aynalar ve doğrudan cam gözlemi teknoloji varken de sürer; ekran yalnızca ek bilgidir. Alçak nesneleri, ince direkleri ve aniden giren yayayı kaçırabildikleri için omuz, ayna ve cam kontrolleri aynen sürdürülür.',
     whyWrong: [
       'Kontrolleri teknolojiye devretmek, sistemin kör kaldığı ilk nesnede çarpma demektir.',
       'Aynaya bakma yasağı ya da sensör kapatma önerisi diye bir kural yoktur.',
@@ -1217,12 +1217,12 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Lastik basıncının düşük olması; basınç artırılır',
       'Direksiyonun geç düzeltilmesi; dönüşte direksiyon hiç kırılmaz',
-      'Arka tekerlekler dönüşte ön tekerleklerden daha içeriden bir iz çizer (iz farkı); köşe biraz ileri alınarak dönüşe geç başlanır ve direksiyon köşe hizası geçilirken kırılır',
+      'Arka tekerlekler dönüşte ön tekerleklerden daha içeriden bir iz çizer (iz farkı)',
       'Aracın arkasının ağır olması; bagaj boşaltılır',
     ],
     answerIndex: 2,
     explanation:
-      'Dönen araçta arka aks, ön aksın izinin içinden gider; buna iz farkı denir. Direksiyon köşeye erken kırılırsa ön tekerlek kurtulsa bile arka tekerlek bordüre biner. Çözüm, aracı köşe hizasını biraz geçirene kadar düz sürmek ve dönüşü ondan sonra başlatmaktır; böylece arka iz de köşeyi temiz döner.',
+      'Dönen araçta arka aks, ön aksın izinin içinden gider; buna iz farkı denir. Direksiyon köşeye erken kırılırsa ön tekerlek kurtulsa bile arka tekerlek bordüre biner. Çözüm, aracı köşe hizasını biraz geçirene kadar düz sürmek ve dönüşü ondan sonra başlatmaktır; böylece arka iz de köşeyi temiz döner. Köşe biraz ileri alınarak dönüşe geç başlanır ve direksiyon köşe hizası geçilirken kırılır.',
     whyWrong: [
       'Lastik basıncı ya da bagaj yükü, geometrik iz farkını ortadan kaldırmaz.',
       'Direksiyonu hiç kırmamak dönüşü imkânsız kılar; mesele kırmayı doğru ana ertelemektir.',
@@ -1243,11 +1243,11 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
       'Sollanan aracın burnu görünür görünmez hemen kırılır',
       'Sollanan aracın önüne mümkün olan en yakın mesafede girilir',
       'Şeride dönüş hiç yapılmaz, sol şeritte devam edilir',
-      'Sollanan araç iç dikiz aynasında bütünüyle görününce sağ sinyal verilir ve kademeli dönülür; bu, önüne yeterli boşluk bırakıldığının pratik göstergesidir',
+      'Sollanan araç iç dikiz aynasında bütünüyle görününce sağ sinyal verilir ve kademeli dönülür',
     ],
     answerIndex: 3,
     explanation:
-      'Sollamanın son hatası erken dönmektir: geçilen aracın önüne dar girmek onu frene zorlar. Pratik ölçü, sollanan aracın iç aynada tamamı görünene kadar sol şeritte kalmaktır; bu görüntü, araya güvenli boşluk girdiğini gösterir. Sonrasında sinyalle, ani kesmeden kademeli dönülür.',
+      'Sollamanın son hatası erken dönmektir: geçilen aracın önüne dar girmek onu frene zorlar. Pratik ölçü, sollanan aracın iç aynada tamamı görünene kadar sol şeritte kalmaktır; bu görüntü, araya güvenli boşluk girdiğini gösterir. Sonrasında sinyalle, ani kesmeden kademeli dönülür. Bu, önüne yeterli boşluk bırakıldığının pratik göstergesidir.',
     whyWrong: [
       'Burun görünür görünmez ya da en yakın mesafede dönmek, sollanan aracın güvenlik payını çalar.',
       'Sol şeridi işgal ederek devam etmek de kurallara aykırıdır; geçiş bitince sağa dönülür.',
@@ -1265,14 +1265,14 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Kırsal yolda önünüze aniden bir hayvan çıktığında temel davranış ne olmalıdır?',
     options: [
-      'Şeridi koruyarak kontrollü fren yapmak; ani ve sert şerit değiştirmek karşı trafiğe ya da şarampole savrulma riski taşıdığından çoğu zaman çarpışmadan daha ağır sonuç doğurur',
+      'Şeridi koruyarak kontrollü fren yapmak',
       'Direksiyonu gözü kapalı karşı şeride kırmak',
       'Korna çalıp hızlanarak hayvandan önce geçmek',
       'Farları söndürüp beklemek',
     ],
     answerIndex: 0,
     explanation:
-      'Ani engelde en büyük ikincil tehlike, refleksle yapılan sert kaçış manevrasıdır: karşı şeritte araç, yol dışında şarampol olabilir. Doğru davranış şeridi koruyup elden gelen en kontrollü freni yapmaktır. Ayrıca yolda tek hayvan görüldüğünde arkasından sürünün gelebileceği düşünülüp hız erken düşürülür.',
+      'Ani engelde en büyük ikincil tehlike, refleksle yapılan sert kaçış manevrasıdır: karşı şeritte araç, yol dışında şarampol olabilir. Doğru davranış şeridi koruyup elden gelen en kontrollü freni yapmaktır. Ayrıca yolda tek hayvan görüldüğünde arkasından sürünün gelebileceği düşünülüp hız erken düşürülür. Ani ve sert şerit değiştirmek karşı trafiğe ya da şarampole savrulma riski taşıdığından çoğu zaman çarpışmadan daha ağır sonuç doğurur.',
     whyWrong: [
       'Bakılmadan yapılan şerit kaçışı, hayvan çarpmasını kafa kafaya çarpışmaya çevirebilir.',
       'Hızlanmak ya da far söndürmek durumu yalnızca içinden çıkılmaz yapar.',
@@ -1291,13 +1291,13 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Yalnızca sağ tekerleklerin gireceği derin bir su birikintisine yüksek hızla girmek araçta hangi etkiyi yaratır?',
     options: [
       'Araç daha dengeli hâle gelir',
-      'Sudaki taraf ani dirençle yavaşlarken kuru taraf hızını korur; araç bir anda birikinti tarafına çekilir ve direksiyon gevşek tutuluyorsa şeritten sapabilir',
+      'Sudaki taraf ani dirençle yavaşlarken kuru taraf hızını korur',
       'Yalnızca cam biraz kirlenir, sürüş etkilenmez',
       'Motor devri kendiliğinden yükselir',
     ],
     answerIndex: 1,
     explanation:
-      'Tek taraftaki tekerleklerin suya girmesi, aracın iki yanına eşit olmayan direnç uygular: sulu taraf frenlenmiş gibi yavaşlar ve araç o yana doğru çeker. Önlem, birikintiyi uzaktan görüp hızı önceden düşürmek ve direksiyonu iki elle sıkıca kavrayarak çekmeyi küçük düzeltmelerle karşılamaktır.',
+      'Tek taraftaki tekerleklerin suya girmesi, aracın iki yanına eşit olmayan direnç uygular: sulu taraf frenlenmiş gibi yavaşlar ve araç o yana doğru çeker. Önlem, birikintiyi uzaktan görüp hızı önceden düşürmek ve direksiyonu iki elle sıkıca kavrayarak çekmeyi küçük düzeltmelerle karşılamaktır. Araç bir anda birikinti tarafına çekilir ve direksiyon gevşek tutuluyorsa şeritten sapabilir.',
     whyWrong: [
       'Asimetrik direnç dengeyi artırmaz, tam tersine ani bir yön çekmesi yaratır.',
       'Cam kirlenmesi ya da devir değişimi buradaki asıl tehlikeyi tanımlamaz.',
@@ -1317,12 +1317,12 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Gözlerini kısarak aynı hızda devam etmek',
       'Güneşe uzun farla karşılık vermek',
-      'Güneşliği indirmek, hızı düşürüp takip mesafesini artırmak ve ön camın temiz olmasına dikkat etmek; kirli cam ışığı dağıtarak kamaşmayı büyütür',
+      'Güneşliği indirmek, hızı düşürüp takip mesafesini artırmak ve ön camın temiz olmasına dikkat etmek',
       'Yolun soluna geçerek gölgede sürmek',
     ],
     answerIndex: 2,
     explanation:
-      'Alçak güneş, ışıklı tabelaları ve fren lambalarını görünmez edecek kadar kamaştırabilir. Güneşlik indirilir, hız ve takip payı görüşteki kayba göre ayarlanır. Az bilinen etken camdır: iç-dış kiri ve silecek izleri güneşi cam boyunca dağıtır; temiz cam kamaşmayı belirgin azaltır.',
+      'Alçak güneş, ışıklı tabelaları ve fren lambalarını görünmez edecek kadar kamaştırabilir. Güneşlik indirilir, hız ve takip payı görüşteki kayba göre ayarlanır. Az bilinen etken camdır: iç-dış kiri ve silecek izleri güneşi cam boyunca dağıtır; temiz cam kamaşmayı belirgin azaltır. Kirli cam ışığı dağıtarak kamaşmayı büyütür.',
     whyWrong: [
       'Göz kısarak hızını korumak, görmeden sürmeye devam etmektir.',
       'Uzun far güneşe etki etmez; şeride ters geçmek ise başlı başına tehlikedir.',
@@ -1340,14 +1340,14 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Kenarında bordür (kaldırım taşı) bulunmayan eğimli bir yol kenarına park ederken ön tekerlekler hangi yöne çevrilir?',
     options: [
-      'İnişte de çıkışta da yolun dışına (banket tarafına) çevrilir; dayanak olacak bordür bulunmadığından kayan araç trafiğin içine değil yol dışına yönelmelidir',
+      'İnişte de çıkışta da yolun dışına (banket tarafına) çevrilir',
       'İnişte içe, çıkışta dışa çevrilir; bordürlü yolla aynıdır',
       'Bordür yoksa tekerlek yönünün önemi kalmaz',
       'Her durumda yolun ortasına doğru çevrilir',
     ],
     answerIndex: 0,
     explanation:
-      'Bordürlü parkta tekerlek yönü, kayan aracı bordüre yaslandırma hesabıyla kurulur. Bordür yoksa yaslanacak dayanak da yoktur; tek güvenli ilke, fren tutmazsa aracın yol dışına (bankete) yuvarlanmasını sağlamaktır. Bu yüzden eğim yönü fark etmeksizin tekerlekler yolun dışına çevrilir; el freni ve vites önlemleri aynen alınır.',
+      'Bordürlü parkta tekerlek yönü, kayan aracı bordüre yaslandırma hesabıyla kurulur. Bordür yoksa yaslanacak dayanak da yoktur; tek güvenli ilke, fren tutmazsa aracın yol dışına (bankete) yuvarlanmasını sağlamaktır. Bu yüzden eğim yönü fark etmeksizin tekerlekler yolun dışına çevrilir; el freni ve vites önlemleri aynen alınır. Dayanak olacak bordür bulunmadığından kayan araç trafiğin içine değil yol dışına yönelmelidir.',
     whyWrong: [
       'Bordürlü kural burada geçersizdir; çünkü kuralın dayanağı olan taş yoktur.',
       'Yönü önemsiz saymak ya da yol ortasına çevirmek, kayan aracı doğrudan trafiğe gönderir.',
@@ -1368,11 +1368,11 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
       'Yokuşta korna sesi daha az duyulduğu için',
       'Boşluk motorun soğumasını sağladığı için',
       'Yokuşta beklemek yasak olduğu için',
-      'Öndeki araç kalkışta bir miktar geriye kayabilir; bırakılan ek boşluk bu kaymayı karşılar ve gerekirse şeritten çıkma payı da verir',
+      'Öndeki araç kalkışta bir miktar geriye kayabilir',
     ],
     answerIndex: 3,
     explanation:
-      'Manuel araçların bir bölümü rampa kalkışında kısa bir geri kayma yaşar; öndekine yapışık duran araç bu kaymada temas alır. Yokuşta öndekiyle aradaki pay bilinçli olarak büyütülür; bu pay ayrıca öndeki araç kalkamazsa manevrayla çıkabilme imkânı verir. Kendi kalkışınızda da arkanızdaki mesafe aynı nedenle önemlidir.',
+      'Manuel araçların bir bölümü rampa kalkışında kısa bir geri kayma yaşar; öndekine yapışık duran araç bu kaymada temas alır. Yokuşta öndekiyle aradaki pay bilinçli olarak büyütülür; bu pay ayrıca öndeki araç kalkamazsa manevrayla çıkabilme imkânı verir. Kendi kalkışınızda da arkanızdaki mesafe aynı nedenle önemlidir. Bırakılan ek boşluk bu kaymayı karşılar ve gerekirse şeritten çıkma payı da verir.',
     whyWrong: [
       'Korna ya da motor soğuması, mesafe kuralının gerekçesi değildir.',
       'Yokuşta trafik gereği beklemek yasak değildir; önemli olan bekleme biçimidir.',

@@ -40,7 +40,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     stem: 'Kontak açıldığında yanan yağ basıncı veya akü (şarj) ikaz ışığı, motor çalıştıktan sonra sönmüyorsa ne yapılmalıdır?',
     options: [
       'Işıklar önemsizdir, yola devam edilir',
-      'Sürüşe başlanmadan arıza araştırılır; sorun giderilmeden yola çıkılmaz',
+      'Sürüşe başlanmadan arıza araştırılır',
       'Gaz verilerek ışığın sönmesi beklenir',
       'Radyo açılarak dikkat başka yöne çekilir',
     ],
@@ -164,7 +164,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Araç hızlanırken bir üst vitese geçme zamanı genellikle nasıl anlaşılır?',
     options: [
-      'Motor devri (ses ve titreşim) yükselip araç o vitese göre yeterli hıza ulaştığında üst vitese geçilir',
+      'Motor devri (ses ve titreşim)',
       'Araç durmak üzereyken üst vitese geçilir',
       'Hız ne olursa olsun her birkaç saniyede bir vites yükseltilir',
       'Motor çok düşük devirde titrerken üst vitese geçilir',
@@ -315,10 +315,10 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Önde ve arkada araç bulunan bir paralel park yerinden güvenle çıkmak için doğru yaklaşım nedir?',
     options: [
-      'Direksiyonu kırıp doğrudan öne çıkmak',
-      'Aynaya bakmadan hızlıca şeride dalmak',
-      'Aracı hafif geri alıp öne pay açmak, sinyal verip aynaları ve kör noktayı kontrol ederek uygun boşlukta yavaşça şeride katılmak',
-      'Kornaya basıp beklemeden çıkmak',
+      'Direksiyonu tam kırıp tek hamlede öne doğru şeride katılmak',
+      'Dörtlüleri yakıp arkadan gelenlerin durmasını bekleyerek çıkmak',
+      'Öne pay açıp sinyal verdikten sonra kör noktayı kontrol ederek çıkmak',
+      'Önce geriye doğru şeride çıkıp sonra ileri yönde ilerlemek',
     ],
     answerIndex: 2,
     explanation:
@@ -469,7 +469,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
       'Sürekli en sol şerit',
       'İstenen herhangi bir şerit, kural yoktur',
       'En soldaki şeritte yavaş gitmek serbesttir',
-      'Sağ şerit; sol şeritler yalnızca öndeki aracı geçmek için kullanılıp geçiş sonrası tekrar sağa dönülür',
+      'Sağ şerit',
     ],
     answerIndex: 3,
     explanation:
@@ -491,14 +491,14 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Işıklı bir kavşağa yaklaşırken ışık yeşilden sarıya döndüğünde kural olarak ne yapılmalıdır?',
     options: [
-      'Güvenle durulabilecek mesafedeyse yavaşlayıp durmak; kavşağa çok girilmişse ve durmak tehlikeliyse geçişi dikkatle tamamlamak',
+      'Güvenle durulabilecek mesafedeyse yavaşlayıp durmak',
       'Her durumda gaza basıp hızla geçmek',
       'Kavşağın ortasında durup beklemek',
       'Sarı ışıkta her koşulda sert fren yaparak durmak',
     ],
     answerIndex: 0,
     explanation:
-      'Sarı ışık, kırmızıya hazırlık uyarısıdır. Kural olarak güvenle durulabilecek mesafedeyse yavaşlayıp durak çizgisinde durulur; ancak araç kavşağa çok girmişse ve durmak arkadan çarpma gibi bir tehlike doğuruyorsa geçiş dikkatle tamamlanır. Amaç ani ve tehlikeli hareketlerden kaçınmaktır.',
+      'Sarı ışık, kırmızıya hazırlık uyarısıdır. Kural olarak güvenle durulabilecek mesafedeyse yavaşlayıp durak çizgisinde durulur; ancak araç kavşağa çok girmişse ve durmak arkadan çarpma gibi bir tehlike doğuruyorsa geçiş dikkatle tamamlanır. Amaç ani ve tehlikeli hareketlerden kaçınmaktır. Kavşağa çok girilmişse ve durmak tehlikeliyse geçişi dikkatle tamamlamak.',
     whyWrong: [
       'Sarıda her zaman gaza basmak, kırmızıya yakalanma ve kavşak içi çarpışma riski doğurur.',
       'Kavşak ortasında durmak ya da her koşulda sert fren yapmak arkadan çarpma ve kilitlenmeye yol açar.',
@@ -544,7 +544,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
       'Kavşağa girip ortada beklemek',
       'Kornaya basıp öndekileri zorlamak',
       'Sinyal verip kavşak içinde durmak',
-      'Kavşağa girilmez; karşı tarafta aracın sığacağı boşluk oluşana kadar kavşak öncesinde beklenir',
+      'Kavşağa girilmez',
     ],
     answerIndex: 3,
     explanation:
@@ -718,7 +718,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     options: [
       'Uzun süre yanlarında, aynı hizada seyretmek',
       'Hemen arkalarına çok yakın durmak',
-      'Kör noktalarında uzun kalmamak; ya güvenle geçmek ya da geride, sürücünün görebileceği bir mesafede kalmak',
+      'Kör noktalarında uzun kalmamak',
       'Farları yakıp yanlarında beklemek',
     ],
     answerIndex: 2,
@@ -744,7 +744,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
       'Yalnızca iç aynaya bakmak',
       'Hızlıca geri gidip son anda durmak',
       'Kornaya basıp beklemeden geri gitmek',
-      'Şüphe varsa araçtan inip arkayı kontrol etmek; özellikle küçük çocuk veya alçak engel olmadığından emin olduktan sonra çok yavaş geri gitmek',
+      'Şüphe varsa araçtan inip arkayı kontrol etmek',
     ],
     answerIndex: 3,
     explanation:
@@ -995,14 +995,14 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Direksiyon sınavında motorun tekrar tekrar stop etmesi (aracın sık sık sönmesi) nasıl değerlendirilir?',
     options: [
-      'Araç hâkimiyeti ve debriyaj-gaz kontrolündeki eksikliği gösteren bir hata olarak kaydedilir; sıklaşması sonucu olumsuz etkiler',
+      'Araç hâkimiyeti ve debriyaj-gaz kontrolündeki eksikliği gösteren bir hata olarak kaydedilir',
       'Hiç dikkate alınmaz',
       'Sınavı otomatik kazandırır',
       'Yalnızca motora zarar verir, değerlendirmeyle ilgisi yoktur',
     ],
     answerIndex: 0,
     explanation:
-      'Motorun sık stop etmesi, adayın debriyaj-gaz uyumunu ve araç hâkimiyetini tam kuramadığını gösterir; bu, değerlendirmede bir eksiklik olarak kaydedilir. Bir kez olması küçük bir hata sayılabilirse de tekrarlanması araç hâkimiyeti puanını düşürür ve kavşak gibi yerlerde tehlike doğurursa ağırlaşır.',
+      'Motorun sık stop etmesi, adayın debriyaj-gaz uyumunu ve araç hâkimiyetini tam kuramadığını gösterir; bu, değerlendirmede bir eksiklik olarak kaydedilir. Bir kez olması küçük bir hata sayılabilirse de tekrarlanması araç hâkimiyeti puanını düşürür ve kavşak gibi yerlerde tehlike doğurursa ağırlaşır. Sıklaşması sonucu olumsuz etkiler.',
     whyWrong: [
       'Motorun sık sönmesi göz ardı edilmez; araç hâkimiyeti göstergesidir.',
       'Bu durum sınav kazandırmaz ve yalnız mekanik değil, sürüş becerisi açısından değerlendirilir.',

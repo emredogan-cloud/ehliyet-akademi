@@ -75,9 +75,9 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     stem: 'Yağışlı havada zemin ıslak ve kaygan olduğunda sürücünün hızıyla ilgili en doğru davranış hangisidir?',
     options: [
       'Hızını azaltır ve takip mesafesini artırır',
-      'Kuru yoldaki gibi aynı hızda sürer',
-      'Hızını artırıp kaygan bölgeyi çabuk geçer',
-      'Farlarını söndürerek yavaşlar',
+      'Kuru yoldaki gibi aynı hızda sürmeyi sürdürür',
+      'Hızını artırıp kaygan bölgeyi çabucak geçer',
+      'Farlarını söndürüp yavaşlayarak ilerler',
     ],
     answerIndex: 0,
     explanation:
@@ -151,9 +151,9 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Siren ve tepe lambasını çalıştırmış bir ambulansla karşılaşan sürücü ne yapmalıdır?',
     options: [
-      'Hızlanıp önünden çekilir',
-      'Olduğu yerde durup korna çalar',
-      'Ambulansı sollamaya çalışır',
+      'Hızlanıp ambulansın önünden çekilir',
+      'Olduğu yerde durup korna çalarak bekler',
+      'Ambulansı sollamaya çalışıp öne geçer',
       'Yavaşlayıp yol vererek geçmesini sağlar',
     ],
     answerIndex: 3,
@@ -178,9 +178,9 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     stem: 'Sekizgen biçimli DUR levhasının bulunduğu yerde sürücüden istenen davranış nedir?',
     options: [
       'Tam olarak durur, yol açıksa geçer',
-      'Sadece yavaşlayıp geçer',
-      'Yalnızca korna çalar',
-      'Hızını koruyarak geçer',
+      'Sadece yavaşlayıp dikkatli geçer',
+      'Yalnızca korna çalıp yoluna devam eder',
+      'Hızını koruyarak kavşaktan geçer',
     ],
     answerIndex: 0,
     explanation:
@@ -205,8 +205,8 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     options: [
       'Geçiş hakkının kendisinde olduğunu',
       'Ana yoldaki araçlara yol vermesi gerektiğini',
-      'Yolun tamamen kapalı olduğunu',
-      'Park etmenin yasak olduğunu',
+      'Yolun ileride tamamen kapalı olduğunu bildirir',
+      'Bu bölgede park etmenin yasak olduğunu',
     ],
     answerIndex: 1,
     explanation:
@@ -229,10 +229,10 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Kenarları kırmızı, zemini beyaz üçgen biçimindeki trafik levhaları genel olarak neyi ifade eder?',
     options: [
-      'Kesin bir yasağı',
-      'Zorunlu bir yönü',
+      'Kesin ve mutlak bir yasağı',
+      'Uyulması zorunlu bir yönü',
       'Bir tehlikeye karşı uyarıyı',
-      'Bir hizmet veya bilgiyi',
+      'Bir hizmet ya da bilgilendirmeyi',
     ],
     answerIndex: 2,
     explanation:
@@ -256,9 +256,9 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     stem: 'Başka bir araç tarafından geçilmekte (sollanmakta) olan aracın sürücüsü ne yapmalıdır?',
     options: [
       'Hızını artırarak geçişi zorlaştırmalıdır',
-      'Sola yaklaşarak yolu kapatmalıdır',
-      'Hızını artırmadan şeridinin sağına yaklaşıp geçen araca kolaylık sağlamalıdır',
-      'Ani fren yaparak arkadaki aracı uyarmalıdır',
+      'Sola yaklaşarak geçmekte olan aracın yolunu kapatmalıdır',
+      'Hızını artırmadan sağa yaklaşıp kolaylık sağlamalıdır',
+      'Ani fren yaparak arkadaki sürücüyü uyarmalıdır',
     ],
     answerIndex: 2,
     explanation:
@@ -281,9 +281,9 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Öndeki araç, aşağıdaki durumların hangisinde istisna olarak sağından geçilebilir?',
     options: [
-      'Trafik yoğun olduğunda',
-      'Öndeki araç yavaş gittiğinde',
-      'Sol şerit dolu olduğunda',
+      'Trafik yoğunlaşıp akış yavaşladığında',
+      'Öndeki araç beklenenden yavaş gittiğinde',
+      'Sol şerit dolu olduğunda ve geçecek boşluk kalmadığında',
       'Öndeki araç sola dönüş işareti verip sola yaklaştığında',
     ],
     answerIndex: 3,
@@ -306,10 +306,10 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Sollamaya başlamadan önce sürücünün yapması gereken doğru davranış hangisidir?',
     options: [
-      'Aynaları ve karşı yönü kontrol edip dönüş sinyali vermek',
-      'Sinyal vermeden hızlıca geçmek',
-      'Korna çalıp farları söndürmek',
-      'Takip mesafesini tamamen kapatmak',
+      'Aynaları ve karşı yönü kontrol edip sinyal vermek',
+      'Sinyal vermeden hızlanıp çabucak geçmek',
+      'Korna çalıp farları söndürerek uyarmak',
+      'Takip mesafesini tamamen kapatıp öndekine yaklaşmak',
     ],
     answerIndex: 0,
     explanation:
@@ -372,9 +372,9 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Dönel kavşakta (göbek/ada etrafında) geçiş önceliği kime aittir?',
     options: [
-      'Kavşağa yeni giren araca',
+      'Kavşağa yeni girmekte olan araca',
       'Sağdan yaklaşan araca',
-      'En hızlı giden araca',
+      'En hızlı giden araca öncelik verilir',
       'Ada etrafında dönmekte olan araca',
     ],
     answerIndex: 3,
@@ -399,9 +399,9 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     stem: 'Dönel kavşağa girmek üzere olan sürücü ne yapmalıdır?',
     options: [
       'İçeride dönmekte olan araçlara yol verir',
-      'Doğrudan hızla girer',
-      'Kornaya basıp girer',
-      'Geri manevra yapar',
+      'Doğrudan ve hızla kavşağa girer',
+      'Kornaya basıp içeridekileri uyararak girer',
+      'Kavşak girişinde geri manevra yapar',
     ],
     answerIndex: 0,
     explanation:
@@ -450,10 +450,10 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Şerit değiştirmeden hemen önce sürücünün yapması gereken nedir?',
     options: [
-      'Sadece hızlanmak',
+      'Yalnızca hızlanıp boşluğa girmek',
       'Ayna kontrolü yapıp dönüş sinyali vermek',
-      'Farları yakıp söndürmek',
-      'El frenini çekmek',
+      'Farları birkaç kez yakıp söndürerek uyarmak',
+      'El frenini yarıya kadar çekmek',
     ],
     answerIndex: 1,
     explanation:
@@ -476,8 +476,8 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Yol üzerindeki devamlı (kesiksiz) çizgi sürücüye ne anlatır?',
     options: [
-      'Sadece geceleri geçerli olduğunu',
-      'Park alanını gösterdiğini',
+      'Yalnızca gece saatlerinde geçerli olduğunu',
+      'Park edilebilecek alanı gösterdiğini',
       'İstenildiği an geçilebileceğini',
       'Geçilerek şerit değiştirilemeyeceğini',
     ],
@@ -938,7 +938,7 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     topic: 'otoyol',
     difficulty: 'kolay',
     stem: 'Aşağıdakilerden hangisi otoyola giremez?',
-    options: ['Otomobiller', 'Yayalar, traktörler ve motorsuz araçlar', 'Otobüsler', 'Kamyonlar'],
+    options: ['Otomobiller ve minibüsler', 'Traktörler ve motorsuz araçlar', 'Otobüsler ve kamyonlar', 'Motosikletler ve otomobiller'],
     answerIndex: 1,
     explanation:
       'Otoyollara yayalar, motorsuz araçlar, traktör ve iş makineleri gibi düşük hızlı unsurlar giremez; bu yollar hızlı motorlu taşıt trafiği içindir.',
@@ -960,14 +960,14 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Taksi, otobüs, kamyon gibi ticari araç veya kamu hizmeti aracı sürücüleri için kandaki yasal alkol sınırı nedir?',
     options: [
-      '0.00 promil; hiç alkollü araç kullanamazlar',
+      '0.00 promil',
       '0.20 promil',
       '0.50 promil',
       '1.00 promil',
     ],
     answerIndex: 0,
     explanation:
-      'Ticari araç ve kamu hizmeti aracı sürücüleri alkollü olarak hiç araç kullanamaz; bu sürücüler için yasal sınır 0.00 promildir.',
+      'Ticari araç ve kamu hizmeti aracı sürücüleri alkollü olarak hiç araç kullanamaz; bu sürücüler için yasal sınır 0.00 promildir. Hiç alkollü araç kullanamazlar.',
     whyWrong: [
       '0.50 promil yalnızca hususi otomobil sürücülerine tanınan sınırdır.',
       '0.20 ve 1.00 promil mevzuatta bu sürücüler için tanımlı değerler değildir.',
@@ -986,10 +986,10 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Ticari araç (taksi, minibüs, otobüs, kamyon) kullanan sürücüler için yasal alkol sınırı nedir?',
     options: [
+      '0.20 promil',
       '0.50 promil',
+      '0.00 promil',
       '0.80 promil',
-      '0.00 promil (alkollü araç kullanamazlar)',
-      '1.00 promil',
     ],
     answerIndex: 2,
     explanation:
@@ -1422,7 +1422,7 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Zorunlu Trafik Sigortası (Zorunlu Mali Sorumluluk Sigortası) neyi karşılar?',
     options: [
-      'Kazada karşı tarafa (üçüncü kişilere) verilen zararları',
+      'Kazada karşı tarafa (üçüncü kişilere)',
       'Sürücünün kendi aracının hasarını',
       'Aracın çalınmasını',
       'Motorun arızasını',

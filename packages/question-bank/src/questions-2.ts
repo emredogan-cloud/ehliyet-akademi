@@ -32,7 +32,7 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     topic: 'isaretler',
     difficulty: 'orta',
     stem: 'Kırmızı kenarlı daire içindeki işaretler genel olarak neyi anlatır?',
-    options: ['Bilgilendirme', 'Yasaklama/kısıtlama', 'Mecburiyet', 'Tehlike uyarısı'],
+    options: ['Bilgilendirme', 'Yasaklama/kısıtlama', 'Mecburiyet', 'Tehlike uyarısı ve dikkat'],
     answerIndex: 1,
     explanation:
       'Kırmızı kenarlı daireler yasaklama/kısıtlama bildirir (ör. hız sınırı, sollama yasağı). Mavi daireler mecburiyet, üçgenler tehlike uyarısıdır.',
@@ -61,10 +61,10 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Kırmızı ışıkta bekleyen sürücü, yeşil yandığında ilk olarak ne yapmalıdır?',
     options: [
-      'Hemen gaza basıp hızla kalkmak',
-      'Korna çalıp öndekini uyarmak',
-      'Kavşağın boşaldığını ve yayaların geçtiğini kontrol edip hareket etmek',
-      'Sarı ışık yanar yanmaz harekete geçmek',
+      'Hemen gaza basıp bir an önce hızla kalkmak',
+      'Korna çalıp öndeki sürücüyü hareket etmeye zorlamak',
+      'Kavşağın boşaldığını kontrol edip hareket etmek',
+      'Sarı ışık yanar yanmaz beklemeden harekete geçmek',
     ],
     answerIndex: 2,
     explanation:
@@ -160,9 +160,9 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Aşağıdaki yerlerin hangisinde öndeki aracı geçmek (sollama) yasaktır?',
     options: [
-      'Görüşün açık olduğu düz yolda',
-      'Bölünmüş yolun sol şeridinde',
-      'Şehirlerarası bölünmüş yolun sağ şeridinde',
+      'Görüşün açık olduğu düz ve geniş yollarda',
+      'Bölünmüş yolun sol şeridinde ilerlerken',
+      'Şehirlerarası bölünmüş bir yolun sağ şeridinde',
       'Tepe üstü ve dönemeçlerde (görüş yetersizken)',
     ],
     answerIndex: 3,
@@ -179,10 +179,10 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Işıksız yaya geçidine yaklaşan sürücü, geçitte yaya varsa ne yapmalıdır?',
     options: [
-      'Korna çalıp geçmek',
+      'Korna çalarak yayayı uyarıp geçmek',
       'Farları yakıp yayayı uyararak geçmek',
       'Yavaşlamak, gerekiyorsa durup yol vermek',
-      'Hızlanıp geçmek',
+      'Hızlanıp yaya geçide girmeden önce geçmek',
     ],
     answerIndex: 2,
     explanation:
@@ -198,10 +198,10 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Aşağıdakilerden hangisi duraklamanın (kısa süreli durmanın) yasak olduğu yerlerdendir?',
     options: [
-      'Geniş ve açık cadde kenarı',
-      'Kavşaklara ve yaya geçitlerine yakın (5 metre içi) alanlar',
-      'Otopark girişinin karşı kaldırımı',
-      'Şehirlerarası yolun park cebi',
+      'Geniş ve açık cadde kenarındaki boş alanlar',
+      'Kavşaklara ve yaya geçitlerine yakın alanlar',
+      'Otopark girişinin karşısındaki kaldırım kenarı',
+      'Şehirlerarası yolun kenarındaki park cebi',
     ],
     answerIndex: 1,
     explanation:
@@ -269,10 +269,10 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Yerleşim yerlerinde gereksiz korna çalmak için aşağıdakilerden hangisi doğrudur?',
     options: [
-      'Serbesttir',
-      'Yalnız gündüz serbesttir',
+      'Her saatte ve her yerde serbesttir',
+      'Yalnızca gündüz saatlerinde serbesttir',
       'Trafiğin yoğun olduğu saatlerde serbesttir',
-      'Gürültü kirliliği yaratır ve zorunlu uyarı dışında yasaktır',
+      'Gürültü kirliliği yaratır ve yasaktır',
     ],
     answerIndex: 3,
     explanation:
@@ -322,7 +322,7 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Sıcak suyla haşlanma gibi bir yanıkta ilk yapılması gereken nedir?',
     options: [
-      'Yanık bölgeye diş macunu/yoğurt sürmek',
+      'Yanık bölgeye diş macunu ya da yoğurt sürüp üzerini kapatmak',
       'Bölgeyi en az 15-20 dakika soğuk (akan) suyla soğutmak',
       'Su toplamış kabarcıkları patlatmak',
       'Yanık bölgeye doğrudan buz koyup ovmak',
@@ -341,14 +341,14 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Kol veya bacakta kırık şüphesi olan kazazedeye ilk yardımda ne yapılır?',
     options: [
-      'Kırık bölge düzeltilmeye çalışılır',
+      'Kırık bölge elle düzeltilmeye çalışılıp sıkıca sarılır',
       'Kazazede hemen ayağa kaldırılır',
-      'Bölge bulunduğu şekilde tespit edilip (sabitleyip) hareketsiz kılınır',
+      'Bölge bulunduğu şekilde sabitlenir (tespit edilir)',
       'Kırık bölgeye sıcak kompres uygulanır',
     ],
     answerIndex: 2,
     explanation:
-      'Kırıkta bölge asla düzeltilmeye çalışılmaz; bulunduğu pozisyonda atel benzeri malzemeyle tespit edilir ve hareket ettirilmez.',
+      'Kırıkta bölge asla düzeltilmeye çalışılmaz; bulunduğu pozisyonda atel benzeri malzemeyle tespit edilir ve hareket ettirilmez. Hareketsiz kılınır.',
     badge: 'official',
     review: 'draft',
     sourceRef: SRC_FA,
@@ -362,8 +362,8 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     options: [
       'Oturur pozisyon',
       'Yüzüstü pozisyon',
-      'Baş ve omuzlar yükseltilip yarı oturur pozisyon',
-      'Sırtüstü yatırılıp bacaklar ~30 cm yükseltilir (şok pozisyonu)',
+      'Baş ve omuzlar yükseltilip yarı oturur pozisyon verilir',
+      'Sırtüstü yatırılıp bacaklar yükseltilir',
     ],
     answerIndex: 3,
     explanation:
@@ -382,7 +382,7 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
       'Her durumda hemen çıkarılır',
       'Kollarından çekilerek hızla çıkarılır',
       'Boyun ve omurga desteklenmeden, oturduğu yerden doğrudan kaldırılarak çıkarılır',
-      'Yangın/patlama gibi hayati tehlike varsa, omurga korunarak (ör. Rautek yöntemiyle) çıkarılır',
+      'Hayati tehlike varsa, omurga korunarak (Rautek yöntemiyle) çıkarılır',
     ],
     answerIndex: 3,
     explanation:
@@ -401,7 +401,7 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
       'Su içirilir',
       'Karına bası (Heimlich manevrası) uygulanır',
       'Sırtüstü yatırılıp beklenir',
-      'Ağzına parmak sokularak cisim aranır',
+      'Ağzına parmak sokularak yabancı cisim aranır ve çıkarılmaya çalışılır',
     ],
     answerIndex: 1,
     explanation:
@@ -419,8 +419,8 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     options: [
       'Ayağa kaldırılıp yürütülür',
       'Yüzüne su dökülür ve sarsılır',
-      'Koklaması için kolonya/amonyak tutulur',
-      'Sırtüstü yatırılır, ayakları yükseltilir, sıkan giysiler gevşetilir',
+      'Koklaması için kolonya ya da amonyak tutulup bekletilir',
+      'Sırtüstü yatırılıp ayakları yükseltilir',
     ],
     answerIndex: 3,
     explanation:
@@ -451,7 +451,7 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     topic: 'elektrik',
     difficulty: 'kolay',
     stem: 'Farlardan biri veya sinyal lambası çalışmıyorsa ilk olarak ne kontrol edilmelidir?',
-    options: ['Motor yağı', 'İlgili sigorta ve ampul', 'Fren hidroliği', 'Lastik basıncı'],
+    options: ['Motor yağı seviyesi', 'İlgili sigorta ve ampul', 'Fren hidroliği seviyesi', 'Lastik hava basıncı'],
     answerIndex: 1,
     explanation:
       'Aydınlatma/sinyal arızalarında ilk bakılacak yer ilgili sigorta ve ampuldür; sigorta atmışsa aynı amper değerinde yenisiyle değiştirilir.',
@@ -485,9 +485,9 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Soğutma sistemindeki antifrizin görevi nedir?',
     options: [
-      'Yakıtı temizlemek',
-      'Lastik basıncını korumak',
-      'Motor yağının viskozitesini artırmak',
+      'Yakıt deposunda biriken suyu ayırıp motora temiz yakıt göndermek',
+      'Lastik iç basıncını sabit tutup yol tutuşunu korumak',
+      'Motor yağının viskozitesini artırıp yağlamayı güçlendirmek',
       'Soğutma suyunun kışın donmasını, yazın kolay kaynamasını önlemek',
     ],
     answerIndex: 3,
@@ -506,9 +506,9 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Trafikte başka bir sürücü hatalı davranıp önünüze kırdığında trafik adabına uygun davranış hangisidir?',
     options: [
-      'Yaklaşıp selektör ve kornayla karşılık vermek',
-      'Aynı hatayı ona yaparak ders vermek',
-      'Uzun far yakıp arkasından yakın takip etmek',
+      'Yaklaşıp selektör ve kornayla aynı biçimde karşılık vermeye çalışmak',
+      'Aynı hatayı ona da yaparak yaptığını anlamasını sağlamak',
+      'Uzun far yakıp arkasından yakın takibe geçmek',
       'Sakin kalmak, takip mesafesini açmak ve güvenliği önceliklendirmek',
     ],
     answerIndex: 3,
@@ -525,10 +525,10 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Trafikte "empati" aşağıdakilerden hangisiyle en iyi açıklanır?',
     options: [
-      'Kendi hakkını sonuna kadar savunmak',
-      'Diğer yol kullanıcılarının durumunu anlamaya çalışıp ona göre davranmak',
-      'Yalnızca yayaları düşünmek',
-      'Kurallara herkesten daha sıkı uymak',
+      'Kendi hakkını sonuna kadar savunup hiç taviz vermemek',
+      'Diğer yol kullanıcılarının durumunu anlayıp ona göre davranmak',
+      'Yalnızca yayaları düşünüp diğer sürücülerin durumunu göz ardı etmek',
+      'Kurallara herkesten daha sıkı uyup başkalarını uyarmak',
     ],
     answerIndex: 1,
     explanation:

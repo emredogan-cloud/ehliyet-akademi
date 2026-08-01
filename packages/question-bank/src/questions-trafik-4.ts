@@ -16,12 +16,12 @@ export const TRAFIK_QUESTIONS_4: QuestionInput[] = [
     options: [
       'Yol boş olduğu sürece en sol şeridi',
       'Dilediği herhangi bir şeridi',
-      'Gidişe ayrılan en sağdaki şeridi; sol şeritleri geçişlerde',
+      'Gidişe ayrılan en sağdaki şeridi',
       'Sürekli orta şeridi',
     ],
     answerIndex: 2,
     explanation:
-      'Şerit disiplininin temeli sağdan seyretmektir: yerleşim yeri dışında araçlar gidişe ayrılan en sağ şeridi izler, soldaki şeritler ise geçiş (sollama) gibi manevralar için kullanılır.',
+      'Şerit disiplininin temeli sağdan seyretmektir: yerleşim yeri dışında araçlar gidişe ayrılan en sağ şeridi izler, soldaki şeritler ise geçiş (sollama) gibi manevralar için kullanılır. Sol şeritleri geçişlerde.',
     whyWrong: [
       'Sol şeridi sürekli işgal etmek geçiş yapacak araçları engeller ve kural ihlalidir.',
       'Şerit seçimi keyfe bağlı değildir; sağ şerit esas, sol şeritler manevra içindir.',
@@ -69,11 +69,11 @@ export const TRAFIK_QUESTIONS_4: QuestionInput[] = [
       'Trafiği hızlandırdığı için yararlıdır',
       'Deneyimli sürücüler için sakıncasızdır',
       'Sadece otoyolda sakıncalıdır',
-      'Kural ihlalidir; kaza riskini ciddi biçimde artırır',
+      'Kural ihlalidir',
     ],
     answerIndex: 3,
     explanation:
-      'Trafiği tehlikeye düşürecek şekilde art arda şerit değiştirmek yasaktır. Bu davranış diğer sürücülerin öngöremeyeceği ani manevralar yarattığı için zincirleme kazalara zemin hazırlar.',
+      'Trafiği tehlikeye düşürecek şekilde art arda şerit değiştirmek yasaktır. Bu davranış diğer sürücülerin öngöremeyeceği ani manevralar yarattığı için zincirleme kazalara zemin hazırlar. Kaza riskini ciddi biçimde artırır.',
     whyWrong: [
       'Slalom trafiği hızlandırmaz; akışı bozar ve ani fren zincirine yol açar.',
       'Deneyim, kuralları esnetme hakkı vermez.',
@@ -144,13 +144,13 @@ export const TRAFIK_QUESTIONS_4: QuestionInput[] = [
     stem: 'Trafik mevzuatındaki tanıma göre "geçiş yolu" aşağıdakilerden hangisidir?',
     options: [
       'İki şehri birbirine bağlayan ana yol',
-      'Araçların bir mülke (bina, arsa, tesis) girip çıkması için yapılmış yol bölümü',
+      'Araçların bir mülke (bina, arsa, tesis)',
       'Yayaların karşıya geçmesi için ayrılmış alan',
       'Otoyolun hizmet tesislerine ayrılan bölümü',
     ],
     answerIndex: 1,
     explanation:
-      'Geçiş yolu, taşıtların karayolundan ayrılıp bir mülke girmesine ya da mülkten çıkıp karayoluna katılmasına yarayan bağlantı bölümüdür; bu tanım park yasakları gibi kuralların da dayanağıdır.',
+      'Geçiş yolu, taşıtların karayolundan ayrılıp bir mülke girmesine ya da mülkten çıkıp karayoluna katılmasına yarayan bağlantı bölümüdür; bu tanım park yasakları gibi kuralların da dayanağıdır. Girip çıkması için yapılmış yol bölümü.',
     whyWrong: [
       'Şehirleri bağlayan yollar devlet yolu/ana yol kavramlarına girer.',
       'Yayalara ayrılan alan yaya geçididir.',
@@ -192,7 +192,7 @@ export const TRAFIK_QUESTIONS_4: QuestionInput[] = [
       'Kısa süreli olması şartıyla serbesttir',
       'Sadece gece yasaktır',
       'Dörtlü ikaz yakılırsa serbesttir',
-      'Yasaktır; geçiş yollarının önü ve üzeri park edilemeyen yerlerdendir',
+      'Yasaktır',
     ],
     answerIndex: 3,
     explanation:
@@ -319,13 +319,13 @@ export const TRAFIK_QUESTIONS_4: QuestionInput[] = [
     stem: 'Gece karanlık bir yolda yalnızca park lambaları yanar durumda seyretmek için ne söylenebilir?',
     options: [
       'Şehir içinde yeterlidir',
-      'Yasaktır; park lambaları seyir aydınlatması değildir',
+      'Yasaktır',
       'Yakıt tasarrufu sağladığı için önerilir',
       'Kısa mesafelerde sakıncası yoktur',
     ],
     answerIndex: 1,
     explanation:
-      'Park lambaları aracın yalnızca yerini belli etmek içindir; yolu aydınlatmaz ve yeterli görünürlük sağlamaz. Gece seyirde kısa veya (uygun koşullarda) uzun huzmeli farlar kullanılmalıdır.',
+      'Park lambaları aracın yalnızca yerini belli etmek içindir; yolu aydınlatmaz ve yeterli görünürlük sağlamaz. Gece seyirde kısa veya (uygun koşullarda) uzun huzmeli farlar kullanılmalıdır. Park lambaları seyir aydınlatması değildir.',
     whyWrong: [
       'Şehir içinde de seyir için en az kısa huzmeli far gerekir.',
       'Lamba seçimi yakıt ekonomisiyle değil, güvenli görüş kuralıyla belirlenir.',
@@ -431,7 +431,7 @@ export const TRAFIK_QUESTIONS_4: QuestionInput[] = [
       'Duraklama yasağı parkı kapsamaz; park edebilir',
       'Sürücü araçta kalırsa park edebilir',
       'Yarım saati geçmemek şartıyla park edebilir',
-      'Park edemez; duraklamanın yasak olduğu her yerde park da yasaktır',
+      'Park edemez',
     ],
     answerIndex: 3,
     explanation:
@@ -557,14 +557,14 @@ export const TRAFIK_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Hemzemin geçidin karşı tarafında trafik durmuş, ilerleme imkânı yoktur. Geçide yaklaşan sürücü ne yapmalıdır?',
     options: [
-      'Geçidin öncesinde durmalı; rayların üzerinde kalma ihtimali varsa geçide hiç girmemelidir',
+      'Geçidin öncesinde durmalı',
       'Geçide girip sıranın açılmasını rayların üzerinde beklemelidir',
       'Karşı şeridi kullanarak kuyruğun önüne geçmelidir',
       'Korna çalarak öndeki araçları ilerlemeye zorlamalıdır',
     ],
     answerIndex: 0,
     explanation:
-      'Hemzemin geçit ancak tek hamlede, duraksamadan geçilebilecekse geçilir. Karşı taraf tıkalıyken geçide giren araç raylar üzerinde mahsur kalabilir; bu, tren kazalarının en ölümcül senaryosudur.',
+      'Hemzemin geçit ancak tek hamlede, duraksamadan geçilebilecekse geçilir. Karşı taraf tıkalıyken geçide giren araç raylar üzerinde mahsur kalabilir; bu, tren kazalarının en ölümcül senaryosudur. Rayların üzerinde kalma ihtimali varsa geçide hiç girmemelidir.',
     whyWrong: [
       'Raylar üzerinde beklemek, gelen trene karşı kaçış imkânı bırakmaz.',
       'Karşı şeridi kullanmak hem sollama yasağını ihlal eder hem de tehlikeyi büyütür.',
@@ -661,7 +661,7 @@ export const TRAFIK_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Bir aracı halatla çekerken iki araç arasındaki bağlantı için hangi kural geçerlidir?',
     options: [
-      'Bağlantı uzunluğu 5 metreyi geçemez; 2,5 metreden uzunsa üzerine kırmızı bez veya yansıtıcı takılır',
+      'Bağlantı uzunluğu 5 metreyi geçemez',
       'Bağlantı en az 10 metre olmalıdır',
       'Bağlantı uzunluğu için bir sınır yoktur',
       'Bağlantıya yalnızca beyaz bez bağlanır',
@@ -969,11 +969,11 @@ export const TRAFIK_QUESTIONS_4: QuestionInput[] = [
       'Mümkün olan en dar kavis',
       'Kavşak merkezinin üzerinden kestirme',
       'Önce sağa açılıp sonra keskin dönüş',
-      'Geniş kavis; kavşak merkezinin dışından dolaşarak',
+      'Geniş kavis',
     ],
     answerIndex: 3,
     explanation:
-      'Kural kısaca "sağa dar, sola geniş"tir: sola dönüş geniş kavisle yapılır ki araç karşı yönden gelen trafiğin şeridine erken girmesin ve dönülen yolun doğru şeridine yerleşsin.',
+      'Kural kısaca "sağa dar, sola geniş"tir: sola dönüş geniş kavisle yapılır ki araç karşı yönden gelen trafiğin şeridine erken girmesin ve dönülen yolun doğru şeridine yerleşsin. Kavşak merkezinin dışından dolaşarak.',
     whyWrong: [
       'Dar kavisle sola dönen araç karşı akımın şeridini kesmiş olur.',
       'Kavşak merkezinden kestirme, dönüş çizgilerini ve karşı akımı ihlal eder.',
@@ -1098,11 +1098,11 @@ export const TRAFIK_QUESTIONS_4: QuestionInput[] = [
       'Sıkışıklığı azalttığı için doğrudur',
       'Kısa mesafede yapılırsa serbesttir',
       'Yalnızca yerli plakalı araçlara serbesttir',
-      'İhlaldir; emniyet şeridi acil durumlar ve görevli araçlar için boş kalmalıdır',
+      'İhlaldir',
     ],
     answerIndex: 3,
     explanation:
-      'Emniyet şeridi; arızalanan araçlar, ambulans, itfaiye ve müdahale ekipleri için ayrılmıştır. Sıkışıklıkta bu şeritten ilerlemek hem ağır bir ihlaldir hem de yardımın kazazedeye ulaşmasını geciktirir.',
+      'Emniyet şeridi; arızalanan araçlar, ambulans, itfaiye ve müdahale ekipleri için ayrılmıştır. Sıkışıklıkta bu şeritten ilerlemek hem ağır bir ihlaldir hem de yardımın kazazedeye ulaşmasını geciktirir. Emniyet şeridi acil durumlar ve görevli araçlar için boş kalmalıdır.',
     whyWrong: [
       'Emniyet şeridini işgal etmek sıkışıklığı çözmez; acil geçiş yolunu kapatır.',
       'Mesafenin kısalığı ihlali ortadan kaldırmaz.',
@@ -1167,7 +1167,7 @@ export const TRAFIK_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Muayene süresi geçtiği hâlde muayenesi yaptırılmamış bir araçla trafiğe çıkan sürücü için hangisi doğrudur?',
     options: [
-      'Ceza uygulanır ve araç muayeneye sevk edilir; süresi geçmiş araçla trafiğe çıkılamaz',
+      'Ceza uygulanır ve araç muayeneye sevk edilir',
       'İlk denetimde yalnızca sözlü uyarı yapılır',
       'Araç hususi ise yaptırım uygulanmaz',
       'Muayene, isteğe bağlı bir işlemdir',
@@ -1196,7 +1196,7 @@ export const TRAFIK_QUESTIONS_4: QuestionInput[] = [
       'Yalnızca şehirlerarası yolda kullanılamaz',
       'Sahibi deneyimliyse kullanılabilir',
       'Kasko varsa trafik sigortasına gerek kalmaz',
-      'Trafiğe çıkarılamaz; tespit edilirse trafikten men edilir',
+      'Trafiğe çıkarılamaz',
     ],
     answerIndex: 3,
     explanation:

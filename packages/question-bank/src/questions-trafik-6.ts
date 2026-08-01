@@ -121,7 +121,7 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
       'Yol boşsa serbesttir',
       'Gece serbesttir',
       'Yavaş dönülürse serbesttir',
-      'Yasaktır; kırmızı ışık o yöndeki tüm hareketleri durdurur',
+      'Yasaktır',
     ],
     answerIndex: 3,
     explanation:
@@ -352,14 +352,14 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Önünüzde ağır yüklü bir kamyonu takip ediyorsunuz. Takip mesafesi konusunda neden normalden daha dikkatli olmalısınız?',
     options: [
-      'Yüklü kamyon geç yavaşlar ve önünü göremezsiniz; ayrıca kasadan malzeme düşebileceği için daha uzun takip mesafesi gerekir',
+      'Yüklü kamyon geç yavaşlar ve önünü göremezsiniz',
       'Kamyon hızlı durduğu için ona çok yaklaşmak gerekir',
       'Kamyonun arkasında durmak yakıt tasarrufu sağlar diye yakın durmak gerekir',
       'Kamyonu ürkütmemek için tampona yakın gitmek gerekir',
     ],
     answerIndex: 0,
     explanation:
-      'Yüklü kamyonun arkasında ilerlerken hem önünüzü göremezsiniz hem de kamyonun kasasından taş veya malzeme düşebilir. Ağır araç uzun mesafede durduğundan, yeterli takip mesafesi hem görüş hem tepki payı sağlar.',
+      'Yüklü kamyonun arkasında ilerlerken hem önünüzü göremezsiniz hem de kamyonun kasasından taş veya malzeme düşebilir. Ağır araç uzun mesafede durduğundan, yeterli takip mesafesi hem görüş hem tepki payı sağlar. Ayrıca kasadan malzeme düşebileceği için daha uzun takip mesafesi gerekir.',
     whyWrong: [
       'Yüklü ağır araç hızlı değil, geç durur; yaklaşmak tehlikelidir.',
       'Yakın takip yakıt için değerlendirilecek bir davranış değildir ve risklidir.',
@@ -432,12 +432,12 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Bütün ışıkları söndürüp aracı karanlıkta bırakmalıdır',
       'Uzun farları açık bırakmalıdır',
-      'Aracın görülebilmesi için park (durum) lambalarını yakmalı, gerekiyorsa yansıtıcı ile işaretlemelidir',
+      'Aracın görülebilmesi için park (durum)',
       'Dörtlü ikazı sabaha kadar yakık tutup gitmelidir',
     ],
     answerIndex: 2,
     explanation:
-      'Aydınlatması yetersiz yolda karanlıkta park eden araç, arkadan gelen için görünmez bir engeldir. Aracın belli olması için park (durum) lambaları yakılır; gerekirse yansıtıcı veya işaretle konumu belirtilir.',
+      'Aydınlatması yetersiz yolda karanlıkta park eden araç, arkadan gelen için görünmez bir engeldir. Aracın belli olması için park (durum) lambaları yakılır; gerekirse yansıtıcı veya işaretle konumu belirtilir. Lambalarını yakmalı, gerekiyorsa yansıtıcı ile işaretlemelidir.',
     whyWrong: [
       'Bütün ışıkları söndürmek aracı görünmez kılar ve çarpışmaya yol açar.',
       'Uzun far park için kullanılmaz; karşıdan gelenleri kamaştırır.',
@@ -510,13 +510,13 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Sürücü belgesi olmayan bir yakınınızın aracınızı kullanmasına izin vermeniz nasıl değerlendirilir?',
     options: [
       'Kısa mesafe için sorun değildir',
-      'Yasaktır; belgesiz kişiye araç kullandıran araç sahibi de sorumlu tutulur ve cezalandırılır',
+      'Yasaktır',
       'Araç sahibinin sorumluluğu yoktur, yalnızca kullanan cezalıdır',
       'Boş ve tenha yollarda serbesttir',
     ],
     answerIndex: 1,
     explanation:
-      'Sürücü belgesi olmayan kişiye araç kullandırmak yasaktır. Sadece kullanan değil, aracı ona veren sahibi de sorumlu tutularak cezalandırılır; çünkü ehliyetsiz sürücü trafikte ciddi risk oluşturur.',
+      'Sürücü belgesi olmayan kişiye araç kullandırmak yasaktır. Sadece kullanan değil, aracı ona veren sahibi de sorumlu tutularak cezalandırılır; çünkü ehliyetsiz sürücü trafikte ciddi risk oluşturur. Belgesiz kişiye araç kullandıran araç sahibi de sorumlu tutulur ve cezalandırılır.',
     whyWrong: [
       'Mesafenin kısalığı ehliyet zorunluluğunu kaldırmaz.',
       'Aracı veren de yasal olarak sorumludur; sorumluluk yalnız sürücüde değildir.',
@@ -665,7 +665,7 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Kenarları kırmızı üçgen bir levha üzerinde keskin bir viraj sembolü gören sürücü ne anlamalıdır?',
     options: [
-      'İleride tehlikeli bir viraj olduğunu; hızını azaltıp dikkatli olması gerektiğini',
+      'İleride tehlikeli bir viraj olduğunu',
       'İleride park yeri bulunduğunu',
       'Virajda sollamanın serbest olduğunu',
       'Yolun bittiğini',
@@ -745,12 +745,12 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
     options: [
       'İleride hayvanat bahçesi bulunduğunu',
       'Bu yolda hayvan taşımanın yasak olduğunu',
-      'Yola hayvan çıkabileceğini; sürücünün hızını azaltıp dikkatli olması gerektiğini',
+      'Yola hayvan çıkabileceğini',
       'Hayvanların bu yolda serbestçe otlayabileceğini',
     ],
     answerIndex: 2,
     explanation:
-      'Hayvan sembollü uyarı levhaları, o kesimde yola aniden hayvan çıkabileceğini bildirir. Sürücü hızını azaltıp uyanık olmalı; özellikle alacakaranlık ve gece saatlerinde daha dikkatli sürmelidir.',
+      'Hayvan sembollü uyarı levhaları, o kesimde yola aniden hayvan çıkabileceğini bildirir. Sürücü hızını azaltıp uyanık olmalı; özellikle alacakaranlık ve gece saatlerinde daha dikkatli sürmelidir. Sürücünün hızını azaltıp dikkatli olması gerektiğini.',
     whyWrong: [
       'Levha bir tesis tanıtımı değil, tehlike uyarısıdır.',
       'Hayvan taşıma yasağı bu işaretle bildirilmez.',
@@ -822,13 +822,13 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Yalnızca engelli araçlarına ayrıldığı işaretlenmiş bir park yerine, engelli olmayan bir sürücünün aracını park etmesi nasıl değerlendirilir?',
     options: [
       'Kısa süreli ise sorun değildir',
-      'Yasaktır; bu yerler engelli sürücülerin ihtiyacı için ayrılmıştır ve işgali cezalandırılır',
+      'Yasaktır',
       'Boşsa herkes kullanabilir',
       'Gece serbesttir',
     ],
     answerIndex: 1,
     explanation:
-      'Engelliler için ayrılmış park yerleri, hareket kısıtı olan sürücülerin erişimini kolaylaştırmak için düzenlenmiştir. Bu yerlere yetkisiz park etmek yasaktır ve cezai yaptırıma bağlanmıştır.',
+      'Engelliler için ayrılmış park yerleri, hareket kısıtı olan sürücülerin erişimini kolaylaştırmak için düzenlenmiştir. Bu yerlere yetkisiz park etmek yasaktır ve cezai yaptırıma bağlanmıştır. Bu yerler engelli sürücülerin ihtiyacı için ayrılmıştır ve işgali cezalandırılır.',
     whyWrong: [
       'Sürenin kısalığı, ihtiyaç sahibinin yerini işgal etmeyi haklı çıkarmaz.',
       'Yerin boş görünmesi, o an gelecek engelli sürücünün hakkını ortadan kaldırmaz.',
@@ -849,7 +849,7 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Kaldırım genişse serbesttir',
       'Trafiğe engel olmuyorsa serbesttir',
-      'Yasaktır; kaldırım yayalarındır, park eden araç yayaları taşıt yoluna inmek zorunda bırakır',
+      'Yasaktır',
       'Yalnızca ticari araçlar için yasaktır',
     ],
     answerIndex: 2,
@@ -977,7 +977,7 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Uyuşturucu ya da uyku veren, sersemlik yapan bir madde veya ilaç etkisindeyken araç kullanmak ile ilgili hangisi doğrudur?',
     options: [
-      'Yasaktır ve ağır yaptırıma bağlıdır; bu maddeler algı, dikkat ve tepki hızını bozar',
+      'Yasaktır ve ağır yaptırıma bağlıdır',
       'Az miktarda alınırsa sorun olmaz',
       'Yalnızca uzun yolda sakıncalıdır',
       'Reçeteli ilaç her durumda sürüşe engel değildir',
@@ -1006,7 +1006,7 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
       'Hamileler kemer takmamalıdır',
       'Kemerin karın bölgesinin tam üzerinden geçmesi gerekir',
       'Kemer yalnızca omuzdan takılmalı, kucak kısmı kullanılmamalıdır',
-      'Kemer takılmalı; kucak kemeri karnın altından, kalça üzerinden; omuz kemeri göğüs ortasından geçecek şekilde konumlandırılmalıdır',
+      'Kemer takılmalı',
     ],
     answerIndex: 3,
     explanation:
@@ -1134,13 +1134,13 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Bölünmüş bir yolda gidiş ve geliş yönlerini ayıran refüjün (orta ayırıcının) üzerinden geçerek karşı yöne geçmek nasıl değerlendirilir?',
     options: [
       'Trafik azsa serbesttir',
-      'Yasaktır; refüj iki yönü ayırmak içindir, üzerinden geçmek karşı yöne çıkıp kafa kafaya çarpışma riski doğurur',
+      'Yasaktır',
       'Acele eden sürücüler için serbesttir',
       'Refüj alçaksa serbesttir',
     ],
     answerIndex: 1,
     explanation:
-      'Refüj, karşılıklı yönleri fiziksel olarak ayırarak kafa kafaya çarpışmaları önler. Refüj üzerinden karşı yöne geçmek, aracı ters yönden gelen trafiğin karşısına çıkarır ve bu yüzden yasaktır; karşı yöne ancak dönüşe izin verilen açıklıklardan geçilir.',
+      'Refüj, karşılıklı yönleri fiziksel olarak ayırarak kafa kafaya çarpışmaları önler. Refüj üzerinden karşı yöne geçmek, aracı ters yönden gelen trafiğin karşısına çıkarır ve bu yüzden yasaktır; karşı yöne ancak dönüşe izin verilen açıklıklardan geçilir. Refüj iki yönü ayırmak içindir, üzerinden geçmek karşı yöne çıkıp kafa kafaya çarpışma riski doğurur.',
     whyWrong: [
       'Trafiğin azlığı, karşı yöne çıkmanın yarattığı ölümcül riski değiştirmez.',
       'Acele bir gerekçe değildir; kural herkes için geçerlidir.',
@@ -1238,7 +1238,7 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Öndeki aracı, hızlanıp yol vermesi için farla (selektörle) sürekli rahatsız eden, sıkıştıran bir sürücü için ne söylenebilir?',
     options: [
       'Trafiği hızlandırdığı için doğru davranıştır',
-      'Yanlış ve tehlikelidir; baskı ve sıkıştırma kaza riskini artırır, geçiş hakkı da doğurmaz',
+      'Yanlış ve tehlikelidir',
       'Yalnızca gündüz sakıncalıdır',
       'Öndeki araç yavaşsa serbesttir',
     ],
@@ -1263,10 +1263,10 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Bir kavşakta sağa veya sola dönecek sürücü dönüş sinyalini ne zaman vermelidir?',
     options: [
-      'Dönüşe başladığı anda',
-      'Dönüş bittikten sonra',
-      'Dönüşe girmeden yeterince önce, arkadan ve yandan gelenlerin niyeti anlayabileceği zamanda',
-      'Yalnızca trafik varsa',
+      'Direksiyonu çevirmeye başladığı anda, dönüşle eş zamanlı olarak',
+      'Dönüş tamamlandıktan hemen sonra, şeride yerleşirken',
+      'Dönüşe girmeden yeterince önce, niyeti anlaşılacak zamanda',
+      'Yalnızca arkada yakın takip eden bir araç varsa',
     ],
     answerIndex: 2,
     explanation:
@@ -1369,7 +1369,7 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Her zaman lastik tekerlekli araçta',
       'Sağdan gelene bakılır, tramvayın türü önemli değildir',
-      'Rayları üzerinde hareket eden tramvayda; diğer araçlar ona yol verir',
+      'Rayları üzerinde hareket eden tramvayda',
       'Kavşağa önce girene',
     ],
     answerIndex: 2,
@@ -1393,14 +1393,14 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'DUR (sekizgen) levhası ile Yol Ver (ters üçgen) levhasının sürücüye yüklediği yükümlülük arasındaki temel fark nedir?',
     options: [
-      'DUR levhasında mutlaka tam durmak gerekir; Yol Ver levhasında ise yavaşlayıp gerekiyorsa yol verilir, yol boşsa durmadan geçilebilir',
+      'DUR levhasında mutlaka tam durmak gerekir',
       'İkisi de mutlaka tam durmayı gerektirir',
       'İkisinde de durmadan geçilebilir',
       'DUR yalnızca gece, Yol Ver yalnızca gündüz geçerlidir',
     ],
     answerIndex: 0,
     explanation:
-      'DUR levhasında sürücü, yol boş olsa bile durma çizgisinde tam olarak durup öyle geçmek zorundadır. Yol Ver levhasında ise tam durma zorunluluğu yoktur; sürücü yavaşlar, gerekirse yol verir, ancak yol güvenliyse durmadan geçebilir.',
+      'DUR levhasında sürücü, yol boş olsa bile durma çizgisinde tam olarak durup öyle geçmek zorundadır. Yol Ver levhasında ise tam durma zorunluluğu yoktur; sürücü yavaşlar, gerekirse yol verir, ancak yol güvenliyse durmadan geçebilir. Yol Ver levhasında ise yavaşlayıp gerekiyorsa yol verilir, yol boşsa durmadan geçilebilir.',
     whyWrong: [
       'Yol Ver levhası her zaman tam durmayı gerektirmez; ikisini aynı saymak yanlıştır.',
       'DUR levhasında durmadan geçmek ihlaldir.',
@@ -1422,11 +1422,11 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
       'Bisikletliden önce hızla dönmeye çalışmak',
       'Korna çalıp bisikletliyi durdurmaya çalışmak',
       'Bisikletlinin arasından sıyrılarak dönmek',
-      'Bisikletlinin geçmesini beklemek ya da güvenli mesafe oluşana kadar dönmemek; onu sıkıştırmamak',
+      'Bisikletlinin geçmesini beklemek ya da güvenli mesafe oluşana kadar dönmemek',
     ],
     answerIndex: 3,
     explanation:
-      'Sağa dönerken sağdaki bisikletli, dönüş yayının içinde sıkışıp kalabilir. Sürücü bisikletliyi geçmesini beklemeli veya güvenli mesafe oluşmadan dönmemeli; asla onun önünü keserek sıkıştırmamalıdır.',
+      'Sağa dönerken sağdaki bisikletli, dönüş yayının içinde sıkışıp kalabilir. Sürücü bisikletliyi geçmesini beklemeli veya güvenli mesafe oluşmadan dönmemeli; asla onun önünü keserek sıkıştırmamalıdır. Onu sıkıştırmamak.',
     whyWrong: [
       'Bisikletlinin önünden aceleyle dönmek onu düşme veya çarpışma riskine sokar.',
       'Korna bisikletlinin dengesini bozup düşmesine yol açabilir.',

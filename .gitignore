@@ -60,3 +60,6 @@ google-services.json
 **/*playconsole*.json
 **/*play-console*.json
 apps/mobile/android/app/*.json
+
+# Referans ekran görüntüleri (rakip uygulama; depoya girmez)
+screenshots/

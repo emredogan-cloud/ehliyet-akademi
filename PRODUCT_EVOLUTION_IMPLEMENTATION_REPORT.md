@@ -7,20 +7,20 @@
 
 ## 0. Özet
 
-| Faz | Durum |
-|---|---|
-| 0 · Denetim | ✅ tamam — 14 tutarsızlık, en ağırı ölçüldü |
-| 1 · Soru kalitesi | 🟡 **kısmi** — %91,1 → **%58,1**; hedef %40, kalan ~283 soru |
-| 2 · Sınav kütüphanesi | ✅ tamam |
-| 3 · İşaret varlık denetimi | ✅ tamam (belge + kod bağlantısı) |
-| 4 · Yarış Modu → **Düello** | ✅ tamam |
-| 5 · Tur başarımı | ✅ tamam — kök neden bulundu ve giderildi |
-| 6 · Koç evrimi | 🟡 **kısmi** — hareket var; göz kırpma katmanlı varlık bekliyor |
-| 7 · Görsel soru genişletme | ❌ **yapılmadı** |
-| 8 · Ders zenginleştirme | ❌ **yapılmadı** |
-| 9 · Seslendirme | ❌ **yapılmadı** |
-| 10 · Ödeme duvarı | ✅ tamam |
-| 11 · Cihaz doğrulaması | ✅ tamam |
+| Faz                         | Durum                                                           |
+| --------------------------- | --------------------------------------------------------------- |
+| 0 · Denetim                 | ✅ tamam — 14 tutarsızlık, en ağırı ölçüldü                     |
+| 1 · Soru kalitesi           | 🟡 **kısmi** — %91,1 → **%58,1**; hedef %40, kalan ~283 soru    |
+| 2 · Sınav kütüphanesi       | ✅ tamam                                                        |
+| 3 · İşaret varlık denetimi  | ✅ tamam (belge + kod bağlantısı)                               |
+| 4 · Yarış Modu → **Düello** | ✅ tamam                                                        |
+| 5 · Tur başarımı            | ✅ tamam — kök neden bulundu ve giderildi                       |
+| 6 · Koç evrimi              | 🟡 **kısmi** — hareket var; göz kırpma katmanlı varlık bekliyor |
+| 7 · Görsel soru genişletme  | ❌ **yapılmadı**                                                |
+| 8 · Ders zenginleştirme     | ❌ **yapılmadı**                                                |
+| 9 · Seslendirme             | ❌ **yapılmadı**                                                |
+| 10 · Ödeme duvarı           | ✅ tamam                                                        |
+| 11 · Cihaz doğrulaması      | ✅ tamam                                                        |
 
 **Kapılar:** `flutter analyze` **0** · mobil **1073 ✓** (978'den) · content-schema **31 ✓** ·
 question-bank **14 ✓** · `pnpm lint` 0 hata · `pnpm typecheck` temiz.
@@ -50,11 +50,11 @@ Diğer 13 bulgu yol haritası §0.2–0.6'da; hepsi bu raporun ilgili fazında e
 
 ## 2. Faz 1 — Soru kalitesi (kısmi)
 
-| Ölçüt | Başlangıç | Şimdi | Hedef |
-|---|---:|---:|---:|
-| "en uzun şıkkı seç" ile bilinebilir | **%91,1** | **%58,1** | %40 |
-| paralel şıklı soru | %21,4 | **%64,6** | %60 ✅ |
-| doğru/çeldirici uzunluk oranı | 2,49× | **1,55×** | 1,5× |
+| Ölçüt                               | Başlangıç |     Şimdi |  Hedef |
+| ----------------------------------- | --------: | --------: | -----: |
+| "en uzun şıkkı seç" ile bilinebilir | **%91,1** | **%58,1** |    %40 |
+| paralel şıklı soru                  |     %21,4 | **%64,6** | %60 ✅ |
+| doğru/çeldirici uzunluk oranı       |     2,49× | **1,55×** |   1,5× |
 
 **Üç ölçütten ikisi hedefe ulaştı.** Bağlayıcı olan üçüncüsü — ~283 sorunun şıkları daha elden
 geçmeli.
@@ -70,13 +70,13 @@ geçmeli.
 
 Doğru şıkkı daha agresif kesen kurallar denendi ve **ölçülerek reddedildi** — cevabı bozuyorlardı:
 
-| Kural | Örnek | Sonuç |
-|---|---|---|
-| baştaki `-arak/-erek` ulacını at | `adab-005` | "takip \| mesafesi" ortadan bölünüyor |
-| `ve` sonrasını at | `trafik-131` | "ön \| arka" saçmalaşıyor |
-| son virgüllü öbeği at | `trafik-505` | cevabın yarısı gidiyor, **yanlış** oluyor |
+| Kural                            | Örnek        | Sonuç                                     |
+| -------------------------------- | ------------ | ----------------------------------------- |
+| baştaki `-arak/-erek` ulacını at | `adab-005`   | "takip \| mesafesi" ortadan bölünüyor     |
+| `ve` sonrasını at                | `trafik-131` | "ön \| arka" saçmalaşıyor                 |
+| son virgüllü öbeği at            | `trafik-505` | cevabın yarısı gidiyor, **yanlış** oluyor |
 
-*"Never generate nonsense"* kuralı tam olarak bunları yasaklıyor. Yanlış cevap, uzun cevaptan
+_"Never generate nonsense"_ kuralı tam olarak bunları yasaklıyor. Yanlış cevap, uzun cevaptan
 kötüdür.
 
 ### Neden mandal
@@ -126,7 +126,7 @@ Referanstaki "Animasyonlu Sorular" bizde **"Görsel Sorular"** — elimizde anim
 
 ### Üreteç düzeltmesi (bu fazda yakalandı)
 
-Görsel enjeksiyonu **ders dağılımını bozuyordu**: metin sorusunun yerine *herhangi* bir görsel
+Görsel enjeksiyonu **ders dağılımını bozuyordu**: metin sorusunun yerine _herhangi_ bir görsel
 soru konuyordu ve "İlk Yardım" sınavına trafik levhası sorusu giriyordu. Değişim artık aynı ders
 içinde yapılıyor — MEB dağılımı görsel enjeksiyonu altında da korunuyor.
 
@@ -138,7 +138,7 @@ içinde yapılıyor — MEB dağılımı görsel enjeksiyonu altında da korunuy
 
 - **17'si rakam taşıyan hız levhası** (`azami-hiz-20…120`, `asgari-hiz-30…50`, `yukseklik-siniri`…).
   Rakam **veridir**, çizim değil; prosedürel çizim orada **doğru** çözüm. 17 ayrı görsel üretmek
-  *"Do NOT generate duplicate prompts"* kuralının tam ihlali olurdu → **üretilmeyecek.**
+  _"Do NOT generate duplicate prompts"_ kuralının tam ihlali olurdu → **üretilmeyecek.**
 - **18'i gerçek piktogram istiyor** → dosya adı, klasör, kullanım yeri, GPT Image istemi, stil,
   çözünürlük ve saydamlık `ASSET_GENERATION_LIBRARY.md` **§7**'ye işlendi.
 
@@ -166,7 +166,7 @@ sonuç.**
 ### Puanlama neden böyle
 
 Doğru **100 puan**, hız bonusu **en fazla 50**. Yani en yavaş doğru bile en hızlı yanlıştan çok
-eder. Yalnız hıza puan verilseydi en iyi strateji *"soruyu okuma, rastgele bas"* olurdu.
+eder. Yalnız hıza puan verilseydi en iyi strateji _"soruyu okuma, rastgele bas"_ olurdu.
 Yanlış cevap puan **götürmüyor**: ceza, tahmin etmeyi değil cevaplamayı caydırır.
 
 **Kaybeden de XP alır.** Sıfır veren sistem, oyuncuyu zayıf olduğu konudan kaçırır — tam olarak
@@ -223,11 +223,11 @@ Ayrıca ışık halkası artık adımdan adıma **kayıyor** (`RectTween`); önc
 
 ### Kütüphane araştırması
 
-| Seçenek | Karar |
-|---|---|
-| **Rive** | En güçlüsü (durum makinesi). `.riv` dosyası ister — elimizde yok, durağan `.webp`den üretilemez. |
-| **Lottie** | Yaygın. `.json` ister — aynı sorun. |
-| **Yerel Flutter dönüşümleri** | **Seçilen.** Sıfır bağımlılık, sıfır dış varlık, bugün çalışıyor. |
+| Seçenek                       | Karar                                                                                            |
+| ----------------------------- | ------------------------------------------------------------------------------------------------ |
+| **Rive**                      | En güçlüsü (durum makinesi). `.riv` dosyası ister — elimizde yok, durağan `.webp`den üretilemez. |
+| **Lottie**                    | Yaygın. `.json` ister — aynı sorun.                                                              |
+| **Yerel Flutter dönüşümleri** | **Seçilen.** Sıfır bağımlılık, sıfır dış varlık, bugün çalışıyor.                                |
 
 Bağımlılık eklemek, animasyon dosyası gelene kadar hiçbir şey çalıştırmazdı: bugün sıfır kazanç,
 kalıcı bakım yükü.
@@ -252,10 +252,10 @@ noktası.
 
 Katalog tek üründen üç pakete çıktı:
 
-| Paket | Fiyat | Tür |
-|---|---|---|
-| Haftalık | 50 TL | abonelik |
-| Aylık | 200 TL | abonelik |
+| Paket         | Fiyat         | Tür                                        |
+| ------------- | ------------- | ------------------------------------------ |
+| Haftalık      | 50 TL         | abonelik                                   |
+| Aylık         | 200 TL        | abonelik                                   |
 | **Ömür Boyu** | **479,99 TL** | **tek seferlik — ÖNERİLEN, en geniş kart** |
 
 **Kaydırma yok.** Kahraman görseli düştü — dikey alanın en pahalı ögesiydi ve karar vermeye
@@ -267,8 +267,8 @@ kampanya varsa çıkıyor (Kampanya Motoru uyumlu).
 Ömür boyu paketin kimliği **`komple-ehliyet` olarak kaldı**. Değiştirmek, ödeme yapmış
 kullanıcıları premium'suz bırakırdı. Bir test bunu kilitliyor.
 
-`_storeProduct` geri düşüşü kaldırıldı: tek ürünlü dönemde zararsızdı, üç üründe *"Aylık seç →
-Ömür Boyu satın al"* demekti.
+`_storeProduct` geri düşüşü kaldırıldı: tek ürünlü dönemde zararsızdı, üç üründe _"Aylık seç →
+Ömür Boyu satın al"_ demekti.
 
 ### Dürüstlük düzeltmeleri
 
@@ -336,18 +336,18 @@ istenmemişti — **yapılmadı.** Doğrulama, aynı imzayı kabul eden Redmi No
 
 ### Cihazda kanıtlanan
 
-| Ne | Kanıt |
-|---|---|
-| **Açılış** | Ana Sayfa, hazırlık halkası, AI Koç paneli — temiz |
-| **Faz 2 · katalog** | Altı kategori; havuzlar **hesaplanmış**: Genel **1895**, Trafik 501, İlk Yardım 303, Motor 522 |
-| **Faz 2 · takvim** | "1 Ağustos 2026 Sınav Soruları" — **bugünün tarihi**, geriye günlük |
-| **Faz 2 · ücretsiz sınır** | İlk üç kart "Ücretsiz" rozetli ve oynatılabilir; dördüncüden itibaren kilit + "Premium" |
-| **Faz 2 · üretim** | 1 Ağustos sınavı açıldı: 50 soru, 44:54 sayaç, soru haritası |
-| **Faz 1 · şık paralelliği** | Sınavın 1. sorusunun şıkları **22–27 karakter**, hepsi akla yatkın mekanik arıza, doğru cevap **en uzun değil** |
-| **Faz 4 · düello** | "Rakip bulundu · Rakip · Seviye 5", "Bugün kalan düello: 5", 1/10 ekranı **16 sn** sayaçla |
-| **Faz 4 · çiftçilik önleme** | Düello yarıda bırakıldı → kalan hak **5 → 4**; iade edilmedi |
-| **Faz 10 · ödeme duvarı** | Üç kart yan yana: ₺50/hafta · ₺200/ay · **ÖNERİLEN Ömür Boyu ₺479,99 tek seferlik**; deneme yok, geri sayım yok, hepsi tek ekranda |
-| **Faz 3 · fiyat kaynağı** | Mağaza kapalı (yandan yükleme) olduğu için **yedek** etiketler göründü — tasarlandığı gibi |
+| Ne                           | Kanıt                                                                                                                              |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| **Açılış**                   | Ana Sayfa, hazırlık halkası, AI Koç paneli — temiz                                                                                 |
+| **Faz 2 · katalog**          | Altı kategori; havuzlar **hesaplanmış**: Genel **1895**, Trafik 501, İlk Yardım 303, Motor 522                                     |
+| **Faz 2 · takvim**           | "1 Ağustos 2026 Sınav Soruları" — **bugünün tarihi**, geriye günlük                                                                |
+| **Faz 2 · ücretsiz sınır**   | İlk üç kart "Ücretsiz" rozetli ve oynatılabilir; dördüncüden itibaren kilit + "Premium"                                            |
+| **Faz 2 · üretim**           | 1 Ağustos sınavı açıldı: 50 soru, 44:54 sayaç, soru haritası                                                                       |
+| **Faz 1 · şık paralelliği**  | Sınavın 1. sorusunun şıkları **22–27 karakter**, hepsi akla yatkın mekanik arıza, doğru cevap **en uzun değil**                    |
+| **Faz 4 · düello**           | "Rakip bulundu · Rakip · Seviye 5", "Bugün kalan düello: 5", 1/10 ekranı **16 sn** sayaçla                                         |
+| **Faz 4 · çiftçilik önleme** | Düello yarıda bırakıldı → kalan hak **5 → 4**; iade edilmedi                                                                       |
+| **Faz 10 · ödeme duvarı**    | Üç kart yan yana: ₺50/hafta · ₺200/ay · **ÖNERİLEN Ömür Boyu ₺479,99 tek seferlik**; deneme yok, geri sayım yok, hepsi tek ekranda |
+| **Faz 3 · fiyat kaynağı**    | Mağaza kapalı (yandan yükleme) olduğu için **yedek** etiketler göründü — tasarlandığı gibi                                         |
 
 Sürüm satırı: **Ehliyet Akademi · v1.0.0 (5)**.
 

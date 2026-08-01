@@ -213,12 +213,7 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     topic: 'sarj',
     difficulty: 'orta',
     stem: 'Alternatörü döndürerek şarj üretilmesini sağlayan ve gevşerse/koparsa şarj sorununa yol açan parça hangisidir?',
-    options: [
-      'Triger (zaman) kayışı',
-      'Vantilatör (V) kayışı',
-      'Fren balatası',
-      'Debriyaj teli',
-    ],
+    options: ['Triger (zaman) kayışı', 'Vantilatör (V) kayışı', 'Fren balatası', 'Debriyaj teli'],
     answerIndex: 1,
     explanation:
       'Alternatör, motordan aldığı hareketi V (vantilatör) kayışı aracılığıyla alır ve döndürülerek elektrik üretir. Bu kayış gevşer ya da koparsa alternatör dönemez, şarj kesilir ve akü boşalır.',

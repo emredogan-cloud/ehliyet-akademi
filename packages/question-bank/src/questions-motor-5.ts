@@ -1243,12 +1243,7 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     topic: 'calisma-zamanlari',
     difficulty: 'zor',
     stem: 'Dört zamanlı bir motorda çevrimin (dört zamanın tamamının) gerçekleşmesi için krank mili kaç tur döner?',
-    options: [
-      'Yarım tur',
-      'İki tam tur (720 derece)',
-      'On tam tur',
-      'Çeyrek tur',
-    ],
+    options: ['Yarım tur', 'İki tam tur (720 derece)', 'On tam tur', 'Çeyrek tur'],
     answerIndex: 1,
     explanation:
       'Her zaman, pistonun bir kez inmesi ya da çıkmasıdır ve krankın yarım turuna denk gelir. Dört zaman toplamda iki tam krank turu (720°) sürer. Supaplar çevrimde bir kez açıldığı için eksantrik mili krankın yarı hızında, yani çevrimde bir tur döner. Eksantrik mili ise aynı sürede yalnızca bir tur atar.',

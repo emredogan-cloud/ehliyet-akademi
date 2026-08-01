@@ -354,11 +354,11 @@ APK'ya etkisi ihmal edilebilir (E13: varlıklar APK'nın yalnız %6'sı).
 
 ### 7.1 Ölçüm
 
-| | |
-|---|---:|
+|                                                  |         |
+| ------------------------------------------------ | ------: |
 | Katalogdaki işaret (`apps/web/content/signs.ts`) | **121** |
-| `official_signs.dart` ile SVG'ye eşlenen | **86** |
-| **Resmî SVG'si olmayan → prosedürel çiziliyor** | **35** |
+| `official_signs.dart` ile SVG'ye eşlenen         |  **86** |
+| **Resmî SVG'si olmayan → prosedürel çiziliyor**  |  **35** |
 
 Prosedürel çizim `TrafficSignView` içinde yapılır: şekil + renk + (varsa) rakam parametreden
 gelir. Yani bu 35 işaret **bozuk değil, çiziliyor** — soru da sorulabiliyor. Denetim, hangilerinin
@@ -366,7 +366,7 @@ gerçekten bir piktogram istediğini ayırmak için yapıldı.
 
 ### 7.2 Üretilmeyecekler — 17 işaret, gerekçesiyle
 
-Bunlar **rakam taşıyan hız levhaları**. İçindeki sayı bir *veridir*, çizim değil: aynı kırmızı
+Bunlar **rakam taşıyan hız levhaları**. İçindeki sayı bir _veridir_, çizim değil: aynı kırmızı
 (ya da mavi) halkanın içine yazılır. `TrafficSignView` bunu zaten parametreyle yapıyor ve sonuç
 mevzuata birebir uyuyor.
 
@@ -389,22 +389,22 @@ Bunların hepsi bir **piktogram** (silüet/şekil) içeriyor; prosedürel çizim
 üretemiyor, yerine yalnız boş çerçeve + kategori rengi çiziliyor.
 
 > **STİL AİLESİ: "Resmî vektör" — §2 uyarınca stil serbestisi YOKTUR.**
-> Bu, üretimin sınırını da belirler: GPT Image mevzuata *birebir* bir levha üretmez, yaklaşık
+> Bu, üretimin sınırını da belirler: GPT Image mevzuata _birebir_ bir levha üretmez, yaklaşık
 > üretir. Bu yüzden **birincil kaynak resmî vektördür**; aşağıdaki istemler, resmî vektör temin
 > edilene kadar geçerli olan **eğitim amaçlı gösterim** içindir. Dosya adları şimdiden koda
 > bağlıdır, dolayısıyla ister üretilmiş görsel ister resmî vektör konsun, uygulama onu kullanır.
 
 **Ortak alanlar (18 kalemin hepsi için aynı):**
 
-| Alan | Değer |
-|---|---|
-| Kayıt dizini | `apps/mobile/assets/signs/` |
-| Uzantı | `.svg` (vektör; ölçekten bağımsız keskin) |
-| **Dosya adı kuralı** | `assets/signs/<işaret-id>.svg` — üretilmiş levhalar KGM kodu kullanıyor ama hangi kodun boş olduğu buradan bilinemiyor: ilk denemede `t-9.svg` seçildi ve zaten kullanımdaydı (test yakaladı). İşaret kimliği hem benzersiz hem okunur. |
-| Çözünürlük | vektör — `viewBox="0 0 100 100"` |
-| Arka plan | **şeffaf** |
-| Kullanım yeri | `TrafficSignView` → Öğren ▸ İşaretler, işaret detayı, **görsel sorular** |
-| Negatif (her istemde) | `metin yok, filigran yok, marka/logo yok, gölge yok, 3B yok, perspektif yok` |
+| Alan                  | Değer                                                                                                                                                                                                                                   |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Kayıt dizini          | `apps/mobile/assets/signs/`                                                                                                                                                                                                             |
+| Uzantı                | `.svg` (vektör; ölçekten bağımsız keskin)                                                                                                                                                                                               |
+| **Dosya adı kuralı**  | `assets/signs/<işaret-id>.svg` — üretilmiş levhalar KGM kodu kullanıyor ama hangi kodun boş olduğu buradan bilinemiyor: ilk denemede `t-9.svg` seçildi ve zaten kullanımdaydı (test yakaladı). İşaret kimliği hem benzersiz hem okunur. |
+| Çözünürlük            | vektör — `viewBox="0 0 100 100"`                                                                                                                                                                                                        |
+| Arka plan             | **şeffaf**                                                                                                                                                                                                                              |
+| Kullanım yeri         | `TrafficSignView` → Öğren ▸ İşaretler, işaret detayı, **görsel sorular**                                                                                                                                                                |
+| Negatif (her istemde) | `metin yok, filigran yok, marka/logo yok, gölge yok, 3B yok, perspektif yok`                                                                                                                                                            |
 
 **İstem şablonu** (§3 standardına uygun, konu alanı değişir):
 
@@ -424,46 +424,46 @@ beyaz simge · **bilgi/park** `#0d47a1` mavi dikdörtgen + beyaz simge ·
 
 #### Tehlike (kırmızı kenarlı üçgen, tepe yukarı) — 4
 
-| Dosya adı | İşaret | KONU (isteme yazılacak) |
-|---|---|---|
-| `kaygan-yol.svg` | Kaygan Yol | Kırmızı kenarlı üçgen; içinde siyah otomobil silüeti ve altında iki adet dalgalı kayma izi |
-| `tehlikeli-viraj-sag.svg` | Sağa Tehlikeli Viraj | Kırmızı kenarlı üçgen; içinde sağa kıvrılan kalın siyah yol oku |
-| `dik-cikis.svg` | Tehlikeli Eğim (çıkış) | Kırmızı kenarlı üçgen; içinde yukarı doğru yükselen siyah eğim çizgisi |
-| `vahsi-hayvan.svg` | Vahşi Hayvanlar Geçebilir | Kırmızı kenarlı üçgen; içinde yandan görünen siyah geyik silüeti |
+| Dosya adı                 | İşaret                    | KONU (isteme yazılacak)                                                                    |
+| ------------------------- | ------------------------- | ------------------------------------------------------------------------------------------ |
+| `kaygan-yol.svg`          | Kaygan Yol                | Kırmızı kenarlı üçgen; içinde siyah otomobil silüeti ve altında iki adet dalgalı kayma izi |
+| `tehlikeli-viraj-sag.svg` | Sağa Tehlikeli Viraj      | Kırmızı kenarlı üçgen; içinde sağa kıvrılan kalın siyah yol oku                            |
+| `dik-cikis.svg`           | Tehlikeli Eğim (çıkış)    | Kırmızı kenarlı üçgen; içinde yukarı doğru yükselen siyah eğim çizgisi                     |
+| `vahsi-hayvan.svg`        | Vahşi Hayvanlar Geçebilir | Kırmızı kenarlı üçgen; içinde yandan görünen siyah geyik silüeti                           |
 
 #### Yasak / Park (kırmızı halka ya da mavi disk) — 4
 
-| Dosya adı | İşaret | KONU |
-|---|---|---|
-| `park-yasak.svg` | Parketmek Yasaktır | Mavi disk, kırmızı halka ve sol üstten sağ alta tek kırmızı eğik çizgi |
-| `park-yasagi-sonu.svg` | Park Yasağı Sonu | Aynı levhanın üzerinde ince gri eğik iptal çizgileri |
+| Dosya adı               | İşaret                 | KONU                                                                    |
+| ----------------------- | ---------------------- | ----------------------------------------------------------------------- |
+| `park-yasak.svg`        | Parketmek Yasaktır     | Mavi disk, kırmızı halka ve sol üstten sağ alta tek kırmızı eğik çizgi  |
+| `park-yasagi-sonu.svg`  | Park Yasağı Sonu       | Aynı levhanın üzerinde ince gri eğik iptal çizgileri                    |
 | `park-saat-sinirli.svg` | Süre Sınırlı Park Yeri | Mavi kare, ortasında beyaz büyük "P" ve altında beyaz kum saati simgesi |
-| `engelli-parki.svg` | Engelli Park Yeri | Mavi kare, ortasında beyaz tekerlekli sandalye simgesi |
+| `engelli-parki.svg`     | Engelli Park Yeri      | Mavi kare, ortasında beyaz tekerlekli sandalye simgesi                  |
 
 #### Mecburiyet (mavi disk, beyaz simge) — 2
 
-| Dosya adı | İşaret | KONU |
-|---|---|---|
+| Dosya adı                | İşaret                   | KONU                                                        |
+| ------------------------ | ------------------------ | ----------------------------------------------------------- |
 | `saga-donus-mecburi.svg` | İleride Sağa Mecburi Yön | Mavi disk; içinde yukarı çıkıp sağa kıvrılan kalın beyaz ok |
 | `sola-donus-mecburi.svg` | İleride Sola Mecburi Yön | Mavi disk; içinde yukarı çıkıp sola kıvrılan kalın beyaz ok |
 
 #### Bilgi (mavi dikdörtgen, beyaz simge) — 5
 
-| Dosya adı | İşaret | KONU |
-|---|---|---|
-| `lokanta.svg` | Lokanta | Mavi kare; içinde beyaz çatal ve bıçak yan yana |
-| `taksi-duragi.svg` | Taksi Durağı | Mavi kare; içinde beyaz otomobil silüeti ve tavanında küçük taksi levhası |
-| `tunel.svg` | Tünel | Mavi kare; içinde beyaz kemerli tünel ağzı ve içine giren yol |
-| `havalimani.svg` | Havalimanı | Mavi kare; içinde eğik duran beyaz uçak silüeti |
-| `motorlu-tasit-yolu.svg` | Motorlu Taşıt Yolu | Mavi kare; içinde önden görünen beyaz otomobil silüeti |
+| Dosya adı                | İşaret             | KONU                                                                      |
+| ------------------------ | ------------------ | ------------------------------------------------------------------------- |
+| `lokanta.svg`            | Lokanta            | Mavi kare; içinde beyaz çatal ve bıçak yan yana                           |
+| `taksi-duragi.svg`       | Taksi Durağı       | Mavi kare; içinde beyaz otomobil silüeti ve tavanında küçük taksi levhası |
+| `tunel.svg`              | Tünel              | Mavi kare; içinde beyaz kemerli tünel ağzı ve içine giren yol             |
+| `havalimani.svg`         | Havalimanı         | Mavi kare; içinde eğik duran beyaz uçak silüeti                           |
+| `motorlu-tasit-yolu.svg` | Motorlu Taşıt Yolu | Mavi kare; içinde önden görünen beyaz otomobil silüeti                    |
 
 #### Otoyol / Yönlendirme (yeşil dikdörtgen) — 3
 
-| Dosya adı | İşaret | KONU |
-|---|---|---|
-| `otoyol-cikisi.svg` | Otoyol Çıkışı | Yeşil dikdörtgen; içinde ana yoldan sağa ayrılan beyaz çıkış oku |
+| Dosya adı                | İşaret                  | KONU                                                                            |
+| ------------------------ | ----------------------- | ------------------------------------------------------------------------------- |
+| `otoyol-cikisi.svg`      | Otoyol Çıkışı           | Yeşil dikdörtgen; içinde ana yoldan sağa ayrılan beyaz çıkış oku                |
 | `otoyol-cikisi-300m.svg` | Otoyol Çıkışı Yaklaşımı | Yeşil dikdörtgen; içinde sağa ayrılan beyaz ok ve yanında üç eğik mesafe çubuğu |
-| `devlet-yolu.svg` | Devlet Yolu Yönlendirme | Beyaz kenarlı mavi dikdörtgen; içinde yukarı yönelen beyaz yön oku |
+| `devlet-yolu.svg`        | Devlet Yolu Yönlendirme | Beyaz kenarlı mavi dikdörtgen; içinde yukarı yönelen beyaz yön oku              |
 
 ### 7.4 Yerleştirme — kod ŞİMDİDEN hazır
 
@@ -490,11 +490,11 @@ Aşağıdaki katmanlar üretildiğinde ikisi de eklenebilir — `LivingMascot` t
 
 ### 8.2 Rive / Lottie neden seçilmedi
 
-| Seçenek | Durum |
-|---|---|
-| **Rive** | En güçlüsü (durum makinesi, etkileşim). `.riv` dosyası ister — elimizde yok, durağan `.webp`den üretilemez. |
-| **Lottie** | Yaygın, After Effects çıktısı. `.json` ister — aynı sorun. |
-| **Yerel Flutter dönüşümleri** | **Seçilen.** Bağımlılık yok, dış varlık yok, bugün çalışıyor. |
+| Seçenek                       | Durum                                                                                                       |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| **Rive**                      | En güçlüsü (durum makinesi, etkileşim). `.riv` dosyası ister — elimizde yok, durağan `.webp`den üretilemez. |
+| **Lottie**                    | Yaygın, After Effects çıktısı. `.json` ister — aynı sorun.                                                  |
+| **Yerel Flutter dönüşümleri** | **Seçilen.** Bağımlılık yok, dış varlık yok, bugün çalışıyor.                                               |
 
 Bağımlılık eklemek, dosya gelene kadar hiçbir şey çalıştırmazdı: bugün sıfır kazanç, kalıcı
 bakım yükü. Katmanlı varlıklar geldiğinde Rive'a geçmek hâlâ mümkün.
@@ -504,22 +504,22 @@ bakım yükü. Katmanlı varlıklar geldiğinde Rive'a geçmek hâlâ mümkün.
 Hepsi **aynı tuval**, **aynı hizada**, **şeffaf** — üst üste bindirildiğinde tam maskotu vermeli.
 Kayma olursa göz gövdenin dışında kalır.
 
-| Alan | Değer |
-|---|---|
-| Kayıt dizini | `apps/mobile/assets/img/` |
-| Uzantı | `.webp` (şeffaflık korunmalı → kayıpsız ya da yüksek kalite) |
-| Çözünürlük | **1080×1080**, hepsi birebir aynı |
-| Arka plan | şeffaf |
-| Stil ailesi | **Maskot (baykuş)** — §2: yumuşak 3B, teal tüy, gözlük, sıcak/öğretici |
-| Negatif (hepsinde) | `metin yok, filigran yok, marka/logo yok, arka plan yok, gölge yok` |
+| Alan               | Değer                                                                  |
+| ------------------ | ---------------------------------------------------------------------- |
+| Kayıt dizini       | `apps/mobile/assets/img/`                                              |
+| Uzantı             | `.webp` (şeffaflık korunmalı → kayıpsız ya da yüksek kalite)           |
+| Çözünürlük         | **1080×1080**, hepsi birebir aynı                                      |
+| Arka plan          | şeffaf                                                                 |
+| Stil ailesi        | **Maskot (baykuş)** — §2: yumuşak 3B, teal tüy, gözlük, sıcak/öğretici |
+| Negatif (hepsinde) | `metin yok, filigran yok, marka/logo yok, arka plan yok, gölge yok`    |
 
-| Dosya adı | Katman | İçerik |
-|---|---|---|
-| `owl_layer_body.webp` | Gövde | Baş ve gözler HARİÇ her şey: gövde, kanatlar, ayaklar, gözlük çerçevesi |
-| `owl_layer_head.webp` | Baş | Yalnız baş (gözler hariç); gövdeden ayrı döndürülebilsin diye |
-| `owl_layer_eyes_open.webp` | Göz akı | Yalnız iki göz akı, göz bebeği YOK |
-| `owl_layer_pupils.webp` | Göz bebeği | Yalnız iki göz bebeği, ortalanmış — kaydırılarak bakış yönü verilir |
-| `owl_layer_eyelids.webp` | Göz kapağı | Kapalı göz kapakları; opaklığı 0↔1 arasında değiştirilerek kırpma yapılır |
+| Dosya adı                  | Katman     | İçerik                                                                    |
+| -------------------------- | ---------- | ------------------------------------------------------------------------- |
+| `owl_layer_body.webp`      | Gövde      | Baş ve gözler HARİÇ her şey: gövde, kanatlar, ayaklar, gözlük çerçevesi   |
+| `owl_layer_head.webp`      | Baş        | Yalnız baş (gözler hariç); gövdeden ayrı döndürülebilsin diye             |
+| `owl_layer_eyes_open.webp` | Göz akı    | Yalnız iki göz akı, göz bebeği YOK                                        |
+| `owl_layer_pupils.webp`    | Göz bebeği | Yalnız iki göz bebeği, ortalanmış — kaydırılarak bakış yönü verilir       |
+| `owl_layer_eyelids.webp`   | Göz kapağı | Kapalı göz kapakları; opaklığı 0↔1 arasında değiştirilerek kırpma yapılır |
 
 **İstem şablonu** (§3 standardına uygun):
 

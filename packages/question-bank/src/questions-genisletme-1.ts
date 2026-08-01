@@ -97,12 +97,7 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     topic: 'isikli-isaret-cihazlari',
     difficulty: 'kolay',
     stem: 'Trafik ışığında kırmızı ile birlikte sarının da yandığı safha ne anlama gelir?',
-    options: [
-      'Hemen geç',
-      'Birazdan yeşil yanacak',
-      'Dur ve motoru durdur',
-      'Kavşakta geri git',
-    ],
+    options: ['Hemen geç', 'Birazdan yeşil yanacak', 'Dur ve motoru durdur', 'Kavşakta geri git'],
     answerIndex: 1,
     explanation:
       'Kırmızı+sarı safhası, yeşilin yanmak üzere olduğunu bildirir; sürücü hareket için hazırlanır ancak yeşil yanmadan geçmez. Harekete hazırlan ama henüz geçme.',

@@ -1,4 +1,5 @@
 import 'exam.dart';
+import 'exam_v2.dart';
 import 'question.dart';
 
 /// Geçmiş (MEB) sınavları — web `qip/archive.ts` + `historical.ts` uyarlaması. 18 sabit gerçek oturum
@@ -99,5 +100,13 @@ HistoricalSession? historicalSessionById(String id) {
 }
 
 /// Bir oturum tarihi için özgün, tarih-tohumlu 50 soruluk deneme.
-BuiltExam historicalExam(List<Question> bank, String date) =>
-    buildExam(bank, rng: seededRng(seedFromDate(date)));
+///
+/// QIP v3 · Faz 5/6 — artık **Üreteç V2** kullanılıyor. Deneyim aynı kaldı (aynı tarih → aynı
+/// sınav, kopyalanan soru yok, açık etiket), ama sınavın KENDİSİ iyileşti: zorluk dengeleniyor,
+/// aynı görsel iki kez gelmiyor, şıklar karışıyor ve karışıma görsel soru giriyor.
+///
+/// Tohum değişmedi (`seedFromDate`), dolayısıyla "o ayın sınavı" kavramı korunuyor.
+BuiltExam historicalExam(List<Question> bank, String date) => buildExamV2(
+  bank,
+  ExamConfig.forMode(ExamMode.historical, seed: seedFromDate(date)).copyWithVisualRatio(0.2),
+).exam;

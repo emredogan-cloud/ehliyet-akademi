@@ -2,7 +2,7 @@ import 'package:ehliyet_akademi/domain/content/content_enums.dart';
 import 'package:ehliyet_akademi/domain/content/dash_lights.dart';
 import 'package:ehliyet_akademi/domain/content/traffic_sign.dart';
 import 'package:ehliyet_akademi/domain/content/vehicle_part.dart';
-import 'package:ehliyet_akademi/domain/practice/exam.dart' show seededRng;
+import 'package:ehliyet_akademi/domain/practice/exam.dart' show Rng, seededRng;
 import 'package:ehliyet_akademi/domain/practice/question.dart';
 import 'package:ehliyet_akademi/domain/practice/visual_questions.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -27,7 +27,7 @@ VehiclePart _part(String id, VehicleSystem sys, String name, String desc) =>
     VehiclePart(id: id, name: name, system: sys, desc: desc, tip: 'İpucu $id.');
 
 void main() {
-  final rng = () => seededRng(20260801);
+  Rng rng() => seededRng(20260801);
 
   group('üretilen her soru BİÇİM kapısından geçer', () {
     final signs = [

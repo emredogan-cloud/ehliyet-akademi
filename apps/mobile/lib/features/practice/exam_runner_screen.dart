@@ -18,6 +18,7 @@ import '../../domain/content/content_enums.dart';
 import '../../domain/onboarding/study_profile.dart';
 import '../../domain/practice/collections.dart';
 import '../../domain/practice/exam.dart';
+import '../../domain/practice/exam_v2.dart';
 import '../../domain/practice/historical.dart';
 import '../../domain/practice/question.dart';
 import '../../domain/practice/question_bank.dart';
@@ -67,7 +68,13 @@ class _ExamRunnerScreenState extends ConsumerState<ExamRunnerScreen> {
   void _ensureBuilt(QuestionBank bank) {
     if (_exam != null) return;
     final built = switch (widget.source) {
-      ExamSource.standard => buildExam(bank.questions),
+      // QIP v3 · Faz 5 — Üreteç V2: zorluk dengesi, görsel tekrarı engeli, şık karıştırma
+      // ve karışıma görsel soru enjeksiyonu. Eski `buildExam` yerinde duruyor (koleksiyon
+      // yolu ve testler onu kullanıyor).
+      ExamSource.standard => buildExamV2(
+        bank.questions,
+        const ExamConfig(mode: ExamMode.exam, visualRatio: 0.2),
+      ).exam,
       ExamSource.historical => historicalExam(bank.questions, widget.id!),
       ExamSource.collection => _fromCollection(bank),
     };

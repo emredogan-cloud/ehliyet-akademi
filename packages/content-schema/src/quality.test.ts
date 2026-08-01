@@ -107,7 +107,7 @@ describe('checkQualityGate', () => {
   });
 
   it('tellal banka kapıda KALIR ve nedeni söylenir', () => {
-    const telling = Array.from({ length: 40 }, (_, i) =>
+    const telling = Array.from({ length: 40 }, () =>
       q(
         [
           'Kısa',

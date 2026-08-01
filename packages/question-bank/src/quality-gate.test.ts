@@ -22,7 +22,7 @@ describe('banka kalite kapısı', () => {
   const report = measureBank(allQuestions());
 
   it('ölçüm özeti', () => {
-    console.log(formatQualityReport(report));
+    console.warn(formatQualityReport(report));
     expect(report.total).toBeGreaterThan(1500);
   });
 
@@ -46,7 +46,7 @@ describe('banka kalite kapısı', () => {
     const gap = report.longestWinsRate - QUALITY_GATE.maxLongestWinsRate;
     if (gap > 0) {
       const remaining = Math.ceil(gap * report.total);
-      console.log(
+      console.warn(
         `HEDEFE KALAN: "en uzun şıkkı seç" %${(report.longestWinsRate * 100).toFixed(1)} → ` +
           `hedef %${(QUALITY_GATE.maxLongestWinsRate * 100).toFixed(0)}; ` +
           `yaklaşık ${remaining} sorunun şıkları daha elden geçirilmeli.`

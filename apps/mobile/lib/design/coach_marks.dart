@@ -131,7 +131,8 @@ class CoachMarkHost extends StatefulWidget {
   CoachMarkHostState createState() => CoachMarkHostState();
 }
 
-class CoachMarkHostState extends State<CoachMarkHost> with SingleTickerProviderStateMixin {
+/// İKİ denetleyici var (nabız + geçiş), bu yüzden `SingleTickerProviderStateMixin` DEĞİL.
+class CoachMarkHostState extends State<CoachMarkHost> with TickerProviderStateMixin {
   final Map<String, GlobalKey> _keys = {};
 
   List<CoachMarkStep> _steps = const [];
@@ -148,11 +149,23 @@ class CoachMarkHostState extends State<CoachMarkHost> with SingleTickerProviderS
   /// baştan yok eder ve maliyeti yok denecek kadar azdır.
   late final AnimationController _pulse;
 
+  /// Işık halkasının adımdan adıma KAYMASI.
+  ///
+  /// Önceden `_spot` doğrudan `setState` ile değişiyordu, yani halka ışınlanıyordu. Altta
+  /// `Scrollable.ensureVisible` animasyonu sürerken bu, gözde "zıplama" olarak okunuyordu.
+  /// Ayrı bir denetleyici şart: `_pulse` sonsuz döngüde koşuyor, geçiş ise bir kez oynayacak.
+  late final AnimationController _move;
+  Animation<Rect?>? _spotTween;
+
   @override
   void initState() {
     super.initState();
     _pulse = AnimationController(vsync: this, duration: const Duration(milliseconds: 1600));
+    _move = AnimationController(vsync: this, duration: AppMotion.base);
   }
+
+  /// O an çizilecek dikdörtgen: geçiş sürüyorsa ara değer, sürmüyorsa hedef.
+  Rect? get _currentSpot => _spotTween?.value ?? _spot;
 
   /// Turu başlat. Çapası bulunamayan adımlar SESSİZCE atlanır — eksik bir çapa yüzünden
   /// kullanıcının karşısına boş bir ışık halkası çıkmaz.
@@ -223,10 +236,18 @@ class CoachMarkHostState extends State<CoachMarkHost> with SingleTickerProviderS
       finish();
       return;
     }
+    final from = _currentSpot;
     setState(() {
       _index = target;
       _spot = rect;
+      // İlk adımda kayacak bir yer yok — halka doğrudan hedefte belirir.
+      _spotTween = from == null || MediaQuery.disableAnimationsOf(context)
+          ? null
+          : RectTween(begin: from, end: rect).animate(
+              CurvedAnimation(parent: _move, curve: AppMotion.easeOut),
+            );
     });
+    if (_spotTween != null) _move.forward(from: 0);
   }
 
   /// Bir adımın ekrandaki dikdörtgenini bul; çapa yoksa (ya da bu arada söküldüyse) null.
@@ -263,6 +284,7 @@ class CoachMarkHostState extends State<CoachMarkHost> with SingleTickerProviderS
   @override
   void dispose() {
     _pulse.dispose();
+    _move.dispose();
     super.dispose();
   }
 
@@ -279,7 +301,12 @@ class CoachMarkHostState extends State<CoachMarkHost> with SingleTickerProviderS
                 step: _steps[_index],
                 index: _index,
                 total: _steps.length,
+                // Baloncuk HEDEF dikdörtgene göre yerleşir, ara değerlere göre değil: kart her
+                // karede yeniden ölçülüp konumlansaydı geçiş boyunca metin zıplardı.
                 spot: _spot!,
+                // Işık halkası ise kayarak gider.
+                spotTween: _spotTween,
+                move: _move,
                 pulse: _pulse,
                 onNext: next,
                 onPrevious: _index > 0 ? previous : null,
@@ -299,6 +326,8 @@ class _CoachMarkOverlay extends StatelessWidget {
     required this.index,
     required this.total,
     required this.spot,
+    required this.spotTween,
+    required this.move,
     required this.pulse,
     required this.onNext,
     required this.onPrevious,
@@ -309,6 +338,10 @@ class _CoachMarkOverlay extends StatelessWidget {
   final int index;
   final int total;
   final Rect spot;
+
+  /// Bir önceki hedeften bu hedefe kayan ara değer; ilk adımda null.
+  final Animation<Rect?>? spotTween;
+  final Animation<double> move;
   final Animation<double> pulse;
   final VoidCallback onNext;
   final VoidCallback? onPrevious;
@@ -365,17 +398,42 @@ class _CoachMarkOverlay extends StatelessWidget {
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: onNext,
-              child: AnimatedBuilder(
-                animation: pulse,
-                builder: (context, _) => CustomPaint(
-                  painter: _SpotlightPainter(
-                    hole: hole,
-                    radius: step.radius,
-                    // Hareket azaltıldığında halka nefes almaz; sabit ve net durur.
-                    pulse: reduceMotion ? 0 : pulse.value,
-                    ring: context.palette.primary,
+              // İKİ AYRI KATMAN — bu bölünme başarımın kendisidir.
+              //
+              // Karartma pahalıdır (tam ekran, delikli yol) ama YALNIZ hedef değişince değişir.
+              // Nefes alan halka ucuzdur (tek `drawRRect` konturu) ama HER KARE değişir. Tek
+              // boyacıda birleştirildiklerinde pahalı olan da kare hızında yeniden çiziliyordu.
+              // Ayrı `CustomPaint`'ler kendi `shouldRepaint`'lerine sahip olduğu için, tur bir
+              // adımda beklerken karartma hiç yeniden çizilmez.
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: AnimatedBuilder(
+                      animation: move,
+                      builder: (context, _) => CustomPaint(
+                        painter: _ScrimPainter(
+                          hole: (spotTween?.value ?? spot).inflate(_padding),
+                          radius: step.radius,
+                          ring: context.palette.primary,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  if (!reduceMotion)
+                    Positioned.fill(
+                      child: AnimatedBuilder(
+                        animation: Listenable.merge([pulse, move]),
+                        builder: (context, _) => CustomPaint(
+                          painter: _PulseRingPainter(
+                            hole: (spotTween?.value ?? spot).inflate(_padding),
+                            radius: step.radius,
+                            pulse: pulse.value,
+                            ring: context.palette.primary,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ),
           ),
@@ -400,8 +458,56 @@ class _CoachMarkOverlay extends StatelessWidget {
   }
 }
 
-class _SpotlightPainter extends CustomPainter {
-  const _SpotlightPainter({
+/// Karartma + delik + net kenar halkası. YALNIZ hedef değişince yeniden çizilir.
+///
+/// KÖK NEDEN KAYDI — turun takılmasının gerçek sebebi buydu. Eskiden karartma ve nefes alan
+/// halka TEK boyacıdaydı; `_pulse` turun tamamı boyunca 1600 ms'lik `repeat(reverse: true)` ile
+/// koştuğu için `shouldRepaint` her karede `true` dönüyor ve saniyede ~60 kez TAM EKRAN boyutunda
+/// `Path.combine(PathOperation.difference, ...)` çalışıyordu. `Path.combine` Skia'nın en pahalı
+/// işlemlerinden biridir, GPU'ya devredilmez ve her çağrıda üç yeni `Path` ayırır.
+///
+/// Çözüm, ilkelin kendisini değiştirmek değil — `clipRRect` `ClipOp` almıyor, yani yuvarlatılmış
+/// delik için `Path.combine` kaçınılmaz. Çözüm, onu ARTIK HER KARE ÇAĞIRMAMAK: karartma kendi
+/// boyacısına alındı ve `shouldRepaint` yalnız delik/yarıçap/renk değişince true dönüyor. Tur bir
+/// adımda beklerken (kullanıcı metni okurken) sıfır yol işlemi yapılır.
+class _ScrimPainter extends CustomPainter {
+  const _ScrimPainter({required this.hole, required this.radius, required this.ring});
+
+  final Rect hole;
+  final double radius;
+  final Color ring;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final rrect = RRect.fromRectAndRadius(hole, Radius.circular(radius));
+
+    canvas.drawPath(
+      Path.combine(
+        PathOperation.difference,
+        Path()..addRect(Offset.zero & size),
+        Path()..addRRect(rrect),
+      ),
+      Paint()..color = const Color(0xFF03070F).withValues(alpha: 0.82),
+    );
+
+    // Net kenar halkası — karartmayla aynı sıklıkta değiştiği için burada durur.
+    canvas.drawRRect(
+      rrect,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2
+        ..color = ring.withValues(alpha: 0.95),
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant _ScrimPainter old) =>
+      old.hole != hole || old.radius != radius || old.ring != ring;
+}
+
+/// Nefes alan dış halka — hedefin "canlı" olduğunu söyler. Her kare değişir ama TEK kontur çizer.
+class _PulseRingPainter extends CustomPainter {
+  const _PulseRingPainter({
     required this.hole,
     required this.radius,
     required this.pulse,
@@ -415,43 +521,19 @@ class _SpotlightPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final rrect = RRect.fromRectAndRadius(hole, Radius.circular(radius));
-
-    // Karartma: tam ekran eksi delik. `Path.combine` tek geçişte çizilir; iki ayrı katman
-    // (karartma + kırpma) yerine bunu seçmek, saydamlık karışımını da tek adımda bitirir.
-    canvas.drawPath(
-      Path.combine(
-        PathOperation.difference,
-        Path()..addRect(Offset.zero & size),
-        Path()..addRRect(rrect),
-      ),
-      Paint()..color = const Color(0xFF03070F).withValues(alpha: 0.82),
-    );
-
-    // Net kenar halkası.
+    if (pulse <= 0) return;
+    final grow = 4 + pulse * 10;
     canvas.drawRRect(
-      rrect,
+      RRect.fromRectAndRadius(hole.inflate(grow), Radius.circular(radius + grow)),
       Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2
-        ..color = ring.withValues(alpha: 0.95),
+        ..color = ring.withValues(alpha: 0.38 * (1 - pulse)),
     );
-
-    // Nefes alan dış halka — hedefin "canlı" olduğunu söyler.
-    if (pulse > 0) {
-      final grow = 4 + pulse * 10;
-      canvas.drawRRect(
-        RRect.fromRectAndRadius(hole.inflate(grow), Radius.circular(radius + grow)),
-        Paint()
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 2
-          ..color = ring.withValues(alpha: 0.38 * (1 - pulse)),
-      );
-    }
   }
 
   @override
-  bool shouldRepaint(covariant _SpotlightPainter old) =>
+  bool shouldRepaint(covariant _PulseRingPainter old) =>
       old.hole != hole || old.pulse != pulse || old.radius != radius || old.ring != ring;
 }
 

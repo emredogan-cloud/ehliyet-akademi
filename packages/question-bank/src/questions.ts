@@ -383,10 +383,15 @@ export const SEED_QUESTIONS: QuestionInput[] = [
     topic: 'puanlama',
     difficulty: 'kolay',
     stem: 'Direksiyon uygulama sınavında araca binince emniyet kemerini takmamak hangi hata sınıfındadır?',
-    options: ['Mavi (küçük) hata', 'Sarı (tali) hata', 'Yeşil (uyarı) hata', 'Kırmızı (asli)'],
+    options: [
+      'Mavi (küçük) hata — puan kaybı yok',
+      'Sarı (tali) hata — birkaçı birikince elenme',
+      'Yeşil (uyarı) hata — yalnızca sözlü uyarı',
+      'Kırmızı (asli) hata — anında elenme',
+    ],
     answerIndex: 3,
     explanation:
-      'Emniyet kemerini takmamak asli (kırmızı) kusurdur ve tek başına sınavdan elenmeye yol açar. Hata — anında elenme.',
+      'Emniyet kemerini takmamak asli (kırmızı) kusurdur ve tek başına sınavdan elenmeye yol açar.',
     badge: 'official',
     review: 'draft',
     sourceRef: 'MTSK direksiyon değerlendirme çizelgesi (özgün ifade)',

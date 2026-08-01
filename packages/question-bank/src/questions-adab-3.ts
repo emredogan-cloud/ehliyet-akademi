@@ -89,14 +89,14 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Otoyolda trafik tamamen durdu ve arkadan sirenli araçların yaklaştığı duyuluyor. En doğru davranış nedir?',
     options: [
-      'Olduğunuz yerde hiç kımıldamadan beklemek',
-      'Emniyet şeridinden ilerleyip trafiği aşmaya çalışmak',
-      'Şeritler arasında yaşam koridoru (acil durum koridoru)',
-      'Sirenli araçlar gelene kadar araçtan inip beklemek',
+      'Olduğunuz yerde hiç kımıldamadan bekleyip sirenli araçların kendilerine yol bulmasını ummak',
+      'Emniyet şeridinden ilerleyip duran trafiği aşarak öne geçmeye çalışmak',
+      'Şeritler arasında yaşam koridoru (acil durum koridoru) oluşacak biçimde kenara yanaşmak',
+      'Sirenli araçlar gelene kadar araçtan inip yol kenarında beklemek',
     ],
     answerIndex: 2,
     explanation:
-      'Trafik durduğunda araçların kenarlara yanaşarak orta bölümde bir yaşam koridoru bırakması, sirenli araçların olay yerine hızla ulaşmasını sağlar ve hayat kurtarır. Oluşacak şekilde araçların kenarlara yanaşması.',
+      'Trafik durduğunda araçların kenarlara yanaşarak orta bölümde bir yaşam koridoru bırakması, sirenli araçların olay yerine hızla ulaşmasını sağlar ve hayat kurtarır.',
     whyWrong: [
       'Herkesin olduğu yerde kalması, ortada geçiş için boşluk bırakmaz.',
       'Emniyet şeridini kişisel çıkar için kullanmak hem yasak hem de tehlikelidir; araçtan inmek ise trafiğe çıkma riski doğurur.',
@@ -117,7 +117,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
       'Yayaların geçişini tamamlamasını bekleyip sonra dönmek',
       'Korna çalıp yayaları hızlandırmak',
       'Yayaların arasından sıyrılıp dönüşü tamamlamak',
-      '"Aracım döndüğü için öncelik bende" deyip geçmek',
+      '«Aracım döndüğü için geçiş önceliği bende» deyip dönüşü tamamlamak',
     ],
     answerIndex: 0,
     explanation:
@@ -142,7 +142,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
       'Korna çalıp acele ettirmek',
       'Arabanın önünden hızla geçmek',
       'Tam durup güvenle ve rahatça geçmelerini beklemek',
-      'Yavaşlayıp yanlarından sıyrılarak geçmek',
+      'Yavaşlayıp bebek arabasının yanından sıyrılarak geçmek',
     ],
     answerIndex: 2,
     explanation:
@@ -165,7 +165,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Bir kavşakta iki araç ramak kala bir kazadan döndü; her iki sürücü de durdu ve ortam gergin. En olgun davranış nedir?',
     options: [
-      'Camı açıp suçun karşı tarafta olduğunu bağırarak söylemek',
+      'Camı açıp kusurun tamamen karşı tarafta olduğunu yüksek sesle bağırarak anlatmaya çalışmak',
       'Sakinleşip gerekirse özür dileyerek durumu yatıştırmak ve yola güvenle devam etmek',
       'Araçtan inip tartışmayı büyütmek',
       'Kavga videosu çekip paylaşmakla tehdit etmek',
@@ -191,7 +191,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     stem: 'Bir yakınınızı almak için evinin önüne geldiniz. Onu aşağı çağırmak için ne yapmalısınız?',
     options: [
       'Aşağı inene kadar korna çalmak',
-      'Uzun bir korna ile geldiğinizi duyurmak',
+      'Uzun uzun korna çalarak geldiğinizi bütün mahalleye duyurmaya çalışmak',
       'Birkaç kez kısa korna çalıp beklemek',
       'Telefonla arayıp ya da mesaj atarak gürültü yapmadan beklemek',
     ],
@@ -218,7 +218,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
       'Durup görevlinin işaretine uyarak çocukların geçmesini beklemek',
       'Görevliyi dikkate almadan yavaşça geçmek',
       'Korna çalıp geçiş isteğinizi belirtmek',
-      'Çocuklar geçmeden hızlıca sıyrılıp gitmek',
+      'Çocuklar karşıya geçmeden önce hızlıca sıyrılıp oradan uzaklaşmak',
     ],
     answerIndex: 0,
     explanation:
@@ -242,7 +242,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     stem: 'Hemzemin (demiryolu) geçidinde bariyerler inmeye başladı. Sabırlı ve güvenli davranış nedir?',
     options: [
       'Bariyer tam inmeden hızla karşıya geçmek',
-      'Bariyerlerin arasından slalom yaparak geçmek',
+      'Bariyerlerin arasından slalom yaparak karşıya geçmek',
       'Bariyerin önünde durup açılmasını sabırla beklemek',
       'Tren görünmüyorsa bariyeri kaldırıp geçmek',
     ],
@@ -268,7 +268,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     options: [
       'Ses yüksekliği sürüşü etkilemez, sorun yoktur',
       'Sadece gece sesi kısmak yeterlidir',
-      'Camlar kapalıysa istediğiniz ses seviyesinde dinleyebilirsiniz',
+      'Camlar kapalıysa dışarıyı rahatsız etmediğiniz için istediğiniz ses seviyesinde dinleyebilirsiniz',
       'Sesi, siren ve korna gibi uyarıları duyabileceğiniz bir seviyeye indirmek',
     ],
     answerIndex: 3,
@@ -291,7 +291,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Koltuk değneğiyle yürüyen bir yaya, yaya geçidinden yavaşça geçmeye çalışıyor. Doğru davranış hangisidir?',
     options: [
-      'Korna çalıp geçişini hızlandırmaya çalışmak',
+      'Korna çalarak geçişini hızlandırmaya çalışmak ve beklememek',
       'Tamamen durup güvenle geçmesi için sabırla beklemek',
       'Yanından dikkatlice sıyrılıp geçmek',
       'El işaretiyle daha hızlı yürümesini istemek',
@@ -317,7 +317,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     stem: 'Birini beklerken aracınızı uzun süre çalışır durumda (rölantide) bırakıyorsunuz. Çevre bilinci açısından doğru olan nedir?',
     options: [
       'Uzun beklemelerde motoru durdurup gereksiz yakıt tüketimi ve egzoz salımını önlemek',
-      'Motoru çalışır bırakmak yakıt tüketmez, sorun yoktur',
+      'Motor rölantide çalışırken yakıt tüketmez ve egzoz salımı olmaz; bu yüzden sorun yoktur',
       'Klima için motoru her zaman çalışır tutmak gerekir',
       'Rölantideki egzoz gazı çevreye zarar vermez',
     ],
@@ -343,7 +343,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     options: [
       'Yol boş görünüyorsa hızlıca sollamak',
       'Selektör yapıp öndekini hızlanmaya zorlamak',
-      'Görüş kapalı olsa da orta çizgiden ilerleyip fırsat kollamak',
+      'Görüş kapalı olsa da orta çizgiye yaklaşarak sollama fırsatı kollamak',
       'Sollamaktan vazgeçip görüş mesafesine göre hızı düşürerek takip etmek',
     ],
     answerIndex: 3,
@@ -368,7 +368,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     stem: 'Bir kavşakta trafik ışığı yeşil yanıyor, ancak trafik polisi sizin yönünüze "dur" işareti veriyor. Hangisine uymalısınız?',
     options: [
       'Işık yeşil olduğu için geçmek',
-      'Hangisine uyacağınıza kendiniz karar vermek',
+      'Işık ile görevlinin işareti çeliştiğinde hangisine uyacağınıza kendiniz karar vermek',
       'Trafik polisinin işaretine uymak, çünkü görevlinin işareti ışıktan önceliklidir',
       'Kornaya basıp polisin çekilmesini beklemek',
     ],
@@ -393,7 +393,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     stem: 'Dik bir yokuşta önünüzdeki araç kalkışta zorlanıp bir miktar geri kayıyor. Empatik ve güvenli davranış nedir?',
     options: [
       'Takip mesafesini artırıp araca yeterli alan bırakmak',
-      'Dibine kadar yaklaşıp baskı yapmak',
+      'Aracın dibine kadar yaklaşıp kalkması için baskı yapmak',
       'Korna çalıp acele ettirmek',
       'Selektör yapıp sıkıştırmak',
     ],
@@ -420,7 +420,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
       'Bisikletlinin hemen yanından hızla geçmek',
       'Yeterli yan güvenlik mesafesi bırakıp hızı azaltarak sollamak',
       'Korna çalıp bisikletliyi iyice kenara itmek',
-      '"Bisikletli engel" deyip sıkıştırarak geçmek',
+      '«Bisikletli yolda engeldir» deyip sıkıştırarak yanından geçmek',
     ],
     answerIndex: 1,
     explanation:
@@ -444,7 +444,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     stem: 'Yakıt tüketimini ve egzoz salımını azaltmak isteyen çevre bilincine sahip bir sürücü nasıl davranır?',
     options: [
       'Sürekli ani hızlanıp ani fren yaparak ilerler',
-      'Sürekli yüksek devirde ve gereksiz yüksek hızda sürer',
+      'Sürekli yüksek devirde ve gereksiz yere yüksek hızda araç kullanmayı sürdürür',
       'Yumuşak gaz-fren, uygun vites ve düzenli bir hızla ekonomik sürüş yapar',
       'Her durakta gaza basarak motoru yüksek devirde tutar',
     ],
@@ -493,7 +493,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Bir sürücü size kaba bir el hareketi yapıp bağırdı. Öfke yönetimi açısından en doğru tepki nedir?',
     options: [
-      'Aynı el hareketini ona da yapmak',
+      'Aynı kaba el hareketini ona da yaparak karşılık vermek ve haddini bildirmek',
       'Peşine takılıp hesap sormak',
       'Tepki vermeyip görmezden gelerek sakin bir şekilde yolunuza devam etmek',
       'Yanına yaklaşıp gözdağı vermek',
@@ -519,7 +519,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     stem: 'Aracınız otoyolda arıza yapıp durdu. Kendinizin ve diğerlerinin güvenliği için en doğru davranış hangisidir?',
     options: [
       'Araçta oturup yardım gelmesini beklemek',
-      'Aracın yanında ayakta durup telefonla ilgilenmek',
+      'Aracı olduğu şeritte bırakıp yanında ayakta durarak telefonla yardım çağırmak ve reflektör koymadan yolcularla birlikte aracın çevresinde beklemek',
       'Dörtlüleri yakmadan aracı ittirmeye çalışmak',
       'Dörtlüleri yakıp mümkünse aracı emniyet şeridine almak, reflektörlü üçgeni uygun mesafeye koymak ve yolcularla bariyerin güvenli tarafına geçmek',
     ],
@@ -547,7 +547,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
       'Manevradan önce arkayı ve çevreyi kontrol etmek, gerekirse inip bakmak ve çok yavaş ilerlemek',
       'Sadece dikiz aynasına bakıp hızlıca geri çıkmak',
       'Korna çalıp çocuklar kaçsın diye beklemek',
-      '"Arkada kimse yoktur" varsayıp normal hızda geri gitmek',
+      '«Arkada kimse yoktur» varsayıp aynalara bile bakmadan normal hızda geri manevrayı hemen tamamlamak',
     ],
     answerIndex: 0,
     explanation:
@@ -573,7 +573,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
       'Aynı hızda yanlarından geçmek',
       'Korna çalıp uzaklaşmalarını istemek',
       'Hızı azaltıp, mümkünse yan şeride geçerek onlara güvenli mesafe bırakmak',
-      'Merak edip yavaşlayarak uzun uzun bakmak ve trafiği aksatmak',
+      'Merak edip iyice yavaşlayarak uzun uzun bakmak ve arkadaki trafiği aksatmak',
     ],
     answerIndex: 2,
     explanation:
@@ -599,7 +599,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
       'Korna ve selektörle acele ettirmek',
       'Takip mesafesini koruyup anlayışla, baskı yapmadan ilerlemek',
       'Dibine yaklaşıp sıkıştırmak',
-      'Yanına gelip el kol hareketiyle uyarmak',
+      'Yanına sokulup el kol hareketleriyle acele etmesi gerektiğini anlatmak',
     ],
     answerIndex: 1,
     explanation:
@@ -622,7 +622,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     stem: 'Kavşakta ışık size yeşil yandı, tam geçecekken yandan sirenli bir itfaiye aracı kavşağa giriyor. Ne yapmalısınız?',
     options: [
       'Yeşil bile olsa durup geçiş üstünlüğü olan araca yol vermek',
-      '"Işık yeşil, geçiş hakkı bende" deyip devam etmek',
+      '«Işık yeşil yandı, geçiş hakkı bende» deyip yola devam etmek',
       'Hızlanıp itfaiyeden önce kavşağı geçmek',
       'Korna çalıp itfaiyeyi durdurmaya çalışmak',
     ],
@@ -649,7 +649,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
       'Yol boşsa yavaşlayıp durmadan geçmek',
       'Tam olarak durup güvenliği kontrol ettikten sonra geçmek',
       'Sadece hızı biraz azaltmak yeterlidir',
-      'Levhayı görmezden gelip normal hızda geçmek',
+      'DUR levhasını görmezden gelip normal hızda kavşaktan geçmek',
     ],
     answerIndex: 1,
     explanation:
@@ -672,7 +672,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     stem: 'Yol çalışması nedeniyle yol tek şeride düşmüş ve bir işaretçi (bayrakçı) trafiği sırayla yönlendiriyor. Doğru davranış nedir?',
     options: [
       'İşaretçiyi dikkate almadan ilerlemek',
-      'Karşı yönden gelenleri beklemeden geçmek',
+      'Karşı yönden gelen araçları beklemeden sıradan çıkıp geçmek',
       'İşaretçinin yönlendirmesine uyup sıranızı sabırla beklemek',
       'Korna çalıp önündekileri sıkıştırmak',
     ],
@@ -699,7 +699,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     options: [
       'Sadece öndeki araçlara bakıp şeridi değiştirmek',
       'Ayna kontrolüyle birlikte kör noktayı da kontrol edip motosikletli olup olmadığına bakmak',
-      'Motosikletler küçük olduğu için onları dikkate almamak',
+      'Motosikletler küçük ve çevik olduğu için şerit değiştirirken onları hiçbir şekilde hesaba katmamak',
       'Sinyal vermeden hızlıca geçmek',
     ],
     answerIndex: 1,
@@ -725,7 +725,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     options: [
       'Sürekli şerit değiştirip boşluk aramak',
       'Öndeki araçlara sinirlenip korna çalmak',
-      'Emniyet şeridine geçip trafiği aşmaya çalışmak',
+      'Emniyet şeridine geçip duran trafiği aşarak bir an önce öne geçmeye çalışmak ve kuyruğu atlamak',
       'Gecikmeyi kabullenip derin nefes alarak, sakin kalıp güvenli sürüşe odaklanmak',
     ],
     answerIndex: 3,
@@ -749,7 +749,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Rüzgarlı ve yağmurlu havada önünüzdeki motosikletli, dengesini korumak için şerit içinde biraz daha geniş seyrediyor. Empatik davranış nedir?',
     options: [
-      'Dibine yaklaşıp geçmesi için baskı yapmak',
+      'Motosikletlinin dibine iyice yaklaşıp kenara çekilmesi için baskı yapmak',
       'Korna çalıp kenara çekilmesini istemek',
       'Takip mesafesini artırıp ona daha fazla alan bırakarak anlayış göstermek',
       'Sıkışıp yanından hızla geçmek',
@@ -775,14 +775,14 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Otoyolda şerit değiştirirken bir kamyon yavaşlayıp sizi araya aldı. Nazik bir teşekkür için ne yapabilirsiniz?',
     options: [
-      'Hiçbir şey yapmadan devam etmek',
-      'Uzun uzun korna çalmak',
-      'Kısa süre dörtlüleri (flaşör)',
-      'Hızlanıp önünden hemen uzaklaşmak',
+      'Hiçbir şey yapmadan yolunuza devam etmek; trafikte teşekkür gerekmez',
+      'Uzun uzun korna çalarak sesli biçimde teşekkür etmek',
+      'Kısa süre dörtlüleri (flaşör) yakıp teşekkür ettiğinizi belirtmek',
+      'Hızlanıp kamyonun önünden bir an önce uzaklaşmak',
     ],
     answerIndex: 2,
     explanation:
-      'Otoyolda size yol veren bir sürücüye kısa süre dörtlü yakarak teşekkür etmek yaygın ve nazik bir işarettir; bu jest, trafikte olumlu bir iletişim kültürünü besler. Yakıp teşekkür ettiğinizi belirtmek.',
+      'Otoyolda size yol veren bir sürücüye kısa süre dörtlü yakarak teşekkür etmek yaygın ve nazik bir işarettir; bu jest, trafikte olumlu bir iletişim kültürünü besler.',
     whyWrong: [
       'Karşılık vermemek, gösterilen inceliği görmezden gelmektir.',
       'Uzun korna teşekkür yerine rahatsızlık izlenimi verir; hemen uzaklaşmak da jesti değersiz kılar.',
@@ -801,7 +801,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Kavşakta ışığınız yeşile döndü, ama bir yaya karşıdan karşıya geçişini henüz tamamlamadı. Ne yaparsınız?',
     options: [
-      'Yeşil yandığı için korna çalıp yayayı uyarmak',
+      'Işık yeşil yandığı için korna çalarak yayayı hızlanmaya zorlamak',
       'Yaya geçişini tamamlayana kadar bekleyip sonra hareket etmek',
       'Yayanın arkasından hızla geçmek',
       'Yayanın önünden sıyrılıp geçmek',
@@ -829,7 +829,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
       'Hızı iyice düşürüp her an durmaya hazır ilerlemek ve okul önüne çift park etmemek',
       'Normal şehir hızını koruyup dikkatli bakmak',
       'Korna çalıp çocukların kenara çekilmesini istemek',
-      'Kısa süre için okul kapısının önüne çift park etmek',
+      'Kısa süre kalacağınız için okul kapısının hemen önüne çift park edip orada beklemek',
     ],
     answerIndex: 0,
     explanation:
@@ -854,7 +854,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
       'Sürücünün dikkatini dağıtmamak, gerekirse yol tarifi veya navigasyon konusunda yardımcı olmak',
       'Sürücüyü daha hızlı gitmesi için sürekli teşvik etmek',
       'Yüksek sesle şakalaşıp sürücünün gözünü yoldan ayırtmak',
-      'Sürekli telefonu sürücünün önüne tutup bir şeyler göstermek',
+      'Sürekli telefonu sürücünün gözünün önüne tutup ekranda bir şeyler göstermeye ve anlatmaya çalışmak',
     ],
     answerIndex: 0,
     explanation:
@@ -877,7 +877,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     stem: 'Uzun bir kırmızı ışıkta ve yoğun trafikte giderek sinirleniyor, direksiyona vurmak istiyorsunuz. Öfkenizi yönetmek için en doğru yol nedir?',
     options: [
       'Kornaya asılıp gerginliği boşaltmak',
-      'Öndeki araçları suçlayıp yüksek sesle söylenmek',
+      'Öndeki araçları suçlayıp yüksek sesle söylenerek gerginliği artırmak',
       'Boşluk buldukça agresif manevralarla ilerlemek',
       'Derin nefes alıp beklemenin geçici olduğunu hatırlayarak sakinleşmek',
     ],
@@ -901,7 +901,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Karşıya geçmek isteyen bir yaya, kornayı ve çevresel sesleri fark etmiyor ve işitme engelli olabileceğini düşünüyorsunuz. Doğru davranış nedir?',
     options: [
-      'Duyana kadar korna çalmaya devam etmek',
+      'Yaya sesi duyana kadar aralıksız biçimde korna çalmaya devam etmek',
       'Sesli uyarı yapıp geçmesini beklemek',
       'Göz teması kurmaya çalışıp tam durarak, temkinle geçişini beklemek',
       'Duymuyorsa hızlıca yanından geçmek',
@@ -929,7 +929,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     options: [
       'Karşıdan gelen olursa korkutmak için uzun korna çalmak',
       'Varlığınızı önceden haber vermek için kısa bir korna çalmak',
-      'Korna çalmaya hiç gerek yoktur, hızlıca geçmek en iyisidir',
+      'Korna çalmaya hiç gerek yoktur; hızlıca geçip çıkmak en iyisidir',
       'Sürekli korna çalarak geçmek',
     ],
     answerIndex: 1,
@@ -954,7 +954,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     stem: 'Trafik sıkışık ve yavaş ilerliyor; tam yaya geçidinin üzerinde durmak üzeresiniz. Doğru davranış nedir?',
     options: [
       'Yaya geçidini boş bırakacak şekilde geçidin gerisinde durmak',
-      'Geçidin üzerinde durup trafiğin açılmasını beklemek',
+      'Yaya geçidinin tam üzerinde durup trafiğin açılmasını beklemek',
       'Yayalar arasından ilerleyip geçidi geçmek',
       'Yaya geçidini kısmen kapatarak durmak',
     ],
@@ -978,9 +978,9 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Tek başınıza uzun bir yolculuğa çıkacaksınız. Yorgunluk ve dikkat kaybını önlemek için en doğru plan hangisidir?',
     options: [
-      'Molasız gidip bir an önce varmaya çalışmak',
-      'Yorulunca kahve içip devam etmek yeterlidir',
-      'Düzenli aralıklarla (yaklaşık her iki saatte bir)',
+      'Hiç mola vermeden ilerleyip bir an önce varış noktasına ulaşmak',
+      'Yorulunca kahve içip yola devam etmek yeterlidir',
+      'Düzenli aralıklarla (yaklaşık her iki saatte bir) mola vermek',
       'Yorgunluk hissedince hızlanıp yolu kısaltmak',
     ],
     answerIndex: 2,
@@ -1054,7 +1054,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Önemli bir randevunuz var ve trafikte acele etmekten kaynaklanan stresi yaşamak istemiyorsunuz. En doğru yaklaşım nedir?',
     options: [
-      'Son dakikada çıkıp trafikte hızlanarak yetişmeye çalışmak',
+      'Son dakikada yola çıkıp trafikte hızlanarak randevuya yetişmeye çalışmak',
       'Geç kalınca riskli manevralarla zaman kazanmaya çalışmak',
       'Trafik kötüyse emniyet şeridini kullanmak',
       'Yola erken çıkıp zaman baskısını ve acele stresini baştan önlemek',
@@ -1082,7 +1082,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
       'Kısa yolda bile ön ve arka tüm yolcular emniyet kemerini takmalıdır',
       'Kısa mesafede kemer takmaya gerek yoktur',
       'Sadece ön koltuktakiler kemer takmalıdır',
-      'Arka koltukta kemer takmak isteğe bağlıdır',
+      'Arka koltukta oturan yolcular için emniyet kemeri takmak isteğe bağlıdır',
     ],
     answerIndex: 0,
     explanation:
@@ -1104,7 +1104,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Dar bir kavşakta karşı sürücüyle "yol hakkı benim" diye inatlaşıyorsunuz ve ikiniz de geçmiyorsunuz. En olgun çözüm nedir?',
     options: [
-      '"Hakkımı savunurum" deyip inatla beklemeye devam etmek',
+      '«Hakkımı sonuna kadar savunurum» deyip inatla yerinde bekleyip geçmemekte ısrarla direnmek',
       'Egoyu bir kenara bırakıp feragat ederek karşı sürücüye yol vermek ve tıkanıklığı çözmek',
       'Korna çalıp karşı tarafı geri gitmeye zorlamak',
       'Aracı yavaşça karşıya doğru sürüp gözdağı vermek',
@@ -1132,7 +1132,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
       'Her zaman tek başına özel araç kullanmak',
       'Aracı gereksiz yere rölantide çalıştırmak',
       'Uygun olduğunda toplu taşımayı, yürüyüşü ya da araç paylaşımını tercih etmek',
-      'Kısa mesafeleri bile yüksek hızda araçla gitmek',
+      'Kısa mesafelerde bile her zaman yüksek hızda özel araç kullanmayı tercih etmek',
     ],
     answerIndex: 2,
     explanation:
@@ -1155,7 +1155,7 @@ export const ADAB_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Gişe veya feribot kuyruğunda uzun bir sıra oluşmuş. Sabır ve adap açısından doğru davranış nedir?',
     options: [
-      'Yandan ilerleyip sıranın önüne kaynak yapmak',
+      'Yandan ilerleyip sıranın en önüne kaynak yaparak girmek',
       'Korna çalıp öndekileri sıkıştırmak',
       'Emniyet şeridinden gidip en öne geçmek',
       'Sıraya saygı gösterip beklemek ve araya girmemek',

@@ -166,14 +166,14 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Sınav güzergâhı tamamlanıp görevli "aracı buraya park edebilirsiniz" dediğinde bitiş manevrasının doğru sırası nedir?',
     options: [
-      'Motoru hemen kapatıp sonra frene basmak',
-      'Kemeri açıp aracı boşta bırakarak inmek',
-      'El frenini çekmeden vitesi boşa alıp inmek',
-      'Aracı güvenli ve düz biçimde durdurmak, vitesi boşa (ya da rampada uygun vitese)',
+      'Önce motoru kapatmak, sonra frene basmak, ardından el frenini çekip kemeri çözerek araçtan hızla inmek ve kapıyı kapatmak',
+      'Kemeri açıp aracı boşta bırakarak inmek ve el frenini çekmeden kapıyı kapatmak',
+      'El frenini çekmeden vitesi boşa alıp motoru çalışır durumda bırakarak inmek',
+      'Aracı güvenli ve düz durdurmak, vitesi boşa almak, el frenini çekmek, motoru kapatmak ve en son kemeri çözmek',
     ],
     answerIndex: 3,
     explanation:
-      'Bitiş de sürüşün bir parçasıdır ve düzeni görevli izler. Doğru sıra; aracı sarsıntısız durdurmak, el frenini çekip aracı emniyete almak, motoru kapatmak ve en son emniyet kemerini çözmektir. Rampada ise vites ve tekerlek yönü önlemleri de eklenir. Bu düzen, aracı tam güvenceye almadan araçtan kopmayı önler. Almak, el frenini çekmek, motoru kapatmak ve ancak sonra kemeri çözüp inmek.',
+      'Bitiş de sürüşün bir parçasıdır ve düzeni görevli izler. Doğru sıra; aracı sarsıntısız durdurmak, el frenini çekip aracı emniyete almak, motoru kapatmak ve en son emniyet kemerini çözmektir. Rampada ise vites ve tekerlek yönü önlemleri de eklenir. Bu düzen, aracı tam güvenceye almadan araçtan kopmayı önler.',
     whyWrong: [
       'Motoru frene basmadan ya da aracı emniyete almadan kapatmak, düzensiz ve riskli bir bitiştir.',
       'El freni çekilmeden boşta bırakılan araç, özellikle en küçük eğimde bile kayabilir.',
@@ -998,14 +998,14 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'İki şeridin tek şeride düştüğü bir yol çalışması ya da daralmada trafiğin en akıcı ve güvenli ilerlemesini sağlayan yöntem hangisidir?',
     options: [
-      'Her aracın daralma noktasına kadar kendi şeridinde ilerleyip birleşme yerinde sırayla, dönüşümlü olarak (fermuar gibi)',
-      'Kapanan şeritteki herkesin çok önceden diğer şeride geçip tek sıra olması',
+      'Her aracın daralma noktasına kadar kendi şeridinde ilerleyip birleşme yerinde sırayla, dönüşümlü olarak (fermuar gibi) tek şeride katılması',
+      'Kapanan şeritteki herkesin çok önceden diğer şeride geçip tek sıra hâlinde ilerlemesi ve daralma noktasına kadar o şeridi hiç kullanmadan beklemesi',
       'Kapanan şeridi kullananların hızlanıp öndekilerin önüne zorla girmesi',
       'İki şeridin de daralmayı görmezden gelip yan yana sıkışarak devam etmesi',
     ],
     answerIndex: 0,
     explanation:
-      'Şerit daralmasında en verimli düzen, araçların birleşme noktasına kadar iki şeridi de kullanıp tam daralma yerinde sırayla, bir o şeritten bir bu şeritten dönüşümlü olarak katılmasıdır; buna fermuar sistemi denir. Bu yöntem her iki şeridin kapasitesini kullandığı için kuyruğu kısaltır ve ani şerit değişimlerini azaltır. Katılan araca yer açmak, birleşme yerinde nezaket değil, akışın gereğidir. Tek şeride katılması.',
+      'Şerit daralmasında en verimli düzen, araçların birleşme noktasına kadar iki şeridi de kullanıp tam daralma yerinde sırayla, bir o şeritten bir bu şeritten dönüşümlü olarak katılmasıdır; buna fermuar sistemi denir. Bu yöntem her iki şeridin kapasitesini kullandığı için kuyruğu kısaltır ve ani şerit değişimlerini azaltır. Katılan araca yer açmak, birleşme yerinde nezaket değil, akışın gereğidir.',
     whyWrong: [
       'Herkesin çok önceden tek şeride yığılması, bir şeridi boş bırakıp kuyruğu gereksiz uzatır.',
       'Zorla öne girmek ya da yan yana sıkışmak, sürtüşme ve tıkanma yaratıp akışı büsbütün bozar.',

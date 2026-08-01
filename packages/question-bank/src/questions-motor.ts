@@ -265,10 +265,15 @@ export const MOTOR_QUESTIONS: Question[] = [
     topic: 'lastik',
     difficulty: 'kolay',
     stem: 'Lastiklerin güvenli sürüş açısından düzenli kontrol edilmesi gereken özellikleri hangileridir?',
-    options: ['Renk ve marka', 'Diş (sırt)', 'Jant çapı ve göbek kapağı', 'Yalnızca üretim yılı'],
+    options: [
+      'Lastiğin yanak rengi ve üretici markası',
+      'Diş (sırt) derinliği ve hava basıncı',
+      'Jant çapı ve göbek kapağı görünümü',
+      'Yalnızca yanakta yazan üretim yılı',
+    ],
     answerIndex: 1,
     explanation:
-      'Yeterli diş derinliği yol tutuşunu ve suyu tahliyeyi sağlar; doğru hava basıncı ise dengeli aşınma, güvenli frenleme ve yol tutuşu için gereklidir. İkisi de güvenliği doğrudan etkiler.',
+      'Yeterli diş derinliği yol tutuşunu ve suyu tahliyeyi sağlar; doğru hava basıncı ise dengeli aşınma, güvenli frenleme ve yol tutuşu için gereklidir.',
     whyWrong: [
       'Renk ve marka sürüş güvenliğinin belirleyicisi değildir.',
       'Yalnızca üretim yılına bakmak, aşınma ve basınç durumunu göstermez.',

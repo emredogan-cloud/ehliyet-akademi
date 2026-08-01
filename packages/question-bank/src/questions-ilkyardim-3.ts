@@ -15,7 +15,7 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     stem: 'İlk yardımda yaşamsal işlevlerin değerlendirilmesinde kullanılan "ABC" kısaltması hangi sırayı ifade eder?',
     options: [
       'Ateş – Bilinç – Cilt rengi',
-      'Ağrı – Bulantı – Baş dönmesi',
+      'Ağrı – Bulantı – Baş dönmesi hâli',
       'Hava yolu – Solunum – Dolaşım',
       'Ağız – Boğaz – Akciğer',
     ],
@@ -40,7 +40,7 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     stem: 'Bilinci kapalı erişkin bir kişide dolaşımın (nabzın) olup olmadığı en güvenilir olarak nereden değerlendirilir?',
     options: [
       'Boyundaki şah damarı (şahdamar) bölgesinden',
-      'El başparmağının ucundan',
+      'El başparmağının uç kısmındaki ince damardan',
       'Ayak tabanından',
       'Alın bölgesinden',
     ],
@@ -64,7 +64,7 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Erişkin bir kişide temel yaşam desteğine (kalp masajı ve yapay solunuma) hangi durumda başlanır?',
     options: [
-      'Kişi baygın ama düzenli nefes alıyorsa',
+      'Kişi baygın görünse bile düzenli biçimde nefes alıp vermeyi sürdürüyorsa',
       'Kişinin yalnızca kolu kırıksa',
       'Kişi ağrıdan yakınıyorsa',
       'Bilinci kapalıysa ve solunumu yoksa (ya da normal solumuyorsa)',
@@ -89,14 +89,14 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Erişkinde göğüs basıları uygulanırken her basının ardından nelere dikkat edilmelidir?',
     options: [
-      'Elleri göğüsten tamamen kaldırıp yerini değiştirmeye',
-      'Göğsün eski hâline (tam olarak)',
-      'Basıyı olabildiğince yavaşlatmaya',
-      'Her basıda bir soluk vermeye',
+      'Elleri göğüsten tamamen kaldırıp her basıda yerini değiştirmeye',
+      'Göğsün eski hâline (tam olarak) geri gelmesine izin vermeye',
+      'Basıyı olabildiğince yavaşlatıp aralarında beklemeye',
+      'Her basının ardından bir kurtarıcı soluk vermeye',
     ],
     answerIndex: 1,
     explanation:
-      'Her göğüs basısından sonra ellerin teması kesilmeden göğsün tam olarak eski hâline gelmesine (geri dönmesine) izin verilir; böylece kalp yeniden kanla dolar. Bası ve gevşeme süreleri dengeli tutulur. Geri gelmesine izin vermeye.',
+      'Her göğüs basısından sonra ellerin teması kesilmeden göğsün tam olarak eski hâline gelmesine (geri dönmesine) izin verilir; böylece kalp yeniden kanla dolar. Bası ve gevşeme süreleri dengeli tutulur.',
     whyWrong: [
       'Elleri her seferinde kaldırıp yeniden yerleştirmek basının yerini şaşırtır ve zaman kaybettirir.',
       'Basıyı yavaşlatmak veya her basıda soluk vermek etkili dolaşımı bozar.',
@@ -114,7 +114,7 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Yaklaşık 1-8 yaş arası bir çocukta dış kalp masajı, erişkine göre genellikle nasıl uygulanır?',
     options: [
-      'İki elin topuğuyla ve daha derin bastırılarak',
+      'Erişkindeki gibi iki elin topuğuyla ve çok daha derin bastırılarak',
       'Yumrukla göğse vurularak',
       'Çoğunlukla tek elin topuğuyla ve daha az derinlikte bastırılarak',
       'Yalnızca karın bölgesine bastırılarak',
@@ -141,7 +141,7 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     options: [
       'Kanın açık kırmızı renkte ve kalp atımına uyumlu biçimde fışkırarak akması',
       'Kanın koyu renkte ve sızarak akması',
-      'Kanamanın her zaman kendiliğinden hemen durması',
+      'Kanın koyu kırmızı renkte olması ve çok kısa sürede kendiliğinden durup kesilmesi',
       'Kanın hiç akmayıp yalnızca morarma olması',
     ],
     answerIndex: 0,
@@ -165,7 +165,7 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     stem: 'Bir kazada yaralının vücuduna büyük bir cisim (örneğin demir çubuk) saplanmışsa ilk yardımda ne yapılır?',
     options: [
       'Cisim hızlıca çekilip çıkarılır',
-      'Cisim ileri geri oynatılarak gevşetilir',
+      'Saplanan cisim ileri geri oynatılarak yavaşça gevşetilip dışarı çıkarılır',
       'Cismin üzerine basılarak içeri itilir',
       'Cisim yerinde bırakılır, çevresi desteklenerek sabitlenir ve 112 aranır',
     ],
@@ -189,14 +189,14 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Şok belirtileri gösteren bir yaralıya ağızdan su veya yiyecek verilmemesinin başlıca nedeni nedir?',
     options: [
-      'Yaralının iştahını kapatmamak için',
-      'Bilinci bozulabileceğinden kusma ve soluk borusuna kaçma (boğulma)',
-      'Su yaralıya lezzetsiz geleceği için',
-      'Su kanamayı doğrudan artıracağı için',
+      'Verilen su ve yiyeceğin yaralının iştahını kapatıp sonraki tedaviyi zorlaştırması nedeniyle',
+      'Bilinci bozulabileceğinden kusma ve soluk borusuna kaçma (boğulma) riski bulunduğu için',
+      'Şoktaki yaralıya verilen suyun tatsız gelmesi ve kişiyi rahatsız etmesi nedeniyle',
+      'Ağızdan alınan sıvının kanamayı doğrudan hızlandırdığının bilinmesi nedeniyle',
     ],
     answerIndex: 1,
     explanation:
-      'Şoktaki yaralının bilinci her an bozulabilir; ağızdan verilen sıvı veya besin kusmaya ve soluk borusuna kaçarak boğulmaya yol açabilir. Ayrıca gerekebilecek acil işlemler için midenin boş olması önemlidir. Bu nedenle ağızdan bir şey verilmez. Riski bulunduğu için.',
+      'Şoktaki yaralının bilinci her an bozulabilir; ağızdan verilen sıvı veya besin kusmaya ve soluk borusuna kaçarak boğulmaya yol açabilir. Ayrıca gerekebilecek acil işlemler için midenin boş olması önemlidir. Bu nedenle ağızdan bir şey verilmez.',
     whyWrong: [
       'Sakınca iştah veya lezzetle ilgili değildir.',
       'Su içmek kanamayı doğrudan artırmaz; asıl tehlike boğulma ve kusma riskidir.',
@@ -214,7 +214,7 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Omuz ya da parmak gibi bir eklemin yerinden çıktığı (çıkık) durumda ilk yardımcı ne yapmalıdır?',
     options: [
-      'Eklemi hızlıca çekip yerine oturtmaya çalışmak',
+      'Çıkan eklemi hızlıca çekip yerine oturtmaya ve normal konumuna geri döndürmeye uğraşmak',
       'Eklemi defalarca hareket ettirmek',
       'Eklemi bulunduğu şekilde sabitleyip soğuk uygulayarak sağlık kuruluşuna yönlendirmek',
       'Çıkık bölgeyi sıcak suya sokmak',
@@ -240,7 +240,7 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     stem: 'Kapalı bir kırığı düşündüren belirtilerden biri aşağıdakilerden hangisidir?',
     options: [
       'Bölgede şişlik, şekil bozukluğu ve hareketle artan şiddetli ağrı',
-      'Ciltte kaşıntı ve kızarıklık',
+      'Ciltte yaygın kaşıntı, kızarıklık ve kabarcık oluşumunun görülmesi',
       'Ateşin aniden yükselmesi',
       'Karın bölgesinde açlık hissi',
     ],
@@ -265,7 +265,7 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     stem: 'Kırık şüphesi olan bir kol veya bacağa atel (destek) uygulanırken uyulması gereken temel kural nedir?',
     options: [
       'Yalnızca kırığın tam üzerini sarmak',
-      'Ateli çok gevşek bağlayıp bölgeyi serbest bırakmak',
+      'Ateli çok gevşek bağlayıp kırık bölgenin serbestçe hareket etmesine izin vermek',
       'Kırık bölgeyi önce elle düzeltip sonra sarmak',
       'Atelin, kırığın bir alt ve bir üst eklemini de içine alacak şekilde uygulanması',
     ],
@@ -289,7 +289,7 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'İkinci derece bir yanıkta ciltte görülen tipik bulgu aşağıdakilerden hangisidir?',
     options: [
-      'Yalnızca hafif kızarıklık ve kuruluk',
+      'Yalnızca hafif kızarıklık ve ciltte kuruluk olması',
       'İçi sıvı dolu su kabarcıklarının (bül) oluşması',
       'Ciltte hiçbir değişiklik olmaması',
       'Bölgenin tümüyle soğuması',
@@ -317,7 +317,7 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
       'Bölgeyi kuru bezle silip kapatmak',
       'Üzerine krem veya merhem sürmek',
       'Bulaşmış giysileri çıkarıp bölgeyi bol akan suyla uzun süre yıkamak',
-      'Bölgeyi ovarak kimyasalı yaymak',
+      'Bölgeyi kuvvetlice ovmak ve kimyasalı cildin çevresine doğru yaymak',
     ],
     answerIndex: 2,
     explanation:
@@ -340,7 +340,7 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     stem: 'Sara (epilepsi) nöbeti geçiren, kasılıp yere düşen ve titreyen bir kişiye ilk yardımda ne yapılır?',
     options: [
       'Çevredeki tehlikeli cisimleri uzaklaştırıp başını korumak ve nöbetin geçmesini beklemek',
-      'Kollarını ve bacaklarını sıkıca tutup kasılmayı zorla durdurmak',
+      'Kollarını ve bacaklarını sıkıca tutup kasılmayı zorla durdurmaya ve kişiyi hareketsiz kılmaya çalışmak',
       'Ağzına sert bir cisim veya parmak yerleştirmek',
       'Kişiyi ayağa kaldırıp yürütmeye çalışmak',
     ],
@@ -364,7 +364,7 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Şeker hastası olduğu bilinen, açlıkla birlikte terleme ve titreme başlayan ancak bilinci açık ve güvenle yutkunabilen bir kişiye ilk yardım olarak ne verilebilir?',
     options: [
-      'Hiçbir şey verilmemeli, hemen yatırılmalı',
+      'Hiçbir şey verilmemeli, kişi hemen sırtüstü yatırılıp beklenmeli',
       'Bol miktarda tuzlu su',
       'Şekerli bir içecek ya da kolay yutulabilen tatlı bir besin',
       'Soğuk duş aldırılmalı',
@@ -391,7 +391,7 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     options: [
       'Sırtüstü ve düz biçimde',
       'Yan tarafına, başı hafifçe geriye ve yüzü biraz aşağı bakacak şekilde',
-      'Yüzükoyun ve kolları altında kalacak biçimde',
+      'Tamamen yüzükoyun yatırılıp kolları gövdesinin altında kalacak biçimde',
       'Oturur konumda başı öne düşmüş hâlde',
     ],
     answerIndex: 1,
@@ -439,14 +439,14 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Bir yaş altı bir bebekte hava yolu yabancı cisimle tıkandığında, erişkindeki karına bası (Heimlich) yerine hangi yöntem uygulanır?',
     options: [
-      'Sırtına (kürek kemikleri arasına)',
-      'Bebeğin karnına kuvvetle bastırılır',
-      'Bebek ayaklarından tutulup sallanır',
-      'Bebeğe bol su içirilir',
+      'Sırtına (kürek kemikleri arasına) vurma ile göğse bası dönüşümlü uygulanır',
+      'Bebeğin karnına, erişkindeki gibi içe ve yukarı doğru kuvvetle bastırılır',
+      'Bebek ayaklarından tutulup baş aşağı sallanarak cisim düşürülmeye çalışılır',
+      'Bebeğe bol su içirilerek cismin mideye inmesi sağlanır',
     ],
     answerIndex: 0,
     explanation:
-      'Bebeklerde karına bası iç organlara zarar verebileceğinden uygulanmaz; bunun yerine bebek yüzüstü kol üzerine alınıp başı gövdesinden aşağıda tutularak sırtına (kürek kemikleri arasına) vurulur ve gerektiğinde göğse bası ile dönüşümlü sürdürülür. Vurma ile göğse bası dönüşümlü olarak uygulanır.',
+      'Bebeklerde karına bası iç organlara zarar verebileceğinden uygulanmaz; bunun yerine bebek yüzüstü kol üzerine alınıp başı gövdesinden aşağıda tutularak sırtına (kürek kemikleri arasına) vurulur ve gerektiğinde göğse bası ile dönüşümlü sürdürülür.',
     whyWrong: [
       'Bebeğin karnına bası uygulamak iç organ yaralanmasına yol açabilir.',
       'Bebeği ayaklarından sallamak veya su içirmek tehlikeli ve etkisizdir.',
@@ -489,7 +489,7 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Yangın gibi hayati bir tehlike nedeniyle bir yaralıyı tek başınıza kısa mesafede güvenli yere çekmeniz gerektiğinde uygun yöntem hangisidir?',
     options: [
-      'Yaralıyı tek kolundan tutup yana doğru savurmak',
+      'Yaralıyı tek kolundan tutup yana doğru savurarak, gövdesinin dönmesine aldırmadan hızla güvenli bir alana doğru sürüklemek',
       'Baş-boyun-gövde ekseni olabildiğince korunacak biçimde, koltuk altından ya da ayak bileklerinden düz çekerek sürüklemek',
       'Yaralıyı sırtına alıp koşmak',
       'Yaralıyı belinden büküp taşımak',
@@ -514,7 +514,7 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Sıcak ve güneşli ortamda uzun süre kaldıktan sonra cildi sıcak-kuru ve kızarık olan, başı dönen ve bilinci bulanıklaşan bir kişide (sıcak/güneş çarpması) ilk yardım olarak ne yapılır?',
     options: [
-      'Kişi sıcakta tutulup üzeri kalın örtüyle örtülür',
+      'Kişi bulunduğu sıcak ortamda tutulup üzeri kalın örtüyle örtülür, terlemesi sağlanır ve sıcak içecekler içirilerek ısıtılır',
       'Kişiye ağır egzersiz yaptırılır',
       'Kişi serin ve gölge bir yere alınıp giysileri gevşetilir, vücudu ılık-serin suyla veya ıslak bezle soğutulur ve 112 aranır',
       'Kişiye sıcak içecekler içirilir',
@@ -539,14 +539,14 @@ export const ILKYARDIM_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Kalp krizi geçirdiğinden şüphelenilen bir kişinin bilinci kapanır ve solunumu durursa ilk yardımcı ne yapmalıdır?',
     options: [
-      'Derhal temel yaşam desteğine (göğüs basısına)',
-      'Kişiyi oturtup su içirmeye çalışmak',
-      'Ağrı geçene kadar beklemek',
-      'Kişiyi ayağa kaldırıp yürütmek',
+      'Derhal temel yaşam desteğine (göğüs basısına) başlamak ve 112 ile iletişimi sürdürmek',
+      'Kişiyi oturtup su içirerek kendine gelmesini beklemek ve bu arada nabzını saymayı sürdürmek',
+      'Göğüs ağrısı tamamen geçene kadar hiçbir müdahale yapmadan beklemek',
+      'Kişiyi ayağa kaldırıp kolundan tutarak yürütmeye çalışmak',
     ],
     answerIndex: 0,
     explanation:
-      'Kalp krizi, kalbin tümüyle durmasına (kalp durması) ilerleyebilir. Bilinç kapanır ve solunum durursa vakit kaybetmeden temel yaşam desteğine başlanır; göğüs basıları uygulanır ve 112 çağrısı sürdürülür. Erken başlanan kalp masajı yaşam şansını artırır. Başlamak ve 112 ile iletişimi sürdürmek.',
+      'Kalp krizi, kalbin tümüyle durmasına (kalp durması) ilerleyebilir. Bilinç kapanır ve solunum durursa vakit kaybetmeden temel yaşam desteğine başlanır; göğüs basıları uygulanır ve 112 çağrısı sürdürülür. Erken başlanan kalp masajı yaşam şansını artırır.',
     whyWrong: [
       'Solunumu durmuş kişiye su içirmeye çalışmak ya da onu yürütmek hayati zaman kaybettirir.',
       'Ağrının geçmesini beklemek, kalp durmasında geri dönüşü zorlaştırır.',

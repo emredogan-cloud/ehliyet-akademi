@@ -145,14 +145,14 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Trafikte "sorumluluk" değeri en kapsamlı biçimde nasıl tanımlanır?',
     options: [
-      'Yalnızca kendi aracına zarar gelmesini önlemektir',
-      'Kendi davranışlarının',
+      'Yalnızca kendi aracına maddi bir zarar gelmesini önlemeye çalışmak demektir',
+      'Kendi davranışlarının başkaları üzerindeki sonuçlarını da üstlenmektir',
       'Bir kaza olduğunda kusuru en hızlı biçimde karşı tarafa yıkabilmektir',
-      'Sadece trafik cezası ödeyecek kadar para bulundurmaktır',
+      'Sadece trafik cezalarını ödeyecek kadar para bulundurmak demektir',
     ],
     answerIndex: 1,
     explanation:
-      'Sorumluluk, direksiyondaki kişinin yalnızca kendinden değil, davranışının dokunduğu herkesten sorumlu olduğunu kabul etmesidir. Bu hem hata yapıldığında sonucunu üstlenmeyi hem de daha önemlisi olası sonuçları önceden düşünüp önlem almayı kapsar. Kendisi, yolcuları, diğer sürücüler ve yayalar üzerindeki sonuçlarını üstlenmek ve bunları önceden hesaba katmaktır.',
+      'Sorumluluk, direksiyondaki kişinin yalnızca kendinden değil, davranışının dokunduğu herkesten sorumlu olduğunu kabul etmesidir. Bu hem hata yapıldığında sonucunu üstlenmeyi hem de daha önemlisi olası sonuçları önceden düşünüp önlem almayı kapsar.',
     whyWrong: [
       'Sorumluluk yalnızca kendi aracını korumak değil, çevredeki herkesin güvenliğini gözetmektir.',
       'Kusuru karşıya yıkmak sorumluluğun değil, ondan kaçmanın ifadesidir.',
@@ -354,10 +354,10 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Haberlerde sıkça geçen "trafik terörü" kavramı en doğru biçimde neyi anlatır?',
     options: [
-      'Yalnızca trafikte yaşanan olağan sıkışıklık ve gecikmeleri',
-      'Öfke, saldırganlık ve kural tanımazlıkla başkalarının can güvenliğini kasıtlı biçimde tehdit eden',
-      'Aracın teknik arızadan dolayı yolda kalmasını',
-      'Trafik cezalarının yüksek olmasını',
+      'Yalnızca trafikte yaşanan olağan sıkışıklık, gecikme ve yoğunluk kaynaklı gündelik gerginlik ve tartışmaların tamamını',
+      'Öfke, saldırganlık ve kural tanımazlıkla başkalarının can güvenliğini kasıtlı biçimde tehdit eden davranışları',
+      'Aracın teknik bir arıza nedeniyle yolda kalması ve trafiği aksatması durumunu',
+      'Trafik cezalarının sürücülerin ödeyemeyeceği kadar yüksek belirlenmesini',
     ],
     answerIndex: 1,
     explanation:

@@ -154,10 +154,10 @@ export const QUALITY_GATE = {
  * aynı şeydir — o zaman düzeltilecek şey mandal değil, sorulardır.
  */
 export const QUALITY_RATCHET = {
-  maxLongestWinsRate: 0.582,
-  minParallelRate: 0.645,
-  maxLengthRatio: 1.56,
-  maxAnswerPositionSkew: 0.045,
+  maxLongestWinsRate: 0.321,
+  minParallelRate: 0.795,
+  maxLengthRatio: 1.384,
+  maxAnswerPositionSkew: 0.044,
 } as const;
 
 export interface GateFailure {

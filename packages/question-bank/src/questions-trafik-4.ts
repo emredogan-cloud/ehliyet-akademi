@@ -143,14 +143,14 @@ export const TRAFIK_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Trafik mevzuatındaki tanıma göre "geçiş yolu" aşağıdakilerden hangisidir?',
     options: [
-      'İki şehri birbirine bağlayan ana yol',
-      'Araçların bir mülke (bina, arsa, tesis)',
-      'Yayaların karşıya geçmesi için ayrılmış alan',
-      'Otoyolun hizmet tesislerine ayrılan bölümü',
+      'İki yerleşim yerini birbirine bağlayan ve devletçe bakımı yapılan ana ulaşım yolu',
+      'Araçların bir mülke (bina, arsa, tesis) girip çıkması için yapılmış yol bölümü',
+      'Yayaların taşıt yolunu güvenle geçmesi için çizgilerle ayrılmış alan',
+      'Otoyolun dinlenme ve hizmet tesislerine ayrılmış bağlantı bölümü',
     ],
     answerIndex: 1,
     explanation:
-      'Geçiş yolu, taşıtların karayolundan ayrılıp bir mülke girmesine ya da mülkten çıkıp karayoluna katılmasına yarayan bağlantı bölümüdür; bu tanım park yasakları gibi kuralların da dayanağıdır. Girip çıkması için yapılmış yol bölümü.',
+      'Geçiş yolu, taşıtların karayolundan ayrılıp bir mülke girmesine ya da mülkten çıkıp karayoluna katılmasına yarayan bağlantı bölümüdür; bu tanım park yasakları gibi kuralların da dayanağıdır.',
     whyWrong: [
       'Şehirleri bağlayan yollar devlet yolu/ana yol kavramlarına girer.',
       'Yayalara ayrılan alan yaya geçididir.',

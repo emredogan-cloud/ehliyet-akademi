@@ -1417,10 +1417,10 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Zorunlu Trafik Sigortası (Zorunlu Mali Sorumluluk Sigortası) neyi karşılar?',
     options: [
-      'Kazada karşı tarafa (üçüncü kişilere)',
-      'Sürücünün kendi aracının hasarını',
-      'Aracın çalınmasını',
-      'Motorun arızasını',
+      'Kazada karşı tarafa (üçüncü kişilere) verilen bedeni ve maddi zararları',
+      'Sürücünün kendi aracında oluşan çarpma hasarını ve tüm onarım masraflarını',
+      'Aracın çalınması veya yanması hâlinde sahibinin uğradığı kaybı',
+      'Motorun arızalanması durumunda ortaya çıkan tamir giderlerini',
     ],
     answerIndex: 0,
     explanation:

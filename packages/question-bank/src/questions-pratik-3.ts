@@ -164,8 +164,8 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Araç hızlanırken bir üst vitese geçme zamanı genellikle nasıl anlaşılır?',
     options: [
-      'Motor devri (ses ve titreşim)',
-      'Araç durmak üzereyken üst vitese geçilir',
+      'Motor devri (ses ve titreşim) uygun aralığa yükseldiğinde',
+      'Araç neredeyse duracak kadar yavaşladığında üst vitese geçilir',
       'Hız ne olursa olsun her birkaç saniyede bir vites yükseltilir',
       'Motor çok düşük devirde titrerken üst vitese geçilir',
     ],

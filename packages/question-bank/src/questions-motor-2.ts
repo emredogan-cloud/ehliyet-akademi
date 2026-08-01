@@ -189,14 +189,14 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Alternatörün arızalanması durumunda sürüş sırasında hangi belirti öne çıkar?',
     options: [
-      'Lastik basıncının kendiliğinden artması',
-      'Fren pedalının sertleşmesi',
-      'Klimanın daha iyi soğutması',
-      'Gösterge panelinde şarj (akü)',
+      'Lastik basıncının kendiliğinden artması ve ikaz vermesi',
+      'Fren pedalının belirgin biçimde sertleşmesi',
+      'Klimanın normalden daha iyi soğutmaya başlaması',
+      'Gösterge panelinde şarj (akü) ikazının yanması',
     ],
     answerIndex: 3,
     explanation:
-      'Alternatör motor çalışırken elektrik üretip aküyü şarj eder ve sistemi besler. Arızalandığında şarj sağlanamaz; panelde akü ikazı yanar ve zamanla akü boşalarak araç stop edebilir. İkazının yanması ve zamanla akünün boşalması.',
+      'Alternatör motor çalışırken elektrik üretip aküyü şarj eder ve sistemi besler. Arızalandığında şarj sağlanamaz; panelde akü ikazı yanar ve zamanla akü boşalarak araç stop edebilir.',
     whyWrong: [
       'Lastik basıncı ve fren pedalı alternatör arızasından böyle etkilenmez.',
       'Alternatör arızası klimanın soğutmasını iyileştirmez, tersine elektrik yetersizliğine yol açar.',
@@ -260,7 +260,7 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     stem: 'Soğutma suyu seviyesi kontrol edilirken doğru davranış aşağıdakilerden hangisidir?',
     options: [
       'Motor çok sıcakken radyatör kapağını hemen açıp bakmak',
-      'Motor soğukken genleşme (yedek su)',
+      'Motor soğukken genleşme (yedek su) deposundan bakmak',
       'Su seviyesini hiç kontrol etmemek',
       'Suyun yerine yağ eklemek',
     ],
@@ -384,14 +384,14 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Kalkışta ve yüklenmede motor devri yükseldiği hâlde araç yeterince hızlanmıyor ve yanık kokusu geliyorsa bu en çok neyi düşündürür?',
     options: [
-      'Lastik basıncının yüksek olduğunu',
-      'Debriyaj (kavrama)',
-      'Radyatörün yeni olduğunu',
-      'Akünün tam şarjlı olduğunu',
+      'Lastik hava basıncının olması gerekenden yüksek olduğunu',
+      'Debriyaj (kavrama) balatasının aşınıp kaydığını',
+      'Radyatörün yeni değiştirilmiş olduğunu',
+      'Akünün tam şarjlı ve sağlam olduğunu',
     ],
     answerIndex: 1,
     explanation:
-      'Debriyaj balatası aşındığında baskı yeterli olmaz ve kavrama kayar; motor devri artsa da güç tekerleğe tam iletilemez, sürtünmeden yanık kokusu gelir. Bu durumda debriyaj kontrol/onarım gerektirir. Balatasının aşınıp kaydığını.',
+      'Debriyaj balatası aşındığında baskı yeterli olmaz ve kavrama kayar; motor devri artsa da güç tekerleğe tam iletilemez, sürtünmeden yanık kokusu gelir. Bu durumda debriyaj kontrol/onarım gerektirir.',
     whyWrong: [
       'Yüksek lastik basıncı bu belirtileri vermez.',
       'Yeni radyatör ve tam şarjlı akü debriyaj kaymasıyla ilgili değildir.',
@@ -610,9 +610,9 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     stem: 'Soğutma sistemindeki termostatın görevi aşağıdakilerden hangisidir?',
     options: [
       'Motorun çalışma sıcaklığına ulaşınca su geçişini ayarlayarak sıcaklığı dengede tutmak',
-      'Yakıtı ateşlemek',
-      'Direksiyonu döndürmek',
-      'Lastik dişini derinleştirmek',
+      'Soğutma suyunu motor ile radyatör arasında dolaştırarak ısıyı radyatöre taşımak',
+      'Radyatöre gelen hava akışını artırıp soğutma suyunun sıcaklığını düşürerek hararet yapmasını önlemek',
+      'Soğutma suyunun donma noktasını düşürüp kaynama noktasını yükselterek sistemi korumak',
     ],
     answerIndex: 0,
     explanation:
@@ -634,9 +634,9 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Su (devir daim) pompasının soğutma sistemindeki görevi nedir?',
     options: [
-      'Aküyü şarj etmek',
-      'Egzoz sesini kısmak',
-      'Yakıt püskürtmek',
+      'Soğutma suyu belirli sıcaklığa ulaşana kadar radyatöre geçişini kapalı tutmak',
+      'Radyatörden geçen hava akışını hızlandırarak suyun sıcaklığını düşürmek',
+      'Soğutma suyunun donma ve kaynama sınırlarını genişletip korozyonu önlemek',
       'Soğutma suyunu motor ile radyatör arasında dolaştırmak',
     ],
     answerIndex: 3,
@@ -683,7 +683,12 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     topic: 'lastik',
     difficulty: 'kolay',
     stem: 'Lastik patladığında kullanılmak üzere araçta bulundurulan yedek lastiğe ne ad verilir?',
-    options: ['Stepne (yedek lastik)', 'Balata', 'Enjektör', 'Amortisör'],
+    options: [
+      'Stepne (yedek lastik)',
+      'Jant (tekerlek çemberi)',
+      'Kriko (kaldırma aleti)',
+      'Bijon (tekerlek somunu)',
+    ],
     answerIndex: 0,
     explanation:
       'Stepne, yolda lastik patladığında ya da hava kaybettiğinde geçici olarak takılan yedek lastiktir. Aracın kriko ve bijon anahtarıyla birlikte stepnenin de sağlam ve basınçlı olması önemlidir.',
@@ -704,10 +709,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'El freninin (park freni) temel görevi aşağıdakilerden hangisidir?',
     options: [
-      'Motoru çalıştırmak',
-      'Farları yakmak',
+      'Ani frenlemede tekerleklerin kilitlenmesini önleyerek yönlendirilebilirliği korumak',
+      'Pedala uygulanan kuvveti vakum yardımıyla çoğaltarak frenleme gücünü artırmak',
       'Park hâlindeki aracın kendiliğinden hareket etmesini önlemek',
-      'Yakıt tüketimini artırmak',
+      'Aracı yavaşlatmak için motorun sıkıştırma direncinden yararlanmak',
     ],
     answerIndex: 2,
     explanation:
@@ -729,9 +734,9 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Hidrolik fren sisteminde fren hidroliğinin (fren yağı) görevi nedir?',
     options: [
-      'Motoru yağlamak',
-      'Aküyü soğutmak',
-      'Lastiği şişirmek',
+      'Fren pedalına uygulanan kuvveti vakum yardımıyla çoğaltıp pedal sertliğini azaltmak',
+      'Fren diskine sürtünerek aracı yavaşlatan sürtünme yüzeyini oluşturmak',
+      'Tekerleklerin kilitlendiğini algılayıp fren basıncını saniyede birkaç kez ayarlamak',
       'Pedala uygulanan basıncı fren mekanizmasına ileterek frenleme kuvveti oluşturmak',
     ],
     answerIndex: 3,
@@ -754,10 +759,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Uzun ve dik bir yokuş inişinde sürekli fren pedalına basmak yerine önerilen güvenli yöntem nedir?',
     options: [
-      'Vitesi boşa alıp inmek',
+      'Vitesi boşa alıp aracın yokuş boyunca serbestçe süzülmesine izin vermek',
       'Uygun düşük vitese geçerek motor freninden yararlanmak',
-      'El frenini çekili tutarak inmek',
-      'Kontağı kapatıp inmek',
+      'El frenini hafifçe çekili tutarak ek bir yavaşlatma kuvveti sağlamak',
+      'Kontağı kapatıp motoru durdurarak iniş boyunca yakıttan tasarruf etmek',
     ],
     answerIndex: 1,
     explanation:
@@ -780,9 +785,9 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     stem: 'Akü bakımında kutup başları (terminaller) ile ilgili doğru uygulama hangisidir?',
     options: [
       'Kutup başlarının temiz, sıkı ve oksitlenmemiş olması sağlanmalıdır',
-      'Kutup başları ne kadar gevşek olursa o kadar iyidir',
-      'Kutup başlarına sürekli su dökülmelidir',
-      'Kutup başları hiç kontrol edilmez',
+      'Kutup başları ne kadar gevşek olursa akü o kadar iyi soğur ve uzun ömürlü olur',
+      'Kutup başlarına düzenli olarak şebeke suyu dökülerek serinletilmesi gerekir',
+      'Kutup başları fabrikada ayarlandığı için kullanım boyunca hiç kontrol edilmez',
     ],
     answerIndex: 0,
     explanation:
@@ -805,13 +810,13 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     stem: 'Boşalmış bir aküye başka araçtan takviye (çapraz kablo) yapılırken doğru yaklaşım aşağıdakilerden hangisidir?',
     options: [
       'Kabloların bağlanma sırasına ve kutuplara dikkat edilmeden rastgele bağlanabilir',
-      'Kablolar doğru kutuplara (artı-artı, eksi-eksi)',
+      'Kablolar doğru kutuplara (artı-artı, eksi-eksi) bağlanır, sıralamaya uyulur',
       'Kablolar çalışan motora hiç bağlanmaz, yalnızca boş aküye takılır',
       'Takviye yaparken kutupların ters bağlanması sorun yaratmaz',
     ],
     answerIndex: 1,
     explanation:
-      'Takviyede kablolar doğru kutuplara (artı-artı, eksi-eksi) bağlanmalıdır; ters bağlantı elektronik aksama zarar verir. Akü çevresinde patlayıcı gaz bulunabileceğinden kıvılcıma karşı dikkatli olunmalı ve sıralamaya uyulmalıdır. Bağlanır ve kıvılcım/patlama riskine karşı dikkatli olunur.',
+      'Takviyede kablolar doğru kutuplara (artı-artı, eksi-eksi) bağlanmalıdır; ters bağlantı elektronik aksama zarar verir. Akü çevresinde patlayıcı gaz bulunabileceğinden kıvılcıma karşı dikkatli olunmalı ve sıralamaya uyulmalıdır.',
     whyWrong: [
       'Kutupların rastgele ya da ters bağlanması kısa devre, hasar ve patlama riski oluşturur.',
       'Takviye, kaynak araçtan kabloyla yapılır; su ile takviye mümkün değildir.',
@@ -829,10 +834,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Dörtlü ikaz (flaşör) lambalarının kullanım amacı aşağıdakilerden hangisidir?',
     options: [
-      'Motoru soğutmak',
-      'Yakıt tüketimini azaltmak',
+      'Gece sürüşünde aracın görünürlüğünü artırmak için farlarla birlikte sürekli yanık tutulduğunu bildirmek',
+      'Dönüş yapılacağını veya şerit değiştirileceğini önceden diğer sürücülere bildirmek',
       'Aracın arıza, tehlike veya diğer sürücüleri uyarma durumunda bulunduğunu bildirmek',
-      'Vites değiştirmek',
+      'Aracın park hâlinde olduğunu ve kısa süre sonra hareket edeceğini bildirmek',
     ],
     answerIndex: 2,
     explanation:
@@ -854,9 +859,9 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Direksiyonda fazla boşluk (serbest hareket) bulunması neden tehlikelidir?',
     options: [
-      'Yakıt tüketimini sıfırlar',
-      'Motoru güçlendirir',
-      'Aküyü şarj eder',
+      'Direksiyon hidroliğinin aşırı ısınmasına yol açarak sistemi zamanla devre dışı bırakır',
+      'Ön tekerleklerin paralelliğini bozarak lastiklerin içten aşınmasına neden olur',
+      'Aracın düz yolda kendiliğinden bir tarafa çekmesine ve titremesine yol açar',
       'Aracın yönlendirilmesini geciktirip zorlaştırarak hakimiyeti azaltır',
     ],
     answerIndex: 3,
@@ -880,9 +885,9 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     stem: 'Yakıt göstergesinin ibresi rezerv (kırmızı) bölgeye yaklaştığında doğru davranış nedir?',
     options: [
       'İlk uygun istasyonda yakıt ikmali yapmak',
-      'Göstergeyi kapatıp yola devam etmek',
-      'Klimayı açarak yakıt üretmek',
-      'Lastik basıncını düşürmek',
+      'Göstergeyi dikkate almadan depo tamamen boşalana kadar yola devam etmek',
+      'Klimayı kapatıp hızı artırarak kalan yakıtla daha uzun yol gitmeye çalışmak',
+      'Rezerv ikaz ışığı sönene kadar aracı park hâlinde rölantide bekletmek',
     ],
     answerIndex: 0,
     explanation:
@@ -904,10 +909,10 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Gösterge panelindeki devir saati (takometre) sürücüye hangi bilgiyi verir?',
     options: [
-      'Kalan yakıt miktarını',
+      'Depoda kalan yakıtla gidilebilecek tahmini mesafeyi',
       'Motorun dakikadaki devir sayısını (rpm)',
-      'Dış hava sıcaklığını',
-      'Lastik basıncını',
+      'Motor soğutma suyunun o andaki sıcaklık değerini',
+      'Aracın toplam kat ettiği kilometre miktarını',
     ],
     answerIndex: 1,
     explanation:
@@ -929,7 +934,7 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Diferansiyelin araçtaki temel görevi aşağıdakilerden hangisidir?',
     options: [
-      'Motorun devrini düşürüp tekerleğe giden torku çoğaltmak',
+      'Motorun devrini düşürüp tekerleğe giden döndürme momentini çoğaltmak',
       'Aracın ağırlığını dört tekerleğe eşit biçimde dağıtmak',
       'Virajda tekerleklerin farklı hızlarda dönebilmesini sağlamak',
       'Egzoz gazını süzüp zararlı salınımı azaltmak',
@@ -955,9 +960,9 @@ export const MOTOR_QUESTIONS_2: QuestionInput[] = [
     stem: 'Motor yağ seviyesi yağ çubuğu (yağ mili) ile kontrol edilirken doğru yöntem hangisidir?',
     options: [
       'Motor düz zeminde ve durgunken çubuk silinip tekrar daldırılarak min-maks arası kontrol edilir',
-      'Motor tam gaz çalışırken çubuk çekilerek bakılır',
-      'Yağ seviyesi hiç kontrol edilmez',
-      'Çubuk yerine lastik basıncı ölçülür',
+      'Motor tam gaz çalışırken yağ çubuğu çekilerek seviyeye bakılır ve eksik görünüyorsa hemen tamamlanır',
+      'Araç eğimli bir zeminde dururken ve motor sıcakken çubuk tek seferde okunur',
+      'Yağ seviyesi yalnızca gösterge panelindeki ikaz lambası yandığında kontrol edilir',
     ],
     answerIndex: 0,
     explanation:

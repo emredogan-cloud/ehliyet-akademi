@@ -14,7 +14,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Kanamalı bir yaralıya müdahale eden ilk yardımcının tek kullanımlık eldiven giymesinin başlıca amacı nedir?',
     options: [
-      'Ellerinin kirlenmesini önleyerek daha rahat çalışmak',
+      'Ellerinin kanla kirlenmesini önleyerek olay yerinde daha rahat çalışabilmek',
       'Yaralıya daha güçlü baskı uygulayabilmek',
       'Kanla bulaşabilecek hastalıklardan hem kendisini hem de yaralıyı korumak',
       'Eldivenin kanamayı kendiliğinden durdurması',
@@ -40,7 +40,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     stem: 'Olay yerinde eldiven bulunmuyorsa, kanayan yaraya baskı uygulamak için ilk yardımcı ne yapabilir?',
     options: [
       'Elini temiz bir naylon poşet veya kalın kumaş gibi geçirimsiz bir malzemeyle örterek baskı uygulayabilir',
-      'Kanla doğrudan temas etmekten çekinmeden çıplak elle bastırabilir',
+      'Kanla doğrudan temas etmekten çekinmeden çıplak elle bastırabilir; eldivensiz müdahalenin hiçbir riski yoktur',
       'Eldiven bulunana kadar kanamaya hiç müdahale etmemelidir',
       'Baskıyı yalnızca yaralının kendisinin yapmasını yasaklamalıdır',
     ],
@@ -140,7 +140,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     stem: 'Kaza yapan aracın motor bölümünden duman yükselmeye başladığında öncelikle ne yapılmalıdır?',
     options: [
       'Duman kesilene kadar araç içinde beklenmelidir',
-      'Motor kaputu açılıp dumanın kaynağına su dökülmelidir',
+      'Motor kaputu açılıp dumanın çıktığı kaynağın üzerine doğrudan su dökülmelidir',
       'Yalnızca fotoğraf çekilerek durum belgelenmeli',
       'Kontak kapatılmalı ve araçtaki herkes hızla araçtan uzaklaştırılmalıdır',
     ],
@@ -215,7 +215,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     stem: 'Yemek sırasında aniden susan bir kişinin iki eliyle boğazını kavraması hangi durumun evrensel işaretidir?',
     options: [
       'Baş dönmesinin',
-      'Yemeği beğenmediğinin',
+      'Yemeği hiç beğenmediğinin ve şikâyet ettiğinin',
       'Hava yolunun yabancı cisimle tıkandığının',
       'Ses kısıklığının',
     ],
@@ -239,7 +239,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Hava yolu tıkanan bir bebeğe sırt vuruları uygulanırken bebek nasıl tutulmalıdır?',
     options: [
-      'Sırtüstü, başı yukarıda olacak şekilde kucakta',
+      'Sırtüstü yatırılıp başı gövdesinden yukarıda olacak biçimde ilk yardımcının kucağında tutulmalıdır',
       'Yüzüstü, ilk yardımcının önkolu üzerinde, başı gövdesinden aşağıda ve çenesi desteklenmiş olarak',
       'Dik konumda, koltuk altlarından tutularak',
       'Ayaklarından baş aşağı sallandırılarak',
@@ -264,7 +264,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Hava yolu tıkanan kişinin ağzındaki yabancı cisimle ilgili doğru uygulama hangisidir?',
     options: [
-      'Cisim görünmese bile parmak boğaza sokularak körlemesine taranır',
+      'Cisim hiç görünmese bile parmak boğaza sokularak ağzın içi iyice taranır ve aranır',
       'Ağza bol su dökülerek cismin yumuşaması beklenir',
       'Cismi itmek için kişiye ekmek yedirilir',
       'Yalnızca ağızda açıkça görülen ve kolayca ulaşılabilen cisim dikkatle çıkarılır',
@@ -290,7 +290,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     stem: 'Havalimanı ve alışveriş merkezi gibi kalabalık yerlerde bulundurulan OED (otomatik dış defibrilatör) cihazının işlevi nedir?',
     options: [
       'Kalp ritmini çözümleyip gerekirse elektrik şoku vermek',
-      'Solunumu duran kişiye basınçlı oksijen vermek',
+      'Solunumu duran kişiye basınçlı oksijen verip akciğerleri şişirmek',
       'Kandaki şeker düzeyini ölçüp sonucu bildirmek',
       'Kanamayı basınçla durdurup yarayı kapatmak',
     ],
@@ -315,7 +315,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     stem: 'OED cihazı şok verilmesini önerdiğinde, şok düğmesine basılmadan hemen önce ne yapılmalıdır?',
     options: [
       'Yaralının eli sıkıca tutulmalıdır',
-      'Yaralının göğsüne bir battaniye örtülmelidir',
+      'Yaralının göğsüne ince bir battaniye örtülmeli ve elektrodlar bunun üzerine yerleştirilmelidir',
       'Yaralıya kimsenin dokunmadığından emin olunmalı ve çevredekiler sözle uyarılmalıdır',
       'Yaralı hızla oturur duruma getirilmelidir',
     ],
@@ -366,7 +366,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Yalnızca hastane çalışanları',
       'Yalnızca itfaiye personeli',
-      'Yalnızca cihazın bulunduğu binanın güvenlik görevlileri',
+      'Yalnızca cihazın bulunduğu binanın güvenlik görevlileri kullanabilir',
       'Sesli komutları izleyerek halktan kişiler de kullanabilir',
     ],
     answerIndex: 3,
@@ -391,7 +391,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Yorgunluk bası derinliğini düşürmeden, yaklaşık iki dakikada bir bası uygulayan kişinin değişmesi',
       'İkisinin de aynı anda göğse bastırması',
-      'Birinin bası yaparken diğerinin yaralının bacaklarını ovması',
+      'Birinin göğüs basısı yaparken diğerinin yaralının bacaklarını ovarak dolaşımı hızlandırmaya çalışması',
       'Yorulan kişinin dinlenirken basıların tamamen durdurulması',
     ],
     answerIndex: 0,
@@ -415,7 +415,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     stem: 'Yüzünde ağır yaralanma olduğu için ağızdan soluk verilemeyen, solunumu durmuş bir yaralıda ilk yardımcı ne yapmalıdır?',
     options: [
       'Canlandırmayı tamamen bırakmalıdır',
-      'Yaralıyı oturtup su içirmeyi denemelidir',
+      'Yaralıyı oturtup su içirmeyi ve kendine getirmeyi bir süre denemelidir',
       'Sağlık ekibi gelene kadar kesintisiz göğüs basısına devam etmelidir',
       'Yalnızca nabız saymalıdır',
     ],
@@ -442,7 +442,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
       'Yaralının başı yana çevrilir',
       'Baş geriye eğik konumdayken yaralının burun kanatları parmaklarla kapatılır',
       'Yaralının ağzı bir bezle örtülür',
-      'Üfleme burun yerine kulağa yakın yapılır',
+      'Üfleme ağız yerine doğrudan burun deliklerine yapılır ve ağız elle kapatılır',
     ],
     answerIndex: 1,
     explanation:
@@ -464,7 +464,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Bebeğe kurtarıcı soluk verilirken ilk yardımcının ağzı nasıl yerleştirilir?',
     options: [
-      'Yalnızca bebeğin burnunu kapsayacak şekilde',
+      'Yalnızca bebeğin burun deliklerini içine alacak biçimde yerleştirilir',
       'Bebeğin yanağına dayanarak',
       'Yalnızca alt dudağına değecek şekilde',
       'Bebeğin ağzını ve burnunu birlikte içine alacak şekilde',
@@ -492,7 +492,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
       'Basıya ara verildiği anda beyne ve kalbe giden kan akımı desteği de durur',
       'Uzun aralar ilk yardımcının üşümesine yol açar',
       'Cihazların pili aralarda daha çok tükenir',
-      'Aralar yaralının uyanıp kaçmasına neden olur',
+      'Verilen uzun aralar yaralının uyanıp yerinden kalkmasına ve kaçmasına neden olur',
     ],
     answerIndex: 0,
     explanation:
@@ -541,7 +541,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Ağrısını azaltmak için sıcak çay içirmek',
       'Ağızdan hiçbir şey vermemek, yaşam bulgularını izlemek ve 112’yi arayıp durumu bildirmek',
-      'Yaralıyı yürüterek dolaşımını hızlandırmak',
+      'Yaralıyı ayağa kaldırıp yürüterek dolaşımını hızlandırmaya ve kendine gelmesini sağlamaya çalışmak',
       'Karnına sıcak su torbası koyup beklemek',
     ],
     answerIndex: 1,
@@ -564,7 +564,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Direksiyona karnını çarpan bir sürücüde, dışarıdan kanama görülmediği hâlde giderek artan karın ağrısı, karında sertlik ve solukluk-hızlı nabız gelişmesi öncelikle neyi düşündürmelidir?',
     options: [
-      'Basit bir kas ağrısını',
+      'Karın kaslarında oluşan basit bir kas zorlanmasını',
       'Yol yorgunluğunu',
       'Araç tutmasını',
       'Karın içi organlardan kaynaklanan iç kanamayı',
@@ -614,7 +614,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'İlk yardımda "ezilme (crush) yaralanması" ne anlama gelir?',
     options: [
-      'Cildin yüzeysel olarak sıyrılması',
+      'Cildin yalnızca yüzeysel olarak sıyrılıp altındaki dokulara hiç ulaşmayan, kısa sürede iyileşen hafif bir yaralanma',
       'Yalnızca parmak uçlarının morarması',
       'Vücudun bir bölümünün ağır bir yük altında uzun süre sıkışıp kasların ve dokuların ağır hasar görmesi',
       'Kısa süreli hafif bir çarpma',
@@ -642,7 +642,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
       'Kurtarma işlemi için ücret gerektiği için',
       'Uzun süreli sıkışmada dokular ağır hasar görmüştür',
       'Kişinin enkaz altında daha rahat ettiği için',
-      'Sıkışan bölgenin kendiliğinden iyileşeceği için',
+      'Sıkışan bölgenin zamanla kendiliğinden iyileşeceği için',
     ],
     answerIndex: 1,
     explanation:
@@ -664,7 +664,7 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Göğsüne cisim saplanmış yaralıda cismin yerinden çıkarılmamasının temel nedeni nedir?',
     options: [
-      'Cismin daha sonra delil olarak incelenecek olması',
+      'Saplı cismin daha sonra adli bir delil olarak incelenecek olması',
       'Cismi çıkarmanın çok uzun sürmesi',
       'Cismin pas bırakma ihtimali',
       'Saplı cismin yaralanan damarları tıkaç gibi kapatıyor olabilmesi',
@@ -864,10 +864,10 @@ export const ILKYARDIM_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Sara nöbeti sona eren, bilinci henüz tam açılmamış ancak solunumu düzenli olan kişiye ne yapılır?',
     options: [
-      'Hemen ayağa kaldırılıp yürütülür',
-      'Ağzına şekerli su verilir',
-      'Sırtüstü bırakılıp yalnız başına terk edilir',
-      'Yan (derlenme)',
+      'Hemen ayağa kaldırılıp koluna girilerek yürütülmeye çalışılır',
+      'Ağzına şekerli su verilerek kendine gelmesi hızlandırılır',
+      'Sırtüstü bırakılıp kendine gelene kadar yalnız başına terk edilir',
+      'Yan (derlenme) pozisyonuna alınır ve gözlem altında tutulur',
     ],
     answerIndex: 3,
     explanation:

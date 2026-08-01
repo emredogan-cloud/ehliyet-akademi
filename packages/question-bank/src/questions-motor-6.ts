@@ -14,10 +14,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Soğuk bir kış sabahı marşa basıldığında motor ağır ağır ve isteksizce dönüyor; aynı anda farlar sönükleşiyor ve korna cılız çıkıyorsa en olası neden hangisidir?',
     options: [
-      'Silecek motorunun bozulması',
-      'Polen filtresinin kirlenmesi',
+      'Silecek motorunun bozulup ön camı temizleyememesi',
+      'Polen filtresinin kirlenip hava akışını kısması',
       'Aküde yeterli enerji kalmaması (zayıf/yaşlı akü)',
-      'Egzoz susturucusunun delinmesi',
+      'Egzoz susturucusunun delinip ses yapması',
     ],
     answerIndex: 2,
     explanation:
@@ -39,10 +39,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Manuel vitesli bir araçta debriyaj pedalına sonuna kadar basıldığı hâlde vitesler zor giriyor ve geçişlerde çıtırtı/sürtme sesi duyuluyorsa en olası neden hangisidir?',
     options: [
-      'Far ampullerinin ömrünü doldurması',
+      'Far ampullerinin ömrünü doldurması ve araç elektrik devresinde gerilim düşmesi yaşanması',
       'Debriyajın kavramayı tam ayıramaması (balata, hidrolik/tel ayarı veya baskı sorunu)',
-      'Lastik hava basıncının yükselmesi',
-      'Ön cam suyunun bitmesi',
+      'Lastik hava basıncının yükselip yol tutuşunun azalması',
+      'Ön cam suyunun bitip fıskiyelerin çalışmaması',
     ],
     answerIndex: 1,
     explanation:
@@ -63,9 +63,9 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Benzinli bir araçta gaz kesildiğinde ya da sürüş sırasında egzozdan zaman zaman "pat" diye patlama sesleri geliyorsa bu belirti en çok neyi düşündürür?',
     options: [
-      'Lastik balansının bozulduğunu',
-      'Amortisörlerin aşındığını',
-      'Direksiyon rotunun ayarsız olduğunu',
+      'Lastik balansının bozulup direksiyonda titreşim oluşturduğunu',
+      'Amortisörlerin aşınıp aracı fazla yaylandırdığını',
+      'Direksiyon rotunun ayarsız kalıp lastiği yediğini',
       'Yanmanın silindir içinde tam zamanında tamamlanmadığını',
     ],
     answerIndex: 3,
@@ -88,9 +88,9 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Seyir hâlindeyken kabinde belirgin bir benzin/yakıt kokusu hissedilirse doğru davranış nedir?',
     options: [
       'Güvenli bir yerde durup motoru durdurmak, kontağı kapatmak ve yakıt kaçağı ihtimaline karşı sistemi kontrol ettirmeden yola devam etmemek',
-      'Camları kapatıp koku geçene kadar hızlanarak sürüşü sürdürmek',
-      'Kaloriferi son kademede açıp kokuyu dağıtmak',
-      'Depoyu tıka basa doldurup yola devam etmek',
+      'Camları kapatıp koku geçene kadar hızlanarak sürüşü sürdürmek ve ilk fırsatta yakıt deposunu tamamen doldurup basıncı dengelemeye çalışmak',
+      'Kaloriferi son kademede açıp kokuyu kabin dışına atmaya çalışmak',
+      'Depoyu tıka basa doldurup kokunun kaybolmasını beklemek',
     ],
     answerIndex: 0,
     explanation:
@@ -112,10 +112,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Sürüş sırasında akü/şarj ikaz lambası (akü şekli) yanıp sönmeden yolda kalırsa doğru değerlendirme hangisidir?',
     options: [
-      'Lamba yanmasının hiçbir önemi yoktur, sürekli göz ardı edilebilir',
+      'Lamba yanmasının hiçbir önemi yoktur; sürüş boyunca sürekli göz ardı edilebilir',
       'Şarj sistemi (alternatör veya kayış) artık aküyü doldurmuyor olabilir',
-      'Derhâl motor durdurulmazsa motor patlar',
-      'Lamba yalnızca yakıtın azaldığını gösterir',
+      'Derhâl motor durdurulmazsa motor kısa sürede patlar',
+      'Lamba yalnızca depodaki yakıtın azaldığını gösterir',
     ],
     answerIndex: 1,
     explanation:
@@ -136,10 +136,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Gösterge panelindeki hava yastığı (airbag/SRS) ikaz lambası sürekli yanık kalıyorsa bu ne anlama gelir?',
     options: [
-      'Hava yastığının o an açıldığını',
-      'Aracın hızının sınırlandığını',
+      'Hava yastığının çarpışma anında açılmış olduğunu',
+      'Aracın azami hızının sınırlandırıldığını',
       'Hava yastığı sisteminde bir arıza bulunduğunu',
-      'Motor yağının azaldığını',
+      'Motor yağı seviyesinin azaldığını',
     ],
     answerIndex: 2,
     explanation:
@@ -160,9 +160,9 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Düz ve düzgün bir yolda araç hafifçe bir tarafa çekmeye başladıysa, servise gitmeden önce yapılabilecek en basit ilk kontrol hangisidir?',
     options: [
-      'Motor yağının markasını değiştirmek',
-      'Silecek lastiklerini yenilemek',
-      'Polen filtresini temizlemek',
+      'Motor yağının markasını değiştirip tamamen yeni bir yağ koydurmak',
+      'Silecek lastiklerini yenileyip cam suyunu tamamlamak',
+      'Polen filtresini söküp temizledikten sonra takmak',
       'İki taraftaki lastiklerin hava basınçlarını ölçüp karşılaştırmak',
     ],
     answerIndex: 3,
@@ -185,9 +185,9 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Hız arttıkça yükselen, sürekli bir uğultu/uğuldama duyuluyor; ses viraj dönerken bir tarafta artıp diğer tarafta azalıyorsa en olası neden hangisidir?',
     options: [
       'Tekerlek göbeğindeki (aks) rulmanın aşınması',
-      'Bujilerin kirlenmesi',
-      'Yakıt filtresinin tıkanması',
-      'Termostatın açık takılması',
+      'Bujilerin kirlenip motorun teklemeye başlaması',
+      'Yakıt filtresinin tıkanıp akışı kısması',
+      'Termostatın açık takılı kalması',
     ],
     answerIndex: 0,
     explanation:
@@ -208,10 +208,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Direksiyonda hissedilen boşluğun yanı sıra bozuk/engebeli yolda ön taraftan "tık tık" sesleri geliyorsa öncelikle hangi grup kontrol ettirilmelidir?',
     options: [
-      'Egzoz susturucusu ve katalizör',
+      'Egzoz susturucusu ile katalitik konvertörün gövdeye olan bağlantı noktaları',
       'Direksiyon-ön düzen bağlantı parçaları (rot başı, rotil gibi mafsallar)',
-      'Polen filtresi ve klima gazı',
-      'Silecek kolu ve fıskiyeler',
+      'Polen filtresi ve klima gazı seviyesi',
+      'Silecek kolu ve cam yıkama fıskiyeleri',
     ],
     answerIndex: 1,
     explanation:
@@ -232,10 +232,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Kısa bir sürüşün ardından bir tekerleğin jantı diğerlerine göre çok daha sıcak, hafif bir yanık/kızgın metal kokusu var ve araç frene basılmadan da o yöne hafifçe çekiyorsa en olası neden hangisidir?',
     options: [
-      'Yakıt pompasının zayıflaması',
-      'Buji kablosunun gevşemesi',
+      'Yakıt pompasının zayıflayıp basıncı düşürmesi ve motora düzensiz biçimde yakıt göndermeye başlaması',
+      'Buji kablosunun gevşeyip kıvılcımın zayıflaması',
       'O tekerlekteki fren kaliperinin (fren pistonunun) sıkışıp balatayı diske sürekli bastırması',
-      'Ön cam suyunun donması',
+      'Ön cam suyunun donup fıskiyeleri tıkaması',
     ],
     answerIndex: 2,
     explanation:
@@ -258,7 +258,7 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Manuel vitesli bir araç eğimli bir yolda park edilirken, el freniyle birlikte hangi vites kademesi güvenlik için tercih edilmelidir?',
     options: [
       'Yokuş yukarı bakan araçta 1. vites, yokuş aşağı bakan araçta geri vites bırakmak (her iki durumda da el freni çekili olmalı)',
-      'Her durumda boş viteste bırakmak',
+      'Yokuş yukarı bakan araçta geri vites, yokuş aşağı bakan araçta 1. vites bırakmak (her iki durumda da el freni çekili olmalı)',
       'Yokuş yukarıda geri vites, yokuş aşağıda 1. vites bırakmak',
       'Vites kademesinin hiçbir önemi yoktur; yalnızca el freni yeterlidir',
     ],
@@ -283,8 +283,8 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Karlı/buzlu bir gecede araç dışarıda park edilecekse silecekler ve cam için önerilen kış önlemi hangisidir?',
     options: [
       'Silecekleri camdan yukarı kaldırıp havada bırakmak veya araya bez koymak',
-      'Sabah donmuş camı silecekleri çalıştırarak temizlemek',
-      'Cam suyu haznesine kaynar su koymak',
+      'Sabah donmuş camı doğrudan silecekleri en hızlı kademede çalıştırarak temizlemek',
+      'Cam suyu haznesine kaynar su koyup buzun erimesini sağlamak',
       'Silecekleri en hızlı kademede bırakıp kontağı öyle kapatmak',
     ],
     answerIndex: 0,
@@ -307,14 +307,14 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Bir süre park edilip kalkan araç çalıştırıldığında egzoz aniden aşırı yüksek ve kaba bir gürültü çıkarmaya başladıysa (araç sanki susturucusuz gibi ötüyorsa) akla gelmesi gereken ihtimallerden biri nedir?',
     options: [
-      'Lastik basıncının düştüğü',
-      'Polen filtresinin tıkandığı',
-      'Ön cam suyunun bittiği',
-      'Egzoz hattının kesildiği',
+      'Lastik hava basıncının düşüp lastiğin jant üzerinde ötmeye başlamış olduğu',
+      'Polen filtresinin tıkanıp havalandırma fanının zorlandığı',
+      'Ön cam suyunun bitip fıskiyelerin boşa çalıştığı',
+      'Egzoz hattının kesildiği ya da koptuğu (katalitik konvertör hırsızlığı)',
     ],
     answerIndex: 3,
     explanation:
-      'Egzoz sistemi, gazları hem yönlendirir hem de susturur. Katalitik konvertör hırsızlık amacıyla kesildiğinde ya da egzoz borusu koptuğunda hat açık kalır; motor sesi hiç boğulmadan dışarı çıktığı için araç son derece gürültülü çalışır. Böyle bir durumda araç kullanılmadan kontrol ettirilmelidir; ayrıca kaçak gaz riski de vardır. Örneğin katalitik konvertörün çalınmak için kesilmiş olabileceği veya egzozda kopma/delik oluştuğu.',
+      'Egzoz sistemi, gazları hem yönlendirir hem de susturur. Katalitik konvertör hırsızlık amacıyla kesildiğinde ya da egzoz borusu koptuğunda hat açık kalır; motor sesi hiç boğulmadan dışarı çıktığı için araç son derece gürültülü çalışır. Böyle bir durumda araç kullanılmadan kontrol ettirilmelidir; ayrıca kaçak gaz riski de vardır.',
     whyWrong: [
       'Lastik basıncı, polen filtresi ve cam suyu egzoz sesiyle ilgili değildir.',
       'Bu belirtiler egzoz hattındaki bir kopma/kesilmeye işaret eder, başka sistemlere değil.',
@@ -356,10 +356,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Far camının içinde buğu/nem toplandığı görülüyorsa bunun tipik nedeni ve doğru değerlendirme nedir?',
     options: [
-      'Motorun aşırı ısındığı; derhâl durulmalıdır',
+      'Motorun aşırı ısındığı ve aracın derhâl durdurulup soğumaya bırakılması gerektiği',
       'Far muhafazasının sızdırmazlığının/havalandırmasının bozulup içeri nem girmesi',
-      'Akünün şarj olmadığı',
-      'Fren balatalarının bittiği',
+      'Akünün şarj olmadığı ve alternatörün arızalandığı',
+      'Fren balatalarının aşınma sınırına gelip bittiği',
     ],
     answerIndex: 1,
     explanation:
@@ -380,7 +380,7 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Otomatik dur-kalk (start-stop) sistemi olan bir araçta, sistem beklenen durumlarda motoru durdurmuyorsa bunun makul nedenlerinden biri hangisidir?',
     options: [
-      'Kabin sıcaklığının ayarlanan değere ulaşması ve klima yükünün düşmüş olması',
+      'Kabin sıcaklığının ayarlanan değere ulaşmamış olması ve klima yükünün yüksek kalması',
       'Vitesin boşa alınmış ve debriyaj pedalının tümüyle bırakılmış olması',
       'Akü şarjının yetersiz olması ya da motorun çalışma sıcaklığına ulaşmamış olması',
       'Yakıt deposunun dolu ve lastik basınçlarının önerilen değerde olması',
@@ -405,7 +405,7 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'LPG sistemi bulunan bir araçla ilgili doğru ifade aşağıdakilerden hangisidir?',
     options: [
       'LPG tüpü genellikle bagaj bölümüne/stepne yuvasına yerleştirilir',
-      'LPG tüpü motorun içine takılır',
+      'LPG tüpü doğrudan motor bölmesinin içine, motorun yanına yerleştirilir',
       'LPG tüpü tavana kadar, ağzına kadar doldurulmalıdır',
       'LPG sistemi hiçbir kontrol veya muayene gerektirmez',
     ],
@@ -527,7 +527,7 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Radyatörün ön yüzünün yaprak, böcek, çamur veya poşet gibi maddelerle örtülmesi neye yol açar?',
     options: [
       'Soğutmanın zayıflaması ve motorun kolay hararet yapması',
-      'Kabin havalandırmasının kapanıp camların buğulanması',
+      'Kabin havalandırmasının kapanıp camların sürekli buğulanması',
       'Silecek fıskiyelerinin tıkanıp cam suyunun akmaması',
       'Ön farların menzilinin kısalıp gece görüşün azalması',
     ],
@@ -550,7 +550,7 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Yakıt deposu kapağının gevşek bırakılması veya iyi kapatılmaması bazı araçlarda hangi belirtiye yol açabilir?',
     options: [
-      'ABS uyarı lambasının sürekli yanık kalmasına',
+      'ABS uyarı lambasının sürekli yanık kalmasına yol açar',
       'Motor arıza (check engine) lambasının yanmasına',
       'Direksiyonun kontak kapalıyken kilitlenmesine',
       'Korna ve sinyal devresinin çalışmamasına',
@@ -574,10 +574,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Benzinli motorlarda ateşleme bobininin görevi aşağıdakilerden hangisidir?',
     options: [
-      'Motor yağını basınçlandırmak',
-      'Soğutma suyunu dolaştırmak',
+      'Motor yağını basınçlandırarak motorun bütün yağ kanallarına ve yataklarına eşit biçimde dağıtmak',
+      'Soğutma suyunu motor ile radyatör arasında dolaştırmak',
       'Akünün düşük gerilimini, bujide kıvılcım atlatmaya yetecek çok yüksek gerilime yükseltmek',
-      'Egzoz gazlarını temizlemek',
+      'Egzoz gazlarındaki zararlı maddeleri temizleyip azaltmak',
     ],
     answerIndex: 2,
     explanation:
@@ -598,9 +598,9 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Manevra sırasında direksiyonu sonuna kadar kırıp o konumda uzun süre zorlayarak beklemek neden sakıncalıdır?',
     options: [
-      'Farların sönmesine yol açtığı için',
-      'Yakıt deposunu boşalttığı için',
-      'Lastik desenini değiştirdiği için',
+      'Direksiyonun sonuna dayanması far ayarını bozar ve gece sürüşünde aydınlatmayı yetersiz kılar',
+      'Yakıt deposunun hızla boşalmasına ve pompanın zorlanmasına yol açtığı için',
+      'Lastik diş desenini değiştirip yol tutuşunu azalttığı için',
       'Direksiyon sonuna dayandığında hidrolik direksiyon sistemi en yüksek basınçta zorlanır',
     ],
     answerIndex: 3,
@@ -624,8 +624,8 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Duran bir aracın bir köşesine bastırıp bıraktığınızda araç bir kez alçalıp yükseldikten sonra durmayıp birkaç kez zıplayarak salınmaya devam ediyorsa bu neyi gösterir?',
     options: [
       'O taraftaki amortisörün zayıfladığını',
-      'Motor yağının fazla olduğunu',
-      'Bujilerin kirlendiğini',
+      'Motor yağının fazla doldurulmuş olduğunu',
+      'Bujilerin kirlenip teklediğini',
       'Radyatörün tıkandığını',
     ],
     answerIndex: 0,
@@ -671,10 +671,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Benzinde belirtilen oktan sayısı temel olarak neyi ifade eder?',
     options: [
-      'Benzinin kaç litre olduğunu',
+      'Benzinin depoda kaç litre bulunduğunu ve bu miktarla gidilebilecek tahmini menzil değerini',
       'Benzinin, sıkıştırma sırasında kendiliğinden erken tutuşmaya (vuruntuya) karşı direncini',
-      'Benzinin donma sıcaklığını',
-      'Benzinin rengini',
+      'Benzinin donma sıcaklığını ve kışın kullanılabilirliğini',
+      'Benzinin rengini ve içine katılan katkı maddesini',
     ],
     answerIndex: 1,
     explanation:
@@ -696,9 +696,9 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Klima açıldığında hava üflüyor ama eskisi gibi soğutmuyorsa olası nedenlerden biri ve doğru yaklaşım hangisidir?',
     options: [
       'Klima gazının zamanla azalmış olabileceği veya polen filtresinin/kondansatörün kirlenmiş olabileceği',
-      'Motor yağının bittiği; hemen yağ eklenmesi',
-      'Lastik basıncının düştüğü; lastiklerin şişirilmesi',
-      'Akünün bittiği; akünün değiştirilmesi',
+      'Motor yağının tamamen bittiği; klima soğutmadığı için önce yağ seviyesinin tamamlanması gerektiği düşünülmelidir',
+      'Lastik basıncının düştüğü ve lastiklerin şişirilmesi gerektiği',
+      'Akünün bittiği ve akünün değiştirilmesi gerektiği',
     ],
     answerIndex: 0,
     explanation:
@@ -743,10 +743,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Bir lastiğin yanağında yazan "205/55 R16" ifadesindeki değerler sırasıyla neyi gösterir?',
     options: [
-      'Lastiğin fiyatını, rengini ve ağırlığını',
-      'Lastik genişliğini (mm)',
-      'Lastiğin üretim yılını, ayını ve gününü',
-      'Lastik basıncını, diş derinliğini ve hızını',
+      'Lastiğin satış fiyatını, yanak rengini ve toplam ağırlığını',
+      'Lastik genişliğini (mm), yanak oranını ve jant çapını (inç)',
+      'Lastiğin üretim yılını, ayını ve gününü sırasıyla',
+      'Lastik basıncını, diş derinliğini ve azami hızını',
     ],
     answerIndex: 1,
     explanation:
@@ -815,14 +815,14 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Koltuk baş desteğinin (kafalık) doğru ayarlanmasının güvenlik açısından önemi nedir?',
     options: [
-      'Yalnızca yolculuğu daha konforlu yapmak için vardır, güvenlikle ilgisi yoktur',
-      'Baş desteğinin üst kenarı yaklaşık baş hizasında olduğunda, özellikle arkadan çarpmalarda başın geriye savrulmasını sınırlayarak boyun (kamçı/whiplash)',
-      'Baş desteği yükseğe alındığında yakıt tüketimini düşürür',
-      'Baş desteği ne kadar aşağıda olursa o kadar iyi korur',
+      'Yalnızca yolculuğu daha konforlu yapmak için vardır; güvenlikle ilgisi yoktur ve ayarı tamamen kişisel tercihe bağlıdır',
+      'Baş desteğinin üst kenarı baş hizasındayken arkadan çarpmada boyun (kamçı/whiplash) yaralanması riskini azaltır',
+      'Baş desteği olabildiğince yükseğe alındığında aracın hava direncini azaltarak yakıt tüketimini düşürür',
+      'Baş desteği ne kadar aşağıda olursa boynu o kadar iyi korur; en güvenlisi tamamen indirmektir',
     ],
     answerIndex: 1,
     explanation:
-      'Baş desteği bir konfor parçası gibi görünse de temel görevi güvenliktir. Özellikle arkadan çarpmada gövde öne itilirken baş geride kalıp ani şekilde geriye savrulur; bu, boyunda "kamçı" tipi yaralanmaya yol açar. Baş desteğinin üst kenarı baş hizasına ayarlandığında başın bu savrulması sınırlanır ve boyun daha iyi korunur. Yaralanması riskini azaltır.',
+      'Baş desteği bir konfor parçası gibi görünse de temel görevi güvenliktir. Özellikle arkadan çarpmada gövde öne itilirken baş geride kalıp ani şekilde geriye savrulur; bu, boyunda "kamçı" tipi yaralanmaya yol açar. Baş desteğinin üst kenarı baş hizasına ayarlandığında başın bu savrulması sınırlanır ve boyun daha iyi korunur.',
     whyWrong: [
       'Baş desteği yalnızca konfor için değil, boyun koruması içindir.',
       'Yakıt tüketimiyle ilgisi yoktur ve çok alçak ayar başı desteklemediği için korumayı azaltır.',
@@ -840,10 +840,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Modern araçlardaki emniyet kemeri gerdiricisinin (ön gerdirici) işlevi nedir?',
     options: [
-      'Kemeri sürüş boyunca gevşek tutmak',
+      'Kemeri sürüş boyunca gevşek tutarak yolcunun rahatça hareket etmesini sağlamak ve kemer baskısını tamamen azaltmak',
       'Şiddetli bir çarpışma anında kemerdeki boşluğu anında toplayarak gövdeyi koltuğa daha sıkı ve erken kavramak',
-      'Kemeri kaza anında tamamen serbest bırakmak',
-      'Kemeri yalnızca park hâlinde germek',
+      'Kaza anında kemeri tamamen serbest bırakıp yolcunun dışarı çıkmasını kolaylaştırmak',
+      'Kemeri yalnızca araç park hâlindeyken gerip yolcuyu koltukta tutmak',
     ],
     answerIndex: 1,
     explanation:
@@ -864,10 +864,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Hız sabitleyici (cruise control) sistemi ile ilgili doğru ifade hangisidir?',
     options: [
-      'Aracın direksiyonunu da otomatik çevirir',
+      'Aracın direksiyonunu da otomatik çevirerek şeridin ortasında tutar',
       'Sürücünün ayarladığı sabit hızı gaz pedalına basmadan korur',
       'Frene basma ihtiyacını tamamen ortadan kaldırır',
-      'Yalnızca şehir içi dur-kalk trafik için tasarlanmıştır',
+      'Yalnızca şehir içi dur-kalk trafiği için tasarlanmıştır',
     ],
     answerIndex: 1,
     explanation:
@@ -913,9 +913,9 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Kör nokta uyarı sistemi sürücüye nasıl bir yardım sağlar?',
     options: [
       'Aynalarda görünmeyen kör noktada yandan gelen/seyreden bir araç bulunduğunda sürücüyü (genellikle ayna kenarındaki ışık ve/veya sesle) uyarır',
-      'Aracı otomatik olarak durdurur',
-      'Direksiyonu kilitleyerek şerit değiştirmeyi tamamen engeller',
-      'Yalnızca gece çalışır ve farları yönetir',
+      'Kör noktadaki aracı algıladığında direksiyonu kilitleyerek şerit değiştirmeyi tamamen engeller ve sürücünün manevra yapmasına hiçbir şekilde izin vermez',
+      'Kör noktada araç varsa aracı otomatik olarak durdurup şeritte sabitler',
+      'Yalnızca gece çalışır ve kör noktadaki aracı farlarla aydınlatır',
     ],
     answerIndex: 0,
     explanation:
@@ -936,10 +936,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Dizel araçlardaki partikül filtresi (DPF) ile ilgili doğru ifade aşağıdakilerden hangisidir?',
     options: [
-      'Motor yağını süzen bir filtredir',
+      'Motor yağını süzerek içindeki metal parçacıklarını ve kurumu tutan bir filtre görevi üstlenir',
       'Egzozdaki kurum (is) parçacıklarını tutarak çevreye salınan zararlı partikülleri azaltır',
-      'Yakıt deposunun içindedir ve yakıtı soğutur',
-      'Yalnızca benzinli araçlarda bulunur',
+      'Yakıt deposunun içinde bulunur ve yakıtı soğutarak buharlaşmayı önler',
+      'Yalnızca benzinli araçlarda bulunur, dizellerde kullanılmaz',
     ],
     answerIndex: 1,
     explanation:
@@ -960,10 +960,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Bir araçta yalnızca debriyaj pedalına basıldığı anda ortaya çıkan, pedal bırakılınca kesilen bir sürtme/vınlama sesi duyuluyorsa öncelikle hangi parça akla gelmelidir?',
     options: [
-      'Radyatör fanı',
-      'Yakıt pompası',
+      'Radyatör fanı (elektro fan)',
+      'Alternatör kasnağı (şarj dinamosu)',
       'Debriyaj baskı rulmanı (bilyası)',
-      'Ön cam sileceği',
+      'Ön cam sileceği motoru',
     ],
     answerIndex: 2,
     explanation:
@@ -984,8 +984,8 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Yeni durmuş, sıcak bir motorun kaputunu açıp kontrol yaparken hangi güvenlik önlemine dikkat edilmelidir?',
     options: [
-      'Sıcak parçalara çıplak elle dokunmak sakıncasızdır',
-      'Radyatör kapağı sıcakken rahatça açılabilir',
+      'Motor durduğu için sıcak parçalara çıplak elle dokunmak hiçbir sakınca doğurmaz',
+      'Radyatör kapağı motor sıcakken rahatça açılabilir',
       'Motor durmuş olsa bile fan aniden dönebilir ve parçalar çok sıcak olabilir',
       'Elektrik bağlantılarına ıslak elle dokunmak güvenlidir',
     ],
@@ -1010,9 +1010,9 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Yağ dolum kapağının altında ya da yağ çubuğunda açık kahverengi/sütlü, köpüklü bir bulaşık görülüyor ve soğutma suyu açıklanamayan şekilde eksiliyorsa akla gelmesi gereken ciddi ihtimal nedir?',
     options: [
       'Silindir kapağı contasının (kafa contası) yanmış/kaçırıyor olabileceği',
-      'Silecek suyunun bittiği',
-      'Polen filtresinin kirlendiği',
-      'Lastik dişlerinin aşındığı',
+      'Ön cam yıkama suyunun bittiği ve fıskiye memelerinin kireçle tıkandığı',
+      'Polen filtresinin kirlenip kabin havasını kısıtladığı',
+      'Lastik dişlerinin aşınıp yol tutuşunu azalttığı',
     ],
     answerIndex: 0,
     explanation:
@@ -1034,10 +1034,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Aracın park edildiği yerin altında yeşilimsi/pembemsi, hafif tatlı kokan bir sıvı lekesi görülüyor ve soğutma suyu azalıyorsa en olası neden nedir?',
     options: [
-      'Fren hidroliğinin kaçırması',
+      'Fren hidroliğinin bir noktadan kaçırıp zemine damlaması',
       'Soğutma sisteminde (antifrizli su) bir kaçak bulunması',
-      'Motor yağının kaçırması',
-      'Ön cam suyunun taşması',
+      'Motor yağının contadan sızıp zemini lekelemesi',
+      'Ön cam yıkama suyunun taşıp zemine akması',
     ],
     answerIndex: 1,
     explanation:
@@ -1059,9 +1059,9 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Otomatik şanzımanlı bir araçta pedalların kullanımıyla ilgili doğru ifade hangisidir?',
     options: [
-      'Sağ ayakla gaz, sol ayakla fren yapmak en doğru yöntemdir',
+      'Sağ ayakla gaz, sol ayakla fren yapmak otomatik araçta en doğru ve hızlı yöntemdir',
       'Debriyaj pedalı olmadığından hem gaz hem fren tek ayakla (sağ ayakla) kullanılır',
-      'Otomatik viteste fren pedalına hiç gerek yoktur',
+      'Otomatik viteste fren pedalına hiç gerek duyulmaz',
       'Otomatik araçta sol ayak sürekli fren pedalında tutulmalıdır',
     ],
     answerIndex: 1,
@@ -1083,10 +1083,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Otomatik şanzımanlı bir araçta "P" (park) konumu ve el freniyle ilgili doğru uygulama hangisidir?',
     options: [
-      'Park hâlinde vites herhangi bir konumda kalabilir',
-      'Motor yalnızca "D" konumunda çalıştırılır',
+      'Park hâlinde vites herhangi bir konumda bırakılabilir; önemli olan yalnızca kontağın kapatılmasıdır',
+      'Motor yalnızca D konumundayken çalıştırılabilir',
       'Park ederken vites "P" konumuna alınır ve ek güvenlik için el freni de çekilir',
-      'El freni otomatik araçlarda hiç kullanılmaz',
+      'El freni otomatik vitesli araçlarda hiç kullanılmaz',
     ],
     answerIndex: 2,
     explanation:
@@ -1131,10 +1131,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Motor yağı değişiminde yağ filtresinin de birlikte değiştirilmesi neden önerilir?',
     options: [
-      'Yağ filtresi hiçbir zaman değiştirilmez',
+      'Yağ filtresi ömür boyu kullanılan bir parçadır; motor hurdaya çıkana kadar hiçbir zaman değiştirilmez',
       'Eski filtre içindeki kirli yağ ve tuttuğu tortular, yeni konan temiz yağı hemen kirletir',
-      'Filtre yalnızca dizel araçlarda değiştirilir',
-      'Filtre değişimi yakıt tüketimini artırır',
+      'Yağ filtresi yalnızca dizel araçlarda değiştirilir, benzinlide gerekmez',
+      'Filtre değişimi yakıt tüketimini artırdığı için önerilmez',
     ],
     answerIndex: 1,
     explanation:
@@ -1155,8 +1155,8 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Kâğıt tipi hava filtresi çok kirlendiğinde en doğru uygulama hangisidir?',
     options: [
-      'Benzinle yıkayıp güneşte kurutmak',
-      'Suyla yıkayıp tekrar takmak',
+      'Benzinle yıkayıp güneşte kuruttuktan sonra yerine takıp yeniden kullanmaya devam etmek',
+      'Suyla yıkayıp ıslakken yerine takıp kullanmayı sürdürmek',
       'Süresi/kilometresi geldiğinde ya da aşırı kirlendiğinde yenisiyle değiştirmek',
       'Hiç değiştirmemek, ömür boyu aynı filtreyi kullanmak',
     ],
@@ -1179,9 +1179,9 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Motor arıza (check engine) lambası sabit (yanıp sönmeden) yanıyor ve araç normale yakın çalışıyorsa doğru davranış nedir?',
     options: [
-      'Lambayı bant çekerek kapatmak',
-      'Lamba sabit yanıyorsa hiçbir şey yapmaya gerek yoktur',
-      'Aracı hemen terk edip çektirmek gerekir',
+      'Lambayı bant çekerek kapatmak ve arıza kendiliğinden geçene kadar aracı normal şekilde kullanmaya devam etmek; sabit yanan lamba acil bir durum bildirmez',
+      'Lamba sabit yanıyorsa hiçbir şey yapmaya gerek yoktur, sürüşe devam edilir',
+      'Aracı derhâl terk edip yol kenarında bırakarak çektirmek gerekir',
       'Motor yönetiminde kayıtlı bir arıza olduğunu kabul edip, ağır hızlanma/yüksek devirden kaçınarak yakın zamanda arıza kodunu okutup kontrol ettirmek',
     ],
     answerIndex: 3,
@@ -1253,10 +1253,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Aracın park edildiği zeminde sızıntı lekeleri görüldüğünde, sıvının rengi olası kaynak hakkında ipucu verir. Aşağıdaki eşleştirmelerden hangisi doğrudur?',
     options: [
-      'Berrak su lekesi her zaman ciddi bir motor yağı kaçağıdır',
+      'Berrak su lekesi her zaman ciddi bir motor yağı kaçağını gösterir; klima yoğuşması gibi zararsız bir kaynak olamaz',
       'Koyu siyah/kahverengi yağlı leke motor yağını, yeşil/pembe renkli leke antifrizli soğutma suyunu düşündürür',
-      'Yeşil renkli leke fren hidroliğidir',
-      'Sıvının rengi kaynağı hakkında hiçbir bilgi vermez',
+      'Yeşil renkli leke fren hidroliğini, siyah leke ise soğutma suyunu düşündürür',
+      'Sıvının rengi kaynağı hakkında hiçbir bilgi vermez; hepsi aynıdır',
     ],
     answerIndex: 1,
     explanation:
@@ -1302,7 +1302,7 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     stem: 'Arızalanan bir aracın halatla çekilerek taşınmasında temel güvenlik kuralıyla ilgili doğru ifade hangisidir?',
     options: [
       'Çekilen araçta kontak, direksiyon ve frenlerin çalışır durumda olması, aracın belirlenmiş çekme noktasından uygun halat/donanımla bağlanması ve iki araç arasında güvenli, gergin bir mesafe korunarak yavaş ve dikkatli gidilmesi gerekir',
-      'Çekilen aracın kontağı tamamen kapatılmalı ve direksiyon kilitli kalmalıdır',
+      'Çekilen aracın kontağı tamamen kapatılmalı, direksiyon kilitli bırakılmalı ve fren sistemi devre dışı olduğundan yalnızca çeken aracın frenlerine güvenilmeli; halat mümkün olduğunca uzun ve gevşek bağlanmalı ki ani gerilme olmasın ve iki araç arasındaki mesafe sürekli değişebilmelidir',
       'Halat ne kadar uzun ve gevşek olursa o kadar güvenlidir',
       'Çekme sırasında hız sınırı olmaksızın hızlı gidilebilir',
     ],
@@ -1325,10 +1325,10 @@ export const MOTOR_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Aracın periyodik bakım zamanının belirlenmesiyle ilgili doğru ilke hangisidir?',
     options: [
-      'Bakım yalnızca bir arıza ortaya çıkınca yapılır',
+      'Bakım yalnızca gözle görülür bir arıza ortaya çıktığında yapılır; düzenli aralık gerekmez',
       'Üretici genellikle bir kilometre değeri ile bir süre (ör. belirli ay/yıl) belirtir',
       'Bakım aralığı sadece kilometreye bakılarak belirlenir, süre önemsizdir',
-      'Bakım aralığı yalnızca aracın rengine göre değişir',
+      'Bakım aralığı yalnızca aracın rengine ve modeline göre değişir',
     ],
     answerIndex: 1,
     explanation:

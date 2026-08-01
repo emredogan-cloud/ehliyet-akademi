@@ -13,7 +13,12 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     topic: 'calisma-zamanlari',
     difficulty: 'kolay',
     stem: 'Dört zamanlı bir motorda aracı hareket ettiren gücün üretildiği zaman aşağıdakilerden hangisidir?',
-    options: ['Emme zamanı', 'Egzoz zamanı', 'İş (ateşleme-genişleme) zamanı', 'Sıkıştırma zamanı'],
+    options: [
+      'Emme zamanı (silindire dolgu alınması)',
+      'Egzoz zamanı (yanmış gazın atılması)',
+      'İş (ateşleme-genişleme) zamanı',
+      'Sıkıştırma zamanı (dolgunun sıkılması)',
+    ],
     answerIndex: 2,
     explanation:
       'Sıkıştırılmış dolgu ateşlendiğinde genişleyen yanma gazları pistonu büyük bir kuvvetle aşağı iter; motorun güç ürettiği tek an bu iş zamanıdır. Diğer üç zaman bu ana hazırlık yapar veya silindiri temizler.',
@@ -84,10 +89,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Dört zamanlı bir motorda egzoz zamanının görevi nedir?',
     options: [
-      'Silindire taze hava almak',
+      'Açılan emme supabından silindire taze hava-yakıt karışımını doldurarak sıkıştırmaya hazırlamak',
       'Açılan egzoz supabından yanmış gazları dışarı atarak silindiri bir sonraki çevrime hazırlamak',
-      'Yakıtı depodan motora pompalamak',
-      'Motor yağını soğutmak',
+      'Yakıtı depodan alıp yüksek basınçla enjektörlere pompalamak',
+      'Motor yağını karterden çekip soğutucu peteklerden geçirmek',
     ],
     answerIndex: 1,
     explanation:
@@ -108,10 +113,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Pistonun motordaki temel görevi aşağıdakilerden hangisidir?',
     options: [
-      'Soğutma suyunu motor içinde dolaştırmak',
-      'Farlar için elektrik üretmek',
+      'Soğutma suyunu motor bloğunun içinde dolaştırarak ısıyı alıp radyatöre taşımak ve geri getirmek',
+      'Farlar ve diğer tüketiciler için gerekli elektriği üretip aküyü şarj etmek',
       'Silindir içinde inip çıkarak yanma basıncını biyel kolu üzerinden krank miline iletmek',
-      'Egzoz gazlarındaki zararlı maddeleri temizlemek',
+      'Egzoz gazlarındaki zararlı maddeleri kimyasal yolla zararsız hâle getirmek',
     ],
     answerIndex: 2,
     explanation:
@@ -132,10 +137,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Krank milinin görevi aşağıdakilerden hangisidir?',
     options: [
-      'Pistonlardan gelen doğrusal (inip kalkan)',
-      'Yakıtı silindire püskürtmek',
-      'Fren basıncını tekerleklere dağıtmak',
-      'Kabine giren havayı süzmek',
+      'Pistonlardan gelen doğrusal (inip kalkan) hareketi dönme hareketine çevirmek',
+      'Yakıtı yüksek basınçla silindir içine püskürtüp hava ile homojen karıştırmak',
+      'Fren pedalından gelen basıncı tekerleklere dengeli dağıtmak',
+      'Kabine giren havayı toz ve polenden arındırarak süzmek',
     ],
     answerIndex: 0,
     explanation:
@@ -156,9 +161,9 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Eksantrik (kam) milinin motordaki görevi nedir?',
     options: [
-      'Aküyü şarj etmek',
-      'Motor yağını süzmek',
-      'Tekerlek balansını dengelemek',
+      'Motor çalışırken kayışla döndürülüp elektrik üreterek aküyü ve araçtaki tüm sistemi beslemek',
+      'Motor yağını süzüp içindeki metal parçacıklarını tutmak',
+      'Tekerleklerin balansını dengeleyip titreşimi önlemek',
       'Üzerindeki kamlar aracılığıyla emme ve egzoz supaplarını tam zamanında açıp kapatmak',
     ],
     answerIndex: 3,
@@ -180,10 +185,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Emme ve egzoz supaplarının görev ayrımı hangi seçenekte doğru verilmiştir?',
     options: [
-      'Emme supabı yanmış gazı atar; egzoz supabı yakıt püskürtür',
+      'Emme supabı yanmış gazı dışarı atar; egzoz supabı ise silindire taze yakıt ve hava püskürterek doldurur',
       'Emme supabı taze dolgunun silindire girmesini, egzoz supabı yanmış gazların dışarı atılmasını sağlar',
-      'Her iki supap da yalnızca yağlama görevi yapar',
-      'Supaplar yalnızca dizel motorlarda bulunur',
+      'Her iki supap da yalnızca yağlama görevi yapar, gaz alışverişine karışmaz',
+      'Supaplar yalnızca dizel motorlarda bulunur, benzinlilerde bulunmaz',
     ],
     answerIndex: 1,
     explanation:
@@ -204,10 +209,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Yağ basınç müşürünün görevi aşağıdakilerden hangisidir?',
     options: [
-      'Motor yağını kanallara pompalamak',
-      'Azalan yağı otomatik olarak tamamlamak',
+      'Yağlama sistemindeki yağı karterden emip basınçlandırarak motorun bütün yağ kanallarına ve yataklarına eşit biçimde dağıtmak',
+      'Yağ seviyesi azaldığında depodan otomatik olarak eksik yağı tamamlamak',
       'Yağlama sistemindeki basıncı izleyip basınç tehlikeli düzeye düştüğünde gösterge panelindeki yağ ikaz lambasını yaktırmak',
-      'Yağ filtresini temizlemek',
+      'Yağ filtresinin içini temizleyip tuttuğu kurumu dışarı atmak',
     ],
     answerIndex: 2,
     explanation:
@@ -229,9 +234,9 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     stem: 'Yağ seviyesi çubukla tam ölçülüyor ve motordan anormal ses gelmiyor; buna rağmen yağ ikaz lambası ara ara yanıp sönüyorsa hangi olasılık da değerlendirilmelidir?',
     options: [
       'Yağ basınç müşürünün veya kablosunun arızalanıp yanlış sinyal veriyor olabileceği',
-      'Yakıt deposunun boşalmak üzere olduğu',
-      'Lastik basıncının yükseldiği',
-      'Silecek suyunun bittiği',
+      'Yakıt deposunun boşalmak üzere olduğu ve yakıt pompasının hava emmeye başlamış olduğu',
+      'Lastik hava basıncının yükselip ikaz sistemini yanılttığı',
+      'Ön cam suyunun bittiği ve seviye sensörünün uyarı verdiği',
     ],
     answerIndex: 0,
     explanation:
@@ -253,10 +258,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Termostat sürekli açık konumda takılı kalırsa araçta hangi durum gözlenir?',
     options: [
-      'Motor birkaç dakika içinde aşırı ısınır',
+      'Motor birkaç dakika içinde aşırı ısınır, hararet göstergesi kırmızı bölgeye dayanır ve buhar çıkar',
       'Soğutma suyu baştan itibaren radyatöre gittiği için motor çalışma sıcaklığına çok geç ulaşır',
-      'Fren pedalı sertleşir',
-      'Direksiyon boşluğu artar',
+      'Fren pedalı sertleşir ve fren mesafesi belirgin biçimde uzar',
+      'Direksiyon boşluğu artar ve araç düz yolda bir tarafa çeker',
     ],
     answerIndex: 1,
     explanation:
@@ -301,10 +306,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Devirdaim (su) pompası görevini yapamadığında hangi belirti ikilisinin birlikte görülmesi beklenir?',
     options: [
-      'Farların sararması ve korna sesinin zayıflaması',
-      'Lastik basıncının düşmesi ve direksiyonun titremesi',
+      'Farların gece sürüşünde sararması ve korna sesinin belirgin biçimde zayıflayıp cılızlaşması',
+      'Lastik basıncının düşmesi ve direksiyonun sürekli titremesi',
       'Motorun hararet yapması ve su dolaşımı durduğu için kaloriferin yeterince ısıtmaması',
-      'Yakıt göstergesinin sıfırlanması ve marşın basmaması',
+      'Yakıt göstergesinin sıfırlanması ve marşın hiç basmaması',
     ],
     answerIndex: 2,
     explanation:
@@ -326,9 +331,9 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     stem: 'Seyir hâlinde hararet yükselmeye başladığında kaloriferi en sıcak kademede sonuna kadar açmanın amacı nedir?',
     options: [
       'Kalorifer peteği motor ısısının bir kısmını kabine aktararak soğutma sistemine destek olur ve sıcaklığın tırmanmasını yavaşlatır',
-      'Kalorifer açılınca yakıt tüketimi sıfırlanır',
-      'Kalorifer açılınca motor kendiliğinden rölantiye düşer',
-      'Yalnızca camların buzlanmasını önlemek içindir',
+      'Kalorifer açıldığında motor üzerindeki yük tamamen kalktığı için yakıt tüketimi sıfırlanır ve motor kendiliğinden soğumaya başlar',
+      'Kalorifer açılınca motor kendiliğinden rölantiye düşer ve devri sabitlenir',
+      'Yalnızca ön camın buzlanmasını ve buğulanmasını önlemek amacıyla yapılır',
     ],
     answerIndex: 0,
     explanation:
@@ -350,10 +355,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Sürüş boyunca sol ayağı debriyaj pedalının üzerinde hafif bir baskıyla dinlendirmek neden yanlıştır?',
     options: [
-      'Sinyal lambaları çalışmaz hâle gelir',
+      'Sol ayağın pedal üzerindeki baskısı sinyal devresini etkiler ve dönüş lambaları çalışmaz hâle gelir',
       'Küçük baskı bile debriyaj balatasını ve baskı rulmanını sürekli sürttürerek erken aşındırır',
-      'Yakıt göstergesi yanlış değer gösterir',
-      'El freni kendiliğinden devreye girer',
+      'Yakıt göstergesi yanlış değer göstererek sürücüyü yanıltır',
+      'El freni kendiliğinden devreye girip aracı yavaşlatır',
     ],
     answerIndex: 1,
     explanation:
@@ -374,14 +379,14 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Yokuşta bekleyen aracı geriye kaçmasın diye uzun süre yarı debriyajla (debriyajı kaydırarak) tutmanın sonucu nedir?',
     options: [
-      'Debriyaj balatası kendini yeniler',
-      'Motor daha iyi soğur',
-      'Lastik basıncı yükselir',
-      'Sürekli sürtünen debriyaj balatası aşırı ısınıp yanar (yanık koku)',
+      'Debriyaj balatası sürtünme ısısıyla kendini yeniler ve kullanım ömrü belirgin biçimde uzar',
+      'Motor daha iyi soğur çünkü devir yüksek tutulmuş olur',
+      'Lastik basıncı yükselir ve yol tutuşu geçici olarak artar',
+      'Sürekli sürtünen debriyaj balatası aşırı ısınıp yanar (yanık koku) ve ömrü hızla kısalır',
     ],
     answerIndex: 3,
     explanation:
-      'Yarı debriyajda balata, volan ile baskı arasında sürekli kayarak çalışır; kısa sürede aşırı ısınır, yanık kokusu yayar ve ömrü hızla tükenir. Yokuşta bekleyiş fren pedalı ya da el freniyle yapılmalı, kalkışta debriyaj kısa süreli kullanılmalıdır. Ömrü hızla kısalır — bekleme fren veya el freniyle yapılmalıdır.',
+      'Yarı debriyajda balata, volan ile baskı arasında sürekli kayarak çalışır; kısa sürede aşırı ısınır, yanık kokusu yayar ve ömrü hızla tükenir. Yokuşta bekleyiş fren pedalı ya da el freniyle yapılmalı, kalkışta debriyaj kısa süreli kullanılmalıdır.',
     whyWrong: [
       'Balata kendini yenileyemez; sürtünme onu geri dönüşsüz aşındırır.',
       'Yarı debriyajın motor soğutmasına ve lastik basıncına etkisi yoktur.',
@@ -399,9 +404,9 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     stem: 'Şanzıman (vites kutusu) yağının görevi aşağıdakilerden hangisidir?',
     options: [
       'Birbiriyle çalışan dişlileri yağlayarak aşınmayı ve aşırı ısınmayı önlemek, sessiz ve rahat vites geçişine katkı sağlamak',
-      'Motor silindirlerini yağlamak',
-      'Gerektiğinde fren hidroliği yerine kullanılmak',
-      'Egzoz gazlarını yumuşatmak',
+      'Motor silindirlerini, pistonları ve krank yataklarını yağlayarak sürtünmeyi azaltmak ve içerideki ısıyı alıp dışarı taşımak',
+      'Gerektiğinde fren hidroliği yerine kullanılıp fren basıncı iletmek',
+      'Egzoz gazlarını yumuşatıp motor sesinin kısılmasını sağlamak',
     ],
     answerIndex: 0,
     explanation:
@@ -422,10 +427,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Manuel vitesli bir araçta vitesler giderek zor geçiyor ve şanzımandan uğultu/çınlama sesi geliyorsa öncelikle ne kontrol ettirilmelidir?',
     options: [
-      'Silecek suyu seviyesi',
-      'Polen filtresi',
+      'Ön cam yıkama suyu haznesinin seviyesi',
+      'Polen filtresinin kirlilik durumu',
       'Şanzıman yağının seviyesi ve durumu',
-      'Far ampulleri',
+      'Far ampullerinin ömrü ve parlaklığı',
     ],
     answerIndex: 2,
     explanation:
@@ -446,10 +451,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Araçlarda diferansiyel bulunmasaydı viraj dönüşlerinde ne yaşanırdı?',
     options: [
-      'Araç virajları daha hızlı dönerdi',
+      'Araç virajları belirgin biçimde daha hızlı ve daha rahat dönerdi, lastik aşınması azalırdı',
       'İç ve dış tekerlekler farklı mesafe kat ettikleri hâlde aynı hızda dönmeye zorlanır',
-      'Motor daha az yakıt harcardı',
-      'Frenler tamamen devre dışı kalırdı',
+      'Motor daha az yakıt harcar, tüketim gözle görülür biçimde düşerdi',
+      'Frenler tamamen devre dışı kalır, araç yalnızca motor freniyle dururdu',
     ],
     answerIndex: 1,
     explanation:
@@ -496,9 +501,9 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     stem: 'Yeni lastik taktırıldığında balans ayarının da yaptırılması neden gerekir?',
     options: [
       'Jant-lastik bütününün ağırlık dağılımı değiştiği için',
-      'Balans ayarı lastiğin rengini korur',
-      'Balans yapılmazsa yakıt deposu küçülür',
-      'Balans ayarı yalnızca kış lastiklerinde gerekir',
+      'Balans ayarı lastiğin renginin solmasını önler ve görünümü korur',
+      'Balans yapılmazsa yakıt deposunun hacmi zamanla küçülür',
+      'Balans ayarı yalnızca kış lastiklerinde gerekli olan bir işlemdir',
     ],
     answerIndex: 0,
     explanation:
@@ -520,10 +525,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'B sınıfı bir otomobilde servis (ayak) freni ile klasik el (park) freninin çalışma prensipleri hangi seçenekte doğru verilmiştir?',
     options: [
-      'Her ikisi de hidrolik basınçla çalışır',
-      'Servis freni mekanik, el freni hidroliktir',
+      'Her ikisi de hidrolik basınçla çalışır; aralarında hiçbir yapısal veya işlevsel farklılık bulunmaz',
+      'Servis freni mekanik olarak, klasik el freni ise hidrolik basınçla çalışır',
       'Servis freni hidrolik basınçla, klasik el freni ise mekanik olarak (halat/tel üzerinden) çalışır',
-      'Her ikisi de basınçlı havayla çalışır',
+      'Her ikisi de basınçlı havayla çalışır; bu sistem otomobillerde kullanılır',
     ],
     answerIndex: 2,
     explanation:
@@ -544,10 +549,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Fren güçlendiricisinin (servo) sürücüye sağladığı fayda nedir?',
     options: [
-      'Fren balatalarının hiç aşınmamasını sağlar',
+      'Fren balatalarının hiç aşınmamasını sağlayarak kullanım ömrünü sınırsız kılar',
       'Pedala uygulanan kuvveti çoğunlukla motor vakumundan yararlanarak katlar',
-      'Aracı engel algılayınca kendiliğinden durdurur',
-      'El frenini tamamen gereksiz kılar',
+      'Aracın önündeki engeli algılayınca kendiliğinden fren yapmasını sağlar',
+      'El frenini tamamen gereksiz kılar; park için ayak freni yeterli olur',
     ],
     answerIndex: 1,
     explanation:
@@ -569,9 +574,9 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     stem: 'Uzun bir inişte yakıt tasarrufu umuduyla kontağı kapatıp motoru durdurarak inmek neden çok tehlikelidir?',
     options: [
       'Motor durunca fren güçlendiricisinin vakum desteği birkaç pedal basışından sonra tükenir ve pedal taş gibi sertleşir',
-      'Yalnızca radyo kapanır, başka bir etkisi olmaz',
-      'Lastikler daha hızlı aşınır',
-      'Klima gazı kaçar',
+      'Yalnızca radyo ve klima kapanır; frenler ve direksiyon eskisi gibi çalıştığı için sürüş güvenliği hiçbir şekilde etkilenmez',
+      'Lastikler daha hızlı aşınır ve diş derinliği inişte belirgin biçimde azalır',
+      'Klima gazı kaçar ve sistem yeniden gazla doldurulmak zorunda kalır',
     ],
     answerIndex: 0,
     explanation:
@@ -593,14 +598,14 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'ASR (patinaj önleme / çekiş kontrol) sisteminin görevi nedir?',
     options: [
-      'Farları karanlıkta otomatik yakmak',
-      'Anlık yakıt tüketimini hesaplamak',
-      'Ani frenlemede tekerleklerin kilitlenmesini önlemek',
-      'Kalkışta ve hızlanmada çekiş tekerleklerinin patinaj yapmasını (boşa dönmesini)',
+      'Farları karanlıkta otomatik olarak yakıp aydınlıkta söndürerek sürücünün işini kolaylaştırmak',
+      'Anlık ve ortalama yakıt tüketimini hesaplayıp gösterge panelinde göstermek',
+      'Ani frenlemede tekerleklerin kilitlenmesini önleyip direksiyon hâkimiyetini korumak',
+      'Kalkışta ve hızlanmada çekiş tekerleklerinin patinaj yapmasını (boşa dönmesini) engellemek',
     ],
     answerIndex: 3,
     explanation:
-      'ASR, gaz verilirken tekerleklerden biri yol tutuşunu kaybedip boşa dönmeye başladığında o tekerleğe kısa fren uygular veya motor gücünü kısar. Özellikle karlı, ıslak ve gevşek zeminlerde kontrollü kalkış sağlar. Engelleyerek tutunmayı korumak.',
+      'ASR, gaz verilirken tekerleklerden biri yol tutuşunu kaybedip boşa dönmeye başladığında o tekerleğe kısa fren uygular veya motor gücünü kısar. Özellikle karlı, ıslak ve gevşek zeminlerde kontrollü kalkış sağlar.',
     whyWrong: [
       'Frende kilitlenmeyi önlemek ASR değil ABS görevi olan ayrı bir işlevdir.',
       'Otomatik far ve tüketim hesabı konfor/gösterge donanımlarıdır.',
@@ -617,10 +622,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'ABS, ESP ve ASR kısaltmalarının görevleri hangi seçenekte doğru eşleştirilmiştir?',
     options: [
-      'ABS = patinajı önler, ESP = frende kilitlenmeyi önler, ASR = savrulmayı dengeler',
+      'ABS = kalkış ve hızlanmada patinajı önler, ESP = frende tekerlek kilitlenmesini önler, ASR = savrulmayı algılayıp aracı yeniden dengeler',
       'ABS = frende tekerlek kilitlenmesini önler, ESP = savrulmayı algılayıp aracı dengeler, ASR = kalkış ve hızlanmada patinajı önler',
-      'Üçü de yalnızca yakıt tasarrufu sağlayan sistemlerdir',
-      'ABS = klima, ESP = müzik sistemi, ASR = far yıkama donanımıdır',
+      'Üçü de yalnızca yakıt tasarrufu sağlayan, güvenlikle ilgisi olmayan sistemlerdir',
+      'ABS = klima, ESP = müzik sistemi, ASR = far yıkama donanımı anlamına gelir',
     ],
     answerIndex: 1,
     explanation:
@@ -641,14 +646,14 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'ESP bir savrulma başlangıcını teknik olarak nasıl toparlar?',
     options: [
-      'Sürücü koltuğunu öne çekerek',
-      'Tüm tekerleklere aynı anda tam fren uygulayarak',
-      'Sensörlerle sürücünün gitmek istediği yön ile aracın gerçek gidişini karşılaştırır',
-      'Direksiyonu sürücüden bağımsız tam tur çevirerek',
+      'Sürücü koltuğunu öne çekip sürüş pozisyonunu değiştirerek direksiyon hâkimiyetini artırır ve savrulmayı böyle engellemeye çalışır',
+      'Dört tekerleğe aynı anda tam fren uygulayarak aracı en kısa sürede durdurur ve savrulmanın büyümesini böylece keser',
+      'Sensörlerle sürücünün istediği yön ile aracın gerçek gidişini karşılaştırır, sapma varsa ilgili tekerleğe fren uygular',
+      'Direksiyonu sürücüden bağımsız biçimde tam tur çevirerek aracın burnunu zorla rotaya geri döndürür',
     ],
     answerIndex: 2,
     explanation:
-      'ESP; direksiyon açısı, tekerlek hızları ve aracın dönme (savrulma) sensörlerini sürekli izler. Araç sürücünün istediği rotadan sapmaya başlarsa sistemi düzeltecek tekerleğe hedefli fren yapar ve gerekirse gücü azaltarak aracı rotada tutar. Sapma algılayınca uygun tekerleklere tek tek fren uygular ve gerekirse motor gücünü kısar.',
+      'ESP; direksiyon açısı, tekerlek hızları ve aracın dönme (savrulma) sensörlerini sürekli izler. Araç sürücünün istediği rotadan sapmaya başlarsa sistemi düzeltecek tekerleğe hedefli fren yapar ve gerekirse gücü azaltarak aracı rotada tutar.',
     whyWrong: [
       'Koltuk konumu ve direksiyonun zorla çevrilmesi ESP ile ilgisizdir.',
       'Tüm tekerleklere aynı anda tam fren savrulmayı düzeltmez; ESP hedefli ve seçici fren yapar.',
@@ -666,8 +671,8 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     stem: 'LED farların halojen farlara göre öne çıkan avantajları nelerdir?',
     options: [
       'Daha az enerji tüketmeleri, çok daha uzun ömürlü olmaları ve anında tam parlaklığa ulaşmaları',
-      'Daha fazla yakıt tüketmeleri',
-      'Yalnızca gündüz çalışabilmeleri',
+      'Halojen farlara göre çok daha fazla enerji tüketmeleri ve bu yüzden alternatörü sürekli zorlamaları',
+      'Yalnızca gündüz çalışabilmeleri, gece hiç yanmamaları',
       'Isıya dayanıksız oldukları için her yıl komple değiştirilmeleri',
     ],
     answerIndex: 0,
@@ -689,10 +694,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Halojen far ampulü değiştirilirken cam kısmına çıplak elle dokunulmamasının nedeni nedir?',
     options: [
-      'Cam kısmın elektrik çarpmasına yol açması',
-      'Parmak izinin ampulün garantisini geçersiz kılması',
+      'Cam kısma dokunmanın ampul içindeki gazın kaçmasına ve halojen döngüsünün bozulmasına yol açarak farın renk sıcaklığını kalıcı biçimde değiştirmesi nedeniyle',
+      'Cam kısmın yüksek gerilim taşıması ve dokunan kişide elektrik çarpmasına yol açması',
       'Parmaktan bulaşan yağın, çok yüksek sıcaklıkta çalışan kuvars camda sıcak nokta oluşturarak ampulün ömrünü kısaltması, hatta patlamasına yol açabilmesi',
-      'Ampulün dokunulduğu anda sönüp bir daha yanmaması',
+      'Parmak izinin ampulün üretici garantisini geçersiz kılması ve iade hakkını düşürmesi',
     ],
     answerIndex: 2,
     explanation:
@@ -737,9 +742,9 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Plaka lambasının görevi aşağıdakilerden hangisidir?',
     options: [
-      'Geri giderken yolu aydınlatmak',
-      'Bagaj içini aydınlatmak',
-      'Sürücüye arkadan gelen aracı göstermek',
+      'Geri vitese takıldığında aracın arkasındaki yolu aydınlatarak geri manevranın güvenli biçimde yapılmasını sağlamak',
+      'Bagaj bölümünün içini aydınlatarak karanlıkta yük yerleştirmeyi kolaylaştırmak',
+      'Sürücüye arkadan yaklaşan aracın uzaklığını ışıkla göstermek',
       'Arka plakayı geceleri aydınlatarak plakanın diğer sürücüler ve görevliler tarafından okunabilmesini sağlamak',
     ],
     answerIndex: 3,
@@ -762,9 +767,9 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     stem: 'Korna aniden hiç ses vermez olduysa yapılacak ilk basit kontrol hangisidir?',
     options: [
       'Sigorta kutusundan korna sigortasının atıp atmadığına bakmak',
-      'Motor yağını değiştirmek',
-      'Lastik basınçlarını yükseltmek',
-      'Radyatöre su eklemek',
+      'Motor yağını tamamen boşaltıp yerine yeni ve temiz yağ koymak',
+      'Lastik hava basınçlarını önerilen değerin üstüne çıkarmak',
+      'Radyatöre soğutma suyu ekleyip seviyeyi tamamlamak',
     ],
     answerIndex: 0,
     explanation:
@@ -809,10 +814,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Kış aylarında silecek su haznesinde donmaya dayanıklı (antifrizli) cam suyu bulundurmanın önemi nedir?',
     options: [
-      'Motorun daha hızlı ısınmasını sağlar',
+      'Motorun daha hızlı ısınmasını ve kaloriferin çabuk üflemesini sağlar',
       'Sıradan su donarak haznede ve fıskiyelerde hasar yapabilir',
-      'Yakıt tüketimini azaltır',
-      'Lastiklerin buz tutmasını engeller',
+      'Yakıt tüketimini azaltıp kışın menzili uzatır',
+      'Lastiklerin yüzeyinde buz tutmasını tamamen engeller',
     ],
     answerIndex: 1,
     explanation:
@@ -834,9 +839,9 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     stem: 'Depoda sürekli çok az yakıtla (ibre hep rezervde) dolaşmak neden araca zarar verebilir?',
     options: [
       'Depo dibindeki tortunun sisteme çekilme olasılığı artar',
-      'Araç hafiflediği için frenler zayıflar',
-      'Rezervde sürüş lastik basıncını düşürür',
-      'Rezervdeyken kabin sigortaları atar',
+      'Araç hafiflediği için frenler zayıflar ve fren mesafesi uzar',
+      'Rezervde sürüş lastik basıncını düşürüp aşınmayı artırır',
+      'Rezervdeyken kabin sigortaları sık sık atmaya başlar',
     ],
     answerIndex: 0,
     explanation:
@@ -857,10 +862,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Dizel bir araca konulan benzinin yakıt sistemine özellikle zarar vermesinin teknik nedeni nedir?',
     options: [
-      'Benzinin renginin motorinden farklı olması',
-      'Benzinin motorinden daha pahalı olması',
+      'Benzinin renginin motorinden farklı olması ve depo iç boyasına zarar vermesi',
+      'Benzinin motorinden pahalı olması ve maliyeti yükseltmesi',
       'Dizel pompa ve enjektörlerin bizzat motorinin yağlayıcılığıyla çalışması',
-      'Benzinin depoda donarak boruları tıkaması',
+      'Benzinin soğukta donarak yakıt borularını tıkaması',
     ],
     answerIndex: 2,
     explanation:
@@ -881,9 +886,9 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Benzinli bir araca yanlışlıkla motorin (dizel yakıtı) konursa ne beklenir?',
     options: [
-      'Motor daha güçlü ve sessiz çalışır',
-      'Hiçbir olumsuzluk yaşanmaz',
-      'Yalnızca klima devre dışı kalır',
+      'Motor daha güçlü ve sessiz çalışır; motorin benzinden daha yüksek enerji taşıdığı için performans artar',
+      'Hiçbir olumsuzluk yaşanmaz; iki yakıt da aynı şekilde yanar',
+      'Yalnızca klima devre dışı kalır, motor normal çalışmayı sürdürür',
       'Motorin bujiyle sağlıklı tutuşamadığı için motor tekler, yoğun duman çıkarır ve kısa sürede stop eder',
     ],
     answerIndex: 3,
@@ -905,10 +910,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Kalitesiz veya tortulu yakıt kullanımı enjektörleri nasıl etkiler?',
     options: [
-      'Enjektörlerin ömrünü uzatır',
+      'Yakıtın içindeki katkılar püskürtme deliklerini temizleyip enjektörlerin kullanım ömrünü uzatır',
       'Püskürtme deliklerini zamanla tıkayarak yakıtın ince zerrecikler hâlinde püskürtülmesini bozar',
-      'Enjektörleri kendiliğinden temizler',
-      'Yalnızca far ayarını bozar',
+      'Enjektörleri her çalıştırmada kendiliğinden temizleyip bakım gereğini kaldırır',
+      'Yalnızca far ayarını bozar, yakıt sistemine hiç etki etmez',
     ],
     answerIndex: 1,
     explanation:
@@ -930,9 +935,9 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     stem: 'Çalışmayan bir motoru çalıştırmaya uğraşırken marşa uzun süre kesintisiz basılı tutmak neden yanlıştır?',
     options: [
       'Çok yüksek akım çeken marş motoru aşırı ısınıp zarar görebilir ve akü kısa sürede boşalır',
-      'Kornanın sigortası atar',
-      'Lastikler aşırı ısınıp patlar',
-      'Silecekler kendiliğinden devreye girer',
+      'Marş devresindeki yüksek akım korna sigortasını attırır ve sesli uyarı devresi çalışmaz hâle gelir',
+      'Lastikler aşırı ısınıp basınçları yükselir ve patlama riski doğar',
+      'Silecekler kendiliğinden devreye girip cam suyunu tüketir',
     ],
     answerIndex: 0,
     explanation:
@@ -953,10 +958,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Motor çalıştığı hâlde marşa basmaya devam etmek ya da çalışan motorda yeniden marş basmak hangi parçalara zarar verir?',
     options: [
-      'Radyatör ve termostata',
-      'Silecek motoruna',
+      'Radyatöre, termostata ve su pompasına',
+      'Silecek motoruna ve mekanizmasına',
       'Marş dişlisi ile volan dişlisine',
-      'Polen filtresine',
+      'Polen filtresine ve kabin fanına',
     ],
     answerIndex: 2,
     explanation:
@@ -977,7 +982,7 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Akü kutup başlarında beyazımsı-yeşilimsi bir tabaka (oksitlenme) birikmesi neye yol açar?',
     options: [
-      'Akü kapasitesinin artmasına',
+      'Akü kapasitesinin belirgin artmasına',
       'Bağlantı direncinin yükselmesine',
       'Farların daha parlak yanmasına',
       'Yakıt tüketiminin azalmasına',
@@ -1001,9 +1006,9 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Susturucusu delinmiş veya çürümüş bir egzozla dolaşmak neden yalnızca gürültü sorunu değildir?',
     options: [
-      'Araç daha hızlı gittiği için',
-      'Yakıt deposu genleştiği için',
-      'Far ayarı bozulduğu için',
+      'Araç daha hızlı gittiği için lastikler daha çabuk aşınır',
+      'Yakıt deposu genleşerek kapağın sızdırmasına yol açar',
+      'Far ayarı bozulup gece görüşü belirgin biçimde azalır',
       'Kaçak yapan egzoz gazı aracın altından kabine sızabilir',
     ],
     answerIndex: 3,
@@ -1027,9 +1032,9 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     stem: 'Kapalı bir garajda motoru çalışır durumda bırakmak neden hayati tehlike oluşturur?',
     options: [
       'Egzozla çıkan karbonmonoksit renksiz ve kokusuz zehirli bir gazdır',
-      'Garaj kapısının boyası solar',
-      'Lastikler zemine yapışır',
-      'Akü aşırı şarj olarak patlar',
+      'Garaj kapısının boyası egzoz ısısıyla zamanla solar ve kabarmaya başlar',
+      'Lastikler zemine yapışıp aracın hareketini zorlaştırır',
+      'Akü aşırı şarj olarak ısınır ve patlama riski oluşur',
     ],
     answerIndex: 0,
     explanation:
@@ -1051,10 +1056,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Aşağıdakilerden hangisi yakıt tüketimini ARTIRMAZ?',
     options: [
-      'Bagajda sürekli gereksiz ağırlık taşımak',
-      'Lastikleri olması gerekenden düşük basınçla kullanmak',
+      'Bagajda sürekli gereksiz ağırlık taşıyıp aracın her yolculukta yüklü hâlde kalmasını sağlamak',
+      'Lastikleri üreticinin önerdiğinden düşük basınçla kullanmak',
       'Uygun basınçlı lastiklerle, trafiğin akışına uygun dengeli ve sabit bir hızda seyretmek',
-      'Sık sık ani gaz verip ani fren yapmak',
+      'Sık sık ani gaz verip hemen ardından sert fren yapmak',
     ],
     answerIndex: 2,
     explanation:
@@ -1075,10 +1080,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Sürekli çok kısa mesafelerde kullanılan araçlarda 100 km başına yakıt tüketiminin yüksek çıkmasının temel nedeni nedir?',
     options: [
-      'Kısa yolda lastik çapının küçülmesi',
+      'Kısa yolda lastik çapının küçülmesi ve devir sayısının artması',
       'Motorun çalışma sıcaklığına ulaşamadan yolculuğun bitmesi',
       'Kısa yolculuklarda rüzgârın hep önden esmesi',
-      'Yakıtın kısa yolda daha hızlı buharlaşması',
+      'Yakıtın kısa yolda daha hızlı buharlaşıp azalması',
     ],
     answerIndex: 1,
     explanation:
@@ -1099,8 +1104,8 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Rölantide ve vites geçişlerinde kabinde belirgin titreşim hissediliyor, gaz kesildiğinde motor sanki yerinden oynuyor gibi sarsılıyorsa; buji ve enjektörler sağlam çıktığında hangi parça kontrol ettirilmelidir?',
     options: [
-      'Silecek lastikleri',
-      'Plaka lambası',
+      'Silecek lastikleri ve silecek kolu',
+      'Plaka lambası ve yuvası',
       'Yakıt deposu kapağı',
       'Motor takozları (kulakları)',
     ],
@@ -1147,10 +1152,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Hava yastığı (airbag) hangi mantıkla çalışır?',
     options: [
-      'Sürücü bir düğmeye bastığında şişer',
+      'Sürücü gösterge panelindeki bir düğmeye bastığında şişer ve yolculuk boyunca şişik kalarak sürücüyle direksiyon arasında sürekli bir yastık oluşturur ve inmez',
       'Şiddetli bir çarpışmayı algılayan sensörlerin komutuyla saniyenin çok küçük bir bölümünde şişerek başın ve gövdenin sert yüzeylere çarpmasını yumuşatır',
-      'Araç 50 km/s hızı geçtiği anda kendiliğinden şişer',
-      'Yavaş yavaş şişer ve yolculuk boyunca şişik kalır',
+      'Araç 50 km/saat hızı geçtiği anda kendiliğinden şişer ve hız düşene kadar açık kalır',
+      'Yavaş yavaş şişer ve yolculuk boyunca yarı şişik hâlde bekletilir',
     ],
     answerIndex: 1,
     explanation:
@@ -1171,10 +1176,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Hava yastığının emniyet kemeriyle birlikte tasarlandığı ifadesi ne anlama gelir?',
     options: [
-      'Hava yastığı olan araçta kemer takmaya gerek kalmaz',
-      'Kemer yalnızca arka koltuk yolcuları için gereklidir',
+      'Hava yastığı bulunan bir araçta emniyet kemeri takmaya gerek kalmaz; yastık tek başına yeterlidir',
+      'Emniyet kemeri yalnızca arka koltuktaki yolcular için gereklidir',
       'Yastık, kemerin yavaşlatıp yerinde tuttuğu bir vücudu karşılamak üzere hesaplanmıştır',
-      'Kemer takılınca hava yastığı devre dışı kalır',
+      'Emniyet kemeri takıldığında hava yastığı otomatik devre dışı kalır',
     ],
     answerIndex: 2,
     explanation:
@@ -1197,9 +1202,9 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     stem: 'Supap boşluğu ayarının bozulması (boşluğun aşırı açılması) kendini tipik olarak nasıl belli eder?',
     options: [
       'Motorun üst kısmından gelen ritmik metalik tıkırtı sesi, performans düşüşü ve düzensiz çalışma',
-      'Lastiklerin virajda ötmesi',
-      'Fren pedalının titremesi',
-      'Kornanın kendiliğinden çalması',
+      'Lastiklerin virajlarda ötmesi, yol tutuşunun azalması ve direksiyonun ağırlaşması bir arada görülür',
+      'Fren pedalının titremesi ve fren mesafesinin uzaması',
+      'Kornanın kendiliğinden çalması ve sinyallerin yanması',
     ],
     answerIndex: 0,
     explanation:
@@ -1220,9 +1225,9 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Yağ pompası görevini yapamaz hâle gelirse motorda süreç nasıl ilerler?',
     options: [
-      'Motor daha sessiz çalışmaya başlar',
-      'Yakıt tüketimi belirgin şekilde düşer',
-      'Yalnızca kalorifer soğuk üfler',
+      'Motor daha sessiz çalışmaya başlar ve titreşim azalır',
+      'Yakıt tüketimi belirgin şekilde düşer ve menzil artar',
+      'Yalnızca kalorifer soğuk üfler, başka etkisi olmaz',
       'Yağ basıncı düşer ve kırmızı yağ lambası yanar',
     ],
     answerIndex: 3,
@@ -1243,7 +1248,12 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     topic: 'calisma-zamanlari',
     difficulty: 'zor',
     stem: 'Dört zamanlı bir motorda çevrimin (dört zamanın tamamının) gerçekleşmesi için krank mili kaç tur döner?',
-    options: ['Yarım tur', 'İki tam tur (720 derece)', 'On tam tur', 'Çeyrek tur'],
+    options: [
+      'Yarım tur (180 derece)',
+      'İki tam tur (720 derece)',
+      'Bir tam tur (360 derece)',
+      'Dört tam tur (1440 derece)',
+    ],
     answerIndex: 1,
     explanation:
       'Her zaman, pistonun bir kez inmesi ya da çıkmasıdır ve krankın yarım turuna denk gelir. Dört zaman toplamda iki tam krank turu (720°) sürer. Supaplar çevrimde bir kez açıldığı için eksantrik mili krankın yarı hızında, yani çevrimde bir tur döner. Eksantrik mili ise aynı sürede yalnızca bir tur atar.',
@@ -1263,14 +1273,14 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Aracını haftalarca kullanmayacak bir sürücünün akü için alabileceği doğru önlem hangisidir?',
     options: [
-      'Aküyü tamamen boşaltıp öyle bırakmak',
-      'Kutup başlarına düzenli su dökmek',
-      'Eksi (şase)',
+      'Aküyü tamamen boşaltıp öyle bekletmek ve kullanımdan önce doldurmak',
+      'Kutup başlarına düzenli olarak şebeke suyu dökerek serin tutmak',
+      'Eksi (şase) kutup başını sökmek ya da akıllı şarj cihazına bağlamak',
       'Farları açık bırakarak akünün formda kalmasını sağlamak',
     ],
     answerIndex: 2,
     explanation:
-      'Eksi kutup başı ayrıldığında alarm ve saat gibi bekleme tüketicileri devreden çıkar; akü yalnız kendi öz deşarjıyla baş başa kalır. Akıllı (bakım tipi) şarj cihazı da aküyü sürekli ideal seviyede tutar. İki yöntem de derin boşalmayı önler. Kutup başını sökmek ya da aküyü akıllı bir şarj cihazına bağlı tutmak.',
+      'Eksi kutup başı ayrıldığında alarm ve saat gibi bekleme tüketicileri devreden çıkar; akü yalnız kendi öz deşarjıyla baş başa kalır. Akıllı (bakım tipi) şarj cihazı da aküyü sürekli ideal seviyede tutar. İki yöntem de derin boşalmayı önler.',
     whyWrong: [
       'Boş bekletilen akü sülfatlaşır ve kalıcı kapasite kaybeder.',
       'Kutup başına su dökmek çözüm değildir; açık far ise aküyü korumaz, bitirir.',
@@ -1288,7 +1298,7 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     stem: 'Çok soğuk ve nemli kış gecelerinde araç uzun süre park edilecekse el freni konusunda hangi önlem önerilir?',
     options: [
       'Balataların dona yapışma riskine karşı düz ve güvenli zeminde el frenini çekmek yerine aracı viteste bırakmak (gerekirse tekerleğe takoz koymak)',
-      'El frenini her zamankinden iki kat kuvvetle çekmek',
+      'El frenini her zamankinden iki kat kuvvetle çekip aracı boş viteste bırakmak ve ek olarak ön tekerlekleri kaldırıma doğru tam çevirerek bırakmak',
       'El frenini çekip aracı boş vitese almak her koşulda en güvenli yöntemdir',
       'Lastiklerin havasını bir miktar indirmek',
     ],
@@ -1312,10 +1322,10 @@ export const MOTOR_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Birçok yeni araçta kontak açılınca kendiliğinden yanan gündüz sürüş farlarının (DRL) amacı nedir?',
     options: [
-      'Geceleri yolu aydınlatmak',
+      'Geceleri yolu aydınlatarak sürücünün görüş mesafesini belirgin biçimde artırmak',
       'Gündüz aracın diğer sürücülerce daha kolay fark edilmesini sağlamak',
-      'Yakıt tüketimini artırarak motoru ısıtmak',
-      'Arka plakayı aydınlatmak',
+      'Yakıt tüketimini artırarak motorun daha hızlı ısınmasını sağlamak',
+      'Arka plakayı aydınlatıp okunabilir hâle getirmek',
     ],
     answerIndex: 1,
     explanation:

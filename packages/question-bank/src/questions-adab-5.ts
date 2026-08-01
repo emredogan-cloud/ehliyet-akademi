@@ -65,7 +65,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
     stem: 'Kavşağa uzanan uzun kuyrukta herkes sırasını beklerken bir sürücü en öne kadar ilerleyip araya sıkışıyor. Bu davranışın "hak" kavramı açısından değerlendirmesi hangisidir?',
     options: [
       'Trafikte hak kavramı aranmaz; boşluğu bulan gider',
-      'Kuyrukta beklemek beceriksizliktir; pratik davranan kazanır',
+      'Kuyrukta beklemek beceriksizliktir; trafikte pratik davranan kazanır',
       'Sırada bekleyen herkesin zamanından çalan bir kul hakkı ihlalidir',
       'Yalnızca ceza yazılırsa yanlış sayılır',
     ],
@@ -90,7 +90,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
     stem: 'Bir grup genç, eğlence olsun diye yol kenarındaki trafik levhasını eğip yönünü değiştiriyor. Bu davranış için en doğru değerlendirme hangisidir?',
     options: [
       'Levha nasılsa yenilenir; kalıcı bir zarar yoktur',
-      'Yalnızca belediyeye verilen küçük bir maddi zarardır',
+      'Yalnızca belediyeye verilen, kolayca telafi edilebilecek küçük bir maddi zarardır',
       'Yol tenhaysa levhanın önemi de yoktur',
       'Herkesin vergisiyle kurulan güvenlik sistemine, yani kamu hakkına saldırıdır',
     ],
@@ -164,7 +164,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Bir sürücü denetim noktasına yaklaşırken yavaşlıyor, noktayı geçer geçmez yeniden aşırı hıza dönüyor. Bu davranış neyi gösterir?',
     options: [
-      'Kuralları çok iyi bildiğini ve akıllıca uyguladığını',
+      'Kuralları çok iyi bildiğini ve onları akıllıca uygulayabildiğini',
       'Kurala inanmadığını, yalnızca ceza korkusuyla hareket ettiğini',
       'Denetim noktalarının gereksiz olduğunu',
       'Deneyimli sürücülüğün doğal bir alışkanlığını',
@@ -264,7 +264,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Hızlanma şeridinden otoyola katılmaya çalışan "yeni sürücü" yazılı bir araç tereddüt ediyor ve yavaş hızlanıyor. Seyir şeridindeki sürücü olarak ne yaparsınız?',
     options: [
-      'Hızınızı koruyup önce siz geçersiniz; katılan araç nasılsa beklemek zorundadır',
+      'Hızınızı aynen koruyup önce siz geçersiniz; hızlanma şeridindeki aracın beklemekten başka seçeneği yoktur',
       'Mümkünse sol şeride geçerek ya da hızınızı ayarlayarak katılması için güvenli bir boşluk açarsınız',
       'Korna ve selektörle hızlanması için baskı yaparsınız',
       'Yakın takibe girerek onu hızlanmaya zorlarsınız',
@@ -389,7 +389,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Gece otoyolda, huni ve ışıklarla işaretlenmiş bir yol çalışması bölgesine yaklaşıyorsunuz; işçiler şeride yakın çalışıyor. En doğru davranış hangisidir?',
     options: [
-      'Hızınızı korumak; işaretlemeler yalnızca gündüz saatleri içindir',
+      'Hızınızı aynen korumak; huni ve işaretlemeler yalnızca gündüz saatleri için konulmuştur',
       'Korna çalarak işçilerin kenara çekilmesini sağlamak',
       'Hunilerin arasından kestirme bir hatla ilerlemek',
       'Hızı belirgin biçimde düşürmek ve mümkünse çalışılan şeritten uzaktaki şeride geçmek',
@@ -417,7 +417,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
       'Çalışanların herkesin güvenliği ve konforu için orada olduğunu hatırlamak',
       'Çalışma bölgesindeki hız sınırını öneri saymak',
       'Öfkeyi işçilere korna çalarak ifade etmek',
-      'Zaman kazanmak için şantiye alanının içinden geçmek',
+      'Zaman kazanmak amacıyla şantiye alanının içinden kestirerek geçmeye çalışmak',
     ],
     answerIndex: 0,
     explanation:
@@ -515,7 +515,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
     stem: 'Bir sürücü, seyir hâlindeyken hız göstergesini videoya çekip sosyal medyada paylaşıyor. Bu davranışın en doğru değerlendirmesi hangisidir?',
     options: [
       'Hem sürüş sırasında telefonla uğraşmak hem de yüksek hızı özendirmek, iki ayrı sorumsuzluğun birleşimidir',
-      'Takipçilerini bilgilendirdiği için yararlı bir paylaşımdır',
+      'Takipçilerini aracın performansı konusunda bilgilendirdiği için yararlı ve paylaşılmayı hak eden bir içeriktir',
       'Araç güvenli ve yeni olduğu sürece sakıncası yoktur',
       'Yalnızca şehir içinde yapılırsa yanlıştır',
     ],
@@ -542,7 +542,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
       'Hızlı bir manevrayla yeri fiilen kapmak',
       'Araçtan inip yerin size ait olduğunu yüksek sesle savunmak',
       'Camı açıp kısaca anlaşmak ya da yerden feragat edip başka yer aramak',
-      'Aracınızı yerin ortasına bırakıp bekleyerek karşı tarafı yıldırmak',
+      'Aracınızı park yerinin ortasına bırakıp bekleyerek karşı tarafı yıldırmak',
     ],
     answerIndex: 2,
     explanation:
@@ -566,7 +566,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Tamponuyla iterek kendinize çıkış alanı açmak',
       'Çevredeki iş yerlerinden sürücüyü sordurmak, ulaşamazsanız yetkilileri (zabıta veya trafik birimini) aramak',
-      'Aracın camına hakaret içeren bir not bırakıp beklemek',
+      'Aracın camına hakaret içeren sert bir not bırakıp sürücü dönene kadar orada öfkeyle bekleyip döndüğünde yüzleşmek',
       'Lastiğinin havasını indirerek sürücüye ders vermek',
     ],
     answerIndex: 1,
@@ -616,7 +616,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Her sorunsuz atlatılan ihlal risk algısını biraz daha köreltir',
       'Cezaların birikip belgeye işlenmesi',
-      'Yakıt tüketiminin ölçülebilir biçimde artması',
+      'Yakıt tüketiminin ölçülebilir biçimde artması ve maliyetin yükselmesi',
       'Aracın mekanik olarak daha hızlı yıpranması',
     ],
     answerIndex: 0,
@@ -639,7 +639,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Uzun yolculukta yorulduğunuzu hissediyorsunuz; yanınızdaki arkadaşınız dinlenmiş ve ehliyetli, direksiyonu devralmayı öneriyor. En doğru davranış hangisidir?',
     options: [
-      '"Ben başladım, ben bitiririm" diyerek devam etmek',
+      '«Ben başladım, ben bitiririm» diyerek direksiyonu kimseye bırakmamak',
       'Teklifi kabul edip ilk uygun ve güvenli yerde direksiyonu devretmek',
       'Camı açıp müziği yükselterek yola devam etmek',
       'Hızlanarak yolu erken bitirmeye çalışmak',
@@ -665,7 +665,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
     stem: 'Yolcusu olduğunuz araçta sürücü sık sık esniyor ve aracı şerit çizgisine doğru sürüklüyor. Ne yapmalısınız?',
     options: [
       'Uyumasın diye radyoyu sonuna kadar açmak',
-      'Karışmamak; sürücü kendi durumunu herkesten iyi bilir',
+      'Konuya hiç karışmamak; sürücü kendi yorgunluk durumunu herkesten daha iyi bilir ve gerekirse kendisi mola verir',
       'Durumu nazikçe dile getirip ilk uygun yerde mola vermeyi, mümkünse direksiyonu devralmayı önermek',
       'Konuyu varış noktasına ulaşınca açmak',
     ],
@@ -715,7 +715,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
     stem: 'Tatil yolculuğunda arka koltuktaki çocuklar sıkıldı ve mola istiyor; siz ise "durmadan gidersek erken varırız" diye düşünüyorsunuz. Trafik adabına uygun yaklaşım hangisidir?',
     options: [
       'Yolculuğu yalnız kendi hedefinize göre değil, araçtaki herkesin ihtiyacına göre planlamak ve uygun tesiste mola vermek',
-      'Çocukları oyalayıp yola kesintisiz devam etmek',
+      'Çocukları oyun ve atıştırmalıkla oyalayıp yola kesintisiz devam etmek; böylece varış saatinden hiç ödün verilmemiş olur',
       'Kaybedilecek süreyi hızlanarak telafi etmek',
       'Molayı yalnızca yakıt bittiğinde vermek',
     ],
@@ -790,7 +790,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
     stem: 'Otoparktan çıkmak üzeresiniz ve bir sürücünün yeriniz için sinyal verip beklediğini görüyorsunuz. Görgülü davranış hangisidir?',
     options: [
       'Telefon işlerinizi bitirene kadar araçta oyalanmak',
-      'Yerin kıymetini bilsin diye bilerek yavaş davranmak',
+      'Bekleyen sürücü yerin kıymetini bilsin diye bilerek ağırdan almak ve acele etmeden oyalanmak',
       'Bekleyeni görmezden gelip dilediğiniz kadar kalmak',
       'Sinyalinizle çıkacağınızı belli etmek ve makul bir sürede, güvenli biçimde yeri boşaltmak',
     ],
@@ -816,7 +816,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Güvenli mesafede durup manevrasını tamamlaması için alan bırakmak',
       'Korna çalarak manevrayı hızlandırmak',
-      'Kalan dar boşluktan süratle sıyrılıp geçmek',
+      'Kalan dar boşluktan süratle sıyrılıp manevranın bitmesini beklememek',
       'Aracın hemen arkasına yanaşıp beklemek',
     ],
     answerIndex: 0,
@@ -867,7 +867,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
       'Nasılsa o yavaşlar diyerek yola çıkmak',
       'Görülmediğinizi varsayıp motosikletli geçene kadar beklemek',
       'Korna çalarak varlığınızı duyurup çıkmak',
-      'Hızla çıkıp gaza basarak riskli süreyi kısaltmak',
+      'Hızla yola çıkıp gaza basarak riskli süreyi kısaltmaya çalışmak',
     ],
     answerIndex: 1,
     explanation:
@@ -917,7 +917,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
       'Karşı sürücü işareti görünce diğer şeritleri kontrol etmeden aniden çıkabilir',
       'Selektör risksizdir; ışıkla verilen davet evrensel bir dildir',
       'Korna çalmak daha güvenli bir davettir',
-      'Uzun farı sürekli yakık tutmak niyetinizi en iyi anlatan yöntemdir',
+      'Uzun farı sürekli yanık tutmak, yol verme niyetinizi en iyi anlatan yöntemdir',
     ],
     answerIndex: 0,
     explanation:
@@ -965,7 +965,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
     stem: 'Önünüzdeki araçta işitme engelli sürücü işareti var; dar yolda geçiş niyetinizi kornanın duyuramayacağını fark ettiniz. En doğru davranış hangisidir?',
     options: [
       'Kornaya daha uzun ve güçlü basmak',
-      'Yakın takibe girerek varlığınızı hissettirmek',
+      'Yakın takibe girip aracın hemen arkasına sokularak varlığınızı hissettirmek ve geçmek istediğinizi bu yolla anlatmaya çalışıp uygun fırsatı beklemek',
       'Sabırlı olmak, takip mesafesini korumak ve gerekiyorsa görüş alanına girerek ya da uygun anda farla nazikçe işaret ederek görsel iletişim kurmak',
       'Camı açıp bağırarak uyarmak',
     ],
@@ -990,7 +990,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
     stem: 'Yoğun saatte otobüslere ayrılmış şerit boş görünüyor; oradan ilerlerseniz epey zaman kazanacaksınız. Bu ihlalin etik boyutu hangisidir?',
     options: [
       'Boş duran şeridi kullanmak kaynak israfını önler',
-      'Otobüs görününce çıkmak koşuluyla kullanılabilir',
+      'Ufukta bir otobüs görününce şeritten çıkmak koşuluyla rahatlıkla kullanılabilir bir şerittir',
       'Kamera yoksa etik bir sorun da yoktur',
       'O şerit, tek araçla yüzlerce yolcu taşıyan toplu taşımanın hızı için ayrılmıştır',
     ],
@@ -1067,7 +1067,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
       'Maliyeti yoktur; ambulanslar nasılsa siren kullanır',
       'Yalnızca ihlal eden araçların ceza riski vardır',
       'Acil durumda ambulansın kullanacağı tek açık yol dolmuş olur',
-      'Yalnızca çekici ve yol bakım araçlarının işini zorlaştırır',
+      'Yalnızca çekici ve yol bakım araçlarının işini biraz zorlaştırır',
     ],
     answerIndex: 2,
     explanation:
@@ -1090,7 +1090,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
     stem: 'Bir sürücü "kış lastiği pahalı; kayarsam kendi riskim" diyor. Bu düşüncenin trafik adabı açısından eksiği nedir?',
     options: [
       'Eksiği yoktur; herkes kendi aracından sorumludur',
-      'Kış lastiği yalnızca kar yağarken fark yaratır, gerisi abartıdır',
+      'Kış lastiği yalnızca kar yağarken fark yaratır; kuru soğukta ve ıslak zeminde hiçbir üstünlük sağlamamaktadır',
       'Zincir bulundurmak kış lastiğinin yerini her koşulda tutar',
       'Kayan araç yalnız sahibini değil çevresindeki araçları, yayaları ve arkasında kapanan yolu da riske atar',
     ],
@@ -1139,7 +1139,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Aşağıdakilerden hangisi yazılı bir trafik kuralı değil, trafik adabı (görgü) örneğidir?',
     options: [
-      'Kırmızı ışıkta durmak',
+      'Kırmızı ışıkta durup yeşili beklemek zorunda olmak',
       'Emniyet kemeri takmak',
       'Yol veren sürücüye el işaretiyle teşekkür etmek',
       'Hız sınırına uymak',
@@ -1165,7 +1165,7 @@ export const ADAB_QUESTIONS_5: QuestionInput[] = [
     stem: 'Sağa yanaşarak yol verdiğiniz ambulans geçti; hemen şeridinize dönmek üzeresiniz. Bu anda gözden kaçırılmaması gereken en önemli olasılık hangisidir?',
     options: [
       'Ambulansın geri dönüp aynı yoldan tekrar geçmesi',
-      'Yol verdiğiniz için arkanızdaki trafiğin size kızması',
+      'Yol vermek için yavaşladığınız gerekçesiyle arkanızdaki sürücülerin size kızıp korna çalarak tepki göstermesi',
       'Yol vermenin cezai işlem gerektirmesi',
       'İlk acil aracın arkasından ikinci bir acil aracın (eskort, itfaiye, polis) geliyor olabileceği',
     ],

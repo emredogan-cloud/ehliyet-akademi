@@ -89,14 +89,14 @@ export const PRATIK_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Dönel kavşaktan ilk (sağa denk gelen) çıkışı kullanacak sürücü için doğru şerit ve sinyal kullanımı hangisidir?',
     options: [
-      'İç şeritten girip sinyal vermeden çıkmak',
-      'Dış şeritten girip sol sinyal vermek',
-      'Kavşağın ortasından düz geçmek',
-      'Dış (sağ)',
+      'İç (sol) şeritten girip hiç sinyal vermeden ilk çıkıştan ayrılmak',
+      'Dış şeritten girip sol sinyal vererek çıkıştan ayrılmak',
+      'Kavşağın ortasından düz geçip sinyal vermeden çıkmak',
+      'Dış (sağ) şeritten girmek ve sağ sinyalle ilk çıkıştan ayrılmak',
     ],
     answerIndex: 3,
     explanation:
-      'İlk çıkıştan ayrılacak sürücü kavşağa dış (sağ) şeritten girer ve sağ sinyalini vererek niyetini bildirir. Böylece hem kavşağa girmeyi bekleyenler hem arkadaki sürücüler hareketi öngörebilir ve akış kesintiye uğramaz. Şeritten girmek ve sağ sinyalle ilk çıkıştan ayrılmak.',
+      'İlk çıkıştan ayrılacak sürücü kavşağa dış (sağ) şeritten girer ve sağ sinyalini vererek niyetini bildirir. Böylece hem kavşağa girmeyi bekleyenler hem arkadaki sürücüler hareketi öngörebilir ve akış kesintiye uğramaz.',
     whyWrong: [
       'İç şeritten girip hemen ilk çıkışa yönelmek, dış şeritteki aracın yolunu keser.',
       'Sol sinyal vermek veya hiç sinyal vermemek diğer sürücülere yanlış ya da eksik bilgi verir.',
@@ -265,14 +265,14 @@ export const PRATIK_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Şerit değiştirmede öğretilen S-D-Ş sıralaması hangi adımları ifade eder?',
     options: [
-      'Sağa yanaş - Dur - Şeride çık',
-      'Sola bak - Dörtlü yak - Şerit değiştir',
-      'Sinyal ver - Dikiz (ayna ve kör nokta)',
-      'Sabit hız - Direksiyon kır - Şeride gir',
+      'Sağa yanaş - Dur - Şeride çık biçiminde sıralanan üç temel manevra',
+      'Sola bak - Dörtlü yak - Şerit değiştir biçiminde sıralanan adımlar',
+      'Sinyal ver - Dikiz (ayna ve kör nokta) kontrol et - Şeridi değiştir',
+      'Sabit hız - Direksiyon kır - Şeride gir biçiminde sıralanan adımlar',
     ],
     answerIndex: 2,
     explanation:
-      'S-D-Ş, şerit değişiminin akılda kalıcı sırasıdır: önce sinyalle niyet bildirilir, ardından dikiz aynaları ve kör nokta kontrol edilir, en son güvenli olduğu görülünce şerit değiştirilir. Sıra bozulursa ya çevre habersiz kalır ya da görülmeyen bir araca doğru manevra yapılır. Kontrol et - Şeridi güvenliyse değiştir.',
+      'S-D-Ş, şerit değişiminin akılda kalıcı sırasıdır: önce sinyalle niyet bildirilir, ardından dikiz aynaları ve kör nokta kontrol edilir, en son güvenli olduğu görülünce şerit değiştirilir. Sıra bozulursa ya çevre habersiz kalır ya da görülmeyen bir araca doğru manevra yapılır.',
     whyWrong: [
       'Durmak, dörtlü yakmak ya da doğrudan direksiyon kırmak şerit değişiminin adımları değildir.',
       'Kontrolsüz veya sinyalsiz geçiş, yandaki aracı hazırlıksız yakalayan başlıca hatadır.',

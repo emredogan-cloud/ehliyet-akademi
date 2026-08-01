@@ -604,10 +604,10 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Otoyolda arızalanan aracını emniyet şeridine çeken sürücü ve yolcuları yardım gelene kadar nerede beklemelidir?',
     options: [
-      'Araç içinde emniyet kemerleri takılı olarak',
-      'Emniyet şeridinde aracın hemen arkasında ayakta',
-      'Taşıt yolunun kenarında yürüyerek',
-      'Araçtan inerek oto korkuluğun (bariyerin)',
+      'Araç içinde emniyet kemerleri takılı olarak, kapılar kilitli biçimde',
+      'Emniyet şeridinde aracın hemen arkasında ayakta bekleyerek',
+      'Taşıt yolunun kenarında yürüyerek yardım gelecek yöne doğru',
+      'Araçtan inerek oto korkuluğun (bariyerin) arkasındaki güvenli alanda',
     ],
     answerIndex: 3,
     explanation:
@@ -1162,14 +1162,14 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Trafikte "banket" ne anlama gelir?',
     options: [
-      'Taşıt yolu kenarı ile yol sınırı arasında kalan',
-      'Yolun ortasındaki yükseltilmiş ada',
-      'Kavşaklardaki dönüş şeridi',
-      'Otoyoldaki ücret toplama alanı',
+      'Taşıt yolu kenarı ile yol sınırı arasında kalan, yayaların yararlandığı bölüm',
+      'Yolun ortasında gidiş yönlerini birbirinden ayıran yükseltilmiş ada ya da refüj',
+      'Kavşaklarda dönüş yapacak araçlar için ayrılmış ek manevra şeridi',
+      'Otoyol girişindeki ücret toplama ve geçiş kontrol alanı',
     ],
     answerIndex: 0,
     explanation:
-      'Banket, taşıt yolunun hemen kenarındaki bölümdür; yaya yolu olmayan yerlerde yayalar ve hayvanlar buradan yararlanır, araçlar ancak zorunlu hâllerde kullanır. Yayaların yararlandığı, zorunlu hâllerde araçların da kullanabildiği bölüm.',
+      'Banket, taşıt yolunun hemen kenarındaki bölümdür; yaya yolu olmayan yerlerde yayalar ve hayvanlar buradan yararlanır, araçlar ancak zorunlu hâllerde kullanır.',
     whyWrong: [
       'Ortadaki yükseltilmiş alan "ada" olarak adlandırılır.',
       'Dönüş şeritleri taşıt yolunun işaretlenmiş bölümleridir.',

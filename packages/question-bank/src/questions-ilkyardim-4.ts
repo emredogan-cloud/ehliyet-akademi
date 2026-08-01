@@ -39,7 +39,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Trafik kazası olay yerinde sigara içilmesine izin verilmemesinin başlıca nedeni nedir?',
     options: [
-      'Yaralıların sigara dumanından rahatsız olması',
+      'Olay yerindeki yaralıların sigara dumanından rahatsız olup solunumunun zorlaşması',
       'Sigaranın dikkat dağıtması',
       'Sızmış olabilecek yakıtın kıvılcımla tutuşup yangın veya patlamaya yol açabilmesi',
       'Olay yerinde çöp oluşturması',
@@ -67,7 +67,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
       'Kalabalık müdahaleyi güçleştirir, yaralının hava almasını engeller ve paniği büyütür',
       'Kalabalık olay yerini daha güvenli hâle getirir',
       'Kalabalığın fotoğraf çekmesi zorunludur',
-      'Yaralıların moralinin yükselmesi için kalabalık gerekir',
+      'Yaralıların moralinin yükselmesi için olay yerinde kalabalık bulunması gerekli görülür',
     ],
     answerIndex: 0,
     explanation:
@@ -90,7 +90,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     stem: 'Hayat kurtarma zincirinin birinci halkası aşağıdakilerden hangisidir?',
     options: [
       'Hastane acil servislerinde yapılan tedavi',
-      'Ambulans ekiplerinin yolda uyguladığı bakım',
+      'Ambulans ekiplerinin yol boyunca uyguladığı bakım',
       'Yaralının taburcu edilmesi',
       'Sağlık kuruluşuna (112 aranarak) haber verilmesi',
     ],
@@ -114,7 +114,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'İlk yardımın tanımındaki temel özelliklerden biri aşağıdakilerden hangisidir?',
     options: [
-      'Yalnızca hekimler tarafından yapılabilmesi',
+      'Yalnızca hekimler ve diğer sağlık personeli tarafından yapılabilmesi',
       'Olay yerinde, eldeki imkânlarla ve ilaç kullanılmadan uygulanması',
       'Mutlaka ambulans içinde yapılması',
       'İleri tıbbi cihazlar gerektirmesi',
@@ -166,7 +166,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     options: [
       'Merkezdeki görevli görüşmeyi bitirebileceğinizi söylediğinde',
       'Adres söylenir söylenmez',
-      'Telefonun şarjını korumak için olabildiğince erken',
+      'Telefonun şarjını korumak amacıyla mümkün olan en erken anda',
       'Uzaktan siren sesi duyulduğunda',
     ],
     answerIndex: 0,
@@ -190,7 +190,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     stem: '112 merkezindeki görevliyle konuşan ilk yardımcının doğru tutumu hangisidir?',
     options: [
       'Bilgi vermeden telefonu hemen kapatmak',
-      'Görevlinin sorularını gereksiz bularak yanıtlamamak',
+      'Görevlinin sorduğu soruları gereksiz ve zaman kaybı bularak hiçbirini yanıtlamak istememek',
       'Panik içinde bağırarak konuşmak',
       'Sakin kalıp sorulara açık ve net yanıtlar vermek, verilen yönlendirmeleri uygulamak',
     ],
@@ -292,7 +292,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
       'Kişiyi ayağa kaldırıp yürütmek',
       'Omzuna hafifçe dokunup sıkarak ağrılı uyarana yanıt verip vermediğine bakmak',
       'Yüzüne soğuk su dökmek',
-      'Hiç beklemeden kalp masajına başlamak',
+      'Bilinç değerlendirmesini tamamen atlayıp hiç beklemeden kalp masajına başlamak',
     ],
     answerIndex: 1,
     explanation:
@@ -336,7 +336,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     options: [
       'Yalnızca nabız sayımını',
       'Yalnızca göz bebeklerinin kontrolünü',
-      'Aracın hasar durumunun incelenmesini',
+      'Yalnızca kaza yapan aracın hasar durumunun ayrıntılı biçimde incelenmesini',
       'Yaralıdan bilgi alınarak baştan ayağa doğru tüm vücudun kontrol edilmesini',
     ],
     answerIndex: 3,
@@ -360,7 +360,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     stem: 'Kalp masajı uygulanacak kişi hangi zeminde ve pozisyonda olmalıdır?',
     options: [
       'Sert ve düz bir zeminde, sırtüstü yatar durumda',
-      'Yumuşak bir yatakta, yan yatar durumda',
+      'Yumuşak bir yatakta, yan yatar durumda ve başı yüksekte',
       'Koltukta oturur durumda',
       'Yüzükoyun, başı yana çevrilmiş durumda',
     ],
@@ -387,7 +387,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
       'Dirsekler bükülü, bilekler gevşek',
       'Tek kol serbest, diğeri göğüste',
       'Dirsekler bükülmeden kollar gergin, omuzlar yaralının göğsünün tam üzerinde',
-      'Kollar çapraz, eller göğsün iki yanında',
+      'Kollar çapraz duracak biçimde ve eller göğsün iki yanına yerleştirilmiş olarak',
     ],
     answerIndex: 2,
     explanation:
@@ -411,7 +411,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     options: [
       'Olabildiğince güçlü ve uzun üflenir',
       'Göğsü hafifçe yükseltecek kadar, yaklaşık bir saniye süreyle üflenir',
-      'Ciğerlerdeki hava tamamen boşalana kadar üflenir',
+      'İlk yardımcının ciğerlerindeki hava tamamen boşalıncaya kadar üflenir',
       'Havanın miktarının hiçbir önemi yoktur',
     ],
     answerIndex: 1,
@@ -434,7 +434,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Başlanan temel yaşam desteği hangi durumda sonlandırılabilir?',
     options: [
-      'İlk yardımcının kolları yorulmaya başladığında',
+      'İlk yardımcı yorulup kollarında ağrı hissetmeye başladığında ve artık devam edemeyeceğini anladığında',
       'Uygulamanın üzerinden beş dakika geçtiğinde',
       'Çevredekiler yeterli olduğunu söylediğinde',
       'Sağlık ekibi müdahaleyi devraldığında veya kişi kendine gelip normal solumaya başladığında',
@@ -460,7 +460,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     stem: 'Çocuk ve bebeklerde temel yaşam desteğine, erişkinden farklı olarak nasıl başlanır?',
     options: [
       'Önce 5 kurtarıcı soluk verilerek',
-      'Önce karına bası uygulanarak',
+      'Önce karın bölgesine bası uygulanarak',
       'Önce şok pozisyonu verilerek',
       'Önce soğuk uygulama yapılarak',
     ],
@@ -484,7 +484,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Bebeklerde dolaşımın değerlendirilmesi için nabız genellikle nereden kontrol edilir?',
     options: [
-      'Boyundaki şah damarından',
+      'Boyundaki şah damarı bölgesinden',
       'Ayak sırtından',
       'Kolun iç yüzündeki atardamardan',
       'Şakak bölgesinden',
@@ -509,14 +509,14 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Bebeklerde göğüs basısının derinliği yaklaşık ne kadar olmalıdır?',
     options: [
-      'Erişkinle aynı, yaklaşık 5 cm',
-      'Göğüs yüksekliğinin (ön-arka çapının)',
-      'Göğüs tamamen çökecek kadar',
-      'Belli belirsiz, yarım santimetreden az',
+      'Erişkindekiyle aynı, yaklaşık beş santimetre derinliğinde olmalı',
+      'Göğüs yüksekliğinin (ön-arka çapının) yaklaşık üçte biri kadar',
+      'Göğüs kafesi tamamen çökecek kadar derin olmalı',
+      'Belli belirsiz, yarım santimetreyi geçmeyecek kadar az',
     ],
     answerIndex: 1,
     explanation:
-      'Bebekte göğüs basısı, göğsün ön-arka yüksekliğinin yaklaşık üçte biri çökecek derinlikte ve iki parmakla uygulanır; erişkin derinliği bebeğin küçük gövdesi için fazladır. Yaklaşık üçte biri kadar.',
+      'Bebekte göğüs basısı, göğsün ön-arka yüksekliğinin yaklaşık üçte biri çökecek derinlikte ve iki parmakla uygulanır; erişkin derinliği bebeğin küçük gövdesi için fazladır.',
     whyWrong: [
       '5 cm derinlik bebekte organ yaralanmasına yol açabilir.',
       'Çok sığ bası ise dolaşımı desteklemez.',
@@ -534,7 +534,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Hava yolu tam tıkanan gebe bir kadında karına bası uygulanamayacağı için bası nereye yapılır?',
     options: [
-      'Sırtın alt bölgesine',
+      'Sırtın alt bölgesine, tam bel hizasına',
       'Karnın alt bölgesine',
       'Boyun bölgesine',
       'Göğüs kemiğinin üzerine (göğse bası)',
@@ -562,7 +562,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
       'Kişiyi dikkatlice yere yatırıp 112 çağrısını kesinleştirmek ve temel yaşam desteğine başlamak',
       'Ayakta karına bası uygulamaya devam etmek',
       'Kişiyi oturtup su içirmeye çalışmak',
-      'Kişiyi yüzükoyun çevirip kendine gelmesini beklemek',
+      'Kişiyi yüzükoyun çevirip kendine gelmesini beklemek ve bu sırada sırtına düzenli olarak vurmaya devam etmek',
     ],
     answerIndex: 0,
     explanation:
@@ -587,7 +587,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
       'Bol su içirme',
       'Göğse yumruk vurma',
       'İki kürek kemiğinin arasına el topuğuyla 5 kez sırt darbesi',
-      'Kişiyi sırtüstü yatırma',
+      'Kişiyi sırtüstü yatırıp ağzının içine parmakla bakma ve tarama',
     ],
     answerIndex: 2,
     explanation:
@@ -611,7 +611,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     options: [
       'İkiye ayrılır: hızlı ve yavaş kanamalar',
       'Üçe ayrılır: dış kanama, iç kanama ve doğal deliklerden olan kanama',
-      'Dörde ayrılır: kol, bacak, baş ve gövde kanamaları',
+      'Dörde ayrılır: kol, bacak, baş ve gövde bölgesinden olan kanamalar biçiminde',
       'Gruplandırılmaz; tüm kanamalar aynı kabul edilir',
     ],
     answerIndex: 1,
@@ -635,7 +635,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     stem: 'Doğrudan baskıya rağmen yavaşlamayan şiddetli kol veya bacak kanamasında kullanılan bası noktası uygulaması ne demektir?',
     options: [
       'Yara ile kalp arasındaki ana atardamarın üzerine, altındaki kemiğe doğru bası yapılması',
-      'Yaranın içine parmakla bastırılması',
+      'Yaranın tam içine parmakla girilerek kanayan damarın doğrudan elle sıkıştırılıp tıkanması',
       'Doğrudan kalbin üzerine bastırılması',
       'Yaranın çevresine buz dizilmesi',
     ],
@@ -712,7 +712,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
       'İştahının hafifçe açılması',
       'Giderek artan uyku hâli, tekrarlayan kusma ve dengesizlik',
       'Kısa süreli hapşırma',
-      'Saç derisinde hafif hassasiyet',
+      'Saç derisinde birkaç saat boyunca süren hafif bir hassasiyet',
     ],
     answerIndex: 1,
     explanation:
@@ -735,7 +735,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     stem: 'Beyin sarsıntısını düşündüren belirtiler hangi seçenekte birlikte verilmiştir?',
     options: [
       'Kısa süreli bilinç kaybı, olayı hatırlayamama, baş ağrısı ve bulantı',
-      'Ayak tabanında kaşıntı ve üşüme hissi',
+      'Ayak tabanında kaşıntı, üşüme hissi ve el parmaklarında karıncalanma',
       'Uzun süreli açlık ve susuzluk',
       'Ellerde ciltte kuruma',
     ],
@@ -760,7 +760,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     stem: 'Omurga yaralanması şüphesi olan yaralı, taşınması zorunlu olduğunda hangi yüzey üzerinde taşınmalıdır?',
     options: [
       'Yumuşak bir yatak üzerinde',
-      'İki kişinin kol kilidi üzerinde oturtularak',
+      'İki ilk yardımcının kollarıyla oluşturduğu kol kilidi üzerinde oturur konumda',
       'Sert ve düz bir zemin ya da sedye üzerinde, baş-boyun-gövde ekseni korunarak',
       'Bir battaniyeye sarılıp omuzda',
     ],
@@ -809,7 +809,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'İlk yardımda Rentek manevrası hangi amaçla kullanılır?',
     options: [
-      'Kırık kola atel uygulamak için',
+      'Kırık bir kola atel uygulayıp bölgeyi tamamen hareketsiz hâle getirip sabitlemek için',
       'Burun kanamasını durdurmak için',
       'Bebekte hava yolunu açmak için',
       'Yaşamsal tehlike varsa yaralıyı omurga ekseni korunarak araç içinden çıkarmak için',
@@ -835,7 +835,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     stem: 'Rentek manevrasıyla yaralıyı araçtan çıkarmadan önce yapılması gerekenlerden biri hangisidir?',
     options: [
       'Yaralının ayaklarının pedallara sıkışıp sıkışmadığını kontrol etmek ve emniyet kemerini açmak',
-      'Yaralının cebindeki eşyaları toplamak',
+      'Yaralının ceplerindeki bütün eşyaları toplayıp güvenli bir yere koymak ve bir listesini çıkarmak',
       'Aracın müzik sistemini kapatmak',
       'Yaralının ayakkabılarını çıkarmak',
     ],
@@ -862,7 +862,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
       'İçi su dolu kabarcıklar',
       'Kömürleşmiş siyah alanlar',
       'Kızarıklık, hafif şişlik ve ağrı',
-      'Cildin tümüyle duyarsızlaşması',
+      'Cildin tümüyle duyarsızlaşıp hissizleşmesi',
     ],
     answerIndex: 2,
     explanation:
@@ -887,7 +887,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
       'Yanığın çok yüzeysel olması',
       'Derinin tüm katlarıyla birlikte sinir uçlarının da zarar görmüş olması',
       'Vücudun ağrıya zamanla alışması',
-      'Bu bölgelerde hiç sinir bulunmaması',
+      'İnsan derisinin bu bölgesinde hiçbir zaman sinir ucu bulunmamış olmasıdır',
     ],
     answerIndex: 1,
     explanation:
@@ -936,7 +936,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     options: [
       'Kuru tahta veya plastik gibi yalıtkan bir cisimle kişinin akımla teması kesilir',
       'Kişi ıslak elle hızla çekilir',
-      'Kablo metal bir çubukla itilir',
+      'Elektrik kablosu uzun metal bir çubukla uzaktan itilerek kişiden uzaklaştırılır',
       'Kişinin üzerine su dökülür',
     ],
     answerIndex: 0,
@@ -962,7 +962,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
       'Cilt yanığı her zaman çok büyük olduğu için',
       'Elektrik çarpması bulaşıcı olduğu için',
       'Akım, ciltteki küçük yara görüntüsüne rağmen vücut içinde ve kalp ritminde gizli hasar bırakmış olabileceği için',
-      'Yalnızca resmî tutanak tutulması gerektiği için',
+      'Elektrik çarpması yaşayan herkes için yasal olarak resmî bir tutanak tutulması ve rapor düzenlenmesi zorunlu olduğu için',
     ],
     answerIndex: 2,
     explanation:
@@ -984,7 +984,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Zehirlenmeler, zehrin vücuda giriş yoluna göre hangi üç grupta incelenir?',
     options: [
-      'Göz, kulak ve burun yolu',
+      'Göz, kulak ve burun delikleri yoluyla',
       'Sindirim, solunum ve cilt (deri) yolu',
       'Saç, tırnak ve diş yolu',
       'Kas, kemik ve eklem yolu',
@@ -1009,7 +1009,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Cildine tarım ilacı gibi zehirli bir kimyasal bulaşan kişiye ilk yardımda ne yapılır?',
     options: [
-      'Kimyasalın kendiliğinden kuruması beklenir',
+      'Bulaşan kimyasalın cilt üzerinde kendiliğinden kuruyup dökülmesi beklenir ve giysiler çıkarılmaz',
       'Bölge alkolle ovularak silinir',
       'Bölgeye yağlı krem sürülür',
       'İlk yardımcı kendi elini koruyarak bulaşan giysileri çıkarır ve bölgeyi bol suyla yıkar',
@@ -1035,7 +1035,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     stem: 'Egzoz gazındaki karbonmonoksitin özellikle tehlikeli olmasının nedeni nedir?',
     options: [
       'Renksiz ve kokusuz olduğu için fark edilmeden zehirlenmeye yol açması',
-      'Çok keskin kokusuyla panik yaratması',
+      'Çok keskin ve rahatsız edici kokusuyla ortamda ani bir panik yaratması',
       'Yalnızca gözleri etkilemesi',
       'Havayla hiç karışmaması',
     ],
@@ -1062,7 +1062,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
       'Parmaklarla sıkılarak',
       'Isıtılmış bir iğneyle deşilerek',
       'Kart gibi sert bir cismin kenarıyla kazınarak',
-      'İğneye dokunulmaz, üzeri bantla kapatılır',
+      'İğneye hiç dokunulmaz, üzeri bantla kapatılır',
     ],
     answerIndex: 2,
     explanation:
@@ -1084,7 +1084,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Arı sokmasından kısa süre sonra yüzünde ve dilinde şişme, ciltte yaygın kızarıklık ve nefes darlığı başlayan kişide ne yapılmalıdır?',
     options: [
-      'Belirtiler kendiliğinden geçene kadar beklenir',
+      'Belirtiler kendiliğinden geçene kadar evde oturarak beklenir',
       'Ağır alerjik tepki düşünülerek vakit kaybetmeden 112 aranır',
       'Kişiye bol yemek yedirilir',
       'Kişiye sıcak duş aldırılır',
@@ -1110,7 +1110,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     stem: 'Basit bir böcek sokmasında ilk yardım olarak hangisi uygundur?',
     options: [
       'Bölgeyi su ve sabunla yıkayıp soğuk uygulama yapmak ve kaşımamak',
-      'Bölgeyi rahatlayana kadar kaşımak',
+      'Bölgeyi kaşıntı tamamen geçene kadar kaşıyıp sonra sıcak su tutmak',
       'Bölgeye sıcak kompres koymak',
       'Bölgeyi çamurla kapatmak',
     ],
@@ -1134,7 +1134,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Birinci derece (yüzeysel) donmada görülen belirtiler hangileridir?',
     options: [
-      'Ciltte içi sıvı dolu büyük kabarcıklar',
+      'Ciltte içi sıvı dolu büyük kabarcıklar oluşması',
       'Dokunun siyahlaşması',
       'Yüksek ateş ve terleme',
       'Ciltte solukluk, uyuşukluk ve iğnelenme hissi',
@@ -1187,7 +1187,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
       'Araç camları buğulanabileceği için',
       'Akü hızla boşalacağı için',
       'Araç içi sıcaklık kısa sürede aşırı yükselerek sıcak çarpmasına yol açabileceği için',
-      'Koltuk döşemeleri zarar görebileceği için',
+      'Güneş altında kalan aracın koltuk döşemeleri ve iç kaplaması zarar görebileceği için',
     ],
     answerIndex: 2,
     explanation:
@@ -1234,7 +1234,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Kulağına böcek kaçan ya da yabancı cisim giren kişide doğru ilk yardım davranışı hangisidir?',
     options: [
-      'Kulak çubuğuyla cismi çıkarmaya çalışmak',
+      'Kulak çubuğu kullanarak cismi kendi başına çıkarmaya çalışmak',
       'Kulağa vurarak cismi düşürmeye çalışmak',
       'Kulağın içine cımbız sokmak',
       'Kulağı karıştırmadan kişiyi sağlık kuruluşuna yönlendirmek',
@@ -1287,7 +1287,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
       'Doğrudan buzun içine gömülerek',
       'Sıcak su dolu bir kapta bekletilerek',
       'Temiz nemli beze sarılıp su geçirmez torbaya konarak',
-      'Açık hâlde, gölge bir yerde taşınarak',
+      'Hiçbir şeye sarılmadan, açık hâlde ve gölgede taşınarak',
     ],
     answerIndex: 2,
     explanation:
@@ -1310,7 +1310,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     stem: 'Bayılmadan hemen önce sık görülen uyarıcı belirtiler hangileridir?',
     options: [
       'Baş dönmesi, göz kararması, soğuk terleme ve kulak çınlaması',
-      'İştah artışı ve neşelenme',
+      'İştahın belirgin biçimde artması ve ani bir neşelenme durumu',
       'Görmede keskinleşme',
       'Kollarda güç artışı',
     ],
@@ -1336,7 +1336,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     options: [
       'Hızlı adımlarla yürümesi',
       'Ayakta durup derin nefes alması',
-      'Araç kullanıyorsa yola devam etmesi',
+      'Araç kullanıyorsa hızını azaltıp yola devam etmesi',
       'Güvenli bir yerde oturması ya da sırtüstü uzanması',
     ],
     answerIndex: 3,
@@ -1361,7 +1361,7 @@ export const ILKYARDIM_QUESTIONS_4: QuestionInput[] = [
     options: [
       'Kişinin doğum yeri',
       'Belirtilerin başladığı saat',
-      'Kullandığı aracın plakası',
+      'Kullandığı aracın plaka numarası',
       'O günkü hava sıcaklığı',
     ],
     answerIndex: 1,

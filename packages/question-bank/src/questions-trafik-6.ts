@@ -425,14 +425,14 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Yeterince aydınlatılmamış bir yol kenarında geceleyin park eden sürücü, aracının fark edilmesi için ne yapmalıdır?',
     options: [
-      'Bütün ışıkları söndürüp aracı karanlıkta bırakmalıdır',
-      'Uzun farları açık bırakmalıdır',
-      'Aracın görülebilmesi için park (durum)',
-      'Dörtlü ikazı sabaha kadar yakık tutup gitmelidir',
+      'Bütün ışıkları söndürüp aracı olduğu gibi karanlıkta bırakmalıdır',
+      'Uzun farları açık bırakıp aracın önünü aydınlatmalıdır',
+      'Aracın görülebilmesi için park (durum) lambalarını yakmalıdır',
+      'Dörtlü ikazı sabaha kadar yanık tutup aracın yanından ayrılmalıdır',
     ],
     answerIndex: 2,
     explanation:
-      'Aydınlatması yetersiz yolda karanlıkta park eden araç, arkadan gelen için görünmez bir engeldir. Aracın belli olması için park (durum) lambaları yakılır; gerekirse yansıtıcı veya işaretle konumu belirtilir. Lambalarını yakmalı, gerekiyorsa yansıtıcı ile işaretlemelidir.',
+      'Aydınlatması yetersiz yolda karanlıkta park eden araç, arkadan gelen için görünmez bir engeldir. Aracın belli olması için park (durum) lambaları yakılır; gerekirse yansıtıcı veya işaretle konumu belirtilir.',
     whyWrong: [
       'Bütün ışıkları söndürmek aracı görünmez kılar ve çarpışmaya yol açar.',
       'Uzun far park için kullanılmaz; karşıdan gelenleri kamaştırır.',

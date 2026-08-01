@@ -39,10 +39,10 @@ export const PRATIK_QUESTIONS: Question[] = [
     difficulty: 'kolay',
     stem: 'Manuel vitesli bir aracı çalıştırırken vites kolu ve debriyaj için doğru olan nedir?',
     options: [
-      'Vites boşta (nötr)',
-      'Vites 1. konumdayken debriyaja basmadan çalıştır',
-      'Vites geri konumdayken çalıştır',
-      'Debriyaja hiç basmadan, vites 2. konumdayken çalıştır',
+      'Vites boşta (nötr) ve debriyaja basılı olmalı',
+      'Vites 1. konumdayken debriyaja basmadan çalıştırılmalı',
+      'Vites geri konumdayken debriyaja basılarak çalıştırılmalı',
+      'Debriyaja hiç basmadan, vites 2. konumda çalıştırılmalı',
     ],
     answerIndex: 0,
     explanation:
@@ -290,14 +290,14 @@ export const PRATIK_QUESTIONS: Question[] = [
     difficulty: 'kolay',
     stem: 'Normal sürüş sırasında direksiyonun tutulmasıyla ilgili doğru davranış hangisidir?',
     options: [
-      'Tek elle, dirseği pencereye dayayarak tutmak',
-      'Dizlerle yönlendirmek',
-      'İki elle, saat kadranında 9 ve 3 (ya da 10-2)',
-      'Direksiyonu iç kısmından, iki parmakla tutmak',
+      'Tek elle, dirseği pencere kenarına dayayarak rahat biçimde tutmak',
+      'Dizlerle yönlendirip elleri serbest bırakmak',
+      'İki elle, saat kadranında 9 ve 3 (ya da 10-2) konumlarında tutmak',
+      'Direksiyonu iç kısmından, iki parmakla kavrayarak tutmak',
     ],
     answerIndex: 2,
     explanation:
-      'Direksiyon iki elle, dengeli konumlarda tutulduğunda ani bir manevra veya bozuk zeminde araca hâkimiyet korunur. Tek el veya dizle yönlendirme kontrolü kaybettirir. Konumlarında dengeli tutmak.',
+      'Direksiyon iki elle, dengeli konumlarda tutulduğunda ani bir manevra veya bozuk zeminde araca hâkimiyet korunur. Tek el veya dizle yönlendirme kontrolü kaybettirir.',
     whyWrong: [
       'Tek elle tutmak ani durumlarda tepki süresini uzatır.',
       'Dizle yönlendirmek araç hâkimiyetini tamamen tehlikeye atar.',

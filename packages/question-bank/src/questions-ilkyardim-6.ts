@@ -514,14 +514,14 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Kapalı bir mekânda bulunan birden fazla kişide aynı anda baş ağrısı, baş dönmesi ve bulantı başlarsa ilk yardımcı öncelikle neyden şüphelenmeli ve ne yapmalıdır?',
     options: [
-      'Ortak bir karbonmonoksit kaynağından',
-      'Yiyecek zehirlenmesinden; herkese su içirmekten',
-      'Grip salgınından; kişileri aynı odada dinlendirmekten',
-      'Uykusuzluktan; perdeleri kapatıp odayı karartmaktan',
+      'Ortak bir karbonmonoksit kaynağından; kişileri temiz havaya çıkarmaktan',
+      'Yiyecek zehirlenmesinden; herkese bol su içirip kusmalarını sağlamaktan',
+      'Grip salgınından; kişileri aynı odada birlikte dinlendirmekten',
+      'Uykusuzluktan; perdeleri kapatıp odayı karartarak uyutmaktan',
     ],
     answerIndex: 0,
     explanation:
-      'Aynı kapalı ortamdaki birden çok kişinin eş zamanlı olarak baş ağrısı, baş dönmesi ve bulantı yaşaması karbonmonoksit zehirlenmesini akla getirmelidir. Kişiler derhâl temiz havaya çıkarılır, ortam havalandırılır ve 112 aranır. Kişileri hızla temiz havaya çıkarıp ortamı havalandırmaktan ve 112’yi aramaktan.',
+      'Aynı kapalı ortamdaki birden çok kişinin eş zamanlı olarak baş ağrısı, baş dönmesi ve bulantı yaşaması karbonmonoksit zehirlenmesini akla getirmelidir. Kişiler derhâl temiz havaya çıkarılır, ortam havalandırılır ve 112 aranır.',
     whyWrong: [
       'Ortak ve ani belirtiler yiyecek zehirlenmesi ya da gribe göre çok daha çok gaz kaynağını düşündürür.',
       'Kişileri aynı ortamda tutmak veya odayı karartmak gaz solumaya devam etmelerine yol açar.',
@@ -764,14 +764,14 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Hayati bir kanamayı durdurmak için zorunlu olarak turnike uygulayan ilk yardımcı, uygulama saatini not ettikten sonra bu bilgiyi nerede belirtmelidir?',
     options: [
-      'Kimseye söylemeden aklında tutmalıdır',
-      'Turnikenin altına gizlemelidir',
-      'Yaralının görünür bir yerine (örneğin alnına)',
-      'Yalnızca kendi telefonuna kaydetmelidir',
+      'Kimseye söylemeden yalnızca kendi aklında tutmalı ve gerekirse hatırlamalıdır',
+      'Turnikenin altına sıkıştırarak gözden uzak biçimde saklamalıdır',
+      'Yaralının görünür bir yerine (örneğin alnına) yazarak belirtmelidir',
+      'Yalnızca kendi telefonuna not olarak kaydedip saklamalıdır',
     ],
     answerIndex: 2,
     explanation:
-      'Turnikenin ne zaman uygulandığı, uzvun ne kadar süredir kansız kaldığını gösteren hayati bir bilgidir. Bu saat, yaralıyı devralacak ekibin kolayca görebileceği bir yere (örneğin alına) yazılır veya üzerine iliştirilir; böylece bilgi yaralıyla birlikte taşınır. Yazarak veya bir kâğıtla yaralının üzerine iliştirerek belirtmelidir.',
+      'Turnikenin ne zaman uygulandığı, uzvun ne kadar süredir kansız kaldığını gösteren hayati bir bilgidir. Bu saat, yaralıyı devralacak ekibin kolayca görebileceği bir yere (örneğin alına) yazılır veya üzerine iliştirilir; böylece bilgi yaralıyla birlikte taşınır.',
     whyWrong: [
       'Bilgiyi yalnızca akılda tutmak veya telefona kaydetmek, ilk yardımcı ayrıldığında saatin kaybolmasına yol açar.',
       'Turnikenin altına gizlenen bir not, devralan ekip tarafından görülmez.',

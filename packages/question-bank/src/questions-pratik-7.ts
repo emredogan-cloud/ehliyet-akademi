@@ -14,14 +14,14 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Doğru sürüş pozisyonunda koltuğun ileri-geri mesafesi hangi ölçüte göre ayarlanır?',
     options: [
-      'Debriyaj (kavrama)',
+      'Debriyaj (kavrama) pedalına sonuna kadar basıldığında dizde hafif kıvrım kalacak biçimde',
       'Bacak pedala ancak zar zor yetişecek kadar koltuk mümkün olduğunca geriye alınır',
       'Göğüs neredeyse direksiyona değecek kadar koltuk öne çekilir',
       'Koltuk her sürücü için aynı orta konumda bırakılır; kişinin boyuna göre değişmesine gerek yoktur',
     ],
     answerIndex: 0,
     explanation:
-      'Koltuk mesafesi, debriyaja sonuna kadar basıldığında bacağın tam gerilmediği, dizde hafif bir kıvrımın kaldığı konuma göre ayarlanır. Bu, hem pedallara tam güç aktarmayı hem uzun sürüşte yorulmamayı sağlar. Sırt koltuğa yaslı kalmalı; böylece ani frende ve manevrada gövde desteklenir. Pedalına sonuna kadar basıldığında bacak tam gerilip kilitlenmeyecek, dizde hafif bir kıvrım kalacak ve sırt koltuğa yaslı olacak biçimde ayarlanır.',
+      'Koltuk mesafesi, debriyaja sonuna kadar basıldığında bacağın tam gerilmediği, dizde hafif bir kıvrımın kaldığı konuma göre ayarlanır. Bu, hem pedallara tam güç aktarmayı hem uzun sürüşte yorulmamayı sağlar. Sırt koltuğa yaslı kalmalı; böylece ani frende ve manevrada gövde desteklenir.',
     whyWrong: [
       'Bacak pedala zar zor yetişiyorsa debriyaj sonuna kadar basılamaz; acil frende de yeterli güç uygulanamaz.',
       'Göğsün direksiyona çok yakın olması, hava yastığı açıldığında yaralanma riski yaratır ve kol hareketini kısıtlar.',
@@ -222,9 +222,9 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Sürüşe başlamadan önce ve sürüş sırasında hangi temel göstergeleri okumak doğrudur?',
     options: [
-      'Yalnızca saat ve dış hava sıcaklığı göstergesi',
-      'Yalnızca radyo frekansı ve ses seviyesi',
-      'Yakıt seviyesi, motor hararet (sıcaklık)',
+      'Yalnızca saat, dış hava sıcaklığı göstergesi ve kalan yolculuk süresi',
+      'Yalnızca radyo frekansı ve ses seviyesi göstergeleri',
+      'Yakıt seviyesi, motor hararet (sıcaklık) göstergesi ve ikaz lambaları',
       'Göstergeler hiçbir zaman okunmaz; sürücü yalnızca yolu izler',
     ],
     answerIndex: 2,
@@ -483,10 +483,10 @@ export const PRATIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Aracı park edip terk ederken güvenliği sağlamak için hangi işlemler bir bütün olarak yapılır?',
     options: [
-      'Araç düzgün durdurulur, el freni (park freni)',
-      'Yalnızca kontak kapatılır; el freni ve vites gereksizdir',
-      'Vites boşta bırakılıp el freni indirilir',
-      'Motor çalışır bırakılıp araçtan inilir',
+      'Araç düzgün durdurulur, el freni (park freni) çekilir ve uygun vites takılır',
+      'Yalnızca kontak kapatılır; el freni çekmeye ve vites takmaya hiç gerek yoktur',
+      'Vites boşta bırakılıp el freni indirilir, kontak açık bırakılır',
+      'Motor çalışır bırakılıp kapılar kilitlenmeden araçtan inilir',
     ],
     answerIndex: 0,
     explanation:

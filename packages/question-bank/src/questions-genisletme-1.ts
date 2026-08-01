@@ -173,14 +173,14 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'orta',
     stem: 'Gösterge panelinde akü/şarj (kırmızı akü sembolü) ikaz lambasının yanması neyi işaret eder?',
     options: [
-      'Lastik basıncının düştüğünü',
-      'Şarj sisteminde (alternatör/kayış)',
-      'Yakıtın bittiğini',
-      'Kapının açık olduğunu',
+      'Lastik hava basıncının önerilen değerin altına düştüğünü',
+      'Şarj sisteminde (alternatör/kayış) arıza olabileceğini',
+      'Depodaki yakıtın bitmek üzere olduğunu',
+      'Araç kapılarından birinin tam kapanmadığını',
     ],
     answerIndex: 1,
     explanation:
-      'Akü sembollü ikaz, şarj sisteminin aküyü doldurmadığını gösterir (alternatör veya kayış arızası olabilir); kısa sürede kontrol ettirilmelidir. Arıza olabileceğini.',
+      'Akü sembollü ikaz, şarj sisteminin aküyü doldurmadığını gösterir (alternatör veya kayış arızası olabilir); kısa sürede kontrol ettirilmelidir.',
     whyWrong: [
       'Lastik basıncının ayrı bir ikaz sembolü vardır.',
       'Yakıt için ayrı gösterge vardır.',
@@ -199,10 +199,10 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'orta',
     stem: 'Motor sıcaklık (hararet) göstergesi kırmızı bölgeye geldiğinde ilk yapılması gereken nedir?',
     options: [
-      'Radyatör kapağını hemen açmak',
+      'Radyatör kapağını hemen açarak içine soğuk su doldurmak',
       'Aracı güvenli yerde durdurup motoru soğumaya bırakmak',
-      'Hızlanarak rüzgârla soğutmak',
-      'Kaloriferi kapatmak',
+      'Hızlanarak rüzgârla motoru soğutmaya çalışmak',
+      'Kaloriferi kapatıp yolculuğa devam etmek',
     ],
     answerIndex: 1,
     explanation:
@@ -225,10 +225,10 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'kolay',
     stem: 'Gösterge panelinde yeşil renkli ikaz lambaları genellikle neyi bildirir?',
     options: [
-      'Ciddi bir arızayı',
+      'Ciddi bir arızayı ve derhâl durulması gerektiğini',
       'Bir sistemin çalıştığını/aktif olduğunu (bilgi)',
-      'Motorun durduğunu',
-      'Yakıtın bittiğini',
+      'Motorun durduğunu ve marş gerektiğini',
+      'Yakıtın bittiğini ve ikmal gerektiğini',
     ],
     answerIndex: 1,
     explanation:
@@ -253,10 +253,10 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'kolay',
     stem: 'Motor yağının değişim zamanı genel olarak neye göre belirlenir?',
     options: [
-      'Aracın rengine göre',
+      'Aracın dış rengine ve model yılına göre belirlenir',
       'Üreticinin belirttiği kilometre veya süreye göre',
-      'Sadece arıza çıkınca',
-      'Lastik basıncına göre',
+      'Yalnızca gözle görülür bir arıza çıkınca',
+      'Lastik hava basıncı değerine göre',
     ],
     answerIndex: 1,
     explanation:
@@ -279,10 +279,10 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'orta',
     stem: 'Tıkanmış bir hava filtresinin araca etkisi ne olur?',
     options: [
-      'Fren mesafesini kısaltır',
+      'Fren mesafesini kısaltıp frenleme gücünü belirgin artırır',
       'Yakıt tüketimini artırır ve motor performansını düşürür',
-      'Lastik ömrünü uzatır',
-      'Direksiyonu ağırlaştırır',
+      'Lastik ömrünü uzatır ve aşınmayı yavaşlatır',
+      'Direksiyonu ağırlaştırır ve manevrayı zorlaştırır',
     ],
     answerIndex: 1,
     explanation:
@@ -305,10 +305,10 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'kolay',
     stem: 'Cam sileceği süpürgesi camda iz bırakıyor ve iyi temizlemiyorsa ne yapılmalıdır?',
     options: [
-      'Görmezden gelinir',
+      'Görmezden gelinir; iz zamanla kendiliğinden geçer',
       'Silecek lastiği/süpürgesi yenisiyle değiştirilir',
-      'Cam açık bırakılır',
-      'Sinyal kolu değiştirilir',
+      'Cam sürekli açık bırakılarak kurutulur',
+      'Sinyal kolu ve silecek motoru değiştirilir',
     ],
     answerIndex: 1,
     explanation:
@@ -545,10 +545,10 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'orta',
     stem: 'Hava yastığı (airbag) sürücüyü en iyi hangi durumda korur?',
     options: [
-      'Emniyet kemeri takılı değilken tek başına',
+      'Emniyet kemeri takılı değilken tek başına kullanıldığında',
       'Emniyet kemeriyle birlikte kullanıldığında',
-      'Yalnızca düşük hızda',
-      'Yalnızca arka koltukta',
+      'Yalnızca düşük hızdaki çarpışmalarda',
+      'Yalnızca arka koltuktaki yolcular için',
     ],
     answerIndex: 1,
     explanation:
@@ -599,10 +599,10 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'orta',
     stem: 'ABS (kilitlenmeyi önleyici fren sistemi) sürücüye temel olarak ne sağlar?',
     options: [
-      'Fren mesafesini her zeminde sıfırlar',
+      'Fren mesafesini her zeminde sıfırlayarak aracı pedala basıldığı anda tamamen ve güvenle durdurur',
       'Ani/sert frende tekerlek kilitlenmesini önleyerek direksiyon hâkimiyetinin korunmasını sağlar',
-      'Yakıt tüketimini azaltır',
-      'Motor gücünü artırır',
+      'Yakıt tüketimini azaltıp fren balatalarının ömrünü uzatır',
+      'Motor gücünü artırıp hızlanma performansını yükseltir',
     ],
     answerIndex: 1,
     explanation:
@@ -653,10 +653,10 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'zor',
     stem: 'Benzinli bir araca yanlışlıkla dizel (veya tersi) yakıt konulduğu fark edilirse ne yapılmalıdır?',
     options: [
-      'Motoru çalıştırıp yakıtı tüketmek',
+      'Motoru çalıştırarak yanlış yakıtı bir an önce tüketmeye çalışmak',
       'Motoru çalıştırmadan aracı çektirip yakıt sistemini boşalttırmak',
-      'Üzerine doğru yakıt eklemek',
-      'Bir süre beklemek',
+      'Üzerine doğru yakıttan ekleyip karışımı seyreltmek',
+      'Bir süre bekleyip yakıtların ayrışmasını sağlamak',
     ],
     answerIndex: 1,
     explanation:
@@ -679,10 +679,10 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'kolay',
     stem: 'Aşağıdakilerden hangisi yakıt tüketimini azaltır?',
     options: [
-      'Sürekli ani hızlanma ve fren',
+      'Sürekli ani hızlanma ve sert fren yaparak yoğun trafikte seyretmek',
       'Sabit hızda gitmek, erken vites yükseltmek ve gereksiz yükü atmak',
       'Lastikleri sürekli düşük basınçta tutmak',
-      'Bagajı ağır yükle dolu tutmak',
+      'Bagajı sürekli ağır yükle dolu tutmak',
     ],
     answerIndex: 1,
     explanation:

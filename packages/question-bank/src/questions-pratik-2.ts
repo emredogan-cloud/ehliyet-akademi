@@ -14,9 +14,9 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Sürüş öncesi koltuk ayarında ayak pedalları ve direksiyon açısından doğru oturuş nasıl olmalıdır?',
     options: [
-      'Koltuk mümkün olduğunca geride, kollar tamamen gergin olacak biçimde uzakta olmalı',
-      'Debriyaj sonuna kadar basıldığında diz tam kilitlenmeli, sırt öne eğik olmalı',
-      'Debriyaj sonuna kadar basıldığında dizde hafif kıvrım kalmalı, bilekler direksiyonun üst kenarına rahat uzanmalı',
+      'Koltuk geride, kollar tamamen gergin olmalı',
+      'Debriyaj basılıyken diz tam kilitlenmeli',
+      'Debriyaj basılıyken dizde hafif kıvrım kalmalı',
       'Koltuk direksiyona yapışık, göğüs korna hizasında olmalı',
     ],
     answerIndex: 2,
@@ -40,8 +40,8 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Manuel vitesli araçta kontak anahtarını marş konumuna getirmeden hemen önce hangi hazırlık yapılmalıdır?',
     options: [
-      'El freni çekili, vites boşta ve debriyaj basılıyken çalıştırmak',
-      'Vites birinci konumdayken debriyaja basmadan marşa basmak',
+      'El freni çekili, vites boşta, debriyaj basılı',
+      'Vites birincideyken debriyaja basmadan marşa basmak',
       'El freni indirilmiş, vites geride iken marşa basmak',
       'Gaz pedalı sonuna kadar basılıyken marşa basmak',
     ],
@@ -67,9 +67,9 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     stem: 'Park hâlindeki araçla sol şeride katılmak için harekete geçerken izlenmesi gereken doğru sıra nedir?',
     options: [
       'Doğrudan direksiyonu sola kırıp şeride girmek',
-      'Önce sola kır, sonra aynaya bakıp sinyal vermek',
-      'Sadece iç dikiz aynasına bakıp hızla çıkmak',
-      'Sol sinyali ver, iç ve sol dış aynayı kontrol et, sol omuz üstünden kör noktayı gör, uygunsa yavaşça şeride gir',
+      'Önce sola kır, sonra aynaya bakıp sinyal vermeye başla',
+      'Yalnızca iç dikiz aynasına bakıp hızla çıkmak',
+      'Sinyal ver, aynaları kontrol et, kör noktayı gör, gir',
     ],
     answerIndex: 3,
     explanation:
@@ -91,10 +91,10 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Kalkış sırasında debriyajı çok hızlı bırakmanın en olası sonucu aşağıdakilerden hangisidir?',
     options: [
-      'Araç yumuşak ve sarsıntısız kalkar',
+      'Araç yumuşak ve sarsıntısız biçimde kalkar',
       'Motor tekler ya da araç zıplayarak stop eder',
-      'Yakıt tüketimi belirgin biçimde azalır',
-      'Direksiyon kilitlenir',
+      'Yakıt tüketimi belirgin biçimde azalıp verim artar',
+      'Direksiyon kilitlenip manevra yapılamaz',
     ],
     answerIndex: 1,
     explanation:
@@ -116,10 +116,10 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Yokuşta el freni çekiliyken durmuş araçla geri kaymadan kalkış için doğru koordinasyon nedir?',
     options: [
-      'El frenini indir, sonra debriyaja hiç dokunmadan sadece gaza yüklen',
-      'Debriyajı tamamen bırak, ardından el frenini indir',
-      'Debriyajı kavrama noktasına getir, hafif gaz ver, aracın öne yüklendiğini hissedince el frenini yavaşça indir',
-      'Önce gaz pedalını dibe bas, sonra el frenini bırakıp debriyajı çek',
+      'El frenini indirip debriyaja dokunmadan gaza yüklenmek',
+      'Debriyajı tamamen bırakıp ardından el frenini indirmek',
+      'Kavrama noktasına getir, gaz ver, el frenini indir',
+      'Gaz pedalını dibe basıp sonra el frenini bırakmak',
     ],
     answerIndex: 2,
     explanation:
@@ -141,8 +141,8 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Bir park cebine geri geri girerken direksiyon ve ayna kullanımı için doğru yaklaşım nedir?',
     options: [
-      'Geri giderken yalnızca öne bakmak yeterlidir',
-      'Geri giderken arka cama ve her iki dış aynaya sırayla bakıp direksiyonu boşluğun hizasına göre kırmak',
+      'Geri giderken yalnızca öne bakmakla yetinmek',
+      'Arka cama ve her iki dış aynaya sırayla bakmak',
       'Direksiyonu tek seferde sonuna kadar kırıp gaz vermek',
       'Geri hareketi hızlı yapıp son anda frene basmak',
     ],
@@ -167,10 +167,10 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Yol kenarında iki araç arasına paralel park yaparken referans alınması gereken ilk adım nedir?',
     options: [
-      'Önündeki araca çok yakın durup direksiyonu hemen kırmak',
-      'Boşluğu ölçmeden geri geri girmeye başlamak',
+      'Önündeki araca çok yaklaşıp direksiyonu hemen kırmak',
+      'Boşluğu ölçmeden doğrudan geri geri girmeye başlamak gerekir',
       'Park boşluğunu geçip sinyal vermeden durmak',
-      'Sağ sinyal ver, boşluğun önündeki araçla yaklaşık yan yana ve uygun aralıkta dur, sonra geri manevraya başla',
+      'Sağ sinyal ver, öndeki araçla yan yana dur, geri başla',
     ],
     answerIndex: 3,
     explanation:
@@ -192,10 +192,10 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Dönel kavşağa (göbekli kavşak) girerken temel yol verme kuralı nedir?',
     options: [
-      'Kavşak içinde dönmekte olan araçlara yol ver, uygun boşlukta gir',
-      'Kavşağa girecek araçların hepsi sana yol vermek zorundadır',
-      'Kavşağa her zaman durmadan ve hız kesmeden girilir',
-      'Kavşak içinde önce sen geçersin, içeridekiler bekler',
+      'Dönmekte olan araçlara yol verip uygun boşlukta girmek',
+      'Kavşağa girecek araçların hepsinin size yol vermesi',
+      'Kavşağa her zaman durmadan ve hız kesmeden girilmesi',
+      'Kavşak içinde önce sizin geçip içeridekilerin beklemesi',
     ],
     answerIndex: 0,
     explanation:
@@ -218,9 +218,9 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     stem: 'Sürüş sırasında dikiz ve yan aynalar ne sıklıkla kontrol edilmelidir?',
     options: [
       'Yalnızca dönüş yapılacağı anda bir kez',
-      'Sadece park ederken',
-      'Düzenli aralıklarla ve her manevra, şerit değişimi ile yavaşlama öncesinde',
-      'Aynalar ayarlandıktan sonra yola çıkınca hiç bakmaya gerek yoktur',
+      'Yalnızca park etme sırasında',
+      'Düzenli aralıklarla ve her manevra öncesinde',
+      'Aynalar ayarlandıktan sonra hiç bakmaya gerek olmaması',
     ],
     answerIndex: 2,
     explanation:
@@ -243,9 +243,9 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     stem: 'Aynaların göremediği kör nokta, şerit değiştirmeden önce nasıl güvenle kontrol edilir?',
     options: [
       'İç dikiz aynasına biraz daha uzun bakarak',
-      'Gitmek istenen yöndeki omuz üstünden kısa bir bakışla, direksiyon hâkimiyeti korunarak',
+      'Gidilen yöndeki omuz üstünden kısa bir bakışla',
       'Kornaya basıp yandaki aracı uyararak',
-      'Camı açıp kafayı tamamen dışarı çıkararak',
+      'Camı açıp kafayı tamamen dışarı çıkararak bakmak',
     ],
     answerIndex: 1,
     explanation:
@@ -268,9 +268,9 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     stem: 'Aracın hızı düşerken motorun teklememesi için vites kullanımı nasıl olmalıdır?',
     options: [
       'Hız düşse de yüksek viteste kalınır',
-      'Vites hiç değiştirilmeden fren tamamen kullanılır',
-      'Doğrudan boşa alınıp öyle gidilir',
-      'Hıza uygun olarak kademeli biçimde küçük viteslere geçilir',
+      'Vites değiştirilmeden yalnızca fren kullanılır',
+      'Doğrudan boşa alınıp öylece süzülerek gidilir',
+      'Hıza uygun olarak kademeli biçimde küçültülür',
     ],
     answerIndex: 3,
     explanation:
@@ -292,9 +292,9 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Trafik ışığında güvenli ve düzgün bir duruş için doğru fren-debriyaj kullanımı nedir?',
     options: [
-      'Önce frenle hızı düşür, araç neredeyse duracakken debriyaja bas ki motor stop etmesin',
-      'Duruştan çok önce debriyaja basıp uzun mesafe boşta süzülmek',
-      'Sadece el freniyle sert biçimde durmak',
+      'Önce frenle yavaşla, duracakken debriyaja bas',
+      'Duruştan çok önce debriyaja basıp boşta süzülmek',
+      'Yalnızca el freniyle sert biçimde durmak',
       'Fren yerine motoru stop ettirerek durmak',
     ],
     answerIndex: 0,
@@ -317,10 +317,10 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Şerit değiştirmeden veya dönüşten ne zaman sinyal verilmelidir?',
     options: [
-      'Manevra tamamlandıktan sonra',
+      'Manevra tamamlandıktan hemen sonra',
       'Tam dönüş anında, direksiyon kırılırken',
-      'Manevradan yeterince önce, diğer sürücülerin fark edebileceği bir zamanda',
-      'Sinyal vermek zorunlu değildir, isteğe bağlıdır',
+      'Manevradan yeterince önce, fark edilecek bir zamanda',
+      'Sinyal vermek zorunlu değildir, tamamen isteğe bağlıdır',
     ],
     answerIndex: 2,
     explanation:
@@ -367,10 +367,10 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Dar bir sokakta üç hamleli (geri dönüş) manevra yapılırken güvenlik açısından en önemli davranış nedir?',
     options: [
-      'Manevrayı olabildiğince hızlı bitirmek',
+      'Manevrayı olabildiğince hızlı biçimde bitirmek',
       'Yalnızca öne bakıp direksiyonu çevirmek',
-      'Aynalara hiç bakmadan sezgiyle dönmek',
-      'Her hamlede yayaları ve gelen araçları kontrol edip düşük hızda, aynaları kullanarak ilerlemek',
+      'Aynalara hiç bakmadan yalnızca sezgiyle dönmeyi denemek',
+      'Her hamlede çevreyi kontrol edip düşük hızda ilerlemek',
     ],
     answerIndex: 3,
     explanation:
@@ -418,10 +418,10 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Sinyal vermeyi veya ayna kontrolünü atlamak sınav değerlendirmesinde genellikle nasıl ele alınır?',
     options: [
-      'Hiç dikkate alınmaz, önemsizdir',
+      'Hiç dikkate alınmaz, tümüyle önemsizdir',
       'Her durumda doğrudan sınavı bitirir',
-      'Güvenliği tehlikeye atmadıkça puan kaybettiren eksiklik olarak değerlendirilir, biriktikçe sonucu etkiler',
-      'Yalnızca eğitmenin keyfine bağlıdır, kuralı yoktur',
+      'Puan kaybettiren eksiklik sayılır, biriktikçe etkiler',
+      'Yalnızca eğitmenin keyfine bağlıdır, yazılı kuralı yoktur',
     ],
     answerIndex: 2,
     explanation:
@@ -444,10 +444,10 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Aracı düz bir çizgide geri alırken (gerileme) doğru görüş ve hız yönetimi nasıl olmalıdır?',
     options: [
-      'Hızlı geri gidip son anda durmak',
-      'Düşük hızda, gövdeyi sağa dönüp arka camdan bakarak ve aynalarla destekleyerek gerilemek',
+      'Hızlı geri gidip son anda frene basmak',
+      'Düşük hızda, arka camdan bakıp aynalarla desteklemek',
       'Yalnızca iç dikiz aynasına bakıp gaz vermek',
-      'Direksiyonu sürekli sağa sola oynatarak ilerlemek',
+      'Direksiyonu sürekli sağa sola oynatarak geri ilerlemek',
     ],
     answerIndex: 1,
     explanation:
@@ -469,10 +469,10 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Çok şeritli yolda güvenli şerit değiştirmenin doğru adımları hangisidir?',
     options: [
-      'Direksiyonu hızlıca kır, sonra sinyal ver',
-      'Sinyal vermeden boşluk görünce hemen geç',
-      'Sadece iç dikiz aynasına bakıp geçmek yeterlidir',
-      'Aynaları kontrol et, sinyal ver, kör noktayı omuz üstünden gör, boşluk uygunsa yumuşak biçimde şeridi değiştir',
+      'Direksiyonu hızlıca kırıp sonra sinyal vermek',
+      'Sinyal vermeden boşluk görünce hemen geçmek',
+      'Yalnızca iç dikiz aynasına bakmanın yeterli sayılması',
+      'Aynaları kontrol et, sinyal ver, kör noktayı gör, geç',
     ],
     answerIndex: 3,
     explanation:
@@ -494,10 +494,10 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Sürüş sırasında önden ani bir engel çıktığında önerilen doğru davranış nedir?',
     options: [
-      'Fren pedalına kararlı basıp direksiyonla güvenli bir kaçış yönü aramak, ABS varsa pedalı bırakmadan basılı tutmak',
-      'Gözleri kapatıp direksiyonu bırakmak',
+      'Fren pedalına kararlı basıp güvenli kaçış yolu aramak',
+      'Gözleri kapatıp direksiyonu tamamen bırakmak',
       'El frenini sonuna kadar aniden çekmek',
-      'Gaza basarak engeli hızla geçmeye çalışmak',
+      'Gaza basarak engeli hızla geçip yandan atlatmaya çalışmak',
     ],
     answerIndex: 0,
     explanation:
@@ -521,8 +521,8 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     options: [
       'Sağ şeride geçip sağ sinyal vermek',
       'Hız kesmeden en soldaki karşı şeride girmek',
-      'Erkenden sol sinyal verip uygun sol şeride yaklaşmak, karşıdan gelen araçlara ve yayalara yol vermek',
-      'Dönüş anında hiç sinyal vermeden hızlıca dönmek',
+      'Erkenden sol sinyal verip uygun şeride yaklaşmak',
+      'Dönüş anında hiç sinyal vermeden hızlıca sola dönmek',
     ],
     answerIndex: 2,
     explanation:
@@ -545,10 +545,10 @@ export const PRATIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Yaklaşan keskin bir virajda hız kontrolü nasıl yapılmalıdır?',
     options: [
-      'Viraj içinde sert fren yaparak hız kesilir',
-      'Viraja girmeden önce hız uygun düzeye düşürülür, viraj içinde sabit ve dengeli hızla dönülür',
+      'Viraj içinde sert fren yapılarak hız kesilir',
+      'Viraja girmeden hız düşürülür, içeride sabit tutulur',
       'Viraja yüksek hızla girilip çıkışta yavaşlanır',
-      'Virajda debriyaja basılı tutup boşta dönülür',
+      'Virajda debriyaja basılı tutulup boşta süzülerek dönülür',
     ],
     answerIndex: 1,
     explanation:

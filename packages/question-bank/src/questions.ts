@@ -21,9 +21,9 @@ export const SEED_QUESTIONS: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Kırmızı zeminli sekizgen "DUR" levhasının bulunduğu yerde sürücü ne yapmalıdır?',
     options: [
-      'Sadece yavaşlar',
-      'Korna çalarak geçer',
-      'Kavşak boş görünüyorsa yavaşlayıp geçer',
+      'Yalnızca yavaşlayıp kavşağa girer',
+      'Korna çalarak diğerlerini uyarıp geçer',
+      'Kavşak boş görünüyorsa durmadan yavaşlayıp geçer',
       'Tam durur ve geçiş hakkı olana yol verir',
     ],
     answerIndex: 3,

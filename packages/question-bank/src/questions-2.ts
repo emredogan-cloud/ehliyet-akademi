@@ -32,7 +32,7 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     topic: 'isaretler',
     difficulty: 'orta',
     stem: 'Kırmızı kenarlı daire içindeki işaretler genel olarak neyi anlatır?',
-    options: ['Bilgilendirme', 'Yasaklama/kısıtlama', 'Mecburiyet', 'Tehlike uyarısı'],
+    options: ['Bilgilendirme', 'Yasaklama/kısıtlama', 'Mecburiyet', 'Tehlike uyarısı ve dikkat'],
     answerIndex: 1,
     explanation:
       'Kırmızı kenarlı daireler yasaklama/kısıtlama bildirir (ör. hız sınırı, sollama yasağı). Mavi daireler mecburiyet, üçgenler tehlike uyarısıdır.',
@@ -61,10 +61,10 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Kırmızı ışıkta bekleyen sürücü, yeşil yandığında ilk olarak ne yapmalıdır?',
     options: [
-      'Hemen gaza basıp hızla kalkmak',
-      'Korna çalıp öndekini uyarmak',
-      'Kavşağın boşaldığını ve yayaların geçtiğini kontrol edip hareket etmek',
-      'Sarı ışık yanar yanmaz harekete geçmek',
+      'Hemen gaza basıp bir an önce hızla kalkmak',
+      'Korna çalıp öndeki sürücüyü hareket etmeye zorlamak',
+      'Kavşağın boşaldığını kontrol edip hareket etmek',
+      'Sarı ışık yanar yanmaz beklemeden harekete geçmek',
     ],
     answerIndex: 2,
     explanation:
@@ -160,9 +160,9 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Aşağıdaki yerlerin hangisinde öndeki aracı geçmek (sollama) yasaktır?',
     options: [
-      'Görüşün açık olduğu düz yolda',
-      'Bölünmüş yolun sol şeridinde',
-      'Şehirlerarası bölünmüş yolun sağ şeridinde',
+      'Görüşün açık olduğu düz ve geniş yollarda',
+      'Bölünmüş yolun sol şeridinde ilerlerken',
+      'Şehirlerarası bölünmüş bir yolun sağ şeridinde',
       'Tepe üstü ve dönemeçlerde (görüş yetersizken)',
     ],
     answerIndex: 3,
@@ -179,10 +179,10 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Işıksız yaya geçidine yaklaşan sürücü, geçitte yaya varsa ne yapmalıdır?',
     options: [
-      'Korna çalıp geçmek',
+      'Korna çalarak yayayı uyarıp geçmek',
       'Farları yakıp yayayı uyararak geçmek',
       'Yavaşlamak, gerekiyorsa durup yol vermek',
-      'Hızlanıp geçmek',
+      'Hızlanıp yaya geçide girmeden önce geçmek',
     ],
     answerIndex: 2,
     explanation:
@@ -198,10 +198,10 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Aşağıdakilerden hangisi duraklamanın (kısa süreli durmanın) yasak olduğu yerlerdendir?',
     options: [
-      'Geniş ve açık cadde kenarı',
-      'Kavşaklara ve yaya geçitlerine yakın (5 metre içi) alanlar',
-      'Otopark girişinin karşı kaldırımı',
-      'Şehirlerarası yolun park cebi',
+      'Geniş ve açık cadde kenarındaki boş alanlar',
+      'Kavşaklara ve yaya geçitlerine yakın alanlar',
+      'Otopark girişinin karşısındaki kaldırım kenarı',
+      'Şehirlerarası yolun kenarındaki park cebi',
     ],
     answerIndex: 1,
     explanation:
@@ -269,10 +269,10 @@ export const EXTRA_QUESTIONS: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Yerleşim yerlerinde gereksiz korna çalmak için aşağıdakilerden hangisi doğrudur?',
     options: [
-      'Serbesttir',
-      'Yalnız gündüz serbesttir',
+      'Her saatte ve her yerde serbesttir',
+      'Yalnızca gündüz saatlerinde serbesttir',
       'Trafiğin yoğun olduğu saatlerde serbesttir',
-      'Gürültü kirliliği yaratır ve zorunlu uyarı dışında yasaktır',
+      'Gürültü kirliliği yaratır ve yasaktır',
     ],
     answerIndex: 3,
     explanation:

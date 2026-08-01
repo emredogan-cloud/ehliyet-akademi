@@ -3033,3 +3033,110 @@ ikaz ışığı görseli ÇİZİLDİ, şıklar önem düzeyi etiketleri. Sprint 
 
 Görsel sorular kademeli geliyor: ikaz ışıkları pakete gömülü olduğu için hemen, işaret ve parça
 soruları içerik anlık görüntüsü indikten sonra.
+
+---
+
+# Ürün Evrim Programı v1.1 — Faz 0/1/3/5/10 (1 Ağustos 2026)
+
+## A. Bankanın %91,1'i soruyu okumadan bilinebiliyordu
+
+Denetimin en ağır bulgusu. **"Soruyu hiç okuma, en uzun şıkkı işaretle"** stratejisi 1562 sorunun
+**1423'ünü** doğru buluyordu. Geçme barajı %70; yani hiç ders çalışmamış bir aday her denemeyi
+%91 ile geçiyordu. Ders bazında motor %95,8 · adab %98,5 · pratik %97,3.
+
+Kök neden: üreteç **açıklamayı doğru şıkkın İÇİNE yazmış**. Doğru şık ortalama 91,9 karakter,
+çeldirici 36,9 — **2,49×**. Gerçek MEB sorularında şıklar paralel uzunluktadır; referans
+ekranlarda doğru cevap çoğu zaman **en kısa** olandı ("…genel adı nedir?" → "Araç", 4 karakter).
+
+**Ders:** içerik kalitesi ölçülmediği sürece yoktur. 1562 sorunun hepsi biçimsel doğrulamadan
+(dört şık, geçerli `answerIndex`, boş alan yok) geçiyordu — kusur biçimde değil, İSTATİSTİKTEYDİ.
+
+## B. Kesip kısaltmak neden tek başına çözmedi
+
+Doğru şıktan açıklama kuyruğunu ayıran güvenli kodmod 588 soruyu düzeltti ve %91,1 → %74,3
+getirdi. Kalan sorun **doğru şıkkın uzunluğu değil, çeldiricilerin kısalığıydı**.
+
+Daha agresif kesme kuralları DENENDİ ve REDDEDİLDİ — cevabı bozuyorlardı:
+
+| Kural | Sonuç |
+|---|---|
+| baştaki `-arak/-erek` ulacını at | `adab-005`: "Sakin kalmak, takip \| mesafesini açmak" — "takip mesafesi" ortadan bölünüyor |
+| `ve` sonrasını at | `trafik-131`: "…ön \| arka tüm koltuklarda" — saçmalaşıyor |
+| son virgüllü öbeği at | `trafik-505`: cevabın yarısı gidiyor ve **yanlış** oluyor |
+
+Yanlış cevap, uzun cevaptan kötüdür. Yalnız AÇIK açıklama ayracı (`;`, parantez kuyruğu, bağlaç
+kuyruğu) kesildi ve kuyruk silinmedi — `explanation` alanına **taşındı**.
+
+## C. Bağlayıcı ölçüt "oran" değil, "en uzun mu"
+
+İlk 44 soruyu düzeltince metrik yalnız 19 azaldı. Sebep: `longestOptionWins` doğru şıkkın
+**tek başına en uzun** olmasına bakıyor — 1,01× de tellalıktır. Yazım kuralı bu yüzden
+"çeldiriciler benzer uzunlukta olsun" değil, **"en az bir çeldirici doğru şık kadar uzun olsun"**.
+Gerçek sınavlarda da ayrıntılı ama yanlış bir şık bulunur.
+
+Karakter saymayı göze bırakmak işe yaramadı (Türkçe uzunluk tahmini sürekli %10-20 şaşıyordu);
+`apply-option-patches.mjs --check` yamayı uygulamadan ölçüyor.
+
+## D. Mandal (ratchet) — kapıyı geçirmek için eşiği yükseltmek yasak
+
+1228 sorunun şıkkı elden geçmeli; tek oturumda bitmez. `QUALITY_GATE` **hedefi** (%40),
+`QUALITY_RATCHET` **bugün ulaşılanı** tutar ve CI ikincisini dayatır. Mandal yalnız AŞAĞI çekilir.
+Ayrı bir test mandalın ulaşılan değere yakın kalmasını zorlar — gevşek mandal, mandal değildir.
+
+Bu oturumda: %91,1 → **%58,1** (516 soru), paralel %21,4 → %64,6, oran 2,49× → 1,55×.
+
+## E. Koç turu takılması: pahalı olan ile sık olanı ayır
+
+`_SpotlightPainter` karartmayı (tam ekran `Path.combine`) ve nefes alan halkayı AYNI boyacıda
+çiziyordu. Nabız 1600 ms'lik sonsuz döngüde koştuğu için `shouldRepaint` her karede true dönüyor,
+**saniyede ~60 kez tam ekran Skia boolean yol işlemi** yapılıyor ve her karede üç `Path`
+ayrılıyordu. Koddaki yorum bunu bir başarım TERCİHİ olarak anlatıyordu; tersi doğruydu.
+
+Çözüm ilkeli değiştirmek değildi (`clipRRect` `ClipOp` almıyor; yuvarlak delik için `Path.combine`
+kaçınılmaz) — **onu her kare çağırmamaktı**. İki boyacı: `_ScrimPainter` (hedef değişince),
+`_PulseRingPainter` (her kare, tek kontur). Genel kural: **bir boyacıda pahalı ve sık değişen
+şeyleri birleştirme.**
+
+Yan bulgu: `SingleTickerProviderStateMixin` ikinci denetleyiciyle patlıyor — testler yakaladı.
+
+## F. Kaydırmayı kaldırmak, gizli taşmayı ortaya çıkarır
+
+Ödeme ekranı `ListView`'dan kaydırmasız düzene geçince 320 dp'de taşma çıktı. Ölçüldü:
+**taşma ESKİDEN DE VARDI** — `ListView` tembel olduğu için o satır hiç yerleştirilmiyordu.
+Kaydırmayı kaldırmak kusuru yaratmadı, **görünür kıldı**.
+
+## G. Ekranda fiyat yazan her yer mağazadan beslenmeli
+
+RC 1.0.0'da ödeme ekranında düzeltilen "katalog fiyatını gösterme" kusuru, **ders detay
+ekranında yaşıyordu** (`Kilidi aç · ${product.priceTRY} ₺`). Tek bir yeri düzeltmek yetmiyor;
+kural katalog alanının adında olmalı → `priceTRY` kaldırıldı, yerine `priceMinor` (kuruş, sunucu
+eşlemesi) + `fallbackPriceLabel` (yalnız mağaza susarsa) geldi.
+
+Aynı sınıftan iki kusur daha: güven şeridi "7 gün iade" diyordu (iade süresini Play belirler,
+biz vaat edemeyiz) ve "Ömür boyu" diyordu (artık yalnız bir paket için doğru).
+
+## H. Geriye uyumluluğun tek gerçek kilidi ürün kimliğidir
+
+Katalog üç pakete çıkarken ömür boyu paketin kimliği **`komple-ehliyet` olarak kaldı**. Kimliği
+"daha güzel" bir şeye çevirmek, ödemiş kullanıcıların `isPremium` denetiminden düşmesi demekti.
+Bir test bunu kilitliyor: `expect(kPremiumProductId, 'komple-ehliyet')`.
+
+Ayrıca `_storeProduct` geri düşüşü ("eşleşme yoksa listedeki ilk ürün") kaldırıldı: tek ürünlü
+dönemde zararsızdı, üç üründe "Aylık seç → Ömür Boyu satın al" demekti.
+
+## I. Yazılıp hiç bağlanmamış kod
+
+`AssetCatalog` (Post-Beta Faz 8) yazılmıştı ama **hiçbir yerden çağrılmıyordu** — `grep` ile
+bulundu. Faz 3'te `main()` içine bağlandı; ayrılmış ama henüz üretilmemiş levha adlarının
+gerçekten pakette olup olmadığı ancak böyle sorulabiliyor.
+
+**Ders:** "yazıldı" ile "çalışıyor" arasındaki farkı yalnız çağrı yeri araması gösterir.
+
+## J. Ayrılmış dosya adı, tahmin edilen kod değil
+
+18 üretilmeyi bekleyen levha için önce KGM kodları seçildi (`t-9.svg`…); `t-9.svg` zaten
+kullanımdaydı ve test yakaladı. Ad kuralı `assets/signs/<işaret-id>.svg` oldu: benzersiz, okunur
+ve `AssetCatalog.byConvention('signs', id)` ile birebir örtüşüyor.
+
+17 hız levhası için görsel ÜRETİLMEYECEK — rakam veridir, çizim değil; 17 ayrı görsel üretmek
+"yinelenen istem yok" kuralının ihlali olurdu.

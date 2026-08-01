@@ -1,4 +1,5 @@
 import 'package:ehliyet_akademi/domain/premium/paywall_offer.dart';
+import 'package:ehliyet_akademi/domain/premium/products.dart';
 import 'package:ehliyet_akademi/features/premium/paywall_sections.dart';
 import 'package:ehliyet_akademi/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -46,12 +47,17 @@ void main() {
 
   group('fiyat bloğu — dürüstlük', () {
     /// Hiç uygulanmamış bir "eski fiyat" göstermek yanıltıcı fiyatlandırmadır. Yapılandırma
-    /// yoksa ekran YALNIZ mağazanın bildirdiği gerçek fiyatı gösterir.
-    testWidgets('kampanya yokken üstü çizili fiyat ve sayaç ÇİZİLMEZ', (tester) async {
+    /// yoksa üstü çizili fiyat ve sayaç çizilmez.
+    ///
+    /// Faz 10 — kampanya yokken blok BÜYÜK FİYATI DA çizmez: fiyatı artık paket kartları
+    /// gösteriyor (bkz. `PaywallPlans`) ve aynı sayıyı iki kez yazmak "hangisi geçerli?"
+    /// sorusu doğuruyordu. Kampanya varsa fiyat geri gelir — orada anlatılacak bir hikâye var.
+    testWidgets('kampanya yokken fiyat, üstü çizili fiyat ve sayaç ÇİZİLMEZ', (tester) async {
       await tester.pumpWidget(
         host(
           const PaywallPriceBlock(
             priceLabel: '₺399,00',
+            period: BillingPeriod.lifetime,
             offer: PaywallOffer(),
             onBuy: null,
             busy: false,
@@ -60,9 +66,11 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      expect(find.text('₺399,00'), findsOneWidget);
+      expect(find.text('₺399,00'), findsNothing);
       expect(find.text('SINIRLI SÜRE'), findsNothing);
       expect(find.textContaining('yerine sadece'), findsNothing);
+      // Satın alma düğmesi ve Play notu yerinde kalır.
+      expect(find.textContaining('Google Play'), findsOneWidget);
     });
 
     testWidgets('gerçek kampanya yapılandırıldığında ikisi de görünür', (tester) async {
@@ -70,6 +78,7 @@ void main() {
         host(
           PaywallPriceBlock(
             priceLabel: '₺479,99',
+            period: BillingPeriod.lifetime,
             offer: PaywallOffer(
               listPriceLabel: '₺799,99',
               endsAt: DateTime.now().add(const Duration(hours: 5)),
@@ -95,6 +104,7 @@ void main() {
         host(
           const PaywallPriceBlock(
             priceLabel: '₺399,00',
+            period: BillingPeriod.lifetime,
             offer: PaywallOffer(),
             onBuy: null,
             busy: false,

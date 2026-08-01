@@ -1,10 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/premium/entitlement_status.dart';
+import '../../domain/premium/products.dart';
 import 'play_billing_gateway.dart';
 import 'revenuecat_gateway.dart';
 
 export '../../domain/premium/entitlement_status.dart' show EntitlementFacts;
+
+// `BillingPeriod` ALAN katmanında tanımlıdır (`domain/premium/products.dart`) ve buradan yeniden
+// dışa verilir: katalogla mağaza yanıtı aynı türü kullansın diye. İki ayrı kopya varken
+// "mağazanın bildirdiği dönem, sattığımız paketin dönemi mi?" sorusu sorulamıyordu.
+export '../../domain/premium/products.dart' show BillingPeriod;
 
 /// Beta Faz 3 — ödeme altyapısı SOYUTLAMASI.
 ///
@@ -31,17 +37,6 @@ enum BillingServerBridge {
   /// görmez. RevenueCat Flutter SDK'sı ham `purchaseToken`'ı zaten sunmaz — ayrıntı:
   /// `BETA_PHASE_3_REPORT.md`.
   revenueCatWebhook,
-}
-
-/// Ödeme dönemi — mağaza ürününün ne tür olduğu.
-enum BillingPeriod {
-  /// Tek seferlik / ömür boyu (yönetilen ürün).
-  lifetime,
-  monthly,
-  yearly,
-
-  /// Sağlayıcı bir dönem bildirmedi.
-  unknown,
 }
 
 /// Mağaza ürünü — hangi altyapı kullanılırsa kullanılsın aynı biçim.

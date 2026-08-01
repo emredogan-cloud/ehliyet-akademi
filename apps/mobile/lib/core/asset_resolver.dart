@@ -52,6 +52,17 @@ class AssetCatalog {
   /// Yalnız testlerin sıfırlaması için.
   static void resetForTest() => _instance = null;
 
+  /// Yalnız testlerin doğrudan kurması için.
+  static void setForTest(Iterable<String> assets) => _instance = AssetCatalog._(assets.toSet());
+
+  /// Zaten YÜKLENMİŞ katalog — yoksa null.
+  ///
+  /// Senkron erişim gerekiyor çünkü çağıranlar `StatelessWidget` (ör. `TrafficSignView`) ve
+  /// çizim sırasında `await` edemezler. Katalog açılışta bir kez yüklenir ([load]); yüklenmeden
+  /// önce çizilen birkaç kare için null döner ve çağıran güvenli varsayılana (prosedürel çizim)
+  /// düşer — kırık görsel çıkmaz.
+  static AssetCatalog? get currentOrNull => _instance;
+
   bool has(String path) => _assets.contains(path);
 
   /// [id] için `assets/<category>/<id>.<ext>` yollarından paketteki İLKİNİ döndür.

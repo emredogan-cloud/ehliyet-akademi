@@ -3,7 +3,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../core/official_signs.dart';
+import '../../../core/asset_resolver.dart';
+import '../../../core/planned_signs.dart';
 import '../../../domain/content/content_enums.dart';
 import '../../../domain/content/traffic_sign.dart';
 
@@ -37,7 +38,9 @@ class TrafficSignView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final official = officialSignAsset(sign.id);
+    // Faz 3 — ayrılmış ama henüz üretilmemiş levhalar da burada devreye girer: dosya GERÇEKTEN
+    // pakete girdiyse çizilir, girmediyse aşağıdaki prosedürel çizici çalışmayı sürdürür.
+    final official = signAssetFor(sign.id, catalog: AssetCatalog.currentOrNull);
     if (official != null) {
       // Resmî levha: metin de dahil her şey vektörün içinde — üstüne hiçbir şey bindirilmez.
       return SizedBox(

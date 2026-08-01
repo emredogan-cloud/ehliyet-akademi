@@ -563,7 +563,10 @@ class _PaywallHeadline extends StatelessWidget {
           TextSpan(
             style: TextStyle(color: p.text2, fontSize: 14, height: 1.45),
             children: [
-              const TextSpan(text: 'Komple Ehliyet Paketi ile tüm konulara sınırsız eriş, '),
+              // Ürün adı YAZILMAZ: katalog artık üç paket taşıyor ve hangisinin seçili olduğu
+              // aşağıdaki kartlarda görünüyor. Tek ürünün adını başlıkta bırakmak, haftalık
+              // paketi seçen kullanıcıya başka bir ürünün adını okutmak olurdu.
+              const TextSpan(text: 'Premium ile tüm konulara sınırsız eriş, '),
               TextSpan(
                 text: 'sınavda bir adım önde',
                 style: TextStyle(color: p.accent, fontWeight: FontWeight.w700),

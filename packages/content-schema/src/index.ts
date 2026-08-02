@@ -525,6 +525,12 @@ export {
   PARALLEL_RATIO_LIMIT,
   QUALITY_GATE,
   QUALITY_RATCHET,
+  // Premium Kalite Programı · Faz 1 — sınav tekniği ölçütleri
+  shortestOptionWins,
+  hasAbsolutePhrase,
+  absoluteOnlyInDistractors,
+  isLazyOption,
+  testWiseGuessWins,
   type ScorableQuestion,
   type BankQualityReport,
   type GateFailure,

@@ -17,7 +17,7 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
       'Motorun ve elektrik sisteminin çalışır kalmasının kıvılcım ve yangın riski taşıması nedeniyle',
       'Aracın yakıt tüketimini durdurmak için',
       'Aracın radyosunun sesini kısmak için',
-      'Yaralının koltuğunu geriye yatırabilmek için',
+      'Yaralının koltuğunu geriye yatırıp daha rahat bir konuma getirebilmek ve müdahale alanı açmak için',
     ],
     answerIndex: 0,
     explanation:
@@ -64,7 +64,7 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Devrilen aracın içinde sıkışmış, bilinci açık ve korku içindeki bir sürücüye ilk yardımcının söyleyeceği en uygun söz hangisidir?',
     options: [
-      'Hiç konuşmadan sessizce beklemek en doğrusudur',
+      'Hiç konuşmadan sessizce beklemek en doğrusudur; konuşmak yaralının paniğini daha da artırır',
       'Durumun çok kötü göründüğünü açıkça söylemek',
       'Yanında olduğunu, yardım ekiplerinin yolda olduğunu belirtip sakin kalmasını istemek',
       'Kendi başına çıkması için onu zorlamak',
@@ -90,7 +90,7 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
     stem: 'Bacağı pedal bölgesine sıkışmış, bilinci açık, solunumu ve dolaşımı düzenli bir sürücü için yangın veya patlama tehlikesi de yokken doğru yaklaşım hangisidir?',
     options: [
       'Sürücüyü kollarından çekerek zorla kurtarmak',
-      'Sıkışan bölümü aracın kriko ve aletleriyle rastgele kaldırmaya çalışmak',
+      'Sıkışan bölümü aracın krikosu ve içindeki aletlerle rastgele kaldırmaya çalışmak ve sürücüyü bu şekilde dışarı kurtarmak',
       'Sürücünün kemerini çözüp kendi çabasıyla çıkmasını beklemek',
       'Yaşamsal bir zorunluluk olmadığından kurtarmayı itfaiye ve 112’ye bırakmak, bu sürede yaralıyı izleyip sakin tutmak',
     ],
@@ -115,7 +115,7 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
     stem: 'Kalabalık bir kaza yerinde ilk yardımcının 112’nin aranmasını sağlamak için en etkili davranışı hangisidir?',
     options: [
       'Kalabalıktan belirli bir kişiyi işaret ederek "Mavi montlu bey, lütfen 112’yi arayın" demek',
-      'Genel olarak "biri ambulans çağırsın" diye bağırmak',
+      'Kalabalığa dönüp genel bir ifadeyle «biri ambulans çağırsın» diye yüksek sesle bağırmak ve beklemek',
       'Herkesin kendiliğinden arayacağını varsaymak',
       'Aramayı bir süre erteleyip önce fotoğraf çekmek',
     ],
@@ -141,7 +141,7 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
     options: [
       'Kalabalık dağılıp herkes evine gitsin diye',
       'Yol güvenliği, 112 çağrısı ve yaralının bakımı gibi işlerin aynı anda ve düzenli yürütülmesini sağlamak için',
-      'Sorumluluğu tamamen başkalarına bırakabilmek için',
+      'Sorumluluğu tamamen olay yerindeki başka kişilere bırakıp kendisinin müdahaleden uzak durabilmesini sağlamak için',
       'Olayla ilgilenen kişi sayısını azaltmak için',
     ],
     answerIndex: 1,
@@ -189,7 +189,7 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Motosiklet sürücüsünün kaskı hangi durumda ve nasıl çıkarılabilir?',
     options: [
-      'Yaralı ayağa kalkabiliyorsa, tek elle hızlıca çekilerek',
+      'Yaralı ayağa kalkabiliyorsa kask tek elle hızlıca çekilerek çıkarılır; iki kişiye ve özel bir tekniğe gerek yoktur',
       'Yaralı kaskı sıcak bulduğunda, çenesinden yukarı doğru',
       'Her kazadan sonra, tek başına ve hızla',
       'Solunumu durmuş ve müdahale için gerekliyse, mümkünse iki kişiyle baş-boyun ekseni korunarak dikkatlice',
@@ -215,7 +215,7 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
     stem: 'Emniyet kemeri takılıyken direksiyona göğsünü çarpan bir sürücüde göğüs bölgesi değerlendirilirken öncelikle nelere bakılır?',
     options: [
       'Nefes alışının rahat olup olmadığına, göğüste ağrı, morarma ve nefeste artan sızıya',
-      'Yalnızca cildin renginin değişip değişmediğine',
+      'Yalnızca göğüs bölgesindeki cildin renginin değişip değişmediğine ve morarma olup olmadığına',
       'Yalnızca nabzının sayısına',
       'Yalnızca gözbebeklerinin büyüklüğüne',
     ],
@@ -242,7 +242,7 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
       'Yaralıya derin nefes egzersizi zorla yaptırmak',
       'Yaralıyı en rahat ettiği pozisyonda tutmak, gereksiz hareketten kaçınmak ve 112 aramak',
       'Ağrıyan bölgeye sertçe bastırıp masaj yapmak',
-      'Yaralıyı sırtüstü düz yatırıp hareketsiz zorlamak',
+      'Yaralıyı sırtüstü düz yatırıp hareket etmemesi için zorlamak ve derin nefes almasını beklemek',
     ],
     answerIndex: 1,
     explanation:
@@ -267,7 +267,7 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
       'Kemerin çok gevşek takıldığını',
       'Yalnızca giysinin lekelendiğini',
       'Bu bölgenin darbe aldığını ve altındaki organlarda gizli bir yaralanma olabileceğini',
-      'Yaralanmanın kesinlikle önemsiz olduğunu',
+      'Emniyet kemerinin izinin görülmesinin yaralanmanın kesinlikle önemsiz olduğunu gösterdiğini',
     ],
     answerIndex: 2,
     explanation:
@@ -514,14 +514,14 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Kapalı bir mekânda bulunan birden fazla kişide aynı anda baş ağrısı, baş dönmesi ve bulantı başlarsa ilk yardımcı öncelikle neyden şüphelenmeli ve ne yapmalıdır?',
     options: [
-      'Ortak bir karbonmonoksit kaynağından',
-      'Yiyecek zehirlenmesinden; herkese su içirmekten',
-      'Grip salgınından; kişileri aynı odada dinlendirmekten',
-      'Uykusuzluktan; perdeleri kapatıp odayı karartmaktan',
+      'Ortak bir karbonmonoksit kaynağından; kişileri temiz havaya çıkarmaktan',
+      'Yiyecek zehirlenmesinden; herkese bol su içirip kusmalarını sağlamaktan',
+      'Grip salgınından; kişileri aynı odada birlikte dinlendirmekten',
+      'Uykusuzluktan; perdeleri kapatıp odayı karartarak uyutmaktan',
     ],
     answerIndex: 0,
     explanation:
-      'Aynı kapalı ortamdaki birden çok kişinin eş zamanlı olarak baş ağrısı, baş dönmesi ve bulantı yaşaması karbonmonoksit zehirlenmesini akla getirmelidir. Kişiler derhâl temiz havaya çıkarılır, ortam havalandırılır ve 112 aranır. Kişileri hızla temiz havaya çıkarıp ortamı havalandırmaktan ve 112’yi aramaktan.',
+      'Aynı kapalı ortamdaki birden çok kişinin eş zamanlı olarak baş ağrısı, baş dönmesi ve bulantı yaşaması karbonmonoksit zehirlenmesini akla getirmelidir. Kişiler derhâl temiz havaya çıkarılır, ortam havalandırılır ve 112 aranır.',
     whyWrong: [
       'Ortak ve ani belirtiler yiyecek zehirlenmesi ya da gribe göre çok daha çok gaz kaynağını düşündürür.',
       'Kişileri aynı ortamda tutmak veya odayı karartmak gaz solumaya devam etmelerine yol açar.',
@@ -764,14 +764,14 @@ export const ILKYARDIM_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Hayati bir kanamayı durdurmak için zorunlu olarak turnike uygulayan ilk yardımcı, uygulama saatini not ettikten sonra bu bilgiyi nerede belirtmelidir?',
     options: [
-      'Kimseye söylemeden aklında tutmalıdır',
-      'Turnikenin altına gizlemelidir',
-      'Yaralının görünür bir yerine (örneğin alnına)',
-      'Yalnızca kendi telefonuna kaydetmelidir',
+      'Kimseye söylemeden yalnızca kendi aklında tutmalı ve gerekirse hatırlamalıdır',
+      'Turnikenin altına sıkıştırarak gözden uzak biçimde saklamalıdır',
+      'Yaralının görünür bir yerine (örneğin alnına) yazarak belirtmelidir',
+      'Yalnızca kendi telefonuna not olarak kaydedip saklamalıdır',
     ],
     answerIndex: 2,
     explanation:
-      'Turnikenin ne zaman uygulandığı, uzvun ne kadar süredir kansız kaldığını gösteren hayati bir bilgidir. Bu saat, yaralıyı devralacak ekibin kolayca görebileceği bir yere (örneğin alına) yazılır veya üzerine iliştirilir; böylece bilgi yaralıyla birlikte taşınır. Yazarak veya bir kâğıtla yaralının üzerine iliştirerek belirtmelidir.',
+      'Turnikenin ne zaman uygulandığı, uzvun ne kadar süredir kansız kaldığını gösteren hayati bir bilgidir. Bu saat, yaralıyı devralacak ekibin kolayca görebileceği bir yere (örneğin alına) yazılır veya üzerine iliştirilir; böylece bilgi yaralıyla birlikte taşınır.',
     whyWrong: [
       'Bilgiyi yalnızca akılda tutmak veya telefona kaydetmek, ilk yardımcı ayrıldığında saatin kaybolmasına yol açar.',
       'Turnikenin altına gizlenen bir not, devralan ekip tarafından görülmez.',

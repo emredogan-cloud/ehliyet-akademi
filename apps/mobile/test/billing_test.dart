@@ -1,7 +1,6 @@
 import 'package:ehliyet_akademi/data/premium/billing_gateway.dart';
 import 'package:ehliyet_akademi/data/premium/iap_service.dart';
 import 'package:ehliyet_akademi/data/premium/play_billing_gateway.dart';
-import 'package:ehliyet_akademi/data/premium/revenuecat_gateway.dart';
 import 'package:ehliyet_akademi/domain/premium/entitlement_status.dart';
 import 'package:ehliyet_akademi/domain/premium/products.dart';
 import 'package:flutter/material.dart';
@@ -107,42 +106,26 @@ void main() {
     });
   });
 
-  group('RevenueCat ağ geçidi — yapılandırma', () {
-    test('anahtar YOKSA yapılandırılmamıştır (uygulama çökmez, mevcut yola düşülür)', () {
-      // Test derlemesinde `--dart-define=REVENUECAT_PUBLIC_KEY` verilmez.
-      expect(RevenueCatGateway().isConfigured, isFalse);
-      expect(RevenueCatGateway(publicKey: '').isConfigured, isFalse);
-    });
-
-    test('anahtar VARSA yapılandırılmıştır ve WEBHOOK köprüsünü bildirir', () {
-      final g = RevenueCatGateway(publicKey: 'anahtar-yer-tutucu');
-      expect(g.isConfigured, isTrue);
-      expect(g.serverBridge, BillingServerBridge.revenueCatWebhook);
-      expect(g.name, 'revenuecat');
-    });
-
-    test('varsayılan yetki kimliği premium; abonelik ürünleri boş kalabilir', () {
-      final g = RevenueCatGateway(publicKey: 'anahtar-yer-tutucu');
-      expect(g.entitlementId, 'premium');
-      expect(g.monthlyProductId, isEmpty);
-      expect(g.yearlyProductId, isEmpty);
-    });
-
-    test('yapılandırılmamış ağ geçidi hiçbir çağrıda FIRLATMAZ', () async {
-      final g = RevenueCatGateway();
-      expect(await g.available(), isFalse);
-      expect(await g.products(), isEmpty);
-      expect(await g.entitlementFacts(), isEmpty);
-      expect(await g.entitlements(), isEmpty);
+  group('ödeme ağ geçidi — RevenueCat kaldırıldı', () {
+    /// Premium Kalite Programı · Faz 6.
+    ///
+    /// İkinci ağ geçidi yalnız `--dart-define=REVENUECAT_PUBLIC_KEY` verilmişse seçiliyordu;
+    /// o bayrak hiçbir derlemede verilmedi, dolayısıyla ağ geçidi hiç çalışmadı. Buna karşılık
+    /// yayınlanan APK'nın `classes.dex` dosyasında 3114 RevenueCat sembolü duruyordu.
+    ///
+    /// Ağ geçidinin KENDİSİ burada kurulamaz: `PlayBillingGateway`, kurucusunda
+    /// `in_app_purchase` platform kanalını açıyor ve birim testinde kanal yok. Bu yüzden
+    /// kaldırmanın kalıcı izi, sözleşmenin kendisinde aranıyor.
+    test('sunucu köprüsü sayımında sağlayıcıya özel bir değer kalmadı', () {
+      expect(BillingServerBridge.values, hasLength(2));
       expect(
-        await g.purchase(
-          const BillingProduct(storeProductId: 'komple_ehliyet', priceLabel: '₺399,00'),
-        ),
-        isA<BillingFailure>(),
+        BillingServerBridge.values.map((v) => v.name.toLowerCase()),
+        isNot(contains(contains('revenue'))),
+        reason: 'sayım artık belirli bir sağlayıcının adını taşımamalı',
       );
-      expect(await g.restore(), isA<BillingFailure>());
-      g.listen((_) async {});
-      g.dispose(); // kurulmamış SDK'da bile güvenli
+      // Bugün sevk edilen yol makbuz doğrulamasıdır; ikinci değer ileriye dönük ayrımı tutar.
+      expect(BillingServerBridge.values, contains(BillingServerBridge.clientReceipt));
+      expect(BillingServerBridge.values, contains(BillingServerBridge.externalWebhook));
     });
   });
 

@@ -117,12 +117,7 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
     topic: 'kirmizida-saga-donus',
     difficulty: 'kolay',
     stem: 'Ülkemizde, ayrı bir yeşil ok ışığı bulunmayan bir kavşakta kırmızı ışıkta sağa dönmek ile ilgili hangisi doğrudur?',
-    options: [
-      'Yol boşsa serbesttir',
-      'Gece serbesttir',
-      'Yavaş dönülürse serbesttir',
-      'Yasaktır',
-    ],
+    options: ['Yol boşsa serbesttir', 'Gece serbesttir', 'Yavaş dönülürse serbesttir', 'Yasaktır'],
     answerIndex: 3,
     explanation:
       'Ülkemizde kırmızı ışıkta sağa dönüş serbest değildir. Ayrı bir yeşil sağa dönüş oku yanmıyorsa, kırmızı ışık o koldaki bütün hareketleri durdurur; sürücü yeşili beklemek zorundadır.',
@@ -430,14 +425,14 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Yeterince aydınlatılmamış bir yol kenarında geceleyin park eden sürücü, aracının fark edilmesi için ne yapmalıdır?',
     options: [
-      'Bütün ışıkları söndürüp aracı karanlıkta bırakmalıdır',
-      'Uzun farları açık bırakmalıdır',
-      'Aracın görülebilmesi için park (durum)',
-      'Dörtlü ikazı sabaha kadar yakık tutup gitmelidir',
+      'Bütün ışıkları söndürüp aracı olduğu gibi karanlıkta bırakmalıdır',
+      'Uzun farları açık bırakıp aracın önünü aydınlatmalıdır',
+      'Aracın görülebilmesi için park (durum) lambalarını yakmalıdır',
+      'Dörtlü ikazı sabaha kadar yanık tutup aracın yanından ayrılmalıdır',
     ],
     answerIndex: 2,
     explanation:
-      'Aydınlatması yetersiz yolda karanlıkta park eden araç, arkadan gelen için görünmez bir engeldir. Aracın belli olması için park (durum) lambaları yakılır; gerekirse yansıtıcı veya işaretle konumu belirtilir. Lambalarını yakmalı, gerekiyorsa yansıtıcı ile işaretlemelidir.',
+      'Aydınlatması yetersiz yolda karanlıkta park eden araç, arkadan gelen için görünmez bir engeldir. Aracın belli olması için park (durum) lambaları yakılır; gerekirse yansıtıcı veya işaretle konumu belirtilir.',
     whyWrong: [
       'Bütün ışıkları söndürmek aracı görünmez kılar ve çarpışmaya yol açar.',
       'Uzun far park için kullanılmaz; karşıdan gelenleri kamaştırır.',
@@ -1341,12 +1336,12 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Aşağıdaki yerlerden hangisinde öndeki aracı geçmek (sollama) genel olarak yasaktır?',
     options: [
-      'Görüşün açık olduğu düz ve geniş yollarda',
       'Tepe üstlerinde, keskin virajlarda, yaya geçitlerinde ve kavşaklarda',
+      'Görüşün açık olduğu düz ve geniş yollarda',
       'Karşı şeridin uzun süre boş olduğu yollarda',
       'Geçme yasağı işareti bulunmayan her yerde',
     ],
-    answerIndex: 1,
+    answerIndex: 0,
     explanation:
       'Sollama, karşı şeridin görülebildiği ve boş olduğu yerlerde yapılabilir. Tepe üstü ve keskin viraj görüşü kapatır; yaya geçidi ve kavşak ise yaya ile başka araçların hareket alanıdır. Bu yerlerde sollama yasaktır.',
     whyWrong: [
@@ -1446,11 +1441,11 @@ export const TRAFIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Gece karayolunda ilerleyen traktör gibi yavaş ve ağır bir aracın arkadan gelen sürücüler tarafından fark edilmesi neden özellikle önemlidir?',
     options: [
       'Yavaş araçların gece sürmesi tamamen yasak olduğu için',
-      'Hızlı gelen araç önündeki yavaş aracı geç fark ederse arkadan çarpma riski çok yükseldiği için, bu araçların lamba ve yansıtıcılarının çalışır olması gerekir',
-      'Yavaş araçların farı olması gerekmediği için',
       'Gece görüşün gündüzden daha iyi olduğu için',
+      'Yavaş araçların farı olması gerekmediği için',
+      'Hızlı gelen araç önündeki yavaş aracı geç fark ederse arkadan çarpma riski çok yükseldiği için, bu araçların lamba ve yansıtıcılarının çalışır olması gerekir',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Gece, arkadan hızla yaklaşan bir sürücü önündeki yavaş aracın hızını yanlış değerlendirebilir. Yavaş aracın arka lambaları ve yansıtıcıları çalışır durumda değilse, aradaki hız farkı yüzünden arkadan çarpma riski çok yükselir.',
     whyWrong: [

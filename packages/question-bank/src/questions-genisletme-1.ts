@@ -20,10 +20,10 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'kolay',
     stem: 'Kavşakta yalnızca yanıp sönen sarı ışık sürücüye ne anlatır?',
     options: [
-      'Dur ve bekle',
+      'Dur çizgisinde tam olarak dur ve bekle',
       'Yavaşla, dikkatli ol ve kurallara göre geç',
-      'Hızlan ve hemen geç',
-      'Geri dön',
+      'Hızlan ve kavşağı hemen geçmeye çalış',
+      'Kavşağa girme, geri dönerek başka yola sap',
     ],
     answerIndex: 1,
     explanation:
@@ -97,12 +97,7 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     topic: 'isikli-isaret-cihazlari',
     difficulty: 'kolay',
     stem: 'Trafik ışığında kırmızı ile birlikte sarının da yandığı safha ne anlama gelir?',
-    options: [
-      'Hemen geç',
-      'Birazdan yeşil yanacak',
-      'Dur ve motoru durdur',
-      'Kavşakta geri git',
-    ],
+    options: ['Hemen geç', 'Birazdan yeşil yanacak', 'Dur ve motoru durdur', 'Kavşakta geri git'],
     answerIndex: 1,
     explanation:
       'Kırmızı+sarı safhası, yeşilin yanmak üzere olduğunu bildirir; sürücü hareket için hazırlanır ancak yeşil yanmadan geçmez. Harekete hazırlan ama henüz geçme.',
@@ -178,14 +173,14 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'orta',
     stem: 'Gösterge panelinde akü/şarj (kırmızı akü sembolü) ikaz lambasının yanması neyi işaret eder?',
     options: [
-      'Lastik basıncının düştüğünü',
-      'Şarj sisteminde (alternatör/kayış)',
-      'Yakıtın bittiğini',
-      'Kapının açık olduğunu',
+      'Lastik hava basıncının önerilen değerin altına düştüğünü',
+      'Şarj sisteminde (alternatör/kayış) arıza olabileceğini',
+      'Depodaki yakıtın bitmek üzere olduğunu',
+      'Araç kapılarından birinin tam kapanmadığını',
     ],
     answerIndex: 1,
     explanation:
-      'Akü sembollü ikaz, şarj sisteminin aküyü doldurmadığını gösterir (alternatör veya kayış arızası olabilir); kısa sürede kontrol ettirilmelidir. Arıza olabileceğini.',
+      'Akü sembollü ikaz, şarj sisteminin aküyü doldurmadığını gösterir (alternatör veya kayış arızası olabilir); kısa sürede kontrol ettirilmelidir.',
     whyWrong: [
       'Lastik basıncının ayrı bir ikaz sembolü vardır.',
       'Yakıt için ayrı gösterge vardır.',
@@ -204,10 +199,10 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'orta',
     stem: 'Motor sıcaklık (hararet) göstergesi kırmızı bölgeye geldiğinde ilk yapılması gereken nedir?',
     options: [
-      'Radyatör kapağını hemen açmak',
+      'Radyatör kapağını hemen açarak içine soğuk su doldurmak',
       'Aracı güvenli yerde durdurup motoru soğumaya bırakmak',
-      'Hızlanarak rüzgârla soğutmak',
-      'Kaloriferi kapatmak',
+      'Hızlanarak rüzgârla motoru soğutmaya çalışmak',
+      'Kaloriferi kapatıp yolculuğa devam etmek',
     ],
     answerIndex: 1,
     explanation:
@@ -230,10 +225,10 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'kolay',
     stem: 'Gösterge panelinde yeşil renkli ikaz lambaları genellikle neyi bildirir?',
     options: [
-      'Ciddi bir arızayı',
+      'Ciddi bir arızayı ve derhâl durulması gerektiğini',
       'Bir sistemin çalıştığını/aktif olduğunu (bilgi)',
-      'Motorun durduğunu',
-      'Yakıtın bittiğini',
+      'Motorun durduğunu ve marş gerektiğini',
+      'Yakıtın bittiğini ve ikmal gerektiğini',
     ],
     answerIndex: 1,
     explanation:
@@ -258,12 +253,12 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'kolay',
     stem: 'Motor yağının değişim zamanı genel olarak neye göre belirlenir?',
     options: [
-      'Aracın rengine göre',
+      'Aracın dış rengine ve model yılına göre belirlenir',
+      'Lastik hava basıncı değerine göre',
+      'Yalnızca gözle görülür bir arıza çıkınca',
       'Üreticinin belirttiği kilometre veya süreye göre',
-      'Sadece arıza çıkınca',
-      'Lastik basıncına göre',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Motor yağı, üreticinin el kitabında belirttiği kilometre veya zaman aralığında (hangisi önce dolarsa) değiştirilir; düzenli değişim motor ömrünü korur.',
     whyWrong: [
@@ -284,12 +279,12 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'orta',
     stem: 'Tıkanmış bir hava filtresinin araca etkisi ne olur?',
     options: [
-      'Fren mesafesini kısaltır',
+      'Fren mesafesini kısaltıp frenleme gücünü belirgin artırır',
+      'Direksiyonu ağırlaştırır ve manevrayı zorlaştırır',
+      'Lastik ömrünü uzatır ve aşınmayı yavaşlatır',
       'Yakıt tüketimini artırır ve motor performansını düşürür',
-      'Lastik ömrünü uzatır',
-      'Direksiyonu ağırlaştırır',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Kirli/tıkalı hava filtresi motora yeterli hava girişini engeller; yanma bozulur, yakıt tüketimi artar ve güç düşer. Periyodik olarak değişmelidir.',
     whyWrong: [
@@ -310,12 +305,12 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'kolay',
     stem: 'Cam sileceği süpürgesi camda iz bırakıyor ve iyi temizlemiyorsa ne yapılmalıdır?',
     options: [
-      'Görmezden gelinir',
+      'Görmezden gelinir; iz zamanla kendiliğinden geçer',
+      'Sinyal kolu ve silecek motoru değiştirilir',
+      'Cam sürekli açık bırakılarak kurutulur',
       'Silecek lastiği/süpürgesi yenisiyle değiştirilir',
-      'Cam açık bırakılır',
-      'Sinyal kolu değiştirilir',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Yıpranmış silecek lastiği görüşü bozar; yağmurda güvenliği doğrudan etkilediğinden yenisiyle değiştirilmelidir.',
     whyWrong: [
@@ -471,11 +466,11 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     stem: 'Trafikte "duraklama" en doğru şekilde nasıl tanımlanır?',
     options: [
       'Aracı uzun süre terk etmek',
-      'Yolcu indirip bindirmek veya kısa bir iş için aracı kısa süreli durdurmak',
-      'Motoru kapatıp gece boyu bırakmak',
       'Aracı tamir için bırakmak',
+      'Motoru kapatıp gece boyu bırakmak',
+      'Yolcu indirip bindirmek veya kısa bir iş için aracı kısa süreli durdurmak',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Duraklama; yolcu indirme-bindirme, yük alma-verme gibi nedenlerle aracın kısa süreli durdurulmasıdır. Uzun süreli bırakma park kapsamındadır.',
     whyWrong: [
@@ -496,12 +491,12 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'zor',
     stem: 'Yokuş aşağı, bordürlü (kaldırımlı) bir yolda park eden sürücü ön tekerlekleri hangi yöne çevirmelidir?',
     options: [
+      'Tekerlek yönünün eğimli yolda bir önemi yoktur',
+      'Tekerlekleri yola paralel biçimde düz bırakır',
+      'Yola doğru, trafiğe bakacak şekilde çevirir',
       'Yoldan uzağa, bordüre (kaldırıma) doğru',
-      'Yola paralel bırakır',
-      'Yola doğru, trafiğe bakacak şekilde',
-      'Fark etmez',
     ],
-    answerIndex: 0,
+    answerIndex: 3,
     explanation:
       'Yokuş aşağı parkta araç kayarsa bordür engel olsun diye ön tekerlekler kaldırıma doğru çevrilir; ayrıca el freni çekilir ve vites takılır.',
     whyWrong: [
@@ -550,10 +545,10 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'orta',
     stem: 'Hava yastığı (airbag) sürücüyü en iyi hangi durumda korur?',
     options: [
-      'Emniyet kemeri takılı değilken tek başına',
+      'Emniyet kemeri takılı değilken tek başına kullanıldığında',
       'Emniyet kemeriyle birlikte kullanıldığında',
-      'Yalnızca düşük hızda',
-      'Yalnızca arka koltukta',
+      'Yalnızca düşük hızdaki çarpışmalarda',
+      'Yalnızca arka koltuktaki yolcular için',
     ],
     answerIndex: 1,
     explanation:
@@ -604,10 +599,10 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'orta',
     stem: 'ABS (kilitlenmeyi önleyici fren sistemi) sürücüye temel olarak ne sağlar?',
     options: [
-      'Fren mesafesini her zeminde sıfırlar',
+      'Fren mesafesini her zeminde sıfırlayarak aracı pedala basıldığı anda tamamen ve güvenle durdurur',
       'Ani/sert frende tekerlek kilitlenmesini önleyerek direksiyon hâkimiyetinin korunmasını sağlar',
-      'Yakıt tüketimini azaltır',
-      'Motor gücünü artırır',
+      'Yakıt tüketimini azaltıp fren balatalarının ömrünü uzatır',
+      'Motor gücünü artırıp hızlanma performansını yükseltir',
     ],
     answerIndex: 1,
     explanation:
@@ -658,10 +653,10 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'zor',
     stem: 'Benzinli bir araca yanlışlıkla dizel (veya tersi) yakıt konulduğu fark edilirse ne yapılmalıdır?',
     options: [
-      'Motoru çalıştırıp yakıtı tüketmek',
+      'Motoru çalıştırarak yanlış yakıtı bir an önce tüketmeye çalışmak',
       'Motoru çalıştırmadan aracı çektirip yakıt sistemini boşalttırmak',
-      'Üzerine doğru yakıt eklemek',
-      'Bir süre beklemek',
+      'Üzerine doğru yakıttan ekleyip karışımı seyreltmek',
+      'Bir süre bekleyip yakıtların ayrışmasını sağlamak',
     ],
     answerIndex: 1,
     explanation:
@@ -684,10 +679,10 @@ export const GENISLETME_QUESTIONS_1: Question[] = [
     difficulty: 'kolay',
     stem: 'Aşağıdakilerden hangisi yakıt tüketimini azaltır?',
     options: [
-      'Sürekli ani hızlanma ve fren',
+      'Sürekli ani hızlanma ve sert fren yaparak yoğun trafikte seyretmek',
       'Sabit hızda gitmek, erken vites yükseltmek ve gereksiz yükü atmak',
       'Lastikleri sürekli düşük basınçta tutmak',
-      'Bagajı ağır yükle dolu tutmak',
+      'Bagajı sürekli ağır yükle dolu tutmak',
     ],
     answerIndex: 1,
     explanation:

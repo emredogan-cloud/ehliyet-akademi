@@ -21,7 +21,10 @@ import '../features/practice/practice_screen.dart';
 import '../features/practice/practice_runner_screen.dart';
 import '../features/practice/exam_runner_screen.dart';
 import '../features/practice/collections_screen.dart';
+import '../features/duel/duel_screen.dart';
+import '../features/practice/exam_library_screen.dart';
 import '../features/practice/historical_screen.dart';
+import '../domain/practice/exam_library.dart';
 import '../domain/practice/historical.dart';
 import '../features/coach/coach_screen.dart';
 import '../features/community/blocked_users_screen.dart';
@@ -215,6 +218,34 @@ GoRouter _buildRouter(Ref ref) => GoRouter(
                   ),
                 ),
                 GoRoute(path: 'historical', builder: (_, _) => const HistoricalScreen()),
+
+                // Ürün Evrimi v1.1 · Faz 4 — Düello.
+                GoRoute(path: 'duel', builder: (_, _) => const DuelScreen()),
+
+                // Ürün Evrimi v1.1 · Faz 2 — sınav kütüphanesi.
+                GoRoute(path: 'library', builder: (_, _) => const ExamLibraryScreen()),
+                GoRoute(
+                  path: 'library/:category',
+                  builder: (_, state) {
+                    final c = examCategoryByName(state.pathParameters['category']);
+                    if (c == null) return const ExamLibraryScreen();
+                    return ExamLibraryDatesScreen(category: c);
+                  },
+                ),
+                GoRoute(
+                  path: 'library/:category/:date',
+                  builder: (_, state) {
+                    final c = examCategoryByName(state.pathParameters['category']);
+                    final date = state.pathParameters['date'] ?? '';
+                    if (c == null) return const ExamLibraryScreen();
+                    final exam = libraryExamById('${c.name}-$date', DateTime.now());
+                    return ExamRunnerScreen(
+                      source: ExamSource.library,
+                      id: exam?.id,
+                      titleText: exam?.label ?? c.label,
+                    );
+                  },
+                ),
                 GoRoute(
                   path: 'historical/:id',
                   builder: (_, state) {

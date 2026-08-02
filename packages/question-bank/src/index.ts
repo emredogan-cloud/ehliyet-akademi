@@ -49,6 +49,7 @@ import { PRATIK_QUESTIONS_5 } from './questions-pratik-5';
 import { PRATIK_QUESTIONS_6 } from './questions-pratik-6';
 import { PRATIK_QUESTIONS_7 } from './questions-pratik-7';
 import { GENISLETME_QUESTIONS_1 } from './questions-genisletme-1';
+import { GENISLETME_QUESTIONS_2 } from './questions-genisletme-2';
 
 export { SEED_QUESTIONS, EXTRA_QUESTIONS };
 
@@ -92,6 +93,7 @@ const RAW: QuestionInput[] = [
   ...PRATIK_QUESTIONS_7,
   // QIP 2.0 · Faz 4 — boşluk-hedefli özgün genişletme
   ...GENISLETME_QUESTIONS_1,
+  ...GENISLETME_QUESTIONS_2,
 ];
 
 /** Doğrulanmış, varsayılanları dolu banka (yükleme anında parse — bozuk içerik build'i kırar). */

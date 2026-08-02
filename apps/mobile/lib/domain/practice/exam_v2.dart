@@ -299,6 +299,11 @@ ExamPlan buildExamV2(List<Question> pool, ExamConfig config, {Rng? rng}) {
   }
 
   // Görsel oranı hedefi — havuzda yeterli görsel soru varsa karışımı ona yaklaştır.
+  //
+  // DEĞİŞİM AYNI DERS İÇİNDE YAPILIR. Önceden metin sorusunun yerine HERHANGİ bir görsel soru
+  // konuyordu; ders dağılımı kurulduktan SONRA çalıştığı için bu, kurulan dağılımı bozuyordu.
+  // Sınav kütüphanesinde yakalandı: "İlk Yardım" sınavına trafik levhası sorusu giriyordu.
+  // Ders eşleşmesi, hem MEB dağılımını hem tek-derslik sınavları korur.
   final ratio = config.visualRatio;
   if (ratio != null && picked.isNotEmpty) {
     final wantVisual = (picked.length * ratio).round();
@@ -308,16 +313,21 @@ ExamPlan buildExamV2(List<Question> pool, ExamConfig config, {Rng? rng}) {
         clean.where((q) => q.media != null && !picked.contains(q)).toList(),
         r,
       );
-      final textIdx = [
-        for (var i = 0; i < picked.length; i++)
-          if (picked[i].media == null) i,
-      ];
+      // Ders → o dersten değiştirilebilir metin sorularının konumları.
+      final textIdxBySubject = <Subject, List<int>>{};
+      for (var i = 0; i < picked.length; i++) {
+        if (picked[i].media == null) {
+          (textIdxBySubject[picked[i].subject] ??= []).add(i);
+        }
+      }
       var swapped = 0;
       for (final q in spare) {
-        if (swapped >= wantVisual - have || swapped >= textIdx.length) break;
+        if (swapped >= wantVisual - have) break;
+        final slots = textIdxBySubject[q.subject];
+        if (slots == null || slots.isEmpty) continue;
         final key = _imageKey(q);
         if (key != null && !usedImages.add(key)) continue;
-        picked[textIdx[swapped]] = q;
+        picked[slots.removeLast()] = q;
         swapped++;
       }
     }

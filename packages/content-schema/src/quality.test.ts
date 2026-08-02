@@ -6,6 +6,10 @@ import {
   longestOptionWins,
   measureBank,
   QUALITY_GATE,
+  absoluteOnlyInDistractors,
+  isLazyOption,
+  shortestOptionWins,
+  testWiseGuessWins,
 } from './quality';
 
 /** Ürün Evrimi v1.1 · Faz 1 — kalite ölçerinin KENDİSİNİN testi.
@@ -107,7 +111,7 @@ describe('checkQualityGate', () => {
   });
 
   it('tellal banka kapıda KALIR ve nedeni söylenir', () => {
-    const telling = Array.from({ length: 40 }, (_, i) =>
+    const telling = Array.from({ length: 40 }, () =>
       q(
         [
           'Kısa',
@@ -136,5 +140,70 @@ describe('checkQualityGate', () => {
     // Kapıyı geçmek için eşiği yükseltmek, kapıyı kaldırmakla aynı şey. Sabit burada kilitli.
     expect(QUALITY_GATE.maxLongestWinsRate).toBeLessThanOrEqual(0.4);
     expect(QUALITY_GATE.minParallelRate).toBeGreaterThanOrEqual(0.6);
+  });
+});
+
+/**
+ * Premium Kalite Programı · Faz 1 — kapının GENİŞLETİLMİŞ ölçütleri.
+ *
+ * Bu blok tek bir fikri koruyor: "soruyu okumadan kazanılan pay" tek bir ölçütle bitmez.
+ * Uzunluk düzeltilince sıra mutlak ifadeye, o düzelince ikisinin BİLEŞİMİNE gelir.
+ */
+describe('kalite kapısı — sınav tekniği ölçütleri', () => {
+  const q = (options: string[], answerIndex: number) => ({ options, answerIndex });
+
+  it('en kısa şık kazanıyorsa yakalanır — ters tellalık', () => {
+    expect(
+      shortestOptionWins(q(['Evet', 'Uzunca bir çeldirici metni', 'Bir diğeri', 'Üçüncüsü'], 0))
+    ).toBe(true);
+    expect(shortestOptionWins(q(['Aynı', 'Aynı', 'Uzun bir metin', 'Bir diğeri'], 0))).toBe(false);
+  });
+
+  it('mutlak ifade yalnız çeldiricilerdeyse tellalık sayılır', () => {
+    expect(
+      absoluteOnlyInDistractors(
+        q(['Duruma göre değişir', 'Asla yapılmaz', 'Her zaman yapılır', 'Kesinlikle yasaktır'], 0)
+      )
+    ).toBe(true);
+    // Doğru şıkta da geçiyorsa taktik işe yaramaz — tellalık yok.
+    expect(
+      absoluteOnlyInDistractors(q(['Asla yapılmaz', 'Bazen yapılır', 'Sık yapılır', 'Nadiren'], 0))
+    ).toBe(false);
+  });
+
+  it('içeriksiz şıklar tanınır', () => {
+    expect(isLazyOption('Hiçbiri')).toBe(true);
+    expect(isLazyOption(' Fark etmez ')).toBe(true);
+    expect(isLazyOption('Kırmızı ışıkta durmak')).toBe(false);
+  });
+
+  it('BİRLEŞİK teknik: mutlakları eleyip en uzunu seçmek doğruya götürüyorsa yakalanır', () => {
+    // Doğru şık en uzun DEĞİL; ama mutlak ifadeliler elenince en uzun o kalıyor.
+    const tricky = q(
+      [
+        'Bu şık kesinlikle her zaman geçerli olan çok uzun bir ifadedir',
+        'Hızı azaltıp durmaya hazır olmak gerekir',
+        'Kısa',
+        'Daha kısa',
+      ],
+      1
+    );
+    expect(longestOptionWins(tricky)).toBe(false);
+    expect(testWiseGuessWins(tricky)).toBe(true);
+  });
+
+  it('hedef SIFIR değil rastgele taban — alt sınır da kapıda', () => {
+    // Doğru şık hiçbir zaman en uzun değilse "en uzunu ele" stratejisi pay verir.
+    const inverted = Array.from({ length: 40 }, () =>
+      q(['Kısa cevap', 'Bu çok daha uzun bir çeldirici metnidir', 'Orta uzunlukta', 'Yine orta'], 0)
+    );
+    const failures = checkQualityGate(measureBank(inverted));
+    expect(failures.some((f) => f.metric === 'longestWinsRate(alt)')).toBe(true);
+    expect(QUALITY_GATE.minLongestWinsRate).toBeGreaterThan(0);
+    expect(QUALITY_GATE.minLongestWinsRate).toBeLessThan(0.25);
+  });
+
+  it('içeriksiz şık kapıda sıfır tolerans', () => {
+    expect(QUALITY_GATE.maxLazyOptions).toBe(0);
   });
 });

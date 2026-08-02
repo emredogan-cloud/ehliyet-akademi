@@ -480,8 +480,8 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
     topic: 'elektrikli-scooter',
     difficulty: 'kolay',
     stem: 'Paylaşımlı elektrikli skuterlerin (e-skuter) tasarım gereği aşamayacağı azami hız kaç km/saattir?',
-    options: ['15', '25', '45', '60'],
-    answerIndex: 1,
+    options: ['25', '15', '45', '60'],
+    answerIndex: 0,
     explanation:
       'Elektrikli skuterler, hızı 25 km/saati aşmayacak şekilde üretilir ve kullanılır; bu sınır, korumasız sürücünün düşme ve çarpışma riskini kontrol altında tutmak içindir.',
     whyWrong: [
@@ -580,11 +580,11 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'İki yönlü bir yolda arızalanan araç için üçgen reflektörler aracın neresine konulmalıdır?',
     options: [
       'Yalnızca arkasına',
-      'Ön ve arkasına birer adet olacak şekilde',
       'Yalnızca önüne',
+      'Ön ve arkasına birer adet olacak şekilde',
       'Sağ ve sol yanlarına',
     ],
-    answerIndex: 1,
+    answerIndex: 2,
     explanation:
       'İki yönlü yolda tehlike her iki yönden de gelir; bu yüzden reflektörlerden biri aracın önüne, diğeri arkasına yerleştirilerek her iki yöndeki sürücüler uyarılır.',
     whyWrong: [
@@ -604,10 +604,10 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Otoyolda arızalanan aracını emniyet şeridine çeken sürücü ve yolcuları yardım gelene kadar nerede beklemelidir?',
     options: [
-      'Araç içinde emniyet kemerleri takılı olarak',
-      'Emniyet şeridinde aracın hemen arkasında ayakta',
-      'Taşıt yolunun kenarında yürüyerek',
-      'Araçtan inerek oto korkuluğun (bariyerin)',
+      'Araç içinde emniyet kemerleri takılı olarak, kapılar kilitli biçimde',
+      'Emniyet şeridinde aracın hemen arkasında ayakta bekleyerek',
+      'Taşıt yolunun kenarında yürüyerek yardım gelecek yöne doğru',
+      'Araçtan inerek oto korkuluğun (bariyerin) arkasındaki güvenli alanda',
     ],
     answerIndex: 3,
     explanation:
@@ -682,12 +682,12 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Karayolunda hayvan sürüsüyle karşılaşan sürücünün doğru davranışı nedir?',
     options: [
-      'Korna çalarak sürüyü dağıtmak',
       'Hızını azaltmak, gerekirse durarak sürünün güvenle geçmesini beklemek',
+      'Korna çalarak sürüyü dağıtmak',
       'Uzun farları yakıp hızla ilerlemek',
       'Sürünün içinden yavaşça geçmeye çalışmak',
     ],
-    answerIndex: 1,
+    answerIndex: 0,
     explanation:
       'Hayvanların davranışı öngörülemez; ürken hayvan aracın önüne atılabilir. Doğru davranış yavaşlamak, gerekirse durmak ve sürünün yolu boşaltmasını beklemektir.',
     whyWrong: [
@@ -811,12 +811,12 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Ters yönde araç kullanmanın en önemli tehlikesi aşağıdakilerden hangisidir?',
     options: [
-      'Yakıt tüketiminin artması',
       'Diğer sürücülerin o yönden araç beklememesi nedeniyle kafa kafaya çarpışma riskinin çok yüksek olması',
+      'Yakıt tüketiminin artması',
       'Lastiklerin daha hızlı aşınması',
       'Navigasyon cihazının yanlış yönlendirme yapması',
     ],
-    answerIndex: 1,
+    answerIndex: 0,
     explanation:
       'Trafik güvenliği öngörülebilirliğe dayanır. Ters yönden gelen araç bu öngörüyü yıkar: karşı sürücünün tepki verecek zamanı ve kaçacak alanı yoktur, çarpışma iki aracın hız toplamıyla gerçekleşir.',
     whyWrong: [
@@ -916,11 +916,11 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Arkaya (sürüş yönünün tersine) bakan bir çocuk koltuğu, otomobilin ön yolcu koltuğuna hangi şartla yerleştirilebilir?',
     options: [
       'Kemer sıkıca bağlanmışsa her zaman yerleştirilebilir',
-      'O koltuğa ait hava yastığı devre dışı bırakılmışsa',
       'Çocuk beş yaşından büyükse',
+      'O koltuğa ait hava yastığı devre dışı bırakılmışsa',
       'Yolculuk kısa sürecekse',
     ],
-    answerIndex: 1,
+    answerIndex: 2,
     explanation:
       'Açılan hava yastığı, arkaya bakan koltuktaki bebeğin başına çok yakın mesafeden büyük bir kuvvetle çarpar. Bu yüzden ön koltuğa ancak o koltuğun hava yastığı devre dışı bırakılmışsa arkaya bakan koltuk konulabilir.',
     whyWrong: [
@@ -1162,14 +1162,14 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Trafikte "banket" ne anlama gelir?',
     options: [
-      'Taşıt yolu kenarı ile yol sınırı arasında kalan',
-      'Yolun ortasındaki yükseltilmiş ada',
-      'Kavşaklardaki dönüş şeridi',
-      'Otoyoldaki ücret toplama alanı',
+      'Taşıt yolu kenarı ile yol sınırı arasında kalan, yayaların yararlandığı bölüm',
+      'Yolun ortasında gidiş yönlerini birbirinden ayıran yükseltilmiş ada ya da refüj',
+      'Kavşaklarda dönüş yapacak araçlar için ayrılmış ek manevra şeridi',
+      'Otoyol girişindeki ücret toplama ve geçiş kontrol alanı',
     ],
     answerIndex: 0,
     explanation:
-      'Banket, taşıt yolunun hemen kenarındaki bölümdür; yaya yolu olmayan yerlerde yayalar ve hayvanlar buradan yararlanır, araçlar ancak zorunlu hâllerde kullanır. Yayaların yararlandığı, zorunlu hâllerde araçların da kullanabildiği bölüm.',
+      'Banket, taşıt yolunun hemen kenarındaki bölümdür; yaya yolu olmayan yerlerde yayalar ve hayvanlar buradan yararlanır, araçlar ancak zorunlu hâllerde kullanır.',
     whyWrong: [
       'Ortadaki yükseltilmiş alan "ada" olarak adlandırılır.',
       'Dönüş şeritleri taşıt yolunun işaretlenmiş bölümleridir.',
@@ -1292,11 +1292,11 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Eğimli ve dar bir yolda, çıkan araç ile inen araç karşılaştığında geçiş kolaylığını hangisi sağlamalıdır?',
     options: [
       'Çıkan araç geri geri inerek yol vermelidir',
-      'İnen araç, çıkan araca yol vermelidir',
-      'Hangisinin aracı büyükse o yol vermelidir',
       'İki araç aynı anda geçmeyi denemelidir',
+      'Hangisinin aracı büyükse o yol vermelidir',
+      'İnen araç, çıkan araca yol vermelidir',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Yokuşta durup yeniden kalkmak, çıkan araç için kayma ve stop riski taşır. Bu yüzden dar ve eğimli kesimlerde inen araç yol verir; gerekiyorsa uygun bir cebe çekilir ya da güvenle geri gider.',
     whyWrong: [
@@ -1395,11 +1395,11 @@ export const TRAFIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Trafik işaret levhalarını sökmek, yerini değiştirmek veya üzerini yazı ve afişle kapatmak nasıl değerlendirilir?',
     options: [
       'Belediyeden izin alınırsa serbesttir',
-      'Yasaktır',
       'Yalnızca büyükşehirlerde yasaktır',
+      'Yasaktır',
       'Reklam amaçlıysa serbesttir',
     ],
-    answerIndex: 1,
+    answerIndex: 2,
     explanation:
       'İşaret levhaları trafik düzeninin dilidir; okunamaz hâle getirilen bir levha kazaya davetiye çıkarır. Levhalara müdahale yasaktır, verilen zarar ayrıca tazmin ettirilir. Trafik güvenliğini bozan bu davranışlar cezai sorumluluk ve zararın tazminini gerektirir.',
     whyWrong: [

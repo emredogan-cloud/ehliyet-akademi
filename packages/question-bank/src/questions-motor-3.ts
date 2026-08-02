@@ -14,10 +14,10 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Sürüş sırasında yalnızca ABS ikaz lambası yanarsa fren sistemiyle ilgili doğru değerlendirme hangisidir?',
     options: [
-      'Fren sistemi tamamen devre dışı kalmıştır, araç hiç duramaz',
-      'El freni otomatik olarak devreye girer',
+      'Fren sistemi tamamen devre dışı kalmıştır; pedala basılsa da araç hiçbir şekilde yavaşlayamaz ve duramaz',
+      'El freni otomatik olarak devreye girer ve araç kendiliğinden yavaşlayarak durur',
       'Normal frenler çalışmaya devam eder, yalnızca kilitlenmeyi önleme özelliği devre dışı olabilir',
-      'Motorun gücü kendiliğinden artar',
+      'Fren balataları aşınma sınırına gelmiştir ve hemen değiştirilmesi gerekir',
     ],
     answerIndex: 2,
     explanation:
@@ -40,10 +40,10 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Fren pedalı normalden yumuşak inip neredeyse tabana kadar gidiyorsa bu en olası olarak neyi gösterir?',
     options: [
-      'Lastik basıncının fazla yüksek olduğunu',
+      'Lastik hava basıncının aşırı yüksek olduğunu ve lastiğin yolla temas alanının azaldığını',
       'Fren sisteminde hava, hidrolik kaçağı veya hidrolik seviyesinin düştüğünü',
-      'Akünün tam şarjlı olduğunu',
-      'Motorun aşırı ısındığını',
+      'Fren balatalarının yeni değiştirildiğini ve henüz diske tam oturmadığını',
+      'Fren servosunun vakum hattında kaçak olduğunu ve pedalın sertleştiğini',
     ],
     answerIndex: 1,
     explanation:
@@ -66,9 +66,9 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Fren yapıldığında araç sürekli bir tarafa (sağa ya da sola) çekiyorsa bunun olası nedeni nedir?',
     options: [
-      'Farların açık unutulmuş olması',
-      'Yakıt deposunun tam dolu olması',
-      'Radyatörün yeni takılmış olması',
+      'Balans ağırlıklarının yeni takıldığını ve henüz oturmadığını; bir süre sürüldüğünde kendiliğinden düzeleceğini',
+      'Fren hidroliğinin maksimum çizgisinin üzerine kadar doldurulmuş olduğunu',
+      'Direksiyon simidinin merkez ayarının kaydırılmış olduğunu',
       'Sağ ve sol tekerlekler arasında frenleme kuvvetinin dengesiz olması (balata/kaliper/hidrolik farkı)',
     ],
     answerIndex: 3,
@@ -92,7 +92,7 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     stem: 'Aracın hava yastığının (airbag) temel görevi aşağıdakilerden hangisidir?',
     options: [
       'Çarpışmada açılıp sert yüzeye çarpma etkisini azaltmak',
-      'Çarpışmada kemeri gerip yolcuyu koltuğa sabitlemek',
+      'Çarpışma anında emniyet kemerini gerip yolcuyu koltuğa sabitlemek',
       'Ani frende tekerleklerin kilitlenmesini önlemek',
       'Devrilme anında tavan direklerini yukarı kaldırmak',
     ],
@@ -141,10 +141,10 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Gösterge panelindeki ikaz lambalarının renkleriyle ilgili genel kural aşağıdakilerden hangisidir?',
     options: [
-      'Tüm renkler aynı anlama gelir',
-      'Kırmızı ikaz acil/tehlike ve genellikle durmayı',
-      'Yeşil ikaz her zaman ağır bir arıza demektir',
-      'Sarı ikaz motoru hemen durdurmayı gerektirir',
+      'Bütün ikaz renkleri aynı aciliyeti taşır; hangisinin yandığı fark etmez',
+      'Kırmızı ikaz acil tehlikeyi, dolayısıyla genellikle durmayı gerektirir',
+      'Yeşil ikaz her zaman ağır bir arızayı, sarı ikaz ise normal çalışmayı gösterir',
+      'Sarı ikaz motorun hemen durdurulmasını, kırmızı ikaz ise bilgi vermeyi ifade eder',
     ],
     answerIndex: 1,
     explanation:
@@ -166,10 +166,10 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Gösterge panelinde lastik basıncı ikaz lambası yandığında doğru davranış nedir?',
     options: [
-      'Göstergeyi kapatıp yola devam etmek',
-      'Hızı artırarak basıncı yükseltmeye çalışmak',
+      'İkaz lambasını dikkate almadan yola devam etmek; lastikler ısındıkça basınç kendiliğinden yükselecektir',
+      'Hızı artırarak lastik içindeki havanın ısınmasını ve basıncın yükselmesini sağlamak',
       'Uygun bir yerde durup lastik basınçlarını kontrol etmek ve gerekiyorsa uygun değere tamamlamak',
-      'Klimayı açmak',
+      'Dört lastiğin de havasını tamamen boşaltıp yeniden eşit biçimde şişirmek',
     ],
     answerIndex: 2,
     explanation:
@@ -192,7 +192,7 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     stem: 'Motor yağlama sisteminde yağ pompasının görevi aşağıdakilerden hangisidir?',
     options: [
       'Yağı basınçla alıp yağlanması gereken parçalara dolaştırmak',
-      'Yağdaki metal parçacıklarını ve kurumu süzüp tutmak',
+      'Yağ içindeki metal parçacıklarını ve kurumu süzerek devrede dolaşmasını önlemek',
       'Yağın sıcaklığını ölçüp gösterge paneline bildirmek',
       'Yağın soğuduğunda kıvamının artmasını önlemek',
     ],
@@ -214,7 +214,12 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     topic: 'yaglama-sistemi',
     difficulty: 'kolay',
     stem: 'Motor yağının depolandığı, motorun alt kısmındaki hazneye ne ad verilir?',
-    options: ['Radyatör', 'Yakıt deposu', 'Silindir kapağı', 'Karter (yağ karteri)'],
+    options: [
+      'Yağ filtresi (yağ süzgeci)',
+      'Genleşme deposu',
+      'Silindir kapağı',
+      'Karter (yağ karteri)',
+    ],
     answerIndex: 3,
     explanation:
       'Karter, motorun altında bulunan ve motor yağının toplandığı hazne bölümüdür. Yağ pompası yağı buradan alıp motora dolaştırır; kullanılan yağ süzülüp tekrar kartere döner. Yağ değişiminde eski yağ karter tapasından boşaltılır.',
@@ -234,10 +239,10 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Motora yağ çubuğundaki üst (maks) işaretin belirgin biçimde üzerinde fazla yağ konması hangi soruna yol açabilir?',
     options: [
-      'Motor gücünün kalıcı olarak artması',
+      'Motor gücünün kalıcı olarak artması, yakıt tüketiminin düşmesi ve bakım aralığının uzaması',
       'Krank milinin yağı köpürtmesi, basınç dengesinin bozulması ve conta/keçelerin zorlanması',
-      'Lastiklerin şişmesi',
-      'Farların daha parlak yanması',
+      'Yağ basıncının tamamen sıfırlanması ve yağlama sisteminin devre dışı kalması',
+      'Soğutma suyunun kaynayarak genleşme deposundan taşması',
     ],
     answerIndex: 1,
     explanation:
@@ -257,7 +262,12 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     topic: 'sogutma-sistemi',
     difficulty: 'kolay',
     stem: 'Aracın içini ısıtan kalorifer (ısıtma) sistemi ısıyı temel olarak nereden alır?',
-    options: ['Aküden', 'Fren balatalarından', 'Isınan motor soğutma suyundan', 'Lastiklerden'],
+    options: [
+      'Egzoz borusunun çevresini saran ısı değiştiriciden',
+      'Akü üzerindeki elektrikli rezistanstan',
+      'Isınan motor soğutma suyundan',
+      'Fren balatalarının sürtünme ısısından',
+    ],
     answerIndex: 2,
     explanation:
       'Kalorifer, ısınmış motor soğutma suyunu kabin içindeki küçük bir radyatörden (kalorifer peteği) geçirir; fan bu petek üzerinden havayı ısıtarak kabine üfler. Bu nedenle motor çalışma sıcaklığına ulaşmadan iç ısıtma tam verim vermez.',
@@ -278,9 +288,9 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     stem: 'Soğutma sisteminde su kaçağı olduğunu düşündüren belirti aşağıdakilerden hangisidir?',
     options: [
       'Genleşme deposundaki su seviyesinin sık sık azalması ve park yerinde zemine sıvı damlaması',
-      'Farların daha parlak yanması',
-      'Lastik dişinin derinleşmesi',
-      'Egzoz sesinin kısılması',
+      'Motor durdurulduktan sonra soğutma fanının bir süre daha kendiliğinden çalışmaya devam etmesi',
+      'Soğuk havada ilk çalıştırmada egzozdan bir süre ince beyaz buhar çıkması',
+      'Klima açıldığında motor rölanti devrinin bir miktar yükselmesi',
     ],
     answerIndex: 0,
     explanation:
@@ -351,10 +361,10 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Lastiklerin belirli aralıklarla ön-arka yer değiştirmesinin (lastik rotasyonu) temel amacı nedir?',
     options: [
-      'Lastik renklerini eşitlemek',
-      'Yakıt tüketimini tamamen sıfırlamak',
+      'Dört lastiğin diş desenini birbirine benzeterek yuvarlanma sesini azaltmak',
+      'Lastiklerin hava basıncını kendiliğinden eşitlemesini sağlamak',
       'Lastiklerin daha dengeli aşınmasını sağlayıp ömrünü uzatmak',
-      'Aküyü şarj etmek',
+      'Ön düzen (rot) ayarının bozulmasını tamamen önlemek',
     ],
     answerIndex: 2,
     explanation:
@@ -374,7 +384,12 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     topic: 'aku-elektrik',
     difficulty: 'orta',
     stem: 'Bakım gerektiren (kapaklı) bir akünün sıvı seviyesi düştüğünde eklenmesi gereken nedir?',
-    options: ['Şebeke suyu', 'Saf (distile) su', 'Motor yağı', 'Antifriz'],
+    options: [
+      'Şebeke (musluk) suyu',
+      'Saf (distile) su',
+      'Antifrizli soğutma suyu',
+      'Cam suyu katkısı',
+    ],
     answerIndex: 1,
     explanation:
       'Kapaklı (bakımlı) akülerde elektrolit seviyesi zamanla düşebilir; plakaların üstünü örtecek şekilde yalnızca saf/distile su eklenir. Musluk suyundaki kireç ve mineraller plakalara zarar verir. Bakımsız (kapalı) akülerde ise dışarıdan su eklenmez.',
@@ -394,10 +409,10 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Atan bir sigortanın yerine daha yüksek amperajlı (daha güçlü) bir sigorta takmak neden sakıncalıdır?',
     options: [
-      'Farlar tamamen söner',
-      'Motor yağı azalır',
-      'Lastik basıncı düşer',
-      'Devre aşırı akıma karşı korunmaz',
+      'Devrenin çektiği akım artacağı için farlar ve diğer tüketiciler daha parlak çalışır',
+      'Akünün şarj hızı yükselir ve alternatör gereksiz yere zorlanmış olur',
+      'Sigorta yuvası gevşer ve sigorta yola çıkıldığında yerinden çıkabilir',
+      'Devre aşırı akıma karşı korunmaz; kablolar ısınıp yangına yol açabilir',
     ],
     answerIndex: 3,
     explanation:
@@ -419,10 +434,10 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Sis farlarının kullanımıyla ilgili doğru ifade aşağıdakilerden hangisidir?',
     options: [
-      'Her zaman, açık ve güneşli havada da yakılmalıdır',
+      'Her hava koşulunda, açık ve güneşli günlerde de sürekli yakılması gereken bir aydınlatma donanımıdır',
       'Yalnızca sis, yoğun yağış veya kar gibi görüşün ciddi biçimde azaldığı durumlarda kullanılır',
-      'Gündüz görüşü açık yolda sürekli yakmak gerekir',
-      'Sadece park hâlinde kullanılır',
+      'Görüşün açık olduğu yollarda uzun farla birlikte sürekli kullanılması önerilir',
+      'Yalnızca araç park hâlindeyken, aracın yerini belli etmek için kullanılır',
     ],
     answerIndex: 1,
     explanation:
@@ -445,7 +460,7 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     stem: 'Farların, stop ve sinyal lambalarının düzenli kontrol edilip temiz tutulmasının temel nedeni nedir?',
     options: [
       'Yolu iyi aydınlatıp aracın niyetini diğer sürücülere doğru göstermek',
-      'Aracın elektrik tüketimini düşürüp akünün ömrünü uzatmak',
+      'Aracın elektrik tüketimini düşürüp akünün ömrünü belirgin biçimde uzatmak',
       'Motorun ısınma süresini kısaltıp yakıt tüketimini azaltmak',
       'Kaportanın boyasını güneşin soldurucu etkisinden korumak',
     ],
@@ -470,7 +485,7 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Marş motoru motoru çevirdiği (marş dönüyor) hâlde motor bir türlü çalışmıyorsa olası neden aşağıdakilerden hangisidir?',
     options: [
-      'Akünün tümüyle boşalıp marş motorunu döndürememesi',
+      'Akünün tümüyle boşalmış olması ve marş motorunu hiç döndürememesi',
       'Direksiyon kilidinin kontak anahtarını bloke etmiş olması',
       'Motora yakıt gelmemesi veya ateşleme sisteminde arıza olması',
       'Vitesin boşta olmaması ve debriyaja basılmamış olması',
@@ -495,7 +510,7 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Kontak anahtarı dönmüyor ve araç çalışmıyorsa, direksiyonun hafifçe sağa-sola oynatılması hangi durumu çözebilir?',
     options: [
-      'Akü kutup başlarının gevşemiş olmasını',
+      'Akü kutup başlarının gevşemiş ve oksitlenmiş olmasını',
       'Marş motorunun dişlisinin sıkışmasını',
       'Yakıt filtresinin tıkanmış olmasını',
       'Direksiyon kilidinin anahtarı bloke etmesini',
@@ -519,10 +534,10 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Aracın üreticinin belirttiği aralıklarla periyodik bakıma götürülmesinin temel amacı nedir?',
     options: [
-      'Aracın rengini korumak',
+      'Yalnızca aracın azami hızını ve motor gücünü artırarak daha sportif bir sürüş elde edilmesini sağlamak',
       'Aşınan parçaların zamanında değişmesini sağlayıp arızaları önlemek, güvenliği ve araç ömrünü korumak',
-      'Yalnızca aracın azami hızını artırmak',
-      'Sadece kullanılan yakıt markasını değiştirmek',
+      'Sadece kullanılan yakıt markasının değiştirilmesini ve depoya katkı eklenmesini sağlamak',
+      'Aracın kaporta boyasını parlatıp iç döşemesini yenileyerek görünümünü korumak',
     ],
     answerIndex: 1,
     explanation:
@@ -544,9 +559,9 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     stem: 'Ön cam yıkama suyu ve silecek lastiklerinin düzenli kontrol edilmesi neden önemlidir?',
     options: [
       'Temiz cam ve iyi silecek, sürüş sırasında net görüş sağlayarak güvenliği artırır',
-      'Motor gücünü artırır',
-      'Aküyü şarj eder',
-      'Yakıt tüketimini sıfırlar',
+      'Cam suyu deposu dolu tutulduğunda motorun soğutma sistemine ek su kaynağı sağlanmış olur',
+      'Silecek lastikleri yeni olduğunda aracın hava direnci azalır ve yakıt tüketimi düşer',
+      'Cam suyu katkısı akünün kutup başlarını oksitlenmeye karşı korur',
     ],
     answerIndex: 0,
     explanation:
@@ -567,7 +582,7 @@ export const MOTOR_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Dizel (mazotlu) bir araca yanlışlıkla benzin konulduğu fark edildiğinde en doğru davranış nedir?',
     options: [
-      'Depoyu ağzına kadar doldurup normal şekilde yola devam etmek',
+      'Depoyu ağzına kadar dizel ile doldurup karışımı seyrelterek normal şekilde yola devam etmek',
       'Depoya bir miktar su ekleyerek karışımı dengelemek',
       'Motoru çalıştırmadan aracı çektirip depoyu boşalttırmak ve yakıt sistemini temizletmek',
       'Aracı gaza yükleyerek yanlış yakıtı bir an önce tüketmek',

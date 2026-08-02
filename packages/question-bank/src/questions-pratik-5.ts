@@ -16,7 +16,7 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     options: [
       'İki el direksiyonda çaprazlanarak tek hamlede sonuna kadar çevrilir',
       'Bir el direksiyonu dönüş yönünde yukarıdan aşağı çekerken diğer el aşağıdan yukarı iter',
-      'Direksiyon tek elin bileğiyle döndürülür, diğer el vites üzerinde bekler',
+      'Direksiyon tek elin bileğiyle döndürülür, diğer el ise vites kolunun üzerinde hazır bekler',
       'Eller simitten kaldırılıp direksiyonun kendi kendine dönmesi beklenir',
     ],
     answerIndex: 1,
@@ -39,7 +39,7 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Direksiyonu avuç içine yaslayıp tek elin ayasıyla hızla çevirmek (ayayla sıvazlama) neden sakıncalı bir alışkanlıktır?',
     options: [
-      'Direksiyon simidinin yüzeyini zamanla parlattığı için',
+      'Direksiyon simidinin yüzeyini zamanla parlatıp kaygan hâle getirdiği için',
       'Yalnızca yakıt tüketimini artırdığı için',
       'Sinyal kolunun yanlışlıkla açılmasına yol açtığı için',
       'Simit kavranmadığı için ani bir düzeltme gerektiğinde el tutamak bulamaz',
@@ -92,7 +92,7 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
       'Aracın hemen önündeki asfalta',
       'Hız göstergesine',
       'Virajın çıkışına, yani gidilmek istenen noktaya',
-      'Karşı şeritteki araçların tekerleklerine',
+      'Karşı şeritten gelen araçların ön tekerleklerine',
     ],
     answerIndex: 2,
     explanation:
@@ -116,7 +116,7 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Bakış hedefe kilitlenince eller de aracı istemsizce o hedefe yöneltir',
       'Engele bakmak göz yorgunluğu yaptığı için',
-      'Engel uzaktan olduğundan küçük görünüp yanılttığı için',
+      'Engel uzakta olduğundan küçük görünüp sürücüyü yanılttığı ve şaşırttığı için',
       'Bakış sabitlenince silecekler otomatik çalıştığı için',
     ],
     answerIndex: 0,
@@ -140,7 +140,7 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Şehir içi sürüşte bakışın taranması gereken uzaklık için doğru yaklaşım hangisidir?',
     options: [
       'Yalnızca öndeki aracın tamponuna bakmak yeterlidir',
-      'Bakış hep en uzak noktada sabit tutulur, yakın çevre hiç taranmaz',
+      'Bakış hep en uzak noktada sabit tutulur ve yakın çevre hiçbir zaman taranmaz; böylece dikkat dağılmaz ve sürücü yolu çok daha iyi görür',
       'Gözler kapalı devre yalnızca aynalarda gezdirilir',
       'Bakış, aracın yaklaşık on-on beş saniye sonra varacağı uzaklığa taşınır ve yakın ile uzak arasında sürekli gidip gelerek tarama yapılır',
     ],
@@ -167,7 +167,7 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
       'Motorun devir sesindeki değişiklik dinlenerek',
       'Öndeki araç sabit bir noktayı geçince normal tempoda "seksen sekiz, seksen dokuz" denir',
       'Kilometre saatine bakıp hız ikiye bölünerek',
-      'Öndeki aracın plakası okunabiliyorsa mesafe yeterli sayılır',
+      'Öndeki aracın plakası okunabiliyorsa aradaki mesafe yeterli sayılır ve sayım yapmaya gerek kalmaz',
     ],
     answerIndex: 1,
     explanation:
@@ -216,7 +216,7 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Aynı yokuşu çıkarken hangi vites gerekiyorsa, inerken de yaklaşık o vites seçilir',
       'İnişte daima en yüksek vites kullanılır',
-      'İnişte vites seçimi önemsizdir, fren her şeyi çözer',
+      'İnişte vites seçiminin herhangi bir önemi yoktur; fren pedalı tek başına her şeyi çözer',
       'İnişe her zaman birinci vitesle başlanır',
     ],
     answerIndex: 0,
@@ -290,7 +290,7 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Uzun rampalarda fren zayıflamasını (fading) daha oluşmadan önlemenin temel yolu nedir?',
     options: [
       'Hızı düşük vitesle motor frenine yaptırıp ayak frenini yalnızca kısa ve aralıklı düzeltmeler için kullanmak',
-      'Fren pedalına iniş boyunca hafifçe sürekli basılı gitmek',
+      'Fren pedalına iniş boyunca hafifçe ve sürekli basılı giderek aracın hızını sabit ve düşük bir düzeyde tutmaya çalışmak',
       'El frenini hafif çekili tutarak inmek',
       'İnişten önce fren hidroliğini boşaltmak',
     ],
@@ -314,7 +314,7 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Uzun inişte "kademeli fren" (bas-bırak) tekniği nasıl uygulanır ve sürekli hafif sürtmeye göre üstünlüğü nedir?',
     options: [
-      'Pedala tek seferde sonuna kadar basılır ve öyle tutulur',
+      'Pedala tek seferde sonuna kadar basılır ve iniş tamamen bitene kadar pedal bırakılmadan öyle basılı tutulur',
       'Fren yerine yalnızca korna kullanılır',
       'Hız arttığında pedala belirgin biçimde basılıp hız istenen düzeye inince pedal tamamen bırakılır',
       'Fren yalnızca viraj ortalarında kullanılır',
@@ -342,7 +342,7 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
       'Arkadaki sürücü sizi daha kolay sollayabilir',
       'Fren lambası erken yanarak arkadakine yavaşlayacağınızı önceden bildirir',
       'Arkadaki aracın yakıt tüketimi düşer',
-      'Hiçbir yararı yoktur; fren yalnızca sürücünün kendisini ilgilendirir',
+      'Hiçbir yararı yoktur; frenleme yalnızca sürücünün kendisini ilgilendiren bir şeydir',
     ],
     answerIndex: 1,
     explanation:
@@ -364,7 +364,7 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Islak yolda araç su yastığına (aquaplaning) binip yüzmeye başladığı anda sürücü ne yapmalıdır?',
     options: [
-      'Sert fren yapıp direksiyonu hızla sağa kırmak',
+      'Sert fren yapıp direksiyonu hızla sağa kırmak, ardından el frenini çekerek aracı bir an önce durdurmaya ve yoldan çıkmasını engellemeye çalışmak',
       'Gaza basarak su tabakasını yarmaya çalışmak',
       'El frenini çekmek',
       'Gazdan yumuşakça çekilmek, direksiyonu düz ve sabit tutmak, ani fren ve ani direksiyondan kaçınıp lastiklerin yolu yeniden tutmasını beklemek',
@@ -390,7 +390,7 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Sağanak altında seyrederken direksiyonun aniden hafifleyip boşalmış gibi hissedilmesi neyin belirtisidir?',
     options: [
       'Lastiklerin su tabakası üzerine binip yolla temasını kaybetmeye başladığının',
-      'Direksiyon pompasının arızalandığının',
+      'Direksiyon hidrolik pompasının arızalanıp direksiyon desteğini tamamen kesmesinin',
       'Yolun yeni asfaltlandığının',
       'Rüzgârın tamamen durduğunun',
     ],
@@ -442,7 +442,7 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
       'İkinci vites debriyajı hiç aşındırmadığı için',
       'İkinci viteste tekerleğe daha az ve daha yumuşak tork gittiği için patinaj eğilimi azalır',
       'İkinci vites motoru daha çabuk ısıttığı için',
-      'Birinci vites karda tamamen devre dışı kaldığı için',
+      'Birinci vitesin karlı zeminde tamamen devre dışı kalması ve hiçbir çekiş üretememesi nedeniyle',
     ],
     answerIndex: 1,
     explanation:
@@ -467,7 +467,7 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
       'Arkanın kaydığı yöne, yani sola doğru yumuşakça çevrilir',
       'Kaymanın tersine, sonuna kadar sağa kırılır',
       'Direksiyon hiç oynatılmaz, sıkıca düz tutulur',
-      'Direksiyon bırakılıp iki elle el frenine sarılır',
+      'Direksiyon tamamen bırakılıp iki elle el frenine sarılıp çekilir',
     ],
     answerIndex: 0,
     explanation:
@@ -516,7 +516,7 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     options: [
       'Her zeminde durma mesafesini yarıya indirmesi',
       'Fren balatalarının hiç aşınmamasını sağlaması',
-      'Frene basılıyken bile korna sesini güçlendirmesi',
+      'Frene basılıyken bile korna sesini güçlendirerek çevredeki bütün sürücüleri uyarabilmesi',
       'Tekerlek kilitlenmesini önleyerek tam frende bile direksiyonla yön verebilmeyi koruması',
     ],
     answerIndex: 3,
@@ -539,7 +539,7 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Uzun süren kuraklıktan sonra başlayan yağmurun ilk dakikalarında yol neden en kaygan hâlindedir?',
     options: [
-      'İlk damlalar asfaltı soğutup büzdüğü için',
+      'İlk yağmur damlalarının asfaltı çok hızlı soğutup büzdüğü ve yüzeyini sertleştirdiği için',
       'Yol yüzeyinde birikmiş toz, lastik kalıntısı ve yağ ilk suyla kaygan bir film oluşturur',
       'Silecekler ilk dakikalarda çalışmadığı için',
       'İlk dakikalarda lastik basıncı düştüğü için',
@@ -565,7 +565,7 @@ export const PRATIK_QUESTIONS_5: QuestionInput[] = [
     stem: 'Islak havada şehir içinde özellikle hangi yüzeylerin üzerinde frenlemekten ve ani manevradan kaçınılmalıdır?',
     options: [
       'Metal mazgal ve rögar kapakları, boyalı yol çizgileri ve yaya geçidi boyaları, ıslak yapraklar ile ray geçişleri',
-      'Yeni dökülmüş kumlu asfalt dışında her yüzey aynıdır',
+      'Yeni dökülmüş kumlu asfalt dışında bütün yol yüzeyleri birbiriyle aynıdır; ıslakken hiçbiri diğerinden daha kaygan olmaz',
       'Yalnızca köprü altları',
       'Beton zeminler; asfalt ıslakken hiç kaymaz',
     ],

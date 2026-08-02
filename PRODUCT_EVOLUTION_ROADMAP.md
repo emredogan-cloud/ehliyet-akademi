@@ -20,26 +20,26 @@ En ağır bulgu bu ve programın önceliğini o belirliyor.
 Ölçüm: **"soruyu hiç okuma, en uzun şıkkı işaretle"** stratejisi 1562 sorunun **1423'ünde** doğru
 cevabı buluyor.
 
-| Strateji | Doğru | Oran |
-|---|---:|---:|
+| Strateji                                |           Doğru |      Oran |
+| --------------------------------------- | --------------: | --------: |
 | **En uzun şıkkı seç (soruyu okumadan)** | **1423 / 1562** | **%91,1** |
-| En uzun (beraberlikte ilk) | 1434 / 1562 | %91,8 |
-| "Mutlak" ifadeli şıkkı ele + en uzun | 1412 / 1562 | %90,4 |
-| Her zaman B | 459 / 1562 | %29,4 |
-| Rastgele (taban çizgisi) | — | %25,0 |
+| En uzun (beraberlikte ilk)              |     1434 / 1562 |     %91,8 |
+| "Mutlak" ifadeli şıkkı ele + en uzun    |     1412 / 1562 |     %90,4 |
+| Her zaman B                             |      459 / 1562 |     %29,4 |
+| Rastgele (taban çizgisi)                |               — |     %25,0 |
 
 Geçme barajı %70. Yani **uygulamayı hiç açmamış, tek ders okumamış bir aday her denemeyi %91 ile
 geçer.** Bu, sınav simülasyonunu geçersiz kılar.
 
 Ders bazında (aynı strateji): motor %95,8 · adab %98,5 · pratik %97,3 · ilkyardım %87,8 · trafik %79,7.
 
-**Kök neden — üreteç, *açıklamayı doğru şıkkın içine yazmış*.** Şık uzunlukları:
+**Kök neden — üreteç, _açıklamayı doğru şıkkın içine yazmış_.** Şık uzunlukları:
 
-| | ortalama |
-|---|---:|
-| doğru şık | 91,9 karakter |
+|            |      ortalama |
+| ---------- | ------------: |
+| doğru şık  | 91,9 karakter |
 | yanlış şık | 36,9 karakter |
-| **oran** | **2,49×** |
+| **oran**   |     **2,49×** |
 
 Örnek (`motor-640`, oran 8,1×):
 
@@ -58,12 +58,12 @@ alanına ait. 1228 soruda doğru şık, en uzun çeldiricinin 1,35 katından uzu
 Karşılaştırma — referans ekran görüntülerindeki gerçek MEB sorularında şıklar **paralel uzunlukta**,
 hatta doğru cevap çoğu zaman **en kısa** olan:
 
-| Referans soru | Şık uzunlukları | Doğru |
-|---|---|---|
-| "…yöntemler bütünüdür?" | 11 / 13 / 14 / 16 | **en kısa** (11) |
-| "…genel adı nedir?" | 12 / 13 / 12 / **4** | **en kısa** (4) |
-| "Şekildeki trafik işareti…" | 30 / 32 / 34 / 46 | 32 |
-| "Trafik sıkışıklığından…" | 39 / 32 / 46 / 29 | 46 (oran 1,18×) |
+| Referans soru               | Şık uzunlukları      | Doğru            |
+| --------------------------- | -------------------- | ---------------- |
+| "…yöntemler bütünüdür?"     | 11 / 13 / 14 / 16    | **en kısa** (11) |
+| "…genel adı nedir?"         | 12 / 13 / 12 / **4** | **en kısa** (4)  |
+| "Şekildeki trafik işareti…" | 30 / 32 / 34 / 46    | 32               |
+| "Trafik sıkışıklığından…"   | 39 / 32 / 46 / 29    | 46 (oran 1,18×)  |
 
 ### 0.2 🔴 Ürün turu, gerçekleşmeyen ve hukuken riskli bir vaat veriyor
 
@@ -95,7 +95,7 @@ canvas.drawPath(
 Skia boolean yol işlemi + iki yeni `Path` ayırma**. `Path.combine` Skia'nın en pahalı işlemlerinden
 biridir ve GPU'ya devredilmez.
 
-Koddaki yorum bunu bir *başarım tercihi* olarak anlatıyor ("tek geçişte çizilir") — tersi doğru.
+Koddaki yorum bunu bir _başarım tercihi_ olarak anlatıyor ("tek geçişte çizilir") — tersi doğru.
 Doğru ilkel `canvas.clipRRect(rrect, clipOp: ClipOp.difference)`: yol ayırma yok, boolean işlem yok.
 
 İkinci kusur: `_spot` adımlar arası `setState` ile **ışınlanıyor** (ara değer yok). Altta
@@ -115,36 +115,36 @@ ayrı sınav listesi tutuyor. Bizde kategori kırılımı ve ücretsiz/premium a
 
 Referansın kataloğu (ekran görüntüsünden) ve arkasındaki matematik:
 
-| Kategori | Sınav | Soru | Soru/sınav |
-|---|---:|---:|---:|
-| Genel Sınav | 31 | 1550 | **50** |
-| İlk Yardım Bilgisi | 34 | 408 | **12** |
-| Trafik ve Çevre Bilgisi | 34 | 782 | **23** |
-| Motor ve Araç Tekniği | 34 | 306 | **9** |
-| Trafik Adabı | 34 | 204 | **6** |
-| Animasyonlu Sorular | 24 | 120 | 5 |
+| Kategori                | Sınav | Soru | Soru/sınav |
+| ----------------------- | ----: | ---: | ---------: |
+| Genel Sınav             |    31 | 1550 |     **50** |
+| İlk Yardım Bilgisi      |    34 |  408 |     **12** |
+| Trafik ve Çevre Bilgisi |    34 |  782 |     **23** |
+| Motor ve Araç Tekniği   |    34 |  306 |      **9** |
+| Trafik Adabı            |    34 |  204 |      **6** |
+| Animasyonlu Sorular     |    24 |  120 |          5 |
 
 Ders başına sınav uzunluğu, o dersin **50 soruluk MEB planındaki payına eşit** (23/12/9/6). Bu
 zarif ve bizim `ExamConfig` yapımıza doğrudan oturuyor.
 
 ### 0.6 🟡 Diğer sayılan bulgular
 
-| # | Bulgu | Ölçü |
-|---|---|---|
-| 1 | `whyWrong` boş olan soru | **1177 / 1562** (%75) |
-| 2 | Hiçbir soru uzman onaylı değil | `review: draft` = **1562 / 1562** |
-| 3 | Alan dışı çeldirici ("aracın rengi", "silecek suyu") | 55 şık / 48 soru |
-| 4 | Saçma çeldirici ("…görmezden gelip…") | 16 |
-| 5 | Tembel çeldirici ("Fark etmez", "Geri dön") | 3 |
-| 6 | Cevap konumu dengesizliği | B=459, beklenen ~391 |
-| 7 | Resmî SVG'si olmayan işaret | **35 / 121** |
-| 8 | …bunlardan sayısal hız levhası (prosedürel çizim *doğru* olan) | **17** |
-| 9 | Yinelenen gövde / yinelenen şık / 3 şıklı soru | **0** ✅ |
-| 10 | Tekrarlayan gövde kalıbı (≥12 kez) | **0** ✅ |
-| 11 | Yarış Modu | yok |
-| 12 | Ders görsel bloğu (şema/diyagram/infografik) | yok (`Callout`+`CompareTable` var) |
-| 13 | Seslendirme altyapısı | yok |
-| 14 | Koç maskotu | 7 durağan `.webp`, animasyon yok |
+| #   | Bulgu                                                          | Ölçü                               |
+| --- | -------------------------------------------------------------- | ---------------------------------- |
+| 1   | `whyWrong` boş olan soru                                       | **1177 / 1562** (%75)              |
+| 2   | Hiçbir soru uzman onaylı değil                                 | `review: draft` = **1562 / 1562**  |
+| 3   | Alan dışı çeldirici ("aracın rengi", "silecek suyu")           | 55 şık / 48 soru                   |
+| 4   | Saçma çeldirici ("…görmezden gelip…")                          | 16                                 |
+| 5   | Tembel çeldirici ("Fark etmez", "Geri dön")                    | 3                                  |
+| 6   | Cevap konumu dengesizliği                                      | B=459, beklenen ~391               |
+| 7   | Resmî SVG'si olmayan işaret                                    | **35 / 121**                       |
+| 8   | …bunlardan sayısal hız levhası (prosedürel çizim _doğru_ olan) | **17**                             |
+| 9   | Yinelenen gövde / yinelenen şık / 3 şıklı soru                 | **0** ✅                           |
+| 10  | Tekrarlayan gövde kalıbı (≥12 kez)                             | **0** ✅                           |
+| 11  | Yarış Modu                                                     | yok                                |
+| 12  | Ders görsel bloğu (şema/diyagram/infografik)                   | yok (`Callout`+`CompareTable` var) |
+| 13  | Seslendirme altyapısı                                          | yok                                |
+| 14  | Koç maskotu                                                    | 7 durağan `.webp`, animasyon yok   |
 
 Not: 9 ve 10 temiz çıktı — QIP v3'te konan kapılar tutmuş. Bozuk olan **şık dengesi**, yapı değil.
 
@@ -181,24 +181,24 @@ Faz 11 Cihaz doğrulaması        ← hepsinin üstünde
 Ölçtüm. Doğru şıktan açıklama kuyruğunu ayıran güvenli kodmod (noktalı virgül, parantez kuyruğu,
 bağlaç kuyruğu) 590 şıkkı ayırıyor ve:
 
-| | önce | kodmod sonrası |
-|---|---:|---:|
-| en uzun şıkkı seç | %91,1 | **%74,3** |
-| ort. doğru şık | 91,9 | 64,8 |
-| ort. yanlış şık | 36,9 | 36,9 |
-| oran | 2,49× | 1,76× |
+|                   |  önce | kodmod sonrası |
+| ----------------- | ----: | -------------: |
+| en uzun şıkkı seç | %91,1 |      **%74,3** |
+| ort. doğru şık    |  91,9 |           64,8 |
+| ort. yanlış şık   |  36,9 |           36,9 |
+| oran              | 2,49× |          1,76× |
 
 %74,3 hâlâ barajın üstünde. Kalan sorun **doğru şıkkın uzunluğu değil, çeldiricilerin kısalığı**.
 
 Daha agresif kesme kurallarını da denedim ve **reddettim** — cevabı bozuyorlar:
 
-| Kural | Örnek | Sonuç |
-|---|---|---|
-| baştaki `-arak/-erek` ulacını at | `adab-005`: «Sakin kalmak, takip» ⇒ «mesafesini açmak…» | ❌ "takip mesafesi" ortadan bölünüyor |
-| `ve` sonrası kuyruğu at | `trafik-131`: «…ön» ⇐ «arka tüm koltuklarda» | ❌ "ön ve arka" saçmalaşıyor |
-| son virgüllü öbeği at | `trafik-505`: «Varsa levhalara» ⇐ «yoksa kontrolsüz kavşak kurallarına…» | ❌ cevabın yarısı gidiyor, **yanlış** oluyor |
+| Kural                            | Örnek                                                                    | Sonuç                                        |
+| -------------------------------- | ------------------------------------------------------------------------ | -------------------------------------------- |
+| baştaki `-arak/-erek` ulacını at | `adab-005`: «Sakin kalmak, takip» ⇒ «mesafesini açmak…»                  | ❌ "takip mesafesi" ortadan bölünüyor        |
+| `ve` sonrası kuyruğu at          | `trafik-131`: «…ön» ⇐ «arka tüm koltuklarda»                             | ❌ "ön ve arka" saçmalaşıyor                 |
+| son virgüllü öbeği at            | `trafik-505`: «Varsa levhalara» ⇐ «yoksa kontrolsüz kavşak kurallarına…» | ❌ cevabın yarısı gidiyor, **yanlış** oluyor |
 
-Kullanıcının kuralı: *"Never generate nonsense."* Bu kurallar tam olarak onu üretirdi. Yalnız
+Kullanıcının kuralı: _"Never generate nonsense."_ Bu kurallar tam olarak onu üretirdi. Yalnız
 **açık açıklama ayracı** taşıyan kesme uygulanır.
 
 ### 2.2 Yapılacaklar
@@ -215,7 +215,7 @@ Kullanıcının kuralı: *"Never generate nonsense."* Bu kurallar tam olarak onu
 ### 2.3 Kapsam dürüstlüğü
 
 862 soru × 3 çeldirici = 2586 metin. Bu, programın en büyük tek kalemi. Tek oturumda hepsini
-*iyi* yazmak mümkün değil; **kapı + kodmod + öncelikli yeniden yazım** yapılır ve raporda
+_iyi_ yazmak mümkün değil; **kapı + kodmod + öncelikli yeniden yazım** yapılır ve raporda
 **hangi sorunun düzeldiği, hangisinin kaldığı sayıyla** bildirilir. Sınav üreteci bu arada
 kalite puanı yüksek soruları tercih eder, böylece kullanıcı düzelmiş havuzu görür.
 
@@ -249,8 +249,8 @@ etmeyiz (0.2'deki hatanın aynısını tekrarlamamak için).
 35 işaretin resmî SVG'si yok. Ama **hepsi görsel üretimi hak etmiyor**:
 
 - **17'si sayısal hız levhası** (`azami-hiz-20…120`, `asgari-hiz-30…50`). Bunlar kırmızı/mavi halka
-  + rakamdır; rakam *veridir*, çizim değil. Prosedürel çizim burada **doğru** çözüm. 17 ayrı görsel
-  üretmek "Do NOT generate duplicate prompts" kuralının tam ihlali olurdu → **tek parametrik istem**.
+  - rakamdır; rakam _veridir_, çizim değil. Prosedürel çizim burada **doğru** çözüm. 17 ayrı görsel
+    üretmek "Do NOT generate duplicate prompts" kuralının tam ihlali olurdu → **tek parametrik istem**.
 - **18'i gerçek piktogram istiyor** (`kaygan-yol`, `vahsi-hayvan`, `lokanta`, `tunel`, `havalimani`,
   `taksi-duragi`, `engelli-parki`, `otoyol-cikisi`, …).
 
@@ -280,8 +280,8 @@ Rakip aranıyor…  (3–5 sn)  →  Rakip bulundu  →  20 sn/soru düello  →
 
 ## 7. Faz 6 — Koç Evrimi
 
-Kütüphane araştırması sonucu: **Rive** ve **Lottie** en olgun seçenekler, ama ikisi de *yazılmış
-animasyon dosyası* (`.riv` / `.json`) ister — elimizde yok ve üretemem. Var olan 7 durağan `.webp`
+Kütüphane araştırması sonucu: **Rive** ve **Lottie** en olgun seçenekler, ama ikisi de _yazılmış
+animasyon dosyası_ (`.riv` / `.json`) ister — elimizde yok ve üretemem. Var olan 7 durağan `.webp`
 katmanı üzerinde **yerel Flutter animasyonu** ile gerçek hareket elde edilir: göz kırpma, nefes
 (ölçek), baş eğimi, bakış takibi, yazma/direksiyon hareketi. Sıfır yeni bağımlılık, sıfır dış varlık.
 Abartısız; "premium eğitim" tonunda.

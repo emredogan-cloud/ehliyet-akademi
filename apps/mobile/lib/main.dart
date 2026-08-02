@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app/app.dart';
 import 'app/router.dart';
+import 'core/asset_resolver.dart';
+import 'data/duel/duel_energy_repository.dart';
 import 'core/analytics/analytics.dart';
 import 'core/analytics/analytics_sink.dart';
 import 'core/network/api_client.dart';
@@ -35,6 +37,17 @@ Future<void> main() async {
   // buna bakabilmeli: uygulamayı davet bağlantısıyla kurup kaydı sonra yapan kullanıcının kodu
   // ancak böyle korunur.
   final pendingReferralCode = await PendingReferral.read();
+
+  // Ürün Evrimi v1.1 · Faz 3 — paketteki varlık listesi bir kez okunur.
+  //
+  // `AssetCatalog` Post-Beta'da yazılmıştı ama HİÇBİR YERDEN çağrılmıyordu; denetimde bu çıktı.
+  // Buradan yüklendiğinde `TrafficSignView` gibi senkron çizen widget'lar "bu dosya gerçekten
+  // pakette var mı?" sorusunu sorabiliyor ve ayrılmış ama henüz üretilmemiş bir levha adına
+  // düşüp kırık görsel çizmiyorlar.
+  await AssetCatalog.load();
+
+  // Faz 4 — düello enerjisi (günlük hak + bekleme) senkron okunabilsin diye açılışta yüklenir.
+  await initDuelEnergyStorage();
 
   // ── Beta Faz 4 — gözlemlenebilirlik, uygulamadan ÖNCE kurulur ────────────────────────────────
   //

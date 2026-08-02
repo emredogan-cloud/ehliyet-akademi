@@ -44,6 +44,11 @@ void main() {
     'Deneme sınavı': '/practice/exam',
     'Koleksiyonlar': '/practice/collections',
     'Çıkmış sınavlar': '/practice/historical',
+    // Ürün Evrimi v1.1 · Faz 2 — sınav kütüphanesi de her koşulda taranmalı.
+    'Sınav arşivi': '/practice/library',
+    'Arşiv · kategori': '/practice/library/genel',
+    'Arşiv · görsel kategori': '/practice/library/gorsel',
+    'Düello': '/practice/duel',
     'AI Koç': '/coach',
     'Topluluk': '/community',
     'Topluluğa katıl': '/community/join',

@@ -65,12 +65,12 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Sınav sırasında kalkışta motoru bir kez stop ettiren adayın en doğru davranışı nedir?',
     options: [
-      'Telaşlanıp arka arkaya marşa basarak aracı zorlamak',
       'El frenini çekip vitesi boşa alarak sakince yeniden çalıştırmak, sonra düzgün bir kalkış yapmak',
+      'Telaşlanıp arka arkaya marşa basarak aracı zorlamak',
       'Aracı stop hâlinde bırakıp görevliyi beklemek',
       'Motoru çalıştırmadan debriyaja basıp aracın kendiliğinden yürümesini beklemek',
     ],
-    answerIndex: 1,
+    answerIndex: 0,
     explanation:
       'Tek bir stop çoğunlukla heyecana bağlıdır ve başlı başına adayı elemez; görevlinin izlediği, adayın soğukkanlılıkla toparlanıp güvenli bir kalkış yapabilmesidir. Doğru refleks vitesi boşa alıp aracı emniyete almak, sakince yeniden çalıştırmak ve düzgün kalkıştır. Panikle tekrar tekrar stop ettirmek ise araç hâkimiyeti zafiyetine dönüşerek asıl sorunu büyütür. Tek seferlik stop tek başına elemeli sayılmaz, asıl bakılan toparlanabilmektir.',
     whyWrong: [
@@ -141,12 +141,12 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Sınav boyunca yanındaki görevliyle sohbet başlatmaya çalışan adayın bu davranışı neden sakıncalıdır?',
     options: [
-      'Görevli konuşmayı kesinlikle yanıtlayamayacağı için',
       'Sohbet dikkati yoldan ve gözlemden koparır',
+      'Görevli konuşmayı kesinlikle yanıtlayamayacağı için',
       'Konuşmak yakıt tüketimini artırdığı için',
       'Görevlinin ismini öğrenmek yasak olduğu için',
     ],
-    answerIndex: 1,
+    answerIndex: 0,
     explanation:
       'Sürüş, bölünmemiş dikkat ister; görevliyle sohbet gözü ve zihni yoldan alıp gözlem ile karar arasındaki bağı zayıflatır. Dahası konuşma sırasında gelecek bir yön talimatı ya da bir tehlike gözden kaçabilir. Aday nazik ama kısa yanıtlarla yetinip dikkatini sürüşe ve komutları dinlemeye ayırmalıdır. Ayrıca gelecek yön talimatının kaçırılmasına yol açabilir, oysa aday sürüşe ve komutları dinlemeye odaklanmalıdır.',
     whyWrong: [
@@ -166,14 +166,14 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Sınav güzergâhı tamamlanıp görevli "aracı buraya park edebilirsiniz" dediğinde bitiş manevrasının doğru sırası nedir?',
     options: [
-      'Motoru hemen kapatıp sonra frene basmak',
-      'Kemeri açıp aracı boşta bırakarak inmek',
-      'El frenini çekmeden vitesi boşa alıp inmek',
-      'Aracı güvenli ve düz biçimde durdurmak, vitesi boşa (ya da rampada uygun vitese)',
+      'Önce motoru kapatmak, sonra frene basmak, ardından el frenini çekip kemeri çözerek araçtan hızla inmek ve kapıyı kapatmak',
+      'Kemeri açıp aracı boşta bırakarak inmek ve el frenini çekmeden kapıyı kapatmak',
+      'El frenini çekmeden vitesi boşa alıp motoru çalışır durumda bırakarak inmek',
+      'Aracı güvenli ve düz durdurmak, vitesi boşa almak, el frenini çekmek, motoru kapatmak ve en son kemeri çözmek',
     ],
     answerIndex: 3,
     explanation:
-      'Bitiş de sürüşün bir parçasıdır ve düzeni görevli izler. Doğru sıra; aracı sarsıntısız durdurmak, el frenini çekip aracı emniyete almak, motoru kapatmak ve en son emniyet kemerini çözmektir. Rampada ise vites ve tekerlek yönü önlemleri de eklenir. Bu düzen, aracı tam güvenceye almadan araçtan kopmayı önler. Almak, el frenini çekmek, motoru kapatmak ve ancak sonra kemeri çözüp inmek.',
+      'Bitiş de sürüşün bir parçasıdır ve düzeni görevli izler. Doğru sıra; aracı sarsıntısız durdurmak, el frenini çekip aracı emniyete almak, motoru kapatmak ve en son emniyet kemerini çözmektir. Rampada ise vites ve tekerlek yönü önlemleri de eklenir. Bu düzen, aracı tam güvenceye almadan araçtan kopmayı önler.',
     whyWrong: [
       'Motoru frene basmadan ya da aracı emniyete almadan kapatmak, düzensiz ve riskli bir bitiştir.',
       'El freni çekilmeden boşta bırakılan araç, özellikle en küçük eğimde bile kayabilir.',
@@ -242,11 +242,11 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Sınavda ayna kontrollerinin yalnızca göz ucuyla değil, hafif bir baş hareketiyle yapılması neden önerilir?',
     options: [
       'Baş hareketi boynu dinlendirdiği için',
-      'Ayna kontrolünün gerçekten yapıldığı görevli tarafından görülebilsin ve aday da geniş açıyı daha iyi tarayabilsin diye',
       'Baş çevirmek aracı otomatik yavaşlattığı için',
+      'Ayna kontrolünün gerçekten yapıldığı görevli tarafından görülebilsin ve aday da geniş açıyı daha iyi tarayabilsin diye',
       'Aynalar ancak baş hareketiyle çalıştığı için',
     ],
-    answerIndex: 1,
+    answerIndex: 2,
     explanation:
       'Şerit değişimi, dönüş ve fren öncesi yapılan ayna kontrolü, belirgin bir baş hareketiyle yapıldığında hem daha geniş açı taranır hem de görevli bu gözlemin gerçekten yapıldığını görür. Yalnızca göz ucuyla atılan bakış çoğu zaman yetersizdir ve dışarıdan fark edilmez. Gözlem yapıldığı hâlde belli edilmezse, yapılmadı gibi değerlendirilebilir.',
     whyWrong: [
@@ -367,12 +367,12 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Sınavın park bölümünde aday, aracı cebe ilk hamlede tam oturtamayıp bir düzeltme hamlesi yaparsa bu nasıl değerlendirilir?',
     options: [
-      'Her düzeltme hamlesi otomatik olarak elemeli hata sayılır',
       'Kontrollü ve güvenli yapılan makul sayıda düzeltme kabul edilir',
+      'Her düzeltme hamlesi otomatik olarak elemeli hata sayılır',
       'Park sırasında hiçbir düzeltmeye izin verilmez',
       'Düzeltme yapmak yerine aracı olduğu gibi bırakmak daha iyidir',
     ],
-    answerIndex: 1,
+    answerIndex: 0,
     explanation:
       'Park manevrasında araç ilk hamlede tam oturmayabilir; kontrollü ve güvenli yapılan makul bir düzeltme hâkimiyet göstergesidir, ceza konusu değildir. Değerlendirmeyi olumsuza çeviren, çok sayıda tekrarlı deneme, bordüre veya dubaya temas ve aracın çarpık, taşan ya da tehlikeli konumda bırakılmasıdır. Yani ölçüt hamle sayısından çok, sonucun güvenli ve düzgün olmasıdır. Asıl olumsuzluk çok sayıda deneme, bordüre/dubaya çarpma ya da aracı çarpık ve tehlikeli bırakmaktır.',
     whyWrong: [
@@ -772,11 +772,11 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Kış sürüşünde yol yüzeyine bakıp buzlu (kaygan) kesimi önceden sezmek için hangi ipuçları işe yarar?',
     options: [
       'Yalnızca hava sıcaklığı sıfırın çok altındaysa buz olabilir',
-      'Yolun rengi ve parlaklığı okunur: mat-beyazımsı ya da ıslakmış gibi parlayan koyu kesimler (siyah buz), köprü/gölge/gölet kenarları buzlu olabilir',
-      'Buz yalnızca kar yağarken oluşur, kuru havada olmaz',
       'Buzlu zemin her zaman gözle net görüldüğü için ayrıca dikkat gerekmez',
+      'Buz yalnızca kar yağarken oluşur, kuru havada olmaz',
+      'Yolun rengi ve parlaklığı okunur: mat-beyazımsı ya da ıslakmış gibi parlayan koyu kesimler (siyah buz), köprü/gölge/gölet kenarları buzlu olabilir',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Buzlu zemin çoğu zaman ıslak asfalt gibi görünür; koyu ve camsı parlayan kesimler ("siyah buz") ya da mat-beyaz lekeler kayganlığın habercisidir. Köprü üstleri, gölge alanlar, nehir-gölet kenarları ve tünel ağızları erken donar. Bu işaretler görülünce daha üzerine gelmeden hız düşürülür; ani fren, gaz ve direksiyondan kaçınılır. Sıcaklık sıfır dolayındayken kuru görünen yol bile buzlu olabilir. Buralara girmeden hız düşürülür.',
     whyWrong: [
@@ -797,11 +797,11 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Bölünmüş çok şeritli bir yolda sürekli orta ya da sol şeritte yavaşça seyretmek neden yanlıştır?',
     options: [
       'Sol ve orta şeritte yakıt tüketimi arttığı için',
-      'Sağ şerit esas seyir şerididir',
-      'Orta şeritte aynalar daha az kullanıldığı için',
       'Sol şeritte hız sınırı olmadığı için',
+      'Orta şeritte aynalar daha az kullanıldığı için',
+      'Sağ şerit esas seyir şerididir',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Çok şeritli yollarda esas olan sağ şeritten seyretmek, sol şeritleri sollama ve daha hızlı akış için boş bırakmaktır. Sağ şerit boşken solda yavaş gitmek, arkadan gelenleri sağdan geçmeye ve gereksiz şerit değişimlerine iter; bu, akışı bozup çarpışma riskini artırır. Sollama bittiğinde ya da arkadan hızlı araç geldiğinde sağa dönülür. Sol şeritler sollama ve daha hızlı akış içindir. Boşken solda kalmak arkadan gelenleri sağdan geçmeye zorlar, trafik akışını bozar ve tehlikeli sollamaları körükler.',
     whyWrong: [
@@ -822,12 +822,12 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Seyir hâlinde navigasyon ekranını kullanırken güvenli bakış disiplini nasıl olmalıdır?',
     options: [
-      'Ekrana istenildiği kadar uzun bakılabilir, önemli olan yolu ara ara kontrol etmektir',
       'Navigasyon yalnızca durunca kurulmalı, hareket hâlinde ekrana ise en fazla bir-iki saniyelik kısa bakışlarla göz atılmalı',
+      'Ekrana istenildiği kadar uzun bakılabilir, önemli olan yolu ara ara kontrol etmektir',
       'Ekran sürücünün kucağında tutulup sürekli izlenmelidir',
       'Adres, direksiyondayken ve seyir hâlindeyken yazılmalıdır',
     ],
-    answerIndex: 1,
+    answerIndex: 0,
     explanation:
       'Bir-iki saniyelik bir ekran bakışı bile şehir hızında onlarca metre kör sürüş demektir; bu yüzden hedef seyir hâlinde durmadan yönergeyi almaktır. Navigasyon araç dururken kurulur, hareket hâlinde ekrana yalnızca çok kısa göz atılır ve asıl olarak sesli yönergelere güvenilir. Adres girme gibi karmaşık işlemler kesinlikle güvenli bir yere durularak yapılır. Asıl güven sesli yönergelere verilmeli ve karmaşık ekran işlemleri güvenli bir yerde durulup yapılmalıdır.',
     whyWrong: [
@@ -923,11 +923,11 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     stem: 'Yol kenarında geçmek için bekleyen bir yayaya yaklaşırken, onun niyetini anlamak için sürücünün başvurabileceği pratik yöntem nedir?',
     options: [
       'Yayanın mutlaka geçmeyeceğini varsayıp hızlanmak',
-      'Yayayla göz teması kurmaya çalışmak ve baş-vücut yönü ile ayak hareketinden geçme niyetini okumak',
-      'Farları sürekli yakıp söndürerek yayayı hızlıca geçirmeye zorlamak',
       'Yaya yaşlıysa durmak, gençse durmamak',
+      'Farları sürekli yakıp söndürerek yayayı hızlıca geçirmeye zorlamak',
+      'Yayayla göz teması kurmaya çalışmak ve baş-vücut yönü ile ayak hareketinden geçme niyetini okumak',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Yayanın niyetini okumanın en iyi yolu, mümkünse göz teması kurmak ve vücut yönü ile ilk adım hareketini izlemektir; bunlar geçme niyetinin en güvenilir işaretleridir. Göz teması kurulamıyor ya da yaya (özellikle çocuk, yaşlı, dikkati dağınık kişi) yola bakmıyorsa, her an adım atabileceği varsayılarak hız düşürülür ve durmaya hazır olunur. Sürücü niyeti tahmin etmek yerine güvenli tarafta kalmalıdır.',
     whyWrong: [
@@ -998,14 +998,14 @@ export const PRATIK_QUESTIONS_6: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'İki şeridin tek şeride düştüğü bir yol çalışması ya da daralmada trafiğin en akıcı ve güvenli ilerlemesini sağlayan yöntem hangisidir?',
     options: [
-      'Her aracın daralma noktasına kadar kendi şeridinde ilerleyip birleşme yerinde sırayla, dönüşümlü olarak (fermuar gibi)',
-      'Kapanan şeritteki herkesin çok önceden diğer şeride geçip tek sıra olması',
+      'Her aracın daralma noktasına kadar kendi şeridinde ilerleyip birleşme yerinde sırayla, dönüşümlü olarak (fermuar gibi) tek şeride katılması',
+      'Kapanan şeritteki herkesin çok önceden diğer şeride geçip tek sıra hâlinde ilerlemesi ve daralma noktasına kadar o şeridi hiç kullanmadan beklemesi',
       'Kapanan şeridi kullananların hızlanıp öndekilerin önüne zorla girmesi',
       'İki şeridin de daralmayı görmezden gelip yan yana sıkışarak devam etmesi',
     ],
     answerIndex: 0,
     explanation:
-      'Şerit daralmasında en verimli düzen, araçların birleşme noktasına kadar iki şeridi de kullanıp tam daralma yerinde sırayla, bir o şeritten bir bu şeritten dönüşümlü olarak katılmasıdır; buna fermuar sistemi denir. Bu yöntem her iki şeridin kapasitesini kullandığı için kuyruğu kısaltır ve ani şerit değişimlerini azaltır. Katılan araca yer açmak, birleşme yerinde nezaket değil, akışın gereğidir. Tek şeride katılması.',
+      'Şerit daralmasında en verimli düzen, araçların birleşme noktasına kadar iki şeridi de kullanıp tam daralma yerinde sırayla, bir o şeritten bir bu şeritten dönüşümlü olarak katılmasıdır; buna fermuar sistemi denir. Bu yöntem her iki şeridin kapasitesini kullandığı için kuyruğu kısaltır ve ani şerit değişimlerini azaltır. Katılan araca yer açmak, birleşme yerinde nezaket değil, akışın gereğidir.',
     whyWrong: [
       'Herkesin çok önceden tek şeride yığılması, bir şeridi boş bırakıp kuyruğu gereksiz uzatır.',
       'Zorla öne girmek ya da yan yana sıkışmak, sürtüşme ve tıkanma yaratıp akışı büsbütün bozar.',

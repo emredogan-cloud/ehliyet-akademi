@@ -17,7 +17,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
       'Sadece yakıt göstergesine bakmak yeterlidir',
       'Yalnızca radyo ve klima ayarlarını kontrol etmek',
       'Lastiklerin hava basıncı ve diş durumu, farlar, sinyaller ve araç altında sıvı sızıntısı olup olmadığı kontrol edilir',
-      'Yalnızca koltuk kılıflarının temizliğini kontrol etmek',
+      'Yalnızca koltuk kılıflarının temizliğini, iç döşemenin durumunu ve bagajdaki eşyaların düzenini kontrol etmek yeterlidir',
     ],
     answerIndex: 2,
     explanation:
@@ -66,7 +66,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     options: [
       'Mümkün olduğunca aşağıda, boyun hizasının altında olmalı',
       'Tamamen çıkarılmalı, hiç kullanılmamalı',
-      'En yukarı çekilip öylece bırakılmalı, konumun önemi yoktur',
+      'En yukarı çekilip öylece bırakılmalı; baş desteğinin konumunun güvenlik açısından bir önemi yoktur',
       'Üst kenarı başın tepesine yakın, ortası ise baş arkasını karşılayacak yükseklikte olmalı',
     ],
     answerIndex: 3,
@@ -90,7 +90,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     stem: 'İç dikiz aynası en doğru biçimde nasıl ayarlanır?',
     options: [
       'Sürüş oturuşunda baş hareket ettirilmeden arka camın tamamını çerçeveleyecek biçimde',
-      'Yalnızca aracın tavanı görünecek biçimde yukarı çevrilerek',
+      'Sürüş oturuşunda yalnızca aracın tavanı ve arka koltuk görünecek biçimde yukarı çevrilerek',
       'Yan koltuktaki yolcuyu görecek biçimde yana çevrilerek',
       'Sürücünün kendi yüzünü görebileceği biçimde',
     ],
@@ -117,7 +117,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
       'Debriyaj basılıyken gaz sonuna kadar verilir, sonra debriyaj birden bırakılır',
       'Hafif ve sabit gaz verilirken debriyaj kavrama noktasına kadar yavaşça bırakılır, araç yüklenince pedal tümüyle serbest bırakılır',
       'Gaz hiç verilmeden debriyaj hızla bırakılır',
-      'Önce el freni indirilir, ardından debriyaj ve gaza aynı anda sonuna kadar basılır',
+      'Önce el freni indirilir, ardından debriyaj ve gaz pedalına aynı anda sonuna kadar basılır ve araç kendiliğinden hareket edene kadar beklenir',
     ],
     answerIndex: 1,
     explanation:
@@ -139,7 +139,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Debriyaj kullanılmadığı anlarda sol ayak nerede tutulmalıdır?',
     options: [
-      'Sürekli debriyaj pedalının üzerinde yarı basılı',
+      'Sürekli debriyaj pedalının üzerinde hafif basılı biçimde dinlendirilir',
       'Fren pedalının üzerinde hazır',
       'Pedalın solundaki ayak dayama yerinde (ölü pedal) dinlendirilir',
       'Havada, hiçbir yere değmeden',
@@ -164,8 +164,8 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Araç hızlanırken bir üst vitese geçme zamanı genellikle nasıl anlaşılır?',
     options: [
-      'Motor devri (ses ve titreşim)',
-      'Araç durmak üzereyken üst vitese geçilir',
+      'Motor devri (ses ve titreşim) uygun aralığa yükseldiğinde',
+      'Araç neredeyse duracak kadar yavaşladığında üst vitese geçilir',
       'Hız ne olursa olsun her birkaç saniyede bir vites yükseltilir',
       'Motor çok düşük devirde titrerken üst vitese geçilir',
     ],
@@ -189,7 +189,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Vites değiştirirken gözler nerede olmalıdır?',
     options: [
-      'Vites koluna bakılarak konum doğrulanmalıdır',
+      'Her değişimde vites koluna bakılarak kademenin doğru olduğu doğrulanmalıdır',
       'Gösterge paneline sabitlenmelidir',
       'Debriyaj pedalına bakılmalıdır',
       'Yolda ve trafikte kalmalı, vites kolu ele alışkanlıkla bulunmalıdır',
@@ -217,7 +217,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
       'Fren ve gazı hiç kullanmadan yalnız debriyajla kalkmak',
       'Önce gaza uzun süre yüklenip sonra debriyaja basmak',
       'Debriyajı kavrama noktasında tutup ayağı frenden hızlıca gaza geçirerek, çekiş oluştuğu an aracı ileri yüklemek',
-      'Debriyajı tam bırakıp aracın kendi kendine kalkmasını beklemek',
+      'Debriyajı bir anda tam bırakıp aracın kendi kendine kalkmasını beklemek ve gaz pedalına hiç dokunmadan beklemek',
     ],
     answerIndex: 2,
     explanation:
@@ -242,7 +242,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     options: [
       'Vites boşa alınıp yalnızca fren pedalıyla inilir',
       'Uygun küçük vitese geçilerek motor freninden yararlanılır, fren yalnızca destekleyici olarak kullanılır',
-      'Debriyaj sürekli basılı tutulup araç serbest bırakılır',
+      'Debriyaj sürekli basılı tutulup araç serbest bırakılır, hız yalnızca fren pedalıyla sürekli olarak dengelenir',
       'Yüksek viteste kalıp sık sık sert fren yapılır',
     ],
     answerIndex: 1,
@@ -291,7 +291,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     stem: 'Dar bir alanda direksiyon kırılı hâlde geri manevra yapılırken, aracın ön ucuyla ilgili gözden kaçan tehlike nedir?',
     options: [
       'Ön uç hiç hareket etmez, yalnızca arka döner',
-      'Ön uç arka ile aynı yöne, aynı miktarda kayar',
+      'Ön uç, arka tekerleklerle aynı yöne ve aynı miktarda kaydığı için çevredeki engellere göre konumu hiç değişmez',
       'Ön far kendiliğinden söner',
       'Ön uç, dönülen yönün tersine doğru dışa savrulur ve yandaki araç, direk veya yayaya çarpabilir',
     ],
@@ -316,7 +316,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     stem: 'Önde ve arkada araç bulunan bir paralel park yerinden güvenle çıkmak için doğru yaklaşım nedir?',
     options: [
       'Direksiyonu tam kırıp tek hamlede öne doğru şeride katılmak',
-      'Dörtlüleri yakıp arkadan gelenlerin durmasını bekleyerek çıkmak',
+      'Dörtlüleri yakıp arkadan gelen bütün araçların durmasını bekleyerek çıkmak',
       'Öne pay açıp sinyal verdikten sonra kör noktayı kontrol ederek çıkmak',
       'Önce geriye doğru şeride çıkıp sonra ileri yönde ilerlemek',
     ],
@@ -342,7 +342,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     options: [
       'Aracın kaldırıma çıkmış olması',
       'Aracın kaldırıma yakın ve ona paralel durması, ön-arka araçlarla makul ve dengeli mesafe bırakması',
-      'Aracın yola doğru açılı, arkası dışarıda durması',
+      'Aracın yola doğru açılı durması, arkasının dışarıda kalması ve ön-arka araçlara eşit mesafe bırakmaması',
       'Aracın diğer araçlara değecek kadar yakın olması',
     ],
     answerIndex: 1,
@@ -366,7 +366,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     stem: 'Boş bir dik (90 derece) park cebine geri geri girerken izlenecek doğru manevra sırası nedir?',
     options: [
       'Cebe ileri yönde, direksiyon sabit girilir',
-      'Direksiyon tek seferde sonuna kadar kırılıp gazla girilir',
+      'Cebin tam hizasında durulur, direksiyon tek seferde sonuna kadar kırılıp gaz verilerek geri girilir; aynalara bakmaya gerek yoktur çünkü direksiyon açısı manevrayı kendiliğinden tamamlar',
       'Aynalara bakmadan sezgiyle geri gidilir',
       'Cebi hafif geçip hizalanılır, uygun noktada direksiyon boşluğa doğru kırılır, aynalar ve arka izlenerek yavaşça geri girilir, araç düzelince direksiyon toparlanır',
     ],
@@ -392,7 +392,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     stem: 'Dik park edilmiş bir cepten öne doğru çıkarken en önemli güvenlik önlemi nedir?',
     options: [
       'Yavaşça ilerleyip iki yandan gelen araçları ve önden geçen yayaları görene kadar burnu dikkatle dışarı vermek',
-      'Hızla çıkıp trafiğe hemen katılmak',
+      'Hızla çıkıp trafiğe hemen katılmak; yavaş çıkmak arkadaki araçları bekleteceği için daha büyük risk oluşturur',
       'Sadece sol aynaya bakıp çıkmak',
       'Kornaya basıp gözlem yapmadan çıkmak',
     ],
@@ -419,7 +419,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
       'Karşı yönün en soldaki şeridine',
       'Orta şeride, sinyal vermeden',
       'Girdiği yolun kendi yönündeki en sağ (dönüşe en yakın) şeride',
-      'Kaldırıma en yakın park şeridine',
+      'Girdiği yolun kaldırıma en yakın park şeridine, duraklama alanına',
     ],
     answerIndex: 2,
     explanation:
@@ -443,7 +443,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     options: [
       'Şerit çizgisine sürekli basarak',
       'Şeridin ortasında, iki çizgiye de yaklaşık eşit mesafede',
-      'Sürekli sağ çizgiye yaslanarak',
+      'Sürekli sağ şerit çizgisine yaslanarak, kaldırıma yakın biçimde',
       'İki şeride birden yayılarak',
     ],
     answerIndex: 1,
@@ -494,7 +494,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
       'Güvenle durulabilecek mesafedeyse yavaşlayıp durmak',
       'Her durumda gaza basıp hızla geçmek',
       'Kavşağın ortasında durup beklemek',
-      'Sarı ışıkta her koşulda sert fren yaparak durmak',
+      'Sarı ışıkta her koşulda sert fren yaparak hemen durmak',
     ],
     answerIndex: 0,
     explanation:
@@ -519,7 +519,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
       'Yayalar bekler, araç önce geçer',
       'Kornaya basıp yayaları hızlandırmak',
       'Yayalara yol verilir, geçişleri bitince dönüş tamamlanır',
-      'Yayaların arasından dikkatlice geçilir',
+      'Yayaların arasından yavaşlayarak, dikkatlice süzülüp geçilir',
     ],
     answerIndex: 2,
     explanation:
@@ -569,7 +569,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
       'Öndeki aracın hemen arkasına yaklaşmak',
       'Öndeki araç sabit bir noktayı geçtikten sonra en az iki saniye geçtiğinde o noktaya varacak kadar mesafe bırakmak',
       'Hız ne olursa olsun tek araç boyu mesafe yeterlidir',
-      'Mesafe önemli değildir, önemli olan frenlerin iyi olmasıdır',
+      'Takip mesafesinin herhangi bir önemi yoktur; önemli olan aracın frenlerinin iyi durumda ve lastiklerinin yeni olmasıdır',
     ],
     answerIndex: 1,
     explanation:
@@ -593,7 +593,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     options: [
       'Yaklaşık dört katına çıkar',
       'Yaklaşık aynı kalır',
-      'Yaklaşık yarısına iner',
+      'Yaklaşık yarısına kadar iner',
       'Yalnızca çok az artar',
     ],
     answerIndex: 0,
@@ -619,7 +619,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
       'Yol boşmuş gibi normal hızda gidilir',
       'Hız artırılıp bölge çabucak geçilir',
       'Görülebilen mesafe içinde güvenle durabilecek kadar hız düşürülür',
-      'Yalnızca farlar açılır, hız değiştirilmez',
+      'Yalnızca farlar ve sis lambaları açılır, hızda bir değişiklik yapılmaz',
     ],
     answerIndex: 2,
     explanation:
@@ -642,7 +642,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     stem: 'Okul, hastane ve yoğun yaya bölgelerinden geçerken sürücü ne yapmalıdır?',
     options: [
       'Normal hızını korumak',
-      'Kornaya basıp yayaları uyarmak yeterlidir',
+      'Kornaya basıp yayaları uyarmak yeterlidir; hızı düşürmeye ve durmaya hazır olmaya gerek yoktur',
       'Yalnızca sinyal vererek geçmek',
       'Hızı belirgin biçimde düşürmek ve özellikle çocuklar için her an durmaya hazır olmak',
     ],
@@ -694,7 +694,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
       'Sağ sinyal verip aynadan arkayı kontrol ederek yavaşça sağa yanaşmak',
       'Sinyal vermeden aniden sağa çekmek',
       'Sol sinyal verip sağa yanaşmak',
-      'Dörtlü flaşör yakıp hızla durmak',
+      'Dörtlü flaşörü yakıp aynalara hiç bakmadan olduğunuz yerde hızla durmak',
     ],
     answerIndex: 0,
     explanation:
@@ -743,7 +743,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     options: [
       'Yalnızca iç aynaya bakmak',
       'Hızlıca geri gidip son anda durmak',
-      'Kornaya basıp beklemeden geri gitmek',
+      'Kornaya basıp hiç beklemeden geri manevraya başlamak',
       'Şüphe varsa araçtan inip arkayı kontrol etmek',
     ],
     answerIndex: 3,
@@ -769,7 +769,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     options: [
       'Uzun far açık tutulur',
       'Karşı sürücünün gözünü almamak için kısa fara (yakın huzme) geçilir',
-      'Farlar tamamen kapatılır',
+      'Farlar tamamen kapatılıp yalnızca park lambalarıyla yola devam edilir',
       'Dörtlü flaşör yakılır',
     ],
     answerIndex: 1,
@@ -793,7 +793,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     stem: 'Gece sürüşünde karşıdan gelen aracın farları gözünüzü kamaştırdığında ne yapmalısınız?',
     options: [
       'Bakışı yolun sağ kenar çizgisine kaydırıp hızı düşürerek şeridi takip etmek',
-      'Doğrudan karşı farlara bakmaya devam etmek',
+      'Doğrudan karşıdan gelen aracın farlarına bakmaya devam edip hızı aynen korumak',
       'Gözleri kapatıp hızı korumak',
       'Kendi uzun farınızı yakıp karşılık vermek',
     ],
@@ -821,7 +821,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
       'Gündüzle aynı hızda gitmek',
       'Yol boş göründüğü için hızı artırmak',
       'Farların aydınlattığı mesafe içinde güvenle durabilecek bir hızda gitmek',
-      'Yalnızca hız limitine uymak, görüşü dikkate almamak',
+      'Yalnızca levhadaki hız limitine uymak, farların aydınlattığı görüş mesafesini dikkate almamak',
     ],
     answerIndex: 2,
     explanation:
@@ -843,7 +843,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Yağmurlu ve ıslak zeminde sürüşte kayma (su üstünde kızaklama) riskini azaltmak için ne yapılır?',
     options: [
-      'Hızı artırıp su birikintilerini çabuk geçmek',
+      'Hızı artırıp su birikintilerini bir an önce geçmek ve takip mesafesini kısaltmak',
       'Takip mesafesini kısaltmak',
       'Ani fren ve sert direksiyonla yol denemek',
       'Hızı düşürmek, takip mesafesini artırmak, ani fren ve direksiyondan kaçınmak',
@@ -871,7 +871,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
       'Uzun far yakmak görüşü artırır',
       'Kısa far ve varsa sis farı kullanmak, hızı düşürmek',
       'Farları kapatıp dörtlü flaşörle gitmek',
-      'Yalnızca park (gabari) lambalarıyla ilerlemek',
+      'Yalnızca park (gabari) lambalarını yakarak yola devam etmek',
     ],
     answerIndex: 1,
     explanation:
@@ -894,7 +894,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     stem: 'Buzlu veya karlı zeminde araç hâkimiyetini korumak için kumanda hareketleri nasıl olmalıdır?',
     options: [
       'Gaz, fren ve direksiyon yumuşak ve kademeli kullanılır, hız düşük tutulur',
-      'Hızlı gaz verip tekerleği döndürerek buz kırılır',
+      'Hızlı gaz verilip tekerlek döndürülerek altındaki buz kırılır ve tutunma sağlanır',
       'Sert ve ani fren yapılır',
       'Direksiyon hızlı ve büyük açılarla çevrilir',
     ],
@@ -918,7 +918,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Sürüş sırasında fren pedalı tutmaz veya boşalırsa yapılması gereken doğru yaklaşım nedir?',
     options: [
-      'Kontağı hemen kapatıp direksiyonu bırakmak',
+      'Kontağı hemen kapatıp direksiyonu serbest bırakmak, ardından gaza basıp bir an önce güvenli bir noktaya varmaya çalışmak ve el frenini tek hamlede sonuna kadar çekmek',
       'Gaza basıp bir an önce durağa varmaya çalışmak',
       'Fren pedalını üst üste pompalamayı denemek, küçük viteslere geçip motor freninden yararlanmak ve el frenini kademeli çekerek aracı güvenle yavaşlatmak',
       'Kapıyı açıp araçtan atlamak',
@@ -945,7 +945,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     stem: 'Yüksek hızda seyrederken ön lastiklerden biri aniden patlarsa ilk doğru tepki nedir?',
     options: [
       'Hemen sert fren yapmak',
-      'Direksiyonu patlayan tarafın tersine sertçe kırmak',
+      'Direksiyonu patlayan lastiğin tersi yönüne sertçe kırmak, aynı anda sert fren yapmak ve aracı en kısa sürede durdurmaya çalışmak',
       'Gaza basıp hızı korumak',
       'Direksiyonu iki elle sıkıca ve düz tutmak, gazı yavaşça bırakmak, sert fren yapmadan hızı azaltıp aracı güvenle kenara almak',
     ],
@@ -969,7 +969,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Araç yolda arızalanıp durduğunda güvenliği sağlamak için ne yapılır?',
     options: [
-      'Araçta oturup beklemek, başka önlem almamak',
+      'Aracın içinde emniyet kemeri takılı biçimde oturup yardım gelmesini beklemek, dörtlü yakmamak ve uyarı üçgeni koymadan beklemeyi sürdürmek',
       'Dörtlü flaşörü yakıp aracı mümkünse güvenli bir kenara almak, uyarı üçgenini yeterli mesafeye koymak ve gerekiyorsa yol dışında beklemek',
       'Aracı şeritte bırakıp uzaklaşmak',
       'Yalnızca kaputu açıp beklemek',
@@ -998,7 +998,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
       'Araç hâkimiyeti ve debriyaj-gaz kontrolündeki eksikliği gösteren bir hata olarak kaydedilir',
       'Hiç dikkate alınmaz',
       'Sınavı otomatik kazandırır',
-      'Yalnızca motora zarar verir, değerlendirmeyle ilgisi yoktur',
+      'Yalnızca motora zarar veren teknik bir durumdur; sınav değerlendirmesiyle hiçbir ilgisi bulunmaz',
     ],
     answerIndex: 0,
     explanation:
@@ -1020,7 +1020,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Direksiyon sınavında güvenlik gerektirmediği hâlde sürekli çok yavaş ve tereddütlü gitmek nasıl değerlendirilir?',
     options: [
-      'Ne kadar yavaş gidilirse o kadar güvenli sayılır, olumludur',
+      'Ne kadar yavaş gidilirse o kadar güvenli sayılır; bu yüzden değerlendirmede olumlu bir davranış olarak kaydedilir',
       'Değerlendirmeyle hiç ilgisi yoktur',
       'Trafik akışını gereksiz aksatan ve kararlılık eksikliği gösteren bir hata olarak değerlendirilebilir',
       'Yalnızca yakıt tüketimini etkiler',
@@ -1046,7 +1046,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     stem: 'Direksiyon sınavına girmeden önce heyecanı yönetmek için en yararlı yaklaşım hangisidir?',
     options: [
       'Sınavı önemsizmiş gibi görüp hiç hazırlanmamak',
-      'Son ana kadar başka adaylarla hata konuşup gerginliği artırmak',
+      'Son ana kadar diğer adaylarla yapılan hataları konuşup gerginliği artırmak ve dikkati dağıtmayı sürdürmek',
       'Uykusuz gelip yorgunluğu görmezden gelmek',
       'Yeterince dinlenmek, birkaç derin ve yavaş nefes alarak sakinleşmek ve çalışılan adımlara güvenmek',
     ],
@@ -1070,7 +1070,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Sınav sırasında küçük bir hata yaptığını fark eden aday nasıl davranmalıdır?',
     options: [
-      'Panikleyip hatayı düşünerek sürüşün geri kalanını aksatmak',
+      'Panikleyip yapılan hatayı düşünmeye devam ederek sürüşün geri kalanını aksatmak',
       'Sakin kalıp dikkatini yeniden yola vererek kalan sürüşü güvenle sürdürmek',
       'Sınavı kaybettiğini düşünüp gelişigüzel sürmek',
       'Görevliyle tartışıp hatanın sayılmamasını istemek',
@@ -1098,7 +1098,7 @@ export const PRATIK_QUESTIONS_3: QuestionInput[] = [
       'Sakin biçimde talimatı tekrar sormak ve emin olduktan sonra güvenle uygulamak',
       'Tahmin yürütüp rastgele bir yöne dönmek',
       'Hiçbir şey sormadan olduğu gibi düz devam etmek',
-      'Aniden ve son anda sert manevra yaparak dönmeyi denemek',
+      'Aniden ve son anda sert bir manevra yaparak tahmin ettiği yöne dönmeyi denemek',
     ],
     answerIndex: 0,
     explanation:

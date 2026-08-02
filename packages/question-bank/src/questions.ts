@@ -270,12 +270,7 @@ export const SEED_QUESTIONS: QuestionInput[] = [
     topic: 'aktarma',
     difficulty: 'orta',
     stem: 'Motorda üretilen gücü tekerleklere ileten sistem hangisidir?',
-    options: [
-      'Fren sistemi',
-      'Yakıt sistemi',
-      'Aydınlatma sistemi',
-      'Aktarma organları',
-    ],
+    options: ['Fren sistemi', 'Yakıt sistemi', 'Aydınlatma sistemi', 'Aktarma organları'],
     answerIndex: 3,
     explanation:
       'Aktarma organları (debriyaj, vites kutusu, şaft ve diferansiyel) motor gücünü tekerleklere iletir.',
@@ -312,11 +307,11 @@ export const SEED_QUESTIONS: QuestionInput[] = [
     stem: 'Yaya geçidine yaklaşan bir sürücünün trafik adabına uygun davranışı nedir?',
     options: [
       'Korna çalarak yayanın adımlarını hızlandırmasını beklemek',
-      'Yavaşlayıp gerekiyorsa durarak yayaya yol vermek',
-      'Yayadan önce hızlanıp geçidi boşaltmaya çalışmak',
       'Yayaya el işareti yapıp aynı hızda geçmek',
+      'Yayadan önce hızlanıp geçidi boşaltmaya çalışmak',
+      'Yavaşlayıp gerekiyorsa durarak yayaya yol vermek',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Yaya geçidinde öncelik yayanındır. Saygılı ve güvenli davranış, yavaşlayıp gerektiğinde durarak yol vermektir.',
     badge: 'official',
@@ -349,12 +344,12 @@ export const SEED_QUESTIONS: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Arkadan siren ve tepe lambasıyla gelen bir ambulans için sürücü ne yapmalıdır?',
     options: [
-      'Şeridi kapatıp ambulansın kendi yolunu bulmasını beklemek',
       'Güvenli şekilde sağa yanaşıp geçiş kolaylığı sağlamak',
+      'Şeridi kapatıp ambulansın kendi yolunu bulmasını beklemek',
       'Hızlanıp ambulansın önünden gitmeyi sürdürmek',
       'Kırmızı ışıkta bile hemen kavşağa girip yol açmak',
     ],
-    answerIndex: 1,
+    answerIndex: 0,
     explanation:
       'Geçiş üstünlüğüne sahip araçlara (ambulans, itfaiye vb.) güvenli biçimde yol verilmeli, geçiş kolaylığı sağlanmalıdır.',
     badge: 'official',
@@ -389,14 +384,14 @@ export const SEED_QUESTIONS: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Direksiyon uygulama sınavında araca binince emniyet kemerini takmamak hangi hata sınıfındadır?',
     options: [
-      'Mavi (küçük) hata',
-      'Sarı (tali) hata',
-      'Yeşil (uyarı) hata',
-      'Kırmızı (asli)',
+      'Mavi (küçük) hata — puan kaybı yok',
+      'Sarı (tali) hata — birkaçı birikince elenme',
+      'Yeşil (uyarı) hata — yalnızca sözlü uyarı',
+      'Kırmızı (asli) hata — anında elenme',
     ],
     answerIndex: 3,
     explanation:
-      'Emniyet kemerini takmamak asli (kırmızı) kusurdur ve tek başına sınavdan elenmeye yol açar. Hata — anında elenme.',
+      'Emniyet kemerini takmamak asli (kırmızı) kusurdur ve tek başına sınavdan elenmeye yol açar.',
     badge: 'official',
     review: 'draft',
     sourceRef: 'MTSK direksiyon değerlendirme çizelgesi (özgün ifade)',

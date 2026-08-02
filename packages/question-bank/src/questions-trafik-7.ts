@@ -15,12 +15,12 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Kenarları kırmızı üçgen bir levhada, tekerlekten sıçrayan taş taneleri sembolü (gevşek malzeme) bulunması sürücüye neyi bildirir?',
     options: [
-      'Yol yüzeyinde tekerleklerin fırlatabileceği gevşek malzeme (mıcır) bulunduğunu',
+      'Yolda yalnızca kamyonların geçebileceğini',
       'İleride ücretsiz park yeri bulunduğunu',
       'Bu yolun tamamen trafiğe kapalı olduğunu',
-      'Yolda yalnızca kamyonların geçebileceğini',
+      'Yol yüzeyinde tekerleklerin fırlatabileceği gevşek malzeme (mıcır) bulunduğunu',
     ],
-    answerIndex: 0,
+    answerIndex: 3,
     explanation:
       'Kırmızı kenarlı üçgen levhalar tehlike-uyarı işaretidir. Gevşek malzeme sembolü, kaplamada sabitlenmemiş taş ve çakıl bulunduğunu bildirir; yüksek hızda bu taneler tekerlekten fırlayıp araçlara zarar verebilir ve zemin kaygan olabilir. Sürücü hızını azaltıp öndeki araçla mesafeyi açar. Hızı azaltıp araya mesafe koyması gerektiğini.',
     whyWrong: [
@@ -42,11 +42,11 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     stem: 'Kırmızı kenarlı üçgen bir levhada, bir yamaçtan yola doğru düşen kaya parçaları sembolü gören sürücü ne anlamalıdır?',
     options: [
       'İleride kamp alanı bulunduğunu',
-      'Yamaçtan yola taş ve kaya düşebileceğini',
-      'Bu kesimde madencilik yapıldığı için geçişin yasak olduğunu',
       'Yolun bittiğini',
+      'Bu kesimde madencilik yapıldığı için geçişin yasak olduğunu',
+      'Yamaçtan yola taş ve kaya düşebileceğini',
     ],
-    answerIndex: 1,
+    answerIndex: 3,
     explanation:
       'Düşen kaya uyarı levhası, dik yamaç veya kaya yarması bulunan kesimlerde yola taş ve kaya parçalarının düşebileceğini bildirir. Sürücü hızını azaltmalı, yol yüzeyindeki parçalara karşı uyanık olmalı ve yamaç dibinde gereksiz yere durmamalıdır. Dikkatli olup hızı azaltması gerektiğini.',
     whyWrong: [
@@ -327,10 +327,10 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Beyaz zeminli, kırmızı çember içinde bir kamyon sembolü bulunan işaret sürücüye neyi bildirir?',
     options: [
-      'O yola kamyonların (yük taşıtlarının)',
-      'İleride kamyon garajı bulunduğunu',
-      'Yalnızca kamyonların geçebileceğini',
-      'Kamyonların park edebileceği yeri',
+      'O yola kamyonların (yük taşıtlarının) giremeyeceğini',
+      'İleride kamyonlar için ayrılmış bir garaj ve park alanı bulunduğunu',
+      'Bu yoldan yalnızca kamyon sınıfı taşıtların geçebileceğini',
+      'Kamyonların park edebileceği yerin ileride olduğunu',
     ],
     answerIndex: 0,
     explanation:
@@ -405,10 +405,10 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Kırmızı çember içinde hayvanla (at ile) çekilen bir araba sembolü bulunan işaret neyi bildirir?',
     options: [
-      'Bu yolda ata binmenin serbest olduğunu',
-      'İleride hayvan pazarı bulunduğunu',
+      'Bu yolda ata binmenin ve hayvanla yolculuk etmenin serbest olduğunu',
+      'İleride hayvan pazarı ve barınağı bulunduğunu',
       'Bütün araçların bu yolda çok yavaş gitmesi gerektiğini',
-      'Hayvanla çekilen taşıtların (at arabası, fayton vb.)',
+      'Hayvanla çekilen taşıtların (at arabası, fayton vb.) giremeyeceğini',
     ],
     answerIndex: 3,
     explanation:
@@ -899,10 +899,10 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Beyaz zemin üzerine kırmızı bir haç (artı) sembolü bulunan bilgi işareti neyi tanıtır?',
     options: [
-      'İleride akaryakıt istasyonu bulunduğunu',
-      'Kan bağışı yasağını',
-      'İleride ilk yardım (sağlık)',
-      'Yolun buzlu olduğunu',
+      'İleride akaryakıt istasyonu ve servis hizmeti veren bir tesis bulunduğunu',
+      'Bu bölgede kan bağışı yapmanın yasak olduğunu',
+      'İleride ilk yardım (sağlık) hizmeti verilen bir yer bulunduğunu',
+      'Yolun ileride buzlanmaya elverişli bir kesime girdiğini',
     ],
     answerIndex: 2,
     explanation:
@@ -977,10 +977,10 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Mavi zeminli bir bilgi işareti üzerinde telefon ahizesi sembolü bulunması neyi tanıtır?',
     options: [
-      'Telefonla konuşmanın serbest olduğunu',
-      'Yakında kullanılabilecek bir telefon (acil çağrı)',
-      'Bu yolda telefon çekmediğini',
-      'İleride elektronik mağazası bulunduğunu',
+      'Araç kullanırken elde telefonla konuşmanın bu kesimde serbest olduğunu',
+      'Yakında kullanılabilecek bir telefon (acil çağrı) noktası bulunduğunu',
+      'Bu yol boyunca cep telefonu şebekesinin çekmediğini',
+      'İleride elektronik eşya satan bir mağaza bulunduğunu',
     ],
     answerIndex: 1,
     explanation:
@@ -1055,14 +1055,14 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Yol kenarındaki çadır resimli mavi levha, sürücüye hangi tesisin yakında olduğunu haber verir?',
     options: [
-      'Yakında kamp (çadırlı konaklama)',
-      'Bu yolda çadır kurmanın yasak olduğunu',
-      'İleride asker uygulaması olduğunu',
-      'Yolun toprak olduğunu',
+      'Yakında kamp (çadırlı konaklama) alanı bulunduğunu',
+      'Bu yol kenarında çadır kurmanın ve kamp yapmanın yasak olduğunu',
+      'İleride askerî bir uygulama noktası bulunduğunu',
+      'Yolun ileride toprak yola dönüştüğünü',
     ],
     answerIndex: 0,
     explanation:
-      'Çadır sembollü mavi bilgi işareti, yakında kamp yapılabilecek bir alan bulunduğunu tanıtır. Yol boyunca konaklama ve dinlenme seçeneklerini gösteren bilgi işaretlerindendir. Alanı bulunduğunu.',
+      'Çadır sembollü mavi bilgi işareti, yakında kamp yapılabilecek bir alan bulunduğunu tanıtır. Yol boyunca konaklama ve dinlenme seçeneklerini gösteren bilgi işaretlerindendir.',
     whyWrong: [
       'İşaret bir yasak değil, kamp alanını tanıtır.',
       'İşaret bir uygulama noktası bildirmez.',
@@ -1627,12 +1627,12 @@ export const TRAFIK_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Kısa mesafelerde mümkün olduğunda toplu taşımayı, yürümeyi veya bisikleti tercih etmenin çevreye katkısı nedir?',
     options: [
-      'Trafiğe çıkan özel araç ve dolayısıyla toplam egzoz salımı ile trafik yoğunluğunu azaltması',
+      'Yakıt tüketimini yükseltmesi',
       'Hiçbir katkısı olmaması',
       'Hava kirliliğini artırması',
-      'Yakıt tüketimini yükseltmesi',
+      'Trafiğe çıkan özel araç ve dolayısıyla toplam egzoz salımı ile trafik yoğunluğunu azaltması',
     ],
-    answerIndex: 0,
+    answerIndex: 3,
     explanation:
       'Herkesin ayrı ayrı özel araç kullanması yerine toplu taşımanın, yürümenin veya bisikletin tercih edilmesi; yola çıkan araç sayısını azaltır. Bu da toplam egzoz salımını, yakıt tüketimini ve trafik yoğunluğunu düşürerek hava kalitesine katkı sağlar.',
     whyWrong: [

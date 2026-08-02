@@ -106,21 +106,60 @@ void main() {
     expect(find.text('1 / 50'), findsOneWidget); // collection opened as a runnable exam
   });
 
-  testWidgets('Geçmiş Sınavlar lists MEB sessions', (tester) async {
+  /// Ürün Evrimi v1.1 · Faz 2 — hub artık SINAV ARŞİVİ'ne açılıyor.
+  ///
+  /// Eski "Geçmiş Sınavlar" ekranı 2015–2018 arası sabit tarihler gösteriyordu ve bayatlamıştı.
+  /// Rotası duruyor (sahadaki derin bağlantılar kırılmasın) ama hub oraya değil kütüphaneye
+  /// götürüyor.
+  testWidgets('Sınav Arşivi kategori kataloğunu açar', (tester) async {
     await pumpApp(tester);
     await _openPractice(tester);
 
     await tester.scrollUntilVisible(
-      find.text('Geçmiş Sınavlar'),
+      find.text('Sınav Arşivi'),
       200,
       scrollable: find.byType(Scrollable).first,
     );
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Geçmiş Sınavlar'));
+    await tester.tap(find.text('Sınav Arşivi').last);
     await tester.pumpAndSettle();
 
-    expect(find.text('MEB formatında hazırlanmış özgün deneme sınavı'), findsOneWidget);
-    expect(find.text('2018'), findsOneWidget); // year header
-    expect(find.text('Ağustos 2018'), findsOneWidget); // newest session
+    expect(find.text('Genel Sınav'), findsOneWidget);
+    expect(find.text('Trafik ve Çevre Bilgisi'), findsOneWidget);
+    // Telif etiketi görünür.
+    expect(find.textContaining('Telifli sınav kâğıdı sunulmaz'), findsWidgets);
+
+    // Son kategori listenin altında — kaydırılarak bulunur.
+    await tester.scrollUntilVisible(
+      find.text('Görsel Sorular'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    expect(find.text('Görsel Sorular'), findsOneWidget);
+  });
+
+  testWidgets('Düello hub\'dan açılır ve rakip arar', (tester) async {
+    await pumpApp(tester);
+    await _openPractice(tester);
+
+    await tester.scrollUntilVisible(
+      find.text('Düello'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Düello').last);
+    // `pumpAndSettle` KULLANILMAZ: düello ekranında sürekli çalışan bir zamanlayıcı var ve
+    // sonsuza kadar bekler. Sabit kare sayısıyla geçişin bitmesi beklenir.
+    for (var i = 0; i < 8; i++) {
+      await tester.pump(const Duration(milliseconds: 80));
+    }
+
+    expect(find.text('Rakip aranıyor…'), findsOneWidget);
+    // Uydurma çevrimiçi oyuncu sayısı YAZILMAZ.
+    expect(find.textContaining('çevrimiçi'), findsNothing);
+
+    await tester.pump(const Duration(seconds: 4));
+    expect(find.text('Rakip bulundu'), findsOneWidget);
   });
 }

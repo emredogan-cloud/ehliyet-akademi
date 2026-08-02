@@ -347,3 +347,197 @@ APK'ya etkisi ihmal edilebilir (E13: varlıklar APK'nın yalnız %6'sı).
 5. Kodda emoji yerine illüstrasyonu bağla.
 6. **Cihazda** doğrula, ekran görüntüsü al.
 7. Tekil dosya bütçesi: **≤ 150 KB**.
+
+---
+
+## 7. Trafik işaretleri — prosedürel çizim denetimi (Ürün Evrimi v1.1 · Faz 3)
+
+### 7.1 Ölçüm
+
+|                                                  |         |
+| ------------------------------------------------ | ------: |
+| Katalogdaki işaret (`apps/web/content/signs.ts`) | **121** |
+| `official_signs.dart` ile SVG'ye eşlenen         |  **86** |
+| **Resmî SVG'si olmayan → prosedürel çiziliyor**  |  **35** |
+
+Prosedürel çizim `TrafficSignView` içinde yapılır: şekil + renk + (varsa) rakam parametreden
+gelir. Yani bu 35 işaret **bozuk değil, çiziliyor** — soru da sorulabiliyor. Denetim, hangilerinin
+gerçekten bir piktogram istediğini ayırmak için yapıldı.
+
+### 7.2 Üretilmeyecekler — 17 işaret, gerekçesiyle
+
+Bunlar **rakam taşıyan hız levhaları**. İçindeki sayı bir _veridir_, çizim değil: aynı kırmızı
+(ya da mavi) halkanın içine yazılır. `TrafficSignView` bunu zaten parametreyle yapıyor ve sonuç
+mevzuata birebir uyuyor.
+
+17 ayrı görsel üretmek, tek farkı iki rakam olan 17 dosya demek olurdu — kullanıcının
+"**Do NOT generate duplicate prompts**" kuralının tam ihlali. Ayrıca her yeni hız sınırı
+(ör. 130) yeni bir görsel gerektirirdi; parametrik çizimde ise hiçbir şey gerekmez.
+
+```
+azami-hiz-20/30/40/50/60/70/80/90/100/110/120   (11)
+asgari-hiz-30/40/50                              (3)
+hiz-siniri-sonu · tum-yasaklarin-sonu            (2)  → halka + eğik çizgi, rakamsız
+yukseklik-siniri                                 (1)  → halka + "3,5 m" metni (veri)
+```
+
+**Karar: prosedürel kalır. Görsel üretilmez.**
+
+### 7.3 Üretilecekler — 18 işaret
+
+Bunların hepsi bir **piktogram** (silüet/şekil) içeriyor; prosedürel çizim bunları gerçekten
+üretemiyor, yerine yalnız boş çerçeve + kategori rengi çiziliyor.
+
+> **STİL AİLESİ: "Resmî vektör" — §2 uyarınca stil serbestisi YOKTUR.**
+> Bu, üretimin sınırını da belirler: GPT Image mevzuata _birebir_ bir levha üretmez, yaklaşık
+> üretir. Bu yüzden **birincil kaynak resmî vektördür**; aşağıdaki istemler, resmî vektör temin
+> edilene kadar geçerli olan **eğitim amaçlı gösterim** içindir. Dosya adları şimdiden koda
+> bağlıdır, dolayısıyla ister üretilmiş görsel ister resmî vektör konsun, uygulama onu kullanır.
+
+**Ortak alanlar (18 kalemin hepsi için aynı):**
+
+| Alan                  | Değer                                                                                                                                                                                                                                   |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Kayıt dizini          | `apps/mobile/assets/signs/`                                                                                                                                                                                                             |
+| Uzantı                | `.svg` (vektör; ölçekten bağımsız keskin)                                                                                                                                                                                               |
+| **Dosya adı kuralı**  | `assets/signs/<işaret-id>.svg` — üretilmiş levhalar KGM kodu kullanıyor ama hangi kodun boş olduğu buradan bilinemiyor: ilk denemede `t-9.svg` seçildi ve zaten kullanımdaydı (test yakaladı). İşaret kimliği hem benzersiz hem okunur. |
+| Çözünürlük            | vektör — `viewBox="0 0 100 100"`                                                                                                                                                                                                        |
+| Arka plan             | **şeffaf**                                                                                                                                                                                                                              |
+| Kullanım yeri         | `TrafficSignView` → Öğren ▸ İşaretler, işaret detayı, **görsel sorular**                                                                                                                                                                |
+| Negatif (her istemde) | `metin yok, filigran yok, marka/logo yok, gölge yok, 3B yok, perspektif yok`                                                                                                                                                            |
+
+**İstem şablonu** (§3 standardına uygun, konu alanı değişir):
+
+```
+[KONU]. Resmî trafik levhası vektörü tarzında: düz renk, keskin kenar, tek düzlem.
+Kompozisyon: levha kareye ortalanmış, kenar boşluğu %6.
+Renk paleti: [kategori renkleri].
+Arka plan: şeffaf.
+En-boy: 1:1 · Çözünürlük: vektör (viewBox 0 0 100 100).
+Negatif: metin yok, filigran yok, marka/logo yok, gölge yok, 3B yok, perspektif yok.
+```
+
+Kategori renkleri: **tehlike** `#ed1c24` üçgen + beyaz zemin + siyah simge ·
+**yasak** `#ed1c24` halka + beyaz zemin + siyah simge · **mecburiyet** `#0d47a1` mavi disk +
+beyaz simge · **bilgi/park** `#0d47a1` mavi dikdörtgen + beyaz simge ·
+**otoyol** `#1b7a3e` yeşil dikdörtgen + beyaz simge.
+
+#### Tehlike (kırmızı kenarlı üçgen, tepe yukarı) — 4
+
+| Dosya adı                 | İşaret                    | KONU (isteme yazılacak)                                                                    |
+| ------------------------- | ------------------------- | ------------------------------------------------------------------------------------------ |
+| `kaygan-yol.svg`          | Kaygan Yol                | Kırmızı kenarlı üçgen; içinde siyah otomobil silüeti ve altında iki adet dalgalı kayma izi |
+| `tehlikeli-viraj-sag.svg` | Sağa Tehlikeli Viraj      | Kırmızı kenarlı üçgen; içinde sağa kıvrılan kalın siyah yol oku                            |
+| `dik-cikis.svg`           | Tehlikeli Eğim (çıkış)    | Kırmızı kenarlı üçgen; içinde yukarı doğru yükselen siyah eğim çizgisi                     |
+| `vahsi-hayvan.svg`        | Vahşi Hayvanlar Geçebilir | Kırmızı kenarlı üçgen; içinde yandan görünen siyah geyik silüeti                           |
+
+#### Yasak / Park (kırmızı halka ya da mavi disk) — 4
+
+| Dosya adı               | İşaret                 | KONU                                                                    |
+| ----------------------- | ---------------------- | ----------------------------------------------------------------------- |
+| `park-yasak.svg`        | Parketmek Yasaktır     | Mavi disk, kırmızı halka ve sol üstten sağ alta tek kırmızı eğik çizgi  |
+| `park-yasagi-sonu.svg`  | Park Yasağı Sonu       | Aynı levhanın üzerinde ince gri eğik iptal çizgileri                    |
+| `park-saat-sinirli.svg` | Süre Sınırlı Park Yeri | Mavi kare, ortasında beyaz büyük "P" ve altında beyaz kum saati simgesi |
+| `engelli-parki.svg`     | Engelli Park Yeri      | Mavi kare, ortasında beyaz tekerlekli sandalye simgesi                  |
+
+#### Mecburiyet (mavi disk, beyaz simge) — 2
+
+| Dosya adı                | İşaret                   | KONU                                                        |
+| ------------------------ | ------------------------ | ----------------------------------------------------------- |
+| `saga-donus-mecburi.svg` | İleride Sağa Mecburi Yön | Mavi disk; içinde yukarı çıkıp sağa kıvrılan kalın beyaz ok |
+| `sola-donus-mecburi.svg` | İleride Sola Mecburi Yön | Mavi disk; içinde yukarı çıkıp sola kıvrılan kalın beyaz ok |
+
+#### Bilgi (mavi dikdörtgen, beyaz simge) — 5
+
+| Dosya adı                | İşaret             | KONU                                                                      |
+| ------------------------ | ------------------ | ------------------------------------------------------------------------- |
+| `lokanta.svg`            | Lokanta            | Mavi kare; içinde beyaz çatal ve bıçak yan yana                           |
+| `taksi-duragi.svg`       | Taksi Durağı       | Mavi kare; içinde beyaz otomobil silüeti ve tavanında küçük taksi levhası |
+| `tunel.svg`              | Tünel              | Mavi kare; içinde beyaz kemerli tünel ağzı ve içine giren yol             |
+| `havalimani.svg`         | Havalimanı         | Mavi kare; içinde eğik duran beyaz uçak silüeti                           |
+| `motorlu-tasit-yolu.svg` | Motorlu Taşıt Yolu | Mavi kare; içinde önden görünen beyaz otomobil silüeti                    |
+
+#### Otoyol / Yönlendirme (yeşil dikdörtgen) — 3
+
+| Dosya adı                | İşaret                  | KONU                                                                            |
+| ------------------------ | ----------------------- | ------------------------------------------------------------------------------- |
+| `otoyol-cikisi.svg`      | Otoyol Çıkışı           | Yeşil dikdörtgen; içinde ana yoldan sağa ayrılan beyaz çıkış oku                |
+| `otoyol-cikisi-300m.svg` | Otoyol Çıkışı Yaklaşımı | Yeşil dikdörtgen; içinde sağa ayrılan beyaz ok ve yanında üç eğik mesafe çubuğu |
+| `devlet-yolu.svg`        | Devlet Yolu Yönlendirme | Beyaz kenarlı mavi dikdörtgen; içinde yukarı yönelen beyaz yön oku              |
+
+### 7.4 Yerleştirme — kod ŞİMDİDEN hazır
+
+Yukarıdaki dosya adları `apps/mobile/lib/core/official_signs.dart` içine **bu değişiklikle
+eklendi**. Görsel klasöre konduğu an uygulama onu kullanır; kod değişikliği gerekmez.
+
+Doğrulama: `flutter test test/official_signs_test.dart` — eşlemesi olup dosyası olmayan işaret
+varsa test bunu söyler ve prosedürel çizime düşüldüğünü belgeler.
+
+---
+
+## 8. Maskot KATMANLARI — göz kırpma ve bakış takibi için (Ürün Evrimi v1.1 · Faz 6)
+
+### 8.1 Neden bu katmanlar gerekiyor
+
+Faz 6'da koç canlandırıldı: nefes, süzülme, mikro eğim ve konuşurken öne yaklaşma —
+hepsi yerel Flutter dönüşümleriyle, sıfır bağımlılıkla (`design/living_mascot.dart`).
+
+**Göz kırpma ve bakış takibi YAPILMADI.** İkisi de gözün nerede olduğunu bilmeyi gerektirir;
+elimizdeki maskot tek parça bir raster. Göz konumunu tahmin edip üstüne kapak çizmek, gözün
+yanına siyah bir çubuk koymak olurdu. Olmayan bir şey taklit edilmedi.
+
+Aşağıdaki katmanlar üretildiğinde ikisi de eklenebilir — `LivingMascot` tek değiştirme noktası.
+
+### 8.2 Rive / Lottie neden seçilmedi
+
+| Seçenek                       | Durum                                                                                                       |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| **Rive**                      | En güçlüsü (durum makinesi, etkileşim). `.riv` dosyası ister — elimizde yok, durağan `.webp`den üretilemez. |
+| **Lottie**                    | Yaygın, After Effects çıktısı. `.json` ister — aynı sorun.                                                  |
+| **Yerel Flutter dönüşümleri** | **Seçilen.** Bağımlılık yok, dış varlık yok, bugün çalışıyor.                                               |
+
+Bağımlılık eklemek, dosya gelene kadar hiçbir şey çalıştırmazdı: bugün sıfır kazanç, kalıcı
+bakım yükü. Katmanlı varlıklar geldiğinde Rive'a geçmek hâlâ mümkün.
+
+### 8.3 İstenen katmanlar — `owl_teacher` için 5 dosya
+
+Hepsi **aynı tuval**, **aynı hizada**, **şeffaf** — üst üste bindirildiğinde tam maskotu vermeli.
+Kayma olursa göz gövdenin dışında kalır.
+
+| Alan               | Değer                                                                  |
+| ------------------ | ---------------------------------------------------------------------- |
+| Kayıt dizini       | `apps/mobile/assets/img/`                                              |
+| Uzantı             | `.webp` (şeffaflık korunmalı → kayıpsız ya da yüksek kalite)           |
+| Çözünürlük         | **1080×1080**, hepsi birebir aynı                                      |
+| Arka plan          | şeffaf                                                                 |
+| Stil ailesi        | **Maskot (baykuş)** — §2: yumuşak 3B, teal tüy, gözlük, sıcak/öğretici |
+| Negatif (hepsinde) | `metin yok, filigran yok, marka/logo yok, arka plan yok, gölge yok`    |
+
+| Dosya adı                  | Katman     | İçerik                                                                    |
+| -------------------------- | ---------- | ------------------------------------------------------------------------- |
+| `owl_layer_body.webp`      | Gövde      | Baş ve gözler HARİÇ her şey: gövde, kanatlar, ayaklar, gözlük çerçevesi   |
+| `owl_layer_head.webp`      | Baş        | Yalnız baş (gözler hariç); gövdeden ayrı döndürülebilsin diye             |
+| `owl_layer_eyes_open.webp` | Göz akı    | Yalnız iki göz akı, göz bebeği YOK                                        |
+| `owl_layer_pupils.webp`    | Göz bebeği | Yalnız iki göz bebeği, ortalanmış — kaydırılarak bakış yönü verilir       |
+| `owl_layer_eyelids.webp`   | Göz kapağı | Kapalı göz kapakları; opaklığı 0↔1 arasında değiştirilerek kırpma yapılır |
+
+**İstem şablonu** (§3 standardına uygun):
+
+```
+[KATMAN İÇERİĞİ]. Maskot (baykuş) ailesi tarzında: yumuşak 3B, teal tüy, yuvarlak gözlük,
+sıcak ve öğretici ifade.
+Kompozisyon: kareye ortalanmış, diğer katmanlarla BİREBİR hizalı, kenar boşluğu %8.
+Renk paleti: #14b8a6, #0b7268, #F59E0B.
+Arka plan: şeffaf.
+En-boy: 1:1 · Çözünürlük: 1080×1080.
+Negatif: metin yok, filigran yok, marka/logo yok, arka plan yok, gölge yok, diğer katmanların
+parçaları yok.
+```
+
+### 8.4 Katmanlar geldiğinde yapılacak
+
+1. `LivingMascot`'a `layers` seçeneği: verilirse `Stack` ile beş katman çizilir.
+2. **Göz kırpma** — `owl_layer_eyelids` opaklığı; 90 ms kapanma, 4–7 sn arası rastgele aralık.
+   Aralık SABİT OLMAMALI: sabit aralıklı kırpma robot gibi görünür.
+3. **Bakış takibi** — `owl_layer_pupils` en fazla ±%4 kaydırılır; daha fazlası şaşı görünür.
+4. Testler: kırpma aralığının sabit olmadığı ve hareket azaltıldığında hiç kırpılmadığı.

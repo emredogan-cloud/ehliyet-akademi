@@ -1,0 +1,38 @@
+# gitleaks — bilinçli olarak yok sayılan bulgular.
+#
+# KURAL: buraya yalnız GERÇEK BİR SIR OLMADIĞI doğrulanmış bulgular yazılır ve her satırın
+# gerekçesi üstünde durur. "CI kırmızı kalmasın" tek başına bir gerekçe değildir; bir sırrı
+# buraya yazmak, onu depoda bırakmakla aynı şeydir.
+#
+# İKİNCİ KURAL — bu turda öğrenildi: gerekçe yazarken sızan dizgenin KENDİSİ YAZILMAZ.
+# Bu dosyanın ilk hâlinde dizge örnek olarak alıntılanmıştı ve gitleaks onu YENİ bir bulgu
+# olarak yakaladı. Aynı hata `PRODUCT_EVOLUTION_IMPLEMENTATION_REPORT.md` içinde de vardı:
+# bir sızıntıyı belgelemek, onu bir kez daha depoya yazmak anlamına gelir.
+#
+# Biçim: <commit>:<dosya>:<kural>:<satır>
+#
+# UYARI: parmak izinin ilk alanı COMMIT'tir; geçmiş yeniden yazılırsa (rebase, birleştirme,
+# konu satırı düzeltmesi) bu izler tutmaz ve gitleaks bulguları YENİDEN bildirir. 2 Ağustos
+# 2026'da dört commit'in konu satırı commitlint için düzeltildi; aşağıdaki 2. ve 3. bulgunun
+# commit'i o yüzden değişti. Bulguların kendisi ve gerekçeleri aynı.
+#
+# ── Bulgu 1 ───────────────────────────────────────────────────────────────────────────────
+# Entegrasyon testi demirbaşı bir parola dizgesi (`social.integration.test.ts`, eski hâli).
+# · Gerçek bir kimlik bilgisi değil; test içinde anında oluşturulup atılan bir kullanıcıya
+#   ait. Hiçbir ortama, hiçbir servise, hiçbir hesaba karşılık gelmiyor.
+# · Güncel kaynakta ARTIK YOK — paylaşılan bir sabite taşındı. Bulgu yalnızca geçmişte
+#   duruyor, dolayısıyla satır içi `gitleaks:allow` yorumu bunu susturamaz.
+8ec24808b2af44e6f433d0b97fd0c5a06871888f:apps/web/lib/server/social.integration.test.ts:generic-api-key:162
+#
+# ── Bulgu 2 ───────────────────────────────────────────────────────────────────────────────
+# Bulgu 1'in RAPOR İÇİNDE alıntılanmış hâli. Rapor metni güncel sürümde sansürlendi; aşağıdaki
+# parmak izi yalnızca o commit'teki geçmiş kopyayı susturur.
+5197e7296bd5c2d10adb695cf8a934c3b0fdacfd:PRODUCT_EVOLUTION_IMPLEMENTATION_REPORT.md:generic-api-key:415
+#
+# ── Bulgu 3 ───────────────────────────────────────────────────────────────────────────────
+# BU DOSYANIN kendi ilk sürümü. Gerekçeyi yazarken dizge örnek olarak alıntılanmıştı; bir
+# sonraki commit'te kaldırıldı ama geçmişte kaldı. Üçüncü kez aynı ders: sızıntıyı anlatırken
+# sızıntıyı yeniden yazma. Geçmişten temizlemek için yeniden yazma yapılmadı — tek bir test
+# demirbaşı uğruna göze alınacak bir işlem değil; aşağıdaki commit yalnızca konu satırı
+# düzeltmesinden etkilendiği için farklı.
+e6dda689dc02dd78704e0d034c5274e8ec076d6d:.gitleaksignore:generic-api-key:10

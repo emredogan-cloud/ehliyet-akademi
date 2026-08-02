@@ -1,22 +1,27 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/premium/entitlement_status.dart';
+import '../../domain/premium/products.dart';
 import 'play_billing_gateway.dart';
-import 'revenuecat_gateway.dart';
 
 export '../../domain/premium/entitlement_status.dart' show EntitlementFacts;
+
+// `BillingPeriod` ALAN katmanında tanımlıdır (`domain/premium/products.dart`) ve buradan yeniden
+// dışa verilir: katalogla mağaza yanıtı aynı türü kullansın diye. İki ayrı kopya varken
+// "mağazanın bildirdiği dönem, sattığımız paketin dönemi mi?" sorusu sorulamıyordu.
+export '../../domain/premium/products.dart' show BillingPeriod;
 
 /// Beta Faz 3 — ödeme altyapısı SOYUTLAMASI.
 ///
 /// MİMARİ (Evolution'dan devam, Faz 2'de Google girişinde uygulanan kalıbın aynısı): platforma
 /// bağlı her şey **arayüz + uygulama** olarak yazılır. Bu dosya hiçbir ödeme eklentisinin türünü
-/// dışarı sızdırmaz; `in_app_purchase`'ın `ProductDetails`'i de `purchases_flutter`'ın
-/// `StoreProduct`'ı da burada [BillingProduct]'a indirgenir. Böylece ödeme ekranı tek bir sözleşme
-/// görür ve widget testleri sahte ağ geçidiyle, platform kanalı olmadan çalışır.
+/// dışarı sızdırmaz; `in_app_purchase`'ın `ProductDetails`'i burada [BillingProduct]'a indirgenir.
+/// Böylece ödeme ekranı tek bir sözleşme görür ve widget testleri sahte ağ geçidiyle, platform
+/// kanalı olmadan çalışır.
 ///
-/// **MEVCUT YOL SÖKÜLMEZ.** `in_app_purchase` tabanlı yol [PlayBillingGateway] olarak aynen durur;
-/// RevenueCat onun YERİNE değil, YANINA eklenir ([RevenueCatGateway]). Seçim
-/// [billingGatewayProvider] içinde, derleme zamanı anahtarına bakılarak yapılır.
+/// Soyutlamanın DEĞERİ bu turda kanıtlandı: hiç kullanılmayan ikinci bir sağlayıcı
+/// (RevenueCat) tek bir satır değiştirilerek kaldırıldı ve ödeme ekranı ile testlerin hiçbiri
+/// etkilenmedi. Ayrıntı [billingGatewayProvider] üzerinde.
 
 /// Satın almanın sunucudaki yetkilendirmeye hangi yolla dönüştüğü.
 ///
@@ -27,21 +32,13 @@ enum BillingServerBridge {
   /// doğrulanır. Bugünkü `in_app_purchase` yolu budur.
   clientReceipt,
 
-  /// Sunucu yetkilendirmeyi RevenueCat'in **webhook**'undan alır; istemci ham Play makbuzunu
-  /// görmez. RevenueCat Flutter SDK'sı ham `purchaseToken`'ı zaten sunmaz — ayrıntı:
-  /// `BETA_PHASE_3_REPORT.md`.
-  revenueCatWebhook,
-}
-
-/// Ödeme dönemi — mağaza ürününün ne tür olduğu.
-enum BillingPeriod {
-  /// Tek seferlik / ömür boyu (yönetilen ürün).
-  lifetime,
-  monthly,
-  yearly,
-
-  /// Sağlayıcı bir dönem bildirmedi.
-  unknown,
+  /// Sunucu yetkilendirmeyi bir aracının **webhook**'undan alır; istemci ham Play makbuzunu
+  /// görmez.
+  ///
+  /// BUGÜN KULLANILMIYOR ve bilerek duruyor: bu ayrım, ödeme altyapısı değiştiğinde
+  /// **gerçekten değişen** şeyin ne olduğunu tek satırda anlatıyor (yetkiye ulaşan yol).
+  /// Kaldırmak, bir sonraki entegrasyonda aynı ayrımı yeniden keşfetmek demekti.
+  externalWebhook,
 }
 
 /// Mağaza ürünü — hangi altyapı kullanılırsa kullanılsın aynı biçim.
@@ -180,15 +177,23 @@ abstract class BillingGateway {
   void dispose();
 }
 
-/// Etkin ödeme ağ geçidi.
+/// Etkin ödeme ağ geçidi — **Play Billing** (`in_app_purchase`).
 ///
-/// SEÇİM: `REVENUECAT_PUBLIC_KEY` derleme zamanında verilmişse RevenueCat, verilmemişse **mevcut
-/// `in_app_purchase` yolu**. Anahtar yokken uygulama çökmez; ödeme ekranı bugünkü dürüst
-/// "mağaza kullanılamıyor" durumunu gösterir (testle korunuyor).
+/// ## RevenueCat neden KALDIRILDI (Premium Kalite Programı · Faz 6)
+///
+/// Bir dönem ikinci bir ağ geçidi (`RevenueCatGateway`) vardı ve yalnız
+/// `--dart-define=REVENUECAT_PUBLIC_KEY` verilmişse seçiliyordu. O bayrak hiçbir derlemede
+/// verilmedi; dolayısıyla ağ geçidi **hiçbir zaman çalışmadı**.
+///
+/// Buna karşılık bedeli ölçüldü: yayınlanan sürüm APK'sının `classes.dex` dosyasında
+/// **3114 RevenueCat sembolü** duruyordu. Yani her kullanıcı, hiç kullanılmayan bir ödeme
+/// SDK'sını indiriyordu.
+///
+/// Kaldırma **davranışı değiştirmez** ve bu kanıtlanabilir: seçim koşulu
+/// `isConfigured` idi, o da anahtar boş olduğu için daima `false` dönüyordu — yani sevk
+/// edilen her derleme zaten bu satırdaki yolu kullanıyordu.
 final billingGatewayProvider = Provider<BillingGateway>((ref) {
-  final revenueCat = RevenueCatGateway();
-  final gateway = revenueCat.isConfigured ? revenueCat : PlayBillingGateway();
-  if (!identical(gateway, revenueCat)) revenueCat.dispose();
+  final gateway = PlayBillingGateway();
   ref.onDispose(gateway.dispose);
   return gateway;
 });

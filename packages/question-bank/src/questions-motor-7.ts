@@ -15,14 +15,14 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Bir içten yanmalı motor, aracı hareket ettirmek için temelde hangi enerji dönüşümünü gerçekleştirir?',
     options: [
-      'Elektrik enerjisini doğrudan sese çevirir',
-      'Havayı sıkıştırarak yalnızca ısı üretir, hareket üretmez',
-      'Yakıttaki kimyasal enerjiyi yanmayla ısıya, ısıyı da parçaların hareketiyle mekanik (hareket)',
-      'Suyun buharını elektriğe çevirip aküyü doldurur',
+      'Elektrik enerjisini doğrudan sese ve titreşime çevirerek tekerlekleri döndüren bir sistemdir',
+      'Havayı sıkıştırarak yalnızca ısı üretir; hareket üretmez ve tekerleğe güç aktarmaz',
+      'Yakıttaki kimyasal enerjiyi yanmayla ısıya, ısıyı da mekanik (hareket) enerjisine çevirir',
+      'Suyun buharını elektriğe çevirip aküyü doldurur ve aracı bu elektrikle yürütür',
     ],
     answerIndex: 2,
     explanation:
-      'Motorun görevi, yakıtın içinde depolanmış kimyasal enerjiyi kullanılabilir harekete çevirmektir. Silindir içinde yanan yakıt yüksek ısı ve basınç oluşturur; bu basınç pistonu iter, pistonun doğrusal hareketi krank mili aracılığıyla dönme hareketine çevrilir ve sonunda tekerleklere iletilir. Yani sıralama kimyasal → ısı → mekanik enerji biçimindedir. Enerjisine dönüştürür.',
+      'Motorun görevi, yakıtın içinde depolanmış kimyasal enerjiyi kullanılabilir harekete çevirmektir. Silindir içinde yanan yakıt yüksek ısı ve basınç oluşturur; bu basınç pistonu iter, pistonun doğrusal hareketi krank mili aracılığıyla dönme hareketine çevrilir ve sonunda tekerleklere iletilir. Yani sıralama kimyasal → ısı → mekanik enerji biçimindedir.',
     whyWrong: [
       'Motor sesi üretebilir ama amacı bu değildir; enerjiyi harekete çevirir.',
       'Havanın sıkıştırılması sürecin bir parçasıdır; tek başına aracı yürüten şey değildir. Elektrik üretimi ise alternatörün işidir, motorun asıl amacı değil.',
@@ -64,7 +64,7 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'İki zamanlı ve dört zamanlı motorlar arasındaki temel fark aşağıdakilerden hangisidir?',
     options: [
-      'İki zamanlı motorlarda yakıt kullanılmaz, dört zamanlıda kullanılır',
+      'İki zamanlı motorda çevrim krank milinin iki turunda, dört zamanlı motorda ise tek turunda tamamlanır',
       'İki zamanlı motorlar yalnızca dizel, dört zamanlılar yalnızca benzinli olur',
       'İki zamanlı motorda soğutma yoktur, dört zamanlıda vardır',
       'Dört zamanlı motorda çevrim (emme-sıkıştırma-ateşleme/güç-egzoz) krank milinin iki turunda tamamlanır',
@@ -133,9 +133,9 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     stem: 'Yakıt deposu, yakıt pompası, yakıt filtresi ve enjektörlerden oluşan yakıt sisteminin temel görevi aşağıdakilerden hangisidir?',
     options: [
       'Temizlenmiş yakıtı depodan alıp uygun basınç ve miktarda motora (yanma odasına) iletmek',
-      'Egzoz gazlarını süzüp dışarı atmak',
-      'Aküyü şarj edip elektrik üretmek',
-      'Motoru istenen sıcaklıkta tutmak',
+      'Egzoz gazlarını süzüp zararsız hâle getirdikten sonra susturucu üzerinden dışarıya atmak',
+      'Aküyü şarj edip araçtaki tüm elektrikli tüketicileri beslemek',
+      'Motoru istenen çalışma sıcaklığında tutup hararet yapmasını önlemek',
     ],
     answerIndex: 0,
     explanation:
@@ -156,10 +156,10 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Benzinli bir motorda ateşleme sisteminin (akü-bobin-buji hattı) temel görevi nedir?',
     options: [
-      'Yakıtı depodan çekip enjektörlere basmak',
+      'Yakıtı depodan çekip süzdükten sonra yüksek basınçla enjektörlere basarak yanma odasına göndermek',
       'Sıkıştırılan hava-yakıt karışımını, her silindirde tam zamanında güçlü bir kıvılcımla tutuşturmak',
-      'Egzoz gazındaki zararlı maddeleri temizlemek',
-      'Motor yağını basınçlandırıp parçalara dağıtmak',
+      'Egzoz gazındaki zararlı maddeleri kimyasal olarak temizlemek',
+      'Motor yağını basınçlandırıp yağlanacak parçalara dağıtmak',
     ],
     answerIndex: 1,
     explanation:
@@ -229,10 +229,10 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Önden motorlu, arkadan itişli bir araçta motor gücünün tekerleklere iletildiği aktarma organları hangi sırayla dizilir?',
     options: [
-      'Diferansiyel → şaft → şanzıman → debriyaj',
+      'Diferansiyel → şaft → şanzıman → debriyaj → ön tekerlekler',
       'Debriyaj → şanzıman → şaft → diferansiyel → tekerlekler',
-      'Şanzıman → debriyaj → diferansiyel → şaft',
-      'Alternatör → marş motoru → şaft → tekerlekler',
+      'Şanzıman → debriyaj → diferansiyel → şaft → tekerlekler',
+      'Alternatör → marş motoru → şaft → diferansiyel → tekerlekler',
     ],
     answerIndex: 1,
     explanation:
@@ -254,9 +254,9 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     stem: 'Aracın servis (ayak) fren sisteminin temel görevi aşağıdakilerden hangisidir?',
     options: [
       'Sürücünün pedala uyguladığı kuvveti tekerleklere ileterek aracı yavaşlatmak ve durdurmak',
-      'Motorun devrini yükseltmek',
-      'Aracın farlarını yakmak',
-      'Yakıt tüketimini otomatik ayarlamak',
+      'Motorun devrini yükselterek tekerleklere daha fazla güç aktarmak ve aracın hızlanmasını sağlamak',
+      'Aracın farlarını ve sinyal lambalarını gerektiğinde yakmak',
+      'Yakıt tüketimini otomatik olarak ayarlayıp tasarruf sağlamak',
     ],
     answerIndex: 0,
     explanation:
@@ -301,7 +301,7 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Yay ve amortisörlerden oluşan süspansiyon sisteminin araçtaki temel görevi aşağıdakilerden hangisidir?',
     options: [
-      'Motorun ürettiği gücü tekerleklere kayıpsız biçimde aktarmak',
+      'Motorun ürettiği gücü tekerleklere kayıpsız biçimde aktarıp iletmek',
       'Fren balatalarını soğutup fren mesafesini kısaltmak',
       'Direksiyon kutusuna basınçlı hidrolik yağı göndermek',
       'Yoldan gelen darbeleri yumuşatıp tekerleğin yola temasını sürdürmek',
@@ -350,9 +350,9 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     stem: 'Birçok aracın yakıt göstergesindeki pompa sembolünün yanında küçük bir ok bulunur. Bu okun pratik işlevi nedir?',
     options: [
       'Aracın yakıt dolum kapağının (deponun) aracın hangi tarafında olduğunu gösterir',
-      'Motor yağının seviyesini gösterir',
-      'Aracın gittiği yönü (kuzey-güney) gösteren pusuladır',
-      'Lastik hava basıncının düştüğünü bildirir',
+      'Motor yağının o andaki seviyesini ve kalan kullanım ömrünü gösteren bir işarettir',
+      'Aracın gittiği yönü gösteren dahili bir pusula işaretidir',
+      'Lastik hava basıncının düştüğünü bildiren bir uyarı işaretidir',
     ],
     answerIndex: 0,
     explanation:
@@ -374,10 +374,10 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Araç aynı hızda giderken alt vitesten üst vitese geçildiğinde devir göstergesindeki (takometre) motor devri (rpm) genellikle nasıl değişir?',
     options: [
-      'Devir yükselir, çünkü üst viteste motor daha hızlı döner',
+      'Devir yükselir; çünkü üst viteste motor aynı hızı sağlamak için daha hızlı dönmek zorunda kalır ve zorlanır',
       'Devir düşer, çünkü aynı hızı daha büyük bir vites oranıyla sağlamak motorun daha yavaş dönmesini sağlar',
-      'Devir hiç değişmez, vitesin devirle ilgisi yoktur',
-      'Devir sıfırlanır ve motor durur',
+      'Devir hiç değişmez; vites kademesinin motor devriyle bir ilgisi yoktur',
+      'Devir sıfırlanır ve motor vites geçişi sırasında tamamen durur',
     ],
     answerIndex: 1,
     explanation:
@@ -398,10 +398,10 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Gösterge panelindeki toplam kilometre sayacı (kilometre saati/odometre) ile sıfırlanabilen yol sayacı (trip) arasındaki fark nedir?',
     options: [
-      'İkisi de aynı bilgiyi gösterir, aralarında hiçbir fark yoktur',
-      'Toplam sayaç yalnızca hızı, trip sayaç yalnızca yakıtı gösterir',
+      'İkisi de aracın toplam mesafesini gösterir; aralarında yalnızca gösterim biçimi farkı bulunur',
+      'Toplam sayaç yalnızca anlık hızı, trip sayaç yalnızca yakıtı gösterir',
       'Toplam sayaç aracın kullanım ömrü boyunca yaptığı toplam mesafeyi (sıfırlanamaz) gösterir',
-      'Trip sayaç aracın toplam yaşını yıl olarak gösterir',
+      'Trip sayaç aracın toplam yaşını yıl olarak gösteren bir sayaçtır',
     ],
     answerIndex: 2,
     explanation:
@@ -449,9 +449,9 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     stem: 'Birçok aracın yakıt dolum kapağının iç yüzünde veya çevresinde "Kurşunsuz 95" ya da "Diesel" gibi bir yakıt cinsi etiketi/yazısı bulunur. Bu etiketin amacı nedir?',
     options: [
       'Araca konulması gereken doğru yakıt cinsini belirtip yanlış yakıt konmasını önlemek',
-      'Deponun kaç litre olduğunu göstermek',
-      'Lastik hava basıncını bildirmek',
-      'Aracın azami hızını yazmak',
+      'Deponun kaç litre yakıt aldığını ve o depoyla gidilebilecek tahmini menzili göstermek',
+      'Lastiklerin uygun hava basıncı değerini sürücüye bildirmek',
+      'Aracın çıkabileceği azami hızı sürücüye hatırlatmak',
     ],
     answerIndex: 0,
     explanation:
@@ -472,7 +472,7 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Bir araç için üreticinin önerdiği doğru lastik hava basıncı değerleri genellikle nerede yazılıdır?',
     options: [
-      'Yalnızca lastiğin yan yüzeyinde, "205/55 R16" ifadesinin içinde',
+      'Yalnızca lastiğin yan yüzeyinde, ölçü ifadesinin içinde yazar; araç üzerinde başka herhangi bir yerde bu bilgi bulunmaz',
       'Motor yağı kapağının üstünde',
       'Sürücü kapısının eşiğinde/orta direkte bulunan etikette, yakıt kapağının içinde ya da aracın kullanım (el) kitabında',
       'Ön camın üst köşesinde',
@@ -522,10 +522,10 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Devir göstergesinde (takometre) yüksek devirlerde başlayan kırmızı bölge (redline) neyi ifade eder?',
     options: [
-      'Motorun ısındığı sıcaklık bölgesini',
+      'Motorun ısındığı ve hararet yapmaya başladığı bölgeyi',
       'Motorun güvenle çıkabileceği en yüksek devir sınırını',
-      'Yakıtın bittiği bölgeyi',
-      'En verimli ve tasarruflu sürüş bölgesini',
+      'Depodaki yakıtın bittiği ve rezerve girildiği bölgeyi',
+      'En verimli ve en tasarruflu sürüş yapılan devir bölgesini',
     ],
     answerIndex: 1,
     explanation:
@@ -546,10 +546,10 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Otomatik vitesli bir araçta vites selektöründeki/göstergesindeki "P - R - N - D" harfleri sırasıyla neyi ifade eder?',
     options: [
-      'Park - Geri (Reverse)',
-      'Pompa - Radyatör - Motor - Debriyaj',
-      'Benzin - Rölanti - Nötr - Dizel',
-      'Park - Rölanti - Normal - Direksiyon',
+      'Park - Geri (Reverse) - Boş (Neutral) - İleri sürüş (Drive)',
+      'Pompa - Radyatör - Motor - Debriyaj bileşenlerini sırayla gösterir',
+      'Benzin - Rölanti - Nötr - Dizel kademelerini gösterir',
+      'Park - Rölanti - Normal - Direksiyon konumlarını gösterir',
     ],
     answerIndex: 0,
     explanation:
@@ -570,10 +570,10 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Gösterge panelinde kırmızı renkli emniyet kemeri sembolü yanıp aynı anda kısa aralıklarla uyarı sesi geliyorsa bu ne anlama gelir?',
     options: [
-      'Motor yağının bittiğini',
+      'Motor yağı seviyesinin kritik düzeye düştüğünü ve hemen tamamlanması gerektiğini',
       'Araçtaki bir yolcunun veya sürücünün emniyet kemerinin takılı olmadığını',
-      'Lastiklerin patladığını',
-      'Yakıt deposunun dolduğunu',
+      'Lastiklerden birinin patladığını ve durulması gerektiğini',
+      'Yakıt deposunun tamamen dolduğunu ve ikmalin bittiğini',
     ],
     answerIndex: 1,
     explanation:
@@ -594,10 +594,10 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Sürüş sırasında gösterge panelinde daire içinde ünlem işareti bulunan kırmızı fren ikaz sembolü yanarsa akla gelmesi gereken olasılıklar ve doğru davranış nedir?',
     options: [
-      'Yalnızca farların açık kaldığını gösterir, önemsizdir',
+      'Yalnızca farların açık kaldığını gösterir; bu yüzden önemsizdir ve yola devam etmekte sakınca yoktur, lamba bir süre sonra kendiliğinden sönecektir',
       'El freninin (park freni) çekili kalmış olabileceği, fren hidroliği seviyesinin düşük olabileceği ya da fren sisteminde bir sorun bulunabileceği',
-      'Motorun soğuk olduğunu ve ısınması gerektiğini',
-      'Yakıtın rezerve düştüğünü',
+      'Motorun henüz soğuk olduğunu ve ısınması gerektiğini bildirir',
+      'Depodaki yakıtın rezerv seviyesine düştüğünü bildirir',
     ],
     answerIndex: 1,
     explanation:
@@ -619,14 +619,14 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Otomobil motorlarına "içten yanmalı motor" denmesinin nedeni aşağıdakilerden hangisidir?',
     options: [
-      'Motorun içinde su kaynadığı için',
-      'Motorun kabinin içinde bulunduğu için',
-      'Yakıtın bir dış kazanda değil, doğrudan motorun içinde (silindir/yanma odasında)',
-      'Motorun yalnızca kapalı garajda çalıştığı için',
+      'Motorun soğutma sisteminde suyun kaynayarak buhar üretmesi ve gücü böyle sağlaması',
+      'Motorun aracın kabin bölümünün içinde, yolcuların yanında bulunması',
+      'Yakıtın motorun içinde (silindir/yanma odasında) yakılıp gücün orada üretilmesi',
+      'Motorun yalnızca kapalı garaj içinde güvenle çalıştırılabilmesi',
     ],
     answerIndex: 2,
     explanation:
-      '"İçten yanmalı" ifadesi, yakıtın nerede yandığını anlatır. Bu motorlarda yakıt, ayrı bir dış kazanda değil, doğrudan motorun içindeki silindirde (yanma odasında) yakılır; oluşan yüksek basınçlı gaz pistonu iterek gücü aynı yerde üretir. Buhar makinesi gibi yakıtın dışarıda yakıldığı sistemlere ise "dıştan yanmalı" denir. Otomobil motorları bu yüzden içten yanmalı sınıfındadır. Yakılıp gücün orada üretildiği için.',
+      '"İçten yanmalı" ifadesi, yakıtın nerede yandığını anlatır. Bu motorlarda yakıt, ayrı bir dış kazanda değil, doğrudan motorun içindeki silindirde (yanma odasında) yakılır; oluşan yüksek basınçlı gaz pistonu iterek gücü aynı yerde üretir. Buhar makinesi gibi yakıtın dışarıda yakıldığı sistemlere ise "dıştan yanmalı" denir. Otomobil motorları bu yüzden içten yanmalı sınıfındadır.',
     whyWrong: [
       'İsmin su kaynamasıyla, motorun kabin içinde olmasıyla ya da garajla ilgisi yoktur.',
       'Belirleyici olan yakıtın motorun içinde yanmasıdır; bu, dıştan yanmalı sistemlerden farkını ortaya koyar.',
@@ -668,14 +668,14 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'zor',
     stem: 'Süspansiyonda yay ile amortisörün görevleri farklıdır. Bu görev ayrımı hangi seçenekte doğru verilmiştir?',
     options: [
-      'Yay motoru soğutur, amortisör yakıtı süzer',
-      'İkisi de aynı işi yapar, aralarında görev farkı yoktur',
-      'Yay yoldan gelen darbeyi esneyerek karşılar ve enerjiyi geçici depolar',
-      'Amortisör aracı yaylandırır, yay ise sesi keser',
+      'Yay motoru soğutur, amortisör ise yakıtı süzerek motora temiz yakıt gönderir',
+      'İkisi de aynı işi yapar; aralarında hiçbir görev farkı bulunmaz',
+      'Yay darbeyi esneyerek karşılar, amortisör ise oluşan salınımı sönümler',
+      'Amortisör aracı yaylandırır, yay ise yalnızca sesi keser',
     ],
     answerIndex: 2,
     explanation:
-      'Yay ve amortisör süspansiyonda birbirini tamamlar ama farklı iş yapar. Yay, yoldan gelen darbeyi esneyerek karşılar; sıkışıp açılarak sarsıntının gövdeye iletilmesini yumuşatır, ancak kendi başına bırakılırsa aracı bir süre zıplatmaya devam eder. Amortisör bu zıplamayı (salınımı) sönümler; yayın hareketini yavaşlatıp söndürerek tekerleğin yola çabuk oturmasını ve aracın kararlı kalmasını sağlar. Amortisör zayıfsa araç darbe sonrası uzun süre yaylanır. Amortisör ise yayın oluşturduğu zıplama/salınımı sönümleyerek aracın sürekli inip çıkmasını engeller.',
+      'Yay ve amortisör süspansiyonda birbirini tamamlar ama farklı iş yapar. Yay, yoldan gelen darbeyi esneyerek karşılar; sıkışıp açılarak sarsıntının gövdeye iletilmesini yumuşatır, ancak kendi başına bırakılırsa aracı bir süre zıplatmaya devam eder. Amortisör bu zıplamayı (salınımı) sönümler; yayın hareketini yavaşlatıp söndürerek tekerleğin yola çabuk oturmasını ve aracın kararlı kalmasını sağlar. Amortisör zayıfsa araç darbe sonrası uzun süre yaylanır.',
     whyWrong: [
       'Yay ve amortisörün soğutma, yakıt süzme gibi görevleri yoktur; ikisi de süspansiyon parçasıdır.',
       'İki parça aynı işi yapmaz; biri darbeyi karşılar, diğeri salınımı sönümler. Ses kesmek de asıl görevleri değildir.',
@@ -693,10 +693,10 @@ export const MOTOR_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Gösterge panelinde direksiyon simgesi biçiminde bir ikaz (genellikle sarı ya da kırmızı direksiyon işareti) yandığında bu neyi gösterebilir ve nasıl değerlendirilmelidir?',
     options: [
-      'Yakıt seviyesinin azaldığını',
-      'Lastik desenlerinin aşındığını',
+      'Depodaki yakıt seviyesinin azaldığını ve en kısa sürede ikmal yapılması gerektiğini gösterir',
+      'Lastik desenlerinin aşındığını ve değişim gerektiğini gösterir',
       'Direksiyon destek (hidrolik/elektrikli direksiyon) sisteminde bir sorun olabileceğini',
-      'Farların açık kaldığını',
+      'Farların açık unutulduğunu ve akünün boşalacağını gösterir',
     ],
     answerIndex: 2,
     explanation:

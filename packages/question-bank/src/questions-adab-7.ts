@@ -69,7 +69,7 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
     options: [
       'İstenmeyen bir durum karşısında öfkeye ve aceleye kapılmadan sakinliğini ve sağduyusunu koruyabilme olgunluğudur',
       'Hiçbir koşulda hızlanmamak ve her zaman en yavaş şeritte gitmektir',
-      'Haklı olunduğunda bile her haktan vazgeçip sürekli geri çekilmektir',
+      'Haklı olunduğu durumlarda bile bütün haklardan vazgeçip trafikte sürekli geri çekilmek ve hiçbir manevra yapmamaktır',
       'Trafikte hiç duygu hissetmemek, tamamen tepkisiz kalmaktır',
     ],
     answerIndex: 0,
@@ -119,7 +119,7 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Trafikte "nezaket" değeri en doğru biçimde neyi ifade eder?',
     options: [
-      'Yalnızca teşekkür işareti yapmaktır; başka bir davranışla ilgisi yoktur',
+      'Yalnızca yol veren bir sürücüye teşekkür işareti yapmaktır; bunun dışındaki hiçbir davranışla ilgisi bulunmaz',
       'Kurallar zorunlu kılmasa bile hiçbir sürücüye yol vermemektir',
       'Zorunlu olmadığı hâlde, karşımızdakinin işini kolaylaştıran, incelik ve saygı gösteren gönüllü davranışlardır',
       'Yalnızca trafik yoğunken gösterilmesi gereken bir görgü kuralıdır',
@@ -145,14 +145,14 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Trafikte "sorumluluk" değeri en kapsamlı biçimde nasıl tanımlanır?',
     options: [
-      'Yalnızca kendi aracına zarar gelmesini önlemektir',
-      'Kendi davranışlarının',
+      'Yalnızca kendi aracına maddi bir zarar gelmesini önlemeye çalışmak demektir',
+      'Kendi davranışlarının başkaları üzerindeki sonuçlarını da üstlenmektir',
       'Bir kaza olduğunda kusuru en hızlı biçimde karşı tarafa yıkabilmektir',
-      'Sadece trafik cezası ödeyecek kadar para bulundurmaktır',
+      'Sadece trafik cezalarını ödeyecek kadar para bulundurmak demektir',
     ],
     answerIndex: 1,
     explanation:
-      'Sorumluluk, direksiyondaki kişinin yalnızca kendinden değil, davranışının dokunduğu herkesten sorumlu olduğunu kabul etmesidir. Bu hem hata yapıldığında sonucunu üstlenmeyi hem de daha önemlisi olası sonuçları önceden düşünüp önlem almayı kapsar. Kendisi, yolcuları, diğer sürücüler ve yayalar üzerindeki sonuçlarını üstlenmek ve bunları önceden hesaba katmaktır.',
+      'Sorumluluk, direksiyondaki kişinin yalnızca kendinden değil, davranışının dokunduğu herkesten sorumlu olduğunu kabul etmesidir. Bu hem hata yapıldığında sonucunu üstlenmeyi hem de daha önemlisi olası sonuçları önceden düşünüp önlem almayı kapsar.',
     whyWrong: [
       'Sorumluluk yalnızca kendi aracını korumak değil, çevredeki herkesin güvenliğini gözetmektir.',
       'Kusuru karşıya yıkmak sorumluluğun değil, ondan kaçmanın ifadesidir.',
@@ -171,7 +171,7 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
     stem: 'Öfke, engellenme ya da haksızlığa karşı doğal bir duygudur. Öfkenin trafikteki en temel tehlikesi nedir?',
     options: [
       'Muhakemeyi ve dikkati daraltıp sürücüyü, sakinken asla yapmayacağı riskli davranışlara yöneltmesidir',
-      'Yalnızca sürücünün moralini bozması, sürüşe hiçbir etkisinin olmamasıdır',
+      'Yalnızca sürücünün moralini ve keyfini bozması; sürüş becerisine ve karar verme hızına hiçbir etkisinin olmamasıdır',
       'Aracın yakıt tüketimini artırmasıdır',
       'Sadece uzun yolculuklarda ortaya çıkması, şehir içinde etkisiz olmasıdır',
     ],
@@ -197,7 +197,7 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
     stem: 'Trafikte "empati" değeri en doğru biçimde nasıl tanımlanır ve uygulanır?',
     options: [
       'Kendini yalnızca kendi aracının çıkarları açısından düşünmektir',
-      'Diğer sürücülerin hatalarını sürekli affedip hiçbir önlem almamaktır',
+      'Diğer sürücülerin bütün hatalarını sürekli affedip kendi güvenliğin için hiçbir önlem almamak ve karşıdakinin her davranışını olduğu gibi kabullenmiş olmaktır',
       'Yalnızca kaza anında yaralılara acımaktır',
       'Karşımızdaki sürücünün ya da yayanın durumunu, kısıtlarını ve bakış açısını onun yerine geçerek anlamaya çalışmak ve davranışımızı buna göre ayarlamaktır',
     ],
@@ -223,7 +223,7 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Stres altındaki bir sürücünün bedeninde ve zihninde olanlar düşünüldüğünde, stresin sürüşe temel etkisi nedir?',
     options: [
-      'Stres dikkati artırdığı için sürüşü her zaman güvenli kılar',
+      'Stres dikkati ve uyanıklığı artırdığı için sürüşü her zaman daha güvenli ve kontrollü hâle getirir',
       'Stresin sürüşe hiçbir bedensel ya da zihinsel etkisi yoktur',
       'Kas gerginliği, daralan dikkat ve sabırsızlık yaratarak tepkileri aceleci ve hatalı hâle getirir',
       'Yalnızca sürücünün ruh hâlini etkiler, davranışına hiç yansımaz',
@@ -252,7 +252,7 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
       'Motivasyon ne olursa olsun dikkat her zaman aynı düzeyde kalır',
       '"Bir an önce varmak" ya da "onu geçmek" gibi hedeflere kilitlenen bir zihin, dikkatini o hedefe yoğunlaştırıp çevredeki diğer tehlikeleri gözden kaçırabilir',
       'Yüksek motivasyon her zaman daha güvenli sürüş demektir',
-      'Dikkat yalnızca fiziksel yorgunlukla ilgilidir, niyetle ilgisi yoktur',
+      'Dikkat yalnızca fiziksel yorgunluk düzeyiyle ilgilidir; sürücünün o anki niyeti, hedefi ya da ruh hâli dikkatin dağılmasında hiçbir rol oynamaz ve etkisi ölçülemez',
     ],
     answerIndex: 1,
     explanation:
@@ -277,7 +277,7 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
     stem: 'Trafik, sürücülerin birbiriyle sürekli "iletişim kurduğu" bir ortamdır. Trafikte iletişim en doğru biçimde nasıl tanımlanır?',
     options: [
       'Sinyal, far, korna, göz teması ve aracın konumu gibi işaretlerle niyetimizi diğerlerine anlaşılır biçimde bildirmek ve onların işaretlerini doğru okumaktır',
-      'Yalnızca korna çalarak diğer sürücüleri uyarmaktır',
+      'Yalnızca korna çalarak diğer sürücüleri uyarmak ve gerektiğinde selektör yapmaktır; aracın konumu, hızı ve sinyal kullanımı bu iletişimin bir parçası sayılmaz',
       'Karşıdaki sürücüyle sözlü olarak tartışabilmektir',
       'Sosyal medyada trafikle ilgili paylaşım yapmaktır',
     ],
@@ -302,7 +302,7 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'kolay',
     stem: 'Trafikte aracın kendisi de bir tür "beden dili" konuşur. Aşağıdakilerden hangisi bu araç beden diline bir örnektir?',
     options: [
-      'Sürücünün araç içinde yüksek sesle müzik dinlemesi',
+      'Sürücünün araç içinde yüksek sesle müzik dinleyip camları açarak bunu çevredeki diğer sürücülere duyurması ve varlığını böyle belli etmesi',
       'Aracın markasının pahalı olması',
       'Sürücünün kişisel giyim tarzı',
       'Aracın hızını erkenden azaltıp şerit içinde hafifçe kenara yanaşarak "yol veriyorum, geçebilirsin" niyetini sezdirmesi',
@@ -354,10 +354,10 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Haberlerde sıkça geçen "trafik terörü" kavramı en doğru biçimde neyi anlatır?',
     options: [
-      'Yalnızca trafikte yaşanan olağan sıkışıklık ve gecikmeleri',
-      'Öfke, saldırganlık ve kural tanımazlıkla başkalarının can güvenliğini kasıtlı biçimde tehdit eden',
-      'Aracın teknik arızadan dolayı yolda kalmasını',
-      'Trafik cezalarının yüksek olmasını',
+      'Yalnızca trafikte yaşanan olağan sıkışıklık, gecikme ve yoğunluk kaynaklı gündelik gerginlik ve tartışmaların tamamını',
+      'Öfke, saldırganlık ve kural tanımazlıkla başkalarının can güvenliğini kasıtlı biçimde tehdit eden davranışları',
+      'Aracın teknik bir arıza nedeniyle yolda kalması ve trafiği aksatması durumunu',
+      'Trafik cezalarının sürücülerin ödeyemeyeceği kadar yüksek belirlenmesini',
     ],
     answerIndex: 1,
     explanation:
@@ -381,7 +381,7 @@ export const ADAB_QUESTIONS_7: QuestionInput[] = [
     stem: 'Trafik adabında "feragat" (haktan gönüllü vazgeçme) bir erdem olarak neyi ifade eder?',
     options: [
       'Geçiş hakkı kendinde olsa bile, güvenliği ve akışı korumak için gerektiğinde bu hakkı gönüllüce karşı tarafa bırakabilmektir',
-      'Trafikte hiçbir hakkını asla kullanmamak ve sürekli beklemektir',
+      'Trafikte hiçbir hakkını asla kullanmamak, her kavşakta ve her şeritte sürekli beklemek ve önceliği her zaman karşı tarafa bırakmaktır',
       'Yalnızca korktuğumuz büyük araçlara yol vermektir',
       'Hakkımızı almak için sonuna kadar direnmektir',
     ],

@@ -140,7 +140,12 @@ export const MOTOR_QUESTIONS: Question[] = [
     topic: 'elektrik',
     difficulty: 'orta',
     stem: 'Motor çalışırken akünün sürekli şarj edilmesini sağlayan parça hangisidir?',
-    options: ['Marş motoru (marş dinamosu)', 'Enjektör (püskürtme memesi)', 'Alternatör (şarj dinamosu)', 'Termostat'],
+    options: [
+      'Marş motoru (marş dinamosu)',
+      'Enjektör (püskürtme memesi)',
+      'Alternatör (şarj dinamosu)',
+      'Termostat',
+    ],
     answerIndex: 2,
     explanation:
       'Alternatör, motor çalışırken kayışla döndürülerek elektrik üretir; bu enerjiyle hem araç sistemini besler hem de aküyü şarj eder.',
@@ -261,14 +266,14 @@ export const MOTOR_QUESTIONS: Question[] = [
     difficulty: 'kolay',
     stem: 'Lastiklerin güvenli sürüş açısından düzenli kontrol edilmesi gereken özellikleri hangileridir?',
     options: [
-      'Renk ve marka',
-      'Diş (sırt)',
-      'Jant çapı ve göbek kapağı',
-      'Yalnızca üretim yılı',
+      'Lastiğin yanak rengi ve üretici markası',
+      'Diş (sırt) derinliği ve hava basıncı',
+      'Jant çapı ve göbek kapağı görünümü',
+      'Yalnızca yanakta yazan üretim yılı',
     ],
     answerIndex: 1,
     explanation:
-      'Yeterli diş derinliği yol tutuşunu ve suyu tahliyeyi sağlar; doğru hava basıncı ise dengeli aşınma, güvenli frenleme ve yol tutuşu için gereklidir. İkisi de güvenliği doğrudan etkiler.',
+      'Yeterli diş derinliği yol tutuşunu ve suyu tahliyeyi sağlar; doğru hava basıncı ise dengeli aşınma, güvenli frenleme ve yol tutuşu için gereklidir.',
     whyWrong: [
       'Renk ve marka sürüş güvenliğinin belirleyicisi değildir.',
       'Yalnızca üretim yılına bakmak, aşınma ve basınç durumunu göstermez.',
@@ -310,12 +315,7 @@ export const MOTOR_QUESTIONS: Question[] = [
     topic: 'aktarma',
     difficulty: 'orta',
     stem: 'Motorda üretilen hareketi tekerleklere ileten sisteme genel olarak ne ad verilir?',
-    options: [
-      'Soğutma sistemi',
-      'Yakıt sistemi',
-      'Aktarma organları',
-      'Aydınlatma sistemi',
-    ],
+    options: ['Soğutma sistemi', 'Yakıt sistemi', 'Aktarma organları', 'Aydınlatma sistemi'],
     answerIndex: 2,
     explanation:
       'Debriyaj, şanzıman, şaft ve diferansiyel gibi parçalardan oluşan aktarma organları, motorun ürettiği gücü tekerleklere iletir.',

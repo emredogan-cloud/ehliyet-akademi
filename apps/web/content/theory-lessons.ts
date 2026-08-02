@@ -279,6 +279,7 @@ export const THEORY_EXTRA_LESSONS: LessonInput[] = [
     ],
     quizQuestionIds: ['trafik-111', 'trafik-112'],
     practiceQuestionIds: ['trafik-113', 'trafik-114', 'trafik-115'],
+    figureId: 'stopping-distance',
     references: ['Karayolları Trafik Yönetmeliği — ışıkların kullanımı ve gece sürüşü'],
   },
   {
@@ -650,6 +651,7 @@ export const THEORY_EXTRA_LESSONS: LessonInput[] = [
     ],
     quizQuestionIds: ['ilkyardim-101', 'ilkyardim-102'],
     practiceQuestionIds: ['ilkyardim-103', 'ilkyardim-104', 'ilkyardim-105'],
+    figureId: 'recovery-position',
     references: ['Temel İlk Yardım rehberi — kanama kontrolü ve şok (uzman onayı gereklidir)'],
   },
   {

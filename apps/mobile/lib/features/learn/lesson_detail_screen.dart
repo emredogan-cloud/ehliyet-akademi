@@ -6,6 +6,7 @@ import '../../core/theme/tokens.dart';
 import '../../design/brand.dart';
 import '../../data/premium/entitlements_repository.dart';
 import '../../design/app_card.dart';
+import '../../design/lesson_figure.dart';
 import '../../design/markdown_text.dart';
 import '../../design/primitives.dart' as ui;
 import '../../domain/content/content_enums.dart';
@@ -14,6 +15,7 @@ import '../../domain/content/lesson.dart';
 import '../../domain/content/lesson_meta.dart';
 import '../../domain/premium/products.dart';
 import 'widgets/content_scope.dart';
+import 'widgets/narration_player.dart';
 
 /// Ders detayı — hedefler, bölümler (rozet + vurgu + karşılaştırma), hafıza teknikleri, sınav
 /// stratejisi, sık hatalar, ipuçları, özet ve tekrar kartları. Premium dersler kilitlenir.
@@ -75,7 +77,11 @@ class _LockedGate extends StatelessWidget {
             FilledButton.icon(
               onPressed: () => context.push('/premium?product=${product.id}'),
               icon: const Icon(Icons.lock_open_rounded, size: 18),
-              label: Text('Kilidi aç · ${product.priceTRY} ₺'),
+              // FİYAT BURADA YAZILMAZ. Gerçek fiyat mağazadan gelir (ülke, para birimi, vergi,
+              // indirim orada belirlenir) ve yalnız ödeme ekranı onu biliyor. Katalog fiyatını
+              // düğmeye basmak, mağazadakinden farklı bir sayı göstermek demekti — RC 1.0.0'da
+              // ödeme ekranında düzeltilen kusurun aynısı burada yaşıyordu.
+              label: const Text('Kilidi aç'),
             ),
             const SizedBox(height: AppSpacing.s3),
             TextButton(
@@ -153,6 +159,23 @@ class _LessonBodyState extends State<_LessonBody> {
         _LessonHero(lesson: lesson),
         const SizedBox(height: AppSpacing.s4),
         MarkdownText(lesson.summary, style: TextStyle(color: p.text2, height: 1.45, fontSize: 14.5)),
+
+        // Ders şeması — Premium Kalite Programı · Faz 4.
+        //
+        // Özetin HEMEN ALTINDA duruyor çünkü şema, dersin zihinsel çerçevesini bölümlere
+        // girmeden kuruyor: "sağdaki önce geçer", "iki saniye", "ABC sırası". Bölümlerin
+        // arasına serpiştirmek bu çerçeveyi geç kurardı.
+        //
+        // `figureId` boş ya da tanınmayan bir değerse hiçbir şey çizilmez; ders bugünkü
+        // hâliyle görünmeye devam eder.
+        LessonFigure(figureId: lesson.figureId),
+
+        // Sesli anlatım — Premium Kalite Programı · Faz 5.
+        //
+        // Kaynak ses veremiyorsa bu widget HİÇBİR ŞEY çizmez. Bugün öyle: ses üretilmedi,
+        // dolayısıyla oynatıcı görünmüyor. "Yakında" rozeti konmadı — olmayan bir özelliği
+        // varmış gibi göstermek, denetimde tur metninde yakalanan kusurun aynısı olurdu.
+        NarrationPlayer(lesson: lesson),
 
         // Hedefler
         if (lesson.objectives.isNotEmpty) ...[

@@ -938,7 +938,12 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     topic: 'otoyol',
     difficulty: 'kolay',
     stem: 'Aşağıdakilerden hangisi otoyola giremez?',
-    options: ['Otomobiller ve minibüsler', 'Traktörler ve motorsuz araçlar', 'Otobüsler ve kamyonlar', 'Motosikletler ve otomobiller'],
+    options: [
+      'Otomobiller ve minibüsler',
+      'Traktörler ve motorsuz araçlar',
+      'Otobüsler ve kamyonlar',
+      'Motosikletler ve otomobiller',
+    ],
     answerIndex: 1,
     explanation:
       'Otoyollara yayalar, motorsuz araçlar, traktör ve iş makineleri gibi düşük hızlı unsurlar giremez; bu yollar hızlı motorlu taşıt trafiği içindir.',
@@ -959,12 +964,7 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     topic: 'alkol',
     difficulty: 'orta',
     stem: 'Taksi, otobüs, kamyon gibi ticari araç veya kamu hizmeti aracı sürücüleri için kandaki yasal alkol sınırı nedir?',
-    options: [
-      '0.00 promil',
-      '0.20 promil',
-      '0.50 promil',
-      '1.00 promil',
-    ],
+    options: ['0.00 promil', '0.20 promil', '0.50 promil', '1.00 promil'],
     answerIndex: 0,
     explanation:
       'Ticari araç ve kamu hizmeti aracı sürücüleri alkollü olarak hiç araç kullanamaz; bu sürücüler için yasal sınır 0.00 promildir. Hiç alkollü araç kullanamazlar.',
@@ -985,12 +985,7 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     topic: 'alkol',
     difficulty: 'zor',
     stem: 'Ticari araç (taksi, minibüs, otobüs, kamyon) kullanan sürücüler için yasal alkol sınırı nedir?',
-    options: [
-      '0.20 promil',
-      '0.50 promil',
-      '0.00 promil',
-      '0.80 promil',
-    ],
+    options: ['0.20 promil', '0.50 promil', '0.00 promil', '0.80 promil'],
     answerIndex: 2,
     explanation:
       'Ticari araç sürücüleri için sınır 0.00 promildir; yani bu sürücüler herhangi bir düzeyde alkollüyken araç kullanamaz.',
@@ -1422,10 +1417,10 @@ export const TRAFIK_QUESTIONS_2: QuestionInput[] = [
     difficulty: 'orta',
     stem: 'Zorunlu Trafik Sigortası (Zorunlu Mali Sorumluluk Sigortası) neyi karşılar?',
     options: [
-      'Kazada karşı tarafa (üçüncü kişilere)',
-      'Sürücünün kendi aracının hasarını',
-      'Aracın çalınmasını',
-      'Motorun arızasını',
+      'Kazada karşı tarafa (üçüncü kişilere) verilen bedeni ve maddi zararları',
+      'Sürücünün kendi aracında oluşan çarpma hasarını ve tüm onarım masraflarını',
+      'Aracın çalınması veya yanması hâlinde sahibinin uğradığı kaybı',
+      'Motorun arızalanması durumunda ortaya çıkan tamir giderlerini',
     ],
     answerIndex: 0,
     explanation:

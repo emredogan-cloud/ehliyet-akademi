@@ -7,6 +7,7 @@ import '../../core/analytics/analytics_event.dart';
 import '../../core/analytics/analytics_ref.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/practice/progress_repository.dart';
+import '../../design/living_mascot.dart';
 import '../../design/brand.dart';
 import '../../design/primitives.dart';
 import '../../design/coach_marks.dart';
@@ -275,9 +276,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   id: ProductTourAnchors.realExam,
                   child: _QuickTile(
                     icon: Icons.history_edu_rounded,
-                    label: 'Çıkmış\nSınavlar',
+                    // "Çıkmış Sınavlar" DEĞİL: sınavlar üretiliyor, kopyalanmıyor. Eski ad
+                    // kullanıcıya telifli bir kâğıt vaat ediyordu (bkz. ürün turu düzeltmesi).
+                    label: 'Sınav\nArşivi',
                     color: p.green,
-                    onTap: () => context.go('/practice/historical'),
+                    onTap: () => context.go('/practice/library'),
                   ),
                 ),
               ],
@@ -438,7 +441,7 @@ class _CoachHero extends StatelessWidget {
               ],
             ),
           ),
-          MascotImage(AppImages.owlWheel, height: 150, semanticLabel: 'AI Koç'),
+          LivingMascot(AppImages.owlWheel, height: 150, semanticLabel: 'AI Koç'),
         ],
       ),
     );

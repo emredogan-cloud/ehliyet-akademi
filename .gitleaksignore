@@ -11,6 +11,11 @@
 #
 # Biçim: <commit>:<dosya>:<kural>:<satır>
 #
+# UYARI: parmak izinin ilk alanı COMMIT'tir; geçmiş yeniden yazılırsa (rebase, birleştirme,
+# konu satırı düzeltmesi) bu izler tutmaz ve gitleaks bulguları YENİDEN bildirir. 2 Ağustos
+# 2026'da dört commit'in konu satırı commitlint için düzeltildi; aşağıdaki 2. ve 3. bulgunun
+# commit'i o yüzden değişti. Bulguların kendisi ve gerekçeleri aynı.
+#
 # ── Bulgu 1 ───────────────────────────────────────────────────────────────────────────────
 # Entegrasyon testi demirbaşı bir parola dizgesi (`social.integration.test.ts`, eski hâli).
 # · Gerçek bir kimlik bilgisi değil; test içinde anında oluşturulup atılan bir kullanıcıya
@@ -22,11 +27,12 @@
 # ── Bulgu 2 ───────────────────────────────────────────────────────────────────────────────
 # Bulgu 1'in RAPOR İÇİNDE alıntılanmış hâli. Rapor metni güncel sürümde sansürlendi; aşağıdaki
 # parmak izi yalnızca o commit'teki geçmiş kopyayı susturur.
-fab069eca03f1fc0156e400c1191b1d430ad5318:PRODUCT_EVOLUTION_IMPLEMENTATION_REPORT.md:generic-api-key:415
+5197e7296bd5c2d10adb695cf8a934c3b0fdacfd:PRODUCT_EVOLUTION_IMPLEMENTATION_REPORT.md:generic-api-key:415
 #
 # ── Bulgu 3 ───────────────────────────────────────────────────────────────────────────────
 # BU DOSYANIN kendi ilk sürümü. Gerekçeyi yazarken dizge örnek olarak alıntılanmıştı; bir
 # sonraki commit'te kaldırıldı ama geçmişte kaldı. Üçüncü kez aynı ders: sızıntıyı anlatırken
-# sızıntıyı yeniden yazma. Geçmiş yeniden yazılmıyor — bu, paylaşılan bir dalda tek bir
-# demirbaş uğruna göze alınacak bir işlem değil.
-22d5275cdb61a0a3be0c9847ccef355d023bb285:.gitleaksignore:generic-api-key:10
+# sızıntıyı yeniden yazma. Geçmişten temizlemek için yeniden yazma yapılmadı — tek bir test
+# demirbaşı uğruna göze alınacak bir işlem değil; aşağıdaki commit yalnızca konu satırı
+# düzeltmesinden etkilendiği için farklı.
+e6dda689dc02dd78704e0d034c5274e8ec076d6d:.gitleaksignore:generic-api-key:10

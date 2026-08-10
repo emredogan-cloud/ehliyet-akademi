@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { buildMetadata } from '@/lib/seo/metadata';
+import { SUB_PROCESSORS } from '@/lib/legal-entity';
+import { LegalIdentity } from '../_legal/LegalIdentity';
 
 export const metadata: Metadata = buildMetadata({
   title: 'KVKK Aydınlatma Metni',
@@ -16,16 +18,7 @@ export default function KvkkPage() {
       style={{ maxWidth: 820, margin: '0 auto' }}
     >
       <h1>KVKK Aydınlatma Metni</h1>
-      <p className="muted">Son güncelleme: 15 Temmuz 2026</p>
-
-      <div className="explain" role="note">
-        <strong>Taslak belge uyarısı.</strong> Bu metin bir <em>taslaktır (template)</em> ve henüz
-        kuruluşu tamamlanmamış bir ürün için hazırlanmıştır. Kamuya açık yayına alınmadan önce bir
-        avukat tarafından gözden geçirilmelidir. Metindeki veri sorumlusu ve iletişim bilgileri —{' '}
-        <code>[Şirket Ünvanı]</code>, <code>[VKN]</code>, <code>[Adres]</code>,{' '}
-        <code>[KEP adresi]</code>, <code>[destek e-postası]</code> — yalnızca yer tutucudur ve
-        gerçek bir tüzel kişiliği temsil etmez.
-      </div>
+      <p className="muted">Son güncelleme: 10 Ağustos 2026</p>
 
       <h2>1. Giriş</h2>
       <p>
@@ -36,30 +29,51 @@ export default function KvkkPage() {
       </p>
 
       <h2>2. Veri Sorumlusu</h2>
+      <LegalIdentity />
       <p>
-        Veri sorumlusu <code>[Şirket Ünvanı]</code> (VKN: <code>[VKN]</code>, adres:{' '}
-        <code>[Adres]</code>) olup, bu metinde "Ehliyet Akademi" olarak anılır. İletişim:{' '}
-        <code>[destek e-postası]</code> — KEP: <code>[KEP adresi]</code>.
+        Bu metinde veri sorumlusu &quot;Ehliyet Akademi&quot; olarak anılır. Metin, Ehliyet Akademi{' '}
+        <strong>Android uygulamasını ve web sitesini</strong> birlikte kapsar.
       </p>
 
       <h2>3. İşlenen Kişisel Veriler</h2>
       <ul>
         <li>
-          <strong>Kimlik/İletişim verileri:</strong> Ad (görünen ad), e-posta adresi.
+          <strong>Kimlik/İletişim verileri:</strong> Ad (görünen ad), e-posta adresi. Google ile
+          giriş yapılması hâlinde bu veriler Google tarafından iletilir.
         </li>
         <li>
-          <strong>Müşteri işlem verileri:</strong> Satın alma kaydı, sipariş numarası, tutar, tarih,
-          ödeme sağlayıcı işlem referansı (kart bilgileri tarafımızca işlenmez).
+          <strong>Müşteri işlem verileri:</strong> Google Play satın alma jetonu, ürün kimliği,
+          satın alma tarihi. <strong>Kart ve ödeme bilgileri tarafımızca işlenmez</strong>; ödeme
+          tamamen Google Play üzerinden yürür.
         </li>
         <li>
-          <strong>Kullanım/İlerleme verileri:</strong> Çözülen sorular ve istatistikler (büyük kısmı
-          cihazınızda tutulur).
+          <strong>Kullanım/İlerleme verileri:</strong> Çözülen sorular, doğruluk istatistikleri,
+          hazırlık puanı ve tekrar planı. Hesap açılmadığında bu veriler{' '}
+          <strong>yalnız cihazda</strong> tutulur; hesap açıldığında hesaba bağlanır.
         </li>
         <li>
-          <strong>İşlem güvenliği verileri:</strong> Oturum bilgileri, IP kaydı, temel
-          cihaz/tarayıcı bilgileri.
+          <strong>Topluluk verileri (isteğe bağlı):</strong> Seçtiğiniz görünen ad, avatar ve
+          yazdığınız mesaj/tartışma içerikleri. Topluluğa katılmazsanız bu veriler hiç oluşmaz.
+        </li>
+        <li>
+          <strong>AI Koç verileri:</strong> AI Koç&apos;a yazdığınız soru metni. Yanıt üretildikten
+          sonra kalıcı olarak saklanmaz.
+        </li>
+        <li>
+          <strong>Kimliksiz kullanım ve hata kayıtları:</strong> Ekran/akış olayları ve hata
+          raporları. Cihaz başına üretilen rastgele bir kimlik taşırlar; bu kimlik{' '}
+          <strong>reklam kimliği değildir</strong> ve kişiyi tanımlamaz.
+        </li>
+        <li>
+          <strong>İşlem güvenliği verileri:</strong> Oturum bilgileri ve istek meta verisi. IP
+          adresi davet sisteminde <strong>ham hâliyle saklanmaz</strong>; yalnız tuzlanmış SHA-256
+          özeti tutulur.
         </li>
       </ul>
+      <p>
+        <strong>İşlenmeyen veriler:</strong> konum, rehber, takvim, SMS, arama kaydı, mikrofon,
+        reklam kimliği ve sağlık verisi işlenmez; ilgili izinler istenmez.
+      </p>
 
       <h2>4. İşleme Amaçları ve Hukuki Sebepler (KVKK m.5)</h2>
       <p>
@@ -87,17 +101,39 @@ export default function KvkkPage() {
 
       <h2>5. Kişisel Verilerin Aktarılması</h2>
       <p>
-        Verileriniz, yalnızca hizmetin sunulması için gerekli olduğu ölçüde; ödeme sağlayıcısı,
-        e-posta sağlayıcısı ve barındırma (hosting) sağlayıcısı gibi hizmet sağlayıcılara ve yasal
-        olarak yetkili kamu kurum ve kuruluşlarına, KVKK m.8 ve m.9'daki şartlara uygun olarak
-        aktarılabilir. Yurt dışı aktarım söz konusu olduğunda mevzuatın öngördüğü güvenceler
-        sağlanır.
+        Verileriniz, yalnızca hizmetin sunulması için gerekli olduğu ölçüde aşağıdaki hizmet
+        sağlayıcılara ve yasal olarak yetkili kamu kurum ve kuruluşlarına, KVKK m.8 ve m.9&apos;daki
+        şartlara uygun olarak aktarılır:
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Alıcı</th>
+            <th>Aktarım amacı</th>
+            <th>Aktarılan veri</th>
+          </tr>
+        </thead>
+        <tbody>
+          {SUB_PROCESSORS.map((s) => (
+            <tr key={s.name}>
+              <td>{s.name}</td>
+              <td>{s.purpose}</td>
+              <td>{s.dataShared}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p>
+        Bu sağlayıcıların bir kısmı <strong>yurt dışında</strong> yerleşiktir. Yurt dışı aktarımda
+        KVKK m.9&apos;un öngördüğü şartlar ve güvenceler gözetilir. Verileriniz reklam amacıyla
+        üçüncü taraflara satılmaz veya kiralanmaz.
       </p>
 
       <h2>6. Toplama Yöntemi</h2>
       <p>
-        Kişisel verileriniz; web uygulaması üzerinden doğrudan sizin girmeniz, hizmeti kullanmanız
-        ve çerezler/benzeri teknolojiler aracılığıyla elektronik ortamda toplanır.
+        Kişisel verileriniz; <strong>Android uygulaması</strong> ve <strong>web sitesi</strong>{' '}
+        üzerinden doğrudan sizin girmeniz, hizmeti kullanmanız ve web tarafında çerezler/benzeri
+        teknolojiler aracılığıyla elektronik ortamda toplanır. Android uygulaması çerez kullanmaz.
       </p>
 
       <h2>7. Saklama Süresi</h2>
@@ -130,19 +166,15 @@ export default function KvkkPage() {
       </ul>
 
       <h2>9. Veri Sorumlusuna Başvuru Yöntemi</h2>
-      <p>Yukarıdaki haklarınızı kullanmak için taleplerinizi;</p>
-      <ul>
-        <li>
-          <strong>KEP:</strong> <code>[KEP adresi]</code> adresine,
-        </li>
-        <li>
-          <strong>E-posta:</strong> sistemimizde kayıtlı e-posta adresinizden{' '}
-          <code>[destek e-postası]</code> adresine,
-        </li>
-        <li>
-          <strong>Yazılı olarak:</strong> <code>[Adres]</code> adresine ıslak imzalı dilekçe ile
-        </li>
-      </ul>
+      <p>
+        Yukarıdaki haklarınızı kullanmak için taleplerinizi, §2&apos;de belirtilen KEP adresine,
+        sistemimizde kayıtlı e-posta adresinizden §2&apos;deki destek e-postasına veya §2&apos;deki
+        açık adrese ıslak imzalı dilekçe ile iletebilirsiniz.
+      </p>
+      <p>
+        Hesabınızı ve verilerinizi silmek için ayrıca başvuru yapmanız gerekmez; işlemi doğrudan
+        uygulama içinden yapabilirsiniz — bkz. <a href="/hesap-silme">Hesap ve Veri Silme</a>.
+      </p>
       <p>
         iletebilirsiniz. Kimliğinizi tespit edici bilgilerle yaptığınız başvurular, talebin
         niteliğine göre en kısa sürede ve en geç <strong>30 (otuz) gün</strong> içinde ücretsiz
@@ -153,8 +185,9 @@ export default function KvkkPage() {
 
       <h2>10. İlgili Belgeler</h2>
       <p>
-        Daha fazla bilgi için <a href="/gizlilik">Gizlilik Politikası</a> ve{' '}
-        <a href="/cerez-politikasi">Çerez Politikası</a> sayfalarımıza bakabilirsiniz.
+        Daha fazla bilgi için <a href="/gizlilik">Gizlilik Politikası</a>,{' '}
+        <a href="/cerez-politikasi">Çerez Politikası</a> ve{' '}
+        <a href="/hesap-silme">Hesap ve Veri Silme</a> sayfalarımıza bakabilirsiniz.
       </p>
     </article>
   );

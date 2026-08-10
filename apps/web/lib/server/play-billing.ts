@@ -106,6 +106,16 @@ const b64url = (input: Buffer | string): string =>
  * Servis hesabı için RS256 imzalı JWT üret (OAuth2 JWT-bearer akışı).
  *
  * `nowSec` dışarıdan verilir: `Date.now()` çağıran saf olmayan bir fonksiyon test edilemezdi.
+ *
+ * ## CodeQL `js/insufficient-password-hash` — YANLIŞ POZİTİF
+ *
+ * Tarayıcı, `createSign('RSA-SHA256')` çağrısını "parolayı düşük maliyetli bir özetle hash'lemek"
+ * sanıyor ve bcrypt/scrypt/PBKDF2 öneriyor. Burada **parola yok ve hash'leme yok**: bu bir
+ * DİJİTAL İMZADIR. `sa.private_key` özetlenmez, imzalamak için kullanılır.
+ *
+ * RS256, Google'ın servis hesabı OAuth2 akışının **zorunlu** algoritmasıdır; yerine bir parola
+ * türetme fonksiyonu koymak protokolü tümden bozardı — jeton ucu imzayı doğrulayamaz ve hiçbir
+ * satın alma doğrulanamazdı. Uyarı bu gerekçeyle kapatıldı (alert #6, false positive).
  */
 export function createSignedJwt(sa: PlayServiceAccount, nowSec: number): string {
   const header = b64url(JSON.stringify({ alg: 'RS256', typ: 'JWT' }));

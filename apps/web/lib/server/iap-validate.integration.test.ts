@@ -5,8 +5,10 @@
 import { describe, it, expect, vi } from 'vitest';
 import { POST as register } from '@/app/api/auth/register/route';
 import { POST as validate } from '@/app/api/iap/validate/route';
+import { anyProductById } from '@/lib/products';
 
 const BASE = 'http://test.local';
+const PKG = 'com.ehliyetegitim.ehliyet_akademi';
 const post = (path: string, body: unknown, token?: string) =>
   new Request(BASE + path, {
     method: 'POST',
@@ -68,7 +70,7 @@ describe('mobil IAP /api/iap/validate', () => {
     expect(((await res.json()) as { owned: string[] }).owned).toContain('komple-b');
   });
 
-  it('komple-ehliyet (mobil TEK ürün, 399₺) → grant edilir', async () => {
+  it('komple-ehliyet (ömür boyu paket) → grant edilir', async () => {
     const token = await newUserToken();
     const res = await validate(
       post('/api/iap/validate', { productId: 'komple-ehliyet', purchaseToken: 'tok-mobil' }, token)
@@ -109,5 +111,55 @@ describe('mobil IAP /api/iap/validate', () => {
     } finally {
       vi.unstubAllEnvs();
     }
+  });
+
+  // ── Yayın öncesi denetim bulgusu N1 ───────────────────────────────────────
+  // Mobil katalog ÜÇ paket satıyor. Sunucu kataloğunda yalnız biri vardı; diğer ikisi 404
+  // dönüyor ve kullanıcı ödeme yaptığı hâlde hiçbir hak kaydı oluşmuyordu.
+  describe('mobil kataloğun ÜÇ paketi de tanınır (N1)', () => {
+    it.each(['premium-haftalik', 'premium-aylik', 'komple-ehliyet'])(
+      '%s → 404 DEĞİL, grant edilir',
+      async (productId) => {
+        const token = await newUserToken();
+        const res = await validate(
+          post(
+            '/api/iap/validate',
+            { productId, purchaseToken: `tok-${productId}`, packageName: PKG },
+            token
+          )
+        );
+        expect(res.status, `${productId} sunucu kataloğunda tanınmıyor`).toBe(200);
+        expect(((await res.json()) as { owned: string[] }).owned).toContain(productId);
+      }
+    );
+  });
+
+  it('ömür boyu paketin kayıtlı fiyatı mağaza fiyatını yansıtır (N2)', async () => {
+    // 399 yazılıyordu, mağaza 479,99 tahsil ediyordu; her satın alma yanlış fiyatla kaydediliyordu.
+    const p = anyProductById('komple-ehliyet');
+    expect(p?.priceTRY).toBe(480);
+  });
+
+  it('abonelik yenilenince satır SİLİNMEZ, bitiş anı ileri alınır', async () => {
+    const token = await newUserToken();
+    const first = await validate(
+      post(
+        '/api/iap/validate',
+        { productId: 'premium-haftalik', purchaseToken: 'tok-1', packageName: PKG },
+        token
+      )
+    );
+    expect(first.status).toBe(200);
+    const again = await validate(
+      post(
+        '/api/iap/validate',
+        { productId: 'premium-haftalik', purchaseToken: 'tok-2', packageName: PKG },
+        token
+      )
+    );
+    expect(again.status).toBe(200);
+    const owned = ((await again.json()) as { owned: string[] }).owned;
+    // Tek kayıt: idempotent güncelleme, çift satır değil.
+    expect(owned.filter((p) => p === 'premium-haftalik')).toHaveLength(1);
   });
 });

@@ -81,6 +81,9 @@ export const purchases = pgTable(
     priceTRY: integer('price_try').notNull(),
     provider: text('provider').notNull().default('mock'), // mock | lemonsqueezy | stripe
     externalRef: text('external_ref'), // Sprint 4 — sağlayıcı sipariş/makbuz id'si (idempotent webhook)
+    // Abonelik bitiş anı. NULL → süresiz (tek seferlik ürün). Dolu satırlar süresi geçtiğinde
+    // sahiplik listesinden DÜŞÜRÜLÜR (`/api/purchases`), böylece erişim kendiliğinden kapanır.
+    expiresAt: timestamp('expires_at', { withTimezone: true }),
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [uniqueIndex('purchases_user_product_uq').on(t.userId, t.productId)]

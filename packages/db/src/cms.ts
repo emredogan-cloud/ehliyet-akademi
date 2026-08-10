@@ -26,9 +26,8 @@ export const contentItems = pgTable(
     tags: jsonb('tags').notNull().default([]),
     difficulty: text('difficulty'), // kolay|orta|zor (soru/ders için)
     payload: jsonb('payload').notNull(), // Zod-doğrulanmış içerik gövdesi
-    createdBy: text('created_by')
-      .notNull()
-      .references(() => users.id),
+    // Kullanıcı silinince atıf DÜŞER, içerik KALIR (ON DELETE SET NULL) — bkz. BOOTSTRAP_DDL.
+    createdBy: text('created_by').references(() => users.id, { onDelete: 'set null' }),
     updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
     publishedAt: timestamp('published_at', { withTimezone: true }),
   },
@@ -50,9 +49,7 @@ export const contentVersions = pgTable(
     version: integer('version').notNull(),
     status: text('status').notNull(),
     payload: jsonb('payload').notNull(),
-    changedBy: text('changed_by')
-      .notNull()
-      .references(() => users.id),
+    changedBy: text('changed_by').references(() => users.id, { onDelete: 'set null' }),
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [index('content_versions_content_idx').on(t.contentId)]
@@ -72,9 +69,8 @@ export const mediaAssets = pgTable(
     tags: jsonb('tags').notNull().default([]),
     version: integer('version').notNull().default(1),
     dataBase64: text('data_base64').notNull(),
-    createdBy: text('created_by')
-      .notNull()
-      .references(() => users.id),
+    // Kullanıcı silinince atıf DÜŞER, içerik KALIR (ON DELETE SET NULL) — bkz. BOOTSTRAP_DDL.
+    createdBy: text('created_by').references(() => users.id, { onDelete: 'set null' }),
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [index('media_kind_idx').on(t.kind)]
@@ -85,9 +81,7 @@ export const auditLogs = pgTable(
   'audit_logs',
   {
     id: text('id').primaryKey(),
-    userId: text('user_id')
-      .notNull()
-      .references(() => users.id),
+    userId: text('user_id').references(() => users.id, { onDelete: 'set null' }),
     action: text('action').notNull(), // content.create / content.publish / media.upload / user.role ...
     entity: text('entity').notNull(),
     entityId: text('entity_id').notNull(),

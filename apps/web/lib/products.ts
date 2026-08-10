@@ -9,7 +9,11 @@ export type ProductId =
   | 'simulator-paketi'
   | 'premium-soru-bankasi'
   | 'komple-b'
-  // Mobil uygulamanın TEK premium ürünü (web paywall'da gösterilmez; yalnız mobil IAP doğrulaması).
+  // Mobil uygulamanın premium paketleri (web paywall'da gösterilmez; yalnız mobil IAP doğrulaması).
+  // ÜÇÜ DE burada olmak zorunda: `anyProductById` bilinmeyen kimliğe 404 döner ve kullanıcı
+  // ödeme yaptığı hâlde hiçbir hak kaydı oluşmaz (yayın öncesi denetim bulgusu N1).
+  | 'premium-haftalik'
+  | 'premium-aylik'
   | 'komple-ehliyet';
 
 /** Paketlerin açtığı yetenekler. */
@@ -68,7 +72,10 @@ export const PRODUCTS: Product[] = [
       'Yukarıdaki her şey dahil',
       'AI açıklamalar sınırsız',
       'Gelecek içerik güncellemeleri dahil',
-      'Geçme garantisi kapsamı',
+      // "Geçme garantisi kapsamı" 10 Ağustos 2026'da KALDIRILDI: bu bir SONUÇ GARANTİSİDİR.
+      // Play'in Yanlış Beyan politikası ve 6502 sayılı Tüketicinin Korunması Hakkında Kanun
+      // açısından savunulamaz — uygulama sınavı geçireceğini taahhüt edemez.
+      'Tüm premium derslere kalıcı erişim',
     ],
     capabilities: [
       'teori-premium',
@@ -85,35 +92,98 @@ export function productById(id: string): Product | undefined {
   return PRODUCTS.find((p) => p.id === id);
 }
 
+/** Üç mobil paketin ortak özellik listesi — mobil kataloğun `_kFeatures` karşılığı. */
+const MOBILE_PREMIUM_FEATURES: string[] = [
+  'Tüm konulara sınırsız erişim',
+  'Sınırsız deneme sınavı',
+  'Sınırsız AI Koç desteği',
+  'Tüm video dersler',
+  'Kişisel çalışma planı',
+];
+
+/** Üç paket de AYNI yetenekleri açar — fark yalnız süredir (mobil `kAllCapabilities`). */
+const MOBILE_PREMIUM_CAPABILITIES: Capability[] = [
+  'teori-premium',
+  'direksiyon-premium',
+  'sinirsiz-deneme',
+  'soru-bankasi-tam',
+  'ai-sinirsiz',
+];
+
 /**
- * Mobil uygulamanın TEK premium ürünü — "Komple Ehliyet Paketi" (399 TL, ömür boyu). Web paywall'da
- * GÖSTERİLMEZ (PRODUCTS'a eklenmez); yalnız mobil IAP doğrulaması sunucu-taraflı katalogda tanısın
- * diye ayrı tutulur. Tüm yetenekleri açar.
+ * Mobil uygulamanın premium paketleri. Web paywall'da GÖSTERİLMEZ (PRODUCTS'a eklenmez); yalnız
+ * mobil IAP doğrulaması sunucu-taraflı katalogda tanısın diye ayrı tutulur.
+ *
+ * ## 10 Ağustos 2026 — İKİ ABONELİK EKLENDİ (yayın öncesi denetim bulgusu N1)
+ *
+ * Bu liste yalnız `komple-ehliyet` içeriyordu; oysa mobil katalog ÜÇ paket satıyor
+ * (`apps/mobile/lib/domain/premium/products.dart`). `anyProductById()` haftalık ve aylık için
+ * `undefined` döndüğü için `/api/iap/validate` **404 "Ürün bulunamadı."** yanıtı veriyordu:
+ * kullanıcı Google'a ödeme yapıyor, sunucuda hiçbir hak kaydı oluşmuyordu. Yerel erişim yine de
+ * açıldığı için (`grantFromStore` önce cihaza yazar) hata fark edilmemişti — ama çapraz cihaz
+ * senkronu ve geri yükleme çalışmıyordu.
+ *
+ * ## Fiyatlar
+ *
+ * `priceTRY` **kayıt amaçlıdır** ve mağaza fiyatını yansıtmalıdır; kullanıcıya gösterilen fiyat
+ * her zaman Play'den okunur (`paywall_screen.dart`). Ömür boyu paket 399 yazıyordu, mağaza
+ * 479,99 tahsil ediyordu — her satın alma veritabanına YANLIŞ fiyatla yazılıyordu (bulgu N2).
  */
 export const MOBILE_PRODUCTS: Product[] = [
   {
+    id: 'premium-haftalik',
+    title: 'Premium — Haftalık',
+    priceTRY: 50,
+    blurb: 'Kısa sürede sınava girecekler için haftalık abonelik.',
+    features: MOBILE_PREMIUM_FEATURES,
+    capabilities: MOBILE_PREMIUM_CAPABILITIES,
+  },
+  {
+    id: 'premium-aylik',
+    title: 'Premium — Aylık',
+    priceTRY: 200,
+    blurb: 'Rahat bir tempoyla çalışmak için aylık abonelik.',
+    features: MOBILE_PREMIUM_FEATURES,
+    capabilities: MOBILE_PREMIUM_CAPABILITIES,
+  },
+  {
     id: 'komple-ehliyet',
     title: 'Komple Ehliyet Paketi',
-    priceTRY: 399,
+    priceTRY: 480,
     blurb:
       'Tüm dersler, sınırsız deneme, sınırsız AI Koç ve premium içerik — tek pakette, ömür boyu.',
-    features: [
-      'Tüm konulara sınırsız erişim',
-      'Sınırsız deneme sınavı',
-      'Sınırsız AI Koç desteği',
-      'Tüm video dersler',
-      'Kişisel çalışma planı',
-    ],
-    capabilities: [
-      'teori-premium',
-      'direksiyon-premium',
-      'sinirsiz-deneme',
-      'soru-bankasi-tam',
-      'ai-sinirsiz',
-    ],
+    features: MOBILE_PREMIUM_FEATURES,
+    capabilities: MOBILE_PREMIUM_CAPABILITIES,
     highlight: true,
   },
 ];
+
+/**
+ * Ürün türü — doğrulama hangi Play API'sine gideceğini buradan bilir.
+ *
+ * Abonelikler `purchases.subscriptionsv2.get`, tek seferlik ürünler `purchases.products.get`
+ * ucuna sorulur. Yanlış uç 404 döner ve geçerli bir satın alma reddedilirdi.
+ */
+export type MobileProductKind = 'subscription' | 'product';
+
+const MOBILE_PRODUCT_KIND: Record<string, MobileProductKind> = {
+  'premium-haftalik': 'subscription',
+  'premium-aylik': 'subscription',
+  'komple-ehliyet': 'product',
+};
+
+/** Ürün abonelik mi, tek seferlik mi? Bilinmeyen kimlik için `null`. */
+export function mobileProductKind(id: string): MobileProductKind | null {
+  return MOBILE_PRODUCT_KIND[id] ?? null;
+}
+
+/**
+ * Sunucu ürün kimliğini Play Store kimliğine çevir (`komple-ehliyet` → `komple_ehliyet`).
+ * Mobil taraftaki `storeProductId` ile birebir aynı kural (`products.dart:67`).
+ */
+export function storeProductIdOf(id: string): string {
+  return id.replaceAll('-', '_');
+}
 
 /** Web + mobil kataloglarında ürün arar (mobil IAP doğrulaması mobil ürünleri de tanımalı). */
 export function anyProductById(id: string): Product | undefined {

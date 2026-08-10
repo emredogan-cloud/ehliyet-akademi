@@ -1,49 +1,37 @@
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import { getDb, purchases } from '@ea/db';
 import { getSessionUser, json, newId, guarded } from '@/lib/server/auth';
-import { anyProductById } from '@/lib/products';
+import { anyProductById, mobileProductKind, storeProductIdOf } from '@/lib/products';
 import { getEmailProvider, purchaseConfirmationEmail } from '@/lib/server/email';
+import { isPlayVerificationConfigured, verifyPlayPurchase } from '@/lib/server/play-billing';
 
 /**
- * Mobil uygulama-içi satın alma doğrulaması (Mobile Phase 7). Google Play satın alma token'ını
- * doğrular ve sahipliği kalıcı yazar (LemonSqueezy webhook'uyla aynı desen: katalog fiyat-bütünlüğü +
- * idempotent insert). Bearer oturumu gerekir.
+ * Mobil uygulama-içi satın alma doğrulaması.
  *
- * NOT: Play token'ının SUNUCU-taraflı doğrulaması (androidpublisher `purchases.products.get`) bir
- * Google Cloud servis hesabı gerektirir. Kimlik bilgileri (`GOOGLE_PLAY_SA_JSON`) yoksa uç, mock
- * grant akışıyla (POST /api/purchases) aynı şekilde geliştirme modunda kabul eder — üretimde gerçek
- * doğrulama zorunludur. Bu, imzalı Play yapısı + Play Console olmadan bu ortamda uçtan uca test
- * edilemez; grant + idempotent mantığı test edilir.
+ * ## 10 Ağustos 2026 — İSKELE KALDIRILDI
+ *
+ * Bu uç, dört karakterden uzun HER jetona `valid: true` diyen bir iskele taşıyordu. Üretim
+ * yalnızca `GOOGLE_PLAY_SA_JSON` tanımsız olduğu için (uç 503 dönüyordu) güvendeydi; o değişken
+ * ayarlandığı anda kimliği doğrulanmış herhangi bir kullanıcı dört karakterlik bir dizeyle kendine
+ * ömür boyu premium verebilirdi. Artık doğrulama gerçektir: `lib/server/play-billing.ts` Google'ın
+ * Android Publisher v3 API'sini çağırır.
+ *
+ * ## Fail-closed sözleşmesi
+ *
+ * · Doğrulama yapılandırılmamış + üretim → **503**. Grant YOK.
+ * · Doğrulama yapılandırılmamış + test/geliştirme → yalnız `IAP_DEV_ACCEPT=1` ile grant.
+ * · Doğrulama yapılandırılmış → Google'ın cevabı bağlayıcıdır. Ağ hatası bile `valid:false`'tur;
+ *   "doğrulayamadım" ile "geçerli" ASLA karıştırılmaz.
  */
 
-function iapConfigured(): boolean {
-  return Boolean(process.env.GOOGLE_PLAY_SA_JSON && process.env.GOOGLE_PLAY_SA_JSON.length > 0);
-}
-
 /**
- * GÜVENLİK (fail-closed): Play doğrulaması yapılandırılmamışsa (servis hesabı yok) grant YALNIZ
- * test/dev ortamında kabul edilir. Üretimde doğrulama zorunludur — aksi hâlde herkes kendine
- * premium verebilirdi. (Mock ödemedeki `paymentConfigured` kapısıyla aynı mantık.)
+ * Doğrulamasız grant YALNIZ test/geliştirmede kabul edilir.
+ *
+ * `IAP_DEV_ACCEPT=1` kaçış kapısı, üretimde de açılabilecek bir bayraktır; bu yüzden üretimde
+ * ayrıca `GOOGLE_PLAY_SA_JSON` yokluğu şartı korunur (aşağıdaki 503 kapısı).
  */
 function devGrantAllowed(): boolean {
   return process.env.NODE_ENV !== 'production' || process.env.IAP_DEV_ACCEPT === '1';
-}
-
-/** Play satın almasını sunucuda doğrula (androidpublisher — servis hesabı gerekir). */
-async function verifyPlayPurchase(args: {
-  productId: string;
-  purchaseToken: string;
-  packageName: string;
-}): Promise<{ valid: boolean; reason?: string }> {
-  try {
-    // (İskele) — gerçek uygulamada googleapis ile purchases.products.get çağrılır (purchaseState==0).
-    // Kimlik bilgileri bu ortamda yok; üretimde bu adım gerçek doğrulama yapar.
-    return args.purchaseToken.length >= 4
-      ? { valid: true }
-      : { valid: false, reason: 'invalid_token' };
-  } catch {
-    return { valid: false, reason: 'verification_failed' };
-  }
 }
 
 export const POST = guarded(async (req: Request): Promise<Response> => {
@@ -63,26 +51,49 @@ export const POST = guarded(async (req: Request): Promise<Response> => {
   const purchaseToken = (body.purchaseToken ?? '').trim();
   if (!purchaseToken) return json({ error: 'Satın alma token gerekli.' }, { status: 400 });
 
+  const configured = isPlayVerificationConfigured();
+
   // Fail-closed: doğrulama yapılandırılmamışsa üretimde grant reddedilir.
-  if (!iapConfigured() && !devGrantAllowed()) {
+  if (!configured && !devGrantAllowed()) {
     return json(
       { error: 'Uygulama-içi satın alma doğrulaması henüz yapılandırılmadı.' },
       { status: 503 }
     );
   }
 
-  const verdict = await verifyPlayPurchase({
-    productId: product.id,
-    purchaseToken,
-    packageName: body.packageName ?? '',
-  });
-  if (!verdict.valid) {
-    return json({ error: 'Satın alma doğrulanamadı.', reason: verdict.reason }, { status: 402 });
+  /** Abonelikte bitiş anı; tek seferlik üründe `null` (süresiz). */
+  let expiresAt: Date | null = null;
+
+  if (configured) {
+    // Ürün türü kataloğun kendisinden gelir; istemcinin söylediğine GÜVENİLMEZ. Aksi hâlde
+    // istemci bir aboneliği "tek seferlik" diye göstererek süresiz hak talep edebilirdi.
+    const kind = mobileProductKind(product.id) ?? 'product';
+    const verdict = await verifyPlayPurchase({
+      packageName: body.packageName ?? '',
+      storeProductId: storeProductIdOf(product.id),
+      purchaseToken,
+      kind,
+    });
+
+    if (!verdict.valid) {
+      return json({ error: 'Satın alma doğrulanamadı.', reason: verdict.reason }, { status: 402 });
+    }
+    expiresAt = verdict.expiresAtMs != null ? new Date(verdict.expiresAtMs) : null;
   }
 
   const db = await getDb();
-  let inserted = true;
-  try {
+
+  // Idempotent + yenilenebilir: aynı (kullanıcı, ürün) çifti için tek satır tutulur. Abonelik
+  // yenilendiğinde satır SİLİNMEZ, bitiş anı İLERİ ALINIR — aksi hâlde yenileme "zaten sahip"
+  // sayılıp yeni dönem hiç yazılmazdı.
+  const existing = await db
+    .select({ id: purchases.id })
+    .from(purchases)
+    .where(and(eq(purchases.userId, user.id), eq(purchases.productId, product.id)))
+    .limit(1);
+
+  const isNew = existing.length === 0;
+  if (isNew) {
     await db.insert(purchases).values({
       id: newId(),
       userId: user.id,
@@ -90,19 +101,27 @@ export const POST = guarded(async (req: Request): Promise<Response> => {
       priceTRY: product.priceTRY,
       provider: 'google_play',
       externalRef: purchaseToken,
+      expiresAt,
     });
-  } catch {
-    inserted = false; // unique(user,product) → zaten sahip: idempotent.
-  }
-  if (inserted) {
     await getEmailProvider()
       .send(user.email, purchaseConfirmationEmail(product.title, product.priceTRY))
       .catch(() => {});
+  } else {
+    await db
+      .update(purchases)
+      .set({ externalRef: purchaseToken, expiresAt })
+      .where(and(eq(purchases.userId, user.id), eq(purchases.productId, product.id)));
   }
 
+  // Sahiplik listesi süresi geçmiş abonelikleri İÇERMEZ.
+  const now = new Date();
   const rows = await db
-    .select({ productId: purchases.productId })
+    .select({ productId: purchases.productId, expiresAt: purchases.expiresAt })
     .from(purchases)
     .where(eq(purchases.userId, user.id));
-  return json({ ok: true, owned: [...new Set(rows.map((r) => r.productId))] });
+  const owned = [
+    ...new Set(rows.filter((r) => !r.expiresAt || r.expiresAt > now).map((r) => r.productId)),
+  ];
+
+  return json({ ok: true, owned });
 });

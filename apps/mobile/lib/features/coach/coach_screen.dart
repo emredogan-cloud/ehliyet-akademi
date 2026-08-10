@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../data/coach/ai_report_api.dart';
 import '../../core/analytics/analytics.dart';
 import '../../core/analytics/analytics_event.dart';
 import '../../core/assets.dart';
@@ -183,21 +184,35 @@ class _CoachScreenState extends ConsumerState<CoachScreen> {
                   ? _intro()
                   : ListView.builder(
                       controller: _scroll,
-                      padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s4, AppSpacing.s4, AppSpacing.s4),
+                      padding: const EdgeInsets.fromLTRB(
+                        AppSpacing.s4,
+                        AppSpacing.s4,
+                        AppSpacing.s4,
+                        AppSpacing.s4,
+                      ),
                       // Beta Faz 9: "Koç düşünüyor…" balonu yalnız HENÜZ İÇERİK YOKKEN durur.
                       // Akış başladıktan sonra büyüyen yanıtın kendisi zaten göstergedir; ikisi
                       // birden çizilirse kullanıcı iki ayrı yanıt bekliyormuş gibi görür.
-                      itemCount: chat.messages.length + (_awaiting(chat) ? 1 : 0),
+                      itemCount:
+                          chat.messages.length + (_awaiting(chat) ? 1 : 0),
                       itemBuilder: (context, i) {
-                        if (i >= chat.messages.length) return const _TypingBubble();
+                        if (i >= chat.messages.length) {
+                          return const _TypingBubble();
+                        }
                         return _MessageBubble(message: chat.messages[i]);
                       },
                     ),
             ),
             if (chat.error != null)
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4, vertical: 4),
-                child: Text(chat.error!, style: TextStyle(color: p.red, fontSize: 12.5)),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.s4,
+                  vertical: 4,
+                ),
+                child: Text(
+                  chat.error!,
+                  style: TextStyle(color: p.red, fontSize: 12.5),
+                ),
               ),
             _inputBar(),
           ],
@@ -228,12 +243,22 @@ class _CoachScreenState extends ConsumerState<CoachScreen> {
         ? 0
         : progress.loadCards().values.where((c) => c.dueAt <= now).length;
     return ListView(
-      padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s3, AppSpacing.s4, AppSpacing.s4),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.s4,
+        AppSpacing.s3,
+        AppSpacing.s4,
+        AppSpacing.s4,
+      ),
       children: [
         // AI Koç tanıtım kartı — owl maskotu
         GlowCard(
           selected: true,
-          padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s4, 0, AppSpacing.s4),
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.s4,
+            AppSpacing.s4,
+            0,
+            AppSpacing.s4,
+          ),
           child: Row(
             children: [
               Expanded(
@@ -242,20 +267,39 @@ class _CoachScreenState extends ConsumerState<CoachScreen> {
                   children: [
                     Row(
                       children: [
-                        IconBadge(icon: Icons.auto_awesome_rounded, color: p.primary, size: 40),
+                        IconBadge(
+                          icon: Icons.auto_awesome_rounded,
+                          color: p.primary,
+                          size: 40,
+                        ),
                         const SizedBox(width: AppSpacing.s3),
-                        Text('AI Koç', style: TextStyle(color: p.primary, fontWeight: FontWeight.w900, fontSize: 18)),
+                        Text(
+                          'AI Koç',
+                          style: TextStyle(
+                            color: p.primary,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 18,
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(height: AppSpacing.s3),
                     Text(
                       'İlerlemeni izleyen, sana özel öneren proaktif bir koç. Ehliyet ve trafik konularında da soru sorabilirsin.',
-                      style: TextStyle(color: p.text2, height: 1.4, fontSize: 13),
+                      style: TextStyle(
+                        color: p.text2,
+                        height: 1.4,
+                        fontSize: 13,
+                      ),
                     ),
                   ],
                 ),
               ),
-              LivingMascot(AppImages.owlWave, height: 128, semanticLabel: 'AI Koç'),
+              LivingMascot(
+                AppImages.owlWave,
+                height: 128,
+                semanticLabel: 'AI Koç',
+              ),
             ],
           ),
         ),
@@ -285,19 +329,25 @@ class _CoachScreenState extends ConsumerState<CoachScreen> {
             ),
           ],
           const SizedBox(height: AppSpacing.s3),
-          StudyPlanCard(plan: sevenDayPlan(weak: weak, dueCardCount: dueCards)),
+          StudyPlanCard(
+            plan: sevenDayPlan(weak: weak, dueCardCount: dueCards),
+          ),
         ],
         const SectionTitle('Bir şey sor'),
         Wrap(
           spacing: AppSpacing.s2,
           runSpacing: AppSpacing.s2,
-          children: [for (final s in _suggestions) _SuggestionChip(text: s, onTap: () => _send(s))],
+          children: [
+            for (final s in _suggestions)
+              _SuggestionChip(text: s, onTap: () => _send(s)),
+          ],
         ),
         const SizedBox(height: AppSpacing.s4),
         const AppCallout(
           tone: CalloutTone.info,
           title: 'Güvenilir bilgi',
-          text: 'AI yanıtları platform içeriğine dayanır; kesin ve güncel kural için MEB/MTSK esastır.',
+          text:
+              'AI yanıtları platform içeriğine dayanır; kesin ve güncel kural için MEB/MTSK esastır.',
         ),
       ],
     );
@@ -307,7 +357,12 @@ class _CoachScreenState extends ConsumerState<CoachScreen> {
     final p = context.palette;
     final sending = ref.watch(coachChatProvider).sending;
     return Container(
-      padding: const EdgeInsets.fromLTRB(AppSpacing.s3, AppSpacing.s2, AppSpacing.s3, AppSpacing.s3),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.s3,
+        AppSpacing.s2,
+        AppSpacing.s3,
+        AppSpacing.s3,
+      ),
       decoration: BoxDecoration(
         color: p.surface,
         border: Border(top: BorderSide(color: p.border)),
@@ -322,11 +377,16 @@ class _CoachScreenState extends ConsumerState<CoachScreen> {
               maxLines: 4,
               textInputAction: TextInputAction.send,
               onSubmitted: _send,
-              decoration: const InputDecoration(hintText: 'Ehliyet/trafik hakkında sor…'),
+              decoration: const InputDecoration(
+                hintText: 'Ehliyet/trafik hakkında sor…',
+              ),
             ),
           ),
           const SizedBox(width: AppSpacing.s2),
-          _SendButton(sending: sending, onTap: sending ? null : () => _send(_input.text)),
+          _SendButton(
+            sending: sending,
+            onTap: sending ? null : () => _send(_input.text),
+          ),
         ],
       ),
     );
@@ -353,11 +413,24 @@ class _SendButton extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             gradient: LinearGradient(colors: [p.primary, p.primaryBright]),
-            boxShadow: [BoxShadow(color: p.primary.withValues(alpha: 0.4), blurRadius: 14, spreadRadius: -2)],
+            boxShadow: [
+              BoxShadow(
+                color: p.primary.withValues(alpha: 0.4),
+                blurRadius: 14,
+                spreadRadius: -2,
+              ),
+            ],
           ),
           alignment: Alignment.center,
           child: sending
-              ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+              ? const SizedBox(
+                  width: 18,
+                  height: 18,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: Colors.white,
+                  ),
+                )
               : const Icon(Icons.send_rounded, color: Colors.white, size: 20),
         ),
       ),
@@ -400,8 +473,13 @@ class _MessageBubble extends StatelessWidget {
     final p = context.palette;
     final isUser = message.role == 'user';
     final bubble = Container(
-      constraints: BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width * 0.72),
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4, vertical: AppSpacing.s3),
+      constraints: BoxConstraints(
+        maxWidth: MediaQuery.sizeOf(context).width * 0.72,
+      ),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.s4,
+        vertical: AppSpacing.s3,
+      ),
       decoration: BoxDecoration(
         color: isUser ? p.primary : p.surface,
         borderRadius: BorderRadius.only(
@@ -419,7 +497,9 @@ class _MessageBubble extends StatelessWidget {
             Text(
               message.text,
               style: TextStyle(
-                color: p.brightness == Brightness.dark ? const Color(0xFF04211F) : Colors.white,
+                color: p.brightness == Brightness.dark
+                    ? const Color(0xFF04211F)
+                    : Colors.white,
                 height: 1.4,
                 fontSize: 14.5,
               ),
@@ -431,13 +511,31 @@ class _MessageBubble extends StatelessWidget {
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(message.grounded ? Icons.verified_rounded : Icons.smart_toy_outlined,
-                    size: 13, color: message.grounded ? p.green : p.text3),
+                Icon(
+                  message.grounded
+                      ? Icons.verified_rounded
+                      : Icons.smart_toy_outlined,
+                  size: 13,
+                  color: message.grounded ? p.green : p.text3,
+                ),
                 const SizedBox(width: 4),
-                Text(message.grounded ? 'İçeriğe dayalı' : 'AI',
-                    style: TextStyle(color: message.grounded ? p.green : p.text3, fontSize: 11, fontWeight: FontWeight.w600)),
+                Text(
+                  message.grounded ? 'İçeriğe dayalı' : 'AI',
+                  style: TextStyle(
+                    color: message.grounded ? p.green : p.text3,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ],
             ),
+          ],
+          // Play'in üretken yapay zekâ politikası, rahatsız edici AI çıktısının UYGULAMADAN
+          // ÇIKMADAN bildirilebilmesini bekliyor. Düğme yalnız AI yanıtlarında görünür ve
+          // misafir kullanıcıda da çalışır (bildirim ucu anonim kabul eder).
+          if (!isUser) ...[
+            const SizedBox(height: AppSpacing.s1),
+            _ReportReplyButton(message: message),
           ],
         ],
       ),
@@ -446,10 +544,15 @@ class _MessageBubble extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.s3),
       child: Row(
-        mainAxisAlignment: isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: isUser
+            ? MainAxisAlignment.end
+            : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (!isUser) ...[const _OwlAvatar(), const SizedBox(width: AppSpacing.s2)],
+          if (!isUser) ...[
+            const _OwlAvatar(),
+            const SizedBox(width: AppSpacing.s2),
+          ],
           Flexible(child: bubble),
         ],
       ),
@@ -472,7 +575,10 @@ class _TypingBubble extends StatelessWidget {
           const SizedBox(width: AppSpacing.s2),
           Container(
             margin: const EdgeInsets.only(top: 2),
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4, vertical: AppSpacing.s3),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.s4,
+              vertical: AppSpacing.s3,
+            ),
             decoration: BoxDecoration(
               color: p.surface,
               borderRadius: BorderRadius.circular(AppRadii.base),
@@ -481,9 +587,19 @@ class _TypingBubble extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2, color: p.primary)),
+                SizedBox(
+                  width: 14,
+                  height: 14,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: p.primary,
+                  ),
+                ),
                 const SizedBox(width: AppSpacing.s2),
-                Text('Koç düşünüyor…', style: TextStyle(color: p.text3, fontSize: 13)),
+                Text(
+                  'Koç düşünüyor…',
+                  style: TextStyle(color: p.text3, fontSize: 13),
+                ),
               ],
             ),
           ),
@@ -495,7 +611,8 @@ class _TypingBubble extends StatelessWidget {
 
 /// Henüz tek bir parça bile gelmedi mi? (Akış başladıysa son mesaj artık AI'dır.)
 bool _awaiting(CoachChatState chat) =>
-    chat.sending && (chat.messages.isEmpty || chat.messages.last.role == 'user');
+    chat.sending &&
+    (chat.messages.isEmpty || chat.messages.last.role == 'user');
 
 class _SuggestionChip extends StatelessWidget {
   const _SuggestionChip({required this.text, required this.onTap});
@@ -519,12 +636,117 @@ class _SuggestionChip extends StatelessWidget {
           // korunuyor — çip aynı görünür, hedefi büyür.
           constraints: const BoxConstraints(minHeight: 48),
           alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4, vertical: AppSpacing.s2),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.s4,
+            vertical: AppSpacing.s2,
+          ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppRadii.pill),
             border: Border.all(color: p.border),
           ),
           child: Text(text, style: TextStyle(color: p.text2, fontSize: 12.5)),
+        ),
+      ),
+    );
+  }
+}
+
+/// AI yanıtını bildir — Play üretken yapay zekâ politikası gereği uygulama içi bildirim yolu.
+///
+/// Sebep seçimi topluluk tarafındaki `pickReportReason` ile aynı desende bir alt sayfadır; taksonomi
+/// farklıdır çünkü bir AI yanıtı için "uygunsuz avatar" anlamsızdır. Gönderim başarısız olsa bile
+/// kullanıcıya sessiz kalınmaz: her iki durumda da bir geri bildirim gösterilir.
+class _ReportReplyButton extends ConsumerWidget {
+  const _ReportReplyButton({required this.message});
+  final ChatMessage message;
+
+  Future<void> _report(BuildContext context, WidgetRef ref) async {
+    final reason = await showModalBottomSheet<AiReportReason>(
+      context: context,
+      isScrollControlled: true,
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(AppSpacing.s4),
+              child: Text(
+                'Bu yanıtı bildir',
+                style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.s4,
+                0,
+                AppSpacing.s4,
+                AppSpacing.s3,
+              ),
+              child: Text(
+                'Bildirimler insan incelemesine gider. Otomatik bir filtre yoktur.',
+                style: TextStyle(
+                  color: ctx.palette.text3,
+                  fontSize: 12.5,
+                  height: 1.35,
+                ),
+              ),
+            ),
+            for (final r in AiReportReason.values)
+              ListTile(
+                title: Text(r.label),
+                onTap: () => Navigator.pop(ctx, r),
+              ),
+            const SizedBox(height: AppSpacing.s2),
+          ],
+        ),
+      ),
+    );
+    if (reason == null || !context.mounted) return;
+
+    final ok = await ref
+        .read(aiReportApiProvider)
+        .reportReply(
+          // Yanıtın kendi kimliği yok; içeriğinden türetilen kararlı bir kimlik kullanılır ki
+          // aynı yanıt iki kez bildirildiğinde inceleyen bunu görebilsin.
+          messageId:
+              'ai-${message.text.hashCode.toUnsigned(32).toRadixString(16)}',
+          reason: reason,
+          replyExcerpt: message.text,
+        );
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          ok
+              ? 'Bildirimin alındı. İnceleyeceğiz.'
+              : 'Bildirim gönderilemedi. Bağlantını kontrol edip tekrar dene.',
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final p = context.palette;
+    return InkWell(
+      onTap: () => _report(context, ref),
+      borderRadius: BorderRadius.circular(AppRadii.sm),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 2),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.flag_outlined, size: 12, color: p.text3),
+            const SizedBox(width: 4),
+            Text(
+              'Bu yanıtı bildir',
+              style: TextStyle(
+                color: p.text3,
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
         ),
       ),
     );

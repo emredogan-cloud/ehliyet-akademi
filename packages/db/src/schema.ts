@@ -257,7 +257,11 @@ export const errorReports = pgTable(
 export const questionReports = pgTable('question_reports', {
   id: text('id').primaryKey(), // uuid
   questionId: text('question_id').notNull(),
-  kind: text('kind').notNull(), // wrong-answer | unclear | typo | suggestion | other
+  kind: text('kind').notNull(), // wrong-answer | unclear | typo | suggestion | harmful | other
+  // Bildirimin GELDİĞİ YÜZEY. 'question' (varsayılan) soru bankası; 'ai-reply' AI Koç yanıtı.
+  // Play'in üretken yapay zekâ politikası, kullanıcının rahatsız edici AI çıktısını uygulamadan
+  // ÇIKMADAN bildirebilmesini bekler; aynı inceleme kuyruğu iki yüzeye de hizmet eder.
+  source: text('source').notNull().default('question'),
   message: text('message').notNull().default(''),
   userId: text('user_id'), // opsiyonel — oturum varsa
   status: text('status').notNull().default('open'), // open | resolved | dismissed

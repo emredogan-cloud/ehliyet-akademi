@@ -116,16 +116,16 @@ roadmap row updated. **No phase starts while the previous one is red.**
 
 Updated in place. `CI` = GitHub Actions conclusion for the pushed commit.
 
-| Phase | Commit | CI  | Notes   |
-| ----- | ------ | --- | ------- |
-| A     | —      | —   | pending |
-| B     | —      | —   | pending |
-| C     | —      | —   | pending |
-| D     | —      | —   | pending |
-| E     | —      | —   | pending |
-| F     | —      | —   | pending |
-| K     | —      | —   | pending |
-| L     | —      | —   | pending |
+| Phase | Commit    | CI       | Notes                                                                                                                                                                                                                           |
+| ----- | --------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| A     | `b1269a8` | ✅ green | Gizlilik/KVKK yeniden yazıldı, `/hesap-silme` eklendi. Yerel üretim sunucusunda doğrulandı: üç sayfa da 200, yasak dize yok. Vercel önizlemesi SSO arkasında olduğu için önizleme URL'siyle doğrulama YAPILMADI (yanlış geçer). |
+| B     | `6c46824` | ✅ green | Gerçek Play doğrulaması + 3 ürün + abonelik süresi + fiyat + garanti ifadesi + hesap silme kilidi. 785 test. CodeQL yanlış pozitifi gerekçeli kapatıldı (#6).                                                                   |
+| C     | —         | —        | pending                                                                                                                                                                                                                         |
+| D     | —         | —        | pending                                                                                                                                                                                                                         |
+| E     | —         | —        | pending                                                                                                                                                                                                                         |
+| F     | —         | —        | pending                                                                                                                                                                                                                         |
+| K     | —         | —        | pending                                                                                                                                                                                                                         |
+| L     | —         | —        | pending                                                                                                                                                                                                                         |
 
 ---
 

@@ -432,6 +432,13 @@ ALTER TABLE audit_logs       DROP CONSTRAINT IF EXISTS audit_logs_user_id_fkey;
 ALTER TABLE audit_logs       ADD  CONSTRAINT audit_logs_user_id_fkey
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL;
 
+-- Yayın öncesi (10 Ağustos 2026) — AI YANITI BİLDİRİMİ.
+-- Play'in üretken yapay zekâ politikası, rahatsız edici AI çıktısının uygulama içinden
+-- bildirilebilmesini bekliyor. Yeni bir moderasyon sistemi kurmak yerine var olan soru bildirimi
+-- kuyruğu kullanılıyor; ayrım tek bir sütunla yapılıyor.
+ALTER TABLE question_reports ADD COLUMN IF NOT EXISTS source TEXT NOT NULL DEFAULT 'question';
+CREATE INDEX IF NOT EXISTS question_reports_source_idx ON question_reports(source);
+
 `;
 
 let _db: Db | null = null;

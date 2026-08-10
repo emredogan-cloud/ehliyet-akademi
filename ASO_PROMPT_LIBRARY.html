@@ -1,0 +1,4463 @@
+<meta charset="utf-8" />
+<title>Ehliyet Akademi — ASO Prompt Library (tr-TR)</title>
+<style>
+  :root {
+    --bg: #050b16;
+    --surface: #0b1523;
+    --surface2: #0f1c2e;
+    --surface3: #14243a;
+    --border: #1c2c44;
+    --border2: #29405f;
+    --text: #e8eef7;
+    --text2: #9fb0c6;
+    --text3: #6d7f97;
+    --teal: #2dd4bf;
+    --teal2: #5eead4;
+    --amber: #f5a623;
+    --green: #34d399;
+    --red: #f87171;
+    --purple: #a78bfa;
+    --blue: #60a5fa;
+    --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+    --sans:
+      ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+      sans-serif;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px 120px;
+  }
+
+  /* ---------- header ---------- */
+  header.hero {
+    padding: 56px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 8px;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--teal);
+    color: var(--teal);
+    border-radius: 999px;
+    padding: 6px 16px;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  h1 {
+    font-size: clamp(30px, 5vw, 46px);
+    line-height: 1.1;
+    margin: 20px 0 12px;
+    letter-spacing: -0.02em;
+  }
+  h1 .accent {
+    color: var(--teal);
+  }
+  .lede {
+    color: var(--text2);
+    font-size: 17px;
+    max-width: 74ch;
+    margin: 0 0 20px;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .chip {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 12.5px;
+    color: var(--text2);
+    font-family: var(--mono);
+  }
+  .chip b {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* ---------- nav ---------- */
+  nav.toc {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(5, 11, 22, 0.94);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 0;
+    margin-bottom: 40px;
+  }
+  .toc-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+  .toc a {
+    flex: 0 0 auto;
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 12.5px;
+    padding: 7px 12px;
+    border-radius: 7px;
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+  .toc a:hover {
+    color: var(--teal);
+    border-color: var(--border2);
+    background: var(--surface2);
+  }
+
+  /* ---------- sections ---------- */
+  section {
+    margin: 0 0 56px;
+    scroll-margin-top: 70px;
+  }
+  h2 {
+    font-size: 26px;
+    margin: 48px 0 8px;
+    letter-spacing: -0.01em;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  h3 {
+    font-size: 18px;
+    margin: 30px 0 10px;
+    color: var(--teal2);
+  }
+  h4 {
+    font-size: 14px;
+    margin: 22px 0 8px;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+  }
+  p {
+    margin: 0 0 14px;
+    color: var(--text2);
+  }
+  p strong,
+  li strong {
+    color: var(--text);
+  }
+  ul,
+  ol {
+    color: var(--text2);
+    padding-left: 22px;
+    margin: 0 0 16px;
+  }
+  li {
+    margin: 5px 0;
+  }
+  a {
+    color: var(--teal);
+  }
+  code {
+    font-family: var(--mono);
+    font-size: 0.9em;
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 1px 6px;
+    color: var(--teal2);
+  }
+
+  /* ---------- callouts ---------- */
+  .callout {
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 18px 0;
+    border: 1px solid;
+    background: var(--surface);
+    font-size: 14.5px;
+  }
+  .callout p:last-child {
+    margin-bottom: 0;
+  }
+  .callout .tag {
+    display: block;
+    font-size: 11.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+  .c-danger {
+    border-color: #5b2230;
+    background: #1a0e14;
+  }
+  .c-danger .tag {
+    color: var(--red);
+  }
+  .c-warn {
+    border-color: #5a4318;
+    background: #171208;
+  }
+  .c-warn .tag {
+    color: var(--amber);
+  }
+  .c-ok {
+    border-color: #1b4a3c;
+    background: #08150f;
+  }
+  .c-ok .tag {
+    color: var(--green);
+  }
+  .c-info {
+    border-color: var(--border2);
+    background: var(--surface2);
+  }
+  .c-info .tag {
+    color: var(--teal);
+  }
+
+  /* ---------- tables ---------- */
+  .tw {
+    overflow-x: auto;
+    margin: 16px 0;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+    min-width: 600px;
+  }
+  th,
+  td {
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--text2);
+  }
+  th {
+    background: var(--surface2);
+    color: var(--text);
+    font-weight: 700;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+  tr:last-child td {
+    border-bottom: none;
+  }
+  td strong {
+    color: var(--text);
+  }
+
+  /* ---------- asset cards ---------- */
+  .asset {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--surface);
+    margin: 0 0 40px;
+    overflow: hidden;
+  }
+  .asset-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 22px 24px;
+    background: linear-gradient(135deg, var(--surface2), var(--surface));
+    border-bottom: 1px solid var(--border);
+  }
+  .slot {
+    flex: 0 0 auto;
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: var(--surface3);
+    border: 1px solid var(--teal);
+    color: var(--teal);
+    font-size: 22px;
+    font-weight: 800;
+    font-family: var(--mono);
+  }
+  .asset-head .t {
+    flex: 1;
+    min-width: 0;
+  }
+  .asset-head h3 {
+    margin: 0 0 4px;
+    font-size: 21px;
+    color: var(--text);
+  }
+  .asset-head .sub {
+    color: var(--text3);
+    font-size: 13.5px;
+    margin: 0;
+  }
+  .asset-body {
+    padding: 6px 24px 24px;
+  }
+
+  .kv {
+    display: grid;
+    grid-template-columns: 190px 1fr;
+    gap: 0;
+    margin: 18px 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .kv dt {
+    background: var(--surface2);
+    padding: 9px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text3);
+    border-bottom: 1px solid var(--border);
+  }
+  .kv dd {
+    margin: 0;
+    padding: 9px 14px;
+    font-size: 14px;
+    color: var(--text2);
+    border-bottom: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+  }
+  .kv dt:last-of-type,
+  .kv dd:last-of-type {
+    border-bottom: none;
+  }
+  .kv dd code {
+    font-size: 12.5px;
+  }
+
+  /* ---------- copy blocks ---------- */
+  .cb {
+    margin: 18px 0;
+    border: 1px solid var(--border2);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #040910;
+  }
+  .cb-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 9px 14px;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+  }
+  .cb-title {
+    font-size: 11.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: var(--teal);
+  }
+  .cb pre {
+    margin: 0;
+    padding: 16px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.62;
+    color: #cfe3e0;
+    white-space: pre;
+    tab-size: 2;
+  }
+  .copy {
+    flex: 0 0 auto;
+    cursor: pointer;
+    border: 1px solid var(--teal);
+    background: transparent;
+    color: var(--teal);
+    border-radius: 7px;
+    padding: 5px 13px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: var(--sans);
+    transition: 0.12s;
+  }
+  .copy:hover {
+    background: var(--teal);
+    color: #04121a;
+  }
+  .copy.done {
+    background: var(--green);
+    border-color: var(--green);
+    color: #04121a;
+  }
+
+  .check {
+    list-style: none;
+    padding: 0;
+    margin: 14px 0;
+  }
+  .check li {
+    position: relative;
+    padding-left: 28px;
+    margin: 7px 0;
+    font-size: 14px;
+  }
+  .check li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 14px;
+    height: 14px;
+    border: 1.5px solid var(--border2);
+    border-radius: 4px;
+  }
+
+  .grid2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+  }
+  .box {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    background: var(--surface2);
+  }
+  .box h4 {
+    margin-top: 0;
+  }
+
+  .sw {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 14px 0;
+  }
+  .sw div {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--surface2);
+    width: 132px;
+  }
+  .sw i {
+    display: block;
+    height: 44px;
+  }
+  .sw span {
+    display: block;
+    padding: 6px 9px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text2);
+    line-height: 1.4;
+  }
+  .sw b {
+    display: block;
+    color: var(--text);
+    font-size: 11.5px;
+    font-family: var(--sans);
+  }
+
+  footer {
+    border-top: 1px solid var(--border);
+    margin-top: 60px;
+    padding-top: 24px;
+    color: var(--text3);
+    font-size: 13px;
+  }
+  @media (max-width: 640px) {
+    .kv {
+      grid-template-columns: 1fr;
+    }
+    .kv dd {
+      border-left: none;
+    }
+    .asset-head {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <span class="eyebrow">Üretim Aracı · tr-TR · v1.0</span>
+    <h1>Ehliyet Akademi — <span class="accent">ASO Prompt Library</span></h1>
+    <p class="lede">
+      Google Play mağaza görselleri için tam üretim şartnamesi: 8 telefon ekran görüntüsü, öne çıkan
+      grafik ve uygulama simgesi. Her varlık için kopyalanabilir bir GPT görsel üretim komutu, yasak
+      içerik listesi, tam dosya yolu ve üretim sonrası doğrulama kontrol listesi.
+      <strong
+        >Bu belgedeki her sayı ve her ekran adı, uygulamanın kaynak kodundan veya canlı API'den
+        ölçülmüştür.</strong
+      >
+    </p>
+    <div class="meta">
+      <span class="chip"><b>Paket</b> com.ehliyetegitim.ehliyet_akademi</span>
+      <span class="chip"><b>Sürüm</b> 1.0.0+5</span>
+      <span class="chip"><b>Dal</b> main @ 9ecc358</span>
+      <span class="chip"><b>Tuval</b> 1080×1920 · 9:16</span>
+      <span class="chip"><b>Dil</b> tr-TR (tek yerel ayar)</span>
+      <span class="chip"><b>Ölçüm</b> 10 Ağustos 2026</span>
+    </div>
+  </header>
+
+  <nav class="toc">
+    <div class="toc-inner">
+      <a href="#kurallar">0 · Pazarlıksız kurallar</a>
+      <a href="#gercekler">1 · Doğrulanmış gerçekler</a>
+      <a href="#sistem">2 · Tasarım sistemi</a>
+      <a href="#isimlendirme">3 · Dosya düzeni</a>
+      <a href="#strateji">4 · Sıralama</a>
+      <a href="#a01">01 Hero</a>
+      <a href="#a02">02 e-Sınav</a>
+      <a href="#a03">03 Soru Bankası</a>
+      <a href="#a04">04 Sınav Arşivi</a>
+      <a href="#a05">05 AI Koç</a>
+      <a href="#a06">06 Dersler</a>
+      <a href="#a07">07 İlerleme</a>
+      <a href="#a08">08 Çevrimdışı</a>
+      <a href="#feature">Öne Çıkan Grafik</a>
+      <a href="#icon">Simge</a>
+      <a href="#listing">Mağaza Metni</a>
+      <a href="#pipeline">Üretim Sonrası CLI</a>
+    </div>
+  </nav>
+
+  <section id="kurallar">
+    <h2>0 · Pazarlıksız kurallar</h2>
+
+    <div class="callout c-danger">
+      <span class="tag">Tek cümlelik kural</span>
+      <p>
+        <strong
+          >Mağaza varlığındaki her piksel, ürün hakkında bir iddiadır ve her iddia kaynak koda kadar
+          izlenebilmelidir. Güzellik kanıt değildir.</strong
+        >
+        Bir varlığı incelerken tasarıma değil, <code>lib/</code> içindeki koda bakılır. İnceleyen
+        kişide uygulamanın kendisi var.
+      </p>
+    </div>
+
+    <p>
+      Aşağıdaki kurallar her komutun içine ayrı ayrı yazılmıştır — bir belgenin başındaki politika
+      bölümü üreteci bağlamaz. FormAI projesinde kurallar doğru yazılmıştı ve
+      <em>o kurallardan üretilen</em> 22 varlığın 22'si kuralları ihlal etti. Kural, komuta
+      girmedikçe ve üretimden <strong>sonra</strong> doğrulanmadıkça yoktur.
+    </p>
+
+    <h3>Yasak — içerik</h3>
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>Yasak</th>
+            <th>Neden</th>
+            <th>Bu depodaki ihlal örneği</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <strong>Apple donanımı</strong> — çentik, Dynamic Island, iOS durum çubuğu,
+              <code>9:41</code>, akıllı saat
+            </td>
+            <td>Android listesi. Ayrıca cihaz yanlış beyanı.</td>
+            <td><code>apps/ASO_IMAGE/001–005.png</code>: beşi de Dynamic Island'lı iPhone</td>
+          </tr>
+          <tr>
+            <td><strong>Uydurma gezinme çubuğu</strong></td>
+            <td>
+              Uygulamanın gerçek sekmeleri: Ana Sayfa · Öğren · Pratik · AI Koç · Topluluk · Profil
+            </td>
+            <td>Mevcut beş varlıkta <strong>dört farklı</strong> uydurma çubuk var</td>
+          </tr>
+          <tr>
+            <td><strong>Uydurma sayı</strong> — soru, ders, kullanıcı, indirme, puan</td>
+            <td>Canlı banka <strong>1.605</strong> soru</td>
+            <td><code>003.png</code>: “10.000+ Güncel Sınav Sorusu” — 6,2 kat abartı</td>
+          </tr>
+          <tr>
+            <td>
+              <strong>Gerçek insan yüzü kullanıcı olarak</strong>, isimli profil, yorum/beğeni
+              sayısı
+            </td>
+            <td>Uydurma kimlik + benzerlik riski + Aldatıcı Davranış</td>
+            <td><code>005.png</code>: sekiz isimli fotogerçekçi yüz, “125 beğeni · 23 Yorum”</td>
+          </tr>
+          <tr>
+            <td><strong>“Binlerce kullanıcı”</strong> türü ölçek iddiası</td>
+            <td>Uygulama kapalı betada; kanıtlanamaz</td>
+            <td><code>005.png</code>: “Binlerce sürücü adayıyla yarış”</td>
+          </tr>
+          <tr>
+            <td><strong>Gizlilik mutlakları</strong> — %100, hiçbir, asla, tamamen, tüm veriler</td>
+            <td>Analitik, çökme raporu, AI metni ve satın alma sunucuya gidiyor</td>
+            <td><code>001.png</code>: “%100 Güvenli — Verilerin korunur”</td>
+          </tr>
+          <tr>
+            <td><strong>MEB bağlantısı / onayı / uygunluk onayı</strong></td>
+            <td>Hiçbir resmî bağ yok. Yalnız <em>biçim</em> uyumu söylenebilir.</td>
+            <td>
+              <code>001.png</code> “MEB Uyumlu”, <code>003.png</code> “MEB Müfredatına %100 Uygun”
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong>Sonuç vaadi</strong> — geçersin, kazanırsın, garanti, “daha yüksek başarı”
+            </td>
+            <td>Yanlış Beyan politikası</td>
+            <td><code>001.png</code>: “Daha Yüksek Başarı”</td>
+          </tr>
+          <tr>
+            <td><strong>Fiyat, deneme süresi, iade iddiası</strong></td>
+            <td>
+              Belgeler 399 TL diyor, mağaza 479,99 TL alıyor. Hiçbir SKU ücretsiz deneme taşımıyor.
+            </td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>
+              <strong>Var olmayan özellik</strong> — 3D görsel, HD video ders, indirilebilir video,
+              eğitmen takibi, 7/24 destek, canlı çok oyunculu
+            </td>
+            <td>Hiçbiri kodda yok</td>
+            <td>
+              <code>004.png</code>: “3D Motor Görselleri”, 12:18 bölümlü video, “Ahmet Yıldız · 10+
+              Yıl Sürücü Eğitmeni · Takip Et”
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Google Play rozeti, Google logosu, çizilmiş “Yükle” düğmesi</strong></td>
+            <td>Play kendi arayüzünün taklidini yasaklıyor</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>Eski tarih</strong></td>
+            <td>Varlık tek bir ANI gösterir</td>
+            <td><code>002.png</code>: “10 Mayıs 2024”</td>
+          </tr>
+          <tr>
+            <td><strong>Tıbbi görsel / ilk yardım tavsiyesi çerçevesi</strong></td>
+            <td>İlk yardım burada <em>sınav konusudur</em>, sağlık rehberi değil</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Yasak — teknik</h3>
+    <ul>
+      <li>
+        <strong>Alfa kanalı yok.</strong> Play şeffaflığı kabul etmez. Mevcut beş varlığın beşi de
+        <code>RGBA</code> — yükleme aşamasında reddedilirler.
+      </li>
+      <li>
+        <strong>1080×1920'den küçük olamaz.</strong> Mevcutlar 941×1672 — hem tanıtım uygunluğunu
+        kaybederler hem de karusel içinde tutarsız kutulanır.
+      </li>
+      <li><strong>Set içinde aynı boyut.</strong> Sekiz varlık da tam olarak 1080×1920.</li>
+      <li><strong>Yinelenen dosya yok.</strong> Set <code>md5sum</code> ile taranır.</li>
+      <li><strong>Kenara değen içerik yok.</strong> Her kenarda en az 56 px sessiz alan.</li>
+      <li><strong>Kırpılmış metin, kırpılmış telefon arayüzü yok.</strong></li>
+      <li>
+        <strong>Okunamayan mikro metin yok.</strong> Karusel küçük resminde ~25 mm genişlik; 28
+        px'in altındaki hiçbir metin bir işe yaramaz, yalnız kirlilik yaratır.
+      </li>
+    </ul>
+
+    <div class="callout c-warn">
+      <span class="tag">Metin üretimi — en önemli süreç kararı</span>
+      <p>
+        Türkçe aksanlı bir dildir: <code>ı/i</code> ve <code>I/İ</code>
+        <strong>farklı harflerdir</strong>. Görsel üreteçleri sessizce nokta ve çengel düşürür —
+        FormAI'de <code>CEBINDE</code>, <code>DIYOR KI</code>, <code>TURK TARIFI</code>,
+        <code>güveiinş</code>, <code>AI TEKNOLO.iSi</code> ve <code>Β0</code> (3 yerine beta harfi)
+        yayına girdi. Hiçbir komut bunu güvenilir biçimde önlemiyor.
+      </p>
+      <p>
+        <strong>Bu yüzden bu kütüphanedeki her komut METİNSİZ bir “plaka” üretir.</strong> Tüm
+        Türkçe tipografi ve telefonun içindeki gerçek ekran görüntüsü, üretim sonrası CLI aşamasında
+        <em>bindirilir</em>. Bu, hem aksan bozulmasını hem de uydurma arayüzü aynı anda ortadan
+        kaldırır. Ayrıntı: <a href="#pipeline">Üretim Sonrası CLI</a>.
+      </p>
+    </div>
+
+    <h3>Dört kaynaklı izlenebilirlik kuralı</h3>
+    <p>Bir varlıktaki anlam taşıyan her öge şu dördünden birine izlenebilmelidir:</p>
+    <ol>
+      <li><strong>Gerçek sevk edilen arayüz</strong> — bu ekran, bu düzende, bu derlemede var.</li>
+      <li><strong>Gerçek hesaplanan veri</strong> — bu sayıyı hesaplayan bir kod var.</li>
+      <li>
+        <strong>Gerçek ürün davranışı</strong> — bu cümle kodun yaptığını
+        <em>aynı kapsamda</em> anlatıyor.
+      </li>
+      <li>
+        <strong>Geçerli pazarlama çerçevesi</strong> — olgusal veya sonuç iddiası içermeyen fayda
+        cümlesi.
+      </li>
+    </ol>
+    <p>
+      Dördüne de izlenemeyen her şey uydurmadır ve ne kadar iyi görünürse görünsün çıkarılır.
+      <strong>Kapsamı da kontrol edin, yalnız varlığı değil:</strong> “kamera karesi yüklenmez”
+      gerçek davranışa izlenir, “verilerin cihazında kalır” hiçbir şeye izlenmez.
+    </p>
+  </section>
+
+  <section id="gercekler">
+    <h2>1 · Doğrulanmış ürün gerçekleri</h2>
+    <p>
+      Aşağıdaki her satır 10 Ağustos 2026'da ölçüldü.
+      <strong>Komutlarda ve mağaza metninde kullanılabilecek sayılar yalnız bunlardır.</strong>
+    </p>
+
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>Gerçek</th>
+            <th>Değer</th>
+            <th>Kanıt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Soru bankası</td>
+            <td><strong>1.605 soru</strong> (sürüm <code>bd9b94049853b0fc</code>)</td>
+            <td>canlı <code>GET /api/mobile/question-bank</code></td>
+          </tr>
+          <tr>
+            <td>Konu dağılımı</td>
+            <td>trafik 396 · motor 329 · pratik 305 · ilkyardım 303 · adab 272</td>
+            <td>aynı yanıt</td>
+          </tr>
+          <tr>
+            <td>Zorluk dağılımı</td>
+            <td>kolay 557 · orta 767 · zor 281</td>
+            <td>aynı yanıt</td>
+          </tr>
+          <tr>
+            <td>Sınav biçimi</td>
+            <td><strong>50 soru · 45 dakika · 35 doğru geçme</strong> · 23/12/9/6</td>
+            <td>aynı yanıt, <code>blueprint</code></td>
+          </tr>
+          <tr>
+            <td>Ders sayısı</td>
+            <td><strong>29 ders</strong> · 19'u çizili şema taşıyor · 3'ü premium</td>
+            <td>canlı <code>GET /api/mobile/content-snapshot</code></td>
+          </tr>
+          <tr>
+            <td>Trafik işareti</td>
+            <td>
+              <strong>121</strong> (yasak 35 · tehlike 29 · bilgi 21 · mecburiyet 14 · park 6 ·
+              öncelik 6 · otoyol 5 · geçici 5)
+            </td>
+            <td>aynı yanıt</td>
+          </tr>
+          <tr>
+            <td>Araç parçası</td>
+            <td><strong>112</strong> (kabin 45 · dış 27 · motor bölmesi 22 · muayene 18)</td>
+            <td>aynı yanıt</td>
+          </tr>
+          <tr>
+            <td>Gösterge ikaz ışığı</td>
+            <td><strong>60</strong></td>
+            <td><code>lib/core/dash_assets.dart</code></td>
+          </tr>
+          <tr>
+            <td>Mekanik görsel varlığı</td>
+            <td><strong>101</strong></td>
+            <td><code>lib/core/mech_assets.dart</code></td>
+          </tr>
+          <tr>
+            <td>Video</td>
+            <td><strong>7 yayında</strong> (10–14 sn kısa manevra klipleri) + 2 planlandı</td>
+            <td>canlı snapshot</td>
+          </tr>
+          <tr>
+            <td>Görsel sorular</td>
+            <td>Cihazda, bu kataloglardan üretilir</td>
+            <td><code>lib/domain/practice/visual_questions.dart</code></td>
+          </tr>
+          <tr>
+            <td>Ehliyet sınıfları</td>
+            <td><strong>B (Otomobil) · A (Motosiklet) · D (Otobüs)</strong></td>
+            <td><code>lib/domain/onboarding/study_profile.dart:11-15</code></td>
+          </tr>
+          <tr>
+            <td>Gezinme sekmeleri</td>
+            <td><strong>Ana Sayfa · Öğren · Pratik · AI Koç · Topluluk · Profil</strong></td>
+            <td><code>lib/app/shell.dart:22-33</code></td>
+          </tr>
+          <tr>
+            <td>Sınav Arşivi</td>
+            <td>6 kategori · <strong>ilk 3 sınav ücretsiz</strong> (katalog genelinde)</td>
+            <td><code>lib/domain/practice/exam_library.dart:25-44,119,144</code></td>
+          </tr>
+          <tr>
+            <td>Düello</td>
+            <td>
+              10 soru × 20 sn · <strong>belirlenimci yapay zekâ rakip</strong> · günde 5 ücretsiz
+            </td>
+            <td><code>lib/domain/duel/duel.dart:57-116</code>, <code>duel_energy.dart:52</code></td>
+          </tr>
+          <tr>
+            <td>AI Koç</td>
+            <td>Sunucu tarafı LLM · <em>grounded</em> bayrağı + kaynaklar + kalıcı uyarı</td>
+            <td>
+              <code>lib/data/coach/coach_api.dart:68</code>, <code>coach_screen.dart:300</code>
+            </td>
+          </tr>
+          <tr>
+            <td>Koç kartları / dürtmeler</td>
+            <td><strong>Cihaz içi sezgisel</strong> — LLM değil</td>
+            <td><code>lib/domain/coach/coach_insights.dart</code></td>
+          </tr>
+          <tr>
+            <td>Hesap gerekliliği</td>
+            <td><strong>Yok.</strong> “The app never gates on auth — guests use everything.”</td>
+            <td><code>lib/domain/auth/auth_controller.dart:29</code></td>
+          </tr>
+          <tr>
+            <td>Çevrimdışı</td>
+            <td>Önce yerel önbellek, sonra ağ (ETag)</td>
+            <td><code>lib/data/content/content_repository.dart:12</code></td>
+          </tr>
+          <tr>
+            <td>İzinler</td>
+            <td>Yalnız <code>POST_NOTIFICATIONS</code> + <code>RECEIVE_BOOT_COMPLETED</code></td>
+            <td><code>AndroidManifest.xml</code></td>
+          </tr>
+          <tr>
+            <td>Reklam</td>
+            <td><strong>Yok.</strong> Reklam SDK'sı yok, reklam kimliği okunmuyor</td>
+            <td><code>pubspec.yaml</code>, <code>analytics.dart:16-20</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout c-danger">
+      <span class="tag">Asla kullanılmayacak sayılar</span>
+      <p>
+        <code>10.000+</code> soru · <code>19 ders</code> (bu, şema taşıyan ders sayısıdır, toplam
+        29) · <code>399 TL</code> · <code>%100</code> herhangi bir şey ·
+        <code>Binlerce kullanıcı</code> · <code>7/24 destek</code> · <code>%98 başarı</code> ·
+        herhangi bir yıldız/indirme/sıralama sayısı.
+      </p>
+    </div>
+
+    <div class="callout c-warn">
+      <span class="tag">Kullanılmayacak özellikler — mevcut ama gösterilmemeli</span>
+      <ul style="margin-bottom: 0">
+        <li>
+          <strong>Sesli anlatım</strong> — soyutlama sevk edildi, ses dosyası yok. Oynatıcı doğru
+          biçimde hiçbir şey göstermiyor.
+        </li>
+        <li>
+          <strong
+            ><code>quick</code> / <code>random</code> / <code>adaptive</code> sınav modları</strong
+          >
+          — kodda çağrılabilir, arayüzde giriş noktası yok.
+        </li>
+        <li>
+          <strong>Eksik 18 işaret piktogramı</strong> — işaret galerisi ekran görüntüsü, tam
+          çizilmiş bir bölgeden alınmalı.
+        </li>
+        <li>
+          <strong>2 <code>planned</code> video</strong> — <code>src: null</code>. Dokuz izlenebilir
+          video ima edilemez.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="sistem">
+    <h2>2 · Tasarım sistemi</h2>
+    <p>
+      Referans olarak FormAI'nin ASO seti incelendi.
+      <strong>Kopyalanan şey estetik değil, ilkelerdir:</strong> katı tipografik hiyerarşi, telefonu
+      kuşatan cam kartlar, her karede aynı alt güven şeridi, tek bir baskın vurgu rengi, ve — en
+      önemlisi —
+      <strong
+        >pazarlama metninin telefonun DIŞINDA, gerçek arayüzün telefonun İÇİNDE kalması.</strong
+      >
+      Ehliyet Akademi kendi kimliğiyle kalır: FormAI mor, Ehliyet Akademi <strong>turkuaz</strong>.
+    </p>
+
+    <h3>Palet — uygulamanın kendi jetonlarından</h3>
+    <p>
+      Renkler tahmin edilmedi; <code>apps/mobile/lib/core/theme/tokens.dart:80-98</code> (koyu tema)
+      dosyasından alındı.
+    </p>
+    <div class="sw">
+      <div>
+        <i style="background: #050b16"></i><span><b>Zemin</b>#050B16</span>
+      </div>
+      <div>
+        <i style="background: #0b1523"></i><span><b>Yüzey</b>#0B1523</span>
+      </div>
+      <div>
+        <i style="background: #0f1c2e"></i><span><b>Yüzey 2</b>#0F1C2E</span>
+      </div>
+      <div>
+        <i style="background: #14243a"></i><span><b>Yüzey 3</b>#14243A</span>
+      </div>
+      <div>
+        <i style="background: #1c2c44"></i><span><b>Kenarlık</b>#1C2C44</span>
+      </div>
+      <div>
+        <i style="background: #2dd4bf"></i><span><b>Birincil</b>#2DD4BF</span>
+      </div>
+      <div>
+        <i style="background: #5eead4"></i><span><b>Birincil 700</b>#5EEAD4</span>
+      </div>
+      <div>
+        <i style="background: #f5a623"></i><span><b>Vurgu</b>#F5A623</span>
+      </div>
+      <div>
+        <i style="background: #34d399"></i><span><b>Yeşil</b>#34D399</span>
+      </div>
+      <div>
+        <i style="background: #e8eef7"></i><span><b>Metin</b>#E8EEF7</span>
+      </div>
+      <div>
+        <i style="background: #9fb0c6"></i><span><b>Metin 2</b>#9FB0C6</span>
+      </div>
+      <div>
+        <i style="background: #6d7f97"></i><span><b>Metin 3</b>#6D7F97</span>
+      </div>
+    </div>
+
+    <div class="callout c-info">
+      <span class="tag">Renk disiplini</span>
+      <p>
+        <strong>Turkuaz baskın.</strong> Amber <code>#F5A623</code> yalnız premium/ödül/seri için;
+        yeşil <code>#34D399</code> yalnız “doğru cevap” ve “içeriğe dayalı” rozeti için. Üç vurgu
+        rengini aynı karede eşit ağırlıkta kullanmak, seti bir arada tutan tek şeyi bozar.
+      </p>
+    </div>
+
+    <h3>Tuval ve ızgara — 1080×1920</h3>
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>Bölge</th>
+            <th>Y aralığı</th>
+            <th>İçerik</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Güvenli kenar</td>
+            <td>her kenarda 56 px</td>
+            <td>Hiçbir şey buraya girmez</td>
+          </tr>
+          <tr>
+            <td>Üst etiket (pill)</td>
+            <td>72 – 126</td>
+            <td>Turkuaz konturlu hap, büyük harf, harf aralıklı</td>
+          </tr>
+          <tr>
+            <td>Başlık</td>
+            <td>156 – 380</td>
+            <td>2 satır, ~104 px, BÜYÜK HARF, 1. satır beyaz / 2. satır turkuaz</td>
+          </tr>
+          <tr>
+            <td>Destek metni</td>
+            <td>400 – 490</td>
+            <td>1–2 satır, ~34 px, <code>#9FB0C6</code></td>
+          </tr>
+          <tr>
+            <td>Üç sütunlu ikon şeridi <em>(kullanılan karelerde)</em></td>
+            <td>520 – 660</td>
+            <td>İkon + kısa etiket + tek satır açıklama</td>
+          </tr>
+          <tr>
+            <td>Telefon maketi</td>
+            <td>~690 – 1670</td>
+            <td>Ekran alanı ≈ 470×1010 px</td>
+          </tr>
+          <tr>
+            <td>Yan kartlar</td>
+            <td>telefonla aynı bant</td>
+            <td>Sol x 56–330 · sağ x 750–1024</td>
+          </tr>
+          <tr>
+            <td>Alt güven şeridi</td>
+            <td>1700 – 1864</td>
+            <td>Tam genişlik panel, 3 öge, her karede aynı yapı</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      <strong>Bu değerler hedef banttır, kesin koordinat değil.</strong> Bindirme aşaması, üretilen
+      plakadaki gerçek boş bölgeleri <em>ölçer</em> ve metni ölçülen kutuya oturtur — koordinat
+      tahmin edilmez (bkz. <a href="#pipeline">CLI aşaması</a>).
+    </p>
+
+    <h3>Tipografi</h3>
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>Rol</th>
+            <th>Boyut</th>
+            <th>Ağırlık / biçim</th>
+            <th>Renk</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Başlık satır 1</td>
+            <td>104 px</td>
+            <td>800–900, BÜYÜK HARF, sıkı (-2%)</td>
+            <td><code>#E8EEF7</code></td>
+          </tr>
+          <tr>
+            <td>Başlık satır 2</td>
+            <td>104 px</td>
+            <td>800–900, BÜYÜK HARF, nokta ile biter</td>
+            <td><code>#2DD4BF</code></td>
+          </tr>
+          <tr>
+            <td>Üst etiket</td>
+            <td>26 px</td>
+            <td>700, BÜYÜK HARF, +14% harf aralığı</td>
+            <td><code>#2DD4BF</code></td>
+          </tr>
+          <tr>
+            <td>Destek metni</td>
+            <td>34 px</td>
+            <td>400–500</td>
+            <td><code>#9FB0C6</code></td>
+          </tr>
+          <tr>
+            <td>Kart başlığı</td>
+            <td>30 px</td>
+            <td>700, BÜYÜK HARF</td>
+            <td><code>#E8EEF7</code></td>
+          </tr>
+          <tr>
+            <td>Kart gövdesi</td>
+            <td>26 px</td>
+            <td>400</td>
+            <td><code>#9FB0C6</code></td>
+          </tr>
+          <tr>
+            <td>Güven şeridi</td>
+            <td>28 / 24 px</td>
+            <td>700 / 400</td>
+            <td><code>#E8EEF7</code> / <code>#6D7F97</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      <strong>Yazı tipi:</strong> tam Türkçe kapsamı olan bir gerçek (Inter, Manrope, Archivo veya
+      Barlow). Bindirmeden önce <code>ı İ ş Ş ğ Ğ ç Ç ö Ö ü Ü</code> karakterlerinin hepsinin fontta
+      bulunduğu doğrulanır.
+    </p>
+
+    <h3>Tekrar eden ögeler</h3>
+    <div class="grid2">
+      <div class="box">
+        <h4>Telefon maketi</h4>
+        <p>
+          Modern, çerçevesiz <strong>Android</strong> telefon. Simetrik ince çerçeveler,
+          <strong>ortada küçük delikli (punch-hole) ön kamera</strong>. Hafif 3/4 perspektif (Y
+          ekseninde 6–10°). Cihaz filosuyla uyumlu: Redmi Note 11R, 1080×2408.
+          <strong>Çentik yok, Dynamic Island yok, iOS durum çubuğu yok, akıllı saat yok.</strong>
+        </p>
+      </div>
+      <div class="box">
+        <h4>Cam kartlar</h4>
+        <p>
+          Dolgu <code>#0B1523</code> ~%92 opaklık, 1 px <code>#1C2C44</code> kenarlık, 28 px köşe
+          yarıçapı, çok yumuşak dış gölge. Kartın içinde <strong>yalnız</strong> ikon + başlık + tek
+          cümle yer alır.
+        </p>
+      </div>
+      <div class="box">
+        <h4>İkonlar</h4>
+        <p>
+          Çizgi (stroke) ikonlar, 3 px kalınlık, yuvarlatılmış uçlar, turkuaz. Dolu ikon yok, 3B
+          ikon yok, degrade ikon yok. Emoji yok.
+        </p>
+      </div>
+      <div class="box">
+        <h4>Alt güven şeridi</h4>
+        <p>
+          Sekiz karede de aynı yapı: tam genişlik panel, üç eşit sütun, ikon + kalın etiket + tek
+          satır. İçerik kareye göre değişir; <strong>yapı değişmez</strong>. Seti bir arada tutan
+          asıl öge budur.
+        </p>
+      </div>
+      <div class="box">
+        <h4>Baykuş maskot</h4>
+        <p>
+          Marka karakteri: kep takan, direksiyon tutan, “EHLİYET AKADEMİ” yaka kartlı turkuaz
+          baykuş. <strong>Yalnız 01 ve 05'te</strong> görünür. Açıkça çizgi karakter olması, AI'ın
+          sentetik görünmesi gerekliliğini de karşılar.
+        </p>
+      </div>
+      <div class="box">
+        <h4>Arka plan</h4>
+        <p>
+          <code>#050B16</code> üzerine telefonun arkasından yükselen geniş turkuaz radyal parıltı.
+          Alt üçte birde çok soluk bir asfalt/perspektif ızgarası ipucu —
+          <strong>bilim kurgu neon ağ değil.</strong> Parçacık yok, lens parlaması yok, bokeh yok.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="isimlendirme">
+    <h2>3 · Dosya düzeni ve isimlendirme</h2>
+    <p>
+      <code>apps/ASO_IMAGE/</code> zaten <code>.gitignore</code>'da (satır 42). Bu, FormAI'nin
+      <em>“betikler sürümlenir, ikili dosyalar sürümlenmez”</em> ayrımıyla aynıdır ve korunur.
+      Mevcut düz dosyalar (<code>001.png</code>…<code>005.png</code>)
+      <strong>kullanılmayacak</strong>; yeni yapı onların yanına kurulur.
+    </p>
+
+    <div class="cb">
+      <div class="cb-head">
+        <span class="cb-title">Dizin yapısı</span>
+        <button class="copy" data-t="tree">Kopyala</button>
+      </div>
+      <pre id="tree">
+apps/ASO_IMAGE/
+├── tr-TR/
+│   ├── SOURCE/                    ← GPT çıktısı. ASLA DEĞİŞTİRİLMEZ.
+│   │   ├── 01-hero.png
+│   │   ├── 02-esinav.png
+│   │   ├── 03-soru-bankasi.png
+│   │   ├── 04-sinav-arsivi.png
+│   │   ├── 05-ai-koc.png
+│   │   ├── 06-dersler.png
+│   │   ├── 07-ilerleme.png
+│   │   ├── 08-cevrimdisi.png
+│   │   ├── feature-graphic.png
+│   │   └── icon-512.png
+│   │
+│   ├── SCREENS/                   ← 1.0.0+5 derlemesinden TAZE cihaz yakalamaları
+│   │   ├── home.png
+│   │   ├── exam-runner.png
+│   │   ├── practice-explain.png
+│   │   ├── exam-library.png
+│   │   ├── coach-chat.png
+│   │   ├── lesson-figure.png
+│   │   ├── progress.png
+│   │   └── offline-profile.png
+│   │
+│   └── FINAL/                     ← YÜKLENECEK SET. Boru hattı üretir.
+│       ├── phone-01-tr-TR.png     … phone-08-tr-TR.png
+│       ├── feature-graphic-1024x500.png
+│       └── app-icon-512.png
+│
+└── (001–005.png — ESKİ, KULLANILMAYACAK)</pre>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>Katman</th>
+            <th>Kim üretir</th>
+            <th>Değiştirilebilir mi</th>
+            <th>Play'e yüklenir mi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>SOURCE/</code></td>
+            <td>GPT görsel üretimi (bu kütüphanedeki komutlar)</td>
+            <td><strong>Hayır</strong> — salt okunur kaynak</td>
+            <td>Hayır</td>
+          </tr>
+          <tr>
+            <td><code>SCREENS/</code></td>
+            <td><code>adb exec-out screencap -p</code>, 1.0.0+5 derlemesi</td>
+            <td>Hayır</td>
+            <td>Hayır</td>
+          </tr>
+          <tr>
+            <td><code>FINAL/</code></td>
+            <td>Üretim sonrası CLI boru hattı</td>
+            <td>Her çalıştırmada sıfırdan yeniden üretilir</td>
+            <td><strong>Evet</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      <strong>Play yükleme sırası = dosya adı sırası.</strong> <code>phone-01</code> birinci yuvaya,
+      <code>phone-08</code> sekizinciye gider. Yuva 1–3 arama sonuçlarında görünür.
+    </p>
+
+    <div class="callout c-warn">
+      <span class="tag">Taze ekran görüntüsü zorunlu</span>
+      <p>
+        <code>apps/assets/</code> altındaki mevcut uygulama görüntüleri
+        <strong>24 Temmuz</strong> tarihli ve güncel arayüzden geride. Örnek:
+        <code>home-page-1.png</code> içinde <code>Bugünküi plan</code> yazıyor; sevk edilen dize
+        <code>Bugünkü plan</code> (<code>home_screen.dart:218</code>). Temmuz yakalamasını
+        bindirmek, uygulamanın çoktan düzelttiği bir yazım hatasını mağazaya taşır.
+        <strong>SCREENS/ içine yalnız 1.0.0+5 derlemesinden yeni yakalama konur.</strong>
+      </p>
+    </div>
+  </section>
+
+  <section id="strateji">
+    <h2>4 · Ekran görüntüsü stratejisi ve sıralama</h2>
+    <p>
+      <strong>Sekiz ekran görüntüsü.</strong> Play'in izin verdiği azami sayı; tanıtım uygunluğu
+      için gereken asgari dört fazlasıyla aşılır ve ürünün sekiz ayrı gerçek gücü var. Sıralama
+      dönüşüm için optimize edildi: <strong>yuva 1–3 arama sonuçlarında görünür</strong>,
+      dolayısıyla “bu ne”, “sınav” ve “içerik hacmi” oraya konur.
+    </p>
+
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Dosya</th>
+            <th>Amaç</th>
+            <th>2–3 saniyede anlaşılması gereken</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>01</strong></td>
+            <td><code>phone-01-tr-TR.png</code></td>
+            <td>Hero / temel değer</td>
+            <td>
+              “Bu, ehliyet sınavına hazırlayan bir uygulama ve hazır olup olmadığımı ölçüyor.”
+            </td>
+          </tr>
+          <tr>
+            <td><strong>02</strong></td>
+            <td><code>phone-02-tr-TR.png</code></td>
+            <td>Gerçek sınav deneyimi</td>
+            <td>“Gerçek e-Sınav biçiminde deneme çözebiliyorum: 50 soru, 45 dakika.”</td>
+          </tr>
+          <tr>
+            <td><strong>03</strong></td>
+            <td><code>phone-03-tr-TR.png</code></td>
+            <td>Soru bankası + açıklamalar</td>
+            <td>“1.605 soru var ve yanlışımın nedenini anlatıyor.”</td>
+          </tr>
+          <tr>
+            <td><strong>04</strong></td>
+            <td><code>phone-04-tr-TR.png</code></td>
+            <td>Sınav Arşivi + ücretsiz katman</td>
+            <td>“Her gün yeni sınav var ve üçünü ücretsiz çözebiliyorum.”</td>
+          </tr>
+          <tr>
+            <td><strong>05</strong></td>
+            <td><code>phone-05-tr-TR.png</code></td>
+            <td>AI Koç</td>
+            <td>“Takıldığım yeri sorabiliyorum, cevap uygulamanın içeriğine dayanıyor.”</td>
+          </tr>
+          <tr>
+            <td><strong>06</strong></td>
+            <td><code>phone-06-tr-TR.png</code></td>
+            <td>Dersler + görsel öğrenme</td>
+            <td>“29 ders, çizilmiş şemalar, 121 işaret — ezber değil anlama.”</td>
+          </tr>
+          <tr>
+            <td><strong>07</strong></td>
+            <td><code>phone-07-tr-TR.png</code></td>
+            <td>İlerleme, rozetler, Düello</td>
+            <td>“Gelişimimi görüyorum ve devam etmem için bir sebep var.”</td>
+          </tr>
+          <tr>
+            <td><strong>08</strong></td>
+            <td><code>phone-08-tr-TR.png</code></td>
+            <td>Çevrimdışı · hesapsız · dürüst kapanış</td>
+            <td>“Hesap açmadan, internetsiz kullanabiliyorum. Reklam yok.”</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Neden bu sıra</h3>
+    <ul>
+      <li>
+        <strong>01–03 arama sonucudur.</strong> Türkiye'de bu kategoride arama niyeti sırasıyla
+        “deneme sınavı”, “güncel sorular” ve “e-sınav” etrafında toplanır; üçü de ilk üç yuvada.
+      </li>
+      <li>
+        <strong>04 ücretsiz katmanı taşır.</strong> Dönüşümün en yüksek olduğu nokta, kullanıcının
+        “bedavaya ne alıyorum” sorusunun cevabını gördüğü andır — ama bu, ürünün ne olduğu
+        anlaşılmadan işe yaramaz, bu yüzden dörtte.
+      </li>
+      <li>
+        <strong>05 ve 06 farklılaştırıcıdır.</strong> Rakiplerin dürüstçe iddia edemeyeceği iki şey:
+        içeriğe dayalı AI ve cihazda çizilen şemalar.
+      </li>
+      <li>
+        <strong>07 elde tutmadır</strong>, 08 <strong>güven</strong>. Sekizinci kare bir CTA değil,
+        itiraz giderme karesidir: hesap gerekmiyor, internet gerekmiyor, reklam yok.
+      </li>
+      <li>
+        <strong>Düello ayrı yuva almadı.</strong> Rakip belirlenimci bir yapay zekâdır; kendi
+        karesine konsaydı canlı çok oyunculu ima riski doğardı. 07'de tek kart olarak, açıkça “yapay
+        zekâ rakip” yazısıyla yer alır.
+      </li>
+    </ul>
+
+    <div class="callout c-info">
+      <span class="tag">Metin yoğunluğu tavanı</span>
+      <p>
+        Kare başına <strong>en fazla 14 ayrı metin ögesi</strong> (üst etiket + 2 başlık satırı + 2
+        destek satırı + en çok 6 kart satırı + 3 güven şeridi ögesi). FormAI'nin en kötü karesinde
+        24 öge vardı ve karusel küçük resminde hiçbiri okunmuyordu. Bu tavan, komutların içinde
+        yazılıdır.
+      </p>
+    </div>
+  </section>
+
+  <section id="nasil">
+    <h2>5 · Her komut nasıl kullanılır</h2>
+    <ol>
+      <li><strong>Komutu kopyala</strong> (her kartta “Komutu kopyala” düğmesi).</li>
+      <li><strong>GPT görsel üretimine yapıştır</strong>, 1080×1920 dikey iste.</li>
+      <li>
+        Çıkan görselde <strong>hiçbir metin olmamalı</strong> ve telefon ekranı
+        <strong>düz, boş bir dikdörtgen</strong> olmalı. Metin çıktıysa veya ekranda uydurma arayüz
+        varsa <strong>yeniden üret</strong> — düzeltmeye çalışma.
+      </li>
+      <li><code>apps/ASO_IMAGE/tr-TR/SOURCE/&lt;dosya adı&gt;</code> olarak kaydet.</li>
+      <li>
+        Sekizi de bittiğinde <a href="#pipeline">üretim sonrası CLI aşamasını</a> çalıştır — Türkçe
+        tipografi ve gerçek ekran görüntüsü orada bindirilir.
+      </li>
+    </ol>
+    <div class="callout c-ok">
+      <span class="tag">Neden metinsiz plaka</span>
+      <p>
+        Üreteç Türkçe aksanları sessizce bozar ve boş bıraktığın her yeri kategori ortalamasından
+        doldurur — uydurma sekme, uydurma metrik, uydurma kullanıcı. Metni ve arayüzü sonradan
+        bindirmek bu iki hata sınıfını da <strong>yapısal olarak</strong> imkânsız kılar; komuta
+        “lütfen uydurma” yazmak kılmaz.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ 01 ══════════════════════════════ -->
+  <section id="a01">
+    <article class="asset">
+      <div class="asset-head">
+        <div class="slot">01</div>
+        <div class="t">
+          <h3>Hero — Sınava hazır mısın, ölçelim</h3>
+          <p class="sub">
+            Arama sonucunda görünen ilk kare. Ürünün ne olduğunu ve tek cümlelik vaadini taşır.
+          </p>
+        </div>
+      </div>
+      <div class="asset-body">
+        <dl class="kv">
+          <dt>Pazarlama amacı</dt>
+          <dd>
+            “Bu bir ehliyet sınavı hazırlık uygulaması ve
+            <strong>hazır olup olmadığımı ölçüyor</strong>” — kategoriyi ve farkı aynı anda kurar.
+          </dd>
+          <dt>Başlık</dt>
+          <dd><code>SINAVA HAZIR MISIN?</code> / <code>ÖLÇELİM.</code></dd>
+          <dt>Destek metni</dt>
+          <dd>
+            <code
+              >1.605 soru, 29 ders ve gerçek sınav biçimi — hazırlık puanın her soruda
+              güncellenir.</code
+            >
+          </dd>
+          <dt>Üst etiket</dt>
+          <dd><code>A · B · D SINIFI · e-SINAV</code></dd>
+          <dt>Gerçek ekran</dt>
+          <dd>
+            <strong>Ana Sayfa</strong> — hazırlık halkası, AI Koç kartı, bugünkü plan.
+            <code>SCREENS/home.png</code><br /><em>Sıfır durumu OLMAZ:</em> yakalamadan önce en az
+            60 soru çözülmüş bir profil kullanılmalı.
+          </dd>
+          <dt>Maskot</dt>
+          <dd>Evet — telefonun sağ üstünde, kısmen kartların arkasında</dd>
+          <dt>Çıktı dosyası</dt>
+          <dd><code>apps/ASO_IMAGE/tr-TR/SOURCE/01-hero.png</code></dd>
+          <dt>Nihai dosya</dt>
+          <dd><code>apps/ASO_IMAGE/tr-TR/FINAL/phone-01-tr-TR.png</code></dd>
+          <dt>Boyut</dt>
+          <dd>1080 × 1920 px · 9:16 · PNG · alfa yok</dd>
+          <dt>Metin</dt>
+          <dd><strong>GPT üretmez.</strong> Tüm Türkçe metin CLI aşamasında bindirilir.</dd>
+        </dl>
+
+        <h4>Yan kartlar (bindirilecek içerik)</h4>
+        <div class="tw">
+          <table>
+            <thead>
+              <tr>
+                <th>Konum</th>
+                <th>Başlık</th>
+                <th>Gövde</th>
+                <th>İzlenebilirlik</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sol 1</td>
+                <td>HAZIRLIK PUANI</td>
+                <td>Her çözdüğün soru puanı günceller.</td>
+                <td><code>readiness_ring.dart</code>, <code>progress</code> alanı</td>
+              </tr>
+              <tr>
+                <td>Sol 2</td>
+                <td>ZAYIF KONU</td>
+                <td>Nerede takıldığını konu konu gösterir.</td>
+                <td><code>coach_insights.dart</code></td>
+              </tr>
+              <tr>
+                <td>Sol 3</td>
+                <td>GÜNLÜK PLAN</td>
+                <td>Sınavına kalan süreye göre kurulur.</td>
+                <td><code>study_profile.dart</code> · <code>kDailyQuestionTarget</code></td>
+              </tr>
+              <tr>
+                <td>Sağ 1</td>
+                <td>1.605 SORU</td>
+                <td>trafik, ilk yardım, motor, adab, pratik</td>
+                <td>canlı <code>question-bank</code></td>
+              </tr>
+              <tr>
+                <td>Sağ 2</td>
+                <td>29 DERS</td>
+                <td>19'u çizili şema ile anlatır.</td>
+                <td>canlı <code>content-snapshot</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Alt güven şeridi</h4>
+        <p>
+          <code>HESAP GEREKMEZ</code> · <em>Kayıt olmadan tamamı kullanılır.</em> —
+          <code>ÇEVRİMDIŞI ÇALIŞIR</code> · <em>İçerik bir kez iner, sonra internetsiz.</em> —
+          <code>REKLAM YOK</code> · <em>Hiçbir reklam ağı yok.</em>
+        </p>
+
+        <div class="cb">
+          <div class="cb-head">
+            <span class="cb-title">GPT görsel komutu — 01 Hero</span>
+            <button class="copy" data-t="p01">Komutu kopyala</button>
+          </div>
+          <pre id="p01">
+Create a premium vertical marketing background plate for a Google Play (Android)
+store screenshot. This is an ARTWORK PLATE ONLY — all text and the phone's screen
+content are composited in afterwards by a separate tool.
+
+CANVAS
+  Exactly 1080 x 1920 pixels, 9:16 vertical portrait. Flat 2D marketing composition.
+
+CRITICAL — NO TEXT ANYWHERE
+  Render ZERO letters, words, numbers, digits, logos, wordmarks or glyphs of any
+  kind, in any language, anywhere in the image — including inside the phone, on
+  cards, on badges and in the background. Any text at all is a failed output.
+
+DEVICE
+  One modern bezel-less ANDROID smartphone, standing upright, centred horizontally,
+  rotated about 8 degrees around the vertical axis so the right edge recedes
+  slightly. Symmetric thin dark bezels, softly rounded corners, a small CENTRED
+  PUNCH-HOLE front camera at the top of the screen, a subtle brushed dark metal
+  side rail with two small volume keys and one power key on the right edge.
+  FORBIDDEN: notch, pill-shaped cutout, Dynamic Island, iOS status bar, Apple
+  device of any kind, iPhone silhouette, side action button, smartwatch, earbuds,
+  tablet, laptop, any second device.
+
+PHONE SCREEN — MUST BE EMPTY
+  The screen area is a COMPLETELY FLAT, UNIFORM, FEATURELESS rectangle filled with
+  solid #0B1523. No user interface, no icons, no cards, no charts, no status bar,
+  no navigation bar, no text, no mockup content, no reflections, no glare, no
+  gradient and no texture across the screen face. Treat it as a blank placeholder
+  that will be replaced. Only the glass RIM may carry a faint 1-2 px highlight.
+  The screen must occupy roughly 470 x 1010 pixels of the canvas, positioned
+  between y=690 and y=1670.
+
+COMPOSITION, top to bottom
+  y 0-660    Empty background. Reserved for a headline block. Keep it visually
+             quiet: no cards, no icons, no objects, no bright shapes here.
+  y 690-1670 The phone, centred.
+  Left column, x 56-330, within the phone band: THREE stacked empty glass cards.
+  Right column, x 750-1024, within the phone band: TWO stacked empty glass cards.
+  y 1700-1864 ONE full-width empty glass panel spanning x 56 to x 1024, divided
+             into three equal compartments by two thin 1px vertical dividers.
+
+GLASS CARDS — EMPTY CONTAINERS
+  Each card: fill #0B1523 at about 92% opacity over the background glow, a crisp
+  1px #1C2C44 border, 28px corner radius, and a very soft ambient shadow.
+  Cards are EMPTY — no icons, no shapes, no text, no placeholder lines inside
+  them. They are containers only. Left cards approx 274 x 250 px each with 28px
+  gaps. Right cards approx 274 x 300 px each with 28px gaps.
+
+MASCOT
+  A friendly stylised CARTOON OWL character, clearly illustrated and clearly not
+  a real animal photograph, in teal #2DD4BF plumage with a cream face, large round
+  dark-rimmed glasses and a black graduation cap. Place it in the upper right
+  region around x 760-1010, y 470-720, at roughly 260px tall, partially overlapped
+  by the top-right glass card so it sits behind the card edge. It must not overlap
+  the phone screen and must not carry any text, badge lettering or lanyard writing.
+
+COLOR AND LIGHT
+  Background base #050B16. A broad, soft radial teal glow (#2DD4BF at low opacity,
+  falling off to nothing) centred behind the phone at roughly x=540, y=1050,
+  reaching about 60% of the canvas width. A second much fainter teal rim light
+  along the phone's left edge. In the bottom fifth, a very faint suggestion of an
+  asphalt road surface receding in perspective — barely visible, low contrast,
+  no lane markings, no signs, no vehicles. Overall mood: dark, calm, premium,
+  high-end education product. Deep blacks, clean falloff.
+
+FORBIDDEN VISUAL ELEMENTS
+  No neon wireframe grids, no glowing circuit patterns, no particle sparkles, no
+  lens flares, no bokeh, no light streaks, no hexagon meshes, no data-visualisation
+  overlays, no floating 3D icons, no holograms, no photographic humans, no faces,
+  no hands, no traffic signs, no cars, no road markings, no charts, no graphs,
+  no stars, no rating symbols, no app-store badges, no Google logos, no drawn
+  buttons that look like install buttons.
+
+OUTPUT
+  1080x1920 PNG, sharp, no border, no rounded canvas corners, no drop shadow on
+  the canvas itself, no watermark, no signature, no transparency.</pre>
+        </div>
+
+        <div class="callout c-danger">
+          <span class="tag">Bu karede asla görünmeyecekler</span>
+          <p>
+            Herhangi bir yazı · iPhone/çentik/Dynamic Island · <code>9:41</code> · telefon ekranında
+            herhangi bir arayüz · gerçek insan yüzü · <code>%100</code>, <code>MEB</code>,
+            <code>10.000+</code>, <code>7/24</code> · yıldız/puan/indirme sayısı · fiyat · Google
+            Play rozeti · sıfır durumlu istatistik.
+          </p>
+        </div>
+
+        <h4>Üretim sonrası kontrol listesi — 01</h4>
+        <ul class="check">
+          <li>Boyut tam 1080×1920, mod <code>RGB</code> (alfa yok), &lt; 8 MB</li>
+          <li>Görselde <strong>hiç</strong> metin yok (OCR ile doğrulanır)</li>
+          <li>Telefon Android: ortada delikli kamera, çentik/Dynamic Island yok</li>
+          <li>Telefon ekranı düz ve boş — bindirmeye hazır</li>
+          <li>Beş kart da boş; içlerinde şekil/ikon/çizgi yok</li>
+          <li>Baykuş çizgi karakter; fotogerçekçi hayvan/insan değil</li>
+          <li>Bindirme sonrası: başlık iki satır, alt satır turkuaz, nokta ile bitiyor</li>
+          <li>
+            Bindirme sonrası: <code>1.605</code> ve <code>29</code> sayıları canlı API ile eşleşiyor
+          </li>
+          <li>
+            Bindirme sonrası: telefonda <strong>gerçek</strong> Ana Sayfa görüntüsü, alt sekmelerde
+            altı sekme okunuyor
+          </li>
+          <li>Bindirme sonrası: hazırlık halkası sıfır değil</li>
+          <li>
+            Türkçe aksanlar %100 yakınlaştırmada tek tek doğrulandı: <code>ı İ ş ğ ç ö ü</code>
+          </li>
+          <li>Hiçbir öge kenardan 56 px'ten yakın değil</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <!-- ══════════════════════════════ 02 ══════════════════════════════ -->
+  <section id="a02">
+    <article class="asset">
+      <div class="asset-head">
+        <div class="slot">02</div>
+        <div class="t">
+          <h3>e-Sınav — 50 soru, 45 dakika</h3>
+          <p class="sub">Kategorideki en yüksek arama niyeti. Gerçek sınav biçimini kanıtlar.</p>
+        </div>
+      </div>
+      <div class="asset-body">
+        <dl class="kv">
+          <dt>Pazarlama amacı</dt>
+          <dd>
+            “Gerçek sınav gibi deneme çözebiliyorum” — biçim uyumunu
+            <strong>sayıyla</strong> kanıtlar, MEB iddiası kurmadan.
+          </dd>
+          <dt>Başlık</dt>
+          <dd><code>50 SORU.</code> / <code>45 DAKİKA.</code></dd>
+          <dt>Destek metni</dt>
+          <dd>
+            <code
+              >e-Sınav biçiminde tam deneme: 35 doğru geçme, geri sayan süre, sınav sonu
+              analizi.</code
+            >
+          </dd>
+          <dt>Üst etiket</dt>
+          <dd><code>DENEME SINAVI · GERÇEK BİÇİM</code></dd>
+          <dt>Gerçek ekran</dt>
+          <dd>
+            <strong>Sınav çalıştırıcı</strong> — üstte süre + soru sayacı, altta dört şık.
+            <code>SCREENS/exam-runner.png</code>
+          </dd>
+          <dt>Maskot</dt>
+          <dd>Hayır — bu kare ciddiyet karesi</dd>
+          <dt>Çıktı dosyası</dt>
+          <dd><code>apps/ASO_IMAGE/tr-TR/SOURCE/02-esinav.png</code></dd>
+          <dt>Nihai dosya</dt>
+          <dd><code>apps/ASO_IMAGE/tr-TR/FINAL/phone-02-tr-TR.png</code></dd>
+          <dt>Boyut</dt>
+          <dd>1080 × 1920 px · 9:16 · PNG · alfa yok</dd>
+          <dt>Metin</dt>
+          <dd><strong>GPT üretmez</strong> — CLI aşamasında bindirilir</dd>
+        </dl>
+
+        <div class="callout c-info">
+          <span class="tag">Tutarlılık kuralı — bu karenin tek durumu</span>
+          <p>
+            Bu varlık <strong>tek kullanıcının tek anını</strong> gösterir:
+            <code>soru 23 / 50 · kalan süre 26:14 · dağılım 23/12/9/6</code>. Bindirilen ekran
+            görüntüsü ve yan kartlardaki her sayı bununla uyumlu olmalı. FormAI'de aynı karede
+            “12/30 gün” ile “%60” yan yana durdu; %60, 12/30'un cevabı değil.
+          </p>
+        </div>
+
+        <h4>Yan kartlar (bindirilecek içerik)</h4>
+        <div class="tw">
+          <table>
+            <thead>
+              <tr>
+                <th>Konum</th>
+                <th>Başlık</th>
+                <th>Gövde</th>
+                <th>İzlenebilirlik</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sol 1</td>
+                <td>SÜRE BASKISI</td>
+                <td>45 dakika geri sayar, sınavdaki gibi.</td>
+                <td><code>blueprint.durationMinutes = 45</code></td>
+              </tr>
+              <tr>
+                <td>Sol 2</td>
+                <td>GEÇME EŞİĞİ</td>
+                <td>35 doğru — sonuç ekranı bunu gösterir.</td>
+                <td><code>blueprint.passCorrect = 35</code></td>
+              </tr>
+              <tr>
+                <td>Sol 3</td>
+                <td>RESMÎ DAĞILIM</td>
+                <td>Trafik 23 · İlk yardım 12 · Motor 9 · Adab 6</td>
+                <td><code>blueprint.distribution</code></td>
+              </tr>
+              <tr>
+                <td>Sağ 1</td>
+                <td>SINAV SONU ANALİZİ</td>
+                <td>Hangi konuda kaç yanlış, tek ekranda.</td>
+                <td><code>exam_v2.dart</code> · <code>ExamPlan</code></td>
+              </tr>
+              <tr>
+                <td>Sağ 2</td>
+                <td>YARIM KALIRSA</td>
+                <td>Sınav kaldığın yerden devam eder.</td>
+                <td><code>exam_runner_screen.dart</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Alt güven şeridi</h4>
+        <p>
+          <code>ZORLUK DENGELİ</code> · <em>Kolay, orta ve zor karışık gelir.</em> —
+          <code>ŞIKLAR KARIŞIR</code> · <em>Aynı sınavı ezberleyemezsin.</em> —
+          <code>ÇEVRİMDIŞI ÇÖZÜLÜR</code> · <em>İnternetsiz de sınava girilir.</em>
+        </p>
+
+        <div class="cb">
+          <div class="cb-head">
+            <span class="cb-title">GPT görsel komutu — 02 e-Sınav</span>
+            <button class="copy" data-t="p02">Komutu kopyala</button>
+          </div>
+          <pre id="p02">
+Create a premium vertical marketing background plate for a Google Play (Android)
+store screenshot. ARTWORK PLATE ONLY — all text and the phone's screen content are
+composited in afterwards by a separate tool.
+
+CANVAS
+  Exactly 1080 x 1920 pixels, 9:16 vertical portrait. Flat 2D marketing composition.
+
+CRITICAL — NO TEXT ANYWHERE
+  Render ZERO letters, words, numbers, digits, clock readouts, timers, logos or
+  glyphs of any kind, in any language, anywhere — including inside the phone and
+  on every card. Any text at all is a failed output. In particular do not draw a
+  countdown timer, a score, a percentage or a question counter.
+
+DEVICE
+  One modern bezel-less ANDROID smartphone, upright, positioned slightly LEFT of
+  centre (its centre at about x=470), rotated about 10 degrees around the vertical
+  axis so the right edge recedes. Symmetric thin dark bezels, small CENTRED
+  PUNCH-HOLE front camera, subtle dark metal side rail with two volume keys and
+  one power key.
+  FORBIDDEN: notch, pill cutout, Dynamic Island, iOS status bar, Apple device,
+  iPhone silhouette, side action button, smartwatch, any second device.
+
+PHONE SCREEN — MUST BE EMPTY
+  A COMPLETELY FLAT, UNIFORM, FEATURELESS rectangle of solid #0B1523. No interface,
+  no question, no answer options, no progress bar, no timer, no status bar, no
+  navigation bar, no text, no reflections, no glare, no gradient, no texture.
+  A blank placeholder to be replaced. Only the glass RIM may carry a faint 1-2px
+  highlight. Screen area roughly 470 x 1010 px between y=690 and y=1670.
+
+COMPOSITION, top to bottom
+  y 0-660     Empty background, visually quiet. Reserved for a headline block.
+              No cards, icons or objects here.
+  y 690-1670  The phone.
+  Left column, x 56-330: THREE stacked empty glass cards (approx 274 x 250 px).
+  Right column, x 750-1024: TWO stacked empty glass cards (approx 274 x 300 px).
+              Because the phone sits left of centre, the right column has more
+              breathing room — let the background glow read through there.
+  y 1700-1864 ONE full-width empty glass panel, x 56 to x 1024, split into three
+              equal compartments by two thin 1px vertical dividers.
+
+GLASS CARDS — EMPTY CONTAINERS
+  Fill #0B1523 at about 92% opacity, crisp 1px #1C2C44 border, 28px radius, very
+  soft ambient shadow. Completely EMPTY inside — no icons, no shapes, no lines,
+  no placeholder content.
+
+COLOR AND LIGHT
+  Background base #050B16. A broad soft radial teal glow (#2DD4BF, low opacity)
+  behind the phone at about x=470, y=1050. Add a restrained warm amber accent
+  (#F5A623) as a single narrow rim light along the phone's right edge only —
+  it should read as urgency, not decoration, and must not spill into the
+  background. Bottom fifth: a very faint asphalt surface receding in perspective,
+  low contrast, no lane markings, no signs, no vehicles.
+  Mood: focused, serious, exam-room calm. Deep blacks, restrained highlights.
+
+FORBIDDEN VISUAL ELEMENTS
+  No clocks, no stopwatches, no hourglasses, no timer rings, no gauges, no
+  progress bars, no percentage rings, no charts, no graphs, no checkmarks, no
+  crosses, no traffic signs, no cars, no road markings, no neon grids, no circuit
+  patterns, no particles, no lens flares, no bokeh, no holograms, no floating 3D
+  icons, no photographic humans, no faces, no hands, no animals, no mascot, no
+  app-store badges, no Google logos, no rating stars.
+
+OUTPUT
+  1080x1920 PNG, sharp, no border, no rounded canvas corners, no canvas shadow,
+  no watermark, no signature, no transparency.</pre>
+        </div>
+
+        <div class="callout c-danger">
+          <span class="tag">Bu karede asla görünmeyecekler</span>
+          <p>
+            Herhangi bir yazı veya rakam · saat/kronometre grafiği · iPhone · uydurma sınav arayüzü
+            · “MEB onaylı/uygun” · geçme garantisi · <code>%</code> başarı iddiası · maskot · fiyat.
+          </p>
+        </div>
+
+        <h4>Üretim sonrası kontrol listesi — 02</h4>
+        <ul class="check">
+          <li>1080×1920 · <code>RGB</code> · &lt; 8 MB</li>
+          <li>OCR: sıfır karakter</li>
+          <li>Android telefon, ortada delikli kamera</li>
+          <li>Ekran düz ve boş</li>
+          <li>
+            Bindirme sonrası: gerçek sınav ekranı, sayaç <code>23 / 50</code>, süre
+            <code>26:14</code>
+          </li>
+          <li>
+            Bindirme sonrası: <code>50</code>, <code>45</code>, <code>35</code>,
+            <code>23/12/9/6</code> canlı <code>blueprint</code> ile birebir
+          </li>
+          <li>Bindirme sonrası: kartlardaki hiçbir sayı ekrandaki durumla çelişmiyor</li>
+          <li>“MEB” kelimesi hiçbir yerde geçmiyor</li>
+          <li>Türkçe aksanlar tek tek doğrulandı</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <!-- ══════════════════════════════ 03 ══════════════════════════════ -->
+  <section id="a03">
+    <article class="asset">
+      <div class="asset-head">
+        <div class="slot">03</div>
+        <div class="t">
+          <h3>Soru bankası — 1.605 soru ve nedenini anlatan çözümler</h3>
+          <p class="sub">
+            İçerik hacmi + kalite. Görsel sorular bu karede ikinci katman olarak yer alır.
+          </p>
+        </div>
+      </div>
+      <div class="asset-body">
+        <dl class="kv">
+          <dt>Pazarlama amacı</dt>
+          <dd>
+            Hacim iddiasını <strong>doğrulanabilir</strong> bir sayıyla kurmak ve hemen ardından
+            kaliteye bağlamak: yalnız soru değil, <em>neden yanlış</em> açıklaması.
+          </dd>
+          <dt>Başlık</dt>
+          <dd><code>1.605 SORU.</code> / <code>HER BİRİNİN ÇÖZÜMÜ.</code></dd>
+          <dt>Destek metni</dt>
+          <dd>
+            <code>Yanlış yaptığın soruda hangi şıkkın neden yanlış olduğunu da okursun.</code>
+          </dd>
+          <dt>Üst etiket</dt>
+          <dd><code>SORU BANKASI · 5 KONU</code></dd>
+          <dt>Gerçek ekran</dt>
+          <dd>
+            <strong>Pratik — çözüm görünümü</strong>: soru, işaretlenmiş doğru şık (yeşil), altında
+            açıklama kutusu. <code>SCREENS/practice-explain.png</code>
+          </dd>
+          <dt>Maskot</dt>
+          <dd>Hayır</dd>
+          <dt>Çıktı dosyası</dt>
+          <dd><code>apps/ASO_IMAGE/tr-TR/SOURCE/03-soru-bankasi.png</code></dd>
+          <dt>Nihai dosya</dt>
+          <dd><code>apps/ASO_IMAGE/tr-TR/FINAL/phone-03-tr-TR.png</code></dd>
+          <dt>Boyut</dt>
+          <dd>1080 × 1920 px · 9:16 · PNG · alfa yok</dd>
+          <dt>Metin</dt>
+          <dd><strong>GPT üretmez</strong></dd>
+        </dl>
+
+        <h4>Yan kartlar (bindirilecek içerik)</h4>
+        <div class="tw">
+          <table>
+            <thead>
+              <tr>
+                <th>Konum</th>
+                <th>Başlık</th>
+                <th>Gövde</th>
+                <th>İzlenebilirlik</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sol 1</td>
+                <td>TRAFİK 396</td>
+                <td>İşaretler, öncelik, hız, sollama</td>
+                <td>canlı banka, konu sayımı</td>
+              </tr>
+              <tr>
+                <td>Sol 2</td>
+                <td>İLK YARDIM 303</td>
+                <td>Kanama, şok, temel yaşam desteği</td>
+                <td>aynı</td>
+              </tr>
+              <tr>
+                <td>Sol 3</td>
+                <td>MOTOR 329</td>
+                <td>Fren, aktarma, gösterge ikazları</td>
+                <td>aynı</td>
+              </tr>
+              <tr>
+                <td>Sağ 1</td>
+                <td>NEDEN YANLIŞ</td>
+                <td>Her sorunun çözümü ve şık şık gerekçesi var.</td>
+                <td><code>explanation</code>, <code>whyWrong</code> alanları</td>
+              </tr>
+              <tr>
+                <td>Sağ 2</td>
+                <td>GÖRSEL SORULAR</td>
+                <td>121 işaret, 60 ikaz ışığı ve 101 parça görselinden üretilir.</td>
+                <td>
+                  <code>visual_questions.dart</code>, <code>dash_assets.dart</code>,
+                  <code>mech_assets.dart</code>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout c-warn">
+          <span class="tag">Görsel soru iddiası nasıl kurulmalı</span>
+          <p>
+            Görsel sorular <strong>cihazda üretilir</strong>; sabit bir “görsel soru sayısı” yoktur.
+            Bu yüzden bir toplam vermek yerine <strong>katalog boyutları</strong> söylenir — 121, 60
+            ve 101 doğrudan sayılabilir dosyalardır. <em>“2.270 soru”</em> gibi bir toplam yazmayın:
+            bileşimsel bir havuzu sabit bir sayı gibi göstermek, savunulması gereken bir iddia
+            yaratır.
+          </p>
+        </div>
+
+        <h4>Alt güven şeridi</h4>
+        <p>
+          <code>ŞIK UZUNLUĞU ELE VERMEZ</code> · <em>Sorular bu ölçüye göre denetlenir.</em> —
+          <code>KONU ETİKETLİ</code> · <em>Her soru bir konuya bağlıdır.</em> —
+          <code>ZORLUK ETİKETLİ</code> · <em>Kolay 557 · Orta 767 · Zor 281</em>
+        </p>
+
+        <div class="cb">
+          <div class="cb-head">
+            <span class="cb-title">GPT görsel komutu — 03 Soru bankası</span>
+            <button class="copy" data-t="p03">Komutu kopyala</button>
+          </div>
+          <pre id="p03">
+Create a premium vertical marketing background plate for a Google Play (Android)
+store screenshot. ARTWORK PLATE ONLY — all text and the phone's screen content are
+composited in afterwards by a separate tool.
+
+CANVAS
+  Exactly 1080 x 1920 pixels, 9:16 vertical portrait. Flat 2D marketing composition.
+
+CRITICAL — NO TEXT ANYWHERE
+  Render ZERO letters, words, numbers, digits, logos or glyphs of any kind, in any
+  language, anywhere — including inside the phone and inside every card. Any text
+  at all is a failed output.
+
+DEVICE — TWO PHONES, ONE SCREEN EACH
+  A primary ANDROID smartphone upright and centred at about x=540, rotated ~8
+  degrees around the vertical axis, occupying y=690 to y=1670.
+  A SECOND, SMALLER Android phone of the same industrial design, scaled to about
+  62%, placed BEHIND and to the LEFT of the primary phone, offset up and left so
+  only its right third is visible past the primary phone's left edge. It suggests
+  a second question without competing for attention.
+  Both: symmetric thin dark bezels, small CENTRED PUNCH-HOLE front camera.
+  FORBIDDEN: notch, pill cutout, Dynamic Island, iOS status bar, Apple device,
+  iPhone silhouette, smartwatch, tablet, laptop.
+
+PHONE SCREENS — BOTH MUST BE EMPTY
+  Each screen is a COMPLETELY FLAT, UNIFORM, FEATURELESS rectangle of solid
+  #0B1523. No interface, no question, no answer options, no highlighted row, no
+  explanation panel, no icons, no status bar, no navigation bar, no text, no
+  reflections, no glare, no gradient, no texture. Blank placeholders to be
+  replaced. Only the glass RIM may carry a faint 1-2px highlight.
+
+COMPOSITION, top to bottom
+  y 0-660     Empty background, visually quiet. Reserved for a headline block.
+  y 690-1670  The two phones as described.
+  Left column, x 56-330: THREE stacked empty glass cards (approx 274 x 250 px).
+              They must sit IN FRONT of the smaller background phone.
+  Right column, x 750-1024: TWO stacked empty glass cards (approx 274 x 300 px).
+  y 1700-1864 ONE full-width empty glass panel, x 56 to x 1024, split into three
+              equal compartments by two thin 1px vertical dividers.
+
+GLASS CARDS — EMPTY CONTAINERS
+  Fill #0B1523 at about 92% opacity, crisp 1px #1C2C44 border, 28px radius, very
+  soft ambient shadow. Completely EMPTY inside.
+
+COLOR AND LIGHT
+  Background base #050B16. Broad soft radial teal glow (#2DD4BF, low opacity)
+  behind the primary phone at about x=540, y=1050. A subtle secondary teal pool
+  behind the smaller phone, dimmer, to separate the two planes. Add a single
+  restrained green accent (#34D399) as a soft glow along the primary phone's
+  bottom edge only — it reads as "correct answer" without drawing anything.
+  Bottom fifth: very faint asphalt perspective, low contrast, no lane markings.
+  Mood: deep, layered, library-of-content. Strong figure/ground separation.
+
+FORBIDDEN VISUAL ELEMENTS
+  No traffic signs, no road signs, no warning-light symbols, no engine parts, no
+  cars, no road markings, no checkmarks, no crosses, no A/B/C/D markers, no
+  multiple-choice rows, no charts, no graphs, no stacks of paper, no books, no
+  question marks, no neon grids, no circuit patterns, no particles, no lens
+  flares, no bokeh, no holograms, no floating 3D objects, no photographic humans,
+  no faces, no hands, no animals, no mascot, no app-store badges, no Google logos,
+  no rating stars.
+
+OUTPUT
+  1080x1920 PNG, sharp, no border, no rounded canvas corners, no canvas shadow,
+  no watermark, no signature, no transparency.</pre>
+        </div>
+
+        <div class="callout c-danger">
+          <span class="tag">Bu karede asla görünmeyecekler</span>
+          <p>
+            Herhangi bir yazı veya rakam · <code>10.000+</code> · toplam “görsel soru sayısı” ·
+            çizilmiş trafik işareti (gerçek katalog görselleri yalnız ekran görüntüsünün içinde
+            olur) · iPhone · “en kapsamlı / Türkiye'nin en büyük” türü üstünlük iddiası · fiyat.
+          </p>
+        </div>
+
+        <h4>Üretim sonrası kontrol listesi — 03</h4>
+        <ul class="check">
+          <li>1080×1920 · <code>RGB</code> · &lt; 8 MB</li>
+          <li>OCR: sıfır karakter</li>
+          <li>İki telefon da Android, ikisinde de ortada delikli kamera</li>
+          <li>İki ekran da düz ve boş</li>
+          <li>Sol kartlar arkadaki küçük telefonun ÖNÜNDE</li>
+          <li>
+            Bindirme sonrası: <code>1.605</code> · <code>396</code> · <code>303</code> ·
+            <code>329</code> · <code>557/767/281</code> canlı API ile birebir
+          </li>
+          <li>
+            Bindirme sonrası: <code>121</code> · <code>60</code> · <code>101</code> katalog sayıları
+            doğru
+          </li>
+          <li>
+            Bindirme sonrası: telefonda gerçek çözüm ekranı, yeşil doğru şık ve açıklama kutusu
+            görünür
+          </li>
+          <li>Toplam görsel soru sayısı iddia edilmemiş</li>
+          <li>Türkçe aksanlar tek tek doğrulandı</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <!-- ══════════════════════════════ 04 ══════════════════════════════ -->
+  <section id="a04">
+    <article class="asset">
+      <div class="asset-head">
+        <div class="slot">04</div>
+        <div class="t">
+          <h3>Sınav Arşivi — her gün yeni sınav, ilk üçü ücretsiz</h3>
+          <p class="sub">
+            Dönüşüm karesi. Kullanıcının “bedavaya ne alıyorum” sorusunu dürüstçe yanıtlar.
+          </p>
+        </div>
+      </div>
+      <div class="asset-body">
+        <dl class="kv">
+          <dt>Pazarlama amacı</dt>
+          <dd>
+            Tekrar gelme sebebi (her gün yeni) + risksiz deneme (ilk 3 ücretsiz) + premium sınırının
+            <strong>açıkça</strong> gösterilmesi. Gizlenen sınır, kaldırma sebebidir.
+          </dd>
+          <dt>Başlık</dt>
+          <dd><code>HER GÜN</code> / <code>YENİ SINAV.</code></dd>
+          <dt>Destek metni</dt>
+          <dd>
+            <code>Altı kategori, tarihli sınavlar. İlk üç sınav ücretsiz — gerisi premium.</code>
+          </dd>
+          <dt>Üst etiket</dt>
+          <dd><code>SINAV ARŞİVİ · 6 KATEGORİ</code></dd>
+          <dt>Gerçek ekran</dt>
+          <dd>
+            <strong>Sınav Arşivi</strong> — kategori listesi ve “İlk 3 sınav ücretsiz” bilgi kartı.
+            <code>SCREENS/exam-library.png</code>
+          </dd>
+          <dt>Maskot</dt>
+          <dd>Hayır</dd>
+          <dt>Çıktı dosyası</dt>
+          <dd><code>apps/ASO_IMAGE/tr-TR/SOURCE/04-sinav-arsivi.png</code></dd>
+          <dt>Nihai dosya</dt>
+          <dd><code>apps/ASO_IMAGE/tr-TR/FINAL/phone-04-tr-TR.png</code></dd>
+          <dt>Boyut</dt>
+          <dd>1080 × 1920 px · 9:16 · PNG · alfa yok</dd>
+          <dt>Metin</dt>
+          <dd><strong>GPT üretmez</strong></dd>
+        </dl>
+
+        <h4>Yan kartlar (bindirilecek içerik)</h4>
+        <div class="tw">
+          <table>
+            <thead>
+              <tr>
+                <th>Konum</th>
+                <th>Başlık</th>
+                <th>Gövde</th>
+                <th>İzlenebilirlik</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sol 1</td>
+                <td>GENEL SINAV</td>
+                <td>Tam biçim, 50 soru</td>
+                <td><code>ExamCategory.genel</code></td>
+              </tr>
+              <tr>
+                <td>Sol 2</td>
+                <td>KONU SINAVLARI</td>
+                <td>Trafik · İlk Yardım · Motor · Adab</td>
+                <td><code>ExamCategory</code> etiketleri</td>
+              </tr>
+              <tr>
+                <td>Sol 3</td>
+                <td>GÖRSEL SORULAR</td>
+                <td>Yalnız görselli sorulardan kurulu sınav</td>
+                <td><code>ExamCategory.gorsel</code></td>
+              </tr>
+              <tr>
+                <td>Sağ 1 <em>(amber)</em></td>
+                <td>İLK 3 ÜCRETSİZ</td>
+                <td>Katalog genelinde ilk üç sınav ücretsiz açılır.</td>
+                <td><code>kFreeExamCount = 3</code></td>
+              </tr>
+              <tr>
+                <td>Sağ 2</td>
+                <td>TARİHE GÖRE</td>
+                <td>Her tarih aynı sınavı üretir — arkadaşınla aynı soruları çözersin.</td>
+                <td><code>libraryExams()</code> tarih tohumu</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Alt güven şeridi</h4>
+        <p>
+          <code>ABONELİK ZORUNLU DEĞİL</code> · <em>Ücretsiz katman kalıcıdır.</em> —
+          <code>ÖMÜR BOYU SEÇENEĞİ VAR</code> · <em>Tek seferlik paket de sunulur.</em> —
+          <code>REKLAM YOK</code> · <em>Ücretsiz katmanda da reklam yok.</em>
+        </p>
+
+        <div class="cb">
+          <div class="cb-head">
+            <span class="cb-title">GPT görsel komutu — 04 Sınav Arşivi</span>
+            <button class="copy" data-t="p04">Komutu kopyala</button>
+          </div>
+          <pre id="p04">
+Create a premium vertical marketing background plate for a Google Play (Android)
+store screenshot. ARTWORK PLATE ONLY — all text and the phone's screen content are
+composited in afterwards by a separate tool.
+
+CANVAS
+  Exactly 1080 x 1920 pixels, 9:16 vertical portrait. Flat 2D marketing composition.
+
+CRITICAL — NO TEXT ANYWHERE
+  Render ZERO letters, words, numbers, digits, dates, prices, currency symbols,
+  logos or glyphs of any kind, in any language, anywhere — including inside the
+  phone and inside every card. Any text at all is a failed output.
+
+DEVICE
+  One modern bezel-less ANDROID smartphone, upright, centred at about x=540,
+  rotated about 6 degrees around the vertical axis. Symmetric thin dark bezels,
+  small CENTRED PUNCH-HOLE front camera, subtle dark metal side rail.
+  FORBIDDEN: notch, pill cutout, Dynamic Island, iOS status bar, Apple device,
+  iPhone silhouette, smartwatch, any second device.
+
+PHONE SCREEN — MUST BE EMPTY
+  A COMPLETELY FLAT, UNIFORM, FEATURELESS rectangle of solid #0B1523. No interface,
+  no list rows, no category tiles, no dates, no lock icons, no badges, no status
+  bar, no navigation bar, no text, no reflections, no glare, no gradient, no
+  texture. A blank placeholder to be replaced. Only the glass RIM may carry a
+  faint 1-2px highlight. Screen area roughly 470 x 1010 px, y=690 to y=1670.
+
+COMPOSITION, top to bottom
+  y 0-660     Empty background, visually quiet. Reserved for a headline block.
+  y 690-1670  The phone.
+  Left column, x 56-330: THREE stacked empty glass cards (approx 274 x 250 px).
+  Right column, x 750-1024: TWO stacked empty glass cards (approx 274 x 300 px).
+              THE UPPER RIGHT CARD IS DIFFERENT: give it a 1px amber #F5A623
+              border and a soft amber outer glow instead of the standard
+              #1C2C44 border. It stays completely EMPTY inside — the amber
+              treatment marks it as the offer card. All other cards use the
+              standard border.
+  y 1700-1864 ONE full-width empty glass panel, x 56 to x 1024, split into three
+              equal compartments by two thin 1px vertical dividers.
+
+GLASS CARDS — EMPTY CONTAINERS
+  Fill #0B1523 at about 92% opacity, 28px radius, very soft ambient shadow.
+  Completely EMPTY inside — no icons, no shapes, no lines, no lock symbols.
+
+COLOR AND LIGHT
+  Background base #050B16. Broad soft radial teal glow (#2DD4BF, low opacity)
+  behind the phone at about x=540, y=1050. A distinctly warmer amber pool
+  (#F5A623, very low opacity) in the upper right quadrant, centred behind the
+  amber-bordered card, falling off before it reaches the phone. The two glows
+  must stay separate — do not blend them into a muddy middle.
+  Bottom fifth: very faint asphalt perspective, low contrast, no lane markings.
+  Mood: an archive that keeps growing. Calm, ordered, generous.
+
+FORBIDDEN VISUAL ELEMENTS
+  No calendars, no calendar grids, no date squares, no clocks, no padlocks, no
+  keys, no crowns, no diamonds, no gift boxes, no ribbons, no price tags, no
+  currency symbols, no percentage badges, no "free" starbursts, no folder icons,
+  no document stacks, no charts, no neon grids, no circuit patterns, no particles,
+  no lens flares, no bokeh, no holograms, no floating 3D objects, no photographic
+  humans, no faces, no hands, no animals, no mascot, no app-store badges, no
+  Google logos, no rating stars.
+
+OUTPUT
+  1080x1920 PNG, sharp, no border, no rounded canvas corners, no canvas shadow,
+  no watermark, no signature, no transparency.</pre>
+        </div>
+
+        <div class="callout c-danger">
+          <span class="tag">Bu karede asla görünmeyecekler</span>
+          <p>
+            Herhangi bir yazı/rakam · <strong>fiyat veya para birimi</strong> · “ücretsiz deneme”
+            (hiçbir SKU deneme taşımıyor) · kilit/taç/hediye ikonu · sahte indirim rozeti · “sınırlı
+            süre” · iPhone · takvim görseli (tarih iddiası ekran görüntüsünde kalır).
+          </p>
+        </div>
+
+        <h4>Üretim sonrası kontrol listesi — 04</h4>
+        <ul class="check">
+          <li>1080×1920 · <code>RGB</code> · &lt; 8 MB</li>
+          <li>OCR: sıfır karakter — özellikle rakam ve para birimi yok</li>
+          <li>Android telefon, ortada delikli kamera</li>
+          <li>Ekran düz ve boş</li>
+          <li>Sağ üst kart amber kenarlıklı, diğer dört kart standart kenarlıklı</li>
+          <li>Turkuaz ve amber parıltılar birbirine karışmamış</li>
+          <li>
+            Bindirme sonrası: <code>6 kategori</code> ve <code>ilk 3 ücretsiz</code> koddaki
+            değerlerle eşleşiyor
+          </li>
+          <li>Bindirme sonrası: hiçbir yerde fiyat yok</li>
+          <li>Bindirme sonrası: premium sınırı gizlenmemiş, açıkça yazılmış</li>
+          <li>Türkçe aksanlar tek tek doğrulandı</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <!-- ══════════════════════════════ 05 ══════════════════════════════ -->
+  <section id="a05">
+    <article class="asset">
+      <div class="asset-head">
+        <div class="slot">05</div>
+        <div class="t">
+          <h3>AI Koç — içeriğe dayalı cevap, kaynaklı ve uyarılı</h3>
+          <p class="sub">
+            Farklılaştırıcı. Aynı zamanda Play'in yapay zekâ açıklama beklentisini karşılayan kare.
+          </p>
+        </div>
+      </div>
+      <div class="asset-body">
+        <dl class="kv">
+          <dt>Pazarlama amacı</dt>
+          <dd>
+            “Takıldığım yeri sorabiliyorum” + güven: cevap uydurmuyor, uygulamanın içeriğine
+            dayanıyor ve bunu kendi üstünde yazıyor.
+          </dd>
+          <dt>Başlık</dt>
+          <dd><code>TAKILDIN MI?</code> / <code>SOR.</code></dd>
+          <dt>Destek metni</dt>
+          <dd>
+            <code
+              >AI Koç, cevabı uygulamanın ders ve soru içeriğine dayandırır; kaynağını da
+              gösterir.</code
+            >
+          </dd>
+          <dt>Üst etiket</dt>
+          <dd><code>AI KOÇ · İÇERİĞE DAYALI</code></dd>
+          <dt>Gerçek ekran</dt>
+          <dd>
+            <strong>AI Koç sohbeti</strong> — kullanıcı sorusu, cevap,
+            <strong>“İçeriğe dayalı” yeşil rozeti</strong>, kaynak satırı ve
+            <strong>alttaki kalıcı uyarı</strong>. <code>SCREENS/coach-chat.png</code>
+          </dd>
+          <dt>Maskot</dt>
+          <dd>Evet — AI'ın açıkça sentetik olduğunu gösteren marka ögesi</dd>
+          <dt>Çıktı dosyası</dt>
+          <dd><code>apps/ASO_IMAGE/tr-TR/SOURCE/05-ai-koc.png</code></dd>
+          <dt>Nihai dosya</dt>
+          <dd><code>apps/ASO_IMAGE/tr-TR/FINAL/phone-05-tr-TR.png</code></dd>
+          <dt>Boyut</dt>
+          <dd>1080 × 1920 px · 9:16 · PNG · alfa yok</dd>
+          <dt>Metin</dt>
+          <dd><strong>GPT üretmez</strong></dd>
+        </dl>
+
+        <div class="callout c-warn">
+          <span class="tag">Yapay zekâ iddiasının sınırı</span>
+          <p>
+            Uygulamada <strong>yalnız sohbet</strong> gerçek bir dil modelidir
+            (<code>/api/ai/ask</code>). Koç kartları, dürtmeler ve 7 günlük plan
+            <strong>cihaz içi sezgiseldir</strong>; Düello rakibi belirlenimci bir eğridir. Bu
+            karede AI iddiası sohbetle sınırlı tutulur; plan kartları “çalışma planı” diye anılır,
+            “AI planı” diye değil. Ayrıca
+            <strong>modelin kullanıcı verisinden öğrendiği asla söylenmez</strong> — yanlışsa yanlış
+            beyan, doğruysa beyan edilmemiş veri kalemi olur.
+          </p>
+        </div>
+
+        <h4>Yan kartlar (bindirilecek içerik)</h4>
+        <div class="tw">
+          <table>
+            <thead>
+              <tr>
+                <th>Konum</th>
+                <th>Başlık</th>
+                <th>Gövde</th>
+                <th>İzlenebilirlik</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sol 1</td>
+                <td>KAYNAK GÖSTERİR</td>
+                <td>Cevabın hangi içerikten geldiğini yazar.</td>
+                <td><code>coach_api.dart:76</code> — <code>sources</code></td>
+              </tr>
+              <tr>
+                <td>Sol 2</td>
+                <td>DAYANAK YOKSA SÖYLER</td>
+                <td>İçerikte karşılığı yoksa uydurmaz.</td>
+                <td><code>grounded</code> bayrağı + sunucu kapısı</td>
+              </tr>
+              <tr>
+                <td>Sol 3</td>
+                <td>KALICI UYARI</td>
+                <td>Kesin ve güncel kural için MEB/MTSK esastır.</td>
+                <td><code>coach_screen.dart:300</code> — birebir dize</td>
+              </tr>
+              <tr>
+                <td>Sağ 1</td>
+                <td>ÇALIŞMA PLANI</td>
+                <td>Sınavına kalan süreye göre günlük hedef.</td>
+                <td><code>coach_insights.dart</code> (cihaz içi)</td>
+              </tr>
+              <tr>
+                <td>Sağ 2</td>
+                <td>TÜRKÇE</td>
+                <td>Soruyu kendi cümlenle sorarsın.</td>
+                <td><code>coach_screen.dart</code> giriş alanı</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Alt güven şeridi</h4>
+        <p>
+          <code>YAPAY ZEKÂ YANITI</code> · <em>Cevaplar bir AI modeli tarafından üretilir.</em> —
+          <code>KAYNAKLI</code> · <em>Dayandığı içerik gösterilir.</em> —
+          <code>SON SÖZ MEVZUATTA</code> · <em>Kesin kural için MEB/MTSK esastır.</em>
+        </p>
+
+        <div class="cb">
+          <div class="cb-head">
+            <span class="cb-title">GPT görsel komutu — 05 AI Koç</span>
+            <button class="copy" data-t="p05">Komutu kopyala</button>
+          </div>
+          <pre id="p05">
+Create a premium vertical marketing background plate for a Google Play (Android)
+store screenshot. ARTWORK PLATE ONLY — all text and the phone's screen content are
+composited in afterwards by a separate tool.
+
+CANVAS
+  Exactly 1080 x 1920 pixels, 9:16 vertical portrait. Flat 2D marketing composition.
+
+CRITICAL — NO TEXT ANYWHERE
+  Render ZERO letters, words, numbers, digits, chat bubbles containing writing,
+  logos or glyphs of any kind, in any language, anywhere — including inside the
+  phone and inside every card. Any text at all is a failed output.
+
+DEVICE
+  One modern bezel-less ANDROID smartphone, upright, positioned slightly RIGHT of
+  centre (its centre at about x=610), rotated about 9 degrees around the vertical
+  axis. Symmetric thin dark bezels, small CENTRED PUNCH-HOLE front camera, subtle
+  dark metal side rail.
+  FORBIDDEN: notch, pill cutout, Dynamic Island, iOS status bar, Apple device,
+  iPhone silhouette, smartwatch, any second device.
+
+PHONE SCREEN — MUST BE EMPTY
+  A COMPLETELY FLAT, UNIFORM, FEATURELESS rectangle of solid #0B1523. No chat
+  bubbles, no message rows, no avatars, no input field, no send button, no badges,
+  no status bar, no navigation bar, no text, no reflections, no glare, no
+  gradient, no texture. A blank placeholder to be replaced. Only the glass RIM
+  may carry a faint 1-2px highlight. Screen area roughly 470 x 1010 px,
+  y=690 to y=1670.
+
+MASCOT — THE AI MUST LOOK SYNTHETIC
+  A friendly stylised CARTOON OWL, unmistakably illustrated and unmistakably not
+  a real animal or a person: teal #2DD4BF plumage, cream face, large round
+  dark-rimmed glasses, black graduation cap. Place it LEFT of the phone at
+  approximately x 90-420, y 620-1080, about 460px tall, three-quarter view,
+  turned slightly toward the phone. It may overlap the phone's left edge by no
+  more than 30px and must NOT cover the screen area. No lettering on its cap,
+  glasses, chest, lanyard or any badge.
+  FORBIDDEN: any human face, any photorealistic person, any humanoid android,
+  any robot head, any glowing brain, any "AI assistant" avatar that could be
+  mistaken for a person.
+
+COMPOSITION, top to bottom
+  y 0-600     Empty background, visually quiet. Reserved for a headline block.
+              Keep the mascot below y=620 so it never crowds the headline.
+  y 690-1670  The phone; the mascot to its left.
+  Left column, x 56-330: THREE stacked empty glass cards, positioned in the LOWER
+              part of the band (approx y 1150-1670) so they do not collide with
+              the mascot. Approx 274 x 160 px each.
+  Right column, x 750-1024: TWO stacked empty glass cards (approx 274 x 300 px).
+  y 1700-1864 ONE full-width empty glass panel, x 56 to x 1024, split into three
+              equal compartments by two thin 1px vertical dividers.
+
+GLASS CARDS — EMPTY CONTAINERS
+  Fill #0B1523 at about 92% opacity, crisp 1px #1C2C44 border, 28px radius, very
+  soft ambient shadow. Completely EMPTY inside.
+
+COLOR AND LIGHT
+  Background base #050B16. Broad soft radial teal glow (#2DD4BF, low opacity)
+  behind the phone at about x=610, y=1050. A gentler, wider teal halo around the
+  mascot so the two read as one lit scene rather than two pasted objects. A single
+  restrained green accent (#34D399) as a soft glow at the phone's upper screen
+  edge only, suggesting a verified state without drawing a badge.
+  Bottom fifth: very faint asphalt perspective, low contrast, no lane markings.
+  Mood: warm, approachable, trustworthy. Softer than the other frames.
+
+FORBIDDEN VISUAL ELEMENTS
+  No speech bubbles, no chat balloons, no message icons, no microphones, no
+  waveform bars, no equalizer graphics, no brains, no neural networks, no node
+  graphs, no sparkle clusters, no magic wands, no robots, no humanoid figures,
+  no photographic humans, no faces, no hands, no neon grids, no circuit patterns,
+  no particles, no lens flares, no bokeh, no holograms, no floating 3D objects,
+  no app-store badges, no Google logos, no rating stars.
+
+OUTPUT
+  1080x1920 PNG, sharp, no border, no rounded canvas corners, no canvas shadow,
+  no watermark, no signature, no transparency.</pre>
+        </div>
+
+        <div class="callout c-danger">
+          <span class="tag">Bu karede asla görünmeyecekler</span>
+          <p>
+            Herhangi bir yazı · insan yüzlü/robot yüzlü AI avatarı · “bilimsel kaynaklı”,
+            “doğrulanmış bilgi”, “sürekli öğrenir”, “%100 doğru” · “7/24 destek” (destek kanalı yok)
+            · sohbet balonu içinde uydurma metin · iPhone · uydurma model adı.
+          </p>
+        </div>
+
+        <h4>Üretim sonrası kontrol listesi — 05</h4>
+        <ul class="check">
+          <li>1080×1920 · <code>RGB</code> · &lt; 8 MB</li>
+          <li>OCR: sıfır karakter</li>
+          <li>Maskot açıkça çizgi karakter; hiçbir yerinde harf yok</li>
+          <li>Maskot ekranı örtmüyor, telefon kenarını en fazla 30 px aşıyor</li>
+          <li>Android telefon, ortada delikli kamera</li>
+          <li>
+            Bindirme sonrası: telefonda <strong>gerçek</strong> sohbet ekranı; “İçeriğe dayalı”
+            rozeti ve alt uyarı okunuyor
+          </li>
+          <li>
+            Bindirme sonrası: uyarı dizesi <code>coach_screen.dart:300</code> ile birebir aynı
+          </li>
+          <li>
+            Bindirme sonrası: AI iddiası yalnız sohbetle sınırlı; plan kartı “AI planı” demiyor
+          </li>
+          <li>“Öğrenir / eğitilir / kişiselleşir” türü model iddiası yok</li>
+          <li>Türkçe aksanlar tek tek doğrulandı</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <!-- ══════════════════════════════ 06 ══════════════════════════════ -->
+  <section id="a06">
+    <article class="asset">
+      <div class="asset-head">
+        <div class="slot">06</div>
+        <div class="t">
+          <h3>Dersler — 29 ders, çizilmiş şemalar, 121 işaret</h3>
+          <p class="sub">
+            Ezber değil anlama. Cihazda çizilen şemalar rakiplerin dürüstçe iddia edemediği ikinci
+            şey.
+          </p>
+        </div>
+      </div>
+      <div class="asset-body">
+        <dl class="kv">
+          <dt>Pazarlama amacı</dt>
+          <dd>
+            “Soru çözdürmekle kalmıyor, öğretiyor.” Kavşak, geçiş önceliği ve ilk yardım gibi
+            konuların <strong>çizimle</strong> anlatıldığını göstermek.
+          </dd>
+          <dt>Başlık</dt>
+          <dd><code>29 DERS.</code> / <code>ÇİZEREK ANLATIR.</code></dd>
+          <dt>Destek metni</dt>
+          <dd>
+            <code
+              >19 derste konuyu şema üzerinde görürsün. 121 trafik işareti, 60 ikaz ışığı ve 112
+              araç parçası ayrı ayrı anlatılır.</code
+            >
+          </dd>
+          <dt>Üst etiket</dt>
+          <dd><code>ÖĞREN · ŞEMALI ANLATIM</code></dd>
+          <dt>Gerçek ekran</dt>
+          <dd>
+            <strong>Ders detayı — şemalı bölüm.</strong> Şema taşıyan 19 dersten biri seçilir (ör.
+            Kavşaklar ve Geçiş Önceliği). <code>SCREENS/lesson-figure.png</code>
+          </dd>
+          <dt>Maskot</dt>
+          <dd>Hayır</dd>
+          <dt>Çıktı dosyası</dt>
+          <dd><code>apps/ASO_IMAGE/tr-TR/SOURCE/06-dersler.png</code></dd>
+          <dt>Nihai dosya</dt>
+          <dd><code>apps/ASO_IMAGE/tr-TR/FINAL/phone-06-tr-TR.png</code></dd>
+          <dt>Boyut</dt>
+          <dd>1080 × 1920 px · 9:16 · PNG · alfa yok</dd>
+          <dt>Metin</dt>
+          <dd><strong>GPT üretmez</strong></dd>
+        </dl>
+
+        <div class="callout c-warn">
+          <span class="tag">İşaret galerisi yakalanırken</span>
+          <p>
+            18 işaret piktogramının gerçek çizimi <strong>henüz yok</strong>. Galeri ekran görüntüsü
+            alınırken tam çizilmiş bir bölge seçilmeli; eksik piktogramların bulunduğu bölge kadraja
+            girmemeli. Ayrıca <strong>video sayısı 7'dir</strong> (2'si <code>planned</code>) ve
+            süreleri 10–14 saniyedir — “HD video ders” ifadesi kullanılamaz.
+          </p>
+        </div>
+
+        <h4>Yan kartlar (bindirilecek içerik)</h4>
+        <div class="tw">
+          <table>
+            <thead>
+              <tr>
+                <th>Konum</th>
+                <th>Başlık</th>
+                <th>Gövde</th>
+                <th>İzlenebilirlik</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sol 1</td>
+                <td>121 TRAFİK İŞARETİ</td>
+                <td>Yasak, tehlike, bilgi, mecburiyet — kategorili</td>
+                <td>canlı snapshot · <code>signs</code></td>
+              </tr>
+              <tr>
+                <td>Sol 2</td>
+                <td>60 İKAZ IŞIĞI</td>
+                <td>Gösterge panelinde yanan ışık ne demek</td>
+                <td><code>dash_assets.dart</code></td>
+              </tr>
+              <tr>
+                <td>Sol 3</td>
+                <td>112 ARAÇ PARÇASI</td>
+                <td>Kabin, dış, motor bölmesi, muayene</td>
+                <td>canlı snapshot · <code>vehicleParts</code></td>
+              </tr>
+              <tr>
+                <td>Sağ 1</td>
+                <td>ŞEMALI ANLATIM</td>
+                <td>19 ders konuyu çizim üzerinde gösterir.</td>
+                <td>canlı snapshot · <code>figureId</code> sayımı</td>
+              </tr>
+              <tr>
+                <td>Sağ 2</td>
+                <td>A · B · D İÇERİĞİ</td>
+                <td>Ortak teorinin üstüne sınıfına özel dersler eklenir.</td>
+                <td><code>lesson.licences</code> · 19 ortak + 5 A + 5 D</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Alt güven şeridi</h4>
+        <p>
+          <code>KOYU VE AÇIK TEMA</code> · <em>Şemalar iki temada da okunur.</em> —
+          <code>ÇEVRİMDIŞI OKUNUR</code> · <em>Dersler önbellekten açılır.</em> —
+          <code>DERS SONU TESTİ</code> · <em>Her ders kendi sorularına bağlanır.</em>
+        </p>
+
+        <div class="cb">
+          <div class="cb-head">
+            <span class="cb-title">GPT görsel komutu — 06 Dersler</span>
+            <button class="copy" data-t="p06">Komutu kopyala</button>
+          </div>
+          <pre id="p06">
+Create a premium vertical marketing background plate for a Google Play (Android)
+store screenshot. ARTWORK PLATE ONLY — all text and the phone's screen content are
+composited in afterwards by a separate tool.
+
+CANVAS
+  Exactly 1080 x 1920 pixels, 9:16 vertical portrait. Flat 2D marketing composition.
+
+CRITICAL — NO TEXT ANYWHERE
+  Render ZERO letters, words, numbers, digits, logos or glyphs of any kind, in any
+  language, anywhere — including inside the phone and inside every card. Any text
+  at all is a failed output.
+
+DEVICE — TWO PHONES SIDE BY SIDE
+  A primary ANDROID smartphone upright, centre at about x=470, rotated ~7 degrees
+  around the vertical axis, spanning y=690 to y=1670.
+  A SECOND Android phone of the same design at about 78% scale, placed to the
+  RIGHT and slightly BEHIND, its centre at about x=830, its top edge about 120px
+  lower than the primary phone's. Its left third is overlapped by the primary
+  phone. The pair reads as "lesson + gallery".
+  Both: symmetric thin dark bezels, small CENTRED PUNCH-HOLE front camera.
+  FORBIDDEN: notch, pill cutout, Dynamic Island, iOS status bar, Apple device,
+  iPhone silhouette, smartwatch, tablet, laptop.
+
+PHONE SCREENS — BOTH MUST BE EMPTY
+  Each screen is a COMPLETELY FLAT, UNIFORM, FEATURELESS rectangle of solid
+  #0B1523. No diagrams, no illustrations, no road layouts, no intersections, no
+  signs, no galleries, no grids of tiles, no headings, no body copy, no status
+  bar, no navigation bar, no text, no reflections, no glare, no gradient, no
+  texture. Blank placeholders to be replaced. Only the glass RIM may carry a
+  faint 1-2px highlight.
+
+COMPOSITION, top to bottom
+  y 0-660     Empty background, visually quiet. Reserved for a headline block.
+  y 690-1670  The two phones as described.
+  Left column, x 56-330: THREE stacked empty glass cards (approx 274 x 250 px),
+              sitting IN FRONT of the primary phone's left edge is NOT allowed —
+              keep a clear 26px gap between the cards and the phone.
+  Right column, x 750-1024: TWO stacked empty glass cards (approx 274 x 300 px),
+              sitting IN FRONT of the secondary phone.
+  y 1700-1864 ONE full-width empty glass panel, x 56 to x 1024, split into three
+              equal compartments by two thin 1px vertical dividers.
+
+GLASS CARDS — EMPTY CONTAINERS
+  Fill #0B1523 at about 92% opacity, crisp 1px #1C2C44 border, 28px radius, very
+  soft ambient shadow. Completely EMPTY inside.
+
+COLOR AND LIGHT
+  Background base #050B16. Broad soft radial teal glow (#2DD4BF, low opacity)
+  behind the primary phone at about x=470, y=1050, with a dimmer secondary pool
+  behind the right-hand phone so the two planes separate cleanly. Add a very
+  faint cool blue accent (#60A5FA at very low opacity) in the upper left, hinting
+  at study and reference material without drawing anything.
+  Bottom fifth: very faint asphalt perspective, low contrast, no lane markings.
+  Mood: clear, instructional, uncluttered. This is the calmest frame in the set.
+
+FORBIDDEN VISUAL ELEMENTS
+  No traffic signs, no road signs, no warning-light symbols, no dashboard
+  clusters, no engine parts, no cars, no intersections, no road diagrams, no lane
+  markings, no books, no graduation caps, no pencils, no notebooks, no
+  chalkboards, no play buttons, no video thumbnails, no charts, no neon grids,
+  no circuit patterns, no particles, no lens flares, no bokeh, no holograms, no
+  floating 3D objects, no photographic humans, no faces, no hands, no animals,
+  no mascot, no app-store badges, no Google logos, no rating stars.
+
+OUTPUT
+  1080x1920 PNG, sharp, no border, no rounded canvas corners, no canvas shadow,
+  no watermark, no signature, no transparency.</pre>
+        </div>
+
+        <div class="callout c-danger">
+          <span class="tag">Bu karede asla görünmeyecekler</span>
+          <p>
+            Herhangi bir yazı · çizilmiş trafik işareti/araç/kavşak (gerçek şemalar yalnız ekran
+            görüntüsünde) · <code>3D</code> iddiası · “HD video ders” · “indirilebilir video” ·
+            uzman eğitmen yüzü/adı · “MEB müfredatı” · iPhone.
+          </p>
+        </div>
+
+        <h4>Üretim sonrası kontrol listesi — 06</h4>
+        <ul class="check">
+          <li>1080×1920 · <code>RGB</code> · &lt; 8 MB</li>
+          <li>OCR: sıfır karakter</li>
+          <li>İki telefon da Android, ortada delikli kamera</li>
+          <li>İki ekran da düz ve boş</li>
+          <li>Sol kartlar ile birincil telefon arasında en az 26 px boşluk</li>
+          <li>
+            Bindirme sonrası: <code>29</code> · <code>19</code> · <code>121</code> ·
+            <code>60</code> · <code>112</code> canlı verilerle birebir
+          </li>
+          <li>
+            Bindirme sonrası: bindirilen galeri görüntüsünde eksik piktogram bulunan bölge yok
+          </li>
+          <li>Bindirme sonrası: video sayısı veya süresi hakkında iddia yok</li>
+          <li>
+            Türkçe aksanlar tek tek doğrulandı (<code>ÇİZEREK</code>, <code>İŞARETİ</code>,
+            <code>IŞIĞI</code>)
+          </li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <!-- ══════════════════════════════ 07 ══════════════════════════════ -->
+  <section id="a07">
+    <article class="asset">
+      <div class="asset-head">
+        <div class="slot">07</div>
+        <div class="t">
+          <h3>İlerleme — hazırlık puanı, seri, rozetler ve Düello</h3>
+          <p class="sub">
+            Elde tutma karesi. Düello burada, açıkça “yapay zekâ rakip” olarak yer alır.
+          </p>
+        </div>
+      </div>
+      <div class="asset-body">
+        <dl class="kv">
+          <dt>Pazarlama amacı</dt>
+          <dd>
+            “Devam etmem için bir sebep var.” Gelişimin ölçülebilir olduğunu ve sürdürmenin
+            ödüllendirildiğini göstermek.
+          </dd>
+          <dt>Başlık</dt>
+          <dd><code>HER SORU</code> / <code>PUANI DEĞİŞTİRİR.</code></dd>
+          <dt>Destek metni</dt>
+          <dd>
+            <code
+              >Hazırlık puanın, konu radarın, serin ve rozetlerin tek ekranda. Düelloda yapay zekâ
+              rakibe karşı test et.</code
+            >
+          </dd>
+          <dt>Üst etiket</dt>
+          <dd><code>İLERLEME · ROZETLER · DÜELLO</code></dd>
+          <dt>Gerçek ekran</dt>
+          <dd>
+            <strong>İlerleme</strong> — hazırlık halkası, konu radarı, seri, seviye, rozet ızgarası.
+            <code>SCREENS/progress.png</code><br /><em>Sıfır durumu OLMAZ.</em>
+          </dd>
+          <dt>Maskot</dt>
+          <dd>Hayır</dd>
+          <dt>Çıktı dosyası</dt>
+          <dd><code>apps/ASO_IMAGE/tr-TR/SOURCE/07-ilerleme.png</code></dd>
+          <dt>Nihai dosya</dt>
+          <dd><code>apps/ASO_IMAGE/tr-TR/FINAL/phone-07-tr-TR.png</code></dd>
+          <dt>Boyut</dt>
+          <dd>1080 × 1920 px · 9:16 · PNG · alfa yok</dd>
+          <dt>Metin</dt>
+          <dd><strong>GPT üretmez</strong></dd>
+        </dl>
+
+        <div class="callout c-danger">
+          <span class="tag">Düello — tek doğru anlatım</span>
+          <p>
+            Rakip <code>AiOpponent</code>'tır: seviyeye göre %55'ten %85'e çıkan belirlenimci bir
+            doğruluk eğrisi ve 2,5–9 sn arası yanıt gecikmesi
+            (<code>lib/domain/duel/duel.dart:57-89</code>).
+            <strong>Canlı çok oyunculu değildir.</strong> Kart metni bunu açıkça söylemeli:
+            <em>“yapay zekâ rakip”</em>. “Arkadaşınla yarış”, “çevrimiçi rakip”, “gerçek oyuncular”
+            gibi hiçbir ifade kullanılamaz. Günlük ücretsiz düello sayısı <strong>5</strong>.
+          </p>
+        </div>
+
+        <h4>Yan kartlar (bindirilecek içerik)</h4>
+        <div class="tw">
+          <table>
+            <thead>
+              <tr>
+                <th>Konum</th>
+                <th>Başlık</th>
+                <th>Gövde</th>
+                <th>İzlenebilirlik</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sol 1</td>
+                <td>HAZIRLIK PUANI</td>
+                <td>Doğru, hız ve tekrar birlikte hesaplanır.</td>
+                <td><code>readiness_ring.dart</code></td>
+              </tr>
+              <tr>
+                <td>Sol 2</td>
+                <td>KONU RADARI</td>
+                <td>Beş konudaki durumun tek grafikte.</td>
+                <td><code>progress</code> ekranı radar bileşeni</td>
+              </tr>
+              <tr>
+                <td>Sol 3</td>
+                <td>SERİ VE SEVİYE</td>
+                <td>Üst üste çalıştığın gün ve XP seviyen.</td>
+                <td><code>progress</code> · XP alanları</td>
+              </tr>
+              <tr>
+                <td>Sağ 1</td>
+                <td>ROZETLER</td>
+                <td>Kilometre taşlarını rozetle işaretler.</td>
+                <td><code>features/progress/widgets</code></td>
+              </tr>
+              <tr>
+                <td>Sağ 2 <em>(amber)</em></td>
+                <td>DÜELLO</td>
+                <td>10 soru, 20 saniye — <strong>yapay zekâ rakip</strong>. Günde 5 ücretsiz.</td>
+                <td><code>duel.dart:113-116</code>, <code>duel_energy.dart:52</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Alt güven şeridi</h4>
+        <p>
+          <code>SIRALAMA ZORUNLU DEĞİL</code> · <em>Topluluk tamamen isteğe bağlı.</em> —
+          <code>VERİN SENDE KALIR</code> · <em>İlerlemen hesabınla senkronlanır, paylaşılmaz.</em> —
+          <code>PAYLAŞMAK SENİN SEÇİMİN</code> · <em>Rozet kartını istersen paylaşırsın.</em>
+        </p>
+
+        <div class="cb">
+          <div class="cb-head">
+            <span class="cb-title">GPT görsel komutu — 07 İlerleme</span>
+            <button class="copy" data-t="p07">Komutu kopyala</button>
+          </div>
+          <pre id="p07">
+Create a premium vertical marketing background plate for a Google Play (Android)
+store screenshot. ARTWORK PLATE ONLY — all text and the phone's screen content are
+composited in afterwards by a separate tool.
+
+CANVAS
+  Exactly 1080 x 1920 pixels, 9:16 vertical portrait. Flat 2D marketing composition.
+
+CRITICAL — NO TEXT ANYWHERE
+  Render ZERO letters, words, numbers, digits, percentages, scores, logos or
+  glyphs of any kind, in any language, anywhere — including inside the phone and
+  inside every card. Any text at all is a failed output. Do not draw a percentage
+  ring with a value, a level number, a streak count or a leaderboard.
+
+DEVICE
+  One modern bezel-less ANDROID smartphone, upright, centred at about x=540,
+  rotated about 7 degrees around the vertical axis. Symmetric thin dark bezels,
+  small CENTRED PUNCH-HOLE front camera, subtle dark metal side rail.
+  FORBIDDEN: notch, pill cutout, Dynamic Island, iOS status bar, Apple device,
+  iPhone silhouette, smartwatch, fitness band, any second device.
+
+PHONE SCREEN — MUST BE EMPTY
+  A COMPLETELY FLAT, UNIFORM, FEATURELESS rectangle of solid #0B1523. No rings,
+  no radar chart, no bars, no badges, no medals, no flame icons, no numbers, no
+  status bar, no navigation bar, no text, no reflections, no glare, no gradient,
+  no texture. A blank placeholder to be replaced. Only the glass RIM may carry a
+  faint 1-2px highlight. Screen area roughly 470 x 1010 px, y=690 to y=1670.
+
+COMPOSITION, top to bottom
+  y 0-660     Empty background, visually quiet. Reserved for a headline block.
+  y 690-1670  The phone.
+  Left column, x 56-330: THREE stacked empty glass cards (approx 274 x 250 px).
+  Right column, x 750-1024: TWO stacked empty glass cards (approx 274 x 300 px).
+              THE LOWER RIGHT CARD IS DIFFERENT: give it a 1px amber #F5A623
+              border and a soft amber outer glow instead of the standard border.
+              It stays completely EMPTY inside.
+  y 1700-1864 ONE full-width empty glass panel, x 56 to x 1024, split into three
+              equal compartments by two thin 1px vertical dividers.
+
+GLASS CARDS — EMPTY CONTAINERS
+  Fill #0B1523 at about 92% opacity, 28px radius, very soft ambient shadow.
+  Completely EMPTY inside — no rings, no bars, no medals, no icons of any kind.
+
+COLOR AND LIGHT
+  Background base #050B16. Broad soft radial teal glow (#2DD4BF, low opacity)
+  behind the phone at about x=540, y=1000. A warm amber pool (#F5A623, very low
+  opacity) in the lower right quadrant behind the amber-bordered card, kept
+  clearly separate from the teal. A faint upward-drifting gradient behind the
+  phone suggesting ascent, achieved purely with light — no arrows, no lines,
+  no shapes.
+  Bottom fifth: very faint asphalt perspective, low contrast, no lane markings.
+  Mood: momentum, quiet achievement. Not celebratory, not loud.
+
+FORBIDDEN VISUAL ELEMENTS
+  No trophies, no cups, no medals, no crowns, no laurel wreaths, no ribbons, no
+  stars, no fire or flame icons, no lightning bolts, no arrows, no upward-trend
+  line graphs, no bar charts, no pie charts, no percentage rings, no gauges, no
+  podiums, no leaderboards, no confetti, no fireworks, no neon grids, no circuit
+  patterns, no particles, no lens flares, no bokeh, no holograms, no floating 3D
+  objects, no photographic humans, no faces, no hands, no avatars, no animals,
+  no mascot, no app-store badges, no Google logos, no rating stars.
+
+OUTPUT
+  1080x1920 PNG, sharp, no border, no rounded canvas corners, no canvas shadow,
+  no watermark, no signature, no transparency.</pre>
+        </div>
+
+        <div class="callout c-danger">
+          <span class="tag">Bu karede asla görünmeyecekler</span>
+          <p>
+            Herhangi bir yazı/rakam · kupa/madalya/konfeti · liderlik tablosu ·
+            <strong>gerçek insan yüzü veya isimli kullanıcı</strong> · “binlerce kullanıcı” ·
+            “çevrimiçi rakip” / “arkadaşınla yarış” · sıfır durumlu istatistik · uydurma puan ·
+            iPhone.
+          </p>
+        </div>
+
+        <h4>Üretim sonrası kontrol listesi — 07</h4>
+        <ul class="check">
+          <li>1080×1920 · <code>RGB</code> · &lt; 8 MB</li>
+          <li>OCR: sıfır karakter — özellikle rakam ve <code>%</code> yok</li>
+          <li>Android telefon, ortada delikli kamera</li>
+          <li>Ekran düz ve boş</li>
+          <li>Sağ alt kart amber kenarlıklı</li>
+          <li>
+            Bindirme sonrası: Düello kartında <strong>“yapay zekâ rakip”</strong> ifadesi geçiyor
+          </li>
+          <li>
+            Bindirme sonrası: <code>10 soru</code>, <code>20 saniye</code>,
+            <code>günde 5</code> koddaki değerlerle eşleşiyor
+          </li>
+          <li>Bindirme sonrası: ekran görüntüsünde hiçbir istatistik sıfır değil</li>
+          <li>
+            Bindirme sonrası: ekrandaki her sayı tek bir tutarlı durumu anlatıyor (yüzde, seri
+            noktaları, seviye birbirini doğruluyor)
+          </li>
+          <li>Hiçbir yerde başka kullanıcı adı/yüzü yok</li>
+          <li>Türkçe aksanlar tek tek doğrulandı</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <!-- ══════════════════════════════ 08 ══════════════════════════════ -->
+  <section id="a08">
+    <article class="asset">
+      <div class="asset-head">
+        <div class="slot">08</div>
+        <div class="t">
+          <h3>Çevrimdışı · hesapsız · reklamsız — dürüst kapanış</h3>
+          <p class="sub">
+            CTA değil, itiraz giderme karesi. Kurulum önündeki üç engeli tek tek kaldırır.
+          </p>
+        </div>
+      </div>
+      <div class="asset-body">
+        <dl class="kv">
+          <dt>Pazarlama amacı</dt>
+          <dd>
+            Son itirazları düşürmek: “kayıt olmam gerekecek”, “internetsiz işe yaramaz”, “reklam
+            yağacak”. Üçü de yanlış ve üçü de kanıtlanabilir.
+          </dd>
+          <dt>Başlık</dt>
+          <dd><code>HESAP YOK.</code> / <code>REKLAM YOK.</code></dd>
+          <dt>Destek metni</dt>
+          <dd>
+            <code
+              >Kayıt olmadan tamamını kullan. İçerik bir kez iner, sonra internetsiz çalışır.
+              Topluluk tamamen isteğe bağlıdır.</code
+            >
+          </dd>
+          <dt>Üst etiket</dt>
+          <dd><code>ÇEVRİMDIŞI · GİZLİLİK · İSTEĞE BAĞLI</code></dd>
+          <dt>Gerçek ekran</dt>
+          <dd>
+            <strong>Profil</strong> — misafir durumu, “Giriş yap / Kayıt ol” <em>seçeneği</em>, tema
+            anahtarı, hesap silme satırı. <code>SCREENS/offline-profile.png</code>
+          </dd>
+          <dt>Maskot</dt>
+          <dd>Hayır</dd>
+          <dt>Çıktı dosyası</dt>
+          <dd><code>apps/ASO_IMAGE/tr-TR/SOURCE/08-cevrimdisi.png</code></dd>
+          <dt>Nihai dosya</dt>
+          <dd><code>apps/ASO_IMAGE/tr-TR/FINAL/phone-08-tr-TR.png</code></dd>
+          <dt>Boyut</dt>
+          <dd>1080 × 1920 px · 9:16 · PNG · alfa yok</dd>
+          <dt>Metin</dt>
+          <dd><strong>GPT üretmez</strong></dd>
+        </dl>
+
+        <div class="callout c-danger">
+          <span class="tag">Gizlilik ifadesi — kapsam kuralı</span>
+          <p>
+            Bu kare gizlilikten söz ettiği için setin en riskli karesidir.
+            <strong>Mutlak ifade yasaktır</strong> (<code>%100</code>, <code>hiçbir veri</code>,
+            <code>asla</code>, <code>tamamen</code>). Her cümle <em>hangi veriyi</em> kapsadığını
+            söylemelidir. Söylenebilecekler, kodla birebir:
+          </p>
+          <ul style="margin-bottom: 0">
+            <li>
+              <strong>“Reklam ağı yok”</strong> — reklam SDK'sı yok, reklam kimliği okunmuyor.
+            </li>
+            <li>
+              <strong>“Hesap açmadan kullanılır”</strong> — <code>auth_controller.dart:29</code>.
+            </li>
+            <li>
+              <strong>“İçerik indirildikten sonra çevrimdışı çalışır”</strong> —
+              <code>content_repository.dart:12</code>.
+            </li>
+            <li>
+              <strong>“Topluluk isteğe bağlıdır; katılmazsan bilgin paylaşılmaz”</strong> —
+              <code>join_community_screen.dart:91</code>.
+            </li>
+            <li>
+              <strong>“Hesabını uygulama içinden silebilirsin”</strong> —
+              <code>profile_screen.dart:164</code>.
+            </li>
+          </ul>
+          <p style="margin-top: 10px">
+            <strong>Söylenemeyecekler:</strong> “verilerin cihazında kalır” (analitik, çökme raporu,
+            AI metni ve satın alma sunucuya gider), “şifrelenir ve cihazından çıkmaz”, “hiçbir veri
+            toplamıyoruz”.
+          </p>
+        </div>
+
+        <h4>Yan kartlar (bindirilecek içerik)</h4>
+        <div class="tw">
+          <table>
+            <thead>
+              <tr>
+                <th>Konum</th>
+                <th>Başlık</th>
+                <th>Gövde</th>
+                <th>İzlenebilirlik</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Sol 1</td>
+                <td>HESAP GEREKMEZ</td>
+                <td>Kayıt olmadan dersler, sorular ve sınavlar açılır.</td>
+                <td><code>auth_controller.dart:29</code></td>
+              </tr>
+              <tr>
+                <td>Sol 2</td>
+                <td>ÇEVRİMDIŞI ÇALIŞIR</td>
+                <td>İçerik bir kez iner, sonra internet gerekmez.</td>
+                <td><code>content_repository.dart:12</code></td>
+              </tr>
+              <tr>
+                <td>Sol 3</td>
+                <td>REKLAM AĞI YOK</td>
+                <td>Uygulamada hiçbir reklam SDK'sı bulunmaz.</td>
+                <td><code>pubspec.yaml</code></td>
+              </tr>
+              <tr>
+                <td>Sağ 1</td>
+                <td>TOPLULUK İSTEĞE BAĞLI</td>
+                <td>Katılmazsan hiçbir bilgin paylaşılmaz.</td>
+                <td><code>join_community_screen.dart:91</code></td>
+              </tr>
+              <tr>
+                <td>Sağ 2</td>
+                <td>HESABINI SİLEBİLİRSİN</td>
+                <td>Profil ekranından, uygulama içinden.</td>
+                <td><code>profile_screen.dart:164</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4>Alt güven şeridi</h4>
+        <p>
+          <code>KOYU VE AÇIK TEMA</code> · <em>İki temada da tam destek.</em> —
+          <code>GİRİŞ İSTEĞE BAĞLI</code> · <em>Hesap yalnız senkron ve topluluk için.</em> —
+          <code>A · B · D SINIFI</code> · <em>Sınıfını seçersin, içerik ona göre önceliklenir.</em>
+        </p>
+
+        <div class="cb">
+          <div class="cb-head">
+            <span class="cb-title">GPT görsel komutu — 08 Çevrimdışı</span>
+            <button class="copy" data-t="p08">Komutu kopyala</button>
+          </div>
+          <pre id="p08">
+Create a premium vertical marketing background plate for a Google Play (Android)
+store screenshot. ARTWORK PLATE ONLY — all text and the phone's screen content are
+composited in afterwards by a separate tool.
+
+CANVAS
+  Exactly 1080 x 1920 pixels, 9:16 vertical portrait. Flat 2D marketing composition.
+
+CRITICAL — NO TEXT ANYWHERE
+  Render ZERO letters, words, numbers, digits, logos, badges or glyphs of any
+  kind, in any language, anywhere — including inside the phone and inside every
+  card. Any text at all is a failed output.
+
+DEVICE — TWO PHONES, LIGHT AND DARK
+  A primary ANDROID smartphone upright, centre at about x=470, rotated ~8 degrees
+  around the vertical axis, spanning y=690 to y=1670. Its screen placeholder is
+  DARK.
+  A SECOND Android phone of identical industrial design at about 72% scale, to
+  the RIGHT and slightly behind, centre at about x=850, top edge about 150px
+  lower. Its screen placeholder is LIGHT — a flat solid #F4F6FB rectangle. The
+  pair communicates dark and light theme support with no text at all.
+  Both: symmetric thin dark bezels, small CENTRED PUNCH-HOLE front camera.
+  FORBIDDEN: notch, pill cutout, Dynamic Island, iOS status bar, Apple device,
+  iPhone silhouette, smartwatch, tablet, laptop.
+
+PHONE SCREENS — BOTH MUST BE EMPTY
+  Primary screen: a COMPLETELY FLAT, UNIFORM, FEATURELESS rectangle of solid
+  #0B1523. Secondary screen: the same, in solid #F4F6FB. No settings rows, no
+  toggles, no switches, no avatars, no list items, no icons, no status bar, no
+  navigation bar, no text, no reflections, no glare, no gradient, no texture.
+  Blank placeholders to be replaced. Only the glass RIM may carry a faint 1-2px
+  highlight.
+
+COMPOSITION, top to bottom
+  y 0-660     Empty background, visually quiet. Reserved for a headline block.
+  y 690-1670  The two phones as described.
+  Left column, x 56-330: THREE stacked empty glass cards (approx 274 x 250 px),
+              with a clear 26px gap from the primary phone.
+  Right column, x 750-1024: TWO stacked empty glass cards (approx 274 x 300 px),
+              in front of the secondary phone.
+  y 1700-1864 ONE full-width empty glass panel, x 56 to x 1024, split into three
+              equal compartments by two thin 1px vertical dividers.
+
+GLASS CARDS — EMPTY CONTAINERS
+  Fill #0B1523 at about 92% opacity, crisp 1px #1C2C44 border, 28px radius, very
+  soft ambient shadow. Completely EMPTY inside.
+
+COLOR AND LIGHT
+  Background base #050B16. Broad soft radial teal glow (#2DD4BF, low opacity)
+  behind the primary phone at about x=470, y=1050. A cooler, cleaner light spill
+  around the secondary light-screen phone so the two themes read as deliberate
+  rather than as an error. Keep the overall canvas dark — the light phone is an
+  accent, not a second background.
+  Bottom fifth: very faint asphalt perspective, low contrast, no lane markings.
+  Mood: settled, honest, unhurried. The quietest frame in the set.
+
+FORBIDDEN VISUAL ELEMENTS
+  No padlocks, no shields, no keys, no fingerprints, no eyes, no crossed-out
+  camera or microphone symbols, no wifi symbols, no airplane-mode symbols, no
+  cloud icons, no download arrows, no toggle switches, no checkmarks, no
+  prohibition signs, no "no ads" crossed-circle graphics, no percentage badges,
+  no charts, no neon grids, no circuit patterns, no particles, no lens flares,
+  no bokeh, no holograms, no floating 3D objects, no photographic humans, no
+  faces, no hands, no animals, no mascot, no app-store badges, no Google logos,
+  no rating stars.
+
+OUTPUT
+  1080x1920 PNG, sharp, no border, no rounded canvas corners, no canvas shadow,
+  no watermark, no signature, no transparency.</pre>
+        </div>
+
+        <div class="callout c-danger">
+          <span class="tag">Bu karede asla görünmeyecekler</span>
+          <p>
+            Herhangi bir yazı · <strong>kalkan/kilit/göz ikonu</strong> (gizlilik tiyatrosu) ·
+            <code>%100 güvenli</code> · “verilerin cihazında kalır” · “hiçbir veri toplanmaz” ·
+            “uçtan uca şifreli” · GDPR/KVKK rozeti · sertifika görseli · iPhone.
+          </p>
+        </div>
+
+        <h4>Üretim sonrası kontrol listesi — 08</h4>
+        <ul class="check">
+          <li>1080×1920 · <code>RGB</code> · &lt; 8 MB</li>
+          <li>OCR: sıfır karakter</li>
+          <li>İki telefon da Android; biri koyu, biri açık ekranlı</li>
+          <li>Tuval genel olarak koyu kalmış; açık ekran vurgu düzeyinde</li>
+          <li>Kalkan/kilit/göz ikonu yok</li>
+          <li>Bindirme sonrası: her gizlilik cümlesi <strong>kapsam</strong> belirtiyor</li>
+          <li>
+            Bindirme sonrası: hiçbir mutlak ifade yok (<code>%100</code>, <code>asla</code>,
+            <code>hiçbir</code>, <code>tamamen</code>)
+          </li>
+          <li>Bindirme sonrası: her cümle Veri Güvenliği formundaki beyanla çelişmiyor</li>
+          <li>
+            Bindirme sonrası: telefonda gerçek Profil ekranı; “Giriş yap / Kayıt ol” bir
+            <em>seçenek</em> olarak görünüyor
+          </li>
+          <li>Türkçe aksanlar tek tek doğrulandı</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <!-- ══════════════════════════ FEATURE GRAPHIC ══════════════════════════ -->
+  <section id="feature">
+    <article class="asset">
+      <div class="asset-head">
+        <div class="slot" style="font-size: 15px">ÖÇG</div>
+        <div class="t">
+          <h3>Öne Çıkan Grafik — 1024 × 500</h3>
+          <p class="sub">
+            Liste sayfasının üstünde ve tanıtım yerleşimlerinde görünür. Zorunlu varlık.
+          </p>
+        </div>
+      </div>
+      <div class="asset-body">
+        <dl class="kv">
+          <dt>Amaç</dt>
+          <dd>
+            Marka + tek cümlelik kategori tanımı. Ekran görüntüsü değildir,
+            <strong>afiş de değildir.</strong>
+          </dd>
+          <dt>Bindirilecek metin</dt>
+          <dd>
+            <code>EHLİYET AKADEMİ</code> (marka) ·
+            <code>e-Sınav biçiminde deneme, ders ve AI Koç</code> (tek satır)
+          </dd>
+          <dt>Çıktı dosyası</dt>
+          <dd><code>apps/ASO_IMAGE/tr-TR/SOURCE/feature-graphic.png</code></dd>
+          <dt>Nihai dosya</dt>
+          <dd><code>apps/ASO_IMAGE/tr-TR/FINAL/feature-graphic-1024x500.png</code></dd>
+          <dt>Boyut</dt>
+          <dd><strong>1024 × 500 px</strong> · PNG veya JPEG · ≤ 15 MB · alfa yok</dd>
+          <dt>Güvenli alan</dt>
+          <dd>
+            Merkezdeki <strong>~250 × 250 px sessiz kalmalı</strong> — tanıtım videosu varsa oynat
+            düğmesi oraya biner. Her kenarda ~64 px boş.
+          </dd>
+          <dt>Metin</dt>
+          <dd>
+            <strong>GPT üretmez</strong> — marka adı asla üretece çizdirilmez (FormAI'de marka
+            <code>FORMI</code> olarak çıktı)
+          </dd>
+        </dl>
+
+        <div class="cb">
+          <div class="cb-head">
+            <span class="cb-title">GPT görsel komutu — Öne Çıkan Grafik</span>
+            <button class="copy" data-t="pfg">Komutu kopyala</button>
+          </div>
+          <pre id="pfg">
+Create a premium horizontal banner plate for a Google Play feature graphic.
+ARTWORK PLATE ONLY — all text is composited in afterwards by a separate tool.
+
+CANVAS
+  Exactly 1024 x 500 pixels, horizontal landscape. Flat 2D marketing composition.
+
+CRITICAL — NO TEXT ANYWHERE
+  Render ZERO letters, words, numbers, logos, wordmarks or glyphs of any kind, in
+  any language, anywhere in the image. Any text at all is a failed output. Do not
+  attempt to draw a brand name.
+
+CENTRE SAFE AREA — MUST STAY QUIET
+  A 250 x 250 pixel square at the exact centre of the canvas must contain nothing
+  but smooth background gradient. No subject, no object, no bright highlight, no
+  edge, no detail may enter it. A play button will be overlaid there.
+
+COMPOSITION
+  Left third (x 0-390): reserved empty background for a brand lockup. Keep it a
+  clean, smooth, unbroken dark gradient — no objects, no glow hotspots, no detail.
+  Right third (x 640-1024): a single modern bezel-less ANDROID smartphone, shown
+  at an angle, tilted about 15 degrees, partially cropped by the right canvas
+  edge so roughly two thirds of the device is visible. Small CENTRED PUNCH-HOLE
+  front camera, symmetric thin dark bezels.
+  Its screen is a COMPLETELY FLAT, UNIFORM, FEATURELESS rectangle of solid
+  #0B1523 — no interface, no icons, no text, no reflections, no glare.
+  Between them: only background and light.
+  FORBIDDEN: notch, pill cutout, Dynamic Island, iOS status bar, Apple device,
+  iPhone silhouette, smartwatch, any second device.
+
+COLOR AND LIGHT
+  Background base #050B16. A wide, soft radial teal glow (#2DD4BF at low opacity)
+  originating behind the phone on the right and sweeping left, thinning out before
+  it reaches the left third, so the left stays dark and readable for white type.
+  One narrow warm amber (#F5A623) rim light along the phone's top-right edge.
+  Along the bottom edge, a very faint suggestion of an asphalt road surface
+  receding toward the horizon — extremely low contrast, no lane markings, no
+  signs, no vehicles, no horizon line.
+
+FORBIDDEN VISUAL ELEMENTS
+  No steering wheels, no cars, no traffic signs, no road markings, no traffic
+  lights, no owls, no birds, no animals, no mascots, no graduation caps, no
+  books, no certificates, no licence cards, no photographic humans, no faces,
+  no hands, no neon grids, no circuit patterns, no particles, no lens flares,
+  no bokeh, no holograms, no floating 3D objects, no charts, no app-store
+  badges, no Google logos, no rating stars, no borders, no frames.
+
+OUTPUT
+  1024x500 PNG, sharp, edge-to-edge full bleed, no border, no rounded corners,
+  no canvas shadow, no watermark, no signature, no transparency.</pre>
+        </div>
+
+        <h4>Üretim sonrası kontrol listesi — Öne Çıkan Grafik</h4>
+        <ul class="check">
+          <li>Tam 1024×500 · <code>RGB</code> · ≤ 15 MB</li>
+          <li>OCR: sıfır karakter</li>
+          <li>Merkez 250×250 px bölgesi tamamen sessiz</li>
+          <li>Her kenarda ≥ 64 px sessiz alan</li>
+          <li>Telefon Android, ortada delikli kamera</li>
+          <li>Sol üçte bir düz ve koyu — beyaz tipografi için hazır</li>
+          <li>
+            Bindirme sonrası: marka <code>EHLİYET AKADEMİ</code> birebir doğru,
+            <code>İ</code> harfleri noktalı
+          </li>
+          <li>Bindirme sonrası: hiçbir sayı, fiyat veya sonuç vaadi yok</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <!-- ══════════════════════════ APP ICON ══════════════════════════ -->
+  <section id="icon">
+    <article class="asset">
+      <div class="asset-head">
+        <div class="slot" style="font-size: 15px">SGE</div>
+        <div class="t">
+          <h3>Uygulama Simgesi — 512 × 512</h3>
+          <p class="sub">
+            Arama sonucunda, ana ekranda ve her bildirimde görünür. Tek küresel varlık.
+          </p>
+        </div>
+      </div>
+      <div class="asset-body">
+        <div class="callout c-danger">
+          <span class="tag">Simgenin dört ölümcül hatası</span>
+          <ol style="margin-bottom: 0">
+            <li>
+              <strong>Önceden yuvarlatılmış köşe veya kenarlık.</strong> Play kendi maskesini ve
+              gölgesini uygular. Önceden yuvarlatılmış bir simge <em>iki kez</em> maskelenir:
+              kenarlık dört kopuk yaya dönüşür ve maskenin arkasından kare siyah köşeler görünür.
+            </li>
+            <li>
+              <strong>Metin.</strong> 512 px'te okunan üç kelime, 48 px'te bir lekedir. Ayrıca
+              uygulama adını tekrarlar.
+            </li>
+            <li>
+              <strong>Yerel ayara göre iki sürüm.</strong> Play <strong>tek</strong> simge saklar;
+              simge yerelleştirilemez.
+            </li>
+            <li>
+              <strong>Dışa aktarım artığı.</strong> FormAI'de simgenin alt kenarında 12 satırlık saf
+              beyaz bant vardı ve kimse fark etmedi; Play'in yuvarlak maskesi bunu markanın altında
+              beyaz bir yay olarak gösterirdi.
+              <strong>Tasarımı değil, pikselleri doğrulayın.</strong>
+            </li>
+          </ol>
+        </div>
+
+        <dl class="kv">
+          <dt>Marka işareti</dt>
+          <dd>
+            <strong>Üç kollu direksiyon amblemi</strong> — uygulamanın kendi çizdiği tekrar eden
+            marka glifi (<code>lib/design/brand.dart</code> · <code>SteeringWheelIcon</code>)
+          </dd>
+          <dt>Neden bu</dt>
+          <dd>
+            Metin içermez, 48 px'te ayırt edilir, uygulama içindeki amblemle birebir aynıdır ve dile
+            bağlı değildir — yanlış çevrilemez.
+          </dd>
+          <dt>Baykuş neden değil</dt>
+          <dd>
+            Maskot 48 px'te ayrıntısını kaybeder ve gözlük/kep detayı lekeye döner. Baykuş ekran
+            görüntülerinde ve uygulama içinde kalır.
+          </dd>
+          <dt>Çıktı dosyası</dt>
+          <dd><code>apps/ASO_IMAGE/tr-TR/SOURCE/icon-512.png</code></dd>
+          <dt>Nihai dosya</dt>
+          <dd><code>apps/ASO_IMAGE/tr-TR/FINAL/app-icon-512.png</code></dd>
+          <dt>Boyut</dt>
+          <dd><strong>Tam 512 × 512 px</strong> · PNG · ≤ 1 MB · alfa yok · tam kare, taşmalı</dd>
+        </dl>
+
+        <div class="cb">
+          <div class="cb-head">
+            <span class="cb-title">GPT görsel komutu — Uygulama Simgesi</span>
+            <button class="copy" data-t="pic">Komutu kopyala</button>
+          </div>
+          <pre id="pic">
+Create a flat vector app icon for a Google Play listing.
+
+CANVAS
+  Exactly 512 x 512 pixels. A FULL-BLEED SQUARE. The artwork fills every pixel
+  edge to edge, corner to corner.
+
+CRITICAL — NO ROUNDING, NO BORDER, NO SHADOW
+  Do NOT round the corners. Do NOT draw a border, outline, stroke or frame around
+  the icon. Do NOT add a drop shadow, bevel or emboss to the canvas. Google Play
+  applies its own rounded mask and its own shadow; anything pre-applied is masked
+  twice and breaks. The four corners must be filled with plain background colour.
+
+CRITICAL — NO TEXT
+  Render ZERO letters, words, numbers or glyphs. No app name, no tagline, no
+  monogram lettering, no signature, no watermark.
+
+SUBJECT
+  One centred, flat, geometric STEERING WHEEL emblem, drawn as a simple vector
+  mark: a bold circular ring, a solid round central hub, and exactly THREE thick
+  spokes radiating from the hub to the ring — one pointing straight down, and two
+  pointing to the upper left and upper right (roughly 210 and 330 degrees). The
+  strokes are thick and even, with rounded caps. The mark is clean, symmetrical
+  and instantly readable as a steering wheel.
+  The emblem occupies roughly 300 x 300 pixels centred on the canvas, leaving
+  about 106 pixels of clear space on every side. All meaning must sit inside the
+  central 400 x 400 pixel region, because Play's mask clips the corners.
+
+COLOUR
+  Background: a deep near-black square, #050B16, with a very soft radial glow of
+  #0B2B2A rising from the centre — subtle, never a visible ring or edge.
+  Emblem: a bright teal, #2DD4BF, flat and solid with no gradient inside the
+  strokes. Maximum contrast against the dark background.
+
+STYLE
+  Flat vector. No 3D, no perspective, no photorealism, no metal texture, no
+  chrome, no reflections, no glass, no highlights on the strokes, no inner
+  shadow, no grain, no noise.
+
+FORBIDDEN
+  No text of any kind. No human figures, no faces, no hands, no animals, no owls,
+  no birds, no mascots. No cars, no roads, no traffic signs, no traffic lights,
+  no licence cards, no certificates, no graduation caps, no books. No neon glow
+  outlines, no circuit patterns, no particles, no sparkles. No rounded corners,
+  no border, no frame, no shadow. No Google logo, no Play badge, no imitation of
+  any existing app icon. No fine detail or thin lines that vanish at 48 pixels.
+
+OUTPUT
+  512x512 PNG, full bleed, sharp, no transparency, no watermark, no signature.</pre>
+        </div>
+
+        <h4>Üretim sonrası kontrol listesi — Simge</h4>
+        <ul class="check">
+          <li>Tam 512×512 · <code>RGB</code> · ≤ 1 MB</li>
+          <li>OCR: sıfır karakter</li>
+          <li><strong>Köşeler yuvarlatılmamış</strong> — dört köşe pikseli de zemin rengi</li>
+          <li>Kenarlık, çerçeve veya gölge yok</li>
+          <li>
+            <strong>Piksel bütünlüğü:</strong> hiçbir kenarda saf beyaz/siyah bant yok (dış satır ve
+            sütunlar taranır)
+          </li>
+          <li>Dört köşe örneği hedeflenen zemin rengiyle eşleşiyor</li>
+          <li>Anlam taşıyan her şey merkezdeki 400×400 içinde</li>
+          <li><strong>48×48'e küçültüldüğünde işaret hâlâ tanınıyor</strong></li>
+          <li>Uygulama içi başlatıcı simgesiyle kavramsal olarak tutarlı</li>
+          <li>Tüm yerel ayarlar için <strong>tek</strong> simge — bayt bazında aynı dosya</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <!-- ══════════════════════════ LISTING COPY ══════════════════════════ -->
+  <section id="listing">
+    <h2>6 · Play Store liste metni (tr-TR)</h2>
+
+    <div class="callout c-info">
+      <span class="tag">Google Play'de anahtar kelime alanı yoktur</span>
+      <p>
+        Apple'daki 100 karakterlik kutu Play'de <strong>yok</strong>. Sıralama sinyalleri
+        <strong>uygulama adı</strong>, <strong>kısa açıklama</strong> ve
+        <strong>uzun açıklamadaki terim sıklığı</strong>ndan gelir. Dolayısıyla anahtar kelimeler,
+        insanın okuyacağı metnin <em>içine</em> doğal biçimde yerleşmek zorundadır — saklanacak bir
+        yer yok. Aşağıdaki anahtar kelime listesi metinden <em>türetilmiştir</em>, metne
+        <em>enjekte edilmemiştir</em>; bu sıra, doldurma (keyword stuffing) riskine karşı asıl
+        korumadır.
+      </p>
+    </div>
+
+    <h3>Uygulama adı — 30 karakter sınırı</h3>
+    <div class="cb">
+      <div class="cb-head">
+        <span class="cb-title">Uygulama adı · 30/30 karakter</span>
+        <button class="copy" data-t="ln">Kopyala</button>
+      </div>
+      <pre id="ln">Ehliyet Akademi: Deneme Sınavı</pre>
+    </div>
+    <p>
+      <strong>Neden bu.</strong> Marka önde (<code>android:label</code> =
+      <code>Ehliyet Akademi</code>, kavramsal tutarlılık korunur), ardından kategorideki en yüksek
+      hacimli arama terimi. 30 karakterin tamamı kullanılır — ad, karakter başına en çok ağırlık
+      taşıyan ve en kısa alandır.
+    </p>
+    <p>
+      <strong>Yedek seçenekler:</strong> <code>Ehliyet Akademi: e-Sınav</code> (24) ·
+      <code>Ehliyet Akademi — Sınav</code> (23). <strong>Kullanılamaz:</strong>
+      <code>Ehliyet Akademi — B Sınıfı Sınav</code> (A ve D sınıfları da destekleniyor); adda
+      <code>MEB</code>, <code>Resmî</code>, <code>1 Numara</code>, <code>%100</code> geçemez.
+    </p>
+
+    <h3>Kısa açıklama — 80 karakter sınırı</h3>
+    <div class="cb">
+      <div class="cb-head">
+        <span class="cb-title">Kısa açıklama · 74/80 karakter</span>
+        <button class="copy" data-t="ls">Kopyala</button>
+      </div>
+      <pre id="ls">1.605 soru, 29 ders ve gerçek e-Sınav biçiminde denemeler. Hesap gerekmez.</pre>
+    </div>
+    <p>
+      İki doğrulanabilir sayı, biçim iddiası ve en güçlü itiraz gidericisi — hepsi 74 karakterde.
+      <strong>Karakter sayısı elle tahmin edilmez, betikle sayılır</strong> (Türkçe çok baytlı; bayt
+      değil karakter sayılır).
+    </p>
+
+    <h3>Tam açıklama — 4.000 karakter sınırı</h3>
+    <p>
+      Yapı: <strong>fiil öncelikli başlıklarla özellik blokları</strong>, her biri sevk edilen tek
+      bir özelliğe izlenebilir; sonda iki dürüstlük bölümü. Bu yapı izlenebilirlik denetimini
+      önemsizleştirir: bir başlık, bir özellik, bir dosya.
+    </p>
+
+    <div class="cb">
+      <div class="cb-head">
+        <span class="cb-title">Tam açıklama · 3.056/4.000 karakter</span>
+        <button class="copy" data-t="ll">Kopyala</button>
+      </div>
+      <pre id="ll">
+Ehliyet Akademi, e-Sınav'a hazırlananlar için yazılmış bir çalışma uygulamasıdır. A, B ve D sınıfı adayları için ders, soru ve deneme sınavı bir arada — hesap açmadan, internet olmadan da.
+
+GERÇEK SINAV BİÇİMİNDE DENEME ÇÖZ
+50 soru, 45 dakika, 35 doğru geçme eşiği. Soru dağılımı sınavdaki gibi: 23 trafik, 12 ilk yardım, 9 motor, 6 trafik adabı. Süre geri sayar, sınav yarım kalırsa kaldığın yerden devam eder.
+
+1.605 SORUYU ÇÖZ, NEDENİNİ OKU
+Trafik 396, motor 329, pratik 305, ilk yardım 303, trafik adabı 272 soru. Her sorunun çözümü var; yanlış yaptığında hangi şıkkın neden yanlış olduğunu da okursun. Sorular kolay, orta ve zor olarak etiketlidir.
+
+İŞARETİ GÖREREK ÖĞREN
+121 trafik işareti, 60 gösterge paneli ikaz ışığı ve 112 araç parçası tek tek anlatılır. Görselli sorular bu kataloglardaki çizimlerden cihazında üretilir — işareti, ikaz ışığını ve parçayı görerek tanırsın.
+
+29 DERSİ ŞEMA ÜZERİNDE OKU
+Trafik, ilk yardım, araç tekniği ve trafik adabı dersleri. 19 ders konuyu çizim üzerinde gösterir: kavşakta geçiş önceliği, takip mesafesi, kanama kontrolü. A ve D sınıfı için ortak teorinin üstüne sınıfına özel dersler eklenir.
+
+HER GÜN YENİ SINAV ÇÖZ
+Sınav Arşivi'nde altı kategori var: Genel Sınav, Trafik ve Çevre Bilgisi, İlk Yardım Bilgisi, Motor ve Araç Tekniği, Trafik Adabı, Görsel Sorular. Her tarihin kendi sınavı vardır. İlk üç sınav ücretsizdir.
+
+TAKILDIĞIN YERİ AI KOÇ'A SOR
+Sorunu kendi cümlenle yaz. AI Koç cevabı uygulamanın ders ve soru içeriğine dayandırır, dayandığı kaynağı gösterir ve içerikte karşılığı yoksa uydurmaz. Yanıtlar bir yapay zekâ modeli tarafından üretilir; kesin ve güncel kural için MEB/MTSK esastır.
+
+İLERLEMENİ ÖLÇ
+Hazırlık puanın her çözdüğün soruyla güncellenir. Konu radarı beş konudaki durumunu gösterir; seri, seviye ve rozetler devam etmeni kolaylaştırır. Düello'da 10 soruluk kısa turlarda yapay zekâ rakibe karşı kendini sınarsın.
+
+ÇALIŞMA PLANINI KUR
+Açılışta ehliyet sınıfını, sınava kalan süreni ve daha önce girip girmediğini sorarız. Günlük soru hedefin ve bugünkü planın buna göre kurulur. İstersen çalışma hatırlatması alırsın.
+
+NELER ÜCRETSİZ
+Dersler, soru bankası, görsel sorular, deneme sınavı ve AI Koç'un günlük hakkı ücretsizdir. Sınav Arşivi'nde ilk üç sınav ücretsiz açılır. Premium; arşivin tamamını, premium dersleri ve daha geniş AI Koç kullanımını açar. Fiyatı ve paketleri Google Play üzerinde görürsün.
+
+GİZLİLİK VE HESAP
+Uygulamanın tamamı hesap açmadan kullanılabilir; hesap yalnız ilerleme senkronu, davet ve topluluk için gerekir. Topluluk isteğe bağlıdır: katılmazsan hiçbir bilgin paylaşılmaz, katılırsan yalnız seçtiğin görünen ad, avatar ve çalışma istatistiklerin görünür — e-posta ve gerçek adın görünmez. Hesabını uygulama içinden silebilirsin. Uygulamada reklam ağı yoktur.
+
+BU UYGULAMA NE DEĞİL
+Resmî bir kurumun uygulaması değildir; MEB veya MTSK ile bağlantısı yoktur. Sınavı geçeceğini ya da ehliyet alacağını garanti etmez. İlk yardım içeriği sınav konusudur, tıbbi tavsiye değildir. Sorular sınav biçimini örnek alır; çıkmış resmî sınav kâğıtları değildir.</pre>
+    </div>
+
+    <h3>Metnin izlenebilirliği</h3>
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>Metindeki iddia</th>
+            <th>Kanıt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>50 soru · 45 dakika · 35 doğru · 23/12/9/6</td>
+            <td>canlı <code>question-bank</code> → <code>blueprint</code></td>
+          </tr>
+          <tr>
+            <td>1.605 soru; 396/329/305/303/272</td>
+            <td>canlı <code>question-bank</code>, konu sayımı</td>
+          </tr>
+          <tr>
+            <td>kolay/orta/zor etiketi</td>
+            <td>aynı yanıt, <code>difficulty</code> alanı</td>
+          </tr>
+          <tr>
+            <td>121 işaret · 60 ikaz ışığı · 112 parça</td>
+            <td>canlı <code>content-snapshot</code> + <code>dash_assets.dart</code></td>
+          </tr>
+          <tr>
+            <td>29 ders · 19'u şemalı</td>
+            <td>canlı <code>content-snapshot</code>, <code>figureId</code> sayımı</td>
+          </tr>
+          <tr>
+            <td>A ve D'ye özel dersler</td>
+            <td><code>lesson.licences</code>: 19 ortak + 5 A + 5 D</td>
+          </tr>
+          <tr>
+            <td>6 kategori · ilk 3 ücretsiz</td>
+            <td><code>exam_library.dart:25-44</code>, <code>kFreeExamCount = 3</code></td>
+          </tr>
+          <tr>
+            <td>AI kaynak gösterir, uydurmaz</td>
+            <td><code>coach_api.dart:76</code> · <code>grounded</code> kapısı</td>
+          </tr>
+          <tr>
+            <td>“kesin kural için MEB/MTSK esastır”</td>
+            <td><code>coach_screen.dart:300</code> — uygulamanın kendi dizesiyle birebir</td>
+          </tr>
+          <tr>
+            <td>Düello: 10 soru, yapay zekâ rakip</td>
+            <td><code>duel.dart:57-116</code></td>
+          </tr>
+          <tr>
+            <td>Onboarding: sınıf, süre, deneyim</td>
+            <td><code>onboarding_screen.dart:94-145</code></td>
+          </tr>
+          <tr>
+            <td>Hesapsız kullanım</td>
+            <td><code>auth_controller.dart:29</code></td>
+          </tr>
+          <tr>
+            <td>Topluluk opt-in; e-posta/gerçek ad görünmez</td>
+            <td><code>join_community_screen.dart:91</code></td>
+          </tr>
+          <tr>
+            <td>Uygulama içinden hesap silme</td>
+            <td><code>profile_screen.dart:164</code></td>
+          </tr>
+          <tr>
+            <td>Reklam ağı yok</td>
+            <td><code>pubspec.yaml</code> — reklam SDK'sı yok</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout c-ok">
+      <span class="tag">Metindeki bilinçli tercihler</span>
+      <ul style="margin-bottom: 0">
+        <li>
+          <strong>Fiyat yazılmadı.</strong> Belgeler 399 TL diyor, mağaza 479,99 TL alıyor; fiyatı
+          Play'in kendi alanı gösterir.
+        </li>
+        <li><strong>“Ücretsiz deneme” yazılmadı.</strong> Hiçbir SKU deneme taşımıyor.</li>
+        <li>
+          <strong>Video sayısı yazılmadı.</strong> 7 klip 10–14 saniye; “video ders” beklentisi
+          yaratmaz.
+        </li>
+        <li><strong>Sesli anlatım yazılmadı.</strong> Ses dosyası yok.</li>
+        <li>
+          <strong>Gizlilik cümleleri kapsamlı.</strong> “Reklam ağı yoktur” denildi; “veriniz
+          cihazınızda kalır” denilmedi — analitik, çökme raporu, AI metni ve satın alma sunucuya
+          gidiyor.
+        </li>
+        <li>
+          <strong>Kapanış bölümü var.</strong> “Bu uygulama ne değil” paragrafı MEB bağlantısını,
+          başarı garantisini ve tıbbi tavsiyeyi tek tek reddediyor. Bu paragraf, kaldırılırsa açığa
+          çıkan dört ayrı riski birden kapatıyor.
+        </li>
+      </ul>
+    </div>
+
+    <h3>Anahtar kelime stratejisi (metinden türetilmiştir)</h3>
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>Katman</th>
+            <th>Terimler</th>
+            <th>Nerede geçiyor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Birincil</strong></td>
+            <td>ehliyet, ehliyet sınavı, deneme sınavı, e-sınav</td>
+            <td>Ad + kısa açıklama + ilk 200 karakter</td>
+          </tr>
+          <tr>
+            <td><strong>İkincil</strong></td>
+            <td>
+              ehliyet soruları, trafik işaretleri, ilk yardım, motor ve araç tekniği, trafik adabı,
+              sınav arşivi
+            </td>
+            <td>Blok başlıkları, her biri 2–3 kez</td>
+          </tr>
+          <tr>
+            <td><strong>Uzun kuyruk</strong></td>
+            <td>
+              gösterge paneli ikaz ışıkları, geçiş önceliği, takip mesafesi, A sınıfı motosiklet, D
+              sınıfı otobüs, görsel sorular, çevrimdışı çalışma
+            </td>
+            <td>Gövde cümleleri içinde birer kez</td>
+          </tr>
+          <tr>
+            <td><strong>Kullanılmayacak</strong></td>
+            <td>
+              <s>MEB onaylı</s> · <s>resmî sınav soruları</s> · <s>çıkmış sorular</s> ·
+              <s>garantili geçiş</s> · <s>ücretsiz ehliyet</s> · <s>1 numaralı</s>
+            </td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Sürüm notları — v1.0.0</h3>
+    <div class="cb">
+      <div class="cb-head">
+        <span class="cb-title">What's new · tr-TR</span>
+        <button class="copy" data-t="lw">Kopyala</button>
+      </div>
+      <pre id="lw">
+Ehliyet Akademi'nin ilk sürümü: 1.605 soru, 29 ders, 121 trafik işareti, e-Sınav biçiminde deneme sınavları, Sınav Arşivi, görsel sorular, AI Koç, ilerleme takibi ve çevrimdışı çalışma.</pre>
+    </div>
+
+    <h3>Console'a girmeden önce</h3>
+    <ul class="check">
+      <li>Karakter sayıları <strong>betikle</strong> doğrulandı (30 / 80 / 4.000)</li>
+      <li>Metindeki her sayı canlı API ile yeniden karşılaştırıldı — banka değişmiş olabilir</li>
+      <li>Metinde fiyat, deneme, kullanıcı sayısı, yıldız veya sıralama yok</li>
+      <li>Metinde MEB/MTSK yalnız <em>reddedici</em> bağlamda geçiyor</li>
+      <li>Gizlilik cümleleri Veri Güvenliği formuyla satır satır karşılaştırıldı</li>
+      <li>“Bu uygulama ne değil” paragrafı kaldırılmadı</li>
+      <li>
+        <code>STORE_LISTING.md</code> geçersiz sayıldı (19 ders / 399 TL / “kullanıcı etkileşimi
+        yok” yanlış)
+      </li>
+    </ul>
+  </section>
+
+  <!-- ══════════════════════════ PIPELINE ══════════════════════════ -->
+  <section id="pipeline">
+    <h2>7 · ÜRETİM SONRASI CLI DOĞRULAMA</h2>
+
+    <div class="callout c-danger">
+      <span class="tag">Bu bölüm ŞİMDİ çalıştırılmaz</span>
+      <p>
+        Burası, <strong>görseller üretildikten sonra</strong> ayrı bir istemle devreye girecek
+        ajanın şartnamesidir. Bu belgeyi hazırlayan aşamada hiçbir görsel üretilmedi ve hiçbir boru
+        hattı çalıştırılmadı. Görseller <code>SOURCE/</code> altına konduğunda, aşağıdaki sıra aynen
+        uygulanır.
+      </p>
+    </div>
+
+    <p>
+      Bu bölüm
+      <code>/home/emre/Downloads/FormAI-FitnessKoçu/docs/PLAY_STORE_ASO_LESSONS_LEARNED.md</code>
+      belgesinin §5.3, §6, §8, §9 ve §14 bölümlerinden çıkarılan işlemsel bilgiyi taşır. Oradaki tek
+      cümlelik özet burada da geçerlidir: <strong>görünmeyen kusurlar betik ister.</strong> Alfa
+      kanalını, bayt bazında yinelenen bir dosyayı veya simgenin kenarındaki beyaz bandı insan gözü
+      görmez.
+    </p>
+
+    <h3>7.1 · Boru hattı ilkesi</h3>
+    <div class="cb">
+      <div class="cb-head">
+        <span class="cb-title">Aşama sırası</span>
+        <button class="copy" data-t="stg">Kopyala</button>
+      </div>
+      <pre id="stg">
+ÜRET  →  DENETLE  →  BİNDİR  →  ONAR  →  NORMALLEŞTİR  →  DOĞRULA  →  DIŞA AKTAR
+ GPT      kod+politika   metin+ekran   piksel     1080×1920      bağımsız      FINAL/
+          denetimi       yerleştirme   düzeltme   RGB, sRGB      denetleyici</pre>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>Aşama</th>
+            <th>Ne olur</th>
+            <th>Neden burada</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>ÜRET</strong></td>
+            <td>Bu kütüphanedeki komutlarla metinsiz plakalar üretilir → <code>SOURCE/</code></td>
+            <td>Kaynak <strong>salt okunurdur</strong>; boru hattı ona asla yazmaz</td>
+          </tr>
+          <tr>
+            <td><strong>DENETLE</strong></td>
+            <td>Biçim taraması + kaynak koda karşı iddia denetimi</td>
+            <td>Onarıma yatırım yapmadan <em>önce</em> neyin yanlış olduğunu bil</td>
+          </tr>
+          <tr>
+            <td><strong>BİNDİR</strong></td>
+            <td>
+              Türkçe tipografi + gerçek ekran görüntüleri
+              <strong>doğal çözünürlükte</strong> yerleştirilir
+            </td>
+            <td>Metnin ve arayüzün tek doğru kaynağı burada devreye girer</td>
+          </tr>
+          <tr>
+            <td><strong>ONAR</strong></td>
+            <td>Kalan piksel kusurları <strong>doğal çözünürlükte</strong> düzeltilir</td>
+            <td>Yeniden örneklemeden <em>önce</em> — aşağıya bakın</td>
+          </tr>
+          <tr>
+            <td><strong>NORMALLEŞTİR</strong></td>
+            <td>1080×1920'e ölçekle, alfayı düzleştir, sRGB'ye çevir, üst veriyi sil</td>
+            <td>Tüm set için tek bir kanonik dönüşüm</td>
+          </tr>
+          <tr>
+            <td><strong>DOĞRULA</strong></td>
+            <td>Boru hattından <strong>bağımsız</strong> denetleyici çalışır</td>
+            <td>Kendi çıktısını doğrulayan araç yalnız kendisiyle tutarlı olduğunu kanıtlar</td>
+          </tr>
+          <tr>
+            <td><strong>DIŞA AKTAR</strong></td>
+            <td>Yuva sıralı dosya adlarıyla <code>FINAL/</code> yazılır</td>
+            <td>Sahip klasörü Console'a sürükler</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout c-warn">
+      <span class="tag">Neden onarım yeniden örneklemeden ÖNCE</span>
+      <p>
+        Yükseltmeden <em>sonra</em> uygulanan bir yama, yeniden örneklemenin yumuşattığı çevresine
+        karşı piksel keskinliğinde durur ve <strong>bariz bir yapıştırma gibi okunur</strong>. Önce
+        onarmak, yamanın ve çevresinin aynı Lanczos geçişinden geçip aynı keskinlikte inmesini
+        sağlar. FormAI'de bu ölçüldü: doğal kaynak bölgesi ile 1080 çıktı arasındaki kenar-enerji
+        oranı <strong>1,055</strong> — kalibre edilmiş unsharp geçişi, yeniden örneklemenin
+        götürdüğünü geri verdi ve yerel bir keskinlik süreksizliği oluşmadı.
+      </p>
+    </div>
+
+    <h3>7.2 · Araç zinciri kurulumu (sudo gerekmez)</h3>
+    <div class="cb">
+      <div class="cb-head">
+        <span class="cb-title">Kurulum</span> <button class="copy" data-t="setup">Kopyala</button>
+      </div>
+      <pre id="setup">
+T=~/.cache/ehliyet-play-tools
+mkdir -p $T/pkg && cd $T/pkg
+
+# Debian paketleri özel bir önek altına root olmadan açılır
+for p in optipng pngcrush libimage-exiftool-perl tesseract-ocr tesseract-ocr-tur \
+         fonts-inter fonts-dejavu-core; do
+  apt-get download $p
+done
+for d in *.deb; do dpkg-deb -x "$d" $T/prefix; done
+
+# pip modern dağıtımlarda PEP 668 ile engelli; venv desteklenen yol
+python3 -m venv $T/venv
+$T/venv/bin/pip install pillow numpy pyoxipng pytesseract
+
+cat > $T/env.sh &lt;&lt;'EOF'
+T=~/.cache/ehliyet-play-tools
+export PATH="$T/prefix/usr/bin:$PATH"
+export LD_LIBRARY_PATH="$T/prefix/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH"
+export PERL5LIB="$T/prefix/usr/share/perl5:$PERL5LIB"
+export TESSDATA_PREFIX="$T/prefix/usr/share/tesseract-ocr/5/tessdata"
+export FONTDIR="$T/prefix/usr/share/fonts/opentype/inter"
+export PY="$T/venv/bin/python"
+EOF</pre>
+    </div>
+
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>Araç</th>
+            <th>Görev</th>
+            <th>Karar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Pillow</strong></td>
+            <td>Aç, incele, yeniden örnekle, bindir</td>
+            <td>Zorunlu — boru hattının omurgası</td>
+          </tr>
+          <tr>
+            <td><strong>numpy</strong></td>
+            <td>Piksel matematiği: inpaint, ekstrapolasyon, kenar taraması</td>
+            <td>Zorunlu</td>
+          </tr>
+          <tr>
+            <td><strong>oxipng</strong> (<code>pyoxipng</code>)</td>
+            <td>Kayıpsız yeniden sıkıştırma</td>
+            <td>Zorunlu</td>
+          </tr>
+          <tr>
+            <td><strong>exiftool</strong></td>
+            <td>EXIF/XMP temizliği</td>
+            <td>
+              Zorunlu — optimizasyondan <strong>önce ve sonra</strong> çalıştırılır; optimize
+              ediciler yığın yeniden ekleyebilir
+            </td>
+          </tr>
+          <tr>
+            <td><strong>tesseract</strong> + <code>tur</code> dil paketi</td>
+            <td>OCR: üretilen plakada metin var mı, bindirilen metin doğru mu</td>
+            <td>
+              Zorunlu — bu projede FormAI'dekinden <strong>daha kritik</strong>, çünkü plakalar
+              metinsiz olmalı
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Inter</strong> / <strong>DejaVu</strong></td>
+            <td>Türkçe tam kapsamlı tipografi</td>
+            <td>Zorunlu — bindirme aşaması buna dayanıyor</td>
+          </tr>
+          <tr>
+            <td><strong>ImageMagick</strong></td>
+            <td>İnceleme kırpmaları, kontakt sayfaları</td>
+            <td>İnceleme için; çıktı üretiminde kullanılmaz</td>
+          </tr>
+          <tr>
+            <td><strong>pngquant</strong></td>
+            <td>—</td>
+            <td>
+              <strong>Kasıtlı olarak kullanılmaz.</strong> Kayıplıdır (palet nicemleme); bunlar
+              degrade ağırlıklı koyu kareler, bantlaşma hemen görünür. 8 MB sınırına karşı bol pay
+              var. <em>Aracın kurulu olması kullanılma sebebi değildir.</em>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>7.3 · Betikler ve yolları</h3>
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>Dosya</th>
+            <th>Sorumluluk</th>
+            <th>Sürümlenir mi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>scripts/aso/build_play_assets.py</code></td>
+            <td>
+              DENETLE → BİNDİR → ONAR → NORMALLEŞTİR → DIŞA AKTAR. <code>SOURCE/</code> ve
+              <code>SCREENS/</code>'i okur, <strong>asla yazmaz</strong>; <code>FINAL/</code>'i her
+              çalıştırmada sıfırdan üretir; sonunda <code>selfcheck()</code> ile yeniden ölçer.
+            </td>
+            <td><strong>Evet</strong></td>
+          </tr>
+          <tr>
+            <td><code>scripts/aso/validate_play_assets.py</code></td>
+            <td>
+              Bağımsız uygunluk denetleyicisi. Her çıktı dosyasını yeniden açar ve Play kurallarını
+              sıfırdan doğrular. <code>--json</code> ile CI'ya bağlanır.
+            </td>
+            <td><strong>Evet</strong></td>
+          </tr>
+          <tr>
+            <td><code>scripts/aso/copy_deck.json</code></td>
+            <td>
+              Bindirilecek <strong>tüm Türkçe dizelerin tek doğru kaynağı</strong> — başlıklar, kart
+              metinleri, güven şeridi. OCR karşılaştırması buna göre yapılır.
+            </td>
+            <td><strong>Evet</strong></td>
+          </tr>
+          <tr>
+            <td><code>scripts/aso/README.md</code></td>
+            <td>Araç zinciri kurulumu, her aracın gerekçesi, yeni bir onarımın nasıl eklendiği</td>
+            <td><strong>Evet</strong></td>
+          </tr>
+          <tr>
+            <td><code>apps/ASO_IMAGE/**</code></td>
+            <td>Görseller</td>
+            <td><strong>Hayır</strong> — <code>.gitignore:42</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      <strong>Ayrım kasıtlı:</strong> betikler sürümlenir, ikili dosyalar sürümlenmez. Set herhangi
+      bir makinede boru hattı yeniden çalıştırılarak üretilir.
+    </p>
+
+    <h3>7.4 · DENETLE aşaması — insan bakmadan önce çalışan taramalar</h3>
+    <p>
+      Bunlar saniyeler sürer ve insan incelemesinin <strong>göremeyeceği</strong> kusurları yakalar.
+      FormAI'de yinelenen dosya (<code>US/008</code> ≡ <code>US/007</code>) ve 18 varlığın
+      tamamındaki alfa kanalı böyle bulundu.
+    </p>
+    <div class="cb">
+      <div class="cb-head">
+        <span class="cb-title">Otomatik ön tarama</span>
+        <button class="copy" data-t="scan">Kopyala</button>
+      </div>
+      <pre id="scan">
+. ~/.cache/ehliyet-play-tools/env.sh
+
+# 1 — biçim, boyut, oran, mod, dosya boyutu
+$PY - &lt;&lt;'PY'
+from PIL import Image; import glob, os, hashlib
+for p in sorted(glob.glob("apps/ASO_IMAGE/tr-TR/SOURCE/*.png")):
+    im = Image.open(p); b = open(p,'rb').read()
+    w, h = im.size
+    print(f"{os.path.basename(p):26s} {w}x{h} mode={im.mode} "
+          f"ratio={h/w:.4f} {len(b)/1048576:.2f}MB "
+          f"md5={hashlib.md5(b).hexdigest()[:12]}")
+PY
+
+# 2 — yinelenen dosya (bayt bazında)
+md5sum apps/ASO_IMAGE/tr-TR/SOURCE/*.png | sort | uniq -w32 -d
+
+# 3 — artık PNG yığınları
+$PY - &lt;&lt;'PY'
+import glob
+for p in sorted(glob.glob("apps/ASO_IMAGE/tr-TR/SOURCE/*.png")):
+    d = open(p,'rb').read(); i = 8; out = []
+    while i + 8 &lt;= len(d):
+        ln  = int.from_bytes(d[i:i+4],'big')
+        typ = d[i+4:i+8].decode('ascii','replace')
+        if typ not in ('IHDR','IDAT','IEND','PLTE') and typ[0].islower(): out.append(typ)
+        if typ == 'IEND': break
+        i += 12 + ln
+    if out: print(p, "artık yığınlar:", out)
+PY
+
+# 4 — PLAKADA METİN OLMAMALI (bu projeye özgü, en önemli kontrol)
+$PY - &lt;&lt;'PY'
+import glob, pytesseract
+from PIL import Image
+for p in sorted(glob.glob("apps/ASO_IMAGE/tr-TR/SOURCE/*.png")):
+    txt = pytesseract.image_to_string(Image.open(p), lang='tur+eng').strip()
+    alnum = ''.join(c for c in txt if c.isalnum())
+    print(f"{p}: {'TEMİZ' if len(alnum) &lt; 4 else 'BAŞARISIZ — METİN VAR: ' + txt[:120]!r}")
+PY</pre>
+    </div>
+
+    <h4>Aynı aşamada elle yapılan iddia denetimi</h4>
+    <p>
+      Her varlık için iki sütunlu bir tablo yazılır: solda her metin dizesi, sayı, ikon ve arayüz
+      ögesi; sağda <strong>izlendiği kaynak</strong>. Doldurulamayan her satır bir bulgudur.
+    </p>
+    <ul>
+      <li>Her ekranın uygulamada <strong>bu düzende</strong> var olduğu doğrulandı mı?</li>
+      <li>Gezinme etiketleri <code>lib/app/shell.dart:22-33</code> ile birebir mi?</li>
+      <li>Gösterilen her metriği hesaplayan bir kod var mı?</li>
+      <li>Her sayı <strong>tek bir kullanıcı durumuyla</strong> tutarlı mı?</li>
+      <li>Her yüzde kendi rakamlarına göre aritmetik olarak doğru mu?</li>
+      <li>
+        Sayılan her arayüz ögesi (seri noktası, ilerleme dilimi, onay işareti) etiketiyle eşleşiyor
+        mu?
+      </li>
+      <li>Tarihler güncel mi, yoksa kasten nötr mü?</li>
+      <li>Her gizlilik cümlesi Veri Güvenliği beyanıyla uyumlu mu?</li>
+      <li>Her cihaz çerçevesi <strong>Android</strong> mi?</li>
+      <li>Her öge <em>bu</em> ekrana mı ait? (Kareler arası bulaşma kontrolü)</li>
+    </ul>
+
+    <h3>7.5 · BİNDİR aşaması — Türkçe metin ve gerçek ekranlar</h3>
+    <p>
+      Bu aşama FormAI'de yoktu; bu projede <strong>tasarım gereği</strong> var, çünkü plakalar
+      metinsiz üretiliyor. İki iş yapar:
+    </p>
+
+    <h4>a) Gerçek ekran görüntüsünü telefona perspektif eşleme</h4>
+    <ol>
+      <li>
+        Plakadaki boş ekran dikdörtgeninin <strong>dört köşesi ölçülür</strong> — düz
+        <code>#0B1523</code> bölgesinin sınırları parlaklık eşiğiyle bulunur.
+        <strong>Koordinat tahmin edilmez.</strong>
+      </li>
+      <li>
+        <code>SCREENS/</code>'teki gerçek yakalama, ölçülen dörtgene perspektif dönüşümle (<code
+          >Image.transform(..., Image.PERSPECTIVE)</code
+        >) oturtulur.
+      </li>
+      <li>Cam kenarına 1–2 px'lik yumuşak bir geçiş uygulanır ki yapıştırma sınırı görünmesin.</li>
+      <li>
+        Yakalamanın kendi durum çubuğu (saat, pil, sinyal)
+        <strong>kırpılır veya nötrleştirilir</strong> — gerçek bir saat, varlığı belirli bir ana
+        bağlar.
+      </li>
+    </ol>
+
+    <h4>b) Türkçe tipografiyi bindirme</h4>
+    <ol>
+      <li>
+        Tüm dizeler <code>copy_deck.json</code>'dan okunur — komuttan, hafızadan veya bu HTML'den
+        <strong>değil</strong>.
+      </li>
+      <li>
+        Hedef kutu <strong>ölçülür</strong> (plakadaki boş kart/başlık bölgesi), metin yüksek
+        süperörnekleme ile rasterlenir, sıkı sınırlayıcı kutusu ölçülen kutuya oturtulur. Bu, temel
+        çizgiyi ve ilerleme genişliğini korur.
+      </li>
+      <li>
+        Metin eğik bir yüzeye (maket) biniyorsa <strong>maketin eğimi ölçülür</strong> ve aynı
+        açıyla döndürülür. FormAI'de bir telefon <strong>−5,93°</strong> duruyordu; eşleşmeyen açı
+        anında yapıştırma gibi okunur.
+      </li>
+      <li>
+        Font <strong>tam Türkçe kapsamı</strong> için doğrulanır:
+        <code>ı İ ş Ş ğ Ğ ç Ç ö Ö ü Ü</code> glifleri fontta var mı, <code>font.getmask()</code> ile
+        kontrol edilir. Eksik glif sessizce <code>.notdef</code> kutusuna dönüşür.
+      </li>
+    </ol>
+
+    <div class="callout c-danger">
+      <span class="tag">Bindirmeden sonra zorunlu OCR karşılaştırması</span>
+      <p>
+        Bindirilen her dize, <code>copy_deck.json</code>'daki karşılığıyla
+        <strong>karakter karakter</strong> karşılaştırılır. Türkçe için normalleştirme yapılmaz:
+        <code>ı</code> ile <code>i</code>, <code>I</code> ile <code>İ</code>
+        <strong>farklı harflerdir</strong> ve eşit sayılamaz. OCR güvenilmezse (koyu zemin üzerinde
+        ince tipografi zordur), en azından şu üç sınıf aranır: <strong>yanlış rakam</strong>,
+        <strong>kayıp diyakritik</strong>, <strong>kelime ortasında kesilme</strong>.
+      </p>
+    </div>
+
+    <h3>7.6 · ONAR aşaması — üç teknik yeter</h3>
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>Yardımcı</th>
+            <th>Ne yapar</th>
+            <th>Ne zaman doğru</th>
+            <th>Tuzak</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>inpaint(box)</code></td>
+            <td>Kutunun dört temiz kenarından çift doğrusal harmanlama</td>
+            <td>Düzgün degradeli arka plan — koyu arayüz kromunun çoğu</td>
+            <td>
+              Sol/sağ kenar komşu gliflere denk gelirse yatay harmanlama onları kutu boyunca
+              <strong>çizgi çizgi sürükler</strong>. <code>mode="v"</code> (yalnız üst/alt) varyantı
+              bunu çözer.
+            </td>
+          </tr>
+          <tr>
+            <td><code>extrapolate_up(box)</code></td>
+            <td>Altındaki temiz banda en küçük kareler uydurup yukarı uzatma</td>
+            <td>
+              Bölge üç yandan başka metinle çevriliyse tek seçenek. Simgenin beyaz bandını da bu
+              onardı.
+            </td>
+            <td>Bandın kendisi kirliyse hata yukarı taşınır — bant önce doğrulanır</td>
+          </tr>
+          <tr>
+            <td><code>render_fit(text, font, box, colour, angle)</code></td>
+            <td>
+              Yüksek süperörneklemede rasterle, makete döndür, sıkı kutuyu
+              <strong>ölçülmüş</strong> hedefe ölçekle
+            </td>
+            <td>Bozuk bir glif dizisini değiştirmek</td>
+            <td>Kutu ölçülmez de tahmin edilirse temel çizgi kayar</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout c-warn">
+      <span class="tag">İki zor kazanılmış ayrıntı</span>
+      <p>
+        <strong>1 · Maketler eğiktir.</strong> Rasterlenen glifler maketin açısıyla döndürülmezse
+        anında yapıştırma gibi okunur. Açı, ekrandaki bir temel çizgiden ölçülür.
+      </p>
+      <p>
+        <strong>2 · Koordinatları ölçün, asla tahmin etmeyin.</strong> Her sabit, kaynak üzerinde
+        parlaklık eşikli bir sınırlayıcı kutu geçişinden gelmelidir. FormAI'de göz kararı
+        koordinatlar ilk denemede iki görünür artefakt üretti — bir dikdörtgen bant ve bir çift
+        dikey çizgi — ikisi de çerçeveyi kesen ya da bir alt uzantıyı örnekleyen kutulara
+        dayanıyordu.
+      </p>
+    </div>
+
+    <h4>Ne zaman onarılır, ne zaman yeniden üretilir</h4>
+    <ul>
+      <li>
+        <strong>Piksel onarımı:</strong> yerel bir metin kusuru, sayılabilir bir arayüz ögesi
+        (nokta/onay sayısı), eski bir yıl, yanlış yığılmış bir etiket.
+      </li>
+      <li>
+        <strong>Yeniden üretim:</strong> kompozisyon hatası, iddia hatası, cihaz çerçevesi hatası,
+        plakada metin çıkması, ekranın boş olmaması. <strong>Bunlar onarılmaya çalışılmaz.</strong>
+      </li>
+    </ul>
+
+    <h3>7.7 · NORMALLEŞTİR aşaması</h3>
+    <ol>
+      <li>
+        <strong>Yeniden örnekle</strong> → tam 1080×1920 (Lanczos), kapla-kırp ile, ardından kalibre
+        edilmiş hafif unsharp.
+      </li>
+      <li>
+        <strong>Alfayı düzleştir</strong> → marka tuvali <code>#050B16</code> üzerine.
+        <strong>Beyaza değil</strong> — beyaz saçaklanma yapar.
+        <code>Image.mode == "RGBA"</code> kontrolün tamamıdır.
+      </li>
+      <li><strong>sRGB</strong>, 8 bit/kanal.</li>
+      <li>
+        <strong>Üst veriyi sil</strong> → <code>exiftool -all=</code>, sonra <code>oxipng</code>,
+        sonra <strong>tekrar</strong> <code>exiftool</code>.
+      </li>
+      <li><strong>Kayıpsız yeniden sıkıştır</strong> → <code>oxipng -o max --strip safe</code>.</li>
+      <li>
+        <strong>Yuva sıralı adlarla yaz</strong> → <code>FINAL/phone-01-tr-TR.png</code> …
+        <code>phone-08-tr-TR.png</code>.
+      </li>
+    </ol>
+
+    <h3>7.8 · DOĞRULA aşaması — bağımsız denetleyicinin iddiaları</h3>
+    <p>
+      <code>validate_play_assets.py</code>, onu üreten boru hattından <strong>bağımsızdır</strong>:
+      her çıktıyı yeniden açar ve kuralları sıfırdan doğrular. Böylece sonradan elle değiştirilmiş
+      bir dosyayı da yakalar. Kendi çıktısını doğrulayan bir araç yalnız kendisiyle tutarlı olduğunu
+      kanıtlar.
+    </p>
+
+    <div class="tw">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>İddia</th>
+            <th>Sert kural mı</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Her ekran görüntüsü PNG</td>
+            <td><strong>SERT</strong> — Play reddeder</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><code>mode != RGBA/LA/PA</code> ve <code>transparency</code> anahtarı yok</td>
+            <td><strong>SERT</strong></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Her kenar 320–3840 px arasında</td>
+            <td><strong>SERT</strong></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Uzun kenar ≤ 2 × kısa kenar</td>
+            <td><strong>SERT</strong></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Her dosya ≤ 8 MB</td>
+            <td><strong>SERT</strong></td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>Telefon ekran görüntüsü sayısı 2–8 arasında</td>
+            <td><strong>SERT</strong></td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>Simge tam 512×512, PNG, ≤ 1 MB</td>
+            <td><strong>SERT</strong></td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>Öne çıkan grafik tam 1024×500, ≤ 15 MB, alfa yok</td>
+            <td><strong>SERT</strong></td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>Tüm ekran görüntüleri tam 1080×1920</td>
+            <td>Öneri (tanıtım uygunluğu)</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>Oran tam 9:16 (1,7778 ± 0,0005)</td>
+            <td>Öneri</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>Set içinde tüm boyutlar aynı</td>
+            <td>Öneri</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td>En az 4 ekran görüntüsü, kısa kenar ≥ 1080 px</td>
+            <td>Öneri (tanıtım uygunluğu)</td>
+          </tr>
+          <tr>
+            <td>13</td>
+            <td><code>md5</code> yinelemesi yok</td>
+            <td>Öneri</td>
+          </tr>
+          <tr>
+            <td>14</td>
+            <td>Artık PNG yığını yok</td>
+            <td>Öneri</td>
+          </tr>
+          <tr>
+            <td>15</td>
+            <td>Dosya adları <code>phone-01</code>…<code>phone-08</code>, kesintisiz</td>
+            <td>Öneri</td>
+          </tr>
+          <tr>
+            <td>16</td>
+            <td><code>FINAL/</code> içinde beklenmedik dosya yok</td>
+            <td>Öneri</td>
+          </tr>
+          <tr>
+            <td>17</td>
+            <td>Simge: dört köşe pikseli zemin rengiyle eşleşiyor</td>
+            <td>Öneri — <strong>ama FormAI'de bu kaçtı</strong></td>
+          </tr>
+          <tr>
+            <td>18</td>
+            <td>Simge: hiçbir dış satır/sütun tekdüze saf beyaz veya saf siyah değil</td>
+            <td>Öneri</td>
+          </tr>
+          <tr>
+            <td>19</td>
+            <td>Simge: 48×48'e küçültüldüğünde kontrast oranı eşiğin üstünde</td>
+            <td>Öneri</td>
+          </tr>
+          <tr>
+            <td>20</td>
+            <td>OCR: her varlıktaki metin <code>copy_deck.json</code> ile birebir eşleşiyor</td>
+            <td><strong>Bu projeye özgü — en yüksek getirili kontrol</strong></td>
+          </tr>
+          <tr>
+            <td>21</td>
+            <td>OCR: yasak dize listesinden hiçbiri geçmiyor</td>
+            <td>Bu projeye özgü</td>
+          </tr>
+          <tr>
+            <td>22</td>
+            <td>Kenarlardan 56 px'lik bantta metin pikseli yok</td>
+            <td>Öneri</td>
+          </tr>
+          <tr>
+            <td>23</td>
+            <td>Boru hattı iki kez çalıştırıldığında çıktı <strong>bayt bazında aynı</strong></td>
+            <td>Mühendislik hijyeni</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Yasak dize listesi — OCR ile aranacak (madde 21)</h4>
+    <div class="cb">
+      <div class="cb-head">
+        <span class="cb-title">forbidden_strings — copy_deck.json içine</span>
+        <button class="copy" data-t="fb">Kopyala</button>
+      </div>
+      <pre id="fb">
+%100          100%          tamamen       asla          hiçbir veri
+MEB onaylı    MEB Uyumlu    MEB Müfredat  resmî         onaylı
+garanti       garantili     kesin başarı  mutlaka geçer  geçmeni sağlar
+10.000        10000+        binlerce      milyonlarca    en büyük
+1 numara      1 numaralı    Türkiye'nin en             lider
+7/24          7 gün 24 saat destek hattı
+ücretsiz deneme             deneme süresi  399           479         TL       ₺
+3D            HD video      video ders     indirilebilir video
+çevrimiçi rakip             gerçek oyuncu  arkadaşınla yarış
+9:41
+
+GEZİNME ÇUBUĞU KONTROLÜ ✱
+  Telefonun alt gezinme bandında (ekranın en alt ~%8'i) YALNIZ şu altı
+  etiket bulunabilir, bu sırayla:
+      Ana Sayfa · Öğren · Pratik · AI Koç · Topluluk · Profil
+  Bu bantta "AI Asistan", "Testler", "Dersler" veya "İstatistik" görülürse
+  maket UYDURULMUŞ demektir — varlık reddedilir ve yeniden üretilir.
+
+✱ Bu dört dize yalnız GEZİNME BANDINDA yasaktır, sayfanın başka yerinde
+  değil: pazarlama metninde "29 ders" veya "istatistik" geçebilir. Kontrol
+  bu yüzden konumla sınırlıdır; genel bir dize araması yanlış alarm üretir.</pre>
+    </div>
+
+    <h3>7.9 · Doğrulama raporu</h3>
+    <p>
+      Boru hattı, her çalıştırmada <code>apps/ASO_IMAGE/tr-TR/VALIDATION_REPORT.md</code> üretir
+      (gitignore altında). İçeriği:
+    </p>
+    <ul>
+      <li>Çalıştırma tarihi, girdi dosyalarının <code>md5</code>'leri, betik sürümü</li>
+      <li>Her varlık için: boyut, mod, oran, bayt, <code>md5</code></li>
+      <li>Her iddianın <strong>GEÇTİ / KALDI</strong> durumu ve kalanların ayrıntısı</li>
+      <li>OCR ile çıkarılan tam metin ve <code>copy_deck.json</code> ile farkı</li>
+      <li>Uygulanan her onarımın koordinatı ve <strong>onu gerektiren bulgu</strong></li>
+      <li>Belirlenimcilik kontrolü: ikinci çalıştırmanın <code>md5</code>'leriyle karşılaştırma</li>
+    </ul>
+    <p>
+      Rapor <strong>bir kez kaldıysa</strong> boru hattı sıfırdan farklı bir çıkış kodu döner ve
+      <code>FINAL/</code> yüklenmez.
+    </p>
+
+    <h3>7.10 · Gelecekteki ajanın çalıştıracağı sıra</h3>
+    <div class="cb">
+      <div class="cb-head">
+        <span class="cb-title">Tam komut dizisi</span>
+        <button class="copy" data-t="run">Kopyala</button>
+      </div>
+      <pre id="run">
+. ~/.cache/ehliyet-play-tools/env.sh
+
+# 0 — girdi var mı
+ls apps/ASO_IMAGE/tr-TR/SOURCE/   # 8 kare + öne çıkan grafik + simge
+ls apps/ASO_IMAGE/tr-TR/SCREENS/  # 1.0.0+5 derlemesinden taze yakalamalar
+
+# 1 — ön tarama: biçim, yineleme, artık yığın, PLAKADA METİN VAR MI
+$PY scripts/aso/build_play_assets.py --audit-only
+
+# 2 — tam boru hattı: bindir, onar, normalleştir, dışa aktar + selfcheck
+$PY scripts/aso/build_play_assets.py
+
+# 3 — bağımsız uygunluk geçişi
+$PY scripts/aso/validate_play_assets.py
+$PY scripts/aso/validate_play_assets.py --json > /tmp/aso-validation.json
+
+# 4 — belirlenimcilik: iki kez çalıştır, karşılaştır
+md5sum apps/ASO_IMAGE/tr-TR/FINAL/*.png > /tmp/run1.md5
+$PY scripts/aso/build_play_assets.py
+md5sum apps/ASO_IMAGE/tr-TR/FINAL/*.png > /tmp/run2.md5
+diff /tmp/run1.md5 /tmp/run2.md5 && echo "BELİRLENİMCİ"
+
+# 5 — simgeyi 48 px'te gör
+$PY -c "from PIL import Image; \
+Image.open('apps/ASO_IMAGE/tr-TR/FINAL/app-icon-512.png') \
+.resize((48,48), Image.LANCZOS).save('/tmp/icon-48.png')"
+
+# 6 — raporu oku
+cat apps/ASO_IMAGE/tr-TR/VALIDATION_REPORT.md</pre>
+    </div>
+
+    <h3>7.11 · Boru hattının kapsamadığı — insan işi</h3>
+    <p>
+      Betiklenebilenler 7.4–7.8'de. Betiklenemeyenler burada ve
+      <strong>pahalı kusurlar burada saklanır</strong>:
+    </p>
+    <ol>
+      <li>
+        <strong>Anadili Türkçe olan bir okuyucu, her dizeyi %100 yakınlaştırmada okur.</strong>
+        Kısayolu yok. <code>AI TEKNOLO.iSi</code> bilmediğiniz bir kelime gibi görünür.
+      </li>
+      <li>
+        <strong>Her varlık “bu ekrana ait olmayan bir öge var mı?” diye okunur.</strong> Toplu
+        üretimde içerik kareler arasında göç eder. Ne politika denetimi ne tasarım denetimi bunu
+        yakalar — yalnız tutarlılık okuması yakalar.
+      </li>
+      <li>
+        <strong>Varlığı üreten kişi tek denetleyen olamaz.</strong> Denetim, bakmak değil,
+        <em>kaynak kod karşılaştırmasıdır</em>.
+      </li>
+      <li>
+        <strong>Bir yabancı, listeyi baştan sona okur ve uygulamayı kurar.</strong> Tek soru:
+        <em>bu liste bu uygulamayı mı anlatıyor?</em>
+      </li>
+    </ol>
+
+    <div class="callout c-danger">
+      <span class="tag">Gönderim kuralı</span>
+      <p>
+        Uygulama derleniyor diye gönderme. CI yeşil diye gönderme. Ekran görüntüleri premium
+        göründüğü için gönderme.
+      </p>
+      <p>
+        <strong
+          >Yalnız ürün + ekran görüntüleri + mağaza metni + gizlilik politikası + Veri Güvenliği
+          formu + Console yapılandırması + gerçek cihaz davranışı aynı gerçeği anlattığında
+          gönder.</strong
+        >
+      </p>
+      <p>
+        FormAI'nin CI'sı, listesi uygulamanın uygulamadığı bir gizlilik modeli iddia ederken,
+        üzerinde çalışmadığı bir cihazı gösterirken ve sahip olmadığı bir sosyal akışı reklam
+        ederken de yeşildi.
+        <strong>Yeşil CI, kod hakkında bir ifadedir; liste hakkında değil.</strong>
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      <strong>Ehliyet Akademi — ASO Prompt Library v1.0</strong> · 10 Ağustos 2026 ·
+      <code>main</code> @ <code>9ecc358</code> · uygulama <code>1.0.0+5</code>
+    </p>
+    <p>
+      Bu belgedeki her sayı, ekran adı, gezinme etiketi ve dosya yolu yazım tarihinde depodan veya
+      canlı API'den ölçülmüştür. Hiçbiri eski bir rapordan kopyalanmamıştır.
+    </p>
+    <p>
+      Kardeş belgeler: <code>PLAY_STORE_REVIEW_AUDIT.md</code> (bulgular ve kanıtlar) ·
+      <code>PLAY_CONSOLE_DECLARATIONS_GUIDE.md</code> (her Console beyanı ve kod düzeyinde
+      gerekçesi). Kaynak ders kitabı:
+      <code>FormAI-FitnessKoçu/docs/PLAY_STORE_ASO_LESSONS_LEARNED.md</code>.
+    </p>
+  </footer>
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var el = document.getElementById(btn.dataset.t);
+      if (!el) return;
+      var text = el.innerText;
+      var done = function () {
+        var old = btn.textContent;
+        btn.textContent = 'Kopyalandı ✓';
+        btn.classList.add('done');
+        setTimeout(function () {
+          btn.textContent = old;
+          btn.classList.remove('done');
+        }, 1600);
+      };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(done, function () {
+          fallback(text, done);
+        });
+      } else {
+        fallback(text, done);
+      }
+    });
+  });
+  function fallback(text, done) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      done();
+    } catch (e) {}
+    document.body.removeChild(ta);
+  }
+</script>

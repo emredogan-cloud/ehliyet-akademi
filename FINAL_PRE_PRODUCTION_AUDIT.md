@@ -175,6 +175,37 @@ A release APK **was** built and verified this session (client ID embedded, `INTE
 it is a **verification artefact, not a submission artefact** — it is unsigned by the production
 keystore (F-15) and carries the un-bumped version.
 
+### ⚠️ A STALE AAB IS SITTING IN THE BUILD DIRECTORY — DO NOT UPLOAD IT
+
+```
+apps/mobile/build/app/outputs/bundle/release/app-release.aab
+  built    1 August 2026        (nine days before this work)
+  size     65,287,095 bytes
+  sha256   18a2953b5c5824918cb0a3ee3a2680cc…
+```
+
+It is **gitignored**, so it is not in the repository — but it is on disk and it is the only `.aab`
+present, which makes it exactly the file someone would reach for.
+
+**It predates every fix in this branch.** Uploading it would ship:
+
+- the **purchase-verification stub** (any 4-character token grants lifetime premium once
+  `GOOGLE_PLAY_SA_JSON` is set)
+- **subscriptions that 404** server-side
+- **broken account deletion** for any user with a community avatar
+- **no in-app privacy/KVKK links** and **no AI-reply reporting**
+- `INTERNET` only via the plugin manifest merge — the one occurrence inside it comes from
+  `google_sign_in_android`, not from an explicit declaration
+
+**Delete it before any release work**, so the production AAB cannot be confused with it:
+
+```bash
+rm apps/mobile/build/app/outputs/bundle/release/app-release.aab
+```
+
+The real production AAB does not exist yet and must be built from the final verified commit after
+the gates in §8 close.
+
 ---
 
 ## 7. Reproducing

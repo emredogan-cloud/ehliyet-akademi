@@ -62,20 +62,20 @@ derived from an earlier audit.
 **Zero of 22 assets passed.** Fourteen findings were critical. The prompt
 library's own rules — no iPhone frames, no outcome promises, no invented
 features, fix the "PERSONEL TRAINER" typo — were violated by the assets
-generated *from that library*. Writing the rule down did not make the
+generated _from that library_. Writing the rule down did not make the
 generator follow it, and nobody checked afterwards.
 
 Three findings were not merely policy risks; they were **statements the app's
 own source code contradicts**:
 
-1. Screenshots claimed *"Your data stays on your device. We never send it to
-   servers."* The coach is a server-side LLM —
+1. Screenshots claimed _"Your data stays on your device. We never send it to
+   servers."_ The coach is a server-side LLM —
    `lib/features/coach/domain/coach_brain.dart` calls a Supabase Edge Function
    (`coach-chat`) holding `ANTHROPIC_API_KEY`. The app's own localized string is
    honest about this; the screenshots were not.
 2. The Community screenshots depicted a public feed with free-text posts,
-   photos and comment counts. `squad_feed_screen.dart` states *"Three reactions
-   and no text field … `activity_reactions` has no text column to moderate."*
+   photos and comment counts. `squad_feed_screen.dart` states _"Three reactions
+   and no text field … `activity_reactions` has no text column to moderate."_
    The screenshots advertised a social network the app deliberately does not
    have.
 3. Six assets showed a "calories burned" figure. No burned-energy computation
@@ -85,7 +85,7 @@ Alongside those: every device mockup but two was an **iPhone with a Dynamic
 Island**, in an Android listing. Both feature graphics and both icons carried
 an **X-ray skeleton annotated "HIP ALIGNMENT: 5° DEVIATION"** — a
 musculoskeletal assessment claim. The Turkish icon's lockup read **"YAPAY"**,
-which alone means *artificial / fake*, not *AI*.
+which alone means _artificial / fake_, not _AI_.
 
 ### Why polished screenshots were still unsafe
 
@@ -100,7 +100,7 @@ typographically indistinguishable from "Active time: 1h 42m". One is a
 feature; the other is a fabrication. Only a reviewer holding the source code
 can tell them apart.
 
-This is the trap: a beautiful asset *lowers* scrutiny. Polish reads as
+This is the trap: a beautiful asset _lowers_ scrutiny. Polish reads as
 diligence. It is not.
 
 ### Why visual quality alone is not enough
@@ -135,11 +135,11 @@ Section 3 develops this into an operational rule.
 
 Three passes, each with a different job:
 
-| Pass | Method | Result |
-| --- | --- | --- |
-| **1 · Policy audit** | Every asset inspected at full resolution; every claim checked against `lib/` | 14 critical, 8 high, 0 pass |
-| **2 · Re-audit after regeneration** | Same method on the regenerated set | 14 criticals closed; 4 blockers + 6 string defects remained |
-| **3 · Engineering repair** | Deterministic pipeline: repair → canvas → encode, plus an independent validator | 9 pixel fixes, format normalised, 131/131 checks pass |
+| Pass                                | Method                                                                          | Result                                                      |
+| ----------------------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| **1 · Policy audit**                | Every asset inspected at full resolution; every claim checked against `lib/`    | 14 critical, 8 high, 0 pass                                 |
+| **2 · Re-audit after regeneration** | Same method on the regenerated set                                              | 14 criticals closed; 4 blockers + 6 string defects remained |
+| **3 · Engineering repair**          | Deterministic pipeline: repair → canvas → encode, plus an independent validator | 9 pixel fixes, format normalised, 131/131 checks pass       |
 
 The third pass is the one worth copying. Instead of hand-editing images, two
 committed scripts do the work and prove it:
@@ -174,21 +174,21 @@ misrepresentation) · **FACT** (false claim/number) · **L10N** (localization) �
 
 ### 2.1 False privacy absolutes — the most dangerous class
 
-**Generated:** *"100% PRIVACY — Your data stays on your device. We never send
-it to servers."* and, in Turkish, *"%100 GÜVENLİK — Verilerin cihazında kalır.
-Sunucuya gönderilmez."* The Turkish chat asset went further: *"Sohbetlerin
-şifrelenir ve cihazında kalır"* — your chats are encrypted and stay on your
+**Generated:** _"100% PRIVACY — Your data stays on your device. We never send
+it to servers."_ and, in Turkish, _"%100 GÜVENLİK — Verilerin cihazında kalır.
+Sunucuya gönderilmez."_ The Turkish chat asset went further: _"Sohbetlerin
+şifrelenir ve cihazında kalır"_ — your chats are encrypted and stay on your
 device.
 
 **Why it looked fine:** privacy is a genuine differentiator for this app. The
-camera pipeline *is* on-device — ML Kit pose detection, no frame uploaded. The
+camera pipeline _is_ on-device — ML Kit pose detection, no frame uploaded. The
 claim felt earned.
 
 **Why it was wrong:** it was true of the camera and false of everything else.
 The chat coach is a server-side LLM. Progress, profile, squads and
 leaderboards are all Supabase-backed. The app's own string says so:
-*"Camera footage never leaves your device … Your training progress and profile
-details are stored on secure servers, tied to your account."* The screenshots
+_"Camera footage never leaves your device … Your training progress and profile
+details are stored on secure servers, tied to your account."_ The screenshots
 contradicted the app's own privacy disclosure **and** its Data Safety form.
 
 **Category:** POLICY + FACT. Deceptive Behavior, Data Safety accuracy.
@@ -198,16 +198,16 @@ auditing the claim. `coach_brain.dart` names the Edge Function in a doc
 comment.
 
 **Fixed:** every absolute replaced with a **scoped** claim —
-*"ON-DEVICE FORM ANALYSIS — Camera frames are analysed on your phone and never
-uploaded."* and *"YOUR CHATS, YOUR ACCOUNT — Conversations are tied to your
-account and sent over an encrypted connection."*
+_"ON-DEVICE FORM ANALYSIS — Camera frames are analysed on your phone and never
+uploaded."_ and _"YOUR CHATS, YOUR ACCOUNT — Conversations are tied to your
+account and sent over an encrypted connection."_
 
-**Failure pattern:** *scope inflation*. A true narrow claim gets widened into
+**Failure pattern:** _scope inflation_. A true narrow claim gets widened into
 a false broad one because the broad version markets better. The words that do
 this are **"all", "100%", "never", "always", "completely", "nothing"**.
 
 **Prevention:** ban unscoped privacy absolutes in the prompt. Every privacy
-sentence must name *which data* it covers. Then diff every privacy line
+sentence must name _which data_ it covers. Then diff every privacy line
 against the Data Safety form before upload — if the form says data is
 collected, no asset may say it isn't.
 
@@ -215,8 +215,8 @@ collected, no asset may say it isn't.
 
 ### 2.2 Claims broader than the implementation
 
-**Generated:** *"SHOPPING LIST — Auto-generate missing ingredients based on
-your plan."*
+**Generated:** _"SHOPPING LIST — Auto-generate missing ingredients based on
+your plan."_
 
 **Why it looked fine:** a shopping list genuinely ships.
 
@@ -230,9 +230,9 @@ behaviour was not.
 **Detected:** grepping for the feature, then reading what it actually does
 rather than stopping at "it exists".
 
-**Fixed:** *"SHOPPING LIST — Export the recipes you favourited."*
+**Fixed:** _"SHOPPING LIST — Export the recipes you favourited."_
 
-**Failure pattern:** *verify-by-existence*. Confirming a feature exists and
+**Failure pattern:** _verify-by-existence_. Confirming a feature exists and
 treating the marketing description as validated. The dangerous gap is between
 "the noun is real" and "the verb is real".
 
@@ -248,7 +248,7 @@ feature's directory.
 skeleton with red-highlighted spine and joints, annotated
 **"HIP ALIGNMENT: 5° DEVIATION"** and **"HIP ALIGNMENT: 3° DEVIATION"** —
 two different values for the same measurement. Reinforced by
-*"POSTURE CHECK · 5° tilt"* and the headline *"ANALYZE YOUR BODY."* The
+_"POSTURE CHECK · 5° tilt"_ and the headline _"ANALYZE YOUR BODY."_ The
 Turkish hero carried a body diagram with red-highlighted musculature under
 **"VÜCUT ANALİZİ"**.
 
@@ -270,7 +270,7 @@ can measure?"
 **Fixed:** skeleton and annotations removed; replaced with the sparse green
 joint-node overlay that honestly depicts pose detection.
 
-**Failure pattern:** *credibility theatre*. Medical-looking visuals are
+**Failure pattern:** _credibility theatre_. Medical-looking visuals are
 reached for because they signal sophistication. In a health-category listing
 they signal a claim that needs clinical evidence.
 
@@ -284,16 +284,16 @@ detection actually is.
 
 ### 2.4 Transformation and body-change promises
 
-**Generated:** *"30-DAY TRANSFORMATION"*, *"REAL RESULTS"*,
-*"Accelerate your results."*, *"DAY 30 · New you"*, and in Turkish
-*"30 GÜNDE DÖNÜŞÜM"*, *"GERÇEK SONUÇLAR"*, *"GÜN 30 · Yeni vücut"* — literally
-*a new body*. Plus *"TRACK YOUR PROGRESS — Speeds up your progress and helps
-you maximize your results."*
+**Generated:** _"30-DAY TRANSFORMATION"_, _"REAL RESULTS"_,
+_"Accelerate your results."_, _"DAY 30 · New you"_, and in Turkish
+_"30 GÜNDE DÖNÜŞÜM"_, _"GERÇEK SONUÇLAR"_, _"GÜN 30 · Yeni vücut"_ — literally
+_a new body_. Plus _"TRACK YOUR PROGRESS — Speeds up your progress and helps
+you maximize your results."_
 
 **Why it looked fine:** it is the native dialect of fitness marketing.
 
 **Why it was wrong:** these are outcome guarantees. Build 38 had already
-stripped exactly this language *out of the app*, so the assets contradicted
+stripped exactly this language _out of the app_, so the assets contradicted
 the product's own corrected copy. Turkish made it blunter — **dönüşüm**
 unambiguously means physical transformation.
 
@@ -301,10 +301,10 @@ unambiguously means physical transformation.
 
 **Detected:** reading every headline against the app's shipped strings.
 
-**Fixed:** duration reframed as duration, never as outcome. *"30 DAYS. 24
-SESSIONS."*, *"Day 30 · Program complete"* — never *"New you"*.
+**Fixed:** duration reframed as duration, never as outcome. _"30 DAYS. 24
+SESSIONS."_, _"Day 30 · Program complete"_ — never _"New you"_.
 
-**Failure pattern:** *the app was cleaned, the marketing was not*. Compliance
+**Failure pattern:** _the app was cleaned, the marketing was not_. Compliance
 work on product copy does not propagate to store assets unless someone
 propagates it.
 
@@ -316,7 +316,7 @@ the finished assets' text for it.
 
 ### 2.5 Fabricated metrics — calories burned
 
-**Generated:** *"CALORIES BURNED · 1,840 kcal"* and *"2,450 kcal"* across six
+**Generated:** _"CALORIES BURNED · 1,840 kcal"_ and _"2,450 kcal"_ across six
 assets, in both locales.
 
 **Why it looked fine:** every fitness app shows calories burned. Its absence
@@ -326,7 +326,7 @@ would look like a gap.
 `caloriesBurned|burnedCalor|yakilanKalori` across `lib/` returns **zero**
 matches. The screenshots showed a screen no user will ever see. In one asset
 the same figure appeared twice with two different meanings — once as calories
-*burned*, once as nutrition *intake*.
+_burned_, once as nutrition _intake_.
 
 **Category:** INTEGRITY + FACT.
 
@@ -336,7 +336,7 @@ finding-per-minute check in the whole audit.
 **Fixed:** replaced with metrics the app does compute — sessions completed,
 active time, streak, completion percentage.
 
-**Failure pattern:** *category-expectation filling*. The generator adds what
+**Failure pattern:** _category-expectation filling_. The generator adds what
 apps of this type usually have, not what this app has. It is the single most
 common invention class and the easiest to catch.
 
@@ -368,7 +368,7 @@ feature graphic's device edge at 2×.
 **Fixed:** every mockup regenerated as a bezel-less Android handset with a
 **centred punch-hole** camera; wrists left bare.
 
-**Failure pattern:** *training-distribution default*. The model's prior beats
+**Failure pattern:** _training-distribution default_. The model's prior beats
 an unstated requirement every time.
 
 **Prevention:** state the device positively **and** negatively in the prompt —
@@ -403,7 +403,7 @@ claimed one.
 no tablet screenshot. An absent tablet asset costs a quality signal; a
 fictional one is a deceptive listing.
 
-**Failure pattern:** *aspirational asset*. Generating the product you intend
+**Failure pattern:** _aspirational asset_. Generating the product you intend
 to build rather than the one you are shipping.
 
 **Prevention:** never generate a form-factor asset before confirming the app
@@ -417,7 +417,7 @@ screenshot the stretched phone or ship no tablet asset.
 **Generated:** a public feed with free-text posts, user photographs, trending
 topics, category chips, a "Nearby" tab, comment counts (24, 18, 32), and four
 **photorealistic human faces with names** — Emre K., Selin A., Mert T., Burak
-D. Below it: *"REAL PEOPLE — Join thousands of motivated members."* One post
+D. Below it: _"REAL PEOPLE — Join thousands of motivated members."_ One post
 sat over a photograph of protein-powder tubs.
 
 **Why it looked fine:** social proof is the highest-converting element in most
@@ -425,16 +425,16 @@ listings, and community is a real feature area.
 
 **Why it was wrong:** four separate problems in one asset.
 
-- The feed **does not exist**. `squad_feed_screen.dart`: *"Three reactions and
+- The feed **does not exist**. `squad_feed_screen.dart`: _"Three reactions and
   no text field, which is a decision rather than an omission … no positions,
-  no totals compared between people."* The real feed is squad-scoped presence
+  no totals compared between people."_ The real feed is squad-scoped presence
   events with three reactions and no comment box.
 
 - **"Nearby" does not exist** — no geolocation anywhere in `lib/`.
 - **"Join thousands"** is fabricated scale for a pre-launch app.
 - The **named photorealistic faces** read as testimonials from real people:
   fabricated identities plus likeness risk. All four were Turkish names in the
-  *English* asset.
+  _English_ asset.
 
 Depicting a public UGC feed also invites a moderation review the product
 deliberately designed away.
@@ -451,7 +451,7 @@ rows, three reaction icons, **abstract monogram avatars**, and "Someone" for
 members whose profile is private, which is what the code actually renders.
 Every scale claim removed.
 
-**Failure pattern:** *social-proof gravity*. Community sections attract
+**Failure pattern:** _social-proof gravity_. Community sections attract
 invented users, invented counts and invented engagement because that is what
 makes them work. It is also the fastest route to a Deceptive Behavior finding.
 
@@ -465,9 +465,9 @@ depicting its UI — this one documented its own constraints.
 
 **Generated:** the AI coach was given a **photorealistic human portrait**
 beside the label "AI Fitness Coach". Supporting cards claimed
-*"TRUSTED INFORMATION — Backed by scientific sources"*,
-*"ACCURATE & RELIABLE — Science-based, trustworthy fitness guidance"*, and
-*"AI-POWERED — Continuously learns and gives you better recommendations."*
+_"TRUSTED INFORMATION — Backed by scientific sources"_,
+_"ACCURATE & RELIABLE — Science-based, trustworthy fitness guidance"_, and
+_"AI-POWERED — Continuously learns and gives you better recommendations."_
 
 **Why it looked fine:** a human face humanises the coach; "science-based"
 sounds responsible.
@@ -477,11 +477,11 @@ sounds responsible.
 - A photographic face for an LLM presents AI ambiguously as a person —
   precisely what Play's AI-Generated Content policy is concerned with.
 
-- *"Backed by scientific sources"* asserts evidentiary provenance an LLM does
+- _"Backed by scientific sources"_ asserts evidentiary provenance an LLM does
   not carry unless built to cite. In a health category this draws a
   substantiation request.
 
-- *"Continuously learns"* states the model trains on user data. If false it is
+- _"Continuously learns"_ states the model trains on user data. If false it is
   misrepresentation; if true it is an undeclared Data Safety item. Either
   answer creates work.
 
@@ -492,16 +492,16 @@ prove if asked?"
 
 **Fixed:** avatar replaced with an abstract violet orb labelled
 **"AI assistant"**; a permanent disclosure strip retained
-(*"General fitness advice only, not medical advice"*); and an explicit
+(_"General fitness advice only, not medical advice"_); and an explicit
 disclosure added: **"AI-GENERATED REPLIES — Answers are produced by an AI
 model."** The unsubstantiated claims were deleted.
 
 **What went right, worth copying:** the in-app disclaimer strip and the
 report-a-reply affordance were already built (Play's AI policy requires
-in-app flagging of offensive AI output), and surfacing them *in the
-screenshot* is a genuine trust asset most competitors do not ship.
+in-app flagging of offensive AI output), and surfacing them _in the
+screenshot_ is a genuine trust asset most competitors do not ship.
 
-**Failure pattern:** *anthropomorphise-then-over-claim*. Making the AI feel
+**Failure pattern:** _anthropomorphise-then-over-claim_. Making the AI feel
 human, then borrowing the authority of science it does not have.
 
 **Prevention:** AI avatars must be visibly synthetic. Disclose AI generation
@@ -513,13 +513,13 @@ model output.
 ### 2.10 Copy-paste contamination between screenshots
 
 **Generated:** the Turkish **form-detection** screenshot — headlined
-*"HER TEKRARI TAKİP EDER"* (tracks every rep) — opened with three feature
+_"HER TEKRARI TAKİP EDER"_ (tracks every rep) — opened with three feature
 columns reading **KÜÇÜK TAKIMLAR / SIRALAMA DEĞİL, KATILIM / VARSAYILAN
 GİZLİ** (small squads / presence not ranking / private by default). Those are
 the **Squad** screenshot's columns, verbatim.
 
 **Why it looked fine:** each element was individually well-made, correctly
-localised and policy-clean. The row was only wrong *in context*.
+localised and policy-clean. The row was only wrong _in context_.
 
 **Why it was wrong:** a screenshot about camera form analysis opened by
 discussing 12-person squads and profile privacy. Incoherent to any reader.
@@ -534,7 +534,7 @@ to its own headline and to its English twin.
 **Fixed:** row removed and the violet gradient background reconstructed; the
 English twin's composition became the reference.
 
-**Failure pattern:** *batch contamination*. Regenerating a set in one session
+**Failure pattern:** _batch contamination_. Regenerating a set in one session
 lets content migrate between frames. Neither a policy check nor a design check
 catches it; only a coherence check does.
 
@@ -548,19 +548,19 @@ nothing else catches it.
 
 **Generated (all shipped):**
 
-| Asset | Rendered | Should be |
-| --- | --- | --- |
-| Hero (TR) | `AI TEKNOLO.iSi` | `AI TEKNOLOJİSİ` |
-| Coach (TR) | `CEBINDE` / `DIYOR KI` / `tamamlandi` | `CEBİNDE` / `DİYOR Kİ` / `tamamlandı` |
-| Nutrition (TR) | `250+ TURK TARIFI` | `250+ TÜRK TARİFİ` |
-| Form (TR) | `CANLI ANALIZ` | `CANLI ANALİZ` |
-| Challenges (TR) | `Kendine güveiinş.` | `Kendine güven.` |
-| Tablet (TR) | `Tüm ozellikler` | `Tüm özellikler` |
+| Asset           | Rendered                              | Should be                             |
+| --------------- | ------------------------------------- | ------------------------------------- |
+| Hero (TR)       | `AI TEKNOLO.iSi`                      | `AI TEKNOLOJİSİ`                      |
+| Coach (TR)      | `CEBINDE` / `DIYOR KI` / `tamamlandi` | `CEBİNDE` / `DİYOR Kİ` / `tamamlandı` |
+| Nutrition (TR)  | `250+ TURK TARIFI`                    | `250+ TÜRK TARİFİ`                    |
+| Form (TR)       | `CANLI ANALIZ`                        | `CANLI ANALİZ`                        |
+| Challenges (TR) | `Kendine güveiinş.`                   | `Kendine güven.`                      |
+| Tablet (TR)     | `Tüm ozellikler`                      | `Tüm özellikler`                      |
 
 Plus untranslated English left inside Turkish assets: the hero coaching cue
 **"Chest up"** (the most prominent element on that screen), the badge
 **"COMMUNITY · MOTIVATION · SUPPORT"**, the screen title **"Community"**, and
-`Core`, `keypoint`, `AI Form Coach`. In the *other* direction, Turkish percent
+`Core`, `keypoint`, `AI Form Coach`. In the _other_ direction, Turkish percent
 notation (`%94`, `%60`) and European decimals (`2.450 kcal`) were left in the
 **English** assets — twelve occurrences.
 
@@ -579,7 +579,7 @@ defects, and localization quality is a documented review dimension.
 **Fixed:** regenerated; the two survivors (`Β0` for `30`, and a stale
 non-Turkish issue) were repaired programmatically.
 
-**Failure pattern:** *diacritic decay*. Image models drop dots and cedillas
+**Failure pattern:** _diacritic decay_. Image models drop dots and cedillas
 and invent glyphs when confidence runs out. The failure is silent — it never
 looks like an error, only like a slightly odd word.
 
@@ -599,7 +599,7 @@ string, and have a native reader check.
 
 - `18 / 30 days completed` beside `TODAY'S WORKOUT: Day 1`.
 - `Time remaining: 12 days` while the milestone list said `DAY 21 — 12 days
-  left` and `DAY 30 — 21 days left` — the two swapped.
+left` and `DAY 30 — 21 days left` — the two swapped.
 
 - `10 days current streak` above a row of **7** check marks.
 - Streak card reading `6 days` above **7** filled dots (both locales).
@@ -609,7 +609,7 @@ string, and have a native reader check.
 
 - An in-app date of **May 17, 2025** on a listing being submitted in 2026.
 - A plan pill rendering `30` as a beta-like glyph: **`Β0 Günlük Plan`**.
-- The readout *"Two weeks of data"* under a chart spanning **May 1 – May 29**
+- The readout _"Two weeks of data"_ under a chart spanning **May 1 – May 29**
   with the 30-day range tab active.
 
 **Why it looked fine:** each number is plausible in isolation. Nobody
@@ -625,30 +625,30 @@ of what else was mocked up.
 against every other. Dot counts were counted.
 
 **Fixed:** a single canonical state defined per asset and applied everywhere
-(*day 12 of 30 · 40% · 18 remaining · 6-day streak · 4 sessions this week*);
+(_day 12 of 30 · 40% · 18 remaining · 6-day streak · 4 sessions this week_);
 the surviving defects repaired pixel-wise by
 `tool/playstore_asset_pipeline.py`.
 
-**Failure pattern:** *locally plausible, globally incoherent*. Generators
+**Failure pattern:** _locally plausible, globally incoherent_. Generators
 produce each number independently.
 
 **Prevention:** **define the depicted state before generating.** Write it down
 — day N of M, streak S, sessions C — and put it in the prompt as a consistency
 rule. Then verify arithmetic after generation: percentages, remaining-day
-counts, macro sums, and *counted* UI primitives like streak dots.
+counts, macro sums, and _counted_ UI primitives like streak dots.
 
 ---
 
 ### 2.13 Misleading subscription / trial claims
 
-**Generated:** *"7 DAYS FREE — Try all features, feel the difference."* /
-*"7 GÜN ÜCRETSİZ"*, unqualified, in five assets.
+**Generated:** _"7 DAYS FREE — Try all features, feel the difference."_ /
+_"7 GÜN ÜCRETSİZ"_, unqualified, in five assets.
 
 **Why it looked fine:** free trials convert, and the app has subscriptions.
 
 **Why it was wrong:** `paywall_screen.dart` is deliberately careful — the
-trial badge renders *"ONLY when that card's live RevenueCat SKU carries a free
-trial."* A hard-coded "7 DAYS FREE" asserts unconditionally what **the app
+trial badge renders _"ONLY when that card's live RevenueCat SKU carries a free
+trial."_ A hard-coded "7 DAYS FREE" asserts unconditionally what **the app
 itself refuses to assert**. If the live SKU has no trial, or a different
 length, the asset is a false offer. Promotional material stating a trial must
 also state the price and billing period.
@@ -660,7 +660,7 @@ caution.
 
 **Fixed:** trial claims removed from the assets entirely.
 
-**Failure pattern:** *marketing asserts what the product hedges*. When code
+**Failure pattern:** _marketing asserts what the product hedges_. When code
 goes out of its way to avoid a claim, that is a signal, not an obstacle.
 
 **Prevention:** any price, trial or refund claim in an asset must match a
@@ -683,7 +683,7 @@ omit the claim.
   `d5d71539720a3d9ef8ccf6b0361da551`). The carousel would have shown the same
   slide twice, and the intended eighth asset was missing entirely.
 
-- Dimensions varied *within* a locale (941×1672 vs 1023×1537 vs 992×1586), so
+- Dimensions varied _within_ a locale (941×1672 vs 1023×1537 vs 992×1586), so
   the carousel would letterbox inconsistently.
 
 - Two different 512×512 icons were produced, one per locale — but **Play does
@@ -705,7 +705,7 @@ canvas, re-canvases to 1080×1920 by cover-fit and centre-crop, strips every
 ancillary PNG chunk, and losslessly recompresses;
 `tool/validate_play_assets.py` asserts the result.
 
-**Failure pattern:** *invisible defects need scripts*. Human review cannot see
+**Failure pattern:** _invisible defects need scripts_. Human review cannot see
 an alpha channel or a hash collision.
 
 **Prevention:** run a format validator before any human review. It is the
@@ -719,10 +719,10 @@ cheapest gate in the process.
 `FormAI`. The English icon lockup read **"AI FITNESS COACH"**; the Turkish one
 read **"YAPAY | FİTNESS KOÇUNUZ"**. `android:label` is **`FormAI`**.
 
-`YAPAY` deserves its own note: *yapay zekâ* is Turkish for artificial
+`YAPAY` deserves its own note: _yapay zekâ_ is Turkish for artificial
 intelligence, but **`yapay` alone means artificial / fake**. Rendered at the
 largest type size in the app's most-viewed asset, it read as
-*"FAKE — Your Fitness Coach."*
+_"FAKE — Your Fitness Coach."_
 
 **Category:** L10N + DESIGN + ASO. Metadata consistency.
 
@@ -731,7 +731,7 @@ largest type size in the app's most-viewed asset, it read as
 **Fixed:** the icon was replaced with a language-free F monogram, which cannot
 recur because it contains no words.
 
-**Failure pattern:** *three names for one product* across the assets a
+**Failure pattern:** _three names for one product_ across the assets a
 reviewer sees first, plus a compound-term translation truncated to its
 modifier.
 
@@ -768,7 +768,7 @@ would have caused a rejection.
 
 **Fixed (partially):** slot parity was corrected programmatically — the seven
 shared features now occupy identical slots with the locale-specific extra
-last. Carousel *ordering* was deliberately left to the founder: it is a
+last. Carousel _ordering_ was deliberately left to the founder: it is a
 marketing judgment, and it is drag-and-drop in the Console.
 
 **Prevention:** decide slot order and per-locale positioning before
@@ -790,24 +790,24 @@ treats them as claims, a domain where accuracy is enforced.
 
 ### Why generation models invent
 
-Image models are trained to produce *plausible* images of a category. A "fitness
+Image models are trained to produce _plausible_ images of a category. A "fitness
 app dashboard" has a distribution, and the model samples from it. Anything the
 prompt does not pin down gets filled from that distribution rather than from
 your product. Observed in FormAI, the model invented:
 
-| Invented | Concrete example |
-| --- | --- |
-| Metrics | "Calories burned · 1,840 kcal" — no such computation exists |
-| UI elements | A "Nearby" tab; a public feed with comment counts |
-| Layouts | A tablet nav rail and two-pane grid the app never renders |
-| Device frames | iPhone with Dynamic Island, in an Android listing |
-| Privacy statements | "We never send it to servers" |
-| Health claims | "HIP ALIGNMENT: 5° DEVIATION"; "reduces injury risk" |
-| Statistics | "Join thousands of motivated members" |
-| Feature cards | "Auto-generate missing ingredients based on your plan" |
-| User states | A 10-day streak above 7 check marks |
-| Social proof | Four named photorealistic users with posts |
-| Hardware | An Apple Watch implying wearable pairing |
+| Invented           | Concrete example                                            |
+| ------------------ | ----------------------------------------------------------- |
+| Metrics            | "Calories burned · 1,840 kcal" — no such computation exists |
+| UI elements        | A "Nearby" tab; a public feed with comment counts           |
+| Layouts            | A tablet nav rail and two-pane grid the app never renders   |
+| Device frames      | iPhone with Dynamic Island, in an Android listing           |
+| Privacy statements | "We never send it to servers"                               |
+| Health claims      | "HIP ALIGNMENT: 5° DEVIATION"; "reduces injury risk"        |
+| Statistics         | "Join thousands of motivated members"                       |
+| Feature cards      | "Auto-generate missing ingredients based on your plan"      |
+| User states        | A 10-day streak above 7 check marks                         |
+| Social proof       | Four named photorealistic users with posts                  |
+| Hardware           | An Apple Watch implying wearable pairing                    |
 
 The pattern: **the model completes the category, not the product.** It is not
 lying; it has no access to your product. Every gap you leave becomes a
@@ -855,8 +855,8 @@ unfillable rows were the 14 criticals.
 ### The corollary about scope
 
 Traceability is not only "does it exist" — it is "**does it exist with this
-scope**". *"Camera frames are never uploaded"* traces to real behaviour.
-*"Your data stays on your device"* traces to nothing, because "your data" is
+scope**". _"Camera frames are never uploaded"_ traces to real behaviour.
+_"Your data stays on your device"_ traces to nothing, because "your data" is
 broader than the camera. **Most FormAI failures were scope failures, not
 existence failures.** Check the quantifier, not just the noun.
 
@@ -874,8 +874,8 @@ unreliable. It also specified safe areas, palette and per-asset composition.
 
 **The rules were right and the assets violated them anyway.** That is the
 central prompt lesson: a policy section at the top of a document does not
-constrain a generator. Constraints must be *in the prompt for the specific
-image*, phrased as instructions, repeated per asset, and **verified after
+constrain a generator. Constraints must be _in the prompt for the specific
+image_, phrased as instructions, repeated per asset, and **verified after
 generation**.
 
 ### What every prompt must explicitly specify
@@ -883,25 +883,25 @@ generation**.
 Positive statement is not enough for anything the model has a strong prior
 about. Each of these needs an explicit prohibition alongside the requirement:
 
-| Must specify | Why FormAI needed it |
-| --- | --- |
-| **Exact device** | "Premium phone" produced iPhones with Dynamic Islands |
-| **Android-only hardware** | Must be stated negatively too: no notch, no iOS status bar, no Apple device, no smartwatch |
-| **Exact screen composition** | Otherwise card counts and positions drift between locales |
-| **Exact UI content** | The generator added a "Nearby" tab and a comment-count feed |
-| **Exact text, verbatim** | Paraphrase becomes claim inflation |
-| **No invented UI** | Enumerate what may appear; prohibit additions |
-| **No invented metrics** | List the metrics allowed; prohibit calories burned explicitly if not computed |
-| **No medical imagery** | X-ray, anatomy, red-highlighted body parts, degree readouts |
-| **No transformation promises** | Ban the vocabulary: transformation, dönüşüm, new you, results, guaranteed |
-| **No privacy absolutes** | Ban 100%, all data, never, completely; require a named scope |
-| **No fabricated statistics** | Ban ratings, download counts, member counts, awards |
-| **No fake social proof** | No human faces as users, no names, no testimonials |
-| **No unsupported features** | Wearables, heart rate, barcode scanning, health-platform sync |
-| **Exact locale** | Which language every string is in, including in-UI text |
-| **Exact numeric values** | Give the model the numbers; do not let it choose |
-| **Feature relationships** | Which figure is intake vs expenditure, etc. |
-| **Realistic app state** | One user, one moment, one internally consistent state |
+| Must specify                   | Why FormAI needed it                                                                       |
+| ------------------------------ | ------------------------------------------------------------------------------------------ |
+| **Exact device**               | "Premium phone" produced iPhones with Dynamic Islands                                      |
+| **Android-only hardware**      | Must be stated negatively too: no notch, no iOS status bar, no Apple device, no smartwatch |
+| **Exact screen composition**   | Otherwise card counts and positions drift between locales                                  |
+| **Exact UI content**           | The generator added a "Nearby" tab and a comment-count feed                                |
+| **Exact text, verbatim**       | Paraphrase becomes claim inflation                                                         |
+| **No invented UI**             | Enumerate what may appear; prohibit additions                                              |
+| **No invented metrics**        | List the metrics allowed; prohibit calories burned explicitly if not computed              |
+| **No medical imagery**         | X-ray, anatomy, red-highlighted body parts, degree readouts                                |
+| **No transformation promises** | Ban the vocabulary: transformation, dönüşüm, new you, results, guaranteed                  |
+| **No privacy absolutes**       | Ban 100%, all data, never, completely; require a named scope                               |
+| **No fabricated statistics**   | Ban ratings, download counts, member counts, awards                                        |
+| **No fake social proof**       | No human faces as users, no names, no testimonials                                         |
+| **No unsupported features**    | Wearables, heart rate, barcode scanning, health-platform sync                              |
+| **Exact locale**               | Which language every string is in, including in-UI text                                    |
+| **Exact numeric values**       | Give the model the numbers; do not let it choose                                           |
+| **Feature relationships**      | Which figure is intake vs expenditure, etc.                                                |
+| **Realistic app state**        | One user, one moment, one internally consistent state                                      |
 
 ### Why "make it premium" is insufficient
 
@@ -916,8 +916,7 @@ transformation language, calorie counters, wearables, idealised bodies,
 iPhone hardware.
 
 **A good prompt is 80% specification and 20% style.** FormAI's corrected
-prompts run roughly 500–900 words each, of which the style paragraph is about
-60. The rest is what must appear, what must not, and what the exact strings
+prompts run roughly 500–900 words each, of which the style paragraph is about 60. The rest is what must appear, what must not, and what the exact strings
 are.
 
 ### Three structural prompt techniques that worked
@@ -931,10 +930,10 @@ are.
    strings for that image, not a general policy. It is easier to check
    afterwards, too — the block doubles as the QA list.
 
-3. **A `CONSISTENCY RULE` block** stating the single depicted state: *"this
+3. **A `CONSISTENCY RULE` block** stating the single depicted state: _"this
    asset depicts ONE user at ONE moment. Use day 12 of 30, 40% complete, 18
    days remaining, a 6-day streak, 4 sessions this week, everywhere these
-   appear."* This is what eliminates the section 2.12 class.
+   appear."_ This is what eliminates the section 2.12 class.
 
 ---
 
@@ -1103,23 +1102,23 @@ device frame, regenerate. Section 8 covers the repair pipeline.
 
 Every one of these shipped into a reviewed asset:
 
-| Failure | FormAI instance |
-| --- | --- |
-| Plain typo | `naximum.` for `maximum.` (the `m` rendered as `n`) |
-| Character substitution | `Β0 Günlük Plan` — the digit `3` rendered as a beta-like glyph |
-| Broken diacritics | `CEBINDE`, `DIYOR KI`, `tamamlandi`, `TURK TARIFI`, `CANLI ANALIZ`, `ozellikler` |
-| Invented non-word | `Kendine güveiinş.` — not Turkish, not anything |
-| Punctuation for a letter | `AI TEKNOLO.iSi` — the `J` became a full stop |
-| Brand corruption | The wordmark rendered `FORMI`, not `FormAI` |
-| Truncation | `Kalori Avc.`, `30 Gün Ş.` — cut mid-word |
-| Hallucinated metric | `CALORIES BURNED · 1,840 kcal` |
-| Wrong percentage | `%60` shown for 12 of 30 days (40%) |
-| Wrong locale convention | `%94` in an English asset; `2.450 kcal` in en-US |
-| Duplicated / mismatched | A 10-day streak label above 7 check marks |
-| Content from another screen | The Squad feature row inside the form-detection asset |
-| Stale date | `May 17, 2025` on a 2026 submission |
-| Mistranslation | `YAPAY` (= artificial/fake) used to mean "AI" |
-| Untranslated string | `Chest up` and `Community` left English in Turkish assets |
+| Failure                     | FormAI instance                                                                  |
+| --------------------------- | -------------------------------------------------------------------------------- |
+| Plain typo                  | `naximum.` for `maximum.` (the `m` rendered as `n`)                              |
+| Character substitution      | `Β0 Günlük Plan` — the digit `3` rendered as a beta-like glyph                   |
+| Broken diacritics           | `CEBINDE`, `DIYOR KI`, `tamamlandi`, `TURK TARIFI`, `CANLI ANALIZ`, `ozellikler` |
+| Invented non-word           | `Kendine güveiinş.` — not Turkish, not anything                                  |
+| Punctuation for a letter    | `AI TEKNOLO.iSi` — the `J` became a full stop                                    |
+| Brand corruption            | The wordmark rendered `FORMI`, not `FormAI`                                      |
+| Truncation                  | `Kalori Avc.`, `30 Gün Ş.` — cut mid-word                                        |
+| Hallucinated metric         | `CALORIES BURNED · 1,840 kcal`                                                   |
+| Wrong percentage            | `%60` shown for 12 of 30 days (40%)                                              |
+| Wrong locale convention     | `%94` in an English asset; `2.450 kcal` in en-US                                 |
+| Duplicated / mismatched     | A 10-day streak label above 7 check marks                                        |
+| Content from another screen | The Squad feature row inside the form-detection asset                            |
+| Stale date                  | `May 17, 2025` on a 2026 submission                                              |
+| Mistranslation              | `YAPAY` (= artificial/fake) used to mean "AI"                                    |
+| Untranslated string         | `Chest up` and `Community` left English in Turkish assets                        |
 
 Two observations from the pattern:
 
@@ -1141,22 +1140,22 @@ reference string, or a computed value — not the prompt, and not memory.
 
 ### When generated text is acceptable
 
-| Acceptable | Because |
-| --- | --- |
-| Short ASCII marketing headlines | Low glyph risk; still proofread |
-| Decorative/illegible-at-size micro-copy | Carries no claim |
+| Acceptable                                                       | Because                                      |
+| ---------------------------------------------------------------- | -------------------------------------------- |
+| Short ASCII marketing headlines                                  | Low glyph risk; still proofread              |
+| Decorative/illegible-at-size micro-copy                          | Carries no claim                             |
 | Text you will proofread at 100% zoom against a written reference | The check is the control, not the generation |
 
 ### When text must be composited, not generated
 
-| Composite it | Because |
-| --- | --- |
-| **The brand wordmark** | `FORMI` shipped. Never let a model draw your name |
-| **Any non-ASCII locale** | Diacritic decay is unpreventable by prompt |
-| **Any number** | Digits substitute silently (`3` → `Β`) |
-| **Legal / disclaimer strings** | Must match the shipped string exactly |
-| **Privacy and AI-disclosure lines** | These are the claims Play checks |
-| **Navigation labels and screen titles** | Must match the app's ARB exactly |
+| Composite it                            | Because                                           |
+| --------------------------------------- | ------------------------------------------------- |
+| **The brand wordmark**                  | `FORMI` shipped. Never let a model draw your name |
+| **Any non-ASCII locale**                | Diacritic decay is unpreventable by prompt        |
+| **Any number**                          | Digits substitute silently (`3` → `Β`)            |
+| **Legal / disclaimer strings**          | Must match the shipped string exactly             |
+| **Privacy and AI-disclosure lines**     | These are the claims Play checks                  |
+| **Navigation labels and screen titles** | Must match the app's ARB exactly                  |
 
 The workflow that actually works for a diacritic-heavy locale: **generate the
 art with no non-ASCII text at all, then typeset every string in a design tool
@@ -1187,20 +1186,20 @@ enforcement-grade findings came from a grep, not from looking.
 
 ### What to validate, and where the answer lives
 
-| Claim in the asset | Where the truth is | FormAI example |
-| --- | --- | --- |
-| **Screen exists** | The screen's widget file | `squad_feed_screen.dart` — presence feed, no text field |
-| **Navigation labels** | The l10n ARB `nav*` keys | `navCommunity` is `Topluluk`; there is no `Takım` label |
-| **Feature availability** | Grep the feature name across `lib/` | `nearby` → zero matches; the tab was invented |
-| **Metrics computed** | Grep the metric name | `caloriesBurned` → zero matches |
-| **Metric exists** | The domain file | `video_analysis/domain/form_score.dart` — the form score is real |
-| **Counts and caps** | The model constant | `maxMembers = 12` in `community_models.dart` |
-| **Content volume** | The asset directory | `assets/meals` = 298 → "250+ recipes" is safe |
-| **Privacy architecture** | The transport code + the shipped privacy string | `coach_brain.dart` names the Supabase Edge Function |
-| **AI behaviour** | The brain/provider implementation | `LlmCoachBrain` — server-side, not on-device |
-| **Subscription claims** | The paywall implementation | Trial badge renders only when the live SKU carries one |
-| **Layout support** | Responsive breakpoints | Only `admin_dashboard_screen.dart` has a `>= 600` branch |
-| **Localization truth** | Both ARB files | Compare `app_en.arb` and `app_tr.arb` key by key |
+| Claim in the asset       | Where the truth is                              | FormAI example                                                   |
+| ------------------------ | ----------------------------------------------- | ---------------------------------------------------------------- |
+| **Screen exists**        | The screen's widget file                        | `squad_feed_screen.dart` — presence feed, no text field          |
+| **Navigation labels**    | The l10n ARB `nav*` keys                        | `navCommunity` is `Topluluk`; there is no `Takım` label          |
+| **Feature availability** | Grep the feature name across `lib/`             | `nearby` → zero matches; the tab was invented                    |
+| **Metrics computed**     | Grep the metric name                            | `caloriesBurned` → zero matches                                  |
+| **Metric exists**        | The domain file                                 | `video_analysis/domain/form_score.dart` — the form score is real |
+| **Counts and caps**      | The model constant                              | `maxMembers = 12` in `community_models.dart`                     |
+| **Content volume**       | The asset directory                             | `assets/meals` = 298 → "250+ recipes" is safe                    |
+| **Privacy architecture** | The transport code + the shipped privacy string | `coach_brain.dart` names the Supabase Edge Function              |
+| **AI behaviour**         | The brain/provider implementation               | `LlmCoachBrain` — server-side, not on-device                     |
+| **Subscription claims**  | The paywall implementation                      | Trial badge renders only when the live SKU carries one           |
+| **Layout support**       | Responsive breakpoints                          | Only `admin_dashboard_screen.dart` has a `>= 600` branch         |
+| **Localization truth**   | Both ARB files                                  | Compare `app_en.arb` and `app_tr.arb` key by key                 |
 
 ### A caution learned the hard way
 
@@ -1241,7 +1240,7 @@ Run per asset. Any **No** is a finding.
 
 #### Claims
 
-- [ ] Does every feature claim describe the implemented *behaviour*, not just the feature's existence?
+- [ ] Does every feature claim describe the implemented _behaviour_, not just the feature's existence?
 - [ ] Is every privacy statement scoped to data it is actually true of?
 - [ ] Does every privacy statement agree with the Data Safety declaration?
 - [ ] Is every AI capability claim true of the model, and is AI disclosed?
@@ -1253,7 +1252,7 @@ Run per asset. Any **No** is a finding.
 
 - [ ] Is every device frame the target platform's hardware?
 - [ ] Is every depicted person a model, never a fabricated user identity?
-- [ ] Does every element belong to *this* screen?
+- [ ] Does every element belong to _this_ screen?
 - [ ] Does the asset agree with its other-locale twin on product truth?
 
 ---
@@ -1275,17 +1274,17 @@ python3 -m venv ~/.cache/<project>-tools/venv
 ~/.cache/<project>-tools/venv/bin/pip install pyoxipng numpy pillow
 ```
 
-| Tool | Role | Verdict |
-| --- | --- | --- |
-| **Pillow** | Load, inspect, resample, composite; the pipeline's backbone | Essential |
-| **numpy** | Per-pixel repair maths — inpainting, extrapolation, alpha masks | Essential |
-| **oxipng** (`pyoxipng`) | Primary lossless recompressor; fast, strips safely | Essential |
-| **exiftool** | Removes EXIF/XMP Pillow leaves behind | Essential — run **before and after** optimisation, because optimisers reintroduce chunks |
-| **ImageMagick** | Inspection crops, zooms, contact sheets during review | Essential for review, not for output |
-| **optipng** | Fallback recompressor when the Python binding is unavailable | Useful |
-| **fonts-inter** | Metric-compatible typeface for replaced glyph runs | Needed for pixel repair |
-| **pngquant / pngcrush / zopflipng** | Installed, **deliberately unused** | See below |
-| **ffmpeg** | Available; not needed — no video assets | Unused |
+| Tool                                | Role                                                            | Verdict                                                                                  |
+| ----------------------------------- | --------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| **Pillow**                          | Load, inspect, resample, composite; the pipeline's backbone     | Essential                                                                                |
+| **numpy**                           | Per-pixel repair maths — inpainting, extrapolation, alpha masks | Essential                                                                                |
+| **oxipng** (`pyoxipng`)             | Primary lossless recompressor; fast, strips safely              | Essential                                                                                |
+| **exiftool**                        | Removes EXIF/XMP Pillow leaves behind                           | Essential — run **before and after** optimisation, because optimisers reintroduce chunks |
+| **ImageMagick**                     | Inspection crops, zooms, contact sheets during review           | Essential for review, not for output                                                     |
+| **optipng**                         | Fallback recompressor when the Python binding is unavailable    | Useful                                                                                   |
+| **fonts-inter**                     | Metric-compatible typeface for replaced glyph runs              | Needed for pixel repair                                                                  |
+| **pngquant / pngcrush / zopflipng** | Installed, **deliberately unused**                              | See below                                                                                |
+| **ffmpeg**                          | Available; not needed — no video assets                         | Unused                                                                                   |
 
 **On pngquant specifically:** it is lossy (palette quantisation). These are
 gradient-heavy dark UI frames where banding shows immediately, and the set had
@@ -1301,14 +1300,14 @@ accident forced the right architecture.
 
 A committed script is better for reasons that outlive the accident:
 
-| Hand-fixing | Scripted pipeline |
-| --- | --- |
-| Irreproducible | Byte-identical on every run and every machine |
-| Undocumented magic numbers | Coordinates in source, with the finding that motivated each |
-| Silent partial failure | `selfcheck()` re-measures and fails loudly |
-| Re-doing work when sources change | Re-run |
-| Unreviewable | Diffable, commentable, code-reviewable |
-| Sources at risk | Sources read-only by construction |
+| Hand-fixing                       | Scripted pipeline                                           |
+| --------------------------------- | ----------------------------------------------------------- |
+| Irreproducible                    | Byte-identical on every run and every machine               |
+| Undocumented magic numbers        | Coordinates in source, with the finding that motivated each |
+| Silent partial failure            | `selfcheck()` re-measures and fails loudly                  |
+| Re-doing work when sources change | Re-run                                                      |
+| Unreviewable                      | Diffable, commentable, code-reviewable                      |
+| Sources at risk                   | Sources read-only by construction                           |
 
 Concretely: `tool/playstore_asset_pipeline.py` reads
 `playstore-new-ASO/{US,TUR}/NEW/` and never writes to it, regenerates
@@ -1334,14 +1333,14 @@ duplicate detection.
 GENERATE → VALIDATE → REPAIR → NORMALIZE → VERIFY → EXPORT
 ```
 
-| Stage | What happens | Why here |
-| --- | --- | --- |
-| **GENERATE** | Produce artwork from a specified prompt | — |
-| **VALIDATE** | Audit against source code and policy | Before investing in repair, know what is wrong |
-| **REPAIR** | Pixel fixes **at native resolution** | See below |
-| **NORMALIZE** | Resample to target, flatten alpha, sRGB, strip metadata | One canonical transform for the whole set |
-| **VERIFY** | Independent conformance pass | Catches both tool bugs and later hand-edits |
-| **EXPORT** | Write the upload set with slot-ordered filenames | Founder drags a folder into the Console |
+| Stage         | What happens                                            | Why here                                       |
+| ------------- | ------------------------------------------------------- | ---------------------------------------------- |
+| **GENERATE**  | Produce artwork from a specified prompt                 | —                                              |
+| **VALIDATE**  | Audit against source code and policy                    | Before investing in repair, know what is wrong |
+| **REPAIR**    | Pixel fixes **at native resolution**                    | See below                                      |
+| **NORMALIZE** | Resample to target, flatten alpha, sRGB, strip metadata | One canonical transform for the whole set      |
+| **VERIFY**    | Independent conformance pass                            | Catches both tool bugs and later hand-edits    |
+| **EXPORT**    | Write the upload set with slot-ordered filenames        | Founder drags a folder into the Console        |
 
 ### Why repairs must precede resampling
 
@@ -1367,7 +1366,7 @@ Three helpers covered every FormAI repair:
   horizontal blend drags them across the box as streaks. A `mode="v"` variant
   using only top/bottom margins fixes this.
 
-- **`extrapolate_up(box)`** — least-squares fit on the clean band *below*,
+- **`extrapolate_up(box)`** — least-squares fit on the clean band _below_,
   extrapolated upward. The only option when a region is boxed in on three
   sides by other text. Also what repaired the icon's white band.
 
@@ -1410,40 +1409,40 @@ documentation before relying on them** — Google changes these.
 
 ### Hard requirements
 
-| Asset | Requirement | Tag |
-| --- | --- | --- |
-| **Phone screenshots** | PNG or JPEG | **[HARD]** |
-| | **No alpha channel / transparency** | **[HARD]** |
-| | Each side 320–3840 px | **[HARD]** |
-| | Longest side ≤ 2 × shortest side | **[HARD]** |
-| | ≤ 8 MB per file | **[HARD]** |
-| | Minimum 2, maximum 8 per device type | **[HARD]** |
-| **App icon** | 512 × 512 px | **[HARD]** |
-| | PNG or JPEG, ≤ 1 MB | **[HARD]** |
-| | One icon globally — **not localizable** | **[HARD]** |
-| **Feature graphic** | 1024 × 500 px | **[HARD]** |
-| | PNG or JPEG, ≤ 15 MB | **[HARD]** |
-| | Required for the listing | **[HARD]** |
+| Asset                 | Requirement                             | Tag        |
+| --------------------- | --------------------------------------- | ---------- |
+| **Phone screenshots** | PNG or JPEG                             | **[HARD]** |
+|                       | **No alpha channel / transparency**     | **[HARD]** |
+|                       | Each side 320–3840 px                   | **[HARD]** |
+|                       | Longest side ≤ 2 × shortest side        | **[HARD]** |
+|                       | ≤ 8 MB per file                         | **[HARD]** |
+|                       | Minimum 2, maximum 8 per device type    | **[HARD]** |
+| **App icon**          | 512 × 512 px                            | **[HARD]** |
+|                       | PNG or JPEG, ≤ 1 MB                     | **[HARD]** |
+|                       | One icon globally — **not localizable** | **[HARD]** |
+| **Feature graphic**   | 1024 × 500 px                           | **[HARD]** |
+|                       | PNG or JPEG, ≤ 15 MB                    | **[HARD]** |
+|                       | Required for the listing                | **[HARD]** |
 
 ### Recommendations — quality and featuring, not policy
 
-| Item | Guidance | Tag |
-| --- | --- | --- |
-| **1080 × 1920 phone screenshots** | The canonical size used in this project | **[REC]** |
-| **≥ 4 screenshots at ≥ 1080 px, 16:9 or 9:16** | Gates promotional/featuring eligibility. Not an upload blocker | **[REC]** |
-| **Consistent dimensions within a set** | Mixed sizes letterbox inconsistently in the carousel | **[REC]** |
-| **Feature-graphic safe areas** | Keep the centre ~250 × 250 px quiet (a promo video overlays a play button there) and ~64 px clear at every edge | **[REC]** |
-| **Icon legible at 48 px** | The size it renders at in search and the app drawer | **[REC]** |
-| **Locale parity of slots** | Same feature in the same slot per storefront | **[REC]** |
-| **Screenshot ordering** | Slots 1–3 appear in search results | **[REC]** |
-| **No duplicate screenshots** | Documented asset-quality concern; also wastes a slot | **[REC]** |
-| **Deterministic generation** | Engineering hygiene, not a Play rule | **[REC]** |
-| **Stripped metadata** | Hygiene; nothing for Play to misread | **[REC]** |
+| Item                                           | Guidance                                                                                                        | Tag       |
+| ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | --------- |
+| **1080 × 1920 phone screenshots**              | The canonical size used in this project                                                                         | **[REC]** |
+| **≥ 4 screenshots at ≥ 1080 px, 16:9 or 9:16** | Gates promotional/featuring eligibility. Not an upload blocker                                                  | **[REC]** |
+| **Consistent dimensions within a set**         | Mixed sizes letterbox inconsistently in the carousel                                                            | **[REC]** |
+| **Feature-graphic safe areas**                 | Keep the centre ~250 × 250 px quiet (a promo video overlays a play button there) and ~64 px clear at every edge | **[REC]** |
+| **Icon legible at 48 px**                      | The size it renders at in search and the app drawer                                                             | **[REC]** |
+| **Locale parity of slots**                     | Same feature in the same slot per storefront                                                                    | **[REC]** |
+| **Screenshot ordering**                        | Slots 1–3 appear in search results                                                                              | **[REC]** |
+| **No duplicate screenshots**                   | Documented asset-quality concern; also wastes a slot                                                            | **[REC]** |
+| **Deterministic generation**                   | Engineering hygiene, not a Play rule                                                                            | **[REC]** |
+| **Stripped metadata**                          | Hygiene; nothing for Play to misread                                                                            | **[REC]** |
 
 **Do not present [REC] items to a founder as policy.** Doing so burns
 credibility and misallocates their time. FormAI's tablet decision is the
-distinction in practice: shipping *no* tablet screenshot is entirely
-permitted; shipping a *fictional* one is a Misrepresentation risk. The
+distinction in practice: shipping _no_ tablet screenshot is entirely
+permitted; shipping a _fictional_ one is a Misrepresentation risk. The
 requirement was never "you must have tablet assets".
 
 ### RGB vs RGBA
@@ -1502,7 +1501,7 @@ Every one of those is a problem:
   localizable. One had to be discarded regardless of quality.
 
 - **`YAPAY`.** See §2.15 — a compound-term translation truncated to its
-  modifier, meaning *fake*.
+  modifier, meaning _fake_.
 
 A second-round replacement (neon wireframe human bodies) fixed the wording but
 repeated the structural errors: still pre-rounded with a glowing border, still
@@ -1520,13 +1519,13 @@ bottom edge** (rows 500–511, 6,144 pixels). The artwork was 512×500; the expo
 padded the remainder white.
 
 Play's rounded mask would have rendered it as a white arc under the mark. It
-survived because everyone was reviewing the *design*, and the design was right.
+survived because everyone was reviewing the _design_, and the design was right.
 
 Detection was a four-line script: count pure-white pixels, and find rows that
 are uniformly white. Repair was to extrapolate the background gradient over
 the band — the mark ends far above it, so no artwork was touched.
 
-**Lesson:** validate the icon's *pixels*, not only its design. Sample the
+**Lesson:** validate the icon's _pixels_, not only its design. Sample the
 corners, sample the edges, count extreme values. This class of defect is
 invisible at a glance and fatal under a mask.
 
@@ -1590,9 +1589,9 @@ language". It was not:
   was a parity defect, not a claim defect.)
 
 - **A trust bar present in one locale only.** `US/005` carried
-  *"100% PRIVACY · 7 DAYS FREE · REAL PEOPLE — Join thousands of motivated
-  members"*; the Turkish twin had no such bar. The English asset was
-  *more wrong*, but the divergence itself meant neither could be validated by
+  _"100% PRIVACY · 7 DAYS FREE · REAL PEOPLE — Join thousands of motivated
+  members"_; the Turkish twin had no such bar. The English asset was
+  _more wrong_, but the divergence itself meant neither could be validated by
   checking the other.
 
 - **The same garment spelled two ways** across the Turkish set —
@@ -1617,7 +1616,7 @@ language". It was not:
   means fake.
 
 - **Native copy beats literal translation.** The Turkish long description was
-  written *for* Turkish rather than translated, and reads better for it. The
+  written _for_ Turkish rather than translated, and reads better for it. The
   Turkish nutrition angle (Turkish cuisine, 250+ Türk tarifi) is a genuine
   differentiator in-market and dead weight in en-US — the same asset concept
   should carry different content per locale where the market differs.
@@ -1678,11 +1677,11 @@ Consequences:
 
 ### Field limits, and validating them programmatically
 
-| Field | Limit | FormAI final |
-| --- | --- | --- |
-| App name | 30 characters | `FormAI: AI Fitness Coach` — 24 |
-| Short description | 80 characters | 75 |
-| Long description | 4,000 characters | 2,457 (en-US) / 2,468 (tr-TR) |
+| Field             | Limit            | FormAI final                    |
+| ----------------- | ---------------- | ------------------------------- |
+| App name          | 30 characters    | `FormAI: AI Fitness Coach` — 24 |
+| Short description | 80 characters    | 75                              |
+| Long description  | 4,000 characters | 2,457 (en-US) / 2,468 (tr-TR)   |
 
 Character counts must be **computed, not estimated**. FormAI's were validated
 by script against the limits, and the displayed figures in the review document
@@ -1697,16 +1696,16 @@ surface than any screenshot.
 
 - **No outcome promises.** No "results", "transformation", "guaranteed".
 - **Privacy wording must be scoped.** FormAI's long description states the
-  split explicitly: *"Camera footage never leaves your device … Your training
+  split explicitly: _"Camera footage never leaves your device … Your training
   history, profile and chat are stored on secure servers, tied to your account
-  and sent over an encrypted connection."* Naming the boundary is a stronger
+  and sent over an encrypted connection."_ Naming the boundary is a stronger
   trust signal than a vague absolute, and it survives review.
 
-- **AI must be disclosed** and its limits stated: *"Replies are produced by an
-  AI model and are general fitness guidance, not medical advice."*
+- **AI must be disclosed** and its limits stated: _"Replies are produced by an
+  AI model and are general fitness guidance, not medical advice."_
 
 - **Health disclaimers belong in the copy**, not only in-app. FormAI's
-  descriptions close with an explicit *"what this is not"* paragraph
+  descriptions close with an explicit _"what this is not"_ paragraph
   disclaiming diagnosis, treatment and body-change promises.
 
 - **Subscription claims must match live SKUs**, with terms.
@@ -1848,75 +1847,75 @@ engineering assume someone else did the Console work.
 
 A reusable procedure. Each step names who runs it and what "pass" means.
 
-### 1 · Source-code verification — *engineering*
+### 1 · Source-code verification — _engineering_
 
 Grep every feature, metric, screen and label claimed anywhere in the listing.
 **Pass:** every claim maps to a file; every metric maps to a computation.
 
-### 2 · Real-device verification — *founder or engineering*
+### 2 · Real-device verification — _founder or engineering_
 
 Install the exact release artefact on a physical device. Walk every flow the
 listing advertises.
 **Pass:** every advertised flow completes.
 
-### 3 · Screenshot-to-code verification — *engineering*
+### 3 · Screenshot-to-code verification — _engineering_
 
 Run the §7 checklist per asset.
 **Pass:** zero unfillable traceability rows.
 
-### 4 · Localization verification — *native reader*
+### 4 · Localization verification — _native reader_
 
 Every string in every locale at 100% zoom; number formats; parity diff.
 **Pass:** no glyph defects, no untranslated strings, no product-truth divergence.
 
-### 5 · Asset-format verification — *script*
+### 5 · Asset-format verification — _script_
 
 Run the validator.
 **Pass:** all assertions green, on a freshly regenerated set.
 
-### 6 · Privacy / legal verification — *engineering + founder*
+### 6 · Privacy / legal verification — _engineering + founder_
 
 Diff every privacy sentence in every asset and description against the Data
 Safety form and the live privacy policy.
 **Pass:** no claim broader than the declared data flow.
 
-### 7 · AI disclosure verification — *engineering*
+### 7 · AI disclosure verification — _engineering_
 
 AI presence disclosed in-app and in the listing; AI visibly synthetic;
 in-app reporting of AI output works.
 **Pass:** disclosure present, reporting functional.
 
-### 8 · Health-claim verification — *engineering*
+### 8 · Health-claim verification — _engineering_
 
 Sweep for outcome, diagnosis, prevention, treatment and measurement claims in
 assets, descriptions and in-app copy.
 **Pass:** none present, or each substantiated.
 
-### 9 · Subscription verification — *founder*
+### 9 · Subscription verification — _founder_
 
 Purchase and restore on a device with a license tester account.
 **Pass:** entitlement granted and restored; listing wording matches the SKU.
 
-### 10 · Play Console metadata verification — *founder*
+### 10 · Play Console metadata verification — _founder_
 
 Every field per locale; character counts; no stale wording.
 **Pass:** complete and within limits.
 
-### 11 · Data Safety verification — *founder + engineering*
+### 11 · Data Safety verification — _founder + engineering_
 
 Re-answer the form against the current architecture, not last quarter's.
 **Pass:** form matches code and listing.
 
-### 12 · Account-deletion verification — *founder*
+### 12 · Account-deletion verification — _founder_
 
 Create a throwaway account, delete it, confirm cascaded rows are gone.
 **Pass:** data actually removed.
 
-### 13 · Purchase / restore verification — *founder*
+### 13 · Purchase / restore verification — _founder_
 
 Covered by step 9; listed separately because it is the flow most often skipped.
 
-### 14 · Final reviewer-style walkthrough — *anyone not involved in building it*
+### 14 · Final reviewer-style walkthrough — _anyone not involved in building it_
 
 Open the listing as a stranger. Read every asset and every description. Install
 and use the app. Ask only: **does the listing describe this app?**
@@ -2014,14 +2013,14 @@ waived with a recorded reason.
 1. **Never invent a feature for an ASO screenshot.** The reviewer has the app.
 2. **Never put a claim into an image that the code cannot prove.**
 3. **Treat every store asset as part of the product's public contract**, not as marketing artwork.
-4. **Verify the verb and the scope, not just the noun.** "The feature exists" does not validate "the feature does *this*", and a true narrow claim is not a true broad one. Most failures are true-but-widened.
+4. **Verify the verb and the scope, not just the noun.** "The feature exists" does not validate "the feature does _this_", and a true narrow claim is not a true broad one. Most failures are true-but-widened.
 5. **Never make a privacy claim broader than the actual data flow** — and never one that contradicts Data Safety.
 6. **Ban the absolutes:** 100%, all data, never, always, completely, nothing.
 7. **Never use transformation or outcome promises.** Duration is not a result.
 8. **Never fabricate a metric.** If no code computes it, it does not go in the picture.
 9. **Never fabricate users, counts, ratings or testimonials.** No human face is a user.
 10. **Never show an Apple device in an Android Play listing** — state the prohibition explicitly in the prompt.
-11. **Never ship a tablet layout the consumer app does not render.** Shipping *no* tablet asset is permitted; shipping a fictional one is not.
+11. **Never ship a tablet layout the consumer app does not render.** Shipping _no_ tablet asset is permitted; shipping a fictional one is not.
 12. **Never let a generator draw your brand name.** Composite it.
 13. **Never trust generated text.** Validate against the ARB, or typeset it programmatically.
 14. **Generate art without non-ASCII text and typeset the locale afterwards.** No prompt prevents diacritic decay.
@@ -2046,60 +2045,60 @@ present at the time of writing.
 
 ### The FormAI audits — read these first for worked examples
 
-| File | What it contains |
-| --- | --- |
-| `ASO_SCREENSHOT_COMPLIANCE_REPORT.html` | Round-one audit of all 22 assets. 14 critical + 8 high findings, each with policy category, risk level, detection method, and a corrected generation prompt. The corrected prompts are the best available examples of §5.2 in practice. |
-| `FINAL_PLAY_STORE_REVIEW.html` | Round-two re-audit of the regenerated set, plus the final English and Turkish metadata (title, short and long descriptions, both verified against Play's limits) and the keyword strategy. Carries a status banner recording which blockers were later closed. |
-| `FINAL_PRODUCTION_SUBMISSION_REPORT.md` | The production submission record. **§11** documents the asset-preparation pass with `DONE BY ENGINEERING` and `FOUNDER ACTIONS` separated, and §11.2 records the residuals that were deliberately not fixed. |
-| `FINAL_GOOGLE_PLAY_PRODUCTION_AUDIT.md` | The earlier production audit whose findings drove build 38's copy corrections. |
+| File                                    | What it contains                                                                                                                                                                                                                                               |
+| --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ASO_SCREENSHOT_COMPLIANCE_REPORT.html` | Round-one audit of all 22 assets. 14 critical + 8 high findings, each with policy category, risk level, detection method, and a corrected generation prompt. The corrected prompts are the best available examples of §5.2 in practice.                        |
+| `FINAL_PLAY_STORE_REVIEW.html`          | Round-two re-audit of the regenerated set, plus the final English and Turkish metadata (title, short and long descriptions, both verified against Play's limits) and the keyword strategy. Carries a status banner recording which blockers were later closed. |
+| `FINAL_PRODUCTION_SUBMISSION_REPORT.md` | The production submission record. **§11** documents the asset-preparation pass with `DONE BY ENGINEERING` and `FOUNDER ACTIONS` separated, and §11.2 records the residuals that were deliberately not fixed.                                                   |
+| `FINAL_GOOGLE_PLAY_PRODUCTION_AUDIT.md` | The earlier production audit whose findings drove build 38's copy corrections.                                                                                                                                                                                 |
 
 ### Prompt and design source material
 
-| File | What it contains |
-| --- | --- |
-| `PLAY_STORE_ASO_PROMPTS.html` | The original per-asset GPT image prompt library, with a non-negotiable rules section, safe-area specifications and the palette. Instructive both for what it specifies and for the fact that the generated assets violated it anyway. |
-| `ASO_VISUAL_MASTERPLAN.md` | Turkish-language ASO strategy: positioning, competitor style analysis, screenshot strategy and concepts, generation prompts, overlay-text system. |
-| `docs/IMAGE_PROMPTS.md`, `docs/WORKOUT_IMAGE_PROMPTS.md`, `docs/MEAL_IMAGE_PROMPTS.md` | In-app imagery prompt libraries — same prompt-discipline lessons apply. |
+| File                                                                                   | What it contains                                                                                                                                                                                                                      |
+| -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `PLAY_STORE_ASO_PROMPTS.html`                                                          | The original per-asset GPT image prompt library, with a non-negotiable rules section, safe-area specifications and the palette. Instructive both for what it specifies and for the fact that the generated assets violated it anyway. |
+| `ASO_VISUAL_MASTERPLAN.md`                                                             | Turkish-language ASO strategy: positioning, competitor style analysis, screenshot strategy and concepts, generation prompts, overlay-text system.                                                                                     |
+| `docs/IMAGE_PROMPTS.md`, `docs/WORKOUT_IMAGE_PROMPTS.md`, `docs/MEAL_IMAGE_PROMPTS.md` | In-app imagery prompt libraries — same prompt-discipline lessons apply.                                                                                                                                                               |
 
 ### Tooling — the pipeline and validator
 
-| File | What it contains |
-| --- | --- |
+| File                               | What it contains                                                                                                                                                                                                                 |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `tool/playstore_asset_pipeline.py` | The repair → canvas → encode pipeline. Every `fix_*` function documents the defect it repairs and why the technique suits it. Contains the `inpaint` / `extrapolate_up` / `render_fit` helpers and the `selfcheck()` assertions. |
-| `tool/validate_play_assets.py` | Independent conformance validator — 131 assertions over format, alpha, dimensions, ratio, size, PNG chunks, counts, slot ordering, promotion eligibility, locale parity and duplicates. `--json` for CI. |
-| `tool/README_play_assets.md` | Sudo-free toolchain setup, the rationale for each tool (including why pngquant is installed and deliberately unused), and how to add a repair. |
-| `tool/format_play_store_assets.py` | The earlier asset formatter — resize/crop to Play targets with palette quantisation as a size fallback. Predates the pipeline above; useful as a simpler reference. |
+| `tool/validate_play_assets.py`     | Independent conformance validator — 131 assertions over format, alpha, dimensions, ratio, size, PNG chunks, counts, slot ordering, promotion eligibility, locale parity and duplicates. `--json` for CI.                         |
+| `tool/README_play_assets.md`       | Sudo-free toolchain setup, the rationale for each tool (including why pngquant is installed and deliberately unused), and how to add a repair.                                                                                   |
+| `tool/format_play_store_assets.py` | The earlier asset formatter — resize/crop to Play targets with palette quantisation as a size fallback. Predates the pipeline above; useful as a simpler reference.                                                              |
 
 ### Play Console preparation
 
-| File | What it contains |
-| --- | --- |
-| `PLAY_CONSOLE_PRODUCTION_GUIDE.md` | Step-by-step Console walkthrough: pre-flight, store listing, App content compliance section, monetisation, countries and pricing, testing, creating the production release, post-submission watch, rollout expansion, emergency rollback, and a final pre-submission checklist. |
-| `docs/store/PLAY_CONSOLE_ANSWERS.md` | Pre-written answers for the Console declaration forms. |
-| `docs/store/LISTING_EN.md`, `docs/store/LISTING_TR.md` | Per-locale listing copy. |
-| `docs/store/PRICING_SETUP.md` | Subscription product and pricing configuration. |
-| `docs/store/APP_STORE_ANSWERS.md` | App Store equivalents, for cross-platform releases. |
-| `FINAL_STORE_SUBMISSION_CHECKLIST.md`, `FINAL_STORE_SUBMISSION_ROADMAP.md` | Submission checklist and sequencing. |
-| `FOUNDER_ACTIONS_TODO.md`, `EXTERNAL_ACTION_LEDGER.md` | The running separation of founder-owned from engineering-owned work — the model §13 generalises. |
-| `docs/STORE_LAUNCH_REPORT.md`, `docs/MASTER_LAUNCH_ROADMAP.md` | Launch sequencing context. |
+| File                                                                       | What it contains                                                                                                                                                                                                                                                                |
+| -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `PLAY_CONSOLE_PRODUCTION_GUIDE.md`                                         | Step-by-step Console walkthrough: pre-flight, store listing, App content compliance section, monetisation, countries and pricing, testing, creating the production release, post-submission watch, rollout expansion, emergency rollback, and a final pre-submission checklist. |
+| `docs/store/PLAY_CONSOLE_ANSWERS.md`                                       | Pre-written answers for the Console declaration forms.                                                                                                                                                                                                                          |
+| `docs/store/LISTING_EN.md`, `docs/store/LISTING_TR.md`                     | Per-locale listing copy.                                                                                                                                                                                                                                                        |
+| `docs/store/PRICING_SETUP.md`                                              | Subscription product and pricing configuration.                                                                                                                                                                                                                                 |
+| `docs/store/APP_STORE_ANSWERS.md`                                          | App Store equivalents, for cross-platform releases.                                                                                                                                                                                                                             |
+| `FINAL_STORE_SUBMISSION_CHECKLIST.md`, `FINAL_STORE_SUBMISSION_ROADMAP.md` | Submission checklist and sequencing.                                                                                                                                                                                                                                            |
+| `FOUNDER_ACTIONS_TODO.md`, `EXTERNAL_ACTION_LEDGER.md`                     | The running separation of founder-owned from engineering-owned work — the model §13 generalises.                                                                                                                                                                                |
+| `docs/STORE_LAUNCH_REPORT.md`, `docs/MASTER_LAUNCH_ROADMAP.md`             | Launch sequencing context.                                                                                                                                                                                                                                                      |
 
 ### Source files used as ground truth during the audits
 
 These are the specific files the audits grepped. They are listed because
-*which* files answer *which* question is itself the reusable lesson (§7).
+_which_ files answer _which_ question is itself the reusable lesson (§7).
 
-| Question | File |
-| --- | --- |
-| Is the AI coach on-device or server-side? | `lib/features/coach/domain/coach_brain.dart`, `lib/features/coach/domain/llm_coach_brain.dart` |
-| What does the community feed actually render? | `lib/features/community/presentation/squad_feed_screen.dart` |
-| What is the squad member cap? | `lib/features/community/domain/models/community_models.dart` |
-| Is the form score real? | `lib/features/video_analysis/domain/form_score.dart` |
-| Does the app compute burned calories? | grep `caloriesBurned` across `lib/` — zero matches |
-| What are the real navigation labels? | `lib/l10n/app_en.arb`, `lib/l10n/app_tr.arb` (`nav*` keys) |
-| What does the app itself say about privacy? | `lib/l10n/app_localizations_en.dart` — the camera/servers split string |
-| Are trial claims safe? | `lib/features/monetization/presentation/paywall_screen.dart` |
-| Does the app support tablets? | grep for width breakpoints — only `lib/features/admin/presentation/admin_dashboard_screen.dart` |
-| How many recipes ship? | `assets/meals` |
+| Question                                      | File                                                                                            |
+| --------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| Is the AI coach on-device or server-side?     | `lib/features/coach/domain/coach_brain.dart`, `lib/features/coach/domain/llm_coach_brain.dart`  |
+| What does the community feed actually render? | `lib/features/community/presentation/squad_feed_screen.dart`                                    |
+| What is the squad member cap?                 | `lib/features/community/domain/models/community_models.dart`                                    |
+| Is the form score real?                       | `lib/features/video_analysis/domain/form_score.dart`                                            |
+| Does the app compute burned calories?         | grep `caloriesBurned` across `lib/` — zero matches                                              |
+| What are the real navigation labels?          | `lib/l10n/app_en.arb`, `lib/l10n/app_tr.arb` (`nav*` keys)                                      |
+| What does the app itself say about privacy?   | `lib/l10n/app_localizations_en.dart` — the camera/servers split string                          |
+| Are trial claims safe?                        | `lib/features/monetization/presentation/paywall_screen.dart`                                    |
+| Does the app support tablets?                 | grep for width breakpoints — only `lib/features/admin/presentation/admin_dashboard_screen.dart` |
+| How many recipes ship?                        | `assets/meals`                                                                                  |
 
 ### Note on asset storage
 
@@ -2110,6 +2109,6 @@ Future projects should adopt the same split.
 
 ---
 
-*Compiled from the FormAI Google Play production preparation, July–August 2026.
+_Compiled from the FormAI Google Play production preparation, July–August 2026.
 Every finding, file path and code reference above was verified against the
-repository at the time of writing. Nothing in this document is hypothetical.*
+repository at the time of writing. Nothing in this document is hypothetical._

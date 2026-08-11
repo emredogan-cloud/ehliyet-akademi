@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -7,6 +8,7 @@ import '../../core/theme/theme_controller.dart';
 import '../../core/app_version.dart';
 import '../../core/analytics/analytics_event.dart';
 import '../../core/analytics/analytics_ref.dart';
+import '../../core/config.dart';
 import '../../core/theme/tokens.dart';
 import '../../data/practice/progress_repository.dart';
 import '../../design/brand.dart';
@@ -29,8 +31,10 @@ class ProfileScreen extends ConsumerWidget {
     final auth = ref.watch(authControllerProvider);
     final progress = ref.watch(progressRepositoryProvider).value;
     final profile = ref.watch(studyProfileProvider);
-    final platformDark = MediaQuery.platformBrightnessOf(context) == Brightness.dark;
-    final isDark = mode == ThemeMode.dark || (mode == ThemeMode.system && platformDark);
+    final platformDark =
+        MediaQuery.platformBrightnessOf(context) == Brightness.dark;
+    final isDark =
+        mode == ThemeMode.dark || (mode == ThemeMode.system && platformDark);
 
     final answers = progress?.loadAnswers() ?? const [];
     final streak = progress?.loadStreak() ?? StreakState.empty;
@@ -87,7 +91,8 @@ class ProfileScreen extends ConsumerWidget {
                     icon: Icons.badge_rounded,
                     color: p.blue,
                     title: 'Ehliyet sınıfı',
-                    subtitle: '${profile.category.badge} · ${profile.category.title}',
+                    subtitle:
+                        '${profile.category.badge} · ${profile.category.title}',
                     onTap: () => _showLicencePicker(context, ref),
                   ),
                   _divider(p),
@@ -137,6 +142,25 @@ class ProfileScreen extends ConsumerWidget {
                     title: 'Uygulamayı puanla',
                     subtitle: 'Google Play’de bize destek ol',
                     onTap: () => showRatingDialog(context),
+                  ),
+                  _divider(p),
+                  // Google'ın Kullanıcı Verisi politikası, kişisel veri işleyen uygulamalarda
+                  // gizlilik politikasının mağaza sayfasında VE uygulama içinde bağlanmasını
+                  // istiyor. Bu iki satır o gereksinimi karşılıyor.
+                  _SettingRow(
+                    icon: Icons.privacy_tip_outlined,
+                    color: p.blue,
+                    title: 'Gizlilik Politikası',
+                    subtitle: 'Hangi veriler işleniyor, neden',
+                    onTap: () => _openLegal(context, '/gizlilik'),
+                  ),
+                  _divider(p),
+                  _SettingRow(
+                    icon: Icons.gavel_rounded,
+                    color: p.blue,
+                    title: 'KVKK Aydınlatma Metni',
+                    subtitle: 'Haklarını ve başvuru yolunu öğren',
+                    onTap: () => _openLegal(context, '/kvkk'),
                   ),
                   _divider(p),
                   _SettingRow(
@@ -212,7 +236,10 @@ class ProfileScreen extends ConsumerWidget {
   /// Sıra önemli: silme başarılı olduktan SONRA yerel oturum temizlenir (`logout`) ve yığın
   /// değiştirilir. Tersi yapılsaydı, silme başarısız olduğunda kullanıcı sebepsiz yere çıkmış
   /// olurdu.
-  static Future<void> _deleteAccount(BuildContext context, WidgetRef ref) async {
+  static Future<void> _deleteAccount(
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
     final deleted = await showDeleteAccountDialog(context);
     if (!deleted || !context.mounted) return;
 
@@ -264,7 +291,12 @@ class _ProfileHeader extends StatelessWidget {
     final authed = auth.isAuthenticated && user != null;
     return GlowCard(
       selected: true,
-      padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s4, 0, AppSpacing.s4),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.s4,
+        AppSpacing.s4,
+        0,
+        AppSpacing.s4,
+      ),
       child: Row(
         children: [
           Expanded(
@@ -280,7 +312,9 @@ class _ProfileHeader extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: p.primary.withValues(alpha: 0.16),
-                        border: Border.all(color: p.primary.withValues(alpha: 0.4)),
+                        border: Border.all(
+                          color: p.primary.withValues(alpha: 0.4),
+                        ),
                       ),
                       child: Text(
                         authed ? user.initials : 'EA',
@@ -302,7 +336,9 @@ class _ProfileHeader extends StatelessWidget {
                           ),
                           const SizedBox(height: 2),
                           Text(
-                            authed ? user.email : 'Giriş yaparak ilerlemeni kaydet',
+                            authed
+                                ? user.email
+                                : 'Giriş yaparak ilerlemeni kaydet',
                             style: TextStyle(color: p.text3, fontSize: 12.5),
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -349,7 +385,11 @@ class _ProfileHeader extends StatelessWidget {
                     child: GradientPillButton(
                       label: 'Giriş yap / Kayıt ol',
                       height: 50,
-                      leading: const Icon(Icons.login_rounded, color: Colors.white, size: 18),
+                      leading: const Icon(
+                        Icons.login_rounded,
+                        color: Colors.white,
+                        size: 18,
+                      ),
                       onPressed: () => context.push('/auth'),
                     ),
                   ),
@@ -396,7 +436,11 @@ class _MiniStat extends StatelessWidget {
                   child: Text(
                     value,
                     maxLines: 1,
-                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: p.text),
+                    style: TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 16,
+                      color: p.text,
+                    ),
                   ),
                 ),
                 FittedBox(
@@ -437,7 +481,10 @@ class _ToggleRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = context.palette;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4, vertical: AppSpacing.s2),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.s4,
+        vertical: AppSpacing.s2,
+      ),
       child: Row(
         children: [
           IconBadge(icon: icon, color: color, size: 44),
@@ -446,7 +493,13 @@ class _ToggleRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 15,
+                  ),
+                ),
                 Text(subtitle, style: TextStyle(color: p.text3, fontSize: 12)),
               ],
             ),
@@ -491,7 +544,10 @@ class _SettingRow extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s4, vertical: AppSpacing.s3),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.s4,
+          vertical: AppSpacing.s3,
+        ),
         child: Row(
           children: [
             IconBadge(icon: icon, color: color, size: 44),
@@ -500,8 +556,17 @@ class _SettingRow extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
-                  Text(subtitle, style: TextStyle(color: p.text3, fontSize: 12)),
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 15,
+                    ),
+                  ),
+                  Text(
+                    subtitle,
+                    style: TextStyle(color: p.text3, fontSize: 12),
+                  ),
                 ],
               ),
             ),
@@ -527,11 +592,18 @@ class _PromoCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Ehliyet Akademi', style: Theme.of(context).textTheme.titleMedium),
+                Text(
+                  'Ehliyet Akademi',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
                 const SizedBox(height: 3),
                 Text(
                   'Sürüş bilgini geliştir, sınavlarda bir adım önde ol!',
-                  style: TextStyle(color: p.text2, fontSize: 12.5, height: 1.35),
+                  style: TextStyle(
+                    color: p.text2,
+                    fontSize: 12.5,
+                    height: 1.35,
+                  ),
                 ),
               ],
             ),
@@ -555,14 +627,19 @@ Future<void> _showLicencePicker(BuildContext context, WidgetRef ref) async {
     ),
     isScrollControlled: true,
     // küçük ekranlarda taşmasın diye kaydırılabilir (ve en fazla ekranın %85'i)
-    constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.85),
+    constraints: BoxConstraints(
+      maxHeight: MediaQuery.of(context).size.height * 0.85,
+    ),
     builder: (context) => SafeArea(
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             const SizedBox(height: AppSpacing.s4),
-            Text('Ehliyet sınıfı', style: Theme.of(context).textTheme.titleLarge),
+            Text(
+              'Ehliyet sınıfı',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
             const SizedBox(height: AppSpacing.s2),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.s6),
@@ -586,8 +663,13 @@ Future<void> _showLicencePicker(BuildContext context, WidgetRef ref) async {
                   size: 42,
                 ),
                 title: Text('${c.badge} · ${c.title}'),
-                subtitle: Text(c.blurb, style: TextStyle(color: p.text3, fontSize: 12)),
-                trailing: c == current ? Icon(Icons.check_circle_rounded, color: p.primary) : null,
+                subtitle: Text(
+                  c.blurb,
+                  style: TextStyle(color: p.text3, fontSize: 12),
+                ),
+                trailing: c == current
+                    ? Icon(Icons.check_circle_rounded, color: p.primary)
+                    : null,
                 onTap: () => Navigator.of(context).pop(c),
               ),
             const SizedBox(height: AppSpacing.s4),
@@ -598,6 +680,24 @@ Future<void> _showLicencePicker(BuildContext context, WidgetRef ref) async {
   );
   if (picked != null && picked != current) {
     final profile = ref.read(studyProfileProvider);
-    await ref.read(studyProfileProvider.notifier).save(profile.copyWith(category: picked));
+    await ref
+        .read(studyProfileProvider.notifier)
+        .save(profile.copyWith(category: picked));
   }
+}
+
+/// Yasal sayfayı tarayıcıda aç.
+///
+/// Sayfalar web tarafında yaşıyor (`/gizlilik`, `/kvkk`) ve uygulamayla AYNI metni gösteriyor;
+/// metni ikinci kez uygulamaya gömmek, ikisinin zamanla ayrışması demek olurdu — beyanın iki
+/// farklı sürümü olması, hiç olmamasından kötüdür.
+///
+/// Açılamazsa sessiz kalınmaz: kullanıcı adresi görebilsin diye bilgilendirilir.
+Future<void> _openLegal(BuildContext context, String path) async {
+  final uri = Uri.parse('${AppConfig.apiBaseUrl}$path');
+  final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
+  if (ok || !context.mounted) return;
+  ScaffoldMessenger.of(
+    context,
+  ).showSnackBar(SnackBar(content: Text('Sayfa açılamadı. Adres: $uri')));
 }

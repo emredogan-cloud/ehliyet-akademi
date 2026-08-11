@@ -1,4 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- AĞ ERİŞİMİ — AÇIKÇA BİLDİRİLİR.
+         Bu izin daha önce yalnız `src/debug/` ve `src/profile/` manifestolarında vardı; sürüm
+         derlemesine `google_sign_in_android` eklentisinin kendi manifestosundan BİRLEŞEREK
+         giriyordu. Yani kritik bir izin, ilgisiz bir eklentinin varlığına bağlıydı: o eklenti
+         kaldırılsa veya değiştirilse sürüm derlemesi ağ erişimini SESSİZCE kaybederdi — derleme
+         hatası olmaz, uygulama açılır, yalnız hiçbir içerik gelmez. Uygulamanın tamamı API'den
+         beslendiği için bu tam bir üretim kesintisi olurdu. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <!-- Local notifications (flutter_local_notifications) — Phase 5. -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>

@@ -110,6 +110,11 @@ ALTER TABLE users ADD COLUMN IF NOT EXISTS role TEXT NOT NULL DEFAULT 'user';
 -- Sprint 4: e-posta doğrulama + ödeme makbuz referansı
 ALTER TABLE users ADD COLUMN IF NOT EXISTS email_verified BOOLEAN NOT NULL DEFAULT false;
 ALTER TABLE purchases ADD COLUMN IF NOT EXISTS external_ref TEXT;
+-- Yayın öncesi (10 Ağustos 2026) — ABONELİK BİTİŞ ANI.
+-- Mobil katalog iki abonelik satıyor (haftalık/aylık) ama bu tabloda süre kavramı yoktu: bir
+-- abonelik yazıldığında SÜRESİZ görünür ve haftalık paket ömür boyu erişime dönüşürdü.
+-- NULL = süresiz (tek seferlik ürün). Dolu = o ana kadar geçerli.
+ALTER TABLE purchases ADD COLUMN IF NOT EXISTS expires_at TIMESTAMPTZ;
 
 CREATE TABLE IF NOT EXISTS email_verification_tokens (
   token_hash TEXT PRIMARY KEY,
@@ -129,7 +134,7 @@ CREATE TABLE IF NOT EXISTS content_items (
   tags JSONB NOT NULL DEFAULT '[]',
   difficulty TEXT,
   payload JSONB NOT NULL,
-  created_by TEXT NOT NULL REFERENCES users(id),
+  created_by TEXT REFERENCES users(id) ON DELETE SET NULL,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   published_at TIMESTAMPTZ
 );
@@ -143,7 +148,7 @@ CREATE TABLE IF NOT EXISTS content_versions (
   version INTEGER NOT NULL,
   status TEXT NOT NULL,
   payload JSONB NOT NULL,
-  changed_by TEXT NOT NULL REFERENCES users(id),
+  changed_by TEXT REFERENCES users(id) ON DELETE SET NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS content_versions_content_idx ON content_versions(content_id);
@@ -332,14 +337,14 @@ CREATE TABLE IF NOT EXISTS media_assets (
   tags JSONB NOT NULL DEFAULT '[]',
   version INTEGER NOT NULL DEFAULT 1,
   data_base64 TEXT NOT NULL,
-  created_by TEXT NOT NULL REFERENCES users(id),
+  created_by TEXT REFERENCES users(id) ON DELETE SET NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS media_kind_idx ON media_assets(kind);
 
 CREATE TABLE IF NOT EXISTS audit_logs (
   id TEXT PRIMARY KEY,
-  user_id TEXT NOT NULL REFERENCES users(id),
+  user_id TEXT REFERENCES users(id) ON DELETE SET NULL,
   action TEXT NOT NULL,
   entity TEXT NOT NULL,
   entity_id TEXT NOT NULL,
@@ -399,6 +404,41 @@ CREATE TABLE IF NOT EXISTS error_reports (
 );
 CREATE UNIQUE INDEX IF NOT EXISTS error_reports_id_uq ON error_reports(id);
 CREATE INDEX IF NOT EXISTS error_reports_fp_at_idx ON error_reports(fingerprint, at);
+-- Yayın öncesi (10 Ağustos 2026) — HESAP SİLMEYİ KİLİTLEYEN YABANCI ANAHTARLAR.
+--
+-- Bu dört sütun "NOT NULL REFERENCES users(id)" idi ve ON DELETE yan tümcesi YOKTU. PostgreSQL
+-- varsayılanı NO ACTION'dır: bağlı satır varken ana satır silinemez. media_assets.created_by
+-- yalnız yöneticinin yazdığı sanılıyordu; oysa TOPLULUK AVATAR YÜKLEME ucu da yazıyor. Sonuç:
+-- avatar yüklemiş her kullanıcı "Hesabımı sil" dediğinde 23503 alıyordu.
+--
+-- SET NULL seçildi (CASCADE değil): bir yönetici ayrıldığında ürettiği CMS içeriği ve denetim
+-- kaydı SİLİNMEMELİ, yalnız kime ait olduğu bilgisi düşmeli. Kullanıcının KENDİ avatar görseli
+-- ise ayrıca ve açıkça silinir (app/api/account/route.ts), yetim kayıt bırakılmaz.
+ALTER TABLE media_assets    ALTER COLUMN created_by DROP NOT NULL;
+ALTER TABLE content_items   ALTER COLUMN created_by DROP NOT NULL;
+ALTER TABLE content_versions ALTER COLUMN changed_by DROP NOT NULL;
+ALTER TABLE audit_logs      ALTER COLUMN user_id    DROP NOT NULL;
+
+ALTER TABLE media_assets     DROP CONSTRAINT IF EXISTS media_assets_created_by_fkey;
+ALTER TABLE media_assets     ADD  CONSTRAINT media_assets_created_by_fkey
+  FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL;
+ALTER TABLE content_items    DROP CONSTRAINT IF EXISTS content_items_created_by_fkey;
+ALTER TABLE content_items    ADD  CONSTRAINT content_items_created_by_fkey
+  FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL;
+ALTER TABLE content_versions DROP CONSTRAINT IF EXISTS content_versions_changed_by_fkey;
+ALTER TABLE content_versions ADD  CONSTRAINT content_versions_changed_by_fkey
+  FOREIGN KEY (changed_by) REFERENCES users(id) ON DELETE SET NULL;
+ALTER TABLE audit_logs       DROP CONSTRAINT IF EXISTS audit_logs_user_id_fkey;
+ALTER TABLE audit_logs       ADD  CONSTRAINT audit_logs_user_id_fkey
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL;
+
+-- Yayın öncesi (10 Ağustos 2026) — AI YANITI BİLDİRİMİ.
+-- Play'in üretken yapay zekâ politikası, rahatsız edici AI çıktısının uygulama içinden
+-- bildirilebilmesini bekliyor. Yeni bir moderasyon sistemi kurmak yerine var olan soru bildirimi
+-- kuyruğu kullanılıyor; ayrım tek bir sütunla yapılıyor.
+ALTER TABLE question_reports ADD COLUMN IF NOT EXISTS source TEXT NOT NULL DEFAULT 'question';
+CREATE INDEX IF NOT EXISTS question_reports_source_idx ON question_reports(source);
+
 `;
 
 let _db: Db | null = null;

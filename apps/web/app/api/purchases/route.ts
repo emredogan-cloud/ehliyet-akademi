@@ -15,14 +15,26 @@ export const GET = guarded(async (req: Request): Promise<Response> => {
   const user = await getSessionUser(req);
   if (!user) return json({ error: 'Oturum gerekli.' }, { status: 401 });
   const db = await getDb();
-  const rows = await db
+  const allRows = await db
     .select({
       productId: purchases.productId,
       priceTRY: purchases.priceTRY,
       at: purchases.createdAt,
+      expiresAt: purchases.expiresAt,
     })
     .from(purchases)
     .where(eq(purchases.userId, user.id));
+
+  // SÜRESİ GEÇMİŞ ABONELİKLER SAHİPLİK DEĞİLDİR.
+  //
+  // `expires_at` NULL ise ürün süresizdir (tek seferlik paket). Dolu ve geçmişse abonelik sona
+  // ermiştir ve hak DÜŞER. Bu filtre olmasaydı haftalık bir abonelik, tablodaki satırı kalıcı
+  // olduğu için ömür boyu erişime dönerdi. Mobil taraf sahipliği bu uçtan okuduğu için erişim
+  // burada kapanır; istemcide tek satır değişiklik gerekmez.
+  const nowTs = new Date();
+  const rows = allRows
+    .filter((r) => !r.expiresAt || r.expiresAt > nowTs)
+    .map(({ productId, priceTRY, at }) => ({ productId, priceTRY, at }));
 
   // Faz 8 — ETKİN davet ödülü sahipliğe eklenir.
   //

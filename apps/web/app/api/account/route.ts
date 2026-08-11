@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm';
-import { getDb, users } from '@ea/db';
+import { communityProfiles, getDb, mediaAssets, users } from '@ea/db';
 import {
   getSessionUser,
   json,
@@ -88,7 +88,28 @@ export const DELETE = guarded(async (req: Request): Promise<Response> => {
     }
   }
 
+  // KULLANICININ KENDİ GÖRSELİ ÖNCE SİLİNİR.
+  //
+  // `media_assets.created_by` artık ON DELETE SET NULL taşıyor; bu, silmenin yabancı anahtar
+  // ihlaliyle patlamasını engeller (avatar yüklemiş kullanıcı hesabını silemiyordu). Ama SET NULL
+  // tek başına yeterli DEĞİL: kullanıcının profil fotoğrafı atıfsız bir satır olarak tabloda
+  // KALIRDI. KVKK ve Play açısından fotoğrafın kendisi de gitmelidir, bağı değil.
+  //
+  // Hangi görselin "profil fotoğrafı" olduğu topluluk profilinden okunur — etikete veya
+  // "bu kullanıcının yüklediği her şey" varsayımına dayanmaz. Yönetici bir hesap silindiğinde
+  // onun yüklediği CMS medyası KALMALI; silinmesi gereken yalnız kişisel fotoğraftır.
+  const profile = await db
+    .select({ avatarMediaId: communityProfiles.avatarMediaId })
+    .from(communityProfiles)
+    .where(eq(communityProfiles.userId, user.id))
+    .limit(1);
+
+  const avatarMediaId = profile[0]?.avatarMediaId ?? null;
+  if (avatarMediaId) {
+    await db.delete(mediaAssets).where(eq(mediaAssets.id, avatarMediaId));
+  }
+
   await db.delete(users).where(eq(users.id, user.id));
-  logger.info('account_deleted', { userId: user.id });
+  logger.info('account_deleted', { userId: user.id, avatarRemoved: Boolean(avatarMediaId) });
   return json({ ok: true }, { setCookie: sessionClearCookie() });
 });

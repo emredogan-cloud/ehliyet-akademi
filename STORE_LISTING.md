@@ -1,5 +1,26 @@
 # Google Play Store Listing — Ehliyet Akademi (Mobile Phase 8)
 
+> # ⛔ BU BELGE GEÇERSİZDİR — 10 Ağustos 2026
+>
+> **Kullanmayın.** Mağaza metninin tek doğru kaynağı `ASO_PROMPT_LIBRARY.html` →
+> "Play Store liste metni (tr-TR)" bölümüdür.
+>
+> Bu dosya dört noktada gerçekle çelişiyor ve Console'a olduğu gibi girilirse yanlış beyan üretir:
+>
+> | Bu belge diyor ki                                    | Gerçek                                           | Kanıt                                                 |
+> | ---------------------------------------------------- | ------------------------------------------------ | ----------------------------------------------------- |
+> | "kullanıcı etkileşimi yok" (İçerik Derecelendirmesi) | Sohbet, tartışma, grup ve mesajlaşma var         | `apps/mobile/lib/features/community/chat_screen.dart` |
+> | Tek ürün `komple_ehliyet`, **399 TL**                | Üç paket; ömür boyu paket mağazada **479,99 TL** | `apps/mobile/lib/domain/premium/products.dart`        |
+> | "**19** detaylı ders"                                | **29 ders**; 19 olan, ŞEMA taşıyan ders sayısı   | canlı `/api/mobile/content-snapshot`                  |
+> | Ad: "Ehliyet Akademi — **B Sınıfı** Sınav"           | A, B ve D sınıfları destekleniyor                | `study_profile.dart:11-15`                            |
+>
+> Ayrıca "Assets checklist" bölümündeki ekran görüntüsü planı da geçersizdir; yerine
+> `ASO_PROMPT_LIBRARY.html` §4 (sekiz kare) ve §7 (üretim sonrası CLI) geçerlidir.
+>
+> Belge, tarihsel kayıt olarak duruyor — silinmedi ki eski bir bağlantı boşluğa düşmesin.
+
+---
+
 Draft store metadata for the Android app. Language: **Türkçe (tr-TR)** primary. App id
 `com.ehliyetegitim.ehliyet_akademi`. Category: **Education**. Content rating: **Everyone / 3+**
 (educational; no user-to-user content, no ads, one-time in-app purchases).

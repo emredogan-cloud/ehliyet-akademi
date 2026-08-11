@@ -55,6 +55,12 @@ dependencies:
   # Faz 7 — mağaza sayfasını açmak için. Puanın kendisi Google Play'de veriliyor; uygulama
   # yıldızı KAYDETMEZ ve puana göre yol AYIRMAZ (Play politikası bunu yasaklıyor).
   in_app_review: ^2.0.10
+  # Faz D — uygulama içi yasal bağlantılar (Gizlilik Politikası / KVKK).
+  # Google'ın Kullanıcı Verisi politikası, kişisel veri işleyen uygulamalarda gizlilik
+  # politikasının hem mağaza sayfasında hem UYGULAMA İÇİNDE bağlanmasını istiyor. Paket zaten
+  # geçişli bir bağımlılıktı (in_app_review üzerinden); doğrudan kullanıldığı için artık açıkça
+  # bildiriliyor — geçişli bir paketi doğrudan kullanmak, ara bağımlılık kalkarsa sessizce kırılır.
+  url_launcher: ^6.3.1
   # Faz 10 — rozet/sonuç kartını paylaşmak için. Kart bir widget'tan PNG'ye çevrilip paylaşılır;
   # sunucuya hiçbir şey yüklenmez.
   share_plus: ^13.3.0

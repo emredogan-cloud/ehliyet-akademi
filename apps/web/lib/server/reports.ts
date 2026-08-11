@@ -6,7 +6,22 @@ import { desc, eq } from 'drizzle-orm';
 import { getDb, questionReports } from '@ea/db';
 import { newId } from './auth';
 
-export const REPORT_KINDS = ['wrong-answer', 'unclear', 'typo', 'suggestion', 'other'] as const;
+export const REPORT_KINDS = [
+  'wrong-answer',
+  'unclear',
+  'typo',
+  'suggestion',
+  // Play'in üretken yapay zekâ politikası için gerekli: rahatsız edici/zararlı çıktı bildirimi.
+  'harmful',
+  'other',
+] as const;
+
+/** Bildirimin geldiği yüzey. AI Koç yanıtları soru bankasından ayrı sayılır. */
+export const REPORT_SOURCES = ['question', 'ai-reply'] as const;
+export type ReportSource = (typeof REPORT_SOURCES)[number];
+export function isReportSource(x: unknown): x is ReportSource {
+  return typeof x === 'string' && (REPORT_SOURCES as readonly string[]).includes(x);
+}
 export type ReportKind = (typeof REPORT_KINDS)[number];
 export const REPORT_STATUSES = ['open', 'resolved', 'dismissed'] as const;
 export type ReportStatus = (typeof REPORT_STATUSES)[number];
@@ -34,6 +49,7 @@ export async function createReport(input: {
   kind: ReportKind;
   message?: string;
   userId?: string | null;
+  source?: ReportSource;
 }): Promise<{ id: string }> {
   const db = await getDb();
   const id = newId();
@@ -43,6 +59,7 @@ export async function createReport(input: {
     kind: input.kind,
     message: (input.message ?? '').slice(0, 1000),
     userId: input.userId ?? null,
+    source: input.source ?? 'question',
   });
   return { id };
 }

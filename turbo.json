@@ -1,7 +1,21 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
-    "build": { "dependsOn": ["^build"], "outputs": [".next/**", "!.next/cache/**", "dist/**"] },
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
+      "env": [
+        "LEGAL_COMPANY_NAME",
+        "LEGAL_TAX_ID",
+        "LEGAL_ADDRESS",
+        "LEGAL_KEP_ADDRESS",
+        "LEGAL_SUPPORT_EMAIL",
+        "RETENTION_ANALYTICS_DAYS",
+        "RETENTION_ERROR_REPORTS_DAYS",
+        "RETENTION_MODERATION_DAYS",
+        "NEXT_PUBLIC_SITE_URL"
+      ]
+    },
     "lint": {},
     "typecheck": { "dependsOn": ["^build"] },
     "test": { "dependsOn": ["^build"] }

@@ -80,6 +80,77 @@ void main() {
     });
   });
 
+  /// Sonuç/koşul garantisi taramaları — **kullanıcıya görünen dizelerde**.
+  ///
+  /// Denetim geçmişi bu korumanın neden var olduğunu anlatıyor: web kataloğundaki
+  /// "Geçme garantisi kapsamı" (N3) kaldırıldı, ama aynı sınıftan ikinci bir iddia — ödeme
+  /// duvarındaki **"7 gün para iade garantisi"** — mobil bir açılır pencerede durduğu için
+  /// gözden kaçtı ve ancak CİHAZDA görülerek bulundu.
+  ///
+  /// O iddia üç ayrı sebeple yanlıştı: sunucuda iade uygulaması yok, satın alma Google Play
+  /// üzerinden yapıldığı için 7 günü tek taraflı garanti edemeyiz, ve yayımlanmış /hesap-silme
+  /// sayfası tam tersini söylüyordu.
+  ///
+  /// Tarama YALNIZ tırnak içindeki dizelere bakar: yorum satırları kaldırılan ifadeyi tarihe
+  /// geçirmek için bilerek alıntılıyor ve bunları taramak doğru yapılmış bir düzeltmeyi hata
+  /// gibi gösterirdi.
+  group('mağaza iddiaları', () {
+    /// Dart kaynağındaki tek/çift tırnaklı dize sabitleri.
+    Iterable<String> literalsIn(String source) sync* {
+      for (final line in source.split('\n')) {
+        final code = line.trimLeft();
+        if (code.startsWith('//') || code.startsWith('///')) continue;
+        for (final m in RegExp(r"'([^'\\]*)'|\u0022([^\u0022\\]*)\u0022").allMatches(code)) {
+          yield m.group(1) ?? m.group(2) ?? '';
+        }
+      }
+    }
+
+    const uiFiles = [
+      'lib/features/premium/premium_popups.dart',
+      'lib/features/premium/paywall_screen.dart',
+      'lib/features/coach/coach_screen.dart',
+      'lib/features/profile/profile_screen.dart',
+    ];
+
+    test('ödeme duvarı ve premium yüzeyleri iade/sonuç garantisi vaat etmez', () {
+      final banned = <RegExp>[
+        RegExp(r'para iade garantisi', caseSensitive: false),
+        RegExp(r'geçme garantisi', caseSensitive: false),
+        RegExp(r'başarı garantisi', caseSensitive: false),
+        RegExp(r'%\s*100\s*(başarı|garanti|güvenli)', caseSensitive: false),
+        RegExp(r'kesinlikle geçersin', caseSensitive: false),
+        RegExp(r'ücretsiz deneme süresi', caseSensitive: false),
+      ];
+      for (final path in uiFiles) {
+        for (final literal in literalsIn(read(path))) {
+          for (final rx in banned) {
+            expect(
+              rx.hasMatch(literal),
+              isFalse,
+              reason:
+                  '$path içinde veremeyeceğimiz bir söz var: "$literal". '
+                  'Satın alma Google Play üzerinden yapılır; iade ve iptal onun '
+                  'politikasına tabidir ve /hesap-silme §5 bunu böyle yayımlıyor.',
+            );
+          }
+        }
+      }
+    });
+
+    test('MEB bağlantısı iddia edilmez', () {
+      for (final path in uiFiles) {
+        for (final literal in literalsIn(read(path))) {
+          expect(
+            RegExp(r'MEB\s*(onaylı|onaylidir|uyumlu|müfredatına %100)').hasMatch(literal),
+            isFalse,
+            reason: '$path: hiçbir resmî MEB bağı yok; yalnız BİÇİM uyumu söylenebilir.',
+          );
+        }
+      }
+    });
+  });
+
   group('uygulama içi uyum arayüzü', () {
     test('Profil ekranı gizlilik ve KVKK bağlantılarını taşır', () {
       final profile = read('lib/features/profile/profile_screen.dart');
@@ -99,10 +170,7 @@ void main() {
       final coach = read('lib/features/coach/coach_screen.dart');
       // Bu dize mağaza görsellerinde ve gizlilik politikasında da alıntılanıyor; değişirse
       // üç yer birden tutarsızlaşır.
-      expect(
-        coach.contains('kesin ve güncel kural için MEB/MTSK esastır'),
-        isTrue,
-      );
+      expect(coach.contains('kesin ve güncel kural için MEB/MTSK esastır'), isTrue);
     });
   });
 }

@@ -35,6 +35,41 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
+  /// Dinlenen ilerleme deposu — hangi örneğe abone olduğumuzu bilmek için tutulur.
+  ///
+  /// ## Neden bir dinleyici gerekti (cihaz denetimi, 11 Ağustos 2026)
+  ///
+  /// 90 soru çözüldükten sonra bu ekran hâlâ **%0 hazırlık · 0 soru · Lv 1** gösteriyordu;
+  /// İlerleme ekranı aynı anda 90 soru · %71 · Seviye 4 diyordu. Veri kaybı YOKTU.
+  ///
+  /// Ana Sayfa `StatefulShellRoute.indexedStack` dalında **canlı kalır**: kullanıcı Pratik
+  /// sekmesinde çalışırken bu ekran hiç yeniden inşa edilmez. `progressRepositoryProvider` de
+  /// bir `FutureProvider` olduğu için aynı örneği döndürür ve yeni bir değer yaymaz. Sonuç:
+  /// ekran, açıldığı andaki sayılarda donuyordu ve ancak uygulama yeniden başlatılınca
+  /// düzeliyordu — kullanıcıya "çalışmam kaydedilmedi" gibi görünen sessiz bir kusur.
+  ///
+  /// Depo artık her yazmada `revision`'ı artırıyor; burada ona abone olup yeniden çiziyoruz.
+  ProgressRepository? _boundProgress;
+
+  /// Depo örneği değiştiyse aboneliği taşı. `identical` kontrolü, her `build` çağrısında
+  /// dinleyici eklenmesini önler.
+  void _bindProgress(ProgressRepository? repo) {
+    if (identical(_boundProgress, repo)) return;
+    _boundProgress?.revision.removeListener(_onProgressChanged);
+    _boundProgress = repo;
+    _boundProgress?.revision.addListener(_onProgressChanged);
+  }
+
+  void _onProgressChanged() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _boundProgress?.revision.removeListener(_onProgressChanged);
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -55,11 +90,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     await _maybeShowAiWelcome();
     await _maybeStartTour();
     if (!mounted) return;
-    await maybeShowRetentionPrompt(
-      context,
-      ref,
-      nowMs: DateTime.now().millisecondsSinceEpoch,
-    );
+    await maybeShowRetentionPrompt(context, ref, nowMs: DateTime.now().millisecondsSinceEpoch);
   }
 
   Future<void> _maybeShowAiWelcome() async {
@@ -96,6 +127,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     final p = context.palette;
     final progress = ref.watch(progressRepositoryProvider).value;
+    _bindProgress(progress);
     final profile = ref.watch(studyProfileProvider);
     final answers = progress?.loadAnswers() ?? const [];
     final readiness = answers.isNotEmpty ? progress!.readiness() : null;
@@ -121,7 +153,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       body: SafeArea(
         bottom: false,
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(AppSpacing.s4, AppSpacing.s3, AppSpacing.s4, AppSpacing.s10),
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.s4,
+            AppSpacing.s3,
+            AppSpacing.s4,
+            AppSpacing.s10,
+          ),
           children: [
             // Header
             Row(
@@ -138,7 +175,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ],
                   ),
                 ),
-                _NotificationBell(hasNudge: topNudge != null, onTap: () => context.push('/notifications')),
+                _NotificationBell(
+                  hasNudge: topNudge != null,
+                  onTap: () => context.push('/notifications'),
+                ),
               ],
             ),
             const SizedBox(height: AppSpacing.s4),
@@ -147,72 +187,83 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             CoachAnchor(
               id: ProductTourAnchors.home,
               child: GlowCard(
-              onTap: () => context.push('/progress'),
-              padding: const EdgeInsets.all(AppSpacing.s4),
-              child: Row(
-                children: [
-                  ReadinessRing(value: (readiness?.overall ?? 0) / 100),
-                  const SizedBox(width: AppSpacing.s4),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(child: Text('Sınava hazırlık', style: Theme.of(context).textTheme.titleMedium)),
-                            Icon(Icons.chevron_right_rounded, color: p.text3),
-                          ],
-                        ),
-                        const SizedBox(height: AppSpacing.s2),
-                        Text(
-                          readiness?.message ?? 'Çözmeye başla — ilerlemen ve zayıf konuların burada belirir.',
-                          style: TextStyle(color: p.text3, fontSize: 12.5, height: 1.3),
-                        ),
-                        const SizedBox(height: AppSpacing.s3),
-                        // Faz 12 — üç istatistik kartın genişliğini PAYLAŞIR.
-                        //
-                        // Sabit aralıklı hâli, sayılar büyüdükçe (1250 soru, Lv 12) ve büyük
-                        // sistem yazısında satırı taşırıyordu. Taşma cihazda sarı-siyah şeritli
-                        // bir kare demek; kırpmak yerine paylaştırmak doğru çözüm.
-                        //
-                        // ARALARINDAKİ BOŞLUK ZORUNLU. `StatTile` içeriğini SOLA yaslar; paylar
-                        // bitişik olduğunda geniş bir değer kendi payını doldurup komşusuna
-                        // DEĞİYOR. Cihazda görüldü: %100 doğruluk + Lv 1 yan yana "%100Lv 1"
-                        // olarak okunuyordu. Uygulamadaki diğer bütün `StatTile` satırları
-                        // (davet ekranı, topluluk profili) zaten `s3` ile ayrılmış — burası
-                        // ayrık kalmıştı.
-                        Row(
-                          children: [
-                            Expanded(
-                              child: StatTile(
-                                value: '${answers.length}',
-                                label: 'soru',
-                                color: p.primary,
+                onTap: () => context.push('/progress'),
+                padding: const EdgeInsets.all(AppSpacing.s4),
+                child: Row(
+                  children: [
+                    ReadinessRing(value: (readiness?.overall ?? 0) / 100),
+                    const SizedBox(width: AppSpacing.s4),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'Sınava hazırlık',
+                                  style: Theme.of(context).textTheme.titleMedium,
+                                ),
                               ),
-                            ),
-                            const SizedBox(width: AppSpacing.s3),
-                            Expanded(child: StatTile(value: '%$accuracy', label: 'doğruluk')),
-                            const SizedBox(width: AppSpacing.s3),
-                            Expanded(
-                              child: StatTile(
-                                value: 'Lv ${level.level}',
-                                label: 'seviye',
-                                color: p.accent,
+                              Icon(Icons.chevron_right_rounded, color: p.text3),
+                            ],
+                          ),
+                          const SizedBox(height: AppSpacing.s2),
+                          Text(
+                            readiness?.message ??
+                                'Çözmeye başla — ilerlemen ve zayıf konuların burada belirir.',
+                            style: TextStyle(color: p.text3, fontSize: 12.5, height: 1.3),
+                          ),
+                          const SizedBox(height: AppSpacing.s3),
+                          // Faz 12 — üç istatistik kartın genişliğini PAYLAŞIR.
+                          //
+                          // Sabit aralıklı hâli, sayılar büyüdükçe (1250 soru, Lv 12) ve büyük
+                          // sistem yazısında satırı taşırıyordu. Taşma cihazda sarı-siyah şeritli
+                          // bir kare demek; kırpmak yerine paylaştırmak doğru çözüm.
+                          //
+                          // ARALARINDAKİ BOŞLUK ZORUNLU. `StatTile` içeriğini SOLA yaslar; paylar
+                          // bitişik olduğunda geniş bir değer kendi payını doldurup komşusuna
+                          // DEĞİYOR. Cihazda görüldü: %100 doğruluk + Lv 1 yan yana "%100Lv 1"
+                          // olarak okunuyordu. Uygulamadaki diğer bütün `StatTile` satırları
+                          // (davet ekranı, topluluk profili) zaten `s3` ile ayrılmış — burası
+                          // ayrık kalmıştı.
+                          Row(
+                            children: [
+                              Expanded(
+                                child: StatTile(
+                                  value: '${answers.length}',
+                                  label: 'soru',
+                                  color: p.primary,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                              const SizedBox(width: AppSpacing.s3),
+                              Expanded(
+                                child: StatTile(value: '%$accuracy', label: 'doğruluk'),
+                              ),
+                              const SizedBox(width: AppSpacing.s3),
+                              Expanded(
+                                child: StatTile(
+                                  value: 'Lv ${level.level}',
+                                  label: 'seviye',
+                                  color: p.accent,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: AppSpacing.s4),
 
             // AI Koç hero
-            CoachAnchor(id: ProductTourAnchors.aiCoach, child: _CoachHero(nudge: topNudge)),
+            CoachAnchor(
+              id: ProductTourAnchors.aiCoach,
+              child: _CoachHero(nudge: topNudge),
+            ),
             const SizedBox(height: AppSpacing.s2),
 
             SectionTitle('Bugünkü plan'),
@@ -231,7 +282,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   _PlanRow(
                     icon: Icons.refresh_rounded,
                     color: p.accent,
-                    text: dueCount > 0 ? 'Tekrar zamanı gelen $dueCount kart' : 'Vadesi gelen kart yok',
+                    text: dueCount > 0
+                        ? 'Tekrar zamanı gelen $dueCount kart'
+                        : 'Vadesi gelen kart yok',
                     done: dueCount == 0 && answers.isNotEmpty,
                     onTap: () => context.go('/practice/study'),
                   ),
@@ -318,26 +371,31 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             CoachAnchor(
               id: ProductTourAnchors.progress,
               child: GlowCard(
-              onTap: () => context.push('/progress'),
-              padding: const EdgeInsets.all(AppSpacing.s4),
-              child: Row(
-                children: [
-                  IconBadge(icon: Icons.insights_rounded, color: p.primary, size: 52, glow: true),
-                  const SizedBox(width: AppSpacing.s4),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('İstatistiklerim', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
-                        const SizedBox(height: 3),
-                        Text('Radar, çalışma haritası, rozetler ve seviyeni gör',
-                            style: TextStyle(color: p.text3, fontSize: 12.5, height: 1.3)),
-                      ],
+                onTap: () => context.push('/progress'),
+                padding: const EdgeInsets.all(AppSpacing.s4),
+                child: Row(
+                  children: [
+                    IconBadge(icon: Icons.insights_rounded, color: p.primary, size: 52, glow: true),
+                    const SizedBox(width: AppSpacing.s4),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'İstatistiklerim',
+                            style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
+                          ),
+                          const SizedBox(height: 3),
+                          Text(
+                            'Radar, çalışma haritası, rozetler ve seviyeni gör',
+                            style: TextStyle(color: p.text3, fontSize: 12.5, height: 1.3),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Icon(Icons.chevron_right_rounded, color: p.text3),
-                ],
-              ),
+                    Icon(Icons.chevron_right_rounded, color: p.text3),
+                  ],
+                ),
               ),
             ),
           ],
@@ -375,7 +433,11 @@ class _NotificationBell extends StatelessWidget {
               child: Container(
                 width: 9,
                 height: 9,
-                decoration: BoxDecoration(color: p.accent, shape: BoxShape.circle, border: Border.all(color: p.bg, width: 1.5)),
+                decoration: BoxDecoration(
+                  color: p.accent,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: p.bg, width: 1.5),
+                ),
               ),
             ),
         ],
@@ -449,7 +511,12 @@ class _CoachHero extends StatelessWidget {
 }
 
 class _QuickTile extends StatelessWidget {
-  const _QuickTile({required this.icon, required this.label, required this.color, required this.onTap});
+  const _QuickTile({
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.onTap,
+  });
   final IconData icon;
   final String label;
   final Color color;
@@ -472,7 +539,12 @@ class _QuickTile extends StatelessWidget {
                 label,
                 textAlign: TextAlign.center,
                 maxLines: 2,
-                style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700, color: p.text2, height: 1.15),
+                style: TextStyle(
+                  fontSize: 11.5,
+                  fontWeight: FontWeight.w700,
+                  color: p.text2,
+                  height: 1.15,
+                ),
               ),
             ),
           ],
@@ -483,7 +555,13 @@ class _QuickTile extends StatelessWidget {
 }
 
 class _PlanRow extends StatelessWidget {
-  const _PlanRow({required this.icon, required this.text, required this.color, this.done = false, this.onTap});
+  const _PlanRow({
+    required this.icon,
+    required this.text,
+    required this.color,
+    this.done = false,
+    this.onTap,
+  });
   final IconData icon;
   final String text;
   final Color color;

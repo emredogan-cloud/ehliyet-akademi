@@ -9,7 +9,6 @@ import '../../design/brand.dart';
 import '../../domain/premium/premium_prompt.dart';
 import '../../domain/premium/products.dart';
 
-
 /// Bağlamsal premium teşviki — sık-gösterim sınırlarına uyar. Gösterilmesi gerekiyorsa pencereyi açar
 /// ve gösterimi kaydeder. `nowMs` çağıran taraftan verilir (test edilebilirlik + saf çekirdek).
 Future<void> maybeShowPremiumIncentive(
@@ -53,7 +52,11 @@ class _PremiumIncentiveDialog extends StatelessWidget {
     final p = context.palette;
     final features = [
       (Icons.menu_book_rounded, 'Tüm Konulara Sınırsız Erişim', 'Dersler, video ve görsel içerik'),
-      (Icons.track_changes_rounded, 'Sınırsız Deneme Sınavı', 'Gerçek sınav deneyimi, detaylı analiz'),
+      (
+        Icons.track_changes_rounded,
+        'Sınırsız Deneme Sınavı',
+        'Gerçek sınav deneyimi, detaylı analiz',
+      ),
       (Icons.smart_toy_rounded, 'AI Koç ile Akıllı Destek', 'Sorularını sor, anında öğren'),
       (Icons.event_note_rounded, 'Kişisel Çalışma Planı', 'Sana özel planlama ve hatırlatıcılar'),
     ];
@@ -63,15 +66,27 @@ class _PremiumIncentiveDialog extends StatelessWidget {
         children: [
           MascotImage(AppImages.illLockGold, height: 150, semanticLabel: 'Premium'),
           const SizedBox(height: AppSpacing.s2),
-          BrandChip(label: "PREMIUM'A GEÇ", icon: Icons.workspace_premium_rounded, color: context.palette.accent),
+          BrandChip(
+            label: "PREMIUM'A GEÇ",
+            icon: Icons.workspace_premium_rounded,
+            color: context.palette.accent,
+          ),
           const SizedBox(height: AppSpacing.s3),
           RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
-              style: TextStyle(color: p.text, fontWeight: FontWeight.w900, fontSize: 24, height: 1.15),
+              style: TextStyle(
+                color: p.text,
+                fontWeight: FontWeight.w900,
+                fontSize: 24,
+                height: 1.15,
+              ),
               children: [
                 const TextSpan(text: 'Tüm Potansiyelini\n'),
-                TextSpan(text: 'Kilidi Aç!', style: TextStyle(color: context.palette.accent)),
+                TextSpan(
+                  text: 'Kilidi Aç!',
+                  style: TextStyle(color: context.palette.accent),
+                ),
               ],
             ),
           ),
@@ -117,12 +132,31 @@ class _PremiumIncentiveDialog extends StatelessWidget {
             },
           ),
           const SizedBox(height: AppSpacing.s3),
+          // "7 gün para iade garantisi" 11 Ağustos 2026'da KALDIRILDI — veremeyeceğimiz bir sözdü.
+          //
+          // Üç ayrı yerde yanlıştı:
+          //  1. Sunucuda hiçbir iade uygulaması YOK — grep 'refund' boş döner.
+          //  2. Satın alma Google Play üzerinden yapılır; self-servis iade penceresi 48 saattir,
+          //     ötesi geliştiricinin takdirindedir. Play akışında 7 günü tek taraflı garanti
+          //     edemeyiz.
+          //  3. Yayımlanmış /hesap-silme §5 sayfası TAM TERSİNİ söylüyor: "iptal ve iade talepleri
+          //     Google Play üzerinden yürütülür". Uygulama ile yayımlanan metin çelişiyordu.
+          //
+          // Bu, N3'te kaldırılan "Geçme garantisi kapsamı" ile aynı sınıf bir sonuç/koşul
+          // garantisidir; o web kataloğundaydı, bu mobil açılır penceresinde olduğu için
+          // denetimden kaçmıştı. Yerine doğrulanabilir ve gerçekten geçerli olan bilgi konuldu.
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(Icons.verified_user_rounded, size: 15, color: p.text3),
               const SizedBox(width: 6),
-              Text('7 gün para iade garantisi', style: TextStyle(color: p.text3, fontSize: 12)),
+              Flexible(
+                child: Text(
+                  'İptal ve iade talepleri Google Play üzerinden yürütülür',
+                  style: TextStyle(color: p.text3, fontSize: 12),
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ],
           ),
         ],
@@ -178,8 +212,16 @@ class _PremiumSuccessDialog extends StatelessWidget {
                       children: [
                         Icon(f.$1, color: f.$2, size: 24),
                         const SizedBox(height: 6),
-                        Text(f.$3, textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 11)),
-                        Text(f.$4, textAlign: TextAlign.center, style: TextStyle(color: p.text3, fontSize: 9.5, height: 1.2)),
+                        Text(
+                          f.$3,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 11),
+                        ),
+                        Text(
+                          f.$4,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: p.text3, fontSize: 9.5, height: 1.2),
+                        ),
                       ],
                     ),
                   ),
@@ -220,14 +262,25 @@ class PremiumDialogShell extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(AppRadii.lg),
           border: Border.all(color: p.primary.withValues(alpha: 0.35)),
-          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.5), blurRadius: 40, offset: const Offset(0, 12))],
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.5),
+              blurRadius: 40,
+              offset: const Offset(0, 12),
+            ),
+          ],
         ),
         child: Stack(
           children: [
             ConstrainedBox(
               constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(context).height * 0.86),
               child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(AppSpacing.s5, AppSpacing.s5, AppSpacing.s5, AppSpacing.s5),
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.s5,
+                  AppSpacing.s5,
+                  AppSpacing.s5,
+                  AppSpacing.s5,
+                ),
                 child: child,
               ),
             ),
@@ -239,7 +292,11 @@ class PremiumDialogShell extends StatelessWidget {
                 tooltip: 'Kapat',
                 icon: Container(
                   padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: p.border), color: p.surface),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(color: p.border),
+                    color: p.surface,
+                  ),
                   child: Icon(Icons.close_rounded, color: p.text2, size: 18),
                 ),
               ),

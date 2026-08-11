@@ -25,12 +25,14 @@ These were open on 10 August and are now closed. Listed so you do not redo them.
 
 ## A · Legal and identity
 
-- [ ] **F-01** 🔴 Four legal env vars still missing in Vercel → Production
-  - [ ] `LEGAL_COMPANY_NAME`
-  - [ ] `LEGAL_TAX_ID`
-  - [ ] `LEGAL_ADDRESS`
-  - [ ] `LEGAL_KEP_ADDRESS`
-  - [x] `LEGAL_SUPPORT_EMAIL` — set by me, 11 Aug 2026
+- [x] **F-01** ✅ Legal env vars set in Vercel → Production (by me, 11 Aug 2026)
+  - [x] `LEGAL_COMPANY_NAME` · `LEGAL_TAX_ID` · `LEGAL_ADDRESS` · `LEGAL_SUPPORT_EMAIL`
+  - [x] `LEGAL_KEP_ADDRESS` — **intentionally not created.** KEP is mandatory under TTK m.18/3
+        for capital companies; a natural person is not required to hold one, and inventing an
+        address would publish a false registration detail. The code now treats its absence as
+        valid and simply omits the row.
+- [ ] **F-01b** 🔴 **Merge PR #22 and redeploy** — the pages render the real identity only once
+      production is rebuilt from this branch. Until then the live site still shows the old page.
   - ⚠️ **All five must be present.** With four of five the page still shows "not yet published".
   - **Then redeploy.** Env changes do not affect the running deployment.
   - **Evidence:** `curl -s https://www.ehliyetegitim.com/gizlilik | grep -c "henüz yayımlanmadı"` → `0`
@@ -88,9 +90,10 @@ These were open on 10 August and are now closed. Listed so you do not redo them.
 - [ ] **F-11** 🔴 App name: `Ehliyet Akademi: Deneme Sınavı`
 - [ ] **F-11** 🔴 Short description pasted (74 chars)
 - [ ] **F-11** 🔴 Full description pasted (3.056 chars)
-- [ ] **F-11** 🔴 Eight screenshots uploaded from `apps/ASO_IMAGE/PLAY_READY/` **in filename order**
-- [ ] **F-11** 🔴 Feature graphic uploaded
-- [ ] **F-11** 🔴 App icon uploaded (one, global)
+- [ ] **F-11** 🔴 Eight screenshots uploaded from `apps/ASO_IMAGE/PLAY_READY/` **in filename order** — ✅ built, 134/134
+- [ ] **F-11** 🔴 Feature graphic uploaded — ✅ `feature-graphic-1024x500.png` built
+- [ ] **F-11** 🔴 App icon uploaded — ✅ `app-icon-512.png` built
+- [ ] **F-11** ⚠️ Short description: use the **19 ders** version, not 29 (see handbook F-11)
 - [ ] **F-11** Nothing pasted from `STORE_LISTING.md` (superseded)
 - [ ] **F-13** 🟡 Reviewer notes added
 
@@ -98,7 +101,8 @@ These were open on 10 August and are now closed. Listed so you do not redo them.
 
 - [ ] **F-14** 🔴 Closed-testing requirements met (tester count + continuous days), if applicable
 - [ ] **F-14** 🔴 Production access confirmed
-- [ ] Final AAB uploaded (I build it — see `FINAL_RELEASE_AAB_REPORT.md`)
+- [x] Final AAB **built and verified** — `1.0.0+6`, see `FINAL_RELEASE_AAB_REPORT.md`
+- [ ] **F-14** 🔴 Upload that AAB to Closed testing (I do not upload)
 - [ ] Release notes pasted (tr-TR)
 - [ ] Staged rollout percentage chosen
 

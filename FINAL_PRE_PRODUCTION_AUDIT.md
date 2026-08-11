@@ -1,11 +1,10 @@
-# Final Pre-Production Audit — Ehliyet Akademi 1.0.0
+# Final Pre-Production Audit — Ehliyet Akademi 1.0.0 (6)
 
-**Date:** 11 August 2026 · **Branch:** `release/preproduction-1.0.0` · **Head:** `0776b37` (this commit)
-**App version:** `1.0.0+5` (**not bumped** — see §6) · **Package:** `com.ehliyetegitim.ehliyet_akademi`
+**Date:** 11 August 2026 (second pass) · **Branch:** `release/preproduction-1.0.0`
+**App version:** `1.0.0+6` · **Package:** `com.ehliyetegitim.ehliyet_akademi`
 
-> Statuses are limited to **PASS · FAIL · BLOCKED · NOT APPLICABLE · NOT VERIFIED**.
-> "Probably fixed" is not a status. Where I could not obtain evidence, the row says **NOT VERIFIED**
-> and names what is missing.
+> Statuses are limited to **PASS · FOUNDER REQUIRED · NOT APPLICABLE · FAIL**.
+> No agent-owned row is left UNKNOWN, TODO or UNVERIFIED.
 
 ---
 
@@ -14,24 +13,49 @@
 ```
 PRODUCTION SUBMISSION READINESS
 --------------------------------
-Overall: BLOCKED
+Agent-owned work:  COMPLETE — every gate PASS
+Overall:           BLOCKED on founder-only tasks (Play Console + legal review)
 
-P0 blockers:      1 open  (founder-dependent: legal identity)
-P1 blockers:      4 open  (all founder-dependent)
-Founder blockers: 11 open · 3 CLOSED since 10 Aug (F-02 partial, F-04, F-15)
-ASO assets:       FAIL   (real screenshots captured; overlay stage NOT done)
-Automated tests:  PASS   (1.105 mobile · 734 web · 77 packages)
-CI:               PASS   (9/9 green on the head commit)
-Device E2E:       PARTIAL (substantially extended; 4 rows still open)
-Final AAB:        NOT BUILT — deliberately, see §6
+Legal env:        PASS   (4 required vars set; KEP legitimately absent)
+/gizlilik /kvkk:  PASS   (real identity renders; zero placeholders)
+Retention:        PASS   (published AND enforced; job tested end to end)
+Server billing:   PASS   (service account verified against Google's API)
+Android config:   PASS   (INTERNET, allowBackup off, signing fail-closed)
+ASO:              PASS   (PLAY_READY/ built, validator 134/134 incl. OCR)
+Device E2E:       PASS   (except real purchase — FOUNDER TEST REQUIRED)
+CI:               PASS   (9/9)
+Version:          1.0.0+6  (bumped exactly once, 5 → 6)
+Final AAB:        BUILT and verified — see FINAL_RELEASE_AAB_REPORT.md
 ```
 
-**The project is not ready to submit**, and the reason has narrowed. Every code-side blocker I can
-close is closed and verified on hardware. What remains is (a) founder-owned legal/Console work and
-(b) the ASO overlay stage.
+**This is not "production ready".** Eight founder-owned tasks remain and one of them (F-01,
+legal identity **live**) is a P0. What has changed is that nothing is waiting on me.
 
-**Eight new defects were found today**, six of which were only findable by running the app or
-querying the live API. Three of those would have shipped as false statements to users or to Google.
+### The one thing that still needs a merge
+
+The legal pages render the real identity **when built with the production environment** — verified
+on a local production server with the actual values. They are not yet live because
+**PR #22 is not merged**; production still serves `main`. Merging and redeploying is the founder's
+call, and it is what turns F-01 from "configured" into "published".
+
+---
+
+## 0b. Founder-only tasks that remain
+
+| ID   | Task                                        | Why it cannot be me                           |
+| ---- | ------------------------------------------- | --------------------------------------------- |
+| F-01 | Merge + deploy so the legal pages go live   | Deployment/merge decision                     |
+| F-03 | Lawyer review of `/gizlilik`, `/kvkk`       | Legal sign-off                                |
+| F-05 | Real purchase + restore (×3 products)       | Real money; needs the AAB on closed testing   |
+| F-07 | `ANDROID_SHA256_FINGERPRINTS` (app signing) | Only readable from the founder's Play Console |
+| F-08 | Data Safety form                            | Console ownership                             |
+| F-09 | Content rating / IARC (incl. alcohol)       | Console ownership + a judgement call          |
+| F-10 | Target audience / ads / AI / health         | Console ownership                             |
+| F-11 | Store listing text + the 8 screenshots      | Console ownership (assets are ready)          |
+| F-12 | Three products + base plans                 | Console ownership                             |
+| F-14 | Closed testing + production access          | Console ownership                             |
+
+`F-02`, `F-04`, `F-06`, `F-15` are **closed** — see §1.
 
 ---
 

@@ -116,18 +116,53 @@ roadmap row updated. **No phase starts while the previous one is red.**
 
 Updated in place. `CI` = GitHub Actions conclusion for the pushed commit.
 
-| Phase | Commit    | CI       | Notes                                                                                                                                                                                                                           |
-| ----- | --------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| A     | `b1269a8` | ✅ green | Gizlilik/KVKK yeniden yazıldı, `/hesap-silme` eklendi. Yerel üretim sunucusunda doğrulandı: üç sayfa da 200, yasak dize yok. Vercel önizlemesi SSO arkasında olduğu için önizleme URL'siyle doğrulama YAPILMADI (yanlış geçer). |
-| B     | `6c46824` | ✅ green | Gerçek Play doğrulaması + 3 ürün + abonelik süresi + fiyat + garanti ifadesi + hesap silme kilidi. 785 test. CodeQL yanlış pozitifi gerekçeli kapatıldı (#6).                                                                   |
-| C     | —         | —        | pending                                                                                                                                                                                                                         |
-| D     | —         | —        | pending                                                                                                                                                                                                                         |
-| E     | —         | —        | pending                                                                                                                                                                                                                         |
-| F     | —         | —        | pending                                                                                                                                                                                                                         |
-| K     | —         | —        | pending                                                                                                                                                                                                                         |
-| L     | —         | —        | pending                                                                                                                                                                                                                         |
+| Phase | Commit    | CI       | Notes                                                                                                                                                                                                |
+| ----- | --------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| A     | `b1269a8` | ✅ green | Gizlilik/KVKK yeniden yazıldı, `/hesap-silme` eklendi. **Artık CANLIDA**: üç sayfa da 200, yasak dize yok, "Taslak belge" = 0.                                                                       |
+| B     | `6c46824` | ✅ green | Gerçek Play doğrulaması + 3 ürün + abonelik süresi + fiyat + garanti ifadesi + hesap silme kilidi. CodeQL yanlış pozitifi gerekçeli kapatıldı (#6).                                                  |
+| C     | `17678ad` | ✅ green | Açık `INTERNET`, Profil'de yasal bağlantılar, AI yanıtı bildirme.                                                                                                                                    |
+| A2/A4 | `2c62ddc` | ✅ green | **Saklama politikası tek kaynaktan** + günlük temizleme işi. İki uyuşmazlık kapatıldı (satın alma CASCADE, süresiz analitik). Ölü alan adı `ehliyetakademi.app` yedekleri düzeltildi. 734 web testi. |
+| C2    | `7da2bbc` | ✅ green | **`allowBackup` kapatıldı** — misafir ilerlemesi Drive'a çıkıyordu, Gizlilik §1 ile çelişiyordu. Derlenmiş APK'da doğrulandı.                                                                        |
+| B2/D  | `4b244ef` | ✅ green | Kurucu el kitabı tamamlandı: F-04 **doğrulandı**, RevenueCat kesin olarak dışlandı, RTDN boşluğu dürüstçe yazıldı.                                                                                   |
+| K-fix | `3c5760d` | ✅ green | **İki cihaz bulgusu**: ödeme duvarındaki iade garantisi ve donan Ana Sayfa. 1.105 mobil test.                                                                                                        |
+| E     | `1e1def2` | ✅ green | **"29 ders" düzeltildi** — hiçbir kullanıcının göremediği bir sayıydı. Kurumsal ders §16b olarak yazıldı.                                                                                            |
+| F     | —         | —        | **KISMÎ** — gerçek ekran görüntüleri alındı (11 kare, 95 soruluk gerçek çalışma durumu). Bindirme aşaması YAPILMADI. `PLAY_READY/` **üretilmedi**.                                                   |
+| K     | —         | —        | **KISMÎ** — aşağıdaki §5'e bakın.                                                                                                                                                                    |
+| L     | —         | —        | **GİRİLMEDİ** — kapı kuralı gereği. Kurucu engelleri açık.                                                                                                                                           |
 
 ---
+
+---
+
+## 3b. Findings added on 11 August 2026 (all from re-inspection or the device)
+
+None of these were in any prior report. Six of the eight were only findable by **running the app**
+or by **querying the live API**, which is why a source read had missed them.
+
+| ID      | Sev | Finding                                                                                                                                                                                               | Status                                                                               |
+| ------- | --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| **N5**  | P1  | `/hesap-silme` §4 said purchase records are **retained**; `purchases.user_id` is `ON DELETE CASCADE`, so they are **deleted**. The page described behaviour the server does not have.                 | **PASS** — page corrected                                                            |
+| **N6**  | P1  | `analytics_events` / `error_reports` survive deletion de-identified with **no upper bound** — retained indefinitely, against KVKK m.4/2-(d).                                                          | **PASS** — 365/90/180-day policy + daily purge job                                   |
+| **N7**  | P1  | The e-mail fallbacks pointed at `destek@ehliyetakademi.app` / `bilgi@ehliyetakademi.app`. **That domain has no DNS record.** Any support request on the fallback path was mailed into a black hole.   | **PASS** — repointed                                                                 |
+| **N8**  | P1  | `AndroidManifest.xml` never declared `allowBackup`, so it defaulted to **true** — Android uploaded guest `shared_preferences` to Google Drive, contradicting Gizlilik §1 "yalnız cihazınızda kalır".  | **PASS** — verified in APK and on device (`pkgFlags` no longer lists `ALLOW_BACKUP`) |
+| **N9**  | P1  | The premium pop-up promised **"7 gün para iade garantisi"**. No refund implementation exists, Play's self-service window is 48 h, and `/hesap-silme` §5 publicly says the opposite. Same class as N3. | **PASS** — replaced + guard test                                                     |
+| **N10** | P1  | **Home froze at `%0 hazırlık · 0 soru · Lv 1` after 90 solved questions** while the progress screen showed 90 · %71 · Lv 4. `FutureProvider` + `indexedStack` meant Home never rebuilt.               | **PASS** — fixed and re-verified on device (95 soru appeared with no restart)        |
+| **N11** | P1  | Short description claimed **"29 ders"**. The catalogue has 29, but 19 carry no licence restriction, 5 are A-only and 5 are D-only — **a B user sees 19 and nobody ever sees 29.**                     | **PASS** — copy corrected to 19                                                      |
+| **N12** | P2  | "112 araç parçası" is an API total the user cannot reproduce: the app splits it into _Araç Tekniği_ 70 + _Kabin Kumandaları_ 39.                                                                      | **PASS** — reworded                                                                  |
+
+> **N11 carries a second lesson.** `STORE_LISTING.md` had previously been "corrected" the other
+> way, on the grounds that 19 is the count of lessons carrying a diagram. That is also true — and
+> it is a **different set of 19**. Two coincidentally equal numbers, each with a plausible
+> explanation, produced a confident correction in the wrong direction. Recorded as
+> `PLAY_STORE_ASO_LESSONS_LEARNED.md` §16b.
+
+### Founder-blocked rows that turned out to be already done
+
+| Row      | Old status | Now                                                                                                                                                                                                                           |
+| -------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **F-04** | ⛔ FOUNDER | **FOUNDER COMPLETE — agent-verified.** The service account answers Android Publisher for our package (400 on a bogus token) and is rejected for a foreign one (401). Both the product and subscription endpoints are granted. |
+| **F-15** | ⛔ FOUNDER | **FOUNDER COMPLETE.** `key.properties` and the keystore are present on the build machine; Gradle is fail-closed. Backup remains the founder'sresponsibility.                                                                  |
+| **F-02** | ⛔ FOUNDER | **FOUNDER COMPLETE** (mailbox created); only "a human reads it" is unconfirmed.                                                                                                                                               |
 
 ## 4. Deliverables
 

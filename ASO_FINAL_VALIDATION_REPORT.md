@@ -1,5 +1,40 @@
 # ASO Final Validation Report — Ehliyet Akademi
 
+> ## ⛔ VERDICT: NOT UPLOAD-READY — updated 11 August 2026
+>
+> **`apps/ASO_IMAGE/PLAY_READY/` does not exist and must not be created until the overlay stage
+> passes.** A folder with that name is an instruction to upload.
+>
+> | Stage                                     | State                                                   |
+> | ----------------------------------------- | ------------------------------------------------------- |
+> | Raw plates (`NEW/`)                       | ✅ clean of every banned defect                         |
+> | Normalisation (`NORMALIZED/`)             | ✅ 1080×1920 sRGB, deterministic, 94/94 checks          |
+> | **Real device screenshots (`SCREENS/`)**  | ✅ **12 captured 11 Aug** — see `SCREENS/PROVENANCE.md` |
+> | **Overlay: screens + Turkish typography** | ❌ **NOT DONE**                                         |
+> | Final validation → `PLAY_READY/`          | ❌ not produced                                         |
+>
+> ### What is now in place
+>
+> The non-fabricable half is finished. `SCREENS/` holds twelve screenshots taken off a physical
+> Redmi Note 8 running a release build, backed by a **real 95-question study history** (%67
+> accuracy, level 4, one mock exam passed at %72). They were produced by actually answering
+> questions — the answers were read off the screen with OCR and matched against the live
+> question bank. **No zero state, no invented UI, no fabricated metric.**
+>
+> ### What is left
+>
+> Perspective-map each screenshot into its plate's phone screen, typeset the Turkish copy into the
+> measured boxes (~9 text blocks × 8 plates), OCR-verify every string against the copy deck, then
+> re-run the validator and only then create `PLAY_READY/`.
+>
+> ### One copy correction the overlay must pick up
+>
+> The copy deck's "29 ders" was **wrong in practice** and has been corrected to **19**. A B-class
+> user sees 19 lessons; nobody ever sees 29. Full reasoning:
+> `PLAY_STORE_ASO_LESSONS_LEARNED.md` §16b. Any plate typeset before this correction is invalid.
+
+---
+
 **Date:** 10 August 2026 · **Branch:** `release/preproduction-1.0.0`
 **Source:** `apps/ASO_IMAGE/NEW/` (11 files) · **Output:** `apps/ASO_IMAGE/NORMALIZED/` (10 files)
 **Tools:** `scripts/aso/build_play_assets.py` · `scripts/aso/validate_play_assets.py`

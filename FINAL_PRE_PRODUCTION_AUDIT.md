@@ -173,18 +173,32 @@ release candidate while five blocking rows are open. `1.0.0+5` stands.
 **I can build it the moment the gate closes** — the production keystore and `key.properties` are
 present on this machine and Gradle is fail-closed, so nothing technical is in the way.
 
-### ⚠️ The stale AAB is still on disk
+### The stale 1 August AAB is gone
+
+The 10 August audit flagged `apps/mobile/build/app/outputs/bundle/release/app-release.aab`
+(1 Aug, 65,287,095 bytes) as the file someone would reach for by mistake. **It no longer exists** —
+today's release rebuilds cleared `outputs/bundle/`. Verified:
 
 ```
-apps/mobile/build/app/outputs/bundle/release/app-release.aab
-  built 1 August 2026 · 65,287,095 bytes
+$ ls apps/mobile/build/app/outputs/bundle/release/app-release.aab
+No such file or directory
 ```
 
-It predates every fix in this branch. **Delete it before any release work:**
+There is now **no `.aab` anywhere in the tree**, which is the correct state: the production bundle
+does not exist yet and cannot be confused with anything.
 
-```bash
-rm apps/mobile/build/app/outputs/bundle/release/app-release.aab
+### What does exist — a verification artefact, not a submission artefact
+
 ```
+apps/mobile/build/app/outputs/flutter-apk/app-release.apk   80,053,767 bytes · 11 Aug 15:44
+  GOOGLE_SERVER_CLIENT_ID embedded in libapp.so   ✅ (1 match)
+  android:allowBackup                              false ✅
+  signer DN   CN=Emre Dogan, O=Ehliyet Akademi - Sınav 2026   ✅ (production upload key, NOT debug)
+  SHA-256     46b2dfce2f78bda0ebc6a019fe4f1498c0523742199468c547d04f686f0607d3
+```
+
+This is the APK used for the device E2E above. It carries the un-bumped `versionCode=5` and is an
+APK, not a bundle — **it is not uploadable and must not be uploaded.**
 
 ---
 

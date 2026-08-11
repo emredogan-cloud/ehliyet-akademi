@@ -20,7 +20,10 @@ export const POST = guarded(async (req: Request): Promise<Response> => {
   if (message.length < 10)
     return json({ error: 'Mesaj en az 10 karakter olmalı.' }, { status: 400 });
 
-  const inbox = process.env.SUPPORT_EMAIL ?? 'destek@ehliyetakademi.app';
+  // Yedek adres, `SUPPORT_EMAIL` tanımsızsa kullanılır. Eskiden `destek@ehliyetakademi.app` idi;
+  // o alan adının **DNS kaydı yok** (`getent hosts` boş döner), yani yedek yola düşen her destek
+  // talebi sessizce kaybolurdu. Kurucunun doğruladığı gerçek kutu ile değiştirildi.
+  const inbox = process.env.SUPPORT_EMAIL ?? 'support@ehliyetegitim.com';
   try {
     await getEmailProvider().send(inbox, supportRequestEmail(email, message.slice(0, 4000)));
   } catch (e) {

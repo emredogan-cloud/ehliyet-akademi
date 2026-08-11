@@ -69,7 +69,9 @@ export function emailConfigured(): boolean {
 
 export function getEmailProvider(): EmailProvider {
   const key = process.env.RESEND_API_KEY;
-  const from = process.env.EMAIL_FROM ?? 'Ehliyet Akademi <bilgi@ehliyetakademi.app>';
+  // Yedek gönderici: `ehliyetakademi.app` alan adı çözümlenmiyor (DNS kaydı yok), bu yüzden oradan
+  // gönderim SPF/DKIM'siz kalır ve teslim edilmez. Yayındaki tek gerçek alan adı `ehliyetegitim.com`.
+  const from = process.env.EMAIL_FROM ?? 'Ehliyet Akademi <support@ehliyetegitim.com>';
   return key ? new ResendEmailProvider(key, from) : new ConsoleEmailProvider();
 }
 

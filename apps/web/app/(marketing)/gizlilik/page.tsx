@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { buildMetadata } from '@/lib/seo/metadata';
 import { SUB_PROCESSORS } from '@/lib/legal-entity';
+import { retentionRules, retentionText } from '@/lib/retention';
 import { LegalIdentity } from '../_legal/LegalIdentity';
 
 export const metadata: Metadata = buildMetadata({
@@ -229,25 +230,47 @@ export default function GizlilikPage() {
       </p>
 
       <h2>7. Saklama Süreleri</h2>
+      <p>
+        Aşağıdaki süreler, sunucudaki günlük temizleme işinin uyguladığı sürelerin
+        <strong> aynısıdır</strong> — sayfa ile davranış tek kaynaktan (
+        <code>lib/retention.ts</code>) gelir. Hiçbiri &quot;kanun şu kadar diyor&quot; iddiası
+        taşımaz; her biri, veriyi işleme amacı için gereken en kısa makul süredir ve ortam
+        değişkeniyle değiştirilebilir.
+      </p>
+      <div style={{ overflowX: 'auto' }}>
+        <table>
+          <thead>
+            <tr>
+              <th>Veri</th>
+              <th>Neden</th>
+              <th>Saklama</th>
+            </tr>
+          </thead>
+          <tbody>
+            {retentionRules().map((rule) => (
+              <tr key={rule.key}>
+                <td>
+                  <strong>{rule.label}</strong>
+                </td>
+                <td>{rule.why}</td>
+                <td>{retentionText(rule)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <ul>
         <li>
-          <strong>Hesap ve ilerleme verileri:</strong> hesabınız aktif olduğu sürece. Hesabınızı
-          sildiğinizde ilişkili kayıtlar aynı işlemde silinir.
-        </li>
-        <li>
           <strong>Cihazdaki ilerleme verisi:</strong> siz uygulamayı kaldırana veya verileri
-          temizleyene kadar cihazınızda kalır.
+          temizleyene kadar cihazınızda kalır; sunucuya hiç gitmemiş olabilir.
         </li>
         <li>
           <strong>AI Koç soru metni:</strong> kalıcı olarak saklanmaz.
         </li>
         <li>
-          <strong>Satın alma kayıtları:</strong> ilgili vergi ve ticaret mevzuatının öngördüğü süre
-          boyunca saklanır. Bu süre yasal bir yükümlülüktür ve hesap silinse de devam eder.
-        </li>
-        <li>
-          <strong>Kullanım istatistikleri ve hata raporları:</strong> kimliksiz oldukları için
-          hesabınızla ilişkilendirilmez ve hesap silindiğinde ayrıca silinmeleri gerekmez.
+          <strong>Satın alma kayıtları hesapla birlikte silinir.</strong> Tuttuğumuz kayıt fatura
+          değil, erişiminizi geri yüklemeye yarayan hak sahipliği kaydıdır; ödemenin malî kaydı
+          Google Play tarafında durur.
         </li>
       </ul>
 

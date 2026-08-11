@@ -419,25 +419,61 @@ for you because it depends on how the current IARC wording is phrased.
 
 **Play Console → Grow → Store presence → Main store listing**
 
-### Value — verified against the live API on 11 August 2026
+### Value — verified against the live API **and on the device** on 11 August 2026
 
-| Field             | Value                                                                        | Length      |
-| ----------------- | ---------------------------------------------------------------------------- | ----------- |
-| App name          | `Ehliyet Akademi: Deneme Sınavı`                                             | 30/30       |
-| Short description | `1.605 soru, 29 ders ve gerçek e-Sınav biçiminde denemeler. Hesap gerekmez.` | 74/80       |
-| Full description  | the block in `ASO_PROMPT_LIBRARY.html` → "Play Store liste metni (tr-TR)"    | 3.056/4.000 |
+| Field             | Value                                                                     | Length      |
+| ----------------- | ------------------------------------------------------------------------- | ----------- |
+| App name          | `Ehliyet Akademi: Deneme Sınavı`                                          | 30/30       |
+| Short description | **see the correction below — do NOT paste the "29 ders" version**         | —           |
+| Full description  | the block in `ASO_PROMPT_LIBRARY.html` → "Play Store liste metni (tr-TR)" | 3.056/4.000 |
 
-Every number in that copy was re-verified against the production API today:
+| Claim in the listing                                            | Live value                                                            | Verdict            |
+| --------------------------------------------------------------- | --------------------------------------------------------------------- | ------------------ |
+| 1.605 soru                                                      | `/api/mobile/question-bank` → `count: 1605`                           | ✅                 |
+| 121 trafik işareti                                              | `signs: 121` — Öğren sekmesi de **121** gösteriyor                    | ✅                 |
+| 60 gösterge ikaz ışığı                                          | 60 gömülü kayıt + 60 varlık — uygulama **60** gösteriyor              | ✅                 |
+| 50 soru · 45 dk · 35 doğru                                      | canlı şema; cihazdaki sınav "Baraj 35 doğru" ile bitti                | ✅                 |
+| trafik 396 / ilk yardım 303 / motor 329 / adab 272 / pratik 305 | konu başına tam sayımlar, toplam 1605                                 | ✅                 |
+| **29 ders**                                                     | katalogda 29 var, **ama hiçbir kullanıcı 29 görmüyor**                | ⛔ **düzelt**      |
+| **112 araç parçası**                                            | API toplamı 112; uygulama **70 + 39 = 109** olarak iki galeriye böler | ⚠️ **yeniden yaz** |
 
-| Claim in the listing                                            | Live value                                     | Verdict |
-| --------------------------------------------------------------- | ---------------------------------------------- | ------- |
-| 1.605 soru                                                      | `/api/mobile/question-bank` → `count: 1605`    | ✅      |
-| 29 ders                                                         | `/api/mobile/content-snapshot` → `lessons: 29` | ✅      |
-| 121 trafik işareti                                              | `signs: 121`                                   | ✅      |
-| 112 araç parçası                                                | `vehicleParts: 112`                            | ✅      |
-| 60 gösterge ikaz ışığı                                          | 60 entries bundled in the app + 60 asset files | ✅      |
-| trafik 396 / ilk yardım 303 / motor 329 / adab 272 / pratik 305 | exact per-subject counts, sum 1605             | ✅      |
-| 50 soru · 45 dk · 35 doğru                                      | live exam blueprint                            | ✅      |
+### ⛔ "29 ders" sorunu — API okuyarak değil, uygulamayı AÇARAK bulundu
+
+Katalogda gerçekten 29 ders var, yani sayı bir API kontrolünden geçer. **Tek önemli kontrolden
+geçmiyor: kullanıcı kurduktan sonra ne görüyor?**
+
+| Ders kümesi                         | Sayı    |
+| ----------------------------------- | ------- |
+| Sınıf kısıtı olmayan (herkese açık) | **19**  |
+| Yalnız A sınıfı                     | 5       |
+| Yalnız D sınıfı                     | 5       |
+| **B sınıfı adayının gördüğü**       | **19**  |
+| A veya D adayının gördüğü           | 24      |
+| **Herhangi birinin gördüğü en çok** | asla 29 |
+
+Cihazda doğrulandı: **B · Otomobil** seçiliyken Öğren sekmesi **"Dersler 19"** yazıyor. "29 ders"
+sözüne güvenip kuran bir kullanıcı 19 sayar ve listenin abarttığı sonucuna varır. B en büyük
+kitledir.
+
+> **Adı konulması gereken bir tuzak.** `STORE_LISTING.md`'nin geçersizlik başlığı 19'u 29 olarak
+> "düzeltiyor" ve 19'un "şema taşıyan ders sayısı" olduğunu söylüyor. Bu da doğru — 19 dersin
+> `figureId`'si var — ama bu **başka bir 19**: üç ders ortak olduğu hâlde şemasız, üç ders şemalı
+> olduğu hâlde sınıfa özel. Birbiriyle ilgisiz iki 19'un üst üste düşmesi, kendinden emin ve
+> yanlış bir cümlenin tam olarak nasıl yazıldığıdır.
+
+**Bunlardan birini kullanın** (ikisi de kurulumdan sonra kullanıcı tarafından doğrulanabilir):
+
+| Seçenek                                                                         | Karakter |
+| ------------------------------------------------------------------------------- | -------- |
+| `1.605 soru, 19 ders ve gerçek e-Sınav biçiminde denemeler. Hesap gerekmez.`    | 74/80    |
+| `1.605 soru, 121 işaret ve gerçek e-Sınav biçiminde denemeler. Hesap gerekmez.` | 78/80    |
+
+**Tam açıklamada** "29" yalnız bileşimi aynı cümlede söylenirse kullanılabilir — ör. "19 ortak
+ders, sınıfına göre 5 ders daha (A veya D)". Çıplak bir "29 DERS" başlığı yazmayın.
+
+**Araç parçası satırını da yeniden yazın.** API toplamı 112, ama uygulama bunları iki galeri
+olarak sunuyor: _Araç Tekniği_ **70** ve _Kabin Kumandaları_ **39**. Kullanıcının yeniden
+üretemeyeceği tek bir toplam yerine "araç parçası ve kabin kumandası galerileri" deyin.
 
 **The listing must never claim 10.000+ questions.** That figure appears only in the audit documents
 that record it as a banned claim.

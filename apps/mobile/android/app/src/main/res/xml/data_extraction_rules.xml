@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Android 12 (API 31) ve üstü için yedekleme/aktarım kuralları.
+
+  NEDEN HER İKİSİ DE KAPALI
+
+  · `cloud-backup` — Gizlilik Politikası §1 açıkça şunu söylüyor: "Hesap açmazsanız ilerlemeniz
+    YALNIZ CİHAZINIZDA kalır." Android'in otomatik yedeklemesi varsayılan olarak AÇIKTIR ve
+    uygulamanın `shared_preferences` verisini kullanıcının Google Drive hesabına yükler. Yani
+    beyan ile davranış çelişiyordu: misafir kullanıcının ilerlemesi cihazdan çıkıyordu.
+
+  · `device-transfer` — `allowBackup="false"` Android 12+'ta yalnız BULUT yedeğini kapatır;
+    cihazdan cihaza aktarım ayrı bir kanaldır ve varsayılan olarak açık kalır. İkisini birden
+    kapatmayan bir yapılandırma, sorunu yarım çözmüş olurdu.
+
+  AYRICA: oturum jetonu `flutter_secure_storage` ile EncryptedSharedPreferences içinde durur ve
+  şifreleme anahtarı Android Keystore'dadır. Keystore YEDEKLENMEZ. Yedekten dönen bir cihazda
+  şifreli blob anahtarsız kalır ve çözülemez — bu, bilinen bir "restore sonrası oturum bozulması"
+  arızasıdır. Yedeği kapatmak o arızayı da ortadan kaldırır.
+
+  Sonuç kullanıcı açısından: yeni cihaza geçen kullanıcı ilerlemesini HESAP AÇARAK taşır
+  (sunucu senkronu). Bu, politikada anlatılan yolun ta kendisidir.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="root" />
+        <exclude domain="file" />
+        <exclude domain="database" />
+        <exclude domain="sharedpref" />
+        <exclude domain="external" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="root" />
+        <exclude domain="file" />
+        <exclude domain="database" />
+        <exclude domain="sharedpref" />
+        <exclude domain="external" />
+    </device-transfer>
+</data-extraction-rules>

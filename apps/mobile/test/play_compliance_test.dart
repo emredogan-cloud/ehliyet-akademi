@@ -27,6 +27,36 @@ void main() {
       );
     });
 
+    /// Gizlilik Politikası §1: "hesap açmazsanız ilerlemeniz YALNIZ CİHAZINIZDA kalır."
+    ///
+    /// `allowBackup` bildirilmezse Android varsayılanı **true**'dur ve sistem misafir
+    /// kullanıcının `shared_preferences` verisini Google Drive'a yükler — yani beyan ile
+    /// davranış ayrılırdı. Bayrak sessizce düşerse hiçbir test kırılmaz, hiçbir hata çıkmaz;
+    /// bu yüzden koruma kaynak düzeyinde durur.
+    test('otomatik yedekleme kapalı ve her iki kanal da dışlanmış', () {
+      final manifest = read('android/app/src/main/AndroidManifest.xml');
+      expect(
+        manifest.contains('android:allowBackup="false"'),
+        isTrue,
+        reason:
+            'allowBackup bildirilmezse varsayılan true olur ve misafir ilerlemesi '
+            'kullanıcının Google Drive hesabına yüklenir — Gizlilik Politikası §1 ile çelişir.',
+      );
+      expect(
+        manifest.contains('android:dataExtractionRules="@xml/data_extraction_rules"'),
+        isTrue,
+        reason:
+            'Android 12+ için gerekli: allowBackup="false" yalnız bulut yedeğini kapatır, '
+            'cihazdan cihaza aktarım ayrı kanaldır ve açık kalır.',
+      );
+
+      // Kural dosyaları gerçekten var mı ve İKİ kanalı da dışlıyor mu?
+      final rules = read('android/app/src/main/res/xml/data_extraction_rules.xml');
+      expect(rules.contains('<cloud-backup>'), isTrue);
+      expect(rules.contains('<device-transfer>'), isTrue);
+      expect(File('android/app/src/main/res/xml/backup_rules.xml').existsSync(), isTrue);
+    });
+
     test('beklenmedik hassas izin yok', () {
       final manifest = read('android/app/src/main/AndroidManifest.xml');
       for (final banned in [

@@ -1,37 +1,40 @@
 # ASO Final Validation Report — Ehliyet Akademi
 
-> ## ⛔ VERDICT: NOT UPLOAD-READY — updated 11 August 2026
+> ## ✅ VERDICT: UPLOAD-READY — 11 August 2026
 >
-> **`apps/ASO_IMAGE/PLAY_READY/` does not exist and must not be created until the overlay stage
-> passes.** A folder with that name is an instruction to upload.
+> **`apps/ASO_IMAGE/PLAY_READY/` exists and every asset passes.** Validator: **134/134**, stage
+> `final`, including the OCR text checks that the earlier version of this validator deferred.
 >
-> | Stage                                     | State                                                   |
-> | ----------------------------------------- | ------------------------------------------------------- |
-> | Raw plates (`NEW/`)                       | ✅ clean of every banned defect                         |
-> | Normalisation (`NORMALIZED/`)             | ✅ 1080×1920 sRGB, deterministic, 94/94 checks          |
-> | **Real device screenshots (`SCREENS/`)**  | ✅ **12 captured 11 Aug** — see `SCREENS/PROVENANCE.md` |
-> | **Overlay: screens + Turkish typography** | ❌ **NOT DONE**                                         |
-> | Final validation → `PLAY_READY/`          | ❌ not produced                                         |
+> | Stage                                | State                                                   |
+> | ------------------------------------ | ------------------------------------------------------- |
+> | Raw plates (`NEW/`)                  | ✅ clean of every banned defect                         |
+> | Real device screenshots (`SCREENS/`) | ✅ 16 captures — see `SCREENS/PROVENANCE.md`            |
+> | **Overlay (`COMPOSED/`)**            | ✅ real screens perspective-mapped + Turkish typography |
+> | Normalisation (`NORMALIZED/`)        | ✅ 1080×1920 sRGB, no alpha, deterministic              |
+> | **`PLAY_READY/`**                    | ✅ **10 assets, 134/134**                               |
 >
-> ### What is now in place
+> ### What is in the set
 >
-> The non-fabricable half is finished. `SCREENS/` holds twelve screenshots taken off a physical
-> Redmi Note 8 running a release build, backed by a **real 95-question study history** (%67
-> accuracy, level 4, one mock exam passed at %72). They were produced by actually answering
-> questions — the answers were read off the screen with OCR and matched against the live
-> question bank. **No zero state, no invented UI, no fabricated metric.**
+> 8 phone screenshots (1080×1920 RGB), `feature-graphic-1024x500.png`, `app-icon-512.png`.
 >
-> ### What is left
+> Every phone frame carries a **real screen captured from a physical Redmi Note 8** running a
+> release build, backed by a genuine 95-question study history (%67 accuracy, level 4, one mock
+> exam passed at %72). No zero state, no invented UI, no fabricated metric, no fabricated user.
 >
-> Perspective-map each screenshot into its plate's phone screen, typeset the Turkish copy into the
-> measured boxes (~9 text blocks × 8 plates), OCR-verify every string against the copy deck, then
-> re-run the validator and only then create `PLAY_READY/`.
+> ### The validator now proves the overlay happened
 >
-> ### One copy correction the overlay must pick up
+> The previous validator checked only technical Play rules, so a **textless** set scored 94/94 and
+> looked uploadable. tesseract (+`tur`) is now in the toolchain, so `final` additionally OCRs each
+> asset and matches it against `scripts/aso/copy_deck.json`: eyebrow, both title lines, a majority
+> of card headings, and the presence of Turkish diacritics.
 >
-> The copy deck's "29 ders" was **wrong in practice** and has been corrected to **19**. A B-class
-> user sees 19 lessons; nobody ever sees 29. Full reasoning:
-> `PLAY_STORE_ASO_LESSONS_LEARNED.md` §16b. Any plate typeset before this correction is invalid.
+> **Negative control run:** the same validator against the textless raw plates scores **121/134**
+> — 13 failures. The guard is not vacuous, and a textless set can no longer reach `PLAY_READY/`.
+>
+> ### Numbers in the copy are what the user actually sees
+>
+> `19 ders` (not 29 — see `PLAY_STORE_ASO_LESSONS_LEARNED.md` §16b), 1.605 soru, 121 işaret,
+> 60 ikaz ışığı, 50/45/35 exam blueprint. No price, no MEB claim, no guarantee, no "10.000+".
 
 ---
 

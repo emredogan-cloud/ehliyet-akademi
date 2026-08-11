@@ -1,6 +1,6 @@
 # Final Pre-Production Audit — Ehliyet Akademi 1.0.0
 
-**Date:** 11 August 2026 · **Branch:** `release/preproduction-1.0.0` · **Head:** `1e1def2`
+**Date:** 11 August 2026 · **Branch:** `release/preproduction-1.0.0` · **Head:** `0776b37` (this commit)
 **App version:** `1.0.0+5` (**not bumped** — see §6) · **Package:** `com.ehliyetegitim.ehliyet_akademi`
 
 > Statuses are limited to **PASS · FAIL · BLOCKED · NOT APPLICABLE · NOT VERIFIED**.
@@ -145,7 +145,7 @@ these upgrades:
 
 ### CI
 
-**9/9 green** on `1e1def2` (PR #22): Lint·Typecheck·Test·Build · Analyze·Test·Build (Android) ·
+**9/9 green** on PR #22 (verified per-commit): Lint·Typecheck·Test·Build · Analyze·Test·Build (Android) ·
 E2E (Playwright) · CodeQL · Analyze (JS/TS) · Conventional Commits · gitleaks · Vercel ×2.
 
 > CI only runs on `push` for `main` and on `pull_request`. PR #22 exists **as the CI gate** for this

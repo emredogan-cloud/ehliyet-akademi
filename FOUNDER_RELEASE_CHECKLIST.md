@@ -32,10 +32,10 @@ These were open on 10 August and are now closed. Listed so you do not redo them.
         address would publish a false registration detail. The code now treats its absence as
         valid and simply omits the row.
 - [ ] **F-01b** 🔴 **Merge PR #22 and redeploy** — the pages render the real identity only once
-      production is rebuilt from this branch. Until then the live site still shows the old page.
-  - ⚠️ **All five must be present.** With four of five the page still shows "not yet published".
-  - **Then redeploy.** Env changes do not affect the running deployment.
-  - **Evidence:** `curl -s https://www.ehliyetegitim.com/gizlilik | grep -c "henüz yayımlanmadı"` → `0`
+      production is rebuilt from this branch. Until then the live site still serves `main`.
+  - Verified `0` on a local production server built with the real values, so the only thing
+    missing is the deploy.
+  - **Evidence after deploy:** `curl -s https://www.ehliyetegitim.com/gizlilik | grep -c "henüz yayımlanmadı"` → `0`
 - [ ] **F-02** 🔴 Confirm a human actually reads `support@ehliyetegitim.com`
 - [ ] **F-03** 🔴 Lawyer reviewed `/gizlilik`, `/kvkk` and `/hesap-silme`
 - [ ] **F-06** 🟡 Lawyer confirms or overrides my retention defaults

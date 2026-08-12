@@ -63,3 +63,7 @@ apps/mobile/android/app/*.json
 
 # Referans ekran görüntüleri (rakip uygulama; depoya girmez)
 screenshots/
+
+# Python bayt kodu — artefakt.
+__pycache__/
+*.pyc

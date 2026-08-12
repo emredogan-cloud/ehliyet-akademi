@@ -2038,6 +2038,60 @@ waived with a recorded reason.
 
 ---
 
+## 16b. A number can pass the API check and still be a false claim
+
+**Found 11 August 2026, on a device, after the API check had already passed.**
+
+The short description said `1.605 soru, 29 ders …`. Both numbers verify against the production
+API: `question-bank.count = 1605`, `content-snapshot.counts.lessons = 29`. The listing was signed
+off on that basis.
+
+Then the app was installed with **B · Otomobil** selected, and the Öğren tab read **"Dersler 19"**.
+
+| Lesson set                        | Count    |
+| --------------------------------- | -------- |
+| No licence restriction (everyone) | 19       |
+| A-class only                      | 5        |
+| D-class only                      | 5        |
+| A B-class candidate sees          | **19**   |
+| An A or D candidate sees          | 24       |
+| Anyone, ever                      | never 29 |
+
+29 is the size of the _catalogue_. It is not a number any user can reach. B is the largest
+audience, so the most common experience was the furthest from the claim.
+
+### The second trap: two unrelated 19s
+
+`STORE_LISTING.md` had earlier been "corrected" the other way — a banner explained that 19 was
+wrong and 29 right, because 19 is "the number of lessons carrying a diagram". That is _also_ true:
+19 lessons have a `figureId`. But it is a **different set of 19** — three lessons are common but
+diagramless, three are diagrammed but class-specific.
+
+Two coincidentally equal numbers, each with a correct-sounding explanation, produced a confident
+correction in the wrong direction.
+
+### The rule
+
+> **Verify a count against the SCREEN, not only the API.** An API total answers "how much content
+> exists". A store listing promises "how much content you get". They are different questions
+> whenever content is filtered — by licence class, region, tier, entitlement or locale.
+
+Checks that would have caught it:
+
+```bash
+# 1. Does the catalogue filter on anything?
+curl -s .../content-snapshot | python3 -c "import sys,json,collections; \
+  print(collections.Counter(tuple(l.get('licences') or []) for l in json.load(sys.stdin)['lessons']))"
+
+# 2. Then open the app as the DEFAULT persona and read the number off the screen.
+```
+
+The same question must be asked of every remaining count: 121 signs and 60 dash lights are shown
+unfiltered (screen agrees), but the 112 vehicle parts appear split as **70 + 39** across two
+galleries — so "112 araç parçası" is a total the user cannot reproduce either, and was reworded.
+
+---
+
 ## 17. References
 
 Files in this repository that a future agent should consult. All paths verified

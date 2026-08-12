@@ -18,3 +18,6 @@ key.properties
 # (GOOGLE_SERVICES_JSON) olarak verilir ve derleme öncesi dosyaya yazılır.
 # Depoya alınsaydı CI'daki gitleaks taraması api_key.current_key'i sır sanıp yapıyı kırabilirdi.
 **/google-services.json
+
+# Kotlin derleme önbelleği (AGP 8+) — artefakt, depoya girmez.
+.kotlin/

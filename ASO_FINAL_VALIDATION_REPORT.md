@@ -1,5 +1,43 @@
 # ASO Final Validation Report — Ehliyet Akademi
 
+> ## ✅ VERDICT: UPLOAD-READY — 11 August 2026
+>
+> **`apps/ASO_IMAGE/PLAY_READY/` exists and every asset passes.** Validator: **134/134**, stage
+> `final`, including the OCR text checks that the earlier version of this validator deferred.
+>
+> | Stage                                | State                                                   |
+> | ------------------------------------ | ------------------------------------------------------- |
+> | Raw plates (`NEW/`)                  | ✅ clean of every banned defect                         |
+> | Real device screenshots (`SCREENS/`) | ✅ 16 captures — see `SCREENS/PROVENANCE.md`            |
+> | **Overlay (`COMPOSED/`)**            | ✅ real screens perspective-mapped + Turkish typography |
+> | Normalisation (`NORMALIZED/`)        | ✅ 1080×1920 sRGB, no alpha, deterministic              |
+> | **`PLAY_READY/`**                    | ✅ **10 assets, 134/134**                               |
+>
+> ### What is in the set
+>
+> 8 phone screenshots (1080×1920 RGB), `feature-graphic-1024x500.png`, `app-icon-512.png`.
+>
+> Every phone frame carries a **real screen captured from a physical Redmi Note 8** running a
+> release build, backed by a genuine 95-question study history (%67 accuracy, level 4, one mock
+> exam passed at %72). No zero state, no invented UI, no fabricated metric, no fabricated user.
+>
+> ### The validator now proves the overlay happened
+>
+> The previous validator checked only technical Play rules, so a **textless** set scored 94/94 and
+> looked uploadable. tesseract (+`tur`) is now in the toolchain, so `final` additionally OCRs each
+> asset and matches it against `scripts/aso/copy_deck.json`: eyebrow, both title lines, a majority
+> of card headings, and the presence of Turkish diacritics.
+>
+> **Negative control run:** the same validator against the textless raw plates scores **121/134**
+> — 13 failures. The guard is not vacuous, and a textless set can no longer reach `PLAY_READY/`.
+>
+> ### Numbers in the copy are what the user actually sees
+>
+> `19 ders` (not 29 — see `PLAY_STORE_ASO_LESSONS_LEARNED.md` §16b), 1.605 soru, 121 işaret,
+> 60 ikaz ışığı, 50/45/35 exam blueprint. No price, no MEB claim, no guarantee, no "10.000+".
+
+---
+
 **Date:** 10 August 2026 · **Branch:** `release/preproduction-1.0.0`
 **Source:** `apps/ASO_IMAGE/NEW/` (11 files) · **Output:** `apps/ASO_IMAGE/NORMALIZED/` (10 files)
 **Tools:** `scripts/aso/build_play_assets.py` · `scripts/aso/validate_play_assets.py`

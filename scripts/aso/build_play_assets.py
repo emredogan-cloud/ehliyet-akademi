@@ -92,6 +92,11 @@ def classify(p: Path) -> str:
         return "feature"
     if p.stem[:3].isdigit():
         return "phone"
+    # BİNDİR aşamasının çıktısı `phone-01-tr-TR` biçiminde adlandırılır; ham plakalar ise
+    # `001`…`008`. Normalleştirici her ikisini de kabul etmeli, aksi hâlde bindirilmiş set
+    # sessizce "sınıflandırılamadı" diye atlanır ve NORMALIZED boş kalır.
+    if n.startswith("phone-"):
+        return "phone"
     return "other"
 
 

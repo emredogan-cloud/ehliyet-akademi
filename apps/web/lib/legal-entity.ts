@@ -21,14 +21,25 @@
 
 /** Play/KVKK açısından gerekli asgari yasal kimlik alanları. */
 export interface LegalEntity {
-  /** Ticaret unvanı — veri sorumlusunun tam yasal adı. */
+  /** Ticaret unvanı ya da gerçek kişinin adı — veri sorumlusunun tam yasal adı. */
   companyName: string;
   /** Vergi kimlik numarası (10 hane) veya T.C. kimlik numarası (11 hane). */
   taxId: string;
   /** Tebligata elverişli açık adres. */
   address: string;
-  /** Kayıtlı elektronik posta adresi. */
-  kepAddress: string;
+  /**
+   * Kayıtlı elektronik posta adresi — **isteğe bağlı**.
+   *
+   * KEP zorunluluğu TTK m.18/3 uyarınca **sermaye şirketlerine** (anonim, limited, sermayesi
+   * paylara bölünmüş komandit) özgüdür. Veri sorumlusu bir **gerçek kişi** ise KEP hesabı tutmak
+   * zorunda değildir ve çoğu tutmaz.
+   *
+   * Bu alan bir dönem ZORUNLUYDU ve tam da bu durumu kilitliyordu: gerçek kişi olan kurucu diğer
+   * dört alanı doğru doldurduğu hâlde sayfa "henüz yayımlanmadı" demeye devam ediyordu. Var
+   * olmayan bir KEP adresi uydurmak ise sahte tescil bilgisi yayımlamak olurdu — yer tutucudan
+   * çok daha ağır bir kusur. Doğru çözüm alanı isteğe bağlı yapmak: yoksa satır hiç basılmaz.
+   */
+  kepAddress: string | null;
   /** İzlenen destek e-posta adresi — KVKK başvuruları buraya düşer. */
   supportEmail: string;
 }
@@ -42,21 +53,40 @@ export const LEGAL_ENV_KEYS = {
   supportEmail: 'LEGAL_SUPPORT_EMAIL',
 } as const satisfies Record<keyof LegalEntity, string>;
 
+/**
+ * Kimliğin yayımlanabilmesi için DOLU olması gereken alanlar.
+ *
+ * `kepAddress` bilerek dışarıda: gerekçesi [LegalEntity.kepAddress] üzerinde.
+ */
+export const REQUIRED_LEGAL_FIELDS = [
+  'companyName',
+  'taxId',
+  'address',
+  'supportEmail',
+] as const satisfies ReadonlyArray<keyof LegalEntity>;
+
 type EnvLike = Record<string, string | undefined>;
 
 /**
  * Yasal kimliği ortamdan oku.
  *
- * Alanlardan biri bile boşsa `null` döner — kısmi kimlik yayımlanmaz (bkz. dosya başlığı).
+ * ZORUNLU alanlardan biri bile boşsa `null` döner — kısmi kimlik yayımlanmaz (bkz. dosya başlığı).
+ * KEP boşsa kimlik yine de geçerlidir; yalnız `kepAddress` `null` olur ve sayfada satır çıkmaz.
  */
 export function readLegalEntity(env: EnvLike = process.env): LegalEntity | null {
-  const out: Partial<LegalEntity> = {};
-  for (const [field, key] of Object.entries(LEGAL_ENV_KEYS) as Array<[keyof LegalEntity, string]>) {
-    const value = (env[key] ?? '').trim();
-    if (!value) return null;
-    out[field] = value;
+  const read = (field: keyof LegalEntity): string => (env[LEGAL_ENV_KEYS[field]] ?? '').trim();
+
+  for (const field of REQUIRED_LEGAL_FIELDS) {
+    if (!read(field)) return null;
   }
-  return out as LegalEntity;
+  const kep = read('kepAddress');
+  return {
+    companyName: read('companyName'),
+    taxId: read('taxId'),
+    address: read('address'),
+    kepAddress: kep === '' ? null : kep,
+    supportEmail: read('supportEmail'),
+  };
 }
 
 /** Yasal kimlik yayına hazır mı? Sayfalardaki "hazır değil" uyarısı buna bakar. */
@@ -64,9 +94,28 @@ export function isLegalIdentityConfigured(env: EnvLike = process.env): boolean {
   return readLegalEntity(env) !== null;
 }
 
-/** Eksik olan ortam değişkenlerinin adları — kurucuya ne gireceğini söylemek için. */
+/**
+ * Eksik olan ZORUNLU ortam değişkenlerinin adları — kurucuya ne gireceğini söylemek için.
+ *
+ * `LEGAL_KEP_ADDRESS` burada listelenmez: yokluğu bir eksiklik değil, geçerli bir durumdur.
+ */
 export function missingLegalEnvKeys(env: EnvLike = process.env): string[] {
-  return (Object.values(LEGAL_ENV_KEYS) as string[]).filter((k) => !(env[k] ?? '').trim());
+  return REQUIRED_LEGAL_FIELDS.map((f) => LEGAL_ENV_KEYS[f]).filter((k) => !(env[k] ?? '').trim());
+}
+
+/**
+ * Kimlik numarasının DOĞRU etiketi.
+ *
+ * Sayfa bir dönem her numarayı `VKN:` diye basıyordu. 11 haneli bir değer T.C. kimlik
+ * numarasıdır, vergi kimlik numarası değildir — yayımlanan yasal bir metinde yanlış etiket,
+ * yanlış beyandır. Uzunluk tek ayırt edici bilgi olduğu için karar oradan verilir; tanınmayan
+ * bir uzunlukta nötr ve doğru olan "Kimlik No" kullanılır.
+ */
+export function taxIdLabel(taxId: string): string {
+  const digits = taxId.replace(/\D/g, '');
+  if (digits.length === 11) return 'T.C. Kimlik No';
+  if (digits.length === 10) return 'VKN';
+  return 'Kimlik No';
 }
 
 /**

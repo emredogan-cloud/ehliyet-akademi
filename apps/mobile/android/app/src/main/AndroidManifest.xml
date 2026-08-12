@@ -10,11 +10,25 @@
     <!-- Local notifications (flutter_local_notifications) — Phase 5. -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <!-- OTOMATİK YEDEKLEME KAPALI — beyanla davranışı hizalar.
+         Android'de `allowBackup` bildirilmezse varsayılan **true**'dur ve sistem, uygulamanın
+         `shared_preferences` verisini kullanıcının Google Drive hesabına yükler. Oysa Gizlilik
+         Politikası §1 "hesap açmazsanız ilerlemeniz YALNIZ CİHAZINIZDA kalır" diyor: misafir
+         kullanıcının ilerlemesi sessizce cihazdan çıkıyordu. Beyan ile gerçek ayrılmıştı.
+         İkinci kazanç: oturum jetonu Keystore anahtarıyla şifreli tutuluyor, Keystore ise
+         yedeklenmiyor. Yedekten dönen cihazda blob anahtarsız kalıp çözülemiyordu — bilinen bir
+         "restore sonrası oturum bozulması" arızası.
+         `dataExtractionRules` ayrıca gerekli: Android 12+'ta `allowBackup="false"` yalnız BULUT
+         yedeğini kapatır, cihazdan cihaza aktarım ayrı kanaldır ve açık kalırdı.
+         Gerekçenin tamamı: res/xml/data_extraction_rules.xml -->
     <application
         android:label="Ehliyet Akademi"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round">
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:allowBackup="false"
+        android:fullBackupContent="@xml/backup_rules"
+        android:dataExtractionRules="@xml/data_extraction_rules">
         <activity
             android:name=".MainActivity"
             android:exported="true"

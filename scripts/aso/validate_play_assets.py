@@ -25,7 +25,9 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import difflib
 import json
+import re
 import sys
 from dataclasses import dataclass, asdict
 from pathlib import Path
@@ -63,6 +65,7 @@ class Check:
 
 class Validator:
     def __init__(self) -> None:
+        self._ocr_cache: dict[Path, str] = {}
         self.checks: list[Check] = []
 
     def check(self, scope: str, rule: str, ok: bool, detail: str = "") -> bool:
@@ -182,9 +185,90 @@ class Validator:
     # alarm veren bir doğrulayıcı, insanları doğrulayıcıyı yok saymaya eğitir — sessiz kalmasından
     # daha zararlıdır.
     #
-    # Bu yüzden "ekran boş ve metin yok" bir MANUEL DOĞRULAMA adımıdır ve öyle kayda geçmiştir
-    # (ASO_FINAL_VALIDATION_REPORT.md). Sekiz plaka tam çözünürlükte gözle incelenmiştir.
-    # OCR ile otomatikleştirilebilir; `tesseract` bu ortamda kurulu değildir.
+    # 11 Ağustos 2026: tesseract (+`tur`) araç zincirine kuruldu, dolayısıyla bu denetim artık
+    # OTOMATİK. `final` aşamasında her telefon görselinin `copy_deck.json` içindeki metni GERÇEKTEN
+    # taşıdığı OCR ile doğrulanır. Denetim "ekran boş mu" diye SORMAZ — o soru yanlış alarm
+    # üretiyordu; onun yerine "beklenen Türkçe metin var mı" diye sorar. Bindirme aşaması
+    # çalışmadan geçmesi imkânsızdır ve bu, asıl korunmak istenen hatadır: metinsiz bir setin
+    # 94/94 alıp yüklenebilir sanılması.
+
+    # ── OCR ─────────────────────────────────────────────────────────────────
+    @staticmethod
+    def _norm(t: str) -> str:
+        t = t.lower().replace("i̇", "i")
+        t = re.sub(r"[^0-9a-zçğıöşü ]+", " ", t)
+        return re.sub(r"\s+", " ", t).strip()
+
+    def ocr_text(self, p: Path) -> str:
+        """Görselden okunan tüm metin. tesseract yoksa boş döner (denetim atlanır, KALMAZ)."""
+        if p in self._ocr_cache:
+            return self._ocr_cache[p]
+        try:
+            import pytesseract
+
+            from PIL import ImageOps
+
+            # Açık metin/koyu zemin: ters çevirmek tesseract için daha tanıdık bir düzen.
+            g = ImageOps.invert(Image.open(p).convert("L"))
+            txt = pytesseract.image_to_string(g, config="--psm 6 -l tur")
+
+            # BAŞLIK için ikinci geçiş. Tek geçişte en büyük punto satırı bazen kaçıyordu:
+            # 07'de gövdenin tamamı okunurken "HER SORU" satırı "un . ." olarak çıktı — varlıkta
+            # kusur yok, ölçüm yetersizdi. Başlık bandını 2× büyütüp `--psm 4` (tek sütun, değişken
+            # satır yüksekliği) ile okumak o satırı da getiriyor. Eşiği gevşetmek yerine ÖLÇÜMÜ
+            # düzeltmek doğrusu: gevşetilmiş bir eşik, gerçek bir eksik metni de geçirirdi.
+            w, h = g.size
+            head = g.crop((0, 0, w, int(h * 0.28))).resize((w * 2, int(h * 0.28) * 2), Image.LANCZOS)
+            txt += "\n" + pytesseract.image_to_string(head, config="--psm 4 -l tur")
+        except Exception:  # noqa: BLE001 — tesseract yoksa denetim sessizce atlanır
+            txt = ""
+        self._ocr_cache[p] = txt
+        return txt
+
+    def _match(self, needle: str, haystack: str) -> float:
+        """Beklenen dizenin OCR çıktısındaki karşılık oranı — TOKEN kümesiyle.
+
+        Bitişik eşleme (`find_longest_match`) burada iki kez yanılttı:
+        `difflib.SequenceMatcher` varsayılan olarak `autojunk=True` ile gelir ve `b` 200
+        karakterden uzunsa SIK GEÇEN öğeleri (boşluk, ünlüler) "çöp" sayıp eşlemeden çıkarır.
+        OCR çıktısı ~1000 karakter olduğu için, görselde net okunan "SINAVA HAZIR MISIN?" bile
+        18/18 yerine 5/18 puan alıyordu. Token kümesi hem bu tuzaktan hem de tek harflik OCR
+        kaymalarından etkilenmez.
+        """
+        want = {t for t in self._norm(needle).split() if len(t) > 1}
+        if not want:
+            return 1.0
+        got = set(haystack.split())
+        hit = sum(1 for t in want if t in got or any(t in g or g in t for g in got))
+        return hit / len(want)
+
+    def check_overlay_text(self, p: Path, spec: dict) -> None:
+        """Beklenen Türkçe dizeler görselde OKUNABİLİYOR mu?"""
+        raw = self.ocr_text(p)
+        if not raw.strip():
+            self.check(p.name, "OCR calisti", False, "tesseract okunamadi")
+            return
+        got = self._norm(raw)
+
+        # Başlık + üst etiket: bunlar en büyük puntolar, OCR bunları kaçırırsa bindirme yoktur.
+        wanted = [spec["eyebrow"], *spec["title"]]
+        # Kart başlıkları: hepsini istemek OCR gürültüsüne karşı kırılgan olur; çoğunluk yeter.
+        cards = [t for t, _ in spec["left"]] + [t for t, _ in spec["right"]]
+
+        for w in wanted:
+            score = self._match(w, got)
+            self.check(p.name, f'metin okunuyor: "{w[:28]}"', score >= 0.7, f"{score:.2f}")
+
+        found = sum(1 for c in cards if self._match(c, got) >= 0.7)
+        self.check(p.name, "kart basliklarinin cogu okunuyor", found >= 3, f"{found}/{len(cards)}")
+
+        # Türkçe aksanlar: bindirme yanlış fontla yapılırsa bunlar kutuya/soru işaretine döner.
+        self.check(
+            p.name,
+            "turkce aksanli karakter iceriyor",
+            any(ch in raw for ch in "çğıöşüÇĞİÖŞÜ"),
+            "",
+        )
 
     # ── varlık türleri ──────────────────────────────────────────────────────
     def validate_phone(self, p: Path, stage: str) -> None:
@@ -292,8 +376,15 @@ def main() -> int:
     icons = [p for p in pngs if "icon" in p.name.lower()]
     features = [p for p in pngs if "feature" in p.name.lower() or "grafi" in p.name.lower()]
 
+    deck_path = Path(__file__).parent / "copy_deck.json"
+    deck = json.loads(deck_path.read_text(encoding="utf-8")) if deck_path.exists() else {"plates": []}
+    by_slot = {f"phone-{d['id']}-tr-TR.png": d for d in deck.get("plates", [])}
+
     for p in phones:
         v.validate_phone(p, args.stage)
+        # Metin denetimi YALNIZ final aşamasında: ham plakalar tasarım gereği metinsizdir.
+        if args.stage == "final" and p.name in by_slot:
+            v.check_overlay_text(p, by_slot[p.name])
     for p in icons:
         v.validate_icon(p)
     for p in features:

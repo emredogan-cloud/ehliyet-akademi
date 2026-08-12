@@ -1,0 +1,200 @@
+{
+  "_": [
+    "Bindirilecek TÜM Türkçe dizelerin TEK DOĞRU KAYNAĞI. Overlay bunu render eder, doğrulayıcı",
+    "OCR sonucunu buna karşı karşılaştırır. Bir dizeyi burada değiştirmek, hem görselde hem",
+    "denetimde aynı anda değiştirir.",
+    "",
+    "SAYI KURALI: her sayı, kullanıcının UYGULAMADA görebileceği bir sayı olmak zorundadır —",
+    "API toplamı değil. 'ders' sayısı 19'dur (B sınıfı adayının Öğren > Dersler ekranında",
+    "gördüğü sayı); katalogdaki 29 hiçbir kullanıcıya görünmez. Araç parçası için tek toplam",
+    "verilmez: uygulama bunları 70 (Araç Tekniği) + 39 (Kabin Kumandaları) olarak iki galeriye",
+    "böler. Gerekçe: PLAY_STORE_ASO_LESSONS_LEARNED.md §16b."
+  ],
+  "plates": [
+    {
+      "id": "01",
+      "plate": "001.png",
+      "screen": "home.png",
+      "eyebrow": "A · B · D SINIFI · e-SINAV",
+      "title": ["SINAVA HAZIR MISIN?", "ÖLÇELİM."],
+      "support": "1.605 soru, 19 ders ve gerçek sınav biçimi — hazırlık puanın her soruda güncellenir.",
+      "left": [
+        ["HAZIRLIK PUANI", "Her çözdüğün soru puanı günceller."],
+        ["ZAYIF KONU", "Nerede takıldığını konu konu gösterir."],
+        ["GÜNLÜK PLAN", "Sınavına kalan süreye göre kurulur."]
+      ],
+      "right": [
+        ["1.605 SORU", "Trafik, ilk yardım, motor, adab, pratik"],
+        ["19 ORTAK DERS", "Sınıfına göre 5 ders daha eklenir."]
+      ],
+      "strip": [
+        ["HESAP GEREKMEZ", "Kayıt olmadan tamamı kullanılır."],
+        ["ÇEVRİMDIŞI ÇALIŞIR", "İçerik bir kez iner, sonra internetsiz."],
+        ["REKLAM YOK", "Hiçbir reklam ağı yok."]
+      ]
+    },
+    {
+      "id": "02",
+      "plate": "002.png",
+      "screen": "exam-runner.png",
+      "eyebrow": "DENEME SINAVI · GERÇEK BİÇİM",
+      "title": ["50 SORU.", "45 DAKİKA."],
+      "support": "e-Sınav biçiminde tam deneme: 35 doğru geçme, geri sayan süre, sınav sonu analizi.",
+      "left": [
+        ["SÜRE BASKISI", "45 dakika geri sayar, sınavdaki gibi."],
+        ["GEÇME EŞİĞİ", "35 doğru — sonuç ekranı bunu gösterir."],
+        ["RESMÎ DAĞILIM", "Trafik 23 · İlk yardım 12 · Motor 9 · Adab 6"]
+      ],
+      "right": [
+        ["SINAV SONU ANALİZİ", "Hangi konuda kaç yanlış, tek ekranda."],
+        ["YARIM KALIRSA", "Sınav kaldığın yerden devam eder."]
+      ],
+      "strip": [
+        ["ZORLUK DENGELİ", "Kolay, orta ve zor karışık gelir."],
+        ["ŞIKLAR KARIŞIR", "Aynı sınavı ezberleyemezsin."],
+        ["ÇEVRİMDIŞI ÇÖZÜLÜR", "İnternetsiz de sınava girilir."]
+      ]
+    },
+    {
+      "id": "03",
+      "plate": "003.png",
+      "screen": "practice-explain.png",
+      "eyebrow": "SORU BANKASI · 5 KONU",
+      "title": ["1.605 SORU.", "HER BİRİNİN ÇÖZÜMÜ."],
+      "support": "Yanlış yaptığın soruda hangi şıkkın neden yanlış olduğunu da okursun.",
+      "left": [
+        ["TRAFİK 396", "İşaretler, öncelik, hız, sollama"],
+        ["İLK YARDIM 303", "Kanama, şok, temel yaşam desteği"],
+        ["MOTOR 329", "Fren, aktarma, gösterge ikazları"]
+      ],
+      "right": [
+        ["NEDEN YANLIŞ", "Her sorunun çözümü ve şık şık gerekçesi var."],
+        ["GÖRSEL SORULAR", "121 işaret ve 60 ikaz ışığı görselinden üretilir."]
+      ],
+      "strip": [
+        ["KONU ETİKETLİ", "Her soru bir konuya bağlıdır."],
+        ["ZORLUK ETİKETLİ", "Kolay, orta ve zor ayrı ayrı işaretli."],
+        ["ÇÖZÜMLÜ", "Her soruda açıklama bulunur."]
+      ]
+    },
+    {
+      "id": "04",
+      "plate": "004.png",
+      "screen": "exam-library.png",
+      "eyebrow": "SINAV ARŞİVİ · 6 KATEGORİ",
+      "title": ["HER GÜN", "YENİ SINAV."],
+      "support": "Altı kategori, tarihli sınavlar. İlk üç sınav ücretsiz — gerisi premium.",
+      "left": [
+        ["GENEL SINAV", "Tam biçim, 50 soru"],
+        ["KONU SINAVLARI", "Trafik · İlk Yardım · Motor · Adab"],
+        ["GÖRSEL SORULAR", "Yalnız görselli sorulardan kurulu sınav"]
+      ],
+      "right": [
+        ["İLK 3 ÜCRETSİZ", "Katalog genelinde ilk üç sınav ücretsiz açılır."],
+        ["TARİHE GÖRE", "Her tarih aynı sınavı üretir."]
+      ],
+      "strip": [
+        ["ABONELİK ZORUNLU DEĞİL", "Ücretsiz katman kalıcıdır."],
+        ["ÖMÜR BOYU SEÇENEĞİ VAR", "Tek seferlik paket de sunulur."],
+        ["REKLAM YOK", "Ücretsiz katmanda da reklam yok."]
+      ]
+    },
+    {
+      "id": "05",
+      "plate": "005.png",
+      "screen": "coach-chat.png",
+      "eyebrow": "AI KOÇ · İÇERİĞE DAYALI",
+      "title": ["TAKILDIN MI?", "SOR."],
+      "support": "AI Koç, cevabı uygulamanın ders ve soru içeriğine dayandırır; kaynağını da gösterir.",
+      "left": [
+        ["KAYNAK GÖSTERİR", "Cevabın hangi içerikten geldiğini yazar."],
+        ["DAYANAK YOKSA SÖYLER", "İçerikte karşılığı yoksa uydurmaz."],
+        ["KALICI UYARI", "Kesin kural için MEB/MTSK esastır."]
+      ],
+      "right": [
+        ["ÇALIŞMA PLANI", "Sınavına kalan süreye göre günlük hedef."],
+        ["TÜRKÇE", "Soruyu kendi cümlenle sorarsın."]
+      ],
+      "strip": [
+        ["YAPAY ZEKÂ YANITI", "Cevaplar bir AI modeli tarafından üretilir."],
+        ["KAYNAKLI", "Dayandığı içerik gösterilir."],
+        ["SON SÖZ MEVZUATTA", "Kesin kural için MEB/MTSK esastır."]
+      ]
+    },
+    {
+      "id": "06",
+      "plate": "006.png",
+      "screen": "lesson-figure.png",
+      "eyebrow": "ÖĞREN · ŞEMALI ANLATIM",
+      "title": ["19 ORTAK DERS.", "ÇİZEREK ANLATIR."],
+      "support": "Konuyu şema üzerinde görürsün. 121 trafik işareti ve 60 ikaz ışığı ayrı ayrı anlatılır.",
+      "left": [
+        ["121 TRAFİK İŞARETİ", "Yasak, tehlike, bilgi, mecburiyet"],
+        ["60 İKAZ IŞIĞI", "Gösterge panelinde yanan ışık ne demek"],
+        ["ARAÇ PARÇALARI", "Motor bölmesi, dış, kabin ve muayene"]
+      ],
+      "right": [
+        ["ŞEMALI ANLATIM", "Dersler konuyu çizim üzerinde gösterir."],
+        ["A · B · D İÇERİĞİ", "Ortak teorinin üstüne sınıfına özel dersler."]
+      ],
+      "strip": [
+        ["KOYU VE AÇIK TEMA", "Şemalar iki temada da okunur."],
+        ["ÇEVRİMDIŞI OKUNUR", "Dersler önbellekten açılır."],
+        ["DERS SONU TESTİ", "Her ders kendi sorularına bağlanır."]
+      ]
+    },
+    {
+      "id": "07",
+      "plate": "007.png",
+      "screen": "progress.png",
+      "eyebrow": "İLERLEME · ROZETLER · DÜELLO",
+      "title": ["HER SORU", "PUANI DEĞİŞTİRİR."],
+      "support": "Hazırlık puanın, konu radarın, serin ve rozetlerin tek ekranda.",
+      "left": [
+        ["HAZIRLIK PUANI", "Doğru, hız ve tekrar birlikte hesaplanır."],
+        ["KONU RADARI", "Beş konudaki durumun tek grafikte."],
+        ["SERİ VE SEVİYE", "Üst üste çalıştığın gün ve XP seviyen."]
+      ],
+      "right": [
+        ["ROZETLER", "Kilometre taşlarını rozetle işaretler."],
+        ["DÜELLO", "10 soru, 20 saniye — yapay zekâ rakip."]
+      ],
+      "strip": [
+        ["SIRALAMA ZORUNLU DEĞİL", "Topluluk tamamen isteğe bağlı."],
+        ["VERİN SENDE KALIR", "İlerlemen hesabınla senkronlanır."],
+        ["PAYLAŞMAK SENİN SEÇİMİN", "Rozet kartını istersen paylaşırsın."]
+      ]
+    },
+    {
+      "id": "08",
+      "plate": "008.png",
+      "screen": "offline-profile.png",
+      "eyebrow": "ÇEVRİMDIŞI · GİZLİLİK · İSTEĞE BAĞLI",
+      "title": ["HESAP YOK.", "REKLAM YOK."],
+      "support": "Kayıt olmadan tamamını kullan. İçerik bir kez iner, sonra internetsiz çalışır.",
+      "left": [
+        ["HESAP GEREKMEZ", "Kayıt olmadan dersler, sorular ve sınavlar açılır."],
+        ["ÇEVRİMDIŞI ÇALIŞIR", "İçerik bir kez iner, sonra internet gerekmez."],
+        ["REKLAM AĞI YOK", "Uygulamada hiçbir reklam SDK'sı bulunmaz."]
+      ],
+      "right": [
+        ["TOPLULUK İSTEĞE BAĞLI", "Katılmazsan hiçbir bilgin paylaşılmaz."],
+        ["HESABINI SİLEBİLİRSİN", "Profil ekranından, uygulama içinden."]
+      ],
+      "strip": [
+        ["KOYU VE AÇIK TEMA", "İki temada da tam destek."],
+        ["GİRİŞ İSTEĞE BAĞLI", "Hesap yalnız senkron ve topluluk için."],
+        ["A · B · D SINIFI", "Sınıfını seçersin, içerik ona göre önceliklenir."]
+      ],
+      "screen2": "offline-profile-light.png",
+      "_screen2": "008 plakası İKİ telefon çizer: koyu tema önde, açık tema arkada. Arkadaki ekran beyaz bırakılırsa varlık yarım görünür ve o karenin kendi güven şeridi \"KOYU VE AÇIK TEMA\" diyor — yani beyaz ekran, iddiayı yalanlar."
+    }
+  ],
+  "feature": {
+    "plate": "feature-graphic.png",
+    "screen": "home.png",
+    "brand": "EHLİYET AKADEMİ",
+    "tagline": "e-Sınav biçiminde deneme, ders ve AI Koç",
+    "_": "Marka adı ASLA üretece çizdirilmez — FormAI'de marka 'FORMI' olarak çıktı. Merkezdeki ~250x250 px sessiz kalır: tanıtım videosu varsa oynat düğmesi oraya biner."
+  }
+}

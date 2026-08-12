@@ -1,49 +1,72 @@
 # Founder Release Checklist — Ehliyet Akademi 1.0.0
 
-Tick as you go. Full instructions for every line: **`FOUNDER_RELEASE_HANDOOK.md`**.
+**Updated:** 11 August 2026. Tick as you go. Full instructions for every line:
+**`FOUNDER_RELEASE_HANDOOK.md`**.
 
-> **The release verdict cannot be PASS while any 🔴 box is unticked.** Send me the evidence column
-> and I will re-run the affected verification and update `FINAL_PRE_PRODUCTION_AUDIT.md`.
+> **The release verdict cannot be PASS while any 🔴 box is unticked.** Send me the evidence and I
+> will re-run the affected verification and update `FINAL_PRE_PRODUCTION_AUDIT.md`.
+
+---
+
+## ✅ Already done — no action needed
+
+These were open on 10 August and are now closed. Listed so you do not redo them.
+
+- [x] **F-04** 🔴 Play service account created, granted, and `GOOGLE_PLAY_SA_JSON` set
+  - **I verified it against Google's live API on 11 Aug**: our package answers `400` to a bogus
+    token while a foreign package answers `401`. That difference proves the Console grant exists,
+    for both the product and the subscription endpoints.
+- [x] **F-15** 🔴 Production keystore present and Gradle signing is fail-closed
+  - ⚠️ **Still yours:** back up the keystore and its passwords off this machine.
+- [x] **F-02** partial — `support@ehliyetegitim.com` created and wired into both env vars
+- [x] **F-06** Retention periods defined, published, and enforced by a daily job
 
 ---
 
 ## A · Legal and identity
 
-- [ ] **F-01** 🔴 Five legal env vars set in Vercel → Production
-  - [ ] `LEGAL_COMPANY_NAME`
-  - [ ] `LEGAL_TAX_ID`
-  - [ ] `LEGAL_ADDRESS`
-  - [ ] `LEGAL_KEP_ADDRESS`
-  - [ ] `LEGAL_SUPPORT_EMAIL`
-  - **Evidence:** `curl -s https://www.ehliyetegitim.com/gizlilik | grep -c "henüz yayımlanmadı"` returns `0`
-- [ ] **F-02** 🔴 Support mailbox exists and a human reads it
-- [ ] **F-03** 🔴 Lawyer reviewed `/gizlilik` and `/kvkk`
-- [ ] **F-06** 🔴 Retention periods decided and sent to me
-  - [ ] purchase/invoice records
-  - [ ] community reports under review
-  - [ ] deletion-request turnaround (page currently promises 30 days — confirm achievable)
+- [x] **F-01** ✅ Legal env vars set in Vercel → Production (by me, 11 Aug 2026)
+  - [x] `LEGAL_COMPANY_NAME` · `LEGAL_TAX_ID` · `LEGAL_ADDRESS` · `LEGAL_SUPPORT_EMAIL`
+  - [x] `LEGAL_KEP_ADDRESS` — **intentionally not created.** KEP is mandatory under TTK m.18/3
+        for capital companies; a natural person is not required to hold one, and inventing an
+        address would publish a false registration detail. The code now treats its absence as
+        valid and simply omits the row.
+- [ ] **F-01b** 🔴 **Merge PR #22 and redeploy** — the pages render the real identity only once
+      production is rebuilt from this branch. Until then the live site still serves `main`.
+  - Verified `0` on a local production server built with the real values, so the only thing
+    missing is the deploy.
+  - **Evidence after deploy:** `curl -s https://www.ehliyetegitim.com/gizlilik | grep -c "henüz yayımlanmadı"` → `0`
+- [ ] **F-02** 🔴 Confirm a human actually reads `support@ehliyetegitim.com`
+- [ ] **F-03** 🔴 Lawyer reviewed `/gizlilik`, `/kvkk` and `/hesap-silme`
+- [ ] **F-06** 🟡 Lawyer confirms or overrides my retention defaults
+  - [ ] 365 days anonymous analytics · 90 days error logs · 180 days closed moderation records
+  - [ ] **Decision needed:** purchase records are now **deleted with the account**; the financial
+        record lives with Google Play. Confirm this satisfies your book-keeping obligations.
 
 ## B · Billing
 
-- [ ] **F-04** 🔴 Service account created, granted **View financial data** + **Manage orders and subscriptions**
-- [ ] **F-04** 🔴 `GOOGLE_PLAY_SA_JSON` set in Vercel → Production
-  - ⚠️ Only now is this safe. The verification stub that made this dangerous was removed in this release.
-- [ ] **F-12** 🔴 Three products defined in Play Console
-  - [ ] `komple_ehliyet` — one-time (managed)
-  - [ ] `premium_haftalik` — subscription, weekly
-  - [ ] `premium_aylik` — subscription, monthly
-- [ ] **F-12** Lifetime price confirmed (documentation records ₺479,99)
+- [ ] **F-12** 🔴 Three products created in Play Console — **IDs use underscores**
+  - [ ] `komple_ehliyet` — one-time (managed), **Active**
+  - [ ] `premium_haftalik` — subscription, weekly base plan, **base plan Active**
+  - [ ] `premium_aylik` — subscription, monthly base plan, **base plan Active**
+  - [ ] No free trial / introductory offer (no listing text claims one)
+  - [ ] Türkiye pricing set; lifetime price confirmed (documentation records ₺479,99)
+  - **Evidence:** screenshot of the products list showing all three Active, with prices
 - [ ] **F-05** 🔴 Licence tester account added
 - [ ] **F-05** 🔴 Real purchase — `komple_ehliyet` **Evidence:** screenshot
-- [ ] **F-05** 🔴 Real purchase — `premium_haftalik` (**never exercised before this release**) **Evidence:** screenshot
+- [ ] **F-05** 🔴 Real purchase — `premium_haftalik` (**never exercised before this release**)
 - [ ] **F-05** 🔴 Restore after clean reinstall works
 - [ ] **F-05** 🔴 Entitlement follows the account on a second device
+  - ⏸️ **Do not start F-05 until the newest AAB is on closed testing and reaches your tester account.**
+- [ ] **F-16** ⚪ _Optional:_ RTDN Pub/Sub topic, to close the refund/revocation gap
+- [ ] ⚪ _Optional housekeeping:_ delete `REVENUECAT_SECRET_KEY` from Vercel — nothing reads it
+
+> **Do not configure RevenueCat.** It is not in the current architecture. Handbook explains why.
 
 ## C · Android configuration
 
 - [ ] **F-07** 🟠 `ANDROID_SHA256_FINGERPRINTS` set from **App signing key** (not upload key)
-  - **Evidence:** `curl -s https://www.ehliyetegitim.com/.well-known/assetlinks.json` returns a populated array
-- [ ] **F-15** 🔴 Production keystore available and backed up
+  - **Evidence:** `curl -s https://www.ehliyetegitim.com/.well-known/assetlinks.json` → populated array
 
 ## D · Play Console — App content
 
@@ -67,9 +90,10 @@ Tick as you go. Full instructions for every line: **`FOUNDER_RELEASE_HANDOOK.md`
 - [ ] **F-11** 🔴 App name: `Ehliyet Akademi: Deneme Sınavı`
 - [ ] **F-11** 🔴 Short description pasted (74 chars)
 - [ ] **F-11** 🔴 Full description pasted (3.056 chars)
-- [ ] **F-11** 🔴 Eight screenshots uploaded from `apps/ASO_IMAGE/PLAY_READY/` **in filename order**
-- [ ] **F-11** 🔴 Feature graphic uploaded
-- [ ] **F-11** 🔴 App icon uploaded (one, global)
+- [ ] **F-11** 🔴 Eight screenshots uploaded from `apps/ASO_IMAGE/PLAY_READY/` **in filename order** — ✅ built, 134/134
+- [ ] **F-11** 🔴 Feature graphic uploaded — ✅ `feature-graphic-1024x500.png` built
+- [ ] **F-11** 🔴 App icon uploaded — ✅ `app-icon-512.png` built
+- [ ] **F-11** ⚠️ Short description: use the **19 ders** version, not 29 (see handbook F-11)
 - [ ] **F-11** Nothing pasted from `STORE_LISTING.md` (superseded)
 - [ ] **F-13** 🟡 Reviewer notes added
 
@@ -77,15 +101,14 @@ Tick as you go. Full instructions for every line: **`FOUNDER_RELEASE_HANDOOK.md`
 
 - [ ] **F-14** 🔴 Closed-testing requirements met (tester count + continuous days), if applicable
 - [ ] **F-14** 🔴 Production access confirmed
-- [ ] Final AAB uploaded (I build it — see `FINAL_RELEASE_AAB_REPORT.md`)
+- [x] Final AAB **built and verified** — `1.0.0+6`, see `FINAL_RELEASE_AAB_REPORT.md`
+- [ ] **F-14** 🔴 Upload that AAB to Closed testing (I do not upload)
 - [ ] Release notes pasted (tr-TR)
 - [ ] Staged rollout percentage chosen
 
 ---
 
 ## What I still owe you after you finish
-
-Once the 🔴 boxes are ticked and evidence is in, I will:
 
 1. Re-probe `/gizlilik`, `/kvkk`, `/hesap-silme` and `assetlinks.json` live
 2. Re-run the purchase-verification path against your real test purchase

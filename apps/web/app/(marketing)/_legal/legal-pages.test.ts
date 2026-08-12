@@ -95,10 +95,40 @@ describe('yasal sayfalar — yer tutucu ve taslak uyarısı içermez', () => {
     for (const topic of [
       'Hesabımı sil',
       'Silinen veriler',
-      'Saklanmaya devam eden kayıtlar',
+      'Saklama süreleri',
       'Uygulama kurulu değilse',
     ]) {
       expect(src, `hesap silme sayfasında eksik bölüm: ${topic}`).toContain(topic);
+    }
+  });
+
+  /**
+   * Denetim bulgusu: sayfa "satın alma kayıtları mevzuatın öngördüğü süre boyunca saklanır"
+   * diyordu, oysa `purchases.user_id` şemada ON DELETE CASCADE taşır ve kayıt hesapla birlikte
+   * SİLİNİR. Sayfa, sunucunun yapmadığı bir şeyi anlatıyordu.
+   *
+   * Bu test o cümlenin geri gelmesini engeller. Süreler artık `lib/retention.ts` üzerinden
+   * render edildiği için sayfaya elle yazılmış bir saklama iddiası da olmamalıdır.
+   */
+  it('hiçbir yasal sayfa satın alma kaydının hesap silindikten sonra saklandığını iddia etmez', () => {
+    for (const name of ['gizlilik', 'kvkk', 'hesap-silme'] as const) {
+      const src = visibleSource(PAGES[name]);
+      expect(src, `${name}: uydurulmuş yasal saklama iddiası`).not.toMatch(
+        /mevzuatın öngördüğü süre boyunca/
+      );
+      expect(src, `${name}: satın alma kaydı için yanlış saklama iddiası`).not.toMatch(
+        /vergi ve ticaret mevzuatı[^.]*saklanmasını zorunlu/i
+      );
+    }
+  });
+
+  it('saklama süreleri tek kaynaktan (lib/retention) render edilir', () => {
+    for (const name of ['gizlilik', 'hesap-silme'] as const) {
+      const src = visibleSource(PAGES[name]);
+      expect(src, `${name}: saklama tablosu elle yazılmış olabilir`).toContain(
+        "from '@/lib/retention'"
+      );
+      expect(src).toContain('retentionRules()');
     }
   });
 

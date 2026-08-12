@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+// ValueNotifier için — depo bir "ilerleme değişti" sinyali yayınlar (bkz. [ProgressRepository.revision]).
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,6 +27,32 @@ class ProgressRepository {
   final SharedPreferences _prefs;
   final StateSync? _sync;
 
+  /// Yazma sayacı — "ilerleme değişti" sinyali.
+  ///
+  /// ## Neden gerekti (cihaz denetiminde bulundu, 11 Ağustos 2026)
+  ///
+  /// 90 soru çözüldükten sonra Ana Sayfa hâlâ **%0 hazırlık · 0 soru · Lv 1** gösteriyordu;
+  /// İlerleme ekranı ise aynı anda doğru değerleri (90 soru · %71 · Seviye 4) gösteriyordu.
+  /// Veri kaybı yoktu — ekran tazelenmiyordu.
+  ///
+  /// Sebep iki parçalıydı:
+  /// 1. `progressRepositoryProvider` bir `FutureProvider`'dır ve **bir kez** çözülüp aynı
+  ///    örneği döndürür. Depo içindeki veri değişse de sağlayıcı yeni bir değer YAYMAZ.
+  /// 2. Gezinme `StatefulShellRoute.indexedStack` kullanır: Pratik sekmesinde çalışılırken
+  ///    Ana Sayfa dalı **canlı kalır** ve yeniden inşa edilmez.
+  ///
+  /// İkisi birleşince Ana Sayfa, açıldığı andaki değerleri sonsuza kadar gösteriyordu; ancak
+  /// uygulama yeniden başlatılınca düzeliyordu. Kullanıcı açısından bu "çalışmam kaydedilmedi"
+  /// demektir — ilk izlenimi bozan, sessiz bir kusur.
+  ///
+  /// `ValueNotifier` seçildi çünkü depo saf bir shared_preferences sarmalayıcısıdır; onu
+  /// `ChangeNotifier`'a çevirmek ya da Riverpod'a bağlamak, tek ihtiyaç "bir şey değişti"
+  /// demekken gereğinden ağır olurdu.
+  final ValueNotifier<int> revision = ValueNotifier<int>(0);
+
+  /// Her YAZMA sonrası çağrılır. Okuma yollarında çağrılmaz — dinleyiciyi boşuna uyandırırdı.
+  void _touch() => revision.value++;
+
   // ——— SRS kartları ———
   Map<String, SrsCard> loadCards() {
     final raw = _prefs.getString(_kCards);
@@ -37,6 +65,7 @@ class ProgressRepository {
     final obj = cards.map((k, v) => MapEntry(k, v.toJson()));
     await _prefs.setString(_kCards, jsonEncode(obj));
     _sync?.push(_kCards, obj);
+    _touch();
   }
 
   // ——— Cevap kayıtları (son 2000) ———
@@ -54,6 +83,7 @@ class ProgressRepository {
     final obj = capped.map((a) => a.toJson()).toList();
     await _prefs.setString(_kAnswers, jsonEncode(obj));
     _sync?.push(_kAnswers, obj);
+    _touch();
   }
 
   // ——— Seri (ardışık gün) ———
@@ -69,9 +99,14 @@ class ProgressRepository {
     if (s.lastDay == today) return s;
     final yesterday = _dayKey(nowMs - dayMs);
     final current = s.lastDay == yesterday ? s.current + 1 : 1;
-    final next = StreakState(current: current, best: current > s.best ? current : s.best, lastDay: today);
+    final next = StreakState(
+      current: current,
+      best: current > s.best ? current : s.best,
+      lastDay: today,
+    );
     await _prefs.setString(_kStreak, jsonEncode(next.toJson()));
     _sync?.push(_kStreak, next.toJson());
+    _touch();
     return next;
   }
 
@@ -86,6 +121,7 @@ class ProgressRepository {
     final obj = {'examsFinished': examsFinished() + 1};
     await _prefs.setString(_kCounters, jsonEncode(obj));
     _sync?.push(_kCounters, obj);
+    _touch();
   }
 
   /// Oturum açıldığında sunucu durumunu yerelle birleştir (güvenli birleşim: kayıp yok).
@@ -138,6 +174,9 @@ class ProgressRepository {
         await _prefs.setString(_kCounters, jsonEncode({'examsFinished': srv}));
       }
     }
+    // Birleştirme birden çok anahtarı değiştirebilir; tek bir sinyal yeter ve dinleyiciyi
+    // gereksiz yere birden çok kez uyandırmaz.
+    _touch();
   }
 
   /// Bir alt küme yardımcı: verilen cevap kayıtlarından readiness üret.

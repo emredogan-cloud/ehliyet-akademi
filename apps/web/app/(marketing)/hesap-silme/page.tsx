@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import { buildMetadata } from '@/lib/seo/metadata';
+import { DELETION_REQUEST_SLA_DAYS, retentionRules, retentionText } from '@/lib/retention';
 import { LegalIdentity } from '../_legal/LegalIdentity';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Hesap ve Veri Silme',
   description:
-    'Ehliyet Akademi hesabınızı ve verilerinizi nasıl silersiniz: uygulama içi adımlar, silinen veriler, yasal olarak saklanması gereken kayıtlar ve uygulama kurulu değilken izlenecek yol.',
+    'Ehliyet Akademi hesabınızı ve verilerinizi nasıl silersiniz: uygulama içi adımlar, silinen veriler, veri türü başına saklama süreleri ve uygulama kurulu değilken izlenecek yol.',
   path: '/hesap-silme',
 });
 
@@ -19,9 +20,17 @@ export const metadata: Metadata = buildMetadata({
  * · Sunucu ucu            → `apps/web/app/api/account/route.ts` (DELETE, şifre ile onay)
  * · Basamaklı silme       → `packages/db/src/index.ts` — users(id) üzerine ON DELETE CASCADE
  *
- * Yasal saklama SÜRELERİ burada SAYI olarak verilmez: mevzuata dayalı süreyi belirlemek hukuki bir
- * karardır ve uydurulamaz. Süre, kurucunun hukuk danışmanıyla belirlediği değerle güncellenecektir
- * (bkz. FOUNDER_RELEASE_HANDOOK.md → F-06).
+ * ## §4 neden yeniden yazıldı
+ *
+ * Önceki sürüm, satın alma/fatura kayıtlarının "mevzuatın öngördüğü süre boyunca" saklandığını
+ * söylüyordu. Kod bunu YAPMIYOR: `purchases.user_id` şemada `ON DELETE CASCADE` taşır, yani
+ * hesap silindiğinde satın alma kaydı **aynı işlemde yok olur**. Sayfa, sunucunun yapmadığı bir
+ * şeyi anlatıyordu; düzeltildi. Malî kaydın aslı zaten ödemeyi alan Google Play'de durur — bizim
+ * tablomuz muhasebe defteri değil, hak sahipliği defteridir.
+ *
+ * Süreler artık `lib/retention.ts` dosyasından RENDER EDİLİR; burada elle yazılmış ikinci bir
+ * liste yoktur. Aynı liste `app/api/cron/retention` işi tarafından uygulanır, böylece sayfadaki
+ * cümle ile sunucunun davranışı tek kaynaktan gelir.
  */
 export default function HesapSilmePage() {
   return (
@@ -35,8 +44,8 @@ export default function HesapSilmePage() {
 
       <p>
         Ehliyet Akademi hesabınızı ve hesabınıza bağlı verileri istediğiniz zaman silebilirsiniz. Bu
-        sayfa, silme işleminin nasıl yapıldığını, tam olarak neyin silindiğini ve hangi kayıtların
-        yasal olarak saklanmak zorunda olduğunu açıklar.
+        sayfa, silme işleminin nasıl yapıldığını, tam olarak neyin silindiğini ve hangi verinin ne
+        kadar süreyle saklandığını açıklar.
       </p>
 
       <h2>1. Uygulama içinden silme (önerilen yol)</h2>
@@ -80,27 +89,47 @@ export default function HesapSilmePage() {
         <li>Premium erişim kaydınız</li>
       </ul>
 
-      <h2>4. Saklanmaya devam eden kayıtlar</h2>
-      <ul>
-        <li>
-          <strong>Satın alma ve fatura kayıtları.</strong> Vergi ve ticaret mevzuatı, satın alma
-          kayıtlarının belirli bir süre saklanmasını zorunlu kılar. Bu kayıtlar hesabınız silinse de
-          mevzuatın öngördüğü süre boyunca tutulur ve yalnız bu yasal yükümlülük için kullanılır.
-        </li>
-        <li>
-          <strong>Kimliksiz kullanım ve hata kayıtları.</strong> Bu kayıtlar hesabınızla
-          ilişkilendirilmez ve kimliğinizi taşımaz; bu nedenle hesap silindikten sonra da kimliksiz
-          biçimde kalabilir. Sizi tanımlamak için kullanılamazlar.
-        </li>
-        <li>
-          <strong>Topluluk bildirimleri.</strong> Hakkınızda veya sizin tarafınızdan yapılmış bir
-          içerik bildirimi inceleme sürecindeyse, incelemenin tamamlanabilmesi için ilgili kayıt
-          süreç boyunca saklanabilir.
-        </li>
-      </ul>
+      <h2>4. Saklama süreleri</h2>
+      <p>
+        Aşağıdaki tablo, hangi verinin ne kadar süre tutulduğunu ve nasıl silindiğini gösterir.
+        Tablo, sunucudaki temizleme işinin <strong>okuduğu listenin ta kendisidir</strong>: burada
+        yazan süre ile uygulanan süre aynı kaynaktan gelir.
+      </p>
+      <div style={{ overflowX: 'auto' }}>
+        <table>
+          <thead>
+            <tr>
+              <th>Veri</th>
+              <th>Saklama</th>
+              <th>Nasıl silinir</th>
+            </tr>
+          </thead>
+          <tbody>
+            {retentionRules().map((rule) => (
+              <tr key={rule.key}>
+                <td>
+                  <strong>{rule.label}</strong>
+                  <br />
+                  <span className="muted">{rule.what}</span>
+                </td>
+                <td>{retentionText(rule)}</td>
+                <td>{rule.deletion}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p>
+        <strong>Satın alma kayıtları hesapla birlikte silinir.</strong> Bizim tuttuğumuz kayıt bir
+        fatura değil, premium erişiminizin geri yüklenmesini sağlayan hak sahipliği kaydıdır.
+        Ödemenin malî kaydı, ödemeyi tahsil eden <strong>Google Play</strong> tarafında tutulur ve
+        oradaki saklama süresi Google&apos;ın kendi politikasına tabidir.
+      </p>
       <p className="muted">
-        Yasal saklama sürelerinin kesin değerleri, veri sorumlusunun mevzuat değerlendirmesine göre
-        bu sayfada yayımlanacaktır.
+        Kimliksiz kullanım ve hata kayıtları hesabınız silindiğinde{' '}
+        <em>kullanıcı bağından koparılır</em> — kayıt kalsa bile sizi göstermez — ve yukarıdaki süre
+        dolduğunda tamamen silinir. İnceleme sürecinde (<code>open</code>) olan bir topluluk
+        bildirimi, inceleme kapanana kadar silinmez.
       </p>
 
       <h2>5. Google Play satın alımları</h2>
@@ -116,7 +145,7 @@ export default function HesapSilmePage() {
         Uygulamayı kaldırdıysanız ve hesabınızı silmek istiyorsanız, §7&apos;de belirtilen destek
         adresine <strong>hesabınıza kayıtlı e-posta adresinden</strong> bir silme talebi
         gönderebilirsiniz. Talebiniz kimliğiniz doğrulandıktan sonra en geç{' '}
-        <strong>30 (otuz) gün</strong> içinde sonuçlandırılır.
+        <strong>{DELETION_REQUEST_SLA_DAYS} gün</strong> içinde sonuçlandırılır.
       </p>
 
       <h2>7. İletişim</h2>
